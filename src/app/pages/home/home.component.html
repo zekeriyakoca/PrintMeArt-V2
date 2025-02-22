@@ -1,5 +1,4 @@
 <div class="bg-white w-full">
-  <app-header />
   <div class="relative isolate px-6 lg:px-8">
     <div class="mx-auto max-w-2xl pb-16 pt-32">
       <div class="text-center">
@@ -8,15 +7,11 @@
     </div>
   </div>
   <div class="grid grid-cols-4 gap-6">
-    <app-catagory-card class="" />
-    <app-catagory-card class="" />
-    <app-catagory-card class="" />
-    <app-catagory-card class="" />
+    @for (cat of categories; track cat) {
+    <app-collection-card [category]="cat" />
+    }
   </div>
   <div>
     <app-our-services />
-  </div>
-  <div>
-    <app-footer />
   </div>
 </div>
