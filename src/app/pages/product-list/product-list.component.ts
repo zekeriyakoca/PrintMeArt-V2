@@ -34,7 +34,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       .getProductsByCategory(this.categoryId)
       .pipe(first())
       .subscribe((products) => {
-        if (products?.data && products.data.length > 0) {
+        if (products?.data) {
           this.products.set(products);
         }
       });

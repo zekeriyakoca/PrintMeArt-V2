@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { ProductDto } from '../../models/product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -9,4 +10,13 @@ import { ProductDto } from '../../models/product';
 })
 export class ProductCardComponent {
   product = input.required<ProductDto>();
+
+  constructor(private router: Router) {}
+
+  goToProduct() {
+    const productId = this.product()?.id;
+    if (productId) {
+      this.router.navigate(['/products', productId]);
+    }
+  }
 }

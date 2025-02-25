@@ -10,7 +10,7 @@ export interface ProductDto {
   id: number;
   name: string;
   description: string;
-  image: ProductImageDto;
+  images: ProductImageDto;
   variants: VariantDto[];
   category: string;
   isAvailable: boolean;

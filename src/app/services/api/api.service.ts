@@ -3,7 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ProductListResponseDto } from '../../models/product';
+import { ProductDto, ProductListResponseDto } from '../../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +38,15 @@ export class ApiService {
     return this._httpClient.post<ProductListResponseDto>(
       `${this.CATALOG_API_URL}/catalog/v1/products/search`,
       { categoryId }
+    );
+  }
+
+  getProductById(productId: string): Observable<ProductDto> {
+    if (this.isSSR) {
+      return of({} as ProductDto);
+    }
+    return this._httpClient.get<ProductDto>(
+      `${this.CATALOG_API_URL}/catalog/v1/products/${productId}`
     );
   }
 }
