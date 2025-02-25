@@ -1,14 +1,25 @@
 import { Injectable, signal, Signal } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, of, take, tap, throwError } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import {
+  catchError,
+  first,
+  map,
+  Observable,
+  of,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 
 import { ATTRIBUTE_GROUPS, PRICE_POLICY_OPTIONS } from './mockData';
 import { AttributeGroupDto } from '../../models/attirubuteGroup';
 import { environment } from '../../../environments/environment';
 import { SelectDto } from '../../models/select';
 import { CategoryDto } from '../../models/category';
-
-
 
 @Injectable({
   providedIn: 'root',
@@ -26,25 +37,23 @@ export class BootstrapService {
     return this.attributeGroups.asReadonly();
   }
 
-  fetchCategories(force: boolean = false) {
-    if (force || this.categories().length <= 0) {
-      this.getCategories().pipe(take(1)).subscribe();
+  fetchCategories() {
+    if (this.categories().length <= 0) {
+      this.getCategories().pipe(first()).subscribe();
     }
   }
 
-  getCategories(): Observable<CategoryDto[] | undefined> {
+  private getCategories(): Observable<CategoryDto[] | undefined> {
     return this._httpClient
       .get<CategoryDto[]>(
         `${environment.serviceUrls['catalog-api']}/catalog/v1/category`
       )
       .pipe(
-        take(1),
         tap((categories) => {
           this.categories.set(categories ?? []);
         })
       );
   }
-
 
   getPricePolicyOptions(): Observable<SelectDto[]> {
     return of(PRICE_POLICY_OPTIONS).pipe(map((x) => x!));

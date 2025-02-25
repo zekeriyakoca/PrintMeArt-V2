@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 
-export const authenticationGuard: CanActivateFn = (route, state): boolean => {
+export const AuthenticationGuard: CanActivateFn = (route, state): boolean => {
   // const authService = inject(AuthenticationService);
 
   // if (authService.isAuthenticated()) {

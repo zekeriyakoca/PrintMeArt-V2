@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Router } from '@angular/router';
+import { CategoryDto } from '../../models/category';
 
 @Component({
   selector: 'app-collection-card',
@@ -8,11 +9,14 @@ import { Router } from '@angular/router';
   styleUrl: './collection-card.component.scss',
 })
 export class CollectionCardComponent {
-  @Input() category: string = '';
+  category = input.required<CategoryDto>();
 
   constructor(private router: Router) {}
 
   goToCategory() {
-    this.router.navigate(['/products', this.category.toLowerCase()]);
+    const categoryId = this.category()?.id;
+    if (categoryId) {
+      this.router.navigate(['/products'], { queryParams: { categoryId } });
+    }
   }
 }

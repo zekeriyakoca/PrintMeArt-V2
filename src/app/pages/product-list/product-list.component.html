@@ -3,6 +3,8 @@
     <h1 class="text-2xl font-semibold tracking-tight text-balance text-gray-700 sm:text-5xl">Prints</h1>
   </div>
   <div class="grid grid-cols-4 gap-6 mb-15">
-    @for (product of products; track product) {<app-product-card [product]="product"></app-product-card>}
+    @for (product of products().data; track product.id) {
+    <app-product-card [product]="product"></app-product-card>
+    }
   </div>
 </div>

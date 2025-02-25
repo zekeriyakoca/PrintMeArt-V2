@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import { ApiService } from '../../services/api/api.service';
+import { ProductListResponseDto } from '../../models/product';
+import { first, takeUntil } from 'rxjs';
+import { BasePageComponent } from '../basePageComponent';
 
 @Component({
   selector: 'app-product-list',
@@ -9,32 +12,31 @@ import { ProductCardComponent } from '../../components/product-card/product-card
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent implements OnInit {
-  category: string = '';
-  // products: any[] = [];
+export class ProductListComponent extends BasePageComponent implements OnInit {
+  categoryId: string = '';
+  products = signal<ProductListResponseDto>({} as ProductListResponseDto);
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
-
-  ngOnInit() {
-    // this.route.paramMap.subscribe(params => {
-    //   this.category = params.get('category') || '';
-    //   this.fetchProducts();
-    // });
+  constructor(private route: ActivatedRoute, private apiService: ApiService) {
+    super();
   }
 
-  // fetchProducts() {
-  //   // Replace with actual API call
-  //   this.http.get<any[]>(`https://api.example.com/products?category=${this.category}`)
-  //     .subscribe(data => {
-  //       this.products = data;
-  //     });
-  // }
+  ngOnInit() {
+    this.route.queryParamMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((params) => {
+        this.categoryId = params.get('categoryId') || '';
+        this.fetchProducts();
+      });
+  }
 
-  products = [
-    'The Little Street',
-    'Autumn River',
-    'Still Life with Roses',
-    'Winter Day',
-    'The Starry Night',
-  ];
+  fetchProducts() {
+    this.apiService
+      .getProductsByCategory(this.categoryId)
+      .pipe(first())
+      .subscribe((products) => {
+        if (products?.data && products.data.length > 0) {
+          this.products.set(products);
+        }
+      });
+  }
 }

@@ -1,21 +1,21 @@
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { Routes } from '@angular/router';
-import { authenticationGuard } from './services/authentication/authentication.guard';
+import { AuthenticationGuard } from './services/authentication/authentication.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [authenticationGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
   {
-    path: 'products/:category',
+    path: 'products',
     component: ProductListComponent,
-    canActivate: [authenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
-    path: 'products/:category/:product',
+    path: 'products/:productId',
     component: ProductDetailComponent,
-    canActivate: [authenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
 ];
