@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ApiService } from '../../services/api/api.service';
-import { ProductListResponseDto } from '../../models/product';
+import { PaginatedListDto, ProductSimpleDto } from '../../models/product';
 import { first, takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 
@@ -14,7 +14,9 @@ import { BasePageComponent } from '../basePageComponent';
 })
 export class ProductListComponent extends BasePageComponent implements OnInit {
   categoryId: string = '';
-  products = signal<ProductListResponseDto>({} as ProductListResponseDto);
+  products = signal<PaginatedListDto<ProductSimpleDto>>(
+    {} as PaginatedListDto<ProductSimpleDto>
+  );
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {
     super();

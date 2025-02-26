@@ -1,22 +1,37 @@
-export interface ProductListResponseDto {
+export interface PaginatedListDto<T> {
   pageIndex: number;
   pageSize: number;
   count: number;
   totalPage: number;
-  data: ProductDto[];
+  data: T[];
+}
+
+export interface ProductSimpleDto {
+  id: number;
+  name: string;
+  description: string;
+  image: ProductImageDto;
+  isAvailable: boolean;
+  cheapestPrice: number;
+  discountRate: number;
+  discountAmount: number;
 }
 
 export interface ProductDto {
   id: number;
   name: string;
   description: string;
-  images: ProductImageDto;
-  variants: VariantDto[];
-  category: string;
-  isAvailable: boolean;
+  title: string;
+  categoryName: string;
+  images: ProductImageDto[];
+  attributeIds: number[];
+  hasCustomOptions: boolean;
+  optionGroups: OptionGroupDto[];
+  tags: number;
   cheapestPrice: number;
   discountRate: number;
   discountAmount: number;
+  isAvailable: boolean;
 }
 
 export interface ProductImageDto {
@@ -29,12 +44,16 @@ export interface ProductImageDto {
   order: number;
 }
 
-export interface VariantDto {
-  id: number;
+export interface OptionGroupDto {
   name: string;
-  availableStock: number;
-  image: string;
-  price: number;
-  discountRate: number;
-  discountAmount: number;
+  options: OptionDto[];
+}
+
+export interface OptionDto {
+  id: number;
+  value: string;
+  imageUrl: string;
+  optionGroup: string;
+  isCustom: boolean;
+  pricePolicyName: string;
 }

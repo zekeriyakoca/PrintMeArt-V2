@@ -3,7 +3,11 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ProductDto, ProductListResponseDto } from '../../models/product';
+import {
+  ProductDto,
+  PaginatedListDto,
+  ProductSimpleDto,
+} from '../../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -31,12 +35,12 @@ export class ApiService {
 
   getProductsByCategory(
     categoryId: string
-  ): Observable<ProductListResponseDto> {
+  ): Observable<PaginatedListDto<ProductSimpleDto>> {
     if (this.isSSR) {
-      return of({} as ProductListResponseDto);
+      return of({} as PaginatedListDto<ProductSimpleDto>);
     }
-    return this._httpClient.post<ProductListResponseDto>(
-      `${this.CATALOG_API_URL}/catalog/v1/products/search`,
+    return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
       { categoryId }
     );
   }
@@ -46,7 +50,7 @@ export class ApiService {
       return of({} as ProductDto);
     }
     return this._httpClient.get<ProductDto>(
-      `${this.CATALOG_API_URL}/catalog/v1/products/${productId}`
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`
     );
   }
 }

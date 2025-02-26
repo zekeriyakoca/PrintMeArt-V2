@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { ProductDto } from '../../models/product';
+import { ProductSimpleDto } from '../../models/product';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
-  product = input.required<ProductDto>();
+  product = input.required<ProductSimpleDto>();
 
   constructor(private router: Router) {}
 
