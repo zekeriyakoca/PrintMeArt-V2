@@ -1,8 +1,8 @@
 <div class="my-40 grid grid-cols-2">
   <div class="image-container p-8">
-    <img
-      src="https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/34f97531-d474-406a-af04-c319314188aa/34f97531-d474-406a-af04-c319314188aa.jpeg"
-      alt="chisfis listing gallery " class="rounded-md">
+    @if ((product().images?.length ?? 0) > 0) {
+    <img src="{{ product().images[0].original }}" alt="chisfis listing gallery" class="rounded-md">
+    }
   </div>
   <div class="info-container p-8">
     <div class="flex justify-between mb-2">
@@ -13,40 +13,20 @@
         $ 20.00 USD
       </p>
     </div>
-    <div class="product-color">
-      <h5 class="text-lg font-semibold">
-        Color
-      </h5>
-      <div class="flex items center">
-        <div class="w-10 h-10 border rounded-full flex items-center justify-center bg-red-600 cursor-pointer">
-        </div>
-        <div class="w-10 h-10 border rounded-full flex items-center justify-center ml-4 bg-blue-600 cursor-pointer">
-        </div>
-        <div class="w-10 h-10 border rounded-full flex items-center justify-center ml-4 bg-green-600 cursor-pointer">
-        </div>
-        <div class="w-10 h-10 border rounded-full flex items-center justify-center ml-4 bg-yellow-400 cursor-pointer">
-        </div>
+    @for (group of product().optionGroups; track group.name; let groupIndex = $index) {
+    <h5 class="text-lg font-semibold">
+      {{ group.name }}
+    </h5>
+    <div class="flex gap-4">
+      @for (option of group.options; track option.id) {
+      <div class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer"
+        [class.bg-indigo-600]="group.selectedOptionId === option.id"
+        [class.text-white]="group.selectedOptionId === option.id" (click)="selectOption(groupIndex, option.id)">
+        <span class="text-lg font-semibold">{{ option.value }}</span>
       </div>
+      }
     </div>
-    <div class="product-size mt-2">
-      <h5 class="text-lg font-semibold">
-        Size
-      </h5>
-      <div class="flex items-center">
-        <div class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer">
-          <span class="text-lg font-semibold">S</span>
-        </div>
-        <div class="w-10 h-10 border rounded-md flex items-center justify-center ml-4 cursor-pointer">
-          <span class="text-lg font-semibold">M</span>
-        </div>
-        <div class="w-10 h-10 border rounded-md flex items-center justify-center ml-4 cursor-pointer">
-          <span class="text-lg font-semibold">L</span>
-        </div>
-        <div class="w-10 h-10 border rounded-md flex items-center justify-center ml-4 cursor-pointer">
-          <span class="text-lg font-semibold">XL</span>
-        </div>
-      </div>
-    </div>
+    }
     <div class="product-quantity mt-2">
       <h5 class="text-lg font-semibold">
         Quantity

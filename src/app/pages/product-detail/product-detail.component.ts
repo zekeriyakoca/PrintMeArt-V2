@@ -41,4 +41,21 @@ export class ProductDetailComponent
         }
       });
   }
+
+  selectOption(groupIndex: number, optionId: number) {
+    this.product.update((currentProduct) => {
+      const updatedGroups = currentProduct.optionGroups.map((group, index) => {
+        if (index === groupIndex) {
+          return {
+            ...group,
+            selectedOptionId:
+              group.selectedOptionId === optionId ? undefined : optionId,
+          };
+        }
+        return group;
+      });
+      console.log({ ...currentProduct, optionGroups: updatedGroups });
+      return { ...currentProduct, optionGroups: updatedGroups };
+    });
+  }
 }

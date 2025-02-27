@@ -47,6 +47,7 @@ export interface ProductImageDto {
 export interface OptionGroupDto {
   name: string;
   options: OptionDto[];
+  selectedOptionId?: number;
 }
 
 export interface OptionDto {
