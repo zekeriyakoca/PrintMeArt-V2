@@ -14,6 +14,7 @@ import {
 })
 export class ApiService {
   private readonly CATALOG_API_URL = environment.serviceUrls['catalog-api'];
+  private readonly PRICING_API_URL = environment.serviceUrls['pricing-api'];
 
   constructor(
     private _httpClient: HttpClient,
@@ -51,6 +52,24 @@ export class ApiService {
     }
     return this._httpClient.get<ProductDto>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`
+    );
+  }
+
+  calculatePrice(
+    productId: string,
+    selectedOptions: { id: number }[]
+  ): Observable<any> {
+    if (this.isSSR) {
+      return of({});
+    }
+    const requestBody = {
+      productId: productId,
+      selectedOptions: selectedOptions,
+    };
+
+    return this._httpClient.post<any>(
+      `${this.PRICING_API_URL}/pricing/v1/product/calculate-price`,
+      requestBody
     );
   }
 }
