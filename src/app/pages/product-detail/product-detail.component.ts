@@ -1,15 +1,17 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil, first } from 'rxjs';
-import { ProductDto, ProductImageDto } from '../../models/product';
+import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
-import { DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart/cart.service';
+import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -21,15 +23,11 @@ export class ProductDetailComponent
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
 
-  hasAllOptionsSelected = computed(
-    () =>
-      this.product().optionGroups?.length > 0 &&
-      this.product().optionGroups.every(
-        (group) => group.selectedOptionId !== undefined
-      )
-  );
-
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private cartService: CartService
+  ) {
     super();
   }
 
@@ -41,6 +39,14 @@ export class ProductDetailComponent
         this.fetchProducts();
       });
   }
+
+  hasAllOptionsSelected = computed(
+    () =>
+      this.product().optionGroups?.length > 0 &&
+      this.product().optionGroups.every(
+        (group) => group.selectedOptionId !== undefined
+      )
+  );
 
   fetchProducts() {
     this.apiService
@@ -90,5 +96,44 @@ export class ProductDetailComponent
           console.error('Error fetching calculated price:', error);
         },
       });
+  }
+
+  addToCart() {
+    if (!this.hasAllOptionsSelected()) {
+      return;
+    }
+
+    const selectedOptions: SelectedOptionDto[] =
+      this.product().optionGroups.map((group) => ({
+        optionId: group.selectedOptionId!,
+      }));
+
+    const requestBody: CartItemDto = {
+      id: this.generateUUID(),
+      productId: parseInt(this.productId, 10),
+      variantId: 0,
+      selectedOptions: selectedOptions,
+      quantity: 1,
+      noDiscountUnitPrice: this.calculatedPrice(),
+      productName: this.product().name,
+      pictureUrl: this.product().images[0].original,
+      unitPrice: this.product().cheapestPrice,
+    };
+
+    this.cartService
+      .addProductToCart(requestBody)
+      .pipe(first())
+      .subscribe({
+        next: (response) => {
+          console.log('Product added to cart:', response);
+        },
+        error: (error) => {
+          console.error('Error adding product to cart:', error);
+        },
+      });
+  }
+
+  private generateUUID(): string {
+    return crypto.randomUUID();
   }
 }

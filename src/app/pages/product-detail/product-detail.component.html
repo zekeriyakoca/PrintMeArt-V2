@@ -11,9 +11,10 @@
       </h2>
       <p class="text-lg text-gray-500">
         @if (hasAllOptionsSelected()) {
-        € {{ calculatedPrice() | number:'1.2-2' }}
+        {{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}
         } @else {
-        <span class="text-sm text-gray-400">Starting from</span> € {{ product().cheapestPrice | number:'1.2-2' }}
+        <span class="text-sm text-gray-400">Starting from</span> {{ product().cheapestPrice |
+        currency:'EUR':'symbol':'1.2-2' }}
         }
       </p>
     </div>
@@ -46,7 +47,9 @@
       </div>
     </div>
     <div class="product-action my-4">
-      <button class="w-full h-12 bg-indigo-600 text-white rounded-md">
+      <button class="w-full h-12 bg-indigo-600 text-white rounded-md" [class.opacity-50]="!hasAllOptionsSelected()"
+        [class.cursor-not-allowed]="!hasAllOptionsSelected()" [disabled]="!hasAllOptionsSelected()"
+        (click)="addToCart()">
         Add to Cart
       </button>
     </div>
