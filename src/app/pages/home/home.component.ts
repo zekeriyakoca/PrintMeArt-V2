@@ -33,7 +33,7 @@ export class HomeComponent extends BasePageComponent {
       .pipe(first())
       .subscribe((cats) => {
         if (cats && cats.length > 0) {
-          this.childCategories.set(cats[0].childCategories ?? []);
+          this.childCategories.set(cats[1].childCategories ?? []);
         }
       });
   }

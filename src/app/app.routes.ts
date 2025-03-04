@@ -4,6 +4,7 @@ import { AuthenticationGuard } from './services/authentication/authentication.gu
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthenticationGuard] },
@@ -16,6 +17,11 @@ export const routes: Routes = [
   {
     path: 'products/:productId',
     component: ProductDetailComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
     canActivate: [AuthenticationGuard],
   },
 ];

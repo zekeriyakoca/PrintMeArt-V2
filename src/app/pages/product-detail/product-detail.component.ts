@@ -1,5 +1,5 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil, first } from 'rxjs';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
@@ -26,7 +26,8 @@ export class ProductDetailComponent
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {
     super();
   }
@@ -110,14 +111,14 @@ export class ProductDetailComponent
 
     const requestBody: CartItemDto = {
       id: this.generateUUID(),
-      productId: parseInt(this.productId, 10),
-      variantId: 0,
+      productId: +this.productId,
+      variantId: 1,
       selectedOptions: selectedOptions,
+      unitPrice: this.product().cheapestPrice,
       quantity: 1,
       noDiscountUnitPrice: this.calculatedPrice(),
       productName: this.product().name,
       pictureUrl: this.product().images[0].original,
-      unitPrice: this.product().cheapestPrice,
     };
 
     this.cartService
@@ -135,5 +136,9 @@ export class ProductDetailComponent
 
   private generateUUID(): string {
     return crypto.randomUUID();
+  }
+
+  goToCart() {
+    this.router.navigate(['/cart']);
   }
 }
