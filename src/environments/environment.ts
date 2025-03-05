@@ -9,7 +9,7 @@ export const environment = {
   // },
   serviceUrls: {
     'catalog-api': 'http://4.210.248.46:30001',
-    'basket-api': 'http://4.210.248.46:30003',
+    'basket-api': 'http://localhost:5003',
     'ordering-api': 'http://4.210.248.46:30004',
     'pricing-api': 'http://4.210.248.46:30002',
   },

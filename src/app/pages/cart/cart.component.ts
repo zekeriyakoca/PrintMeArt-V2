@@ -25,7 +25,6 @@ export class CartComponent extends BasePageComponent {
       .getCartItems()
       .pipe(first())
       .subscribe((cartItems) => {
-        debugger;
         if (cartItems && cartItems.length > 0) {
           this.cartItems.set(cartItems ?? []);
         }

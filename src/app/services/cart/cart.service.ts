@@ -30,8 +30,48 @@ export class CartService {
     if (this.isSSR) {
       return of([]);
     }
-    return this._httpClient.get<CartItemDto[]>(
-      `${this.BASKET_API_URL}/basket/v1/basket`
-    );
+    return of([
+      {
+        id: '6ebb1df7-3beb-4f21-bbbb-e3b35849f5a0',
+        productId: 2,
+        variantId: 1,
+        selectedOptions: [
+          {
+            optionId: 13,
+          },
+          {
+            optionId: 11,
+          },
+        ],
+        unitPrice: 0,
+        quantity: 1,
+        noDiscountUnitPrice: 31.5,
+        productName: 'T-Shirt',
+        pictureUrl:
+          'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/4601b89c-467c-41c5-9de5-ca44b55e74ec',
+      },
+      {
+        id: '6ebb1df7-3beb-4f21-bbbb-e3b35849f5a0',
+        productId: 2,
+        variantId: 1,
+        selectedOptions: [
+          {
+            optionId: 13,
+          },
+          {
+            optionId: 11,
+          },
+        ],
+        unitPrice: 0,
+        quantity: 1,
+        noDiscountUnitPrice: 31.5,
+        productName: 'T-Shirt',
+        pictureUrl:
+          'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/4601b89c-467c-41c5-9de5-ca44b55e74ec',
+      },
+    ] as CartItemDto[]);
+    // return this._httpClient.get<CartItemDto[]>(
+    //   `${this.BASKET_API_URL}/basket/v1/basket`
+    // );
   }
 }
