@@ -4,12 +4,17 @@
       <h1 class="text-2xl sm:text-5xl font-semibold text-gray-500">Your cart</h1>
       <a href="/" class="underline text-gray-500">Continue shopping</a>
     </div>
-    <hr class="border-slate-200 dark:border-slate-700 my-10 xl:my-12">
-    <div>
-      @for (cartItem of cartItems() ; track cartItem.id) {
-      <app-cart-item [cartItem]="cartItem" />
-      }
+    <hr class="border-slate-300 my-10 xl:my-12">
+    <div class="grid grid-cols-3 gap-4 min-h-48">
+      <div class="col-span-2">
+        @for (cartItem of cartItems() ; track cartItem.id) {
+        <app-cart-item [cartItem]="cartItem" />
+        <hr class="border-slate-300 my-10 xl:my-12">
+        }
+      </div>
+      <div class="col-span-1">
+        <app-cart-summary />
+      </div>
     </div>
-    <!-- <app-cart-item /> -->
   </div>
 </div>

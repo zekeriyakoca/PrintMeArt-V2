@@ -4,10 +4,11 @@ import { first } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { CartService } from '../../services/cart/cart.service';
 import { CartItemDto } from '../../models/cart-item';
+import { CartSummaryComponent } from '../../components/cart-summary/cart-summary.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent],
+  imports: [CartItemComponent, CartSummaryComponent],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
