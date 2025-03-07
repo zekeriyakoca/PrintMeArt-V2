@@ -55,8 +55,8 @@
     </div>
     <div class="product-action my-4">
       <button class="w-full h-12 bg-indigo-600 text-white rounded-md" [class.opacity-50]="!hasAllOptionsSelected()"
-        [class.cursor-not-allowed]="!hasAllOptionsSelected()" [disabled]="!hasAllOptionsSelected()"
-        (click)="addToCart()">
+        [class.cursor-not-allowed]="!hasAllOptionsSelected()" [class.cursor-pointer]="hasAllOptionsSelected()"
+        [disabled]="!hasAllOptionsSelected()" (click)="addToCart()">
         Add to Cart
       </button>
     </div>

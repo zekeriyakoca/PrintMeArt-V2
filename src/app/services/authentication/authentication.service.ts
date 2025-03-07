@@ -23,6 +23,9 @@ export class AuthenticationService {
     const token = this.getToken();
     return token != '';
   }
+  public logout() {
+    throw new Error('Method not implemented.');
+  }
 }
 
 export interface User {
