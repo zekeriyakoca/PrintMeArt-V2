@@ -66,4 +66,18 @@ export class CartService {
       .pipe(first())
       .subscribe((cartItems) => this.cart.set(cartItems));
   }
+
+  removeItemFromCart(itemId: any): void {
+    const updatedCart = this.cart().filter((item) => item.id !== itemId);
+
+    this.cart.set(updatedCart);
+
+    this.updateCartOnBackend(updatedCart)
+      .pipe(first())
+      .subscribe({
+        next: () => console.log('Product removed from cart successfully'),
+        error: (error) =>
+          console.error('Error removing product from cart:', error),
+      });
+  }
 }
