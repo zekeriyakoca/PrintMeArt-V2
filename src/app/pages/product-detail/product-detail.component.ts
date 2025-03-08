@@ -107,38 +107,22 @@ export class ProductDetailComponent
     const selectedOptions: SelectedOptionDto[] =
       this.product().optionGroups.map((group) => ({
         optionId: group.selectedOptionId!,
+        optionName:
+          group.options.find((option) => option.id === group.selectedOptionId)
+            ?.value || '',
       }));
 
-    const requestBody: CartItemDto = {
-      id: this.generateUUID(),
-      productId: +this.productId,
-      variantId: 1,
-      selectedOptions: selectedOptions,
-      unitPrice: this.product().cheapestPrice,
-      quantity: 1,
-      noDiscountUnitPrice: this.calculatedPrice(),
-      productName: this.product().name,
-      pictureUrl: this.product().images[0].original,
-    };
-
-    this.cartService
-      .addProductToCart(requestBody)
-      .pipe(first())
-      .subscribe({
-        next: (response) => {
-          console.log('Product added to cart:', response);
-        },
-        error: (error) => {
-          console.error('Error adding product to cart:', error);
-        },
-      });
+    this.cartService.addItemToCart(
+      +this.productId,
+      this.product().name,
+      this.product().cheapestPrice,
+      this.calculatedPrice(),
+      this.product().images[0].original,
+      selectedOptions
+    );
   }
 
-  private generateUUID(): string {
-    return crypto.randomUUID();
-  }
-
-  goToCart() {
+  navigateToCart() {
     this.router.navigate(['/cart']);
   }
 }

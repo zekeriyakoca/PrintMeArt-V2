@@ -1,6 +1,6 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { CartItemDto } from '../../models/cart-item';
+import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { first, Observable } from 'rxjs';
+import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CartService {
   private readonly BASKET_API_URL = environment.serviceUrls['basket-api'];
+  cart = signal<CartItemDto[]>([]);
 
   constructor(
     private _httpClient: HttpClient,
@@ -16,62 +17,53 @@ export class CartService {
   ) {}
 
   get isSSR(): boolean {
-    return this.platformId == 'server' ? true : false;
+    return this.platformId === 'server';
   }
 
-  addProductToCart(cartItem: CartItemDto): Observable<CartItemDto> {
-    return this._httpClient.post<CartItemDto>(
-      `${this.BASKET_API_URL}/basket/v1/basket/upsert-item`,
-      cartItem
+  addItemToCart(
+    productId: number,
+    productName: string,
+    cheapestPrice: number,
+    calculatedPrice: number,
+    pictureUrl: string,
+    selectedOptions: SelectedOptionDto[]
+  ): void {
+    const newItem: CartItemDto = {
+      id: crypto.randomUUID(),
+      productId,
+      variantId: 1,
+      selectedOptions,
+      unitPrice: cheapestPrice,
+      quantity: 1,
+      noDiscountUnitPrice: calculatedPrice,
+      productName,
+      pictureUrl,
+    };
+
+    const updatedCart = [...this.cart(), newItem];
+    this.cart.set(updatedCart);
+
+    this.updateCartOnBackend(updatedCart)
+      .pipe(first())
+      .subscribe({
+        next: () => console.log('Product added to cart successfully'),
+        error: (error) => console.error('Error adding product to cart:', error),
+      });
+  }
+
+  updateCartOnBackend(cartItems: CartItemDto[]): Observable<CartItemDto[]> {
+    return this._httpClient.put<CartItemDto[]>(
+      `${this.BASKET_API_URL}/basket/v1/basket`,
+      cartItems
     );
   }
 
-  getCartItems(): Observable<CartItemDto[]> {
-    if (this.isSSR) {
-      return of([]);
-    }
-    // return of([
-    //   {
-    //     id: '6ebb1df7-3beb-4f21-bbbb-e3b35849f5a0',
-    //     productId: 2,
-    //     variantId: 1,
-    //     selectedOptions: [
-    //       {
-    //         optionId: 13,
-    //       },
-    //       {
-    //         optionId: 11,
-    //       },
-    //     ],
-    //     unitPrice: 0,
-    //     quantity: 1,
-    //     noDiscountUnitPrice: 31.5,
-    //     productName: 'T-Shirt',
-    //     pictureUrl:
-    //       'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/4601b89c-467c-41c5-9de5-ca44b55e74ec',
-    //   },
-    //   {
-    //     id: '6ebb1df7-3beb-4f21-bbbb-e3b35849f5a0',
-    //     productId: 2,
-    //     variantId: 1,
-    //     selectedOptions: [
-    //       {
-    //         optionId: 13,
-    //       },
-    //       {
-    //         optionId: 11,
-    //       },
-    //     ],
-    //     unitPrice: 0,
-    //     quantity: 1,
-    //     noDiscountUnitPrice: 31.5,
-    //     productName: 'T-Shirt',
-    //     pictureUrl:
-    //       'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/4601b89c-467c-41c5-9de5-ca44b55e74ec',
-    //   },
-    // ] as CartItemDto[]);
-    return this._httpClient.get<CartItemDto[]>(
-      `${this.BASKET_API_URL}/basket/v1/basket`
-    );
+  fetchCartItems(): void {
+    if (this.isSSR) return;
+
+    this._httpClient
+      .get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`)
+      .pipe(first())
+      .subscribe((cartItems) => this.cart.set(cartItems));
   }
 }

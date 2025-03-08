@@ -19,16 +19,8 @@ export class CartComponent extends BasePageComponent {
 
   constructor(private cartService: CartService) {
     super();
+    this.cartItems = this.cartService.cart;
   }
 
-  ngOnInit() {
-    this.cartService
-      .getCartItems()
-      .pipe(first())
-      .subscribe((cartItems) => {
-        if (cartItems && cartItems.length > 0) {
-          this.cartItems.set(cartItems ?? []);
-        }
-      });
-  }
+  ngOnInit() {}
 }

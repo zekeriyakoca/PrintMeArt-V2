@@ -12,5 +12,5 @@ export interface CartItemDto {
 
 export interface SelectedOptionDto {
   optionId: number;
-  optionName?: string;
+  optionName?: string | undefined;
 }

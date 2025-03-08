@@ -32,10 +32,10 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
 const SESSION_KEY = 'session_id';
 
 function getSessionId(): string {
-  let sessionId = sessionStorage.getItem(SESSION_KEY);
+  let sessionId = localStorage.getItem(SESSION_KEY);
   if (!sessionId) {
     sessionId = crypto.randomUUID();
-    sessionStorage.setItem(SESSION_KEY, sessionId);
+    localStorage.setItem(SESSION_KEY, sessionId);
   }
   return sessionId;
 }
