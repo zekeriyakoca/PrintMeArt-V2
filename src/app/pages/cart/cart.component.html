@@ -8,12 +8,12 @@
     <div class="flex flex-wrap gap-4 min-h-48">
       <div class="flex-1 min-w-0">
         @for (cartItem of cartItems() ; track cartItem.id; let i = $index) {
-        <app-cart-item [(cartItem)]="cartItems()[i]" />
+        <app-cart-item [(cartItem)]="cartItems()[i]" (cartItemChanged)="triggerRecalculateSummary()" />
         <hr class="border-slate-300 my-6">
         }
       </div>
       <div class="w-1/3 min-w-0">
-        <app-cart-summary />
+        <app-cart-summary [cartItems]="cartItems()" />
       </div>
     </div>
   </div>

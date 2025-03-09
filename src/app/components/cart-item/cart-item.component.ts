@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component, model, output } from '@angular/core';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 
@@ -11,6 +11,7 @@ import { CartService } from '../../services/cart/cart.service';
 })
 export class CartItemComponent {
   cartItem = model<CartItemDto>();
+  cartItemChanged = output();
 
   constructor(private cartService: CartService) {}
 
@@ -21,6 +22,7 @@ export class CartItemComponent {
   }
 
   changeQuantity(change: number) {
+    this.cartItemChanged.emit();
     this.cartItem.update((x) => {
       if (x) {
         x.quantity += change;
