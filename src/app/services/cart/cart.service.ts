@@ -22,28 +22,37 @@ export class CartService {
 
   addItemToCart(
     productId: number,
+    variantId: number,
     productName: string,
     cheapestPrice: number,
     calculatedPrice: number,
+    quantity: number,
     pictureUrl: string,
     selectedOptions: SelectedOptionDto[]
   ): void {
     const newItem: CartItemDto = {
       id: crypto.randomUUID(),
       productId,
-      variantId: 1,
+      variantId,
       selectedOptions,
-      unitPrice: cheapestPrice,
-      quantity: 1,
+      unitPrice: calculatedPrice,
+      quantity,
       noDiscountUnitPrice: calculatedPrice,
       productName,
       pictureUrl,
     };
 
-    const updatedCart = [...this.cart(), newItem];
-    this.cart.set(updatedCart);
+    const existingItemIndex = this.cart().findIndex(
+      (c) => c.variantId == newItem.variantId
+    );
 
-    this.updateCartOnBackend(updatedCart)
+    if (existingItemIndex >= 0) {
+      this.cart()[existingItemIndex].quantity += newItem.quantity;
+    } else {
+      this.cart().push(newItem);
+    }
+
+    this.updateCartOnBackend(this.cart())
       .pipe(first())
       .subscribe({
         next: () => console.log('Product added to cart successfully'),

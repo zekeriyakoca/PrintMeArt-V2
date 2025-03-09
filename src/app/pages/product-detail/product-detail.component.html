@@ -44,11 +44,14 @@
         Quantity
       </h5>
       <div class="flex items-center">
-        <button class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer">
+        <button class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer"
+          (click)="setQuantity(-1)">
           <span class="text-lg font-semibold">-</span>
         </button>
-        <input type="text" class="w-10 h-10 border rounded-md flex items-center justify-center mx-4 text-lg" value="1">
-        <button class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer">
+        <input type="text" class="w-10 h-10 border rounded-md flex items-center justify-center mx-4 text-lg"
+          [value]="quantity()">
+        <button class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer"
+          (click)="setQuantity(1)">
           <span class="text-lg font-semibold">+</span>
         </button>
       </div>

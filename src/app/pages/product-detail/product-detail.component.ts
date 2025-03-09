@@ -6,7 +6,7 @@ import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart/cart.service';
-import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
+import { SelectedOptionDto } from '../../models/cart-item';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,6 +22,8 @@ export class ProductDetailComponent
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
+  quantity = signal<number>(1);
+  private variantId: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +39,7 @@ export class ProductDetailComponent
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
         this.productId = params.get('productId') || '';
-        this.fetchProducts();
+        this.fetchProduct();
       });
   }
 
@@ -49,7 +51,7 @@ export class ProductDetailComponent
       )
   );
 
-  fetchProducts() {
+  fetchProduct() {
     this.apiService
       .getProductById(this.productId)
       .pipe(first())
@@ -74,10 +76,17 @@ export class ProductDetailComponent
       });
       return { ...currentProduct, optionGroups: updatedGroups };
     });
-    this.updatePrice();
+    this.calculatePrice();
   }
 
-  updatePrice() {
+  setQuantity(change: number) {
+    this.quantity.update((currentQuantity) => {
+      const newQuantity = currentQuantity + change;
+      return Math.max(newQuantity, 1);
+    });
+  }
+
+  calculatePrice() {
     if (!this.hasAllOptionsSelected()) {
       return;
     }
@@ -91,7 +100,8 @@ export class ProductDetailComponent
       .pipe(first())
       .subscribe({
         next: (response) => {
-          this.calculatedPrice.set(response);
+          this.calculatedPrice.set(response.price);
+          this.variantId = response.variantId;
         },
         error: (error) => {
           console.error('Error fetching calculated price:', error);
@@ -114,9 +124,11 @@ export class ProductDetailComponent
 
     this.cartService.addItemToCart(
       +this.productId,
+      this.variantId,
       this.product().name,
       this.product().cheapestPrice,
       this.calculatedPrice(),
+      this.quantity(),
       this.product().images[0].original,
       selectedOptions
     );

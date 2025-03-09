@@ -7,8 +7,8 @@
     <hr class="border-slate-300 my-10 xl:my-12">
     <div class="flex flex-wrap gap-4 min-h-48">
       <div class="flex-1 min-w-0">
-        @for (cartItem of cartItems() ; track cartItem.id) {
-        <app-cart-item [cartItem]="cartItem" />
+        @for (cartItem of cartItems() ; track cartItem.id; let i = $index) {
+        <app-cart-item [(cartItem)]="cartItems()[i]" />
         <hr class="border-slate-300 my-6">
         }
       </div>

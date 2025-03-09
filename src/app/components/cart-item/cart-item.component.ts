@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 
@@ -10,7 +10,7 @@ import { CartService } from '../../services/cart/cart.service';
   styleUrl: './cart-item.component.scss',
 })
 export class CartItemComponent {
-  cartItem = input<CartItemDto>();
+  cartItem = model<CartItemDto>();
 
   constructor(private cartService: CartService) {}
 
@@ -18,5 +18,14 @@ export class CartItemComponent {
     if (this.cartItem()?.id) {
       this.cartService.removeItemFromCart(this.cartItem()?.id);
     }
+  }
+
+  changeQuantity(change: number) {
+    this.cartItem.update((x) => {
+      if (x) {
+        x.quantity += change;
+      }
+      return x;
+    });
   }
 }
