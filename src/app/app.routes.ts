@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthenticationGuard] },
@@ -22,6 +23,11 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
     canActivate: [AuthenticationGuard],
   },
 ];

@@ -1,13 +1,7 @@
-import {
-  Component,
-  computed,
-  effect,
-  input,
-  model,
-  signal,
-} from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { CartItemDto } from '../../models/cart-item';
 import { CurrencyPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-summary',
@@ -19,7 +13,7 @@ export class CartSummaryComponent {
   cartItems = input<CartItemDto[]>([]);
   shippingFee = signal(5);
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   totalPrice = computed(() => {
     return this.cartItems()?.reduce(
@@ -33,4 +27,8 @@ export class CartSummaryComponent {
   totalPriceWithTax = computed(
     () => this.totalPrice() + this.taxAmount() + this.shippingFee()
   );
+
+  navigateToCheckout() {
+    this.router.navigate(['/checkout']);
+  }
 }
