@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
+import { ApiService } from '../../services/api/api.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -24,14 +26,57 @@ export class CheckoutComponent extends BasePageComponent {
   @Input() @HostBinding('class') class: string = '';
   cartItems = signal<CartItemDto[]>([]);
 
-  constructor(private cartService: CartService, private router: Router) {
+  userDetails: any = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    addressDetails: '',
+    city: '',
+    postalCode: '',
+    country: '',
+  };
+
+  constructor(
+    private apiService: ApiService,
+    private cartService: CartService,
+    private router: Router
+  ) {
     super();
     this.cartItems = this.cartService.cart;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiService
+      .createDraftOrder()
+      .pipe(first())
+      .subscribe(() => {
+        console.log('Draft order created');
+      });
+  }
 
-  navigateToPayment() {
-    this.router.navigate(['/payment']);
+  prepareOrderData() {
+    return {
+      customerFullName: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
+      shipmentAddress: {
+        city: this.userDetails.city,
+        street: this.userDetails.addressDetails,
+        state: this.userDetails.country,
+        country: this.userDetails.country,
+        zipCode: this.userDetails.postalCode,
+      },
+    };
+  }
+
+  confirmOrder() {
+    const orderData = this.prepareOrderData();
+    this.apiService
+      .submitOrder(orderData)
+      .pipe(first())
+      .subscribe(() => {
+        console.log('Order confirmed');
+      });
+
+    this.router.navigate(['/home']);
   }
 }

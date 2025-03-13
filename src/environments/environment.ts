@@ -19,7 +19,8 @@ export const environment = {
     'basket-api': 'https://ecommbone-apim.azure-api.net/storefront/basket-api',
     'pricing-api':
       'https://ecommbone-apim.azure-api.net/storefront/pricing-api',
-    'ordering-api':
-      'https://ecommbone-apim.azure-api.net/storefront/ordering-api',
+    // 'ordering-api':
+    //   'https://ecommbone-apim.azure-api.net/storefront/ordering-api',
+    'ordering-api': 'http://4.210.248.46:30010',
   },
 };

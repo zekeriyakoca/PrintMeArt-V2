@@ -7,14 +7,14 @@
     <hr class="border-slate-300 my-10 xl:my-12">
     <div class="flex flex-wrap gap-4 min-h-48">
       <div class="flex-1 min-w-0">
-        <app-checkout-user-info />
+        <app-checkout-user-info [(userDetails)]="userDetails" />
       </div>
       <div class="w-1/3 min-w-0">
         <app-order-summary [cartItems]="cartItems()">
           <order-button>
             <button
               class="w-full text-white hover:opacity-50 font-medium rounded-lg text-sm py-3 bg-indigo-700 cursor-pointer"
-              (click)="navigateToPayment()">
+              (click)="confirmOrder()">
               Confirm order
             </button>
           </order-button>

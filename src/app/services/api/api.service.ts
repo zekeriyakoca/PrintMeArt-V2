@@ -15,6 +15,7 @@ import {
 export class ApiService {
   private readonly CATALOG_API_URL = environment.serviceUrls['catalog-api'];
   private readonly PRICING_API_URL = environment.serviceUrls['pricing-api'];
+  private readonly ORDERING_API_URL = environment.serviceUrls['ordering-api'];
 
   constructor(
     private _httpClient: HttpClient,
@@ -70,6 +71,26 @@ export class ApiService {
     return this._httpClient.post<any>(
       `${this.PRICING_API_URL}/pricing/v1/product/calculate-price`,
       requestBody
+    );
+  }
+
+  createDraftOrder(): Observable<any> {
+    if (this.isSSR) {
+      return of({});
+    }
+    return this._httpClient.post<any>(
+      `${this.ORDERING_API_URL}/bff/v1/ordering/draft-order`,
+      {}
+    );
+  }
+
+  submitOrder(userInfo: any): Observable<any> {
+    if (this.isSSR) {
+      return of({});
+    }
+    return this._httpClient.post<any>(
+      `${this.ORDERING_API_URL}/bff/v1/ordering/order`,
+      userInfo
     );
   }
 }
