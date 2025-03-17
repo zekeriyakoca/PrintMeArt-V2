@@ -58,6 +58,7 @@ export class CheckoutComponent extends BasePageComponent {
   prepareOrderData() {
     return {
       customerFullName: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
+      customerEmail: this.userDetails.email,
       shipmentAddress: {
         city: this.userDetails.city,
         street: this.userDetails.addressDetails,

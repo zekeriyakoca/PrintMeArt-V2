@@ -1,4 +1,4 @@
-@use "tailwindcss";
+@use "tailwindcss" as *; // ✅ keep this if needed by setup
 
 @tailwind base;
 @tailwind components;
