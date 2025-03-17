@@ -1,5 +1,5 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { takeUntil, first } from 'rxjs';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
@@ -28,8 +28,7 @@ export class ProductDetailComponent
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private cartService: CartService,
-    private router: Router
+    private cartService: CartService
   ) {
     super();
   }
@@ -132,9 +131,5 @@ export class ProductDetailComponent
       this.product().images[0].original,
       selectedOptions
     );
-  }
-
-  navigateToCart() {
-    this.router.navigate(['/cart']);
   }
 }

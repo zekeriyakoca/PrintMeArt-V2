@@ -12,6 +12,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
+      },
       spacing: {
         "8xl": "96rem",
         "9xl": "128rem",

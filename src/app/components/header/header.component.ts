@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseAppComponent } from '../baseAppComponent';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,11 @@ import { BaseAppComponent } from '../baseAppComponent';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent extends BaseAppComponent {
-  constructor() {
+  constructor(private router: Router) {
     super();
+  }
+
+  navigateToCart() {
+    this.router.navigate(['/cart']);
   }
 }

@@ -6,7 +6,7 @@
   </div>
   <div class="info-container p-8">
     <div class="flex justify-between mb-2">
-      <h2 class="text-2xl font-semibold">
+      <h2 class="text-4xl font-semibold">
         {{ product().name }}
       </h2>
       <p class="text-lg text-gray-500">
@@ -18,23 +18,17 @@
         }
       </p>
     </div>
-    <div>
-      <button type="button"
-        class="text-white hover:opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-indigo-600 cursor-pointer"
-        (click)="navigateToCart()">Go
-        to basket</button>
-    </div>
 
     @for (group of product().optionGroups; track group.name; let groupIndex = $index) {
-    <h5 class="text-lg font-semibold">
+    <h5 class="text-md mb-1">
       {{ group.name }}
     </h5>
-    <div class="flex gap-4">
+    <div class="flex gap-4 mb-1">
       @for (option of group.options; track option.id) {
-      <div class="w-10 h-10 border rounded-md flex items-center justify-center cursor-pointer"
+      <div class="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer"
         [class.bg-indigo-600]="group.selectedOptionId === option.id"
         [class.text-white]="group.selectedOptionId === option.id" (click)="selectOption(groupIndex, option.id)">
-        <span class="text-lg font-semibold">{{ option.value }}</span>
+        <span class="text-xs">{{ option.value }}</span>
       </div>
       }
     </div>
