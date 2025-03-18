@@ -3,8 +3,16 @@
     Our Products
   </h1>
 </div>
-<div class="flex flex-row mb-15">
-  @for (product of products().data; track product.id) {
-  <app-product-card [product]="product" class="basis-1/4"></app-product-card>
-  }
+<div class="flex">
+  <div id="filters" class="flex-2">
+    my filters
+  </div>
+  <div class="flex-10">
+    <div class="grid grid-cols-3 mb-15">
+      @for (product of products().data; track product.id) {
+      <app-product-card [product]="product" class=""></app-product-card>
+      }
+    </div>
+  </div>
+
 </div>
