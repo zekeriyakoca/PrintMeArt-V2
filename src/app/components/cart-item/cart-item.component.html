@@ -2,15 +2,15 @@
   <div class="cart-detail flex flex-col gap-4">
     <div class="flex gap-4">
       <div class="px-7 py-3 w-3xs">
-        <img src="{{cartItem()?.pictureUrl}}" alt="{{cartItem()?.productName}}" class="rounded-md" />
+        <img src="{{cartItem()?.pictureUrl}}" alt="{{cartItem()?.productName}}" />
       </div>
       <div class="flex-1">
         <div class="mt-8 flex items-center justify-between">
           <div>
-            <h3 class="mb-4 font-semibold">{{cartItem()?.productName}}</h3>
+            <h3 class="mb-4 text-xl">{{cartItem()?.productName}}</h3>
             <div class="flex">
-              <p class="border-r pr-3">{{cartItem()?.selectedOptions?.[0]?.optionName}}</p>
-              <p class="ml-3">{{cartItem()?.selectedOptions?.[1]?.optionName}}</p>
+              <p class="border-r pr-3 text-sm">{{cartItem()?.selectedOptions?.[0]?.optionName}}</p>
+              <p class="ml-3 text-sm">{{cartItem()?.selectedOptions?.[1]?.optionName}}</p>
             </div>
           </div>
           <div class="flex justify-center items-center">
@@ -19,12 +19,12 @@
             <button class="border rounded-full px-3 py-1 cursor-pointer" (click)="changeQuantity(1)">+</button>
           </div>
           <div class="flex justify-end mr-10">
-            <p>{{cartItem()?.noDiscountUnitPrice}}</p>
+            <p>${{cartItem()?.noDiscountUnitPrice}}</p>
           </div>
         </div>
-        <div class="flex justify-end mr-10 mt-30 items-center">
+        <div class="flex justify-end mr-8 mt-30 items-center">
           <button
-            class="w-fit text-white hover:opacity-50 font-medium rounded-lg text-sm px-3 py-1 bg-rose-700 cursor-pointer mb-5"
+            class="w-fit text-rose-800 font-medium text-sm px-2 py-1 border cursor-pointer hover:bg-rose-800 hover:text-white"
             (click)="removeItem()">
             Remove
           </button>

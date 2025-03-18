@@ -1,7 +1,8 @@
 <div
-  class="bg-white border-none rounded-3xl shadow-sm pr-24 pl-6 pt-4 pb-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
+  class="bg-white border-none rounded-3xl shadow-sm pr-24 pl-6 pt-4 pb-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+  (click)="goToCategory()">
   <a>
-    <img class="rounded-full max-w-[150px]  my-6"
+    <img class="rounded-full max-w-[150px] my-6"
       src="https://static.zara.net/assets/public/a1db/7c85/56334981a1cd/9746228c2eac/20120918999-e1/20120918999-e1.jpg?ts=1735557143923&w=1700"
       alt="" />
   </a>
@@ -10,8 +11,7 @@
     <a>
       <h5 class="my-2 text-3xl font-normal tracking-tight text-gray-800 ">{{category().name}}</h5>
     </a>
-    <a class="inline-flex items-center py-2 mt-4 text-md font-medium text-center rounded-lg text-indigo-800"
-      (click)="goToCategory()">
+    <a class="inline-flex items-center py-2 mt-4 text-md font-medium text-center rounded-lg text-indigo-800">
       See more
       <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 14 10">
