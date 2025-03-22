@@ -1,0 +1,19 @@
+<div class="flex gap-1 mb-1">
+  @if(group().name==='Color') {
+  @for (option of group().options; track option.id) {
+  <div class="w-8 h-8 border flex items-center justify-center cursor-pointer p-1 color-option"
+    [class.rounded-full]="group().selectedOptionId === option.id" [style.backgroundColor]="mapColorToHex(option.value)"
+    (click)="selectOption(option.id)">
+  </div>
+  }
+  }
+  @else if(group().name==='Size'){
+  @for (option of group().options; track option.id) {
+  <div class="w-8 h-8 border flex items-center justify-center cursor-pointer"
+    [class.bg-indigo-800]="group().selectedOptionId === option.id"
+    [class.text-white]="group().selectedOptionId === option.id" (click)="selectOption(option.id)">
+    <span class="text-xs">{{ option.value }}</span>
+  </div>
+  }
+  }
+</div>

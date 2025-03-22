@@ -18,21 +18,12 @@
         }
       </p>
     </div>
-
     @for (group of product().optionGroups; track group.name; let groupIndex = $index) {
     <div class="mb-4">
       <h5 class="text-sm mb-1">
         {{ group.name }}
       </h5>
-      <div class="flex gap-1 mb-1">
-        @for (option of group.options; track option.id) {
-        <div class="w-8 h-8 border flex items-center justify-center cursor-pointer"
-          [class.bg-indigo-800]="group.selectedOptionId === option.id"
-          [class.text-white]="group.selectedOptionId === option.id" (click)="selectOption(groupIndex, option.id)">
-          <span class="text-xs">{{ option.value }}</span>
-        </div>
-        }
-      </div>
+      <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
     </div>
     }
     <div class="product-quantity mt-4 mb-8">

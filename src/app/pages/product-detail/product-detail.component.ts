@@ -7,11 +7,12 @@ import { BasePageComponent } from '../basePageComponent';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart/cart.service';
 import { SelectedOptionDto } from '../../models/cart-item';
+import { OptionsComponent } from '../../components/shared/options/options.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OptionsComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
