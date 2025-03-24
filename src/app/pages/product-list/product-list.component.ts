@@ -74,9 +74,9 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
 
     if (groupType.toLowerCase().includes('categories')) {
       newSelectedOptions.categoryId = optionId;
-    } else if (groupType.toLowerCase().includes('attribute')) {
+    } else if (groupType.toLowerCase().includes('attributes')) {
       newSelectedOptions.attributeId = optionId;
-    } else if (groupType.toLowerCase().includes('option')) {
+    } else if (groupType.toLowerCase().includes('options')) {
       newSelectedOptions.optionId = optionId;
     }
 

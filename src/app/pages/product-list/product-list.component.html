@@ -30,8 +30,12 @@
         </div>
         }
         @else{
-        <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700 "
-          (click)="selectOption(group.groupType, option.id)">
+        <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700" (click)="selectOption(group.groupType, option.id)"
+          [class]="(
+          selectedFilterOptions().categoryId === option.id ||
+          selectedFilterOptions().attributeId === option.id ||
+          selectedFilterOptions().optionId === option.id
+        ) ? 'text-indigo-700 font-semibold pl-1': ''">
           {{option.name}}
         </p>
         }
