@@ -10,6 +10,7 @@ import {
 } from '../../models/product';
 import { first, takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
+import { mapColorToHex } from '../../shared/utils';
 
 @Component({
   selector: 'app-product-list',
@@ -92,5 +93,9 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
           this.products.set(products);
         }
       });
+  }
+
+  mapColorToHex(color: string): string {
+    return mapColorToHex(color);
   }
 }
