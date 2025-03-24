@@ -5,6 +5,7 @@ import { ApiService } from '../../services/api/api.service';
 import {
   FilterGroupDto,
   PaginatedListDto,
+  ProductFilterRequestDto,
   ProductSimpleDto,
 } from '../../models/product';
 import { first, takeUntil } from 'rxjs';
@@ -22,6 +23,10 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     {} as PaginatedListDto<ProductSimpleDto>
   );
   filterOptions = signal<FilterGroupDto[]>([]);
+  selectedFilterOptions = signal<ProductFilterRequestDto>({
+    pageSize: 10,
+    pageIndex: 0,
+  });
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {
     super();
@@ -57,7 +62,35 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       });
   }
 
-  selectOption(_t12: number, $event: number) {
-    throw new Error('Method not implemented.');
+  selectOption(groupType: string, optionId: number) {
+    const currentSelectedOptions = this.selectedFilterOptions();
+    const newSelectedOptions: ProductFilterRequestDto = {
+      ...currentSelectedOptions,
+      categoryId: undefined,
+      attributeId: undefined,
+      optionId: undefined,
+    };
+
+    if (groupType.toLowerCase().includes('categories')) {
+      newSelectedOptions.categoryId = optionId;
+    } else if (groupType.toLowerCase().includes('attribute')) {
+      newSelectedOptions.attributeId = optionId;
+    } else if (groupType.toLowerCase().includes('option')) {
+      newSelectedOptions.optionId = optionId;
+    }
+
+    this.selectedFilterOptions.set(newSelectedOptions);
+    this.fetchProductsWithFilters();
+  }
+
+  fetchProductsWithFilters() {
+    this.apiService
+      .getFilteredProducts(this.selectedFilterOptions())
+      .pipe(first())
+      .subscribe((products) => {
+        if (products?.data) {
+          this.products.set(products);
+        }
+      });
   }
 }

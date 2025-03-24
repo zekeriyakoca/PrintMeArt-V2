@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, WritableSignal } from '@angular/core';
 import { CategoryDto } from '../../models/category';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -7,6 +7,7 @@ import {
   ProductDto,
   PaginatedListDto,
   ProductSimpleDto,
+  ProductFilterRequestDto,
 } from '../../models/product';
 
 @Injectable({
@@ -100,6 +101,13 @@ export class ApiService {
     }
     return this._httpClient.get<any>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`
+    );
+  }
+
+  getFilteredProducts(filterBody: ProductFilterRequestDto) {
+    return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
+      filterBody
     );
   }
 }

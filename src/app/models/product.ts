@@ -68,3 +68,10 @@ export interface FilterOptionDto {
   id: number;
   name: string;
 }
+export interface ProductFilterRequestDto {
+  pageSize: number;
+  pageIndex: number;
+  categoryId?: number;
+  attributeId?: number;
+  optionId?: number;
+}

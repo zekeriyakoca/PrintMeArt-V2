@@ -16,7 +16,8 @@
         </h3>
       </div>
       @for(option of group.options; track option.name; let optionIndex = $index) {
-      <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700 ">{{option.name}}</p>
+      <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700" (click)="selectOption(group.groupType, option.id)">
+        {{option.name}}</p>
       }
     </div>
     }
