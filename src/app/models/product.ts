@@ -58,3 +58,13 @@ export interface OptionDto {
   isCustom: boolean;
   pricePolicyName: string;
 }
+
+export interface FilterGroupDto {
+  groupType: 'Attributes' | 'Categories' | 'Options';
+  name: string;
+  options: FilterOptionDto[];
+}
+export interface FilterOptionDto {
+  id: number;
+  name: string;
+}

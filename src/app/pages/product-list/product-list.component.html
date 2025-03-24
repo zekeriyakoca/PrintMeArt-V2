@@ -4,8 +4,22 @@
   </h1>
 </div>
 <div class="flex">
-  <div id="filters" class="flex-2">
-    my filters
+  <div id="filters" class="">
+    <h2 class="text-2xl font-light my-4 bg-white rounded-[5px] text-slate-700">
+      All Filters
+    </h2>
+    @for (group of filterOptions(); track group.name; let groupIndex = $index) {
+    <div class="mb-4">
+      <div>
+        <h3 class="mb-1 text-lg font-semibold">
+          {{ group.name }}
+        </h3>
+      </div>
+      @for(option of group.options; track option.name; let optionIndex = $index) {
+      <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700 ">{{option.name}}</p>
+      }
+    </div>
+    }
   </div>
   <div class="flex-10">
     <div class="grid grid-cols-3 mb-15">

@@ -2,7 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ApiService } from '../../services/api/api.service';
-import { PaginatedListDto, ProductSimpleDto } from '../../models/product';
+import {
+  FilterGroupDto,
+  PaginatedListDto,
+  ProductSimpleDto,
+} from '../../models/product';
 import { first, takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 
@@ -17,6 +21,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   products = signal<PaginatedListDto<ProductSimpleDto>>(
     {} as PaginatedListDto<ProductSimpleDto>
   );
+  filterOptions = signal<FilterGroupDto[]>([]);
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {
     super();
@@ -29,6 +34,16 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
         this.categoryId = params.get('categoryId') || '';
         this.fetchProducts();
       });
+    this.fetchFilterOptions();
+  }
+
+  fetchFilterOptions() {
+    this.apiService
+      .getFilterOptions()
+      .pipe(first())
+      .subscribe((filterOptions) => {
+        this.filterOptions.set(filterOptions);
+      });
   }
 
   fetchProducts() {
@@ -40,5 +55,9 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
           this.products.set(products);
         }
       });
+  }
+
+  selectOption(_t12: number, $event: number) {
+    throw new Error('Method not implemented.');
   }
 }

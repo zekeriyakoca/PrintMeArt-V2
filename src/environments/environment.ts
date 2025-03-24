@@ -7,20 +7,18 @@ export const environment = {
   //   'basket-api': 'http://localhost:5003',
   //   'ordering-api': 'http://localhost:5004',
   // },
-  // serviceUrls: {
-  //   'catalog-api': 'http://4.210.248.46:30001',
-  //   'basket-api': 'http://4.210.248.46:30003',
-  //   'ordering-api': 'http://4.210.248.46:30004',
-  //   'pricing-api': 'http://4.210.248.46:30002',
-  // },
   serviceUrls: {
-    'catalog-api':
-      'https://ecommbone-apim.azure-api.net/storefront/catalog-api',
-    'basket-api': 'https://ecommbone-apim.azure-api.net/storefront/basket-api',
-    'pricing-api':
-      'https://ecommbone-apim.azure-api.net/storefront/pricing-api',
-    // 'ordering-api':
-    //   'https://ecommbone-apim.azure-api.net/storefront/ordering-api',
-    'ordering-api': 'http://4.210.248.46:30010',
+    'catalog-api': 'http://4.210.248.46:30001',
+    'basket-api': 'http://4.210.248.46:30003',
+    'ordering-api': 'http://4.210.248.46:30004',
+    'pricing-api': 'http://4.210.248.46:30002',
   },
+  // serviceUrls: {
+  //   'catalog-api':
+  //     'https://ecommbone-apim.azure-api.net/storefront/catalog-api',
+  //   'basket-api': 'https://ecommbone-apim.azure-api.net/storefront/basket-api',
+  //   'pricing-api':
+  //     'https://ecommbone-apim.azure-api.net/storefront/pricing-api',
+  //   'ordering-api': 'http://4.210.248.46:30004',
+  // },
 };

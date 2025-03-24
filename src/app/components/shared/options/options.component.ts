@@ -15,7 +15,7 @@ export class OptionsComponent {
     this.optionSelected.emit(optionId);
   }
   mapColorToHex(color: string) {
-    switch (color.toLowerCase()) {
+    switch (color?.toLowerCase()) {
       case 'red':
         return '#ff0000';
       case 'green':

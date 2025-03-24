@@ -93,4 +93,13 @@ export class ApiService {
       userInfo
     );
   }
+
+  getFilterOptions() {
+    if (this.isSSR) {
+      return of({});
+    }
+    return this._httpClient.get<any>(
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`
+    );
+  }
 }
