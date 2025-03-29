@@ -48,19 +48,30 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       .getFilterOptions()
       .pipe(first())
       .subscribe((filterOptions) => {
-        this.filterOptions.set(filterOptions);
+        this.filterOptions.set(filterOptions ?? []);
       });
   }
 
   fetchProducts() {
-    this.apiService
-      .getProductsByCategory(this.categoryId)
-      .pipe(first())
-      .subscribe((products) => {
-        if (products?.data) {
-          this.products.set(products);
-        }
-      });
+    if (this.categoryId != '') {
+      this.apiService
+        .getProductsByCategory(this.categoryId)
+        .pipe(first())
+        .subscribe((products) => {
+          if (products?.data) {
+            this.products.set(products);
+          }
+        });
+    } else {
+      this.apiService
+        .getFilteredProducts({ pageSize: 10, pageIndex: 0 })
+        .pipe(first())
+        .subscribe((products) => {
+          if (products?.data) {
+            this.products.set(products);
+          }
+        });
+    }
   }
 
   selectOption(groupType: string, optionId: number) {

@@ -8,6 +8,7 @@ import {
   PaginatedListDto,
   ProductSimpleDto,
   ProductFilterRequestDto,
+  FilterGroupDto,
 } from '../../models/product';
 
 @Injectable({
@@ -95,9 +96,9 @@ export class ApiService {
     );
   }
 
-  getFilterOptions() {
+  getFilterOptions(): Observable<FilterGroupDto[]> {
     if (this.isSSR) {
-      return of({});
+      return of([] as FilterGroupDto[]);
     }
     return this._httpClient.get<any>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`
@@ -105,6 +106,9 @@ export class ApiService {
   }
 
   getFilteredProducts(filterBody: ProductFilterRequestDto) {
+    if (this.isSSR) {
+      return of({} as PaginatedListDto<ProductSimpleDto>);
+    }
     return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
       filterBody
