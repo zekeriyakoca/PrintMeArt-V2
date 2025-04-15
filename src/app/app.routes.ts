@@ -18,10 +18,7 @@ export const routes: Routes = [
   {
     path: 'products/:productId',
     component: ProductDetailComponent,
-    canActivate: [AuthenticationGuard],
-    data: {
-      renderMode: 'server'
-    }
+    canActivate: [AuthenticationGuard]
   },
   {
     path: 'cart',

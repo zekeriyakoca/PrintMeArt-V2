@@ -1,9 +1,9 @@
-// src/server.ts (or wherever your SSR entry is)
-import { CommonEngine } from '@angular/ssr/node';
-import { render } from '@netlify/angular-runtime/common-engine.mjs';
+// // src/server.ts (or wherever your SSR entry is)
+// import { CommonEngine } from '@angular/ssr/node';
+// import { render } from '@netlify/angular-runtime/common-engine.mjs';
 
-const commonEngine = new CommonEngine();
+// const commonEngine = new CommonEngine();
 
-export async function netlifyCommonEngineHandler(request: Request, context: any): Promise<Response> {
-  return await render(commonEngine);
-}
+// export async function netlifyCommonEngineHandler(request: Request, context: any): Promise<Response> {
+//   return await render(commonEngine);
+// }
