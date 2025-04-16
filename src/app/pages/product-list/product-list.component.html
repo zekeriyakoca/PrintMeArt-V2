@@ -22,7 +22,8 @@
           {{ group.name }}
         </h3>
       </div>
-      <div [class]="group.name.toLowerCase() === 'color' ? 'flex gap-1 mb-1' : 'flex flex-col gap-1 mb-1'">
+      <div
+        [class]="group.name.toLowerCase() === 'color' ? 'grid grid-cols-4 mb-1 max-w-[80%]' : 'flex flex-col gap-1 mb-1'">
         @for(option of group.options; track option.name; let optionIndex = $index) {
         @if(group.name.toLowerCase() == 'color'){
         <div class="w-8 h-8 border flex items-center justify-center cursor-pointer p-1 mb-2 color-option"
