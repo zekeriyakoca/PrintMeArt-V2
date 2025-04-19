@@ -74,21 +74,21 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     }
   }
 
-  selectOption(groupType: string, optionId: number) {
+  selectOption(groupType: string, optionName: string) {
     const currentSelectedOptions = this.selectedFilterOptions();
     const newSelectedOptions: ProductFilterRequestDto = {
       ...currentSelectedOptions,
-      categoryId: undefined,
-      attributeId: undefined,
-      optionId: undefined,
+      categoryName: undefined,
+      attributeName: undefined,
+      optionName: undefined,
     };
 
     if (groupType.toLowerCase().includes('categories')) {
-      newSelectedOptions.categoryId = optionId;
+      newSelectedOptions.categoryName = optionName;
     } else if (groupType.toLowerCase().includes('attributes')) {
-      newSelectedOptions.attributeId = optionId;
+      newSelectedOptions.attributeName = optionName;
     } else if (groupType.toLowerCase().includes('options')) {
-      newSelectedOptions.optionId = optionId;
+      newSelectedOptions.optionName = optionName;
     }
 
     this.selectedFilterOptions.set(newSelectedOptions);
