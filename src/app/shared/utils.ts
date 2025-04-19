@@ -1,14 +1,28 @@
 export function mapColorToHex(color: string): string {
   switch (color?.toLowerCase()) {
-    case 'red':
-      return '#ff0000';
-    case 'green':
-      return '#00ff00';
+    case 'black':
+      return '#1C1C1C'; // Charcoal Black
     case 'blue':
-      return '#0000ff';
+      return '#4682B4'; // Steel Blue
+    case 'brown':
+      return '#8B5A2B'; // Light Saddle Brown
+    case 'gray':
+      return '#A9A9A9'; // Dark Gray
+    case 'green':
+      return '#3CB371'; // Medium Sea Green
+    case 'navy':
+      return '#2C3E50'; // Midnight Navy
+    case 'pink':
+      return '#FFB6C1'; // Light Pink
+    case 'red':
+      return '#E74C3C'; // Soft Crimson Red
     case 'white':
-      return '#ffffff';
+      return '#F5F5F5'; // Linen White
+    case 'yellow':
+      return '#F4D03F'; // Mustard Yellow
+    case 'rose':
+      return '#D81B60'; // Rose Pink
     default:
-      return '#000000';
+      return '#34495E'; // Slate Blue
   }
 }

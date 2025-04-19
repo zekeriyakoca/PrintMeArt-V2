@@ -5,8 +5,8 @@
 </div>
 <div class="flex">
   <div id="filters" class="flex-2">
-    <h2 class=" text-lg font-normal text-indigo-800 my-4 bg-white rounded-[5px]">
-      <span class="inline-flex border-b-2 border-indigo-800 pr-4 ">
+    <h2 class=" text-lg font-normal text-indigo-900 my-4 bg-white rounded-[5px]">
+      <span class="inline-flex border-b-2 border-indigo-900 pr-4 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-6 mr-[1px]">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -26,17 +26,17 @@
         [class]="group.name.toLowerCase() === 'color' ? 'grid grid-cols-4 mb-1 max-w-[80%]' : 'flex flex-col gap-1 mb-1'">
         @for(option of group.options; track option.name; let optionIndex = $index) {
         @if(group.name.toLowerCase() == 'color'){
-        <div class="w-8 h-8 border flex items-center justify-center cursor-pointer p-1 mb-2 color-option"
-          [style.backgroundColor]="mapColorToHex(option.name)" (click)="selectOption(group.groupType, option.id)">
+        <div class="test w-8 h-8 flex items-center justify-center cursor-pointer p-1 mb-2 color-option shadow-lg"
+          [style.backgroundColor]="mapColorToHex(option.name)" (click)="selectOption(group.groupType, option.name)">
         </div>
         }
         @else{
-        <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700" (click)="selectOption(group.groupType, option.id)"
-          [class]="(
-          selectedFilterOptions().categoryId === option.id ||
-          selectedFilterOptions().attributeId === option.id ||
-          selectedFilterOptions().optionId === option.id
-        ) ? 'text-indigo-700 font-semibold pl-1': ''">
+        <p class="text-sm cursor-pointer mb-1 hover:text-indigo-700"
+          (click)="selectOption(group.groupType, option.name)" [class]="(
+          selectedFilterOptions().categoryName === option.name ||
+          selectedFilterOptions().attributeName === option.name ||
+          selectedFilterOptions().optionName === option.name
+        ) ? 'text-slate-950 font-light pl-1': ''">
           {{option.name}}
         </p>
         }
