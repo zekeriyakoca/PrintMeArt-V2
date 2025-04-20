@@ -2,9 +2,8 @@
   class="bg-white border-none rounded-3xl shadow-sm pr-24 pl-6 pt-4 pb-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
   (click)="goToCategory()">
   <a>
-    <img class="rounded-full max-w-[150px] my-6"
-      src="https://static.zara.net/assets/public/a1db/7c85/56334981a1cd/9746228c2eac/20120918999-e1/20120918999-e1.jpg?ts=1735557143923&w=1700"
-      alt="" />
+    <img class="rounded-full max-w-[150px] my-6 object-cover aspect-[4/5]" src="{{category().imageUrl}}"
+      alt="category image" />
   </a>
   <div class="px-3 pt-6 pb-0">
     <p class="text-sm text-gray-700 text-[#241b6a]">Category</p>

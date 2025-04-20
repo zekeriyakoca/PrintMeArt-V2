@@ -19,7 +19,7 @@ import { mapColorToHex } from '../../shared/utils';
   styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent extends BasePageComponent implements OnInit {
-  categoryId: string = '';
+  categoryName: string = '';
   products = signal<PaginatedListDto<ProductSimpleDto>>(
     {} as PaginatedListDto<ProductSimpleDto>
   );
@@ -37,7 +37,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     this.route.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
-        this.categoryId = params.get('categoryId') || '';
+        this.categoryName = params.get('categoryName') || '';
         this.fetchProducts();
       });
     this.fetchFilterOptions();
@@ -53,9 +53,9 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   }
 
   fetchProducts() {
-    if (this.categoryId != '') {
+    if (this.categoryName != '') {
       this.apiService
-        .getProductsByCategory(this.categoryId)
+        .getProductsByCategory(this.categoryName)
         .pipe(first())
         .subscribe((products) => {
           if (products?.data) {

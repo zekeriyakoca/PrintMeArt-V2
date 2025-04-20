@@ -14,9 +14,9 @@ export class CollectionCardComponent {
   constructor(private router: Router) {}
 
   goToCategory() {
-    const categoryId = this.category()?.id;
-    if (categoryId) {
-      this.router.navigate(['/products'], { queryParams: { categoryId } });
+    const categoryName = this.category()?.name;
+    if (categoryName) {
+      this.router.navigate(['/products'], { queryParams: { categoryName } });
     }
   }
 }

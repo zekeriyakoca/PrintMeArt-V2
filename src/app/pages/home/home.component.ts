@@ -33,7 +33,13 @@ export class HomeComponent extends BasePageComponent {
       .pipe(first())
       .subscribe((cats) => {
         if (cats && cats.length > 0) {
-          this.childCategories.set(cats[0].childCategories ?? []);
+          const categories = cats[0].childCategories ?? [];
+          // Temporary image URLs
+          categories[0].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/tshirt-cat.png";
+          categories[1].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/shoes-cat.jpeg";
+          categories[2].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/jacket-cat.png";
+          categories[3].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/short-cat.png";
+          this.childCategories.set(categories);
         }
       });
   }

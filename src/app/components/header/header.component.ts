@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { BaseAppComponent } from '../baseAppComponent';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart/cart.service';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +13,17 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent extends BaseAppComponent {
-  constructor(private router: Router) {
+  totalItemCountInCart = signal<number>(0);
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+  ) {
     super();
+    toObservable(this.cartService.cart)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((cart) => {
+        this.totalItemCountInCart.set(cart.length);
+      });
   }
 
   navigateToCart() {

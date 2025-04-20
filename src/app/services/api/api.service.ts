@@ -38,15 +38,9 @@ export class ApiService {
   }
 
   getProductsByCategory(
-    categoryId: string
+    categoryName: string
   ): Observable<PaginatedListDto<ProductSimpleDto>> {
-    if (this.isSSR) {
-      return of({} as PaginatedListDto<ProductSimpleDto>);
-    }
-    return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
-      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
-      { categoryId }
-    );
+    return this.getFilteredProducts({categoryName} as ProductFilterRequestDto);
   }
 
   getProductById(productId: string): Observable<ProductDto> {
