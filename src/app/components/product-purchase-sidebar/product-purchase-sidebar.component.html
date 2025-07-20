@@ -1,0 +1,41 @@
+<div class="lg:shadow-lg p-8">
+  <div class="flex justify-between mb-6">
+    <p class="text-lg text-gray-500">
+      @if (hasAllOptionsSelected()) {
+      {{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}
+      } @else {
+      <span class="text-sm text-gray-400">Starting from<br /></span> {{ product().cheapestPrice |
+      currency:'EUR':'symbol':'1.2-2' }}
+      }
+    </p>
+  </div>
+  @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
+  <div class="mb-4">
+    <h5 class="text-sm mb-1">
+      {{ group.name }}
+    </h5>
+    <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
+  </div>
+  }
+  <div class="product-quantity mt-4 mb-8">
+    <h5 class="text-sm mb-1">
+      Quantity
+    </h5>
+    <div class="flex">
+      <button class="cursor-pointer mr-4" (click)="setQuantity(-1)">
+        <span>-</span>
+      </button>
+      <p type="text" class="mr-4">{{quantity()}}</p>
+      <button class="cursor-pointer" (click)="setQuantity(1)">
+        <span>+</span>
+      </button>
+    </div>
+  </div>
+  <div class="product-action my-4">
+    <button class="w-full h-12 text-indigo-800 border" [class.opacity-50]="!hasAllOptionsSelected()"
+      [class.cursor-not-allowed]="!hasAllOptionsSelected()" [class.cursor-pointer]="hasAllOptionsSelected()"
+      [disabled]="!hasAllOptionsSelected()" (click)="addToCart()">
+      Add to Cart
+    </button>
+  </div>
+</div>

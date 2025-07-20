@@ -1,53 +1,31 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { takeUntil, first } from 'rxjs';
+import { Component, computed, input, model, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
-import { BasePageComponent } from '../basePageComponent';
-import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart/cart.service';
+import { BasePageComponent } from '../../pages/basePageComponent';
 import { SelectedOptionDto } from '../../models/cart-item';
-import { OptionsComponent } from '../../components/shared/options/options.component';
-import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
-import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
+import { first } from 'rxjs';
+import { OptionsComponent } from '../shared/options/options.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-product-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    OptionsComponent,
-    ImageGallery1Component,
-    ProductPurchaseSidebarComponent,
-  ],
-  templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss',
+  selector: 'app-product-purchase-sidebar',
+  imports: [OptionsComponent, CommonModule],
+  templateUrl: './product-purchase-sidebar.component.html',
+  styleUrl: './product-purchase-sidebar.component.scss',
 })
-export class ProductDetailComponent
-  extends BasePageComponent
-  implements OnInit
-{
-  productId: string = '';
-  product = signal<ProductDto>({} as ProductDto);
+export class ProductPurchaseSidebarComponent extends BasePageComponent {
+  productId = input<number>(0);
+  product = model<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
   private variantId: number = 1;
 
   constructor(
-    private route: ActivatedRoute,
     private apiService: ApiService,
     private cartService: CartService,
   ) {
     super();
-  }
-
-  ngOnInit() {
-    this.route.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((params) => {
-        this.productId = params.get('productId') || '';
-        this.fetchProduct();
-      });
   }
 
   hasAllOptionsSelected = computed(
@@ -57,17 +35,6 @@ export class ProductDetailComponent
         (group) => group.selectedOptionId !== undefined,
       ),
   );
-
-  fetchProduct() {
-    this.apiService
-      .getProductById(this.productId)
-      .pipe(first())
-      .subscribe((product) => {
-        if (product) {
-          this.product.set(product);
-        }
-      });
-  }
 
   selectOption(groupIndex: number, optionId: number) {
     this.product.update((currentProduct) => {
@@ -103,7 +70,7 @@ export class ProductDetailComponent
     }));
 
     this.apiService
-      .calculatePrice(this.productId, selectedOptions)
+      .calculatePrice(this.product().id.toString(), selectedOptions)
       .pipe(first())
       .subscribe({
         next: (response) => {
@@ -140,4 +107,7 @@ export class ProductDetailComponent
       selectedOptions,
     );
   }
+}
+function modal<T>(arg0: ProductDto) {
+  throw new Error('Function not implemented.');
 }
