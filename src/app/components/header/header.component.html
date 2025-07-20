@@ -1,66 +1,298 @@
-<header class="absolute inset-x-0 top-0 z-50">
-  <nav class="flex justify-between p-6 px-12 lg:px-8" aria-label="Global">
-    <div class="flex lg:flex-1">
-      <a href="#" class="-m-1.5 p-1.5">
-        <span class="sr-only">Logo</span>
-        <img class="h-8 w-auto" style="transform: scale(1.9);" src="assets/logo.svg" alt="">
-      </a>
+<header class="inset-x-0 top-0 z-50 nc-Header sticky top-0 w-full left-0 right-0 z-40 bg-white">
+  <div class="bg-white">
+    <div class="container">
+      <div class="h-20 flex justify-between">
+        <!-- Logo section -->
+        <div class="flex items-center lg:flex-1">
+          <a href="#" class="ttnc-logo inline-block text-slate-600 flex-shrink-0 pt-14">
+            <img class="block" style="transform: scale(2.7);"
+              src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo">
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex lg:items-center lg:space-x-10">
+          <!-- Main Navigation -->
+          <nav class="flex items-center space-x-8">
+            <ul class="nc-Navigation flex items-center">
+              <!-- Prints Mega Menu -->
+              <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large"
+                (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
+                <a href="/search"
+                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  Prints
+                </a>
+                <!-- Prints Mega Menu -->
+                <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50"
+                  [class.visible]="activeDropdown === 'prints'">
+                  <div class="bg-white shadow-lg">
+                    <div class="container">
+                      <div class="flex text-sm border-t border-slate-200 py-14">
+                        <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
+                          <!-- Nature & Landscapes -->
+                          <div>
+                            <p class="font-medium text-slate-900">Nature & Landscapes</p>
+                            <ul class="grid space-y-4 mt-4">
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=nature-prints">Nature prints</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=botanical-art">Botanical art</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=animal-art">Animal art</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=space-and-astronomy">Space and astronomy</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=maps-and-cities">Maps and cities</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=landscape">Landscape</a></li>
+                            </ul>
+                          </div>
+                          <!-- Famous Painters -->
+                          <div>
+                            <p class="font-medium text-slate-900">Famous Painters</p>
+                            <ul class="grid space-y-4 mt-4">
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=art-prints">Art prints</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=renaissance-masters">Renaissance Masters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=dutch-masters">Dutch masters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=modern-masters">Modern masters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=abstract-art">Abstract art</a></li>
+                            </ul>
+                          </div>
+                          <!-- Posters -->
+                          <div>
+                            <p class="font-medium text-slate-900">Posters</p>
+                            <ul class="grid space-y-4 mt-4">
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=retro-and-vintage">Retro and vintage</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=black-and-white">Black and white</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=historical-posters">Historical posters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=classic-posters">Classic posters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=text-posters">Text posters</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=movies-and-games-posters">Movies & Games posters</a></li>
+                            </ul>
+                          </div>
+                          <!-- Art Styles -->
+                          <div>
+                            <p class="font-medium text-slate-900">Art Styles</p>
+                            <ul class="grid space-y-4 mt-4">
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=abstract">Abstract</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=modern">Modern</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=minimalist">Minimalist</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=illustrations">Illustrations</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=photographs">Photographs</a></li>
+                              <li><a class="font-normal text-slate-600 hover:text-black"
+                                  href="/search?category=iconic-photos">Iconic photos</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- Right side card -->
+
+
+                        <div class="w-[40%] xl:w-[35%] max-w-[450px]">
+                          <div class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group">
+                            <div class="absolute flex flex-col h-full w-full p-8 z-40 ">
+                              <img
+                                src="https://genstorageaccount3116.blob.core.windows.net/printme-images/coffee-invitation.webp"
+                                class="absolute end-0 w-1/2 max-w-[260px] h-full object-contain drop-shadow-xl"
+                                alt="Visit Our Space">
+                              <div class="max-w-xs">
+                                <span class="block mb-2 text-sm text-slate-700">
+                                  Visit Our Space
+                                </span>
+                                <h2 class="text-md md:text-lg lg:text-2xl text-slate-900 font-semibold">
+                                  Pick up prints,<br />enjoy coffee.
+                                </h2>
+                              </div>
+                              <div class="mt-auto">
+                                <button
+                                  class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 transition-colors cursor-pointer drop-shadow-xl">
+                                  Show me all
+                                </button>
+                              </div>
+                            </div>
+                            <span
+                              class="opacity-0 group-hover:opacity-40 absolute inset-0 bg-black/10 transition-opacity"></span>
+                            <div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- Our Catalog (no submenu) -->
+              <li class="menu-item flex-shrink-0">
+                <a href="/search"
+                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  Our Catalog
+                </a>
+              </li>
+
+              <!-- Your Design (special styling, no submenu) -->
+              <li class="menu-item flex-shrink-0">
+                <a href="/your-design"
+                  class="inline-flex items-center text-sm lg:text-[15px] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
+                  style="color: #db2877; font-family: fantasy; font-size: 1.09rem;">
+                  Your Design
+                </a>
+              </li>
+
+              <!-- About -->
+              <li class="menu-item flex-shrink-0">
+                <a href="/about"
+                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  About
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Right side icons -->
+          <div class="flex items-center space-x-1">
+            <!-- Search Icon -->
+            <button type="button"
+              class="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M22 22L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <!-- Profile/User Icon -->
+            <button type="button"
+              class="flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+            </button>
+
+            <!-- Cart Icon with Badge -->
+            <button type="button"
+              class="relative flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center"
+              (click)="navigateToCart()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              </svg>
+              <!-- Cart Badge -->
+              <span
+                class="absolute -top-2 -right-2 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center transform scale-75"
+                *ngIf="totalItemCountInCart() > 0">
+                {{ totalItemCountInCart() }}
+              </span>
+            </button>
+
+            <!-- Language Dropdown -->
+            <div class="hidden xl:block h-6 border-l border-neutral-300 ml-3"></div>
+            <div class="hidden xl:flex">
+              <button type="button"
+                class="flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center">
+                <span class="text-sm font-medium">EN</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="flex items-center lg:hidden">
+          <button type="button"
+            class="focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
+            (click)="toggleMobileMenu()">
+            <span class="sr-only">Open main menu</span>
+            <svg *ngIf="!isMobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg *ngIf="isMobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="flex">
-      <div class="hidden lg:flex lg:gap-x-8 mr-12">
-        <a href="/products" class="text-sm/6 font-semibold text-gray-900">Product</a>
-        <a href="/about" class="text-sm/6 font-semibold text-gray-900">About</a>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end mr-2 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-        </svg>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end cursor-pointer ml-2" (click)="navigateToCart()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-        </svg>
-        <span
-          class="w-[21px] h-[21px] bg-indigo-900 transform translate-x-[-15px] translate-y-[12px] text-white text-sm rounded-full flex items-center justify-center mx-auto">{{totalItemCountInCart()}}</span>
-      </div>
-    </div>
-  </nav>
-  <!-- Mobile menu, show/hide based on menu open state. -->
-  <div class="lg:hidden" role="dialog" aria-modal="true">
-    <!-- Background backdrop, show/hide based on slide-over state. -->
-    <div class="fixed inset-0 z-50"></div>
-    <div
-      class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="lg:hidden fixed inset-0 z-50 bg-white" *ngIf="isMobileMenuOpen" role="dialog" aria-modal="true">
+    <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
+      <!-- Mobile menu header -->
       <div class="flex items-center justify-between">
-        <a href="#" class="-m-1.5 p-1.5">
-          <span class="sr-only">Your Company</span>
-          <img class="h-8 w-auto" src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            alt="">
+        <a href="#" class="ttnc-logo inline-block text-slate-600">
+          <img class="block h-8 w-auto" src="assets/logo.svg" alt="PrintMeArt Logo">
         </a>
-        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+        <button type="button" class="-m-2.5 rounded-md p-2.5 text-slate-700" (click)="toggleMobileMenu()">
           <span class="sr-only">Close menu</span>
-          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            aria-hidden="true" data-slot="icon">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
+
+      <!-- Mobile menu content -->
       <div class="mt-6 flow-root">
         <div class="-my-6 divide-y divide-gray-500/10">
           <div class="space-y-2 py-6">
-            <a href="/products"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Products</a>
+            <a href="/search"
+              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              (click)="toggleMobileMenu()">
+              Prints
+            </a>
+            <a href="/search"
+              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              (click)="toggleMobileMenu()">
+              Our Catalog
+            </a>
+            <a href="/your-design"
+              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50"
+              style="color: #db2877;" (click)="toggleMobileMenu()">
+              Your Design
+            </a>
             <a href="/about"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">About</a>
+              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              (click)="toggleMobileMenu()">
+              About
+            </a>
           </div>
           <div class="py-6">
-            <a href="#"
-              class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log
-              in</a>
+            <button type="button"
+              class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-left"
+              (click)="navigateToCart(); toggleMobileMenu()">
+              Cart ({{ totalItemCountInCart() }})
+            </button>
+            <button type="button"
+              class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-left mt-2"
+              (click)="toggleMobileMenu()">
+              Profile
+            </button>
           </div>
         </div>
       </div>

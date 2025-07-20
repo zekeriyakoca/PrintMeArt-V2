@@ -1,0 +1,158 @@
+header{
+  position:fixed;
+}
+
+.nc-Header {
+  transition: all 0.3s ease-in-out;
+}
+
+.ttnc-logo {
+  transition: color 0.3s;
+}
+
+.nc-Navigation {
+  .menu-item {
+    a {
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// Mega Menu Styles (only for Prints)
+.menu-item.menu-megamenu:hover {
+  > .sub-menu {
+    visibility: visible;
+  }
+}
+
+.sub-menu {
+  transition: all 0.3s ease;
+  left: 0;
+  right: 0;
+
+  &.visible {
+    visibility: visible;
+  }
+}
+
+// CardCategory3 component styles for the right side card
+.nc-CardCategory3 {
+  .aspect-w-5 {
+    position: relative;
+    padding-bottom: 80%; // 5:4 aspect ratio
+  }
+
+  .aspect-h-4 {
+    height: 0;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Button hover effects
+button:hover svg {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+// Mobile menu animations
+.mobile-menu-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.mobile-menu-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.mobile-menu-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+// Custom scrollbar for mobile menu
+.mobile-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-menu::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .ttnc-logo img {
+    height: 2rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .ttnc-logo img {
+    height: 2.5rem;
+  }
+}
+
+// Container utility (matching the React project)
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+}

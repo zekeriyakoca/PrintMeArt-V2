@@ -14,6 +14,7 @@ import { takeUntil } from 'rxjs';
 })
 export class HeaderComponent extends BaseAppComponent {
   totalItemCountInCart = signal<number>(0);
+  activeDropdown: string | null = null;
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -28,5 +29,21 @@ export class HeaderComponent extends BaseAppComponent {
 
   navigateToCart() {
     this.router.navigate(['/cart']);
+  }
+  toggleMobileMenu() {
+    const mobileMenu = document.querySelector('.mobile-menu');
+    if (mobileMenu) {
+      mobileMenu.classList.toggle('open');
+    }
+  }
+  showDropdown(dropdown: string) {
+    this.activeDropdown = this.activeDropdown === dropdown ? null : dropdown;
+    console.log(this.activeDropdown);
+  }
+  hideDropdown(dropdown: string) {
+    if (this.activeDropdown === dropdown) {
+      this.activeDropdown = null;
+      console.log(this.activeDropdown);
+    }
   }
 }
