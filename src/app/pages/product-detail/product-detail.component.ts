@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart/cart.service';
 import { SelectedOptionDto } from '../../models/cart-item';
 import { OptionsComponent } from '../../components/shared/options/options.component';
+import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, OptionsComponent],
+  imports: [CommonModule, OptionsComponent, ImageGallery1Component],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -29,7 +30,7 @@ export class ProductDetailComponent
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private cartService: CartService
+    private cartService: CartService,
   ) {
     super();
   }
@@ -47,8 +48,8 @@ export class ProductDetailComponent
     () =>
       this.product().optionGroups?.length > 0 &&
       this.product().optionGroups.every(
-        (group) => group.selectedOptionId !== undefined
-      )
+        (group) => group.selectedOptionId !== undefined,
+      ),
   );
 
   fetchProduct() {
@@ -130,7 +131,7 @@ export class ProductDetailComponent
       this.calculatedPrice(),
       this.quantity(),
       this.product().images[0].original,
-      selectedOptions
+      selectedOptions,
     );
   }
 }
