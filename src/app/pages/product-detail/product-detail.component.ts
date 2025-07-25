@@ -10,6 +10,8 @@ import { SelectedOptionDto } from '../../models/cart-item';
 import { OptionsComponent } from '../../components/shared/options/options.component';
 import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
+import { AccordionInfoComponent } from '../../components/accordion-info/accordion-info.component';
+import { AccordionItem } from '../../models/accordion-item';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,6 +21,7 @@ import { ProductPurchaseSidebarComponent } from '../../components/product-purcha
     OptionsComponent,
     ImageGallery1Component,
     ProductPurchaseSidebarComponent,
+    AccordionInfoComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
@@ -49,6 +52,19 @@ export class ProductDetailComponent
         this.fetchProduct();
       });
   }
+
+  productAccordionData = computed(() => {
+    return [
+      {
+        name: 'Title',
+        content: this.product().title || 'No title available.',
+      },
+      {
+        name: 'Description',
+        content: this.product().description || 'No description available.',
+      },
+    ] as AccordionItem[];
+  });
 
   hasAllOptionsSelected = computed(
     () =>

@@ -1,17 +1,11 @@
 <div class="my-40">
-  <app-image-gallery-1
-    [images]="[product().images[0],product().images[0],product().images[0],product().images[0]]"></app-image-gallery-1>
+  <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
   <div class="container relative z-10 mt-9 sm:mt-11 flex ">
     <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14 lg:space-y-14">
       <h2 class="text-3xl text-slate-700">
         {{ product().name }}
       </h2>
-      <h5 class="text-2xl font-normal mb-1 text-indigo-800">
-        Description
-      </h5>
-      <p class="text-md text-gray-500">
-        {{ product().description }}
-      </p>
+      <app-accordion-info [data]="productAccordionData()" [panelClassName]="'p-4 text-gray-700'"></app-accordion-info>
     </div>
     <div class="flex-grow">
       <app-product-purchase-sidebar [productId]=" product().id" [product]="product()"></app-product-purchase-sidebar>
