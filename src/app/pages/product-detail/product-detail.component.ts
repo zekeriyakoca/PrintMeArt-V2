@@ -7,21 +7,21 @@ import { BasePageComponent } from '../basePageComponent';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart/cart.service';
 import { SelectedOptionDto } from '../../models/cart-item';
-import { OptionsComponent } from '../../components/shared/options/options.component';
 import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { AccordionInfoComponent } from '../../components/accordion-info/accordion-info.component';
 import { AccordionItem } from '../../models/accordion-item';
+import { PolicyComponent } from '../../components/policy/policy.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
   imports: [
     CommonModule,
-    OptionsComponent,
     ImageGallery1Component,
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
+    PolicyComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',

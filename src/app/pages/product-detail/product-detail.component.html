@@ -1,11 +1,32 @@
 <div class="my-40">
   <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
   <div class="container relative z-10 mt-9 sm:mt-11 flex ">
-    <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14 lg:space-y-14">
+    <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14">
       <h2 class="text-3xl text-slate-700">
         {{ product().name }}
       </h2>
       <app-accordion-info [data]="productAccordionData()" [panelClassName]="'p-4 text-gray-700'"></app-accordion-info>
+      <div class=" mt-8">
+        <h2 class="text-2xl font-semibold">{{ "Product details" }}</h2>
+        <div class="prose prose-sm sm:prose sm:max-w-4xl">
+          <p>
+            Our giclée prints are created using cutting-edge technology to ensure exceptional detail and color accuracy.
+            Each
+            print is made with 200 g/m² fine art paper, providing a rich matte finish that enhances the artwork's depth
+            and
+            vibrancy. The added 3.0 cm blank borders allow for easy framing, and our prints come with a 100+ year color
+            guarantee, ensuring that your art remains stunning for
+            generations.
+          </p>
+          <ul class="tracking-wide leading-[29px]">
+            <li>&gt; High-quality 200 g/m² fine art paper (matte)</li>
+            <li>&gt; Giclée printing for vibrant, accurate colors</li>
+            <li>&gt; 3.0 cm blank borders for easy framing</li>
+            <li>&gt; 50+ year color guarantee</li>
+          </ul>
+        </div>
+      </div>
+      <app-policy></app-policy>
     </div>
     <div class="flex-grow">
       <app-product-purchase-sidebar [productId]=" product().id" [product]="product()"></app-product-purchase-sidebar>
