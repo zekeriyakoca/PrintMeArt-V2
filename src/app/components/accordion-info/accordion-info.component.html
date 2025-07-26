@@ -24,7 +24,7 @@
 
     <!-- Accordion Panel - EXACT Tailwind classes from React -->
     @if (isOpen(i)) {
-    <div [class]="panelClassName" [innerHTML]="item.content">
+    <div [class]="panelClassName()" [innerHTML]="item.content">
     </div>
     }
   </div>

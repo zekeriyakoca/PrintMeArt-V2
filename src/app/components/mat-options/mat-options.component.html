@@ -1,0 +1,17 @@
+<div class="mt-6 space-y-7 lg:space-y-8">
+  <div>
+    <div
+      class="flex items-center justify-center px-4 py-2 text-sm rounded-full border focus:outline-none cursor-pointer select-none"
+      [class]="isMatIncluded()
+        ? 'border-primary-500 bg-primary-50 text-primary-900'
+        : 'border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-500'"
+      (click)="onMatToggle()">
+      <!-- PlusIcon SVG -->
+      <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          d="M12 4v16m8-8H4" />
+      </svg>
+      <span class="line-clamp-1 ml-2">Include Mat</span>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,8 @@ import { OptionsComponent } from '../shared/options/options.component';
 import { CommonModule } from '@angular/common';
 import { FrameOptionsComponent } from '../frame-options/frame-options.component';
 import { InputNumberComponent } from '../shared/input-number/input-number.component';
+import { IconComponent } from '../shared/icon/icon.component';
+import { MatOptionsComponent } from '../mat-options/mat-options.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -17,6 +19,8 @@ import { InputNumberComponent } from '../shared/input-number/input-number.compon
     CommonModule,
     FrameOptionsComponent,
     InputNumberComponent,
+    IconComponent,
+    MatOptionsComponent,
   ],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
@@ -27,6 +31,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
   private variantId: number = 1;
+  isMatIncluded = false;
 
   constructor(
     private apiService: ApiService,

@@ -1,4 +1,4 @@
-import { Component, input, Input, model, output } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 
 @Component({
   selector: 'app-input-number',
@@ -17,7 +17,7 @@ export class InputNumberComponent {
   ngOnInit() {}
 
   handleClickDecrement() {
-    if (this.min >= this.value) return;
+    if (this.min() >= this.value()) return;
     this.value.update((currentValue) => {
       const newValue = currentValue - 1;
       return Math.max(newValue, this.min());
@@ -25,10 +25,10 @@ export class InputNumberComponent {
   }
 
   handleClickIncrement() {
-    if (this.max && this.max <= this.value) return;
+    if (this.max() && this.max() <= this.value()) return;
     this.value.update((currentValue) => {
       const newValue = currentValue + 1;
-      return this.max ? Math.min(newValue, this.max()) : newValue;
+      return this.max() ? Math.min(newValue, this.max()) : newValue;
     });
   }
 

@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs';
 export class HeaderComponent extends BaseAppComponent {
   totalItemCountInCart = signal<number>(0);
   activeDropdown: string | null = null;
+  isMobileMenuOpen = signal<boolean>(false);
   constructor(
     private router: Router,
     private cartService: CartService,

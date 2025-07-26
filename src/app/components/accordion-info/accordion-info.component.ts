@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   trigger,
@@ -75,19 +75,21 @@ const DEFAULT_DATA: AccordionItem[] = [
   ],
 })
 export class AccordionInfoComponent {
-  @Input() panelClassName: string =
-    'p-4 pt-3 last:pb-0 text-slate-600 text-sm leading-6';
-  @Input() data: AccordionItem[] = [];
-
+  panelClassName = input<string>(
+    'p-4 pt-3 last:pb-0 text-slate-600 text-sm leading-6',
+  );
+  data = input<AccordionItem[]>([]);
   openStates: { [key: number]: boolean } = {};
   allData: AccordionItem[] = [];
 
   ngOnInit() {
-    this.allData = [...this.data, ...DEFAULT_DATA];
-
     this.allData.forEach((_, index) => {
       this.openStates[index] = index < 2;
     });
+  }
+
+  ngOnChanges() {
+    this.allData = [...this.data(), ...DEFAULT_DATA];
   }
 
   toggleAccordion(index: number) {
