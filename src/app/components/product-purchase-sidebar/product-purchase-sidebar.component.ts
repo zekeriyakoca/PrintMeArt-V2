@@ -7,10 +7,17 @@ import { SelectedOptionDto } from '../../models/cart-item';
 import { first } from 'rxjs';
 import { OptionsComponent } from '../shared/options/options.component';
 import { CommonModule } from '@angular/common';
+import { FrameOptionsComponent } from '../frame-options/frame-options.component';
+import { InputNumberComponent } from '../shared/input-number/input-number.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [OptionsComponent, CommonModule],
+  imports: [
+    OptionsComponent,
+    CommonModule,
+    FrameOptionsComponent,
+    InputNumberComponent,
+  ],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })

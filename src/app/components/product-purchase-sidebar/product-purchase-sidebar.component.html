@@ -12,15 +12,21 @@
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
   <div class="mb-4">
     <h5 class="text-sm mb-1">
-      {{ group.name }}
+      {{ group.name }} {{group.selectedOptionId ? ': ' + group.options[group.selectedOptionId].value :''}}
     </h5>
+    @if(group.name.toLowerCase() == 'frame'){
+    <app-frame-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-frame-options>
+    }
+    @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
+    }
   </div>
   }
   <div class="product-quantity mt-4 mb-8">
     <h5 class="text-sm mb-1">
       Quantity
     </h5>
+    <app-input-number [(value)]="quantity"></app-input-number>
     <div class="flex">
       <button class="cursor-pointer mr-4" (click)="setQuantity(-1)">
         <span>-</span>
