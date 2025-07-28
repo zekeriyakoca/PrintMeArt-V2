@@ -11,6 +11,13 @@ export interface CartItemDto {
 }
 
 export interface SelectedOptionDto {
-  optionId: number;
-  optionName?: string | undefined;
+  optionId: number; // TODO : Remove
+  optionName?: string | undefined; // TODO : Remove
+  id: number;
+  spec1?: string;
+  spec2?: string;
+  spec3?: string;
+  spec4?: string;
+  spec5?: string;
+  name?: string;
 }

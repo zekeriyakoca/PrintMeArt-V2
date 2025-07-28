@@ -14,13 +14,16 @@
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
   <div class="mb-4">
     <h5 class="text-sm mb-1">
-      {{ group.name }} {{group.selectedOptionId ? ': ' + group.options[group.selectedOptionId].value :''}}
+      {{ group.name }} {{ getSelectedOptionName(group.selectedOptionId)}}
     </h5>
     @if(group.name.toLowerCase() == 'frame'){
     <app-frame-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-frame-options>
     }
     @else if(group.name.toLowerCase() == 'including mat'){
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
+    }
+    @else if(group.name.toLowerCase() == 'size'){
+    <app-size-options [sizes]="sizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
     }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
@@ -36,7 +39,7 @@
       <button type="button" [class.opacity-50]="!hasAllOptionsSelected()"
         [class.cursor-not-allowed]="!hasAllOptionsSelected()" [class.cursor-pointer]="hasAllOptionsSelected()"
         [disabled]="!hasAllOptionsSelected()" (click)="addToCart()"
-        class="flex-1 nc-Button flex items-center justify-center rounded-full text-sm font-medium py-3 px-4 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000">
+        class="flex-1 nc-Button flex items-center justify-center rounded-full text-sm font-medium py-3 px-4 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600">
         <app-icon iconName="cart"></app-icon>
         <span class="ml-3">Add to cart</span>
       </button>

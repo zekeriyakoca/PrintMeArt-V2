@@ -10,6 +10,7 @@ import {
   ProductFilterRequestDto,
   FilterGroupDto,
 } from '../../models/product';
+import { SelectedOptionDto } from '../../models/cart-item';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class ApiService {
 
   constructor(
     private _httpClient: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: string
+    @Inject(PLATFORM_ID) private platformId: string,
   ) {}
 
   get isSSR(): boolean {
@@ -33,14 +34,16 @@ export class ApiService {
       return of([]);
     }
     return this._httpClient.get<CategoryDto[]>(
-      `${this.CATALOG_API_URL}/catalog/v1/categories`
+      `${this.CATALOG_API_URL}/catalog/v1/categories`,
     );
   }
 
   getProductsByCategory(
-    categoryName: string
+    categoryName: string,
   ): Observable<PaginatedListDto<ProductSimpleDto>> {
-    return this.getFilteredProducts({categoryName} as ProductFilterRequestDto);
+    return this.getFilteredProducts({
+      categoryName,
+    } as ProductFilterRequestDto);
   }
 
   getProductById(productId: string): Observable<ProductDto> {
@@ -48,13 +51,13 @@ export class ApiService {
       return of({} as ProductDto);
     }
     return this._httpClient.get<ProductDto>(
-      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`,
     );
   }
 
   calculatePrice(
     productId: string,
-    selectedOptions: { id: number }[]
+    selectedOptions: SelectedOptionDto[],
   ): Observable<any> {
     if (this.isSSR) {
       return of({});
@@ -66,7 +69,7 @@ export class ApiService {
 
     return this._httpClient.post<any>(
       `${this.PRICING_API_URL}/pricing/v1/product/calculate-price`,
-      requestBody
+      requestBody,
     );
   }
 
@@ -76,7 +79,7 @@ export class ApiService {
     }
     return this._httpClient.post<any>(
       `${this.ORDERING_API_URL}/bff/v1/ordering/draft-order`,
-      {}
+      {},
     );
   }
 
@@ -86,7 +89,7 @@ export class ApiService {
     }
     return this._httpClient.post<any>(
       `${this.ORDERING_API_URL}/bff/v1/ordering/order`,
-      userInfo
+      userInfo,
     );
   }
 
@@ -95,7 +98,7 @@ export class ApiService {
       return of([] as FilterGroupDto[]);
     }
     return this._httpClient.get<any>(
-      `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`
+      `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`,
     );
   }
 
@@ -105,7 +108,7 @@ export class ApiService {
     }
     return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
-      filterBody
+      filterBody,
     );
   }
 }
