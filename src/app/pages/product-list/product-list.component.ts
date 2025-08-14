@@ -11,10 +11,13 @@ import {
 import { first, takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, CommonModule, FormsModule, IconComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -28,6 +31,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     pageSize: 10,
     pageIndex: 0,
   });
+  searchText = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -112,6 +116,14 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
           this.products.set(products);
         }
       });
+  }
+
+  search(): void {
+    this.selectedFilterOptions.update((prev) => ({
+      ...prev,
+      searchTerm: this.searchText.trim(),
+    }));
+    this.fetchProductsWithFilters();
   }
 
   mapColorToHex(color: string): string {

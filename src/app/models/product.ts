@@ -70,6 +70,7 @@ export interface FilterOptionDto {
 export interface ProductFilterRequestDto {
   pageSize: number;
   pageIndex: number;
+  searchTerm?: string;
   categoryName?: string;
   attributeName?: string;
   optionName?: string;
