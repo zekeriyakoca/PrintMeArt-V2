@@ -21,7 +21,7 @@ import { mapColorToHex } from '../../shared/utils';
 export class ProductListComponent extends BasePageComponent implements OnInit {
   categoryName: string = '';
   products = signal<PaginatedListDto<ProductSimpleDto>>(
-    {} as PaginatedListDto<ProductSimpleDto>
+    {} as PaginatedListDto<ProductSimpleDto>,
   );
   filterOptions = signal<FilterGroupDto[]>([]);
   selectedFilterOptions = signal<ProductFilterRequestDto>({
@@ -29,7 +29,10 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     pageIndex: 0,
   });
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+  ) {
     super();
   }
 
@@ -48,7 +51,12 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       .getFilterOptions()
       .pipe(first())
       .subscribe((filterOptions) => {
-        this.filterOptions.set(filterOptions ?? []);
+        const onlyCategoryAndAttributeOptions = filterOptions.filter(
+          (o) =>
+            o.groupType.toLowerCase().includes('categories') ||
+            o.groupType.toLowerCase().includes('attributes'),
+        );
+        this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
       });
   }
 

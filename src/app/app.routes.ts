@@ -14,26 +14,25 @@ export const routes: Routes = [
   {
     path: 'products',
     component: ProductListComponent,
-    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'search',
+    redirectTo: 'products',
   },
   {
     path: 'products/:productId',
     component: ProductDetailComponent,
-    canActivate: [AuthenticationGuard],
   },
   {
     path: 'cart',
     component: CartComponent,
-    canActivate: [AuthenticationGuard],
   },
   {
     path: 'checkout',
     component: CheckoutComponent,
-    canActivate: [AuthenticationGuard],
   },
   {
     path: 'about',
     component: AboutComponent,
-    canActivate: [AuthenticationGuard],
   },
 ];
