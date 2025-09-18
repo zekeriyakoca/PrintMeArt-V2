@@ -1,9 +1,6 @@
 <div class="content-container">
 
   <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50 ">
-    <!-- <h1 class="text-5xl font-light mb-4 text-slate-700 text-center">
-      Our Products
-    </h1> -->
   </div>
   <header class="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7 w-full">
     <div class="relative w-full">
@@ -74,11 +71,14 @@
     <hr class="mb-4 border-b-1 border-indigo-800 w-[150px] ml-0 opacity-15">
     }
   </div>
-  <div class="flex-10">
-    <div class="grid grid-cols-3 mb-15">
+  <div class="flex-10 mb-15">
+    <div class="grid grid-cols-3 mb-2">
       @for (product of products().data; track product.id) {
       <app-product-card [product]="product" class=""></app-product-card>
       }
+    </div>
+    <div class="flex justify-end">
+      <app-pagination [className]="'mt-8'"></app-pagination>
     </div>
   </div>
 

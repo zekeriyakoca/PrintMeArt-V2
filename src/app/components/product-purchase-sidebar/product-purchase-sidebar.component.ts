@@ -42,7 +42,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     { id: 5, name: '50x70', val1: 50, val2: 70 },
     { id: 6, name: '60x90', val1: 60, val2: 90 },
   ];
-  selectedSize = this.sizeOptions[0];
+  selectedSize = signal(this.sizeOptions[0]);
 
   constructor(
     private apiService: ApiService,
@@ -53,7 +53,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   hasAllOptionsSelected = computed(() => {
     const allSelected =
-      this.selectedSize != null &&
+      this.selectedSize() != null &&
       this.product().optionGroups?.length > 0 &&
       this.product()
         .optionGroups.filter((group) => !group.options[0].isCustom)
@@ -165,12 +165,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         this.product().optionGroups.find(
           (group) => group.name.toLowerCase() === 'size',
         )?.options[0].id || 0,
-      spec1: this.selectedSize.val1.toString(),
-      spec2: this.selectedSize.val2.toString(),
+      spec1: this.selectedSize().val1.toString(),
+      spec2: this.selectedSize().val2.toString(),
     } as SelectedOptionDto);
     return selectedOptions;
   }
-}
-function modal<T>(arg0: ProductDto) {
-  throw new Error('Function not implemented.');
 }

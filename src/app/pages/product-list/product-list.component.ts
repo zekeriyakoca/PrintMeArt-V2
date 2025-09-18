@@ -14,10 +14,17 @@ import { mapColorToHex } from '../../shared/utils';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductCardComponent, CommonModule, FormsModule, IconComponent],
+  imports: [
+    ProductCardComponent,
+    CommonModule,
+    FormsModule,
+    IconComponent,
+    PaginationComponent,
+  ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -28,7 +35,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   );
   filterOptions = signal<FilterGroupDto[]>([]);
   selectedFilterOptions = signal<ProductFilterRequestDto>({
-    pageSize: 10,
+    pageSize: 12,
     pageIndex: 0,
   });
   searchText = '';
@@ -76,7 +83,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
         });
     } else {
       this.apiService
-        .getFilteredProducts({ pageSize: 10, pageIndex: 0 })
+        .getFilteredProducts({ pageSize: 12, pageIndex: 0 })
         .pipe(first())
         .subscribe((products) => {
           if (products?.data) {

@@ -1,0 +1,36 @@
+/* filepath: src/app/components/pagination/pagination.component.scss */
+
+.nc-Pagination {
+  button {
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  span {
+    box-shadow: none;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .nc-Pagination {
+    button, span {
+      width: 40px;
+      height: 40px;
+      font-size: 0.875rem;
+    }
+  }
+}
