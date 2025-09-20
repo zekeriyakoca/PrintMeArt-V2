@@ -28,10 +28,10 @@ import { SizeOptionsComponent } from '../size-options/size-options.component';
   styleUrl: './product-purchase-sidebar.component.scss',
 })
 export class ProductPurchaseSidebarComponent extends BasePageComponent {
-  productId = input<number>(0);
   product = model<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
+
   private variantId: number = 1;
   isMatIncluded = false;
   sizeOptions = [
@@ -52,17 +52,26 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   hasAllOptionsSelected = computed(() => {
-    const allSelected =
-      this.selectedSize() != null &&
-      this.product().optionGroups?.length > 0 &&
-      this.product()
-        .optionGroups.filter((group) => !group.options[0].isCustom)
-        .every((group) => group.selectedOptionId !== undefined);
+    if (
+      this.selectedSize() == null ||
+      this.product().optionGroups == null ||
+      this.product().optionGroups.length === 0
+    ) {
+      return false;
+    }
 
-    if (allSelected) {
+    let isFrameSelected =
+      this.product().optionGroups.filter((group) =>
+        group.name.toLowerCase().includes('frame'),
+      )[0].selectedOptionId !== undefined;
+
+    let isAllSelected = isFrameSelected && this.selectedSize();
+
+    if (isAllSelected) {
       this.calculatePrice();
     }
-    return allSelected;
+
+    return isAllSelected;
   });
 
   selectOption(groupIndex: number, optionId: number) {
@@ -79,7 +88,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       });
       return { ...currentProduct, optionGroups: updatedGroups };
     });
-    // this.calculatePrice();
   }
 
   setQuantity(change: number) {
@@ -111,24 +119,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return;
     }
 
-    const selectedOptions: SelectedOptionDto[] =
-      this.product().optionGroups.map((group) => ({
-        optionId: group.selectedOptionId!,
-        id: group.selectedOptionId!,
-        optionName:
-          group.options.find((option) => option.id === group.selectedOptionId)
-            ?.value || '',
-      }));
-
     this.cartService.addItemToCart(
-      +this.productId,
+      this.product().id,
       this.variantId,
       this.product().name,
       this.product().cheapestPrice,
       this.calculatedPrice(),
       this.quantity(),
       this.product().images[0].original,
-      selectedOptions,
+      this.getSelectedOptions(),
     );
   }
 
@@ -146,25 +145,29 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       .map(
         (group) =>
           ({
-            id: group.selectedOptionId!,
-            optionId: 0,
+            optionId: group.selectedOptionId!,
+            optionName: group.options.find(
+              (option) => option.id === group.selectedOptionId,
+            )?.value,
+            spec1: this.selectedSize().val1.toString(),
+            spec2: this.selectedSize().val2.toString(),
           }) as SelectedOptionDto,
       );
     selectedOptions.push({
-      optionId: 0, // TODO : Remove
-      id:
+      optionId:
         this.product().optionGroups.find(
           (group) => group.name.toLowerCase() === 'including mat',
         )?.options[0].id || 0,
+      optionName: this.isMatIncluded ? 'Include Mat' : 'No Mat',
       spec1: this.isMatIncluded ? 'true' : 'false',
     } as SelectedOptionDto);
 
     selectedOptions.push({
-      optionId: 0, // TODO : Remove
-      id:
+      optionId:
         this.product().optionGroups.find(
           (group) => group.name.toLowerCase() === 'size',
         )?.options[0].id || 0,
+      optionName: this.selectedSize().name,
       spec1: this.selectedSize().val1.toString(),
       spec2: this.selectedSize().val2.toString(),
     } as SelectedOptionDto);

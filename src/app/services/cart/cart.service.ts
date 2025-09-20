@@ -1,5 +1,6 @@
+import { CustomerCart } from './../../models/cart-item';
 import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import { first, map, Observable, tap } from 'rxjs';
 import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +14,7 @@ export class CartService {
 
   constructor(
     private _httpClient: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: string
+    @Inject(PLATFORM_ID) private platformId: string,
   ) {}
 
   get isSSR(): boolean {
@@ -28,7 +29,7 @@ export class CartService {
     calculatedPrice: number,
     quantity: number,
     pictureUrl: string,
-    selectedOptions: SelectedOptionDto[]
+    selectedOptions: SelectedOptionDto[],
   ): void {
     const newItem: CartItemDto = {
       id: crypto.randomUUID(),
@@ -43,7 +44,10 @@ export class CartService {
     };
 
     const existingItemIndex = this.cart().findIndex(
-      (c) => c.variantId == newItem.variantId
+      (c) =>
+        c.variantId == newItem.variantId &&
+        this.summaryOptions(c.selectedOptions) ===
+          this.summaryOptions(newItem.selectedOptions),
     );
 
     if (existingItemIndex >= 0) {
@@ -60,11 +64,20 @@ export class CartService {
       });
   }
 
+  private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
+    return selectedOptionDto
+      .map((o) => o.optionName)
+      .sort()
+      .join('_');
+  }
+
   updateCartOnBackend(cartItems: CartItemDto[]): Observable<CartItemDto[]> {
-    return this._httpClient.put<CartItemDto[]>(
-      `${this.BASKET_API_URL}/basket/v1/basket`,
-      cartItems
-    );
+    return this._httpClient
+      .put<CustomerCart>(`${this.BASKET_API_URL}/basket/v1/basket`, cartItems)
+      .pipe(
+        map((customerCart: CustomerCart) => customerCart.items),
+        tap((cartItems) => this.cart.set(cartItems)),
+      );
   }
 
   fetchCartItems(): void {

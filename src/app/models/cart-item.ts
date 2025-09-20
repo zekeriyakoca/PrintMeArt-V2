@@ -1,3 +1,8 @@
+export interface CustomerCart {
+  customerId: string;
+  items: CartItemDto[];
+}
+
 export interface CartItemDto {
   id: string;
   productId: number;
@@ -11,9 +16,8 @@ export interface CartItemDto {
 }
 
 export interface SelectedOptionDto {
-  optionId: number; // TODO : Remove
-  optionName?: string | undefined; // TODO : Remove
-  id: number;
+  optionId: number;
+  optionName?: string | undefined;
   spec1?: string;
   spec2?: string;
   spec3?: string;
