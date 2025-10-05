@@ -8,7 +8,6 @@ import {
   animate,
 } from '@angular/animations';
 import { AccordionItem } from '../../models/accordion-item';
-import { PolicyComponent } from '../policy/policy.component';
 
 const DEFAULT_DATA: AccordionItem[] = [
   {
@@ -63,7 +62,7 @@ const DEFAULT_DATA: AccordionItem[] = [
 @Component({
   selector: 'app-accordion-info',
   standalone: true,
-  imports: [CommonModule, PolicyComponent],
+  imports: [CommonModule],
   templateUrl: './accordion-info.component.html',
   styleUrls: ['./accordion-info.component.scss'],
   animations: [
