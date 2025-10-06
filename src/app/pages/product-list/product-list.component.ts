@@ -8,7 +8,7 @@ import {
   ProductFilterRequestDto,
   ProductSimpleDto,
 } from '../../models/product';
-import { first, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
 import { CommonModule } from '@angular/common';
@@ -58,24 +58,20 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   }
 
   fetchFilterOptions() {
-    this.apiService
-      .getFilterOptions()
-      .pipe(first())
-      .subscribe((filterOptions) => {
-        const onlyCategoryAndAttributeOptions = filterOptions.filter(
-          (o) =>
-            o.groupType.toLowerCase().includes('categories') ||
-            o.groupType.toLowerCase().includes('attributes'),
-        );
-        this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
-      });
+    this.apiService.getFilterOptions().subscribe((filterOptions) => {
+      const onlyCategoryAndAttributeOptions = filterOptions.filter(
+        (o) =>
+          o.groupType.toLowerCase().includes('categories') ||
+          o.groupType.toLowerCase().includes('attributes'),
+      );
+      this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
+    });
   }
 
   fetchProducts() {
     if (this.categoryName != '') {
       this.apiService
         .getProductsByCategory(this.categoryName)
-        .pipe(first())
         .subscribe((products) => {
           if (products?.data) {
             this.products.set(products);
@@ -84,7 +80,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     } else {
       this.apiService
         .getFilteredProducts({ pageSize: 12, pageIndex: 0 })
-        .pipe(first())
         .subscribe((products) => {
           if (products?.data) {
             this.products.set(products);
@@ -117,7 +112,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   fetchProductsWithFilters() {
     this.apiService
       .getFilteredProducts(this.selectedFilterOptions())
-      .pipe(first())
       .subscribe((products) => {
         if (products?.data) {
           this.products.set(products);

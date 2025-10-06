@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface GalleryImage {
@@ -14,9 +21,9 @@ export interface GalleryImage {
   styleUrls: ['./image-gallery-modal.component.scss'],
 })
 export class ImageGalleryModalComponent {
-  @Input() isShowModal = false;
-  @Input() images: GalleryImage[] = [];
-  @Output() onClose = new EventEmitter<void>();
+  isShowModal = input<boolean>(false);
+  images = input<GalleryImage[]>([]);
+  onClose = output<void>();
 
   selectedImageIndex: number | null = null;
 

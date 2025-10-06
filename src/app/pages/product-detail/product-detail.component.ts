@@ -1,6 +1,6 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil, first } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
@@ -32,7 +32,6 @@ export class ProductDetailComponent
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
-  private variantId: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,13 +63,10 @@ export class ProductDetailComponent
   });
 
   fetchProduct() {
-    this.apiService
-      .getProductById(this.productId)
-      .pipe(first())
-      .subscribe((product) => {
-        if (product) {
-          this.product.set(product);
-        }
-      });
+    this.apiService.getProductById(this.productId).subscribe((product) => {
+      if (product) {
+        this.product.set(product);
+      }
+    });
   }
 }

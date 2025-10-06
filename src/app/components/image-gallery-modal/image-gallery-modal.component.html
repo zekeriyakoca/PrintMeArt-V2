@@ -1,4 +1,4 @@
-@if (isShowModal && images.length > 0) {
+@if (isShowModal() && images().length > 0) {
 <div class="fixed inset-0 z-50 bg-white flex flex-col">
 
   <!-- Header with close button -->
@@ -20,7 +20,7 @@
     <div class="container max-w-7xl mx-auto px-4 py-8" (click)="closeModal()">
       <div
         class="w-full max-w-screen-lg mx-auto transform p-4 pt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-        @for (image of images; track image.id; let i = $index) {
+        @for (image of images(); track image.id; let i = $index) {
         <div class="relative group cursor-pointer" (click)="selectImage(i);$event.stopPropagation();">
           <img [src]="image.url" [alt]="'Image ' + (i + 1)"
             class="w-full h-auto rounded-xl object-cover transition-transform duration-300 hover:scale-105"
@@ -48,7 +48,7 @@
 
     <!-- Previous button -->
     <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
-      (click)="prevSelectedImage(); $event.stopPropagation()" [disabled]="images.length <= 1">
+      (click)="prevSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
@@ -56,7 +56,7 @@
 
     <!-- Next button -->
     <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
-      (click)="nextSelectedImage(); $event.stopPropagation()" [disabled]="images.length <= 1">
+      (click)="nextSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
       </svg>
@@ -64,19 +64,19 @@
 
     <!-- Selected image -->
     <div class="flex flex-col items-center max-w-5xl max-h-full p-8">
-      <img [src]="images[selectedImageIndex]?.url" [alt]="'Selected Image ' + (selectedImageIndex + 1)"
+      <img [src]="images()[selectedImageIndex].url" [alt]="'Selected Image ' + (selectedImageIndex + 1)"
         class="max-w-full max-h-[70vh] object-contain rounded-lg" (click)="$event.stopPropagation()">
 
       <!-- Image counter -->
       <div class="text-white mt-4 text-sm">
-        {{ selectedImageIndex + 1 }} / {{ images.length }}
+        {{ selectedImageIndex + 1 }} / {{ images().length }}
       </div>
     </div>
 
     <!-- Thumbnail Carousel at Bottom -->
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-4">
       <div class="flex space-x-2 overflow-x-auto scrollbar-hide justify-center">
-        @for (image of images; track image.id; let i = $index) {
+        @for (image of images(); track image.id; let i = $index) {
         <button
           class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 hover:scale-105"
           [class.border-white]="i === selectedImageIndex" [class.border-gray-400]="i !== selectedImageIndex"

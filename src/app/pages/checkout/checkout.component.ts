@@ -40,19 +40,16 @@ export class CheckoutComponent extends BasePageComponent {
   constructor(
     private apiService: ApiService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
   ) {
     super();
     this.cartItems = this.cartService.cart;
   }
 
   ngOnInit() {
-    this.apiService
-      .createDraftOrder()
-      .pipe(first())
-      .subscribe(() => {
-        console.log('Draft order created');
-      });
+    this.apiService.createDraftOrder().subscribe(() => {
+      console.log('Draft order created');
+    });
   }
 
   prepareOrderData() {
@@ -71,12 +68,9 @@ export class CheckoutComponent extends BasePageComponent {
 
   confirmOrder() {
     const orderData = this.prepareOrderData();
-    this.apiService
-      .submitOrder(orderData)
-      .pipe(first())
-      .subscribe(() => {
-        console.log('Order confirmed');
-      });
+    this.apiService.submitOrder(orderData).subscribe(() => {
+      console.log('Order confirmed');
+    });
 
     this.router.navigate(['/home']);
   }
