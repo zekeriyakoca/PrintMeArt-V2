@@ -6,7 +6,7 @@
     <div class="relative w-full">
       <label for="search-input" class="text-neutral-500">
         <span class="sr-only">Search all products</span>
-        <input id="search-input" type="text"
+        <input #searchInput id="search-input" type="text"
           class="w-full shadow-lg border border-neutral-200 text-sm rounded-full pl-14 pr-14 py-5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200"
           [(ngModel)]="searchText" (keyup.enter)="search()" placeholder="Type your keywords" />
         <button type="button"

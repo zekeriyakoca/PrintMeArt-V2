@@ -28,6 +28,10 @@ export class HeaderComponent extends BaseAppComponent {
       });
   }
 
+  navigateToSearch() {
+    this.router.navigate(['/search'], { fragment: 'search' });
+  }
+
   navigateToCart() {
     this.router.navigate(['/cart']);
   }
