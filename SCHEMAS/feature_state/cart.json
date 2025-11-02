@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CartState",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "productId": { "type": "integer" },
+          "variantId": { "type": "integer" },
+          "selectedOptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "optionId": { "type": "integer" },
+                "optionName": { "type": ["string", "null"] },
+                "spec1": { "type": ["string", "null"] },
+                "spec2": { "type": ["string", "null"] },
+                "spec3": { "type": ["string", "null"] },
+                "spec4": { "type": ["string", "null"] },
+                "spec5": { "type": ["string", "null"] },
+                "name": { "type": ["string", "null"] }
+              },
+              "required": ["optionId"]
+            }
+          },
+          "unitPrice": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "noDiscountUnitPrice": { "type": "number" },
+          "productName": { "type": "string" },
+          "pictureUrl": { "type": "string" }
+        },
+        "required": ["id", "productId", "variantId", "unitPrice", "quantity", "productName", "pictureUrl"]
+      }
+    }
+  },
+  "required": ["items"]
+}
