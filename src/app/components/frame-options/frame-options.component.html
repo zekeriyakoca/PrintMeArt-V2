@@ -1,7 +1,7 @@
 <div class="grid grid-cols-6 gap-2 mt-3">
   @for (frame of group().options; track $index) {
   <div (click)="selectOption(frame.id)"
-    [class]="'relative flex max-w-[75px] h-16 rounded-sm md:rounded-lg border-2 cursor-pointer ' + (selectedOption() === frame.id ? 'border-primary-600 dark:border-primary-500' : 'border-transparent')">
+    [class]="'relative flex max-w-[75px] h-16 rounded-sm md:rounded-lg border-2 cursor-pointer ' + (selectedOption() === frame.id ? 'border-primary-600' : 'border-transparent')">
     <div class="absolute inset-0.5 rounded-none md:rounded-lg overflow-hidden z-0 bg-no-repeat bg-center bg-cover"
       [style.background-image]="'url(' + (frame.imageUrl || 'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg') + ')'">
     </div>

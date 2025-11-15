@@ -15,7 +15,6 @@
 - [ ] OpenAPI endpoint defined or stubbed in `API/openapi.yaml`. (when exist)
 - [ ] State shape added/updated under `SCHEMAS/feature_state/*.json`.
 - [ ] Routes planned (`app.routes.ts`) and lazy loading considered.
-- [ ] i18n keys identified (if user-facing strings). (when exist)
 - [ ] Error handling path (interceptor signal or typed Result) chosen.
 - [ ] Tests planned (unit + e2e stub name).(when exist)
 

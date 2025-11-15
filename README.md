@@ -10,6 +10,7 @@ Core docs have moved under `docs/` for clarity:
 - State Schemas: `SCHEMAS/feature_state/*`
 - [Agentic Spec-to-PR Workflow](docs/AGENTIC_WORKFLOW.md)
 - [Feature Tickets](FEATURES/)
+- [React → Angular Migration Playbook](docs/REACT_TO_ANGULAR_PLAYBOOK.md)
 
 When adding a feature:
 <!-- 1. Update OpenAPI (`API/openapi.yaml`). -->

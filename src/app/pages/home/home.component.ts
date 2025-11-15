@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { CollectionCardComponent } from '../../components/collection-card/collection-card.component';
 import { OurServicesComponent } from '../../components/our-services/our-services.component';
+import { CategoryGridComponent } from '../../components/category-grid/category-grid.component';
 import { ApiService } from '../../services/api/api.service';
 import { CategoryDto } from '../../models/category';
 import { BasePageComponent } from '../basePageComponent';
@@ -14,7 +15,11 @@ import { first } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [OurServicesComponent, CollectionCardComponent],
+  imports: [
+    OurServicesComponent,
+    CollectionCardComponent,
+    CategoryGridComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,10 +40,14 @@ export class HomeComponent extends BasePageComponent {
         if (cats && cats.length > 0) {
           const categories = cats[0].childCategories ?? [];
           // Temporary image URLs
-          categories[0].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/tshirt-cat.png";
-          categories[1].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/shoes-cat.jpeg";
-          categories[2].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/jacket-cat.png";
-          categories[3].imageUrl = "https://ecombone.blob.core.windows.net/ecommbone-catalog-images/short-cat.png";
+          categories[0].imageUrl =
+            'https://ecombone.blob.core.windows.net/ecommbone-catalog-images/tshirt-cat.png';
+          categories[1].imageUrl =
+            'https://ecombone.blob.core.windows.net/ecommbone-catalog-images/shoes-cat.jpeg';
+          categories[2].imageUrl =
+            'https://ecombone.blob.core.windows.net/ecommbone-catalog-images/jacket-cat.png';
+          categories[3].imageUrl =
+            'https://ecombone.blob.core.windows.net/ecommbone-catalog-images/short-cat.png';
           this.childCategories.set(categories);
         }
       });

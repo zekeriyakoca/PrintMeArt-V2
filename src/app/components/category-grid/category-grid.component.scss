@@ -1,0 +1,8 @@
+.hiddenScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hiddenScrollbar::-webkit-scrollbar { display: none; }
+
+.nc-CategoryGrid { /* Tailwind utility driven; add overrides here if needed */ }
+
