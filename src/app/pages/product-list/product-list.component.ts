@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ApiService } from '../../services/api/api.service';
@@ -29,16 +29,14 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
   styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent extends BasePageComponent implements OnInit {
-  categoryName: string = '';
   products = signal<PaginatedListDto<ProductSimpleDto>>(
     {} as PaginatedListDto<ProductSimpleDto>,
   );
-  filterOptions = signal<FilterGroupDto[]>([]);
   selectedFilterOptions = signal<ProductFilterRequestDto>({
     pageSize: 12,
     pageIndex: 0,
   });
-  searchText = '';
+  filterOptions = signal<FilterGroupDto[]>([]);
 
   constructor(
     private route: ActivatedRoute,
@@ -51,46 +49,23 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     this.route.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
-        this.categoryName = params.get('categoryName') || '';
-        this.fetchProducts();
+        this.selectedFilterOptions().categoryName =
+          params.get('categoryName') || '';
+        this.fetchProductsWithFilters();
       });
+
     this.fetchFilterOptions();
   }
 
   fetchFilterOptions() {
-    this.apiService
-      .getFilterOptions()
-      .pipe(first())
-      .subscribe((filterOptions) => {
-        const onlyCategoryAndAttributeOptions = filterOptions.filter(
-          (o) =>
-            o.groupType.toLowerCase().includes('categories') ||
-            o.groupType.toLowerCase().includes('attributes'),
-        );
-        this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
-      });
-  }
-
-  fetchProducts() {
-    if (this.categoryName != '') {
-      this.apiService
-        .getProductsByCategory(this.categoryName)
-        .pipe(first())
-        .subscribe((products) => {
-          if (products?.data) {
-            this.products.set(products);
-          }
-        });
-    } else {
-      this.apiService
-        .getFilteredProducts({ pageSize: 12, pageIndex: 0 })
-        .pipe(first())
-        .subscribe((products) => {
-          if (products?.data) {
-            this.products.set(products);
-          }
-        });
-    }
+    this.apiService.getFilterOptions().subscribe((filterOptions) => {
+      const onlyCategoryAndAttributeOptions = filterOptions.filter(
+        (o) =>
+          o.groupType.toLowerCase().includes('categories') ||
+          o.groupType.toLowerCase().includes('attributes'),
+      );
+      this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
+    });
   }
 
   selectOption(groupType: string, optionName: string) {
@@ -126,10 +101,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   }
 
   search(): void {
-    this.selectedFilterOptions.update((prev) => ({
-      ...prev,
-      searchTerm: this.searchText.trim(),
-    }));
     this.fetchProductsWithFilters();
   }
 

@@ -29,6 +29,6 @@
     class="relative w-[50px] h-[50px] items-center justify-center rounded-full bg-white text-slate-600 disabled:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 transition-colors"
     [disabled]="isLastButtonDisabled()" (click)="goToLastPage()">
     Last
-    <span class="absolute top-0 right-0 text-md text-[#a8bae9] z-10 shadow-none">{{ totalPages }}</span>
+    <span class="absolute top-0 right-0 text-md text-[#a8bae9] z-10 shadow-none">{{ totalPages() }}</span>
   </button>
 </nav>

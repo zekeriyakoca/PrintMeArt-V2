@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  effect,
+  input,
+  Input,
+  model,
+  OnInit,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,34 +16,49 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit {
-  @Input() className: string = '';
+  className = input<string>('');
+  totalPages = input<number>(1);
 
-  // You'll need to inject your filter service or pass these as inputs
-  pageIndex: number = 0;
-  totalPages: number = 10; // Replace with actual value from service
+  pageSize = model<number>(10);
+  pageIndex = model<number>(0);
+  paginationChanged = output<void>();
 
-  ngOnInit() {
-    // Initialize pagination state from your service
+  private _initialized = false;
+
+  constructor() {
+    effect(() => {
+      this.pageIndex();
+      this.pageSize();
+
+      if (!this._initialized) {
+        this._initialized = true;
+        return; // skip initial run
+      }
+
+      this.paginationChanged.emit();
+    });
   }
+  ngOnInit() {}
 
   setPageIndex(index: number) {
-    this.pageIndex = index;
-    // Update your filter service here
-    // this.filterService.setPageIndex(index);
+    this.pageIndex.set(index);
   }
 
   getVisiblePages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, index) => index).filter(
-      (index) => index >= this.pageIndex - 4 && index <= this.pageIndex + 4,
+    return Array.from(
+      { length: this.totalPages() },
+      (_, index) => index,
+    ).filter(
+      (index) => index >= this.pageIndex() - 4 && index <= this.pageIndex() + 4,
     );
   }
 
   isFirstButtonDisabled(): boolean {
-    return this.pageIndex <= 0;
+    return this.pageIndex() <= 0;
   }
 
   isLastButtonDisabled(): boolean {
-    return this.totalPages <= this.pageIndex + 1;
+    return this.totalPages() <= this.pageIndex() + 1;
   }
 
   goToFirstPage() {
@@ -43,10 +66,10 @@ export class PaginationComponent implements OnInit {
   }
 
   goToLastPage() {
-    this.setPageIndex(this.totalPages - 1);
+    this.setPageIndex(this.totalPages() - 1);
   }
 
   isCurrentPage(index: number): boolean {
-    return index === this.pageIndex;
+    return index === this.pageIndex();
   }
 }
