@@ -1,6 +1,16 @@
-import { ProductDetailDto, ProductSearchRequestDto, ProductSimpleDto, UpsertAttributesRequestDto, UpsertVariantRequestDto } from './../../models/product';
+import {
+  ProductDetailDto,
+  ProductSearchRequestDto,
+  ProductSimpleDto,
+  UpsertAttributesRequestDto,
+  UpsertVariantRequestDto,
+} from './../../models/product';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import {
   UpdateProductRequestDto,
@@ -22,24 +32,26 @@ export class ProductService {
   getProducts(
     pageIndex: number,
     pageSize: number,
-    searchTerm: string
+    searchTerm: string,
   ): Observable<PaginatedItems<ProductSimpleDto>> {
-
     const request = new ProductSearchRequestDto(pageIndex, pageSize);
     request.searchTerm = searchTerm;
 
-    return this._httpClient.post<PaginatedItems<ProductSimpleDto>>(`${environment.serviceUrls['catalog-api']}/catalog/v1/product/search`,request )
+    return this._httpClient.post<PaginatedItems<ProductSimpleDto>>(
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/search`,
+      request,
+    );
   }
 
   getProduct(id: number): Observable<ProductDto | undefined> {
     return this._httpClient.get<ProductDto>(
-      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${id}`
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${id}`,
     );
   }
 
   deleteProduct(id: number): Observable<void> {
     return this._httpClient.delete<void>(
-      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${id}`
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${id}`,
     );
   }
 
@@ -48,84 +60,84 @@ export class ProductService {
       throw new Error('Product id is required');
     }
 
-    const body = {...product, images : product.imageDtos.map((image) => image.original)};
+    const body = {
+      ...product,
+      images: product.imageDtos.map((image) => image.original),
+    };
     return this._httpClient.put(
       `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${product.id}`,
-      body
+      body,
     );
   }
 
-  createProduct(
-    product: CreateProductRequestDto
-  ) {
-    const body = {...product, images : product.imageDtos.map((image) => image.original)};
+  createProduct(product: CreateProductRequestDto) {
+    const body = {
+      ...product,
+      images: product.imageDtos.map((image) => image.original),
+    };
     return this._httpClient.post(
       `${environment.serviceUrls['catalog-api']}/catalog/v1/product`,
-      body
+      body,
     );
   }
 
   getVariant(
     productId: number,
-    id: number
+    id: number,
   ): Observable<VariantDto | undefined> {
-    return this._httpClient.get<VariantDto>(`${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${id}` );
+    return this._httpClient.get<VariantDto>(
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${id}`,
+    );
   }
 
   getVariants(
     productId: number,
     page: number, // Todo: Implement pagination when supperted by the API
     pageSize: number,
-    searchTerm: string
+    searchTerm: string,
   ): Observable<VariantDto[]> {
-    return this._httpClient.get<VariantDto[]>(`${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants` );
+    return this._httpClient.get<VariantDto[]>(
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants`,
+    );
   }
 
-  updateVariant(productId:number, variant: VariantDto) {
+  updateVariant(productId: number, variant: VariantDto) {
     if (variant.id === 0 || productId === 0) {
       throw new Error('ProductId and VariantId are both required');
     }
     // TODO : Remove this function at all
-       return this._httpClient.put(
-         `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variant.id}`,
-         {}
-       );
-
-    // const body = {
-    //   variantId: variant.id,
-    //   productId: productId,
-    //   name: variant.name,
-    //   description: variant.description,
-    //   availableStock: variant.availableStock,
-    //   originalPrice: variant.originalPrice,
-    //   discountAmount: variant.discountAmount,
-    //   discountRate: variant.discountRate,
-    //   order: variant.order,
-    //   imageUrls: variant.images.map((image) => image.original),
-    // } as UpsertVariantRequestDto;
-    // return this._httpClient.put(
-    //   `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variant.id}`,
-    //   body
-    // );
+    return this._httpClient.put(
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variant.id}`,
+      {},
+    );
   }
 
   getProductAttributes(
     productId: number,
-    variantId: number
+    variantId: number,
   ): Observable<ProductAttributeDto[]> {
-    return this._httpClient.get<ProductAttributeDto[]>(`${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variantId}/attributes` );
+    return this._httpClient.get<ProductAttributeDto[]>(
+      `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variantId}/attributes`,
+    );
   }
 
-
-  updateProductAttributes(productId:number, variantId:number, attributes: ProductAttributeDto[]) {
+  updateProductAttributes(
+    productId: number,
+    variantId: number,
+    attributes: ProductAttributeDto[],
+  ) {
     if (productId === 0 || variantId === 0) {
       throw new Error('ProductId and VariantId are both required');
     }
 
-    const body = new UpsertAttributesRequestDto(productId, variantId, attributes);
+    const body = new UpsertAttributesRequestDto(
+      productId,
+      variantId,
+      attributes,
+    );
     return this._httpClient.put(
       `${environment.serviceUrls['catalog-api']}/catalog/v1/product/${productId}/variants/${variantId}/attributes`,
-      body
+      body,
     );
   }
 }

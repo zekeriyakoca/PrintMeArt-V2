@@ -1,4 +1,4 @@
-<div class="nc-CategoryGrid px-0 md:px-6">
+<div class="nc-CategoryGrid px-0 md:px-6 max-w-screen-xl mx-auto">
   <div class="mb-8 mt-12 text-neutral-900">
     <h2 class="text-3xl md:text-4xl 2xl:text-5xl font-semibold text-center">{{ heading() }}.</h2>
   </div>
@@ -6,7 +6,7 @@
     <div class="p-1 bg-white rounded-full shadow-lg overflow-x-auto hiddenScrollbar flex space-x-2">
       @for (tab of tabs(); track tab.name) {
       <button type="button" (click)="setTab(tab.name)"
-        class="px-8 py-3 rounded-full transition-colors whitespace-nowrap flex items-center space-x-2 text-md"
+        class="px-8 py-3 rounded-full transition-colors whitespace-nowrap flex items-center space-x-2 text-sm"
         [class]="tabActive() === tab.name ? 'bg-slate-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'">
         <app-icon [name]="tab.iconName" />
         <span>{{ tab.name }}</span>
@@ -14,7 +14,6 @@
       }
     </div>
   </div>
-
 
   @if (childCategories().length === 0) {
   <div class="text-center text-neutral-500 text-sm">No child categories.</div>
@@ -32,6 +31,7 @@
           <div
             class="w-14 h-14 md:w-32 md:h-32 rounded-full overflow-hidden z-0 {{'bg-rose-50' }} flex items-center justify-center">
             <img class="w-full h-full object-cover" [src]="item.imageUrl" [alt]="item.name" loading="lazy" />
+
           </div>
           <span class="text-xs text-slate-700 font-medium pl-1 md:ml-0">
             {{ productCount(item) || 0 }} {{ 'products' }}
