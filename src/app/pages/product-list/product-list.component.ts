@@ -51,6 +51,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       .subscribe((params) => {
         this.selectedFilterOptions().categoryName =
           params.get('categoryName') || '';
+        this.resetPagination();
         this.fetchProductsWithFilters();
       });
 
@@ -86,7 +87,16 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
     }
 
     this.selectedFilterOptions.set(newSelectedOptions);
+    this.resetPagination();
     this.fetchProductsWithFilters();
+  }
+
+  resetPagination() {
+    const currentSelectedOptions = this.selectedFilterOptions();
+    this.selectedFilterOptions.set({
+      ...currentSelectedOptions,
+      pageIndex: 0,
+    });
   }
 
   fetchProductsWithFilters() {
@@ -101,6 +111,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   }
 
   search(): void {
+    this.resetPagination();
     this.fetchProductsWithFilters();
   }
 
