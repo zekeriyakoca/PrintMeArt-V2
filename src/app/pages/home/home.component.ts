@@ -5,20 +5,24 @@ import {
   Input,
   signal,
 } from '@angular/core';
-import { CollectionCardComponent } from '../../components/collection-card/collection-card.component';
+// import { CollectionCardComponent } from '../../components/collection-card/collection-card.component';
 import { OurServicesComponent } from '../../components/our-services/our-services.component';
 import { CategoryGridComponent } from '../../components/category-grid/category-grid.component';
 import { ApiService } from '../../services/api/api.service';
 import { CategoryDto } from '../../models/category';
 import { BasePageComponent } from '../basePageComponent';
 import { first } from 'rxjs';
+import { OrderJourneyComponent } from '../../components/order-journey/order-journey.component';
+import { VisitUsComponent } from '../../components/visit-us/visit-us.component';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     OurServicesComponent,
-    CollectionCardComponent,
+    // CollectionCardComponent,
     CategoryGridComponent,
+    OrderJourneyComponent,
+    VisitUsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

@@ -1,0 +1,28 @@
+<div class="nc-SectionHowItWork">
+  <div class="relative grid grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
+    <img class="hidden md:block absolute inset-x-0 top-5 ml-10" src="/assets/vector.svg" alt="vector" />
+    @for (step of steps; track $index) {
+    <div class="relative flex flex-col items-center max-w-xs mx-auto">
+      <div class="mb-4 sm:mb-10 max-w-[140px] mx-auto">
+        <picture class="flex h-full">
+          <img class="rounded-3xl mx-auto" [src]="step.image.src" alt="HIW" sizes="150px" />
+        </picture>
+      </div>
+      <div class="text-center mt-auto space-y-5">
+        <span class="nc-Badge inline-flex px-2.5 py-1 rounded-full font-medium text-xs relative"
+          [class]="step.badgeClasses">
+          <span>{{ step.label }}</span>
+        </span>
+
+        <h3 class="text-base font-semibold">
+          <span>{{ step.title }}</span>
+        </h3>
+
+        <span class="block text-slate-600 dark:text-slate-400 text-sm leading-6">
+          <span>{{ step.description }}</span>
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+</div>

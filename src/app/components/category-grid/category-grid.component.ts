@@ -19,7 +19,6 @@ import { CategoryDto } from '../../models/category';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryGridComponent {
-  heading = input<string>('Start Exploring');
   categories = input<CategoryDto[]>([]);
 
   private readonly ICON_NAMES: ('marker' | 'user' | 'trophy' | 'badge')[] = [

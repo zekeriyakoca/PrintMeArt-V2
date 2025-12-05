@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div id="secion-categories" class=" container mx-auto px-0 bg-slate-50 py-16 px-12 rounded-sm">
+  <!-- <div id="secion-categories" class=" container mx-auto px-0 bg-slate-50 py-16 px-12 rounded-sm">
     <div>
       <h3
         class="text-4xl font-light mb-4 translate-x-[-100px] translate-y-[-20px] bg-white w-max p-4 rounded-[5px] text-slate-700">
@@ -19,11 +19,17 @@
       <app-collection-card [category]="childCat" />
       }
     </div>
-  </div>
+  </div> -->
   <div id="secion-categories" class=" container mx-auto mt-16 px-0 bg-slate-50 py-16 px-0 rounded-sm">
     <app-category-grid [categories]="childCategories()" />
   </div>
-  <div id="section-our-services" class="container mx-auto">
+  <div id="section-our-services" class="container mx-auto border-t border-slate-200 mt-16">
     <app-our-services />
+  </div>
+  <div class="container mx-auto border-b border-t border-slate-200 py-24 ">
+    <app-order-journey />
+  </div>
+  <div class="container mx-auto py-24 ">
+    <app-visit-us />
   </div>
 </div>
