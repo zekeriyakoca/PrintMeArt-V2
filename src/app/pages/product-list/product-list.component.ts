@@ -8,7 +8,7 @@ import {
   ProductFilterRequestDto,
   ProductSimpleDto,
 } from '../../models/product';
-import { first, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
 import { CommonModule } from '@angular/common';
@@ -102,7 +102,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
   fetchProductsWithFilters() {
     this.apiService
       .getFilteredProducts(this.selectedFilterOptions())
-      .pipe(first())
       .subscribe((products) => {
         if (products?.data) {
           this.products.set(products);

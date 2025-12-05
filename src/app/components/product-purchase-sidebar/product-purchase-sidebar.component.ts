@@ -28,12 +28,13 @@ import { SizeOptionsComponent } from '../size-options/size-options.component';
   styleUrl: './product-purchase-sidebar.component.scss',
 })
 export class ProductPurchaseSidebarComponent extends BasePageComponent {
+  private variantId: number = 1;
+
   product = model<ProductDto>({} as ProductDto);
+
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
 
-  private variantId: number = 1;
-  isMatIncluded = false;
   sizeOptions = [
     { id: 1, name: '13x18', val1: 13, val2: 18 },
     { id: 2, name: '21x30', val1: 21, val2: 30 },
@@ -43,6 +44,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     { id: 6, name: '60x90', val1: 60, val2: 90 },
   ];
   selectedSize = signal(this.sizeOptions[0]);
+
+  isMatIncluded = false;
 
   constructor(
     private apiService: ApiService,
@@ -102,7 +105,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
     this.apiService
       .calculatePrice(this.product().id.toString(), selectedOptions)
-      .pipe(first())
       .subscribe({
         next: (response) => {
           this.calculatedPrice.set(response.price);

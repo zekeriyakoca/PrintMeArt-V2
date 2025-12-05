@@ -1,6 +1,6 @@
 import { CustomerCart } from './../../models/cart-item';
 import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { first, map, Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -56,12 +56,10 @@ export class CartService {
       this.cart().push(newItem);
     }
 
-    this.updateCartOnBackend(this.cart())
-      .pipe(first())
-      .subscribe({
-        next: () => console.log('Product added to cart successfully'),
-        error: (error) => console.error('Error adding product to cart:', error),
-      });
+    this.updateCartOnBackend(this.cart()).subscribe({
+      next: () => console.log('Product added to cart successfully'),
+      error: (error) => console.error('Error adding product to cart:', error),
+    });
   }
 
   private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
@@ -85,7 +83,6 @@ export class CartService {
 
     this._httpClient
       .get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`)
-      .pipe(first())
       .subscribe((cartItems) => this.cart.set(cartItems));
   }
 
@@ -94,12 +91,10 @@ export class CartService {
 
     this.cart.set(updatedCart);
 
-    this.updateCartOnBackend(updatedCart)
-      .pipe(first())
-      .subscribe({
-        next: () => console.log('Product removed from cart successfully'),
-        error: (error) =>
-          console.error('Error removing product from cart:', error),
-      });
+    this.updateCartOnBackend(updatedCart).subscribe({
+      next: () => console.log('Product removed from cart successfully'),
+      error: (error) =>
+        console.error('Error removing product from cart:', error),
+    });
   }
 }

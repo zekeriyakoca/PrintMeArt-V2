@@ -39,19 +39,19 @@ export class BootstrapService {
 
   fetchCategories() {
     if (this.categories().length <= 0) {
-      this.getCategories().pipe(first()).subscribe();
+      this.getCategories().subscribe();
     }
   }
 
   private getCategories(): Observable<CategoryDto[] | undefined> {
     return this._httpClient
-      .get<CategoryDto[]>(
-        `${environment.serviceUrls['catalog-api']}/catalog/v1/category`
-      )
+      .get<
+        CategoryDto[]
+      >(`${environment.serviceUrls['catalog-api']}/catalog/v1/category`)
       .pipe(
         tap((categories) => {
           this.categories.set(categories ?? []);
-        })
+        }),
       );
   }
 
@@ -67,14 +67,14 @@ export class BootstrapService {
 
   getAttributeGroups(): Observable<AttributeGroupDto[]> {
     return this._httpClient
-      .get<AttributeGroupDto[]>(
-        `${environment.serviceUrls['catalog-api']}/catalog/v1/attribute-group`
-      )
+      .get<
+        AttributeGroupDto[]
+      >(`${environment.serviceUrls['catalog-api']}/catalog/v1/attribute-group`)
       .pipe(
         take(1),
         tap((attributeGroups) => {
           this.attributeGroups.set(attributeGroups ?? []);
-        })
+        }),
       );
     return of(ATTRIBUTE_GROUPS);
   }
