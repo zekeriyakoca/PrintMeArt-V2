@@ -1,4 +1,12 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  effect,
+  ElementRef,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ApiService } from '../../services/api/api.service';
@@ -28,7 +36,11 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent extends BasePageComponent implements OnInit {
+export class ProductListComponent
+  extends BasePageComponent
+  implements OnInit, AfterViewInit
+{
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   products = signal<PaginatedListDto<ProductSimpleDto>>(
     {} as PaginatedListDto<ProductSimpleDto>,
   );
@@ -56,6 +68,12 @@ export class ProductListComponent extends BasePageComponent implements OnInit {
       });
 
     this.fetchFilterOptions();
+  }
+
+  ngAfterViewInit() {
+    if (this.route.snapshot.fragment === 'search') {
+      this.searchInput.nativeElement.focus();
+    }
   }
 
   fetchFilterOptions() {
