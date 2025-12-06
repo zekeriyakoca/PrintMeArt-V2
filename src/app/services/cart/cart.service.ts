@@ -16,6 +16,9 @@ export class CartService {
   showCartNotification = signal<boolean>(false);
   lastAddedItem = signal<CartItemDto | null>(null);
 
+  // Cart sidebar state
+  isCartSidebarOpen = signal<boolean>(false);
+
   constructor(
     private _httpClient: HttpClient,
     @Inject(PLATFORM_ID) private platformId: string,
@@ -27,6 +30,18 @@ export class CartService {
 
   hideCartNotification(): void {
     this.showCartNotification.set(false);
+  }
+
+  openCartSidebar(): void {
+    this.isCartSidebarOpen.set(true);
+  }
+
+  closeCartSidebar(): void {
+    this.isCartSidebarOpen.set(false);
+  }
+
+  toggleCartSidebar(): void {
+    this.isCartSidebarOpen.update((open) => !open);
   }
 
   addItemToCart(

@@ -47,7 +47,7 @@ export class HeaderComponent extends BaseAppComponent {
   }
 
   navigateToCart() {
-    this.router.navigate(['/cart']);
+    this.cartService.openCartSidebar();
   }
   toggleMobileMenu() {
     const mobileMenu = document.querySelector('.mobile-menu');

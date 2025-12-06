@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CartAddedModalComponent } from './components/cart-added-modal/cart-added-modal.component';
+import { CartSidebarComponent } from './components/cart-sidebar/cart-sidebar.component';
 import { CartService } from './services/cart/cart.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { CartService } from './services/cart/cart.service';
     HeaderComponent,
     FooterComponent,
     CartAddedModalComponent,
+    CartSidebarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
