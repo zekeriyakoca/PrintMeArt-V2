@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   computed,
   inject,
+  effect,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -16,9 +18,11 @@ import { CartService } from '../../services/cart/cart.service';
   styleUrl: './cart-added-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CartAddedModalComponent {
+export class CartAddedModalComponent implements OnDestroy {
   private router = inject(Router);
   private cartService = inject(CartService);
+  private autoHideTimeout: ReturnType<typeof setTimeout> | null = null;
+  private isPaused = false;
 
   isVisible = this.cartService.showCartNotification;
   addedItem = this.cartService.lastAddedItem;
@@ -29,6 +33,46 @@ export class CartAddedModalComponent {
       .cart()
       .reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
   );
+
+  constructor() {
+    effect(() => {
+      if (this.isVisible()) {
+        this.startAutoHide();
+      } else {
+        this.clearAutoHide();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.clearAutoHide();
+  }
+
+  private startAutoHide(): void {
+    this.clearAutoHide();
+    if (!this.isPaused) {
+      this.autoHideTimeout = setTimeout(() => this.close(), 6000);
+    }
+  }
+
+  private clearAutoHide(): void {
+    if (this.autoHideTimeout) {
+      clearTimeout(this.autoHideTimeout);
+      this.autoHideTimeout = null;
+    }
+  }
+
+  pauseAutoHide(): void {
+    this.isPaused = true;
+    this.clearAutoHide();
+  }
+
+  resumeAutoHide(): void {
+    this.isPaused = false;
+    if (this.isVisible()) {
+      this.startAutoHide();
+    }
+  }
 
   close(): void {
     this.cartService.hideCartNotification();
