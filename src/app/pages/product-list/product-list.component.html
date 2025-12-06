@@ -31,7 +31,7 @@
   <div>
     <h2 class="mt-4 mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
       (click)="hideFilters.set(!hideFilters())">
-      <span class="inline-flex  border-indigo-900 pr-4 ">
+      <span class="inline-flex  border-indigo-900 pr-4 text-[17px]">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-6 mr-[1px]">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,7 +83,7 @@
         }
       </div>
       <div class="flex justify-end">
-        <app-pagination (paginationChanged)="fetchProductsWithFilters()" [className]="'mt-8'"
+        <app-pagination (paginationChanged)="onPaginationChanged()" [className]="'mt-8'"
           [totalPages]="products().totalPage" [(pageIndex)]="selectedFilterOptions().pageIndex"
           [(pageSize)]="selectedFilterOptions().pageSize"></app-pagination>
       </div>

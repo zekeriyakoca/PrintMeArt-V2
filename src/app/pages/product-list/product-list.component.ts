@@ -1,13 +1,12 @@
 import {
   AfterViewInit,
   Component,
-  effect,
   ElementRef,
   OnInit,
   signal,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ApiService } from '../../services/api/api.service';
 import {
@@ -53,6 +52,7 @@ export class ProductListComponent
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private apiService: ApiService,
   ) {
     super();
@@ -62,9 +62,14 @@ export class ProductListComponent
     this.route.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
-        this.selectedFilterOptions().categoryName =
-          params.get('categoryName') || '';
-        this.resetPagination();
+        this.selectedFilterOptions.set({
+          pageSize: +(params.get('pageSize') ?? 12),
+          pageIndex: +(params.get('pageIndex') ?? 0),
+          categoryName: params.get('categoryName') || undefined,
+          attributeName: params.get('attributeName') || undefined,
+          optionName: params.get('optionName') || undefined,
+          searchTerm: params.get('searchTerm') || undefined,
+        });
         this.fetchProductsWithFilters();
       });
 
@@ -88,34 +93,43 @@ export class ProductListComponent
     });
   }
 
-  selectOption(groupType: string, optionName: string) {
-    const currentSelectedOptions = this.selectedFilterOptions();
-    const newSelectedOptions: ProductFilterRequestDto = {
-      ...currentSelectedOptions,
-      categoryName: undefined,
-      attributeName: undefined,
-      optionName: undefined,
-    };
-
-    if (groupType.toLowerCase().includes('categories')) {
-      newSelectedOptions.categoryName = optionName;
-    } else if (groupType.toLowerCase().includes('attributes')) {
-      newSelectedOptions.attributeName = optionName;
-    } else if (groupType.toLowerCase().includes('options')) {
-      newSelectedOptions.optionName = optionName;
-    }
-
-    this.selectedFilterOptions.set(newSelectedOptions);
-    this.resetPagination();
-    this.fetchProductsWithFilters();
+  private getFilterKey(groupType: string): keyof ProductFilterRequestDto {
+    if (groupType.toLowerCase().includes('categories')) return 'categoryName';
+    if (groupType.toLowerCase().includes('attributes')) return 'attributeName';
+    return 'optionName';
   }
 
-  resetPagination() {
-    const currentSelectedOptions = this.selectedFilterOptions();
-    this.selectedFilterOptions.set({
-      ...currentSelectedOptions,
+  selectOption(groupType: string, optionName: string) {
+    const key = this.getFilterKey(groupType);
+    const current = this.selectedFilterOptions();
+    const newFilters: ProductFilterRequestDto = {
+      pageSize: current.pageSize,
       pageIndex: 0,
+      [key]: current[key] === optionName ? undefined : optionName,
+    };
+    this.navigateWithFilters(newFilters);
+  }
+
+  resetFilters() {
+    const current = this.selectedFilterOptions();
+    this.navigateWithFilters({
+      pageSize: current.pageSize,
+      pageIndex: 0,
+      searchTerm: current.searchTerm,
     });
+  }
+
+  private navigateWithFilters(filters: ProductFilterRequestDto) {
+    const queryParams: Record<string, string | number | undefined> = {};
+    if (filters.pageIndex) queryParams['pageIndex'] = filters.pageIndex;
+    if (filters.pageSize !== 12) queryParams['pageSize'] = filters.pageSize;
+    if (filters.categoryName)
+      queryParams['categoryName'] = filters.categoryName;
+    if (filters.attributeName)
+      queryParams['attributeName'] = filters.attributeName;
+    if (filters.optionName) queryParams['optionName'] = filters.optionName;
+    if (filters.searchTerm) queryParams['searchTerm'] = filters.searchTerm;
+    this.router.navigate([], { queryParams });
   }
 
   fetchProductsWithFilters() {
@@ -129,8 +143,16 @@ export class ProductListComponent
   }
 
   search(): void {
-    this.resetPagination();
-    this.fetchProductsWithFilters();
+    const current = this.selectedFilterOptions();
+    this.navigateWithFilters({
+      pageIndex: 0,
+      pageSize: current.pageSize,
+      searchTerm: current.searchTerm,
+    });
+  }
+
+  onPaginationChanged(): void {
+    this.navigateWithFilters(this.selectedFilterOptions());
   }
 
   mapColorToHex(color: string): string {
