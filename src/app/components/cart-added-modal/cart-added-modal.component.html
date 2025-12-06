@@ -1,0 +1,102 @@
+@if (isVisible()) {
+<div class="fixed inset-0 z-50" role="dialog" aria-modal="true">
+  <!-- Backdrop -->
+  <div
+    class="fixed inset-0 bg-black/40 transition-opacity"
+    (click)="close()"
+  ></div>
+
+  <!-- Modal -->
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <div
+      class="relative w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+        <div class="flex items-center space-x-2 text-green-600">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span class="font-semibold text-slate-900">Added to Cart</span>
+        </div>
+        <button
+          type="button"
+          class="w-8 h-8 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition-colors"
+          (click)="close()"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Product Info -->
+      @if (addedItem()) {
+      <div class="p-6">
+        <div class="flex gap-4">
+          <!-- Product Image -->
+          <div class="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-slate-100">
+            <img
+              [src]="addedItem()!.pictureUrl"
+              [alt]="addedItem()!.productName"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Product Details -->
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-slate-900 truncate">
+              {{ addedItem()!.productName }}
+            </h3>
+
+            <!-- Selected Options -->
+            @if (addedItem()!.selectedOptions?.length) {
+            <div class="mt-1 text-sm text-slate-500">
+              @for (option of addedItem()!.selectedOptions; track option.optionId) {
+              <span class="mr-2">{{ option.optionName || option.name }}</span>
+              }
+            </div>
+            }
+
+            <div class="mt-2 flex items-center justify-between">
+              <span class="text-sm text-slate-600">Qty: {{ addedItem()!.quantity }}</span>
+              <span class="font-semibold text-slate-900">€{{ addedItem()!.unitPrice.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- Cart Summary -->
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200">
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-slate-600">Cart ({{ cartItemCount() }} items)</span>
+          <span class="font-semibold text-slate-900">€{{ cartTotal().toFixed(2) }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="px-6 py-4 flex gap-3">
+        <button
+          type="button"
+          class="flex-1 py-3 px-4 rounded-full border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+          (click)="continueShopping()"
+        >
+          Continue Shopping
+        </button>
+        <button
+          type="button"
+          class="flex-1 py-3 px-4 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
+          (click)="viewCart()"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+          </svg>
+          View Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}

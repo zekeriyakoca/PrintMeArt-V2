@@ -12,6 +12,10 @@ export class CartService {
   private readonly BASKET_API_URL = environment.serviceUrls['basket-api'];
   cart = signal<CartItemDto[]>([]);
 
+  // Cart notification state
+  showCartNotification = signal<boolean>(false);
+  lastAddedItem = signal<CartItemDto | null>(null);
+
   constructor(
     private _httpClient: HttpClient,
     @Inject(PLATFORM_ID) private platformId: string,
@@ -19,6 +23,10 @@ export class CartService {
 
   get isSSR(): boolean {
     return this.platformId === 'server';
+  }
+
+  hideCartNotification(): void {
+    this.showCartNotification.set(false);
   }
 
   addItemToCart(
@@ -55,6 +63,10 @@ export class CartService {
     } else {
       this.cart().push(newItem);
     }
+
+    // Show cart notification
+    this.lastAddedItem.set(newItem);
+    this.showCartNotification.set(true);
 
     this.updateCartOnBackend(this.cart()).subscribe({
       next: () => console.log('Product added to cart successfully'),

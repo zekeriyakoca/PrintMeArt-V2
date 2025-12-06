@@ -128,7 +128,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       this.product().cheapestPrice,
       this.calculatedPrice(),
       this.quantity(),
-      this.product().images[0].original,
+      this.product().images[0].thumb,
       this.getSelectedOptions(),
     );
   }
