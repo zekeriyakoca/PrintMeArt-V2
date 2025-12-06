@@ -1,4 +1,24 @@
-.header-background{
-    position: relative;
-    width: 100%;
+.header-background {
+  position: relative;
+  width: 100%;
+}
+
+.category-leaf {
+  line-height: 27px;
+  font-weight: 200;
+}
+
+.filter-title {
+  @apply relative;
+  left: 18px;
+  transition: all 0.4s ease-in-out;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #7e6fa4;
+  font-weight: 200;
+  letter-spacing: 2px;
+
+  &.clicked {
+    left: 0px;
+  }
 }

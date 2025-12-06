@@ -49,6 +49,7 @@ export class ProductListComponent
     pageIndex: 0,
   });
   filterOptions = signal<FilterGroupDto[]>([]);
+  hideFilters = signal<boolean>(false);
 
   constructor(
     private route: ActivatedRoute,
