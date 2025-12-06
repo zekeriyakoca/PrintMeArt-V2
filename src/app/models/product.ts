@@ -11,6 +11,7 @@ export interface ProductSimpleDto {
   name: string;
   description: string;
   image: ProductImageDto;
+  secondImage: ProductImageDto;
   isAvailable: boolean;
   cheapestPrice: number;
   discountRate: number;
