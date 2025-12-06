@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { ApiService } from './../../services/api/api.service';
+import { Component, computed, signal } from '@angular/core';
 import { BaseAppComponent } from '../baseAppComponent';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { takeUntil } from 'rxjs';
+import { CategoryDto } from '../../models/category';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +18,18 @@ export class HeaderComponent extends BaseAppComponent {
   totalItemCountInCart = signal<number>(0);
   activeDropdown: string | null = null;
   isMobileMenuOpen = signal<boolean>(false);
+  categories = signal<CategoryDto[]>([]);
+
+  // Get the "Prints" parent category's child categories for the mega menu
+  printCategories = computed(() => {
+    const prints = this.categories().find((c) => c.slug === 'prints');
+    return prints?.childCategories ?? [];
+  });
+
   constructor(
     private router: Router,
     private cartService: CartService,
+    private apiService: ApiService,
   ) {
     super();
     toObservable(this.cartService.cart)
@@ -26,6 +37,9 @@ export class HeaderComponent extends BaseAppComponent {
       .subscribe((cart) => {
         this.totalItemCountInCart.set(cart.length);
       });
+    this.apiService.getCategories().subscribe((cats) => {
+      this.categories.set(cats || []);
+    });
   }
 
   navigateToSearch() {
@@ -50,5 +64,9 @@ export class HeaderComponent extends BaseAppComponent {
       this.activeDropdown = null;
       console.log(this.activeDropdown);
     }
+  }
+
+  encodeURIComponent(value: string): string {
+    return encodeURIComponent(value);
   }
 }

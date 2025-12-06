@@ -29,80 +29,21 @@
                     <div class="container">
                       <div class="flex text-sm border-t border-slate-200 py-14">
                         <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
-                          <!-- Nature & Landscapes -->
+                          @for (category of printCategories(); track category.id) {
                           <div>
-                            <p class="font-medium text-slate-900">Nature & Landscapes</p>
+                            <p class="font-medium text-slate-900">{{ category.name }}</p>
                             <ul class="grid space-y-4 mt-4">
+                              @for (child of category.childCategories; track child.id) {
                               <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=nature-prints">Nature prints</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=botanical-art">Botanical art</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=animal-art">Animal art</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=space-and-astronomy">Space and astronomy</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=maps-and-cities">Maps and cities</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=landscape">Landscape</a></li>
+                                  [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ child.name
+                                  }}</a>
+                              </li>
+                              }
                             </ul>
                           </div>
-                          <!-- Famous Painters -->
-                          <div>
-                            <p class="font-medium text-slate-900">Famous Painters</p>
-                            <ul class="grid space-y-4 mt-4">
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=art-prints">Art prints</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=renaissance-masters">Renaissance Masters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=dutch-masters">Dutch masters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=modern-masters">Modern masters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=abstract-art">Abstract art</a></li>
-                            </ul>
-                          </div>
-                          <!-- Posters -->
-                          <div>
-                            <p class="font-medium text-slate-900">Posters</p>
-                            <ul class="grid space-y-4 mt-4">
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=retro-and-vintage">Retro and vintage</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=black-and-white">Black and white</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=historical-posters">Historical posters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=classic-posters">Classic posters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=text-posters">Text posters</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=movies-and-games-posters">Movies & Games posters</a></li>
-                            </ul>
-                          </div>
-                          <!-- Art Styles -->
-                          <div>
-                            <p class="font-medium text-slate-900">Art Styles</p>
-                            <ul class="grid space-y-4 mt-4">
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=abstract">Abstract</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=modern">Modern</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=minimalist">Minimalist</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=illustrations">Illustrations</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=photographs">Photographs</a></li>
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  href="/search?category=iconic-photos">Iconic photos</a></li>
-                            </ul>
-                          </div>
+                          }
                         </div>
                         <!-- Right side card -->
-
-
                         <div class="w-[40%] xl:w-[35%] max-w-[450px]">
                           <div class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group">
                             <div class="absolute flex flex-col h-full w-full p-8 z-40 ">
@@ -131,11 +72,6 @@
                             </div>
                           </div>
                         </div>
-
-
-
-
-
                       </div>
                     </div>
                   </div>

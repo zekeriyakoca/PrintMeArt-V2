@@ -49,14 +49,14 @@ body {
 }
 
 p {
-    letter-spacing: 0.6px;
-    line-height: 29px;
+  letter-spacing: 0.6px;
+  line-height: 29px;
 }
 
-.content-container{
+.content-container {
   @apply flex flex-col mt-20 mb-10;
 }
 
-.contained-page{
-  @apply max-w-screen-xl mx-auto px-4 md:px-8;
+.contained-page {
+  @apply max-w-screen-2xl mx-auto px-4 md:px-8;
 }

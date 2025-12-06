@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { Observable, of } from 'rxjs';
+import { Observable, of, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -19,6 +19,7 @@ export class ApiService {
   private readonly CATALOG_API_URL = environment.serviceUrls['catalog-api'];
   private readonly PRICING_API_URL = environment.serviceUrls['pricing-api'];
   private readonly ORDERING_API_URL = environment.serviceUrls['ordering-api'];
+  private categoriesCache$?: Observable<CategoryDto[] | undefined>;
 
   constructor(
     private _httpClient: HttpClient,
@@ -33,9 +34,12 @@ export class ApiService {
     if (this.isSSR) {
       return of([]);
     }
-    return this._httpClient.get<CategoryDto[]>(
-      `${this.CATALOG_API_URL}/catalog/v1/categories`,
-    );
+    if (!this.categoriesCache$) {
+      this.categoriesCache$ = this._httpClient
+        .get<CategoryDto[]>(`${this.CATALOG_API_URL}/catalog/v1/categories`)
+        .pipe(shareReplay(1));
+    }
+    return this.categoriesCache$;
   }
 
   getProductsByCategory(

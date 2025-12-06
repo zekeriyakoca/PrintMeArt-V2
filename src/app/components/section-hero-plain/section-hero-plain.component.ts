@@ -28,19 +28,19 @@ export class SectionHeroPlainComponent {
       title: 'Museum Art Prints',
       image:
         'https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/bc6ca6b1-d98a-421a-8627-4d7c4296e04a/bc6ca6b1-d98a-421a-8627-4d7c4296e04a-mockup1.jpeg',
-      link: '/search?category=museum-art',
+      link: '/search?categoryName=museum-art',
     },
     {
       title: 'Your Custom Design',
       image:
         'https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/bc6ca6b1-d98a-421a-8627-4d7c4296e04a/bc6ca6b1-d98a-421a-8627-4d7c4296e04a-mockup1.jpeg',
-      link: '/search?category=custom-design',
+      link: '/search?categoryName=custom-design',
     },
     {
       title: 'Best Sellers',
       image:
         'https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/bc6ca6b1-d98a-421a-8627-4d7c4296e04a/bc6ca6b1-d98a-421a-8627-4d7c4296e04a-mockup1.jpeg',
-      link: '/search?category=best-sellers',
+      link: '/search?categoryName=best-sellers',
     },
   ]);
 }

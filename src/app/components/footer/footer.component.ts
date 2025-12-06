@@ -24,29 +24,35 @@ export class FooterComponent {
       id: '2',
       title: 'Nature & Landscapes',
       menus: [
-        { href: '/search?category=nature-prints', label: 'Nature prints' },
-        { href: '/search?category=botanical-art', label: 'Botanical art' },
-        { href: '/search?category=animal-art', label: 'Animal art' },
+        { href: '/search?categoryName=nature-prints', label: 'Nature prints' },
+        { href: '/search?categoryName=botanical-art', label: 'Botanical art' },
+        { href: '/search?categoryName=animal-art', label: 'Animal art' },
         {
-          href: '/search?category=space-and-astronomy',
+          href: '/search?categoryName=space-and-astronomy',
           label: 'Space and astronomy',
         },
-        { href: '/search?category=maps-and-cities', label: 'Maps and cities' },
-        { href: '/search?category=landscapes', label: 'Landscapes' },
+        {
+          href: '/search?categoryName=maps-and-cities',
+          label: 'Maps and cities',
+        },
+        { href: '/search?categoryName=landscapes', label: 'Landscapes' },
       ],
     },
     {
       id: '3',
       title: 'Famous Painters',
       menus: [
-        { href: '/search?category=art-prints', label: 'Art prints' },
+        { href: '/search?categoryName=art-prints', label: 'Art prints' },
         {
-          href: '/search?category=renaissance-masters',
+          href: '/search?categoryName=renaissance-masters',
           label: 'Renaissance Masters',
         },
-        { href: '/search?category=dutch-masters', label: 'Dutch masters' },
-        { href: '/search?category=modern-masters', label: 'Modern masters' },
-        { href: '/search?category=abstract-art', label: 'Abstract art' },
+        { href: '/search?categoryName=dutch-masters', label: 'Dutch masters' },
+        {
+          href: '/search?categoryName=modern-masters',
+          label: 'Modern masters',
+        },
+        { href: '/search?categoryName=abstract-art', label: 'Abstract art' },
       ],
     },
     {
@@ -54,22 +60,31 @@ export class FooterComponent {
       title: 'Posters',
       menus: [
         {
-          href: '/search?category=retro-and-vintage',
+          href: '/search?categoryName=retro-and-vintage',
           label: 'Retro and vintage',
         },
-        { href: '/search?category=black-and-white', label: 'Black and white' },
         {
-          href: '/search?category=historical-posters',
+          href: '/search?categoryName=black-and-white',
+          label: 'Black and white',
+        },
+        {
+          href: '/search?categoryName=historical-posters',
           label: 'Historical posters',
         },
-        { href: '/search?category=classic-posters', label: 'Classic posters' },
-        { href: '/search?category=text-posters', label: 'Text posters' },
         {
-          href: '/search?category=movies-and-games-posters',
+          href: '/search?categoryName=classic-posters',
+          label: 'Classic posters',
+        },
+        { href: '/search?categoryName=text-posters', label: 'Text posters' },
+        {
+          href: '/search?categoryName=movies-and-games-posters',
           label: 'Movies & Games posters',
         },
-        { href: '/search?category=music-posters', label: 'Music posters' },
-        { href: '/search?category=sports-posters', label: 'Sports posters' },
+        { href: '/search?categoryName=music-posters', label: 'Music posters' },
+        {
+          href: '/search?categoryName=sports-posters',
+          label: 'Sports posters',
+        },
       ],
     },
   ];

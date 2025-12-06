@@ -63,4 +63,8 @@ export class CategoryGridComponent {
     // Placeholder logic; adapt if product counts exist separately
     return cat.childCategories?.length || 0;
   }
+
+  encodeURIComponent(value: string): string {
+    return encodeURIComponent(value);
+  }
 }

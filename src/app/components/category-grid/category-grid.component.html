@@ -47,7 +47,7 @@
           </h2>
         </div>
 
-        <a [href]="'/search'"
+        <a [href]="'/products?categoryName=' + encodeURIComponent(item.name)"
           class="flex items-center text-xs md:text-sm group-hover:text-primary-500 transition-colors">
           <span>See Prints</span>
           <svg class="w-4 h-4 ml-2.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -56,7 +56,8 @@
         </a>
       </div>
 
-      <a class="absolute inset-0" [href]="'/search'" aria-label="Show Category"></a>
+      <a class="absolute inset-0" [href]="'/products?categoryName=' + encodeURIComponent(item.name)"
+        aria-label="Show Category"></a>
     </div>
     }
   </div>
