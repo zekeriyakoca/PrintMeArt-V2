@@ -1,0 +1,40 @@
+<div class="nc-SectionHero2Item flex flex-col-reverse lg:flex-col relative overflow-hidden {{ className() }}">
+  <!-- BG -->
+  <div class="absolute inset-0 bg-[#F7FFE8]">
+    <img class="absolute w-full h-full object-contain hidden md:block" [src]="backgroundImage()"
+      alt="hero background" />
+  </div>
+
+  <div class="relative container pb-40 sm:pb-0 pt-28 sm:pt-24 lg:py-56 m-auto">
+    <div
+      class="relative z-[1] w-full max-w-2xl md:max-w-lg xl:max-w-2xl space-y-8 sm:space-y-14 nc-SectionHero2Item__left">
+      <div class="space-y-5 sm:space-y-6">
+        <span class="nc-SectionHero2Item__subheading block text-base md:text-[1.40rem] font-medium"
+          style="color: #db2877;">
+          {{ subHeading() }}
+        </span>
+        <h2
+          class="nc-SectionHero2Item__heading font-semibold text-5xl sm:text-4xl md:text-5xl xl:text-[3.2rem] !leading-[114%] text-slate-900">
+          {{ heading() }}
+        </h2>
+      </div>
+
+      <a [href]="btnLink()"
+        class="nc-SectionHero2Item__button inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-3 px-6 sm:py-5 sm:px-9 rounded-full text-sm sm:text-base font-medium">
+        <span>{{ btnText() }}</span>
+        <svg class="w-5 h-5 ms-2.5" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 22L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="mt-10 lg:mt-0 lg:absolute end-0 bottom-0 top-0 right-0 w-1/2 h-full overflow-hidden">
+      <img class="w-full h-full object-contain object-center nc-SectionHero2Item__image hidden md:block" [src]="image()"
+        [alt]="heading()" />
+    </div>
+  </div>
+</div>

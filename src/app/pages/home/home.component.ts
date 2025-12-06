@@ -14,15 +14,18 @@ import { BasePageComponent } from '../basePageComponent';
 import { first } from 'rxjs';
 import { OrderJourneyComponent } from '../../components/order-journey/order-journey.component';
 import { VisitUsComponent } from '../../components/visit-us/visit-us.component';
+import { SectionHeroComponent } from '../../components/section-hero/section-hero.component';
+import { SectionHeroPlainComponent } from '../../components/section-hero-plain/section-hero-plain.component';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     OurServicesComponent,
-    // CollectionCardComponent,
     CategoryGridComponent,
     OrderJourneyComponent,
     VisitUsComponent,
+    SectionHeroComponent,
+    SectionHeroPlainComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
