@@ -61,7 +61,9 @@ export class CartSidebarComponent {
     }
 
     const updatedCart = this.cartItems().map((cartItem) =>
-      cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem,
+      cartItem.id === item.id
+        ? { ...cartItem, quantity: newQuantity }
+        : cartItem,
     );
 
     this.cartService.updateCartOnBackend(updatedCart).subscribe();

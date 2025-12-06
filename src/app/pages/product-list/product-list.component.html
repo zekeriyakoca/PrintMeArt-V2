@@ -28,15 +28,10 @@
   </header>
 </div>
 <div class="contained-page">
-  <div>
+  <div class="border-b border-neutral-200 pb-4">
     <h2 class="mt-4 mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
       (click)="hideFilters.set(!hideFilters())">
       <span class="inline-flex  border-indigo-900 pr-4 text-[17px]">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6 mr-[1px]">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-        </svg> -->
         {{hideFilters() ? 'View All ' : 'Hide '}}Filters
       </span>
     </h2>
@@ -55,18 +50,32 @@
             [class]="group.name.toLowerCase() === 'color' ? 'grid grid-cols-4 mb-1 max-w-[80%]' : 'flex flex-col gap-1 mb-1'">
             @for(option of group.options; track option.name; let optionIndex = $index) {
             @if(group.name.toLowerCase() == 'color'){
-            <div class="test w-8 h-8 flex items-center justify-center cursor-pointer p-1 mb-2 color-option shadow-lg"
-              [style.backgroundColor]="mapColorToHex(option.name)" (click)="selectOption(group.groupType, option.name)">
+            <div
+              class="w-8 h-8 flex items-center justify-center cursor-pointer p-1 mb-2 rounded-full border-2 transition-all duration-200 hover:scale-110"
+              [style.backgroundColor]="mapColorToHex(option.name)"
+              [class.border-neutral-300]="selectedFilterOptions().optionName !== option.name"
+              [class.border-indigo-600]="selectedFilterOptions().optionName === option.name"
+              [class.ring-2]="selectedFilterOptions().optionName === option.name"
+              [class.ring-indigo-600]="selectedFilterOptions().optionName === option.name"
+              (click)="selectOption(group.groupType, option.name)">
             </div>
             }
             @else{
-            <p class="category-leaf text-sm cursor-pointer mb-1 hover:text-indigo-700"
+            <p class="category-leaf text-sm cursor-pointer mb-1 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
               (click)="selectOption(group.groupType, option.name)" [class]="(
-          selectedFilterOptions().categoryName === option.name ||
-          selectedFilterOptions().attributeName === option.name ||
-          selectedFilterOptions().optionName === option.name
-        ) ? 'text-slate-950 font-light pl-1': ''">
-              {{option.name }}
+                selectedFilterOptions().categoryName === option.name ||
+                selectedFilterOptions().attributeName === option.name ||
+                selectedFilterOptions().optionName === option.name
+              ) ? 'bg-indigo-50 text-indigo-700': ''">
+              <span>{{option.name }}</span>
+              @if (selectedFilterOptions().categoryName === option.name ||
+              selectedFilterOptions().attributeName === option.name ||
+              selectedFilterOptions().optionName === option.name) {
+              <svg class="w-4 h-4 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              }
             </p>
             }
             }
