@@ -8,6 +8,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FramesCatalogComponent } from './pages/frames-catalog/frames-catalog.component';
+import { CustomDesignComponent } from './pages/custom-design/custom-design.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthenticationGuard] },
@@ -39,5 +40,9 @@ export const routes: Routes = [
   {
     path: 'frames',
     component: FramesCatalogComponent,
+  },
+  {
+    path: 'your-design',
+    component: CustomDesignComponent,
   },
 ];
