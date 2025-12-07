@@ -14,8 +14,8 @@ import { BasePageComponent } from '../basePageComponent';
 import { first } from 'rxjs';
 import { OrderJourneyComponent } from '../../components/order-journey/order-journey.component';
 import { VisitUsComponent } from '../../components/visit-us/visit-us.component';
-import { SectionHeroComponent } from '../../components/section-hero/section-hero.component';
 import { SectionHeroPlainComponent } from '../../components/section-hero-plain/section-hero-plain.component';
+import { FeaturedPrintsComponent } from '../../components/featured-prints/featured-prints.component';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -24,8 +24,8 @@ import { SectionHeroPlainComponent } from '../../components/section-hero-plain/s
     CategoryGridComponent,
     OrderJourneyComponent,
     VisitUsComponent,
-    SectionHeroComponent,
     SectionHeroPlainComponent,
+    FeaturedPrintsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

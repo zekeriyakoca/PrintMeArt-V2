@@ -102,6 +102,16 @@ export class ApiService {
     );
   }
 
+  getFeaturedProducts(
+    pageSize: number,
+    pageIndex: number,
+  ): Observable<PaginatedListDto<ProductSimpleDto>> {
+    return this.getFilteredProducts({
+      pageSize: pageSize,
+      pageIndex: pageIndex,
+    } as ProductFilterRequestDto);
+  }
+
   getFilteredProducts(filterBody: ProductFilterRequestDto) {
     if (this.isSSR) {
       return of({} as PaginatedListDto<ProductSimpleDto>);
