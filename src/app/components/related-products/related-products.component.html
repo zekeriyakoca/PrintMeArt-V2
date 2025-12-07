@@ -1,0 +1,21 @@
+<section class="related-section" #triggerRef>
+  @if (isLoading()) {
+  <div class="loading-state">
+    <div class="loading-bar"></div>
+  </div>
+  }
+
+  @if (products().length > 0) {
+  <div class="section-header">
+    <span class="section-tag">Curated for you</span>
+    <h2 class="section-title">You may also like</h2>
+  </div>
+  <div class="products-grid">
+    @for (product of products(); track product.id; let i = $index) {
+    <div class="product-wrapper" [style.animation-delay]="i * 80 + 'ms'">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+    }
+  </div>
+  }
+</section>

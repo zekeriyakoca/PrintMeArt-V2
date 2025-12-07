@@ -33,4 +33,7 @@
       <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
     </div>
   </div>
+
+  <app-related-products [categoryName]="product().categoryName" [excludeProductId]="productId">
+  </app-related-products>
 </div>
