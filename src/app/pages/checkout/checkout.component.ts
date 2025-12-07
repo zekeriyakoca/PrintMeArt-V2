@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CheckoutUserInfoComponent } from '../../components/checkout-user-info/checkout-user-info.component';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
@@ -17,7 +17,7 @@ import { first } from 'rxjs';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CheckoutUserInfoComponent, OrderSummaryComponent],
+  imports: [CheckoutUserInfoComponent, OrderSummaryComponent, RouterLink],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

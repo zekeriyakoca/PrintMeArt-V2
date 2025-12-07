@@ -1,59 +1,66 @@
-<div class="px-8">
-  <div class="name-inputs mb-3 flex">
-    <div class="basis-full p-2">
-      <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">First name</label>
-      <input [(ngModel)]="userDetails().firstName" type="text" id="first_name"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-        placeholder="John" required />
+<div class="user-info-form">
+  <div class="form-row">
+    <div class="form-group">
+      <label for="first_name" class="form-label">First name</label>
+      <input [(ngModel)]="userDetails().firstName" type="text" id="first_name" class="form-input" placeholder="John"
+        required />
     </div>
-    <div class="basis-full p-2">
-      <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last name</label>
-      <input [(ngModel)]="userDetails().lastName" type="text" id="last_name"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-        placeholder="Doe" required />
+    <div class="form-group">
+      <label for="last_name" class="form-label">Last name</label>
+      <input [(ngModel)]="userDetails().lastName" type="text" id="last_name" class="form-input" placeholder="Doe"
+        required />
     </div>
   </div>
-  <div class="mb-3">
-    <div class="email p-2">
-      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email address</label>
-      <input [(ngModel)]="userDetails().email" type="email" id="email"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+
+  <div class="form-group">
+    <label for="email" class="form-label">Email address</label>
+    <div class="input-with-icon">
+      <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+      </svg>
+      <input [(ngModel)]="userDetails().email" type="email" id="email" class="form-input with-icon"
         placeholder="john.doe@company.com" required />
     </div>
   </div>
-  <div class="flex mb-3">
-    <div class=" basis-full p-2">
-      <label for="city" class="block mb-2 text-sm font-medium text-gray-900">City</label>
-      <input [(ngModel)]="userDetails().city" type="text" id="city"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-        placeholder="Amsterdam" required />
+
+  <div class="form-divider">
+    <span>Shipping Address</span>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="city" class="form-label">City</label>
+      <input [(ngModel)]="userDetails().city" type="text" id="city" class="form-input" placeholder="Amsterdam"
+        required />
     </div>
-    <div class="basis-full p-2">
-      <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
-      <input [(ngModel)]="userDetails().country" type="text" id="country"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-        placeholder="Netherlands" required />
+    <div class="form-group">
+      <label for="country" class="form-label">Country</label>
+      <input [(ngModel)]="userDetails().country" type="text" id="country" class="form-input" placeholder="Netherlands"
+        required />
     </div>
   </div>
-  <div class="flex mb-3">
-    <div class="basis-full p-2">
-      <label for="postal-code" class="block mb-2 text-sm font-medium text-gray-900">Postal-code</label>
-      <input [(ngModel)]="userDetails().postalCode" type="text" id="postal-code"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+
+  <div class="form-row">
+    <div class="form-group small">
+      <label for="postal-code" class="form-label">Postal code</label>
+      <input [(ngModel)]="userDetails().postalCode" type="text" id="postal-code" class="form-input"
         placeholder="5689 HH" required />
     </div>
-    <div class="basis-full p-2">
-      <label for="house-number" class="block mb-2 text-sm font-medium text-gray-900">House-number</label>
-      <input [(ngModel)]="userDetails().houseNumber" type="text" id="house-number"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-        placeholder="90" required />
+    <div class="form-group small">
+      <label for="house-number" class="form-label">House number</label>
+      <input [(ngModel)]="userDetails().houseNumber" type="text" id="house-number" class="form-input" placeholder="90"
+        required />
     </div>
   </div>
-  <div class="p-2">
-    <label for="address-details" class="block mb-2 text-sm font-medium text-gray-900">Address
-      details</label>
-    <input [(ngModel)]="userDetails().addressDetails" type="text" id="address-details"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-      placeholder="..." />
+
+  <div class="form-group">
+    <label for="address-details" class="form-label">
+      Address details
+      <span class="label-optional">(Optional)</span>
+    </label>
+    <input [(ngModel)]="userDetails().addressDetails" type="text" id="address-details" class="form-input"
+      placeholder="Apartment, suite, floor, etc." />
   </div>
 </div>

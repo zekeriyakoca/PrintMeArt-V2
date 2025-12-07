@@ -4,21 +4,21 @@
   <div class="summary-rows">
     <div class="summary-row">
       <span class="row-label">Subtotal</span>
-      <span class="row-value">{{ totalPrice() | currency }}</span>
+      <span class="row-value">{{ totalPrice() | currency:'EUR' }}</span>
     </div>
     <div class="summary-row">
       <span class="row-label">Shipping</span>
-      <span class="row-value">{{ shippingFee() | currency }}</span>
+      <span class="row-value">{{ shippingFee() | currency:'EUR' }}</span>
     </div>
     <div class="summary-row">
       <span class="row-label">Tax</span>
-      <span class="row-value">{{ taxAmount() | currency }}</span>
+      <span class="row-value">{{ taxAmount() | currency:'EUR' }}</span>
     </div>
   </div>
 
   <div class="summary-total">
     <span class="total-label">Total</span>
-    <span class="total-value">{{ totalPriceWithTax() | currency }}</span>
+    <span class="total-value">{{ totalPriceWithTax() | currency:'EUR' }}</span>
   </div>
 
   <div class="summary-actions">
