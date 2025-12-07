@@ -1,11 +1,7 @@
-<div class="grid grid-cols-4 gap-2 mt-3">
+<div class="size-grid">
   @for (size of sizes(); track size.id; let index = $index) {
-  <div
-    class="relative h-10 sm:h-11 rounded-2xl border flex items-center justify-center text-sm sm:text-base uppercase font-semibold select-none overflow-hidden z-0 cursor-pointer"
-    [class]="isActive(size)
-    ? 'bg-indigo-300 border-indigo-300 text-white hover:bg-indigo-300'
-    : 'border-slate-300 text-slate-900 hover:bg-neutral-50'" (click)="selectSize(size)">
+  <button type="button" class="size-option" [class.selected]="isActive(size)" (click)="selectSize(size)">
     {{ size?.name }}
-  </div>
+  </button>
   }
 </div>

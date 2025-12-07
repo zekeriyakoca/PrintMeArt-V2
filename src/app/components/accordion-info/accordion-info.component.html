@@ -1,31 +1,19 @@
-<div class="w-full rounded-2xl space-y-2.5">
+<div class="info-accordion w-full space-y-3">
   @for (item of allData; track $index; let i = $index) {
-  <div>
-    <!-- Accordion Button - EXACT Tailwind classes from React -->
-    <button
-      class="flex items-center justify-between w-full px-4 py-2 font-medium text-left bg-slate-100/80 hover:bg-slate-200/60 focus:outline-none focus-visible:ring focus-visible:ring-slate-500 focus-visible:ring-opacity-75 cursor-pointer"
-      (click)="toggleAccordion(i)" [attr.aria-expanded]="isOpen(i)">
+  <div class="info-card">
+    <button class="info-button" (click)="toggleAccordion(i)" [attr.aria-expanded]="isOpen(i)">
 
-      <span>{{ item.name }}</span>
+      <div class="flex items-center gap-3 px-1">
+        <div class="flex flex-col text-left">
+          <span class="info-title">{{ item.name }}</span>
+        </div>
+      </div>
 
-      <!-- Plus/Minus Icons - EXACT from React -->
-      @if (!isOpen(i)) {
-      <!-- PlusIcon -->
-      <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
-      } @else {
-      <!-- MinusIcon -->
-      <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-      </svg>
-      }
+      <span class="info-arrow" aria-hidden="true">&gt;</span>
     </button>
 
-    <!-- Accordion Panel - EXACT Tailwind classes from React -->
     @if (isOpen(i)) {
-    <div [class]="panelClassName()" [innerHTML]="item.content">
-    </div>
+    <div class="info-panel" [class]="panelClassName()" [innerHTML]="item.content"></div>
     }
   </div>
   }
