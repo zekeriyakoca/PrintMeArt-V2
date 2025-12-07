@@ -1,5 +1,5 @@
-header{
-  position:fixed;
+header {
+  position: fixed;
 }
 
 .nc-Header {
@@ -24,7 +24,7 @@ header{
 
 // Mega Menu Styles (only for Prints)
 .menu-item.menu-megamenu:hover {
-  > .sub-menu {
+  >.sub-menu {
     visibility: visible;
   }
 }
@@ -116,7 +116,6 @@ button:hover svg {
   }
 }
 
-// Container utility (matching the React project)
 .container {
   width: 100%;
   margin-left: auto;

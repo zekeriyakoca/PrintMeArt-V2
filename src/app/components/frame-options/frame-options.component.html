@@ -1,10 +1,19 @@
-<div class="grid grid-cols-6 gap-2 mt-3">
-  @for (frame of group().options; track $index) {
-  <div (click)="selectOption(frame.id)"
-    [class]="'relative flex max-w-[75px] h-16 rounded-sm md:rounded-lg border-2 cursor-pointer ' + (selectedOption() === frame.id ? 'border-primary-600' : 'border-transparent')">
-    <div class="absolute inset-0.5 rounded-none md:rounded-lg overflow-hidden z-0 bg-no-repeat bg-center bg-cover"
-      [style.background-image]="'url(' + (frame.imageUrl && frame.imageUrl.trim() != '' ? frame.imageUrl : 'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg') + ')'">
+<div class="frame-options-container">
+  <div class="grid grid-cols-6 gap-2">
+    @for (frame of group().options; track $index) {
+    <div (click)="selectOption(frame.id)"
+      [class]="'relative flex max-w-[75px] h-16 rounded-sm md:rounded-lg border-2 cursor-pointer ' + (selectedOption() === frame.id ? 'border-primary-600' : 'border-transparent')">
+      <div class="absolute inset-0.5 rounded-none md:rounded-lg overflow-hidden z-0 bg-no-repeat bg-center bg-cover"
+        [style.background-image]="'url(' + (frame.imageUrl && frame.imageUrl.trim() != '' ? frame.imageUrl : 'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg') + ')'">
+      </div>
     </div>
+    }
   </div>
-  }
+  <a routerLink="/frames" class="frames-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <rect x="7" y="7" width="10" height="10" rx="1" ry="1" />
+    </svg>
+    <span>View all frames</span>
+  </a>
 </div>

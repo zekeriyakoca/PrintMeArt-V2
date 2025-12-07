@@ -1,9 +1,10 @@
 import { Component, input, output, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { OptionGroupDto } from '../../models/product';
 
 @Component({
   selector: 'app-frame-options',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './frame-options.component.html',
   styleUrl: './frame-options.component.scss',
 })
