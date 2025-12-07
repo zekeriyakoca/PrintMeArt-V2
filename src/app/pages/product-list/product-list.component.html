@@ -28,13 +28,55 @@
   </header>
 </div>
 <div class="contained-page">
-  <div>
-    <h2 class="mt-4 mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
+  <div class="flex items-center justify-between mt-4 pb-4 border-b border-neutral-200">
+    <!-- Hide/Show Filters on left -->
+    <h2 class="mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
       (click)="hideFilters.set(!hideFilters())">
-      <span class="inline-flex  border-indigo-900 pr-4 text-[17px]">
+      <span class="inline-flex border-indigo-900 pr-4 text-[17px]">
         {{hideFilters() ? 'View All ' : 'Hide '}}Filters
       </span>
     </h2>
+
+    <!-- Results for chips on right -->
+    @if (selectedFilterOptions().categoryName || selectedFilterOptions().attributeName ||
+    selectedFilterOptions().optionName) {
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-sm text-neutral-500">Results for</span>
+      @if (selectedFilterOptions().categoryName) {
+      <span
+        class="group/pin inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 text-indigo-600 text-sm rounded-full cursor-pointer hover:bg-indigo-100 transition-colors"
+        (click)="selectOption('categories', selectedFilterOptions().categoryName!)">
+        {{ selectedFilterOptions().categoryName }}
+        <svg class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </span>
+      }
+      @if (selectedFilterOptions().attributeName) {
+      <span
+        class="group/pin inline-flex items-center gap-2 px-4 py-1.5 bg-sky-50 text-sky-600 text-sm rounded-full cursor-pointer hover:bg-sky-100 transition-colors"
+        (click)="selectOption('attributes', selectedFilterOptions().attributeName!)">
+        {{ selectedFilterOptions().attributeName }}
+        <svg class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </span>
+      }
+      @if (selectedFilterOptions().optionName) {
+      <span
+        class="group/pin inline-flex items-center gap-2 px-4 py-1.5 bg-violet-50 text-violet-600 text-sm rounded-full cursor-pointer hover:bg-violet-100 transition-colors"
+        (click)="selectOption('options', selectedFilterOptions().optionName!)">
+        {{ selectedFilterOptions().optionName }}
+        <svg class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </span>
+      }
+    </div>
+    }
   </div>
   <div class="flex">
     <div id="filters" class="flex-2 mt-4" [class]="hideFilters() ? 'hidden' : ''">
@@ -61,7 +103,7 @@
             </div>
             }
             @else{
-            <p class="category-leaf text-sm cursor-pointer mb-1 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
+            <p class="category-leaf text-sm cursor-pointer mb-0 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
               (click)="selectOption(group.groupType, option.name)" [class]="(
                 selectedFilterOptions().categoryName === option.name ||
                 selectedFilterOptions().attributeName === option.name ||
@@ -86,11 +128,22 @@
       </div>
     </div>
     <div class="flex-10 mb-15">
+      @if (products().data?.length) {
       <div class="grid grid-cols-4 mb-2">
         @for (product of products().data; track product.id) {
         <app-product-card [product]="product" class=""></app-product-card>
         }
       </div>
+      } @else {
+      <div class="flex flex-col items-center justify-center py-20">
+        <svg class="w-16 h-16 text-neutral-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <p class="text-neutral-500 text-lg mb-1">No products found</p>
+        <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
+      </div>
+      }
       <div class="flex justify-center mt-12">
         <app-pagination (paginationChanged)="onPaginationChanged()" [className]="'mt-8'"
           [totalPages]="products().totalPage" [(pageIndex)]="selectedFilterOptions().pageIndex"

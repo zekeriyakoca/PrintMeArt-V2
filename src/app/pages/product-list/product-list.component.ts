@@ -62,14 +62,24 @@ export class ProductListComponent
     this.route.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
+        const categoryName = params.get('categoryName') || undefined;
+        const attributeName = params.get('attributeName') || undefined;
+        const optionName = params.get('optionName') || undefined;
+
         this.selectedFilterOptions.set({
           pageSize: +(params.get('pageSize') ?? 12),
           pageIndex: +(params.get('pageIndex') ?? 0),
-          categoryName: params.get('categoryName') || undefined,
-          attributeName: params.get('attributeName') || undefined,
-          optionName: params.get('optionName') || undefined,
+          categoryName,
+          attributeName,
+          optionName,
           searchTerm: params.get('searchTerm') || undefined,
         });
+
+        // Show filters if any filter is applied
+        if (categoryName || attributeName || optionName) {
+          this.hideFilters.set(false);
+        }
+
         this.fetchProductsWithFilters();
       });
 
