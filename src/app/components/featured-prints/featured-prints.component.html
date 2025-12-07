@@ -1,0 +1,20 @@
+<div class="nc-SectionGridFeatureItems relative">
+  <div
+    class="nc-Section-Heading relative flex flex-col sm:flex-row sm:items-end justify-between mb-12 lg:mb-14 text-neutral-900">
+    <div>
+      <h2 class="text-2xl md:text-4xl font-semibold">
+        <span>Trending Art Pieces</span>
+      </h2>
+    </div>
+  </div>
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+    @for (product of products().data; track product.id) {
+    <app-product-card [product]="product"></app-product-card>
+    }
+  </div>
+  <button
+    class="relative h-auto cursor-pointer inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6 disabled:bg-opacity-90 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000"
+    (click)="goToProductListPage()">
+    <span>Show me more</span>
+  </button>
+</div>
