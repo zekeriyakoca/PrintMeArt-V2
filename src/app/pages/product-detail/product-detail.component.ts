@@ -52,10 +52,6 @@ export class ProductDetailComponent
   productAccordionData = computed(() => {
     return [
       {
-        name: 'Title',
-        content: this.product().title || 'No title available.',
-      },
-      {
         name: 'Description',
         content: this.product().description || 'No description available.',
       },

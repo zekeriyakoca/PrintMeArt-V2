@@ -2,9 +2,10 @@
   <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
   <div class="container relative z-10 mt-9 sm:mt-11 flex ">
     <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14">
-      <h2 class="text-3xl text-slate-700">
+      <h2 class="text-3xl text-slate-700 mb-2">
         {{ product().name }}
       </h2>
+      <h4 class="text-[#9097bb]">{{ product().title }}</h4>
       <app-accordion-info [data]="productAccordionData()" [panelClassName]="'p-4 text-gray-700'"></app-accordion-info>
       <hr class="!border-gray-200 my-12" />
       <div class=" mt-8">
