@@ -1,28 +1,64 @@
-<div class="contained-page mt-30 mb-48">
-  <div class="w-full p-5">
-    <div class="flex justify-between">
-      <h1 class="text-5xl text-[#241b6a]">Your cart</h1>
-      <a href="/" class="underline text-slate-500">Continue shopping</a>
+<div class="cart-page">
+  <div class="cart-container">
+    <!-- Header -->
+    <header class="cart-header">
+      <div class="header-content">
+        <h1 class="cart-title">Shopping Bag</h1>
+        <span class="item-count">{{ cartItems().length }} {{ cartItems().length === 1 ? 'item' : 'items' }}</span>
+      </div>
+      <a routerLink="/" class="continue-link">
+        <span>Continue shopping</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+    </header>
+
+    @if (cartItems().length === 0) {
+    <div class="empty-cart">
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 01-8 0" />
+        </svg>
+      </div>
+      <h2 class="empty-title">Your bag is empty</h2>
+      <p class="empty-text">Looks like you haven't added any art to your collection yet.</p>
+      <a routerLink="/products" class="browse-btn">Browse Collection</a>
     </div>
-    <hr class="border-slate-300 my-10 xl:my-12">
-    <div class="flex flex-wrap gap-4 min-h-48">
-      <div class="flex-1 min-w-0">
-        @for (cartItem of cartItems() ; track cartItem.id; let i = $index) {
+    } @else {
+    <div class="cart-content">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        @for (cartItem of cartItems(); track cartItem.id; let i = $index) {
         <app-cart-item [(cartItem)]="cartItems()[i]" (cartItemChanged)="triggerRecalculateSummary()" />
-        <hr class="border-slate-300 my-6">
         }
       </div>
-      <div class="w-1/3 min-w-0">
+
+      <!-- Order Summary -->
+      <aside class="cart-sidebar">
         <app-order-summary [cartItems]="cartItems()">
           <order-button>
-            <button
-              class="w-full text-indigo-800 text-md py-3 cursor-pointer border hover:text-white hover:bg-indigo-800"
-              (click)="navigateToCheckout()">
-              Checkout
+            <button class="checkout-btn" (click)="navigateToCheckout()">
+              <span>Proceed to Checkout</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </button>
           </order-button>
+          <order-info>
+            <div class="secure-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+              <span>Secure checkout</span>
+            </div>
+          </order-info>
         </app-order-summary>
-      </div>
+      </aside>
     </div>
+    }
   </div>
 </div>

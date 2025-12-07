@@ -1,35 +1,46 @@
-<div class="cart-container">
-  <div class="cart-detail flex flex-col gap-4">
-    <div class="flex gap-4">
-      <div class="px-7 py-3 w-3xs">
-        <img src="{{cartItem()?.pictureUrl}}" alt="{{cartItem()?.productName}}" />
+<article class="cart-item">
+  <div class="item-image">
+    <img [src]="cartItem()?.pictureUrl" [alt]="cartItem()?.productName" />
+  </div>
+
+  <div class="item-details">
+    <div class="item-header">
+      <h3 class="item-name">{{ cartItem()?.productName }}</h3>
+      <p class="item-price">${{ cartItem()?.noDiscountUnitPrice }}</p>
+    </div>
+
+    <div class="item-options">
+      @if (cartItem()?.selectedOptions?.[0]?.optionName) {
+      <span class="option-tag">{{ cartItem()?.selectedOptions?.[0]?.optionName }}</span>
+      }
+      @if (cartItem()?.selectedOptions?.[1]?.optionName) {
+      <span class="option-tag">{{ cartItem()?.selectedOptions?.[1]?.optionName }}</span>
+      }
+    </div>
+
+    <div class="item-actions">
+      <div class="quantity-control">
+        <button class="qty-btn" (click)="changeQuantity(-1)" aria-label="Decrease quantity">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+        <span class="qty-value">{{ cartItem()?.quantity }}</span>
+        <button class="qty-btn" (click)="changeQuantity(1)" aria-label="Increase quantity">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
       </div>
-      <div class="flex-1">
-        <div class="mt-8 flex items-center justify-between">
-          <div class="max-w-[50%]">
-            <h3 class="mb-4 text-xl">{{cartItem()?.productName}}</h3>
-            <div class="flex">
-              <p class="border-r pr-3 text-sm">{{cartItem()?.selectedOptions?.[0]?.optionName}}</p>
-              <p class="ml-3 text-sm">{{cartItem()?.selectedOptions?.[1]?.optionName}}</p>
-            </div>
-          </div>
-          <div class="flex justify-center items-center">
-            <button class="border rounded-full px-3 py-1 cursor-pointer" (click)="changeQuantity(-1)">-</button>
-            <p class="mx-2">{{cartItem()?.quantity}}</p>
-            <button class="border rounded-full px-3 py-1 cursor-pointer" (click)="changeQuantity(1)">+</button>
-          </div>
-          <div class="flex justify-end mr-10">
-            <p>${{cartItem()?.noDiscountUnitPrice}}</p>
-          </div>
-        </div>
-        <div class="flex justify-end mr-8 mt-30 items-center">
-          <button
-            class="w-fit text-rose-800 font-medium text-sm px-2 py-1 border cursor-pointer hover:bg-rose-800 hover:text-white"
-            (click)="removeItem()">
-            Remove
-          </button>
-        </div>
-      </div>
+
+      <button class="remove-btn" (click)="removeItem()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+        </svg>
+        <span>Remove</span>
+      </button>
     </div>
   </div>
-</div>
+</article>

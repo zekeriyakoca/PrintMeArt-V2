@@ -1,24 +1,28 @@
-<div class="cart-summary pl-6 border-l-1 border-slate-300">
-  <h1 class="text-2xl text-[#241b6a]">Order Summary</h1>
-  <div class="">
-    <div class="flex justify-between border-b-1 py-4 border-slate-300">
-      <p>Subtotal</p>
-      <p>{{ totalPrice() | currency }}</p>
+<div class="order-summary">
+  <h2 class="summary-title">Order Summary</h2>
+
+  <div class="summary-rows">
+    <div class="summary-row">
+      <span class="row-label">Subtotal</span>
+      <span class="row-value">{{ totalPrice() | currency }}</span>
     </div>
-    <div class="flex justify-between border-b-1 py-4 border-slate-300">
-      <p>Shipping estimate</p>
-      <p>{{shippingFee() | currency}}</p>
+    <div class="summary-row">
+      <span class="row-label">Shipping</span>
+      <span class="row-value">{{ shippingFee() | currency }}</span>
     </div>
-    <div class="flex justify-between border-b-1 py-4 border-slate-300">
-      <p>Tax estimate</p>
-      <p>{{ taxAmount() | currency }}</p>
-    </div>
-    <div class="flex justify-between py-4 font-semibold">
-      <p>Order total</p>
-      <p>{{ totalPriceWithTax() | currency }}</p>
+    <div class="summary-row">
+      <span class="row-label">Tax</span>
+      <span class="row-value">{{ taxAmount() | currency }}</span>
     </div>
   </div>
-  <hr class="border-slate-200 mb-6">
-  <ng-content select="order-button"></ng-content>
-  <ng-content select="order-info"></ng-content>
+
+  <div class="summary-total">
+    <span class="total-label">Total</span>
+    <span class="total-value">{{ totalPriceWithTax() | currency }}</span>
+  </div>
+
+  <div class="summary-actions">
+    <ng-content select="order-button"></ng-content>
+    <ng-content select="order-info"></ng-content>
+  </div>
 </div>
