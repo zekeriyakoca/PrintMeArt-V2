@@ -204,9 +204,8 @@
       </div>
 
       <!-- Right Section - Options -->
-      <div class="w-full md:w-4/12">
+      <!-- <div class="w-full md:w-4/12">
         <div class="flex flex-col relative mb-12">
-          <!-- Frame Selector -->
           <div class="mt-6 space-y-7 lg:space-y-8">
             <div>
               <div class="flex justify-between font-medium text-sm">
@@ -238,7 +237,6 @@
             </div>
           </div>
 
-          <!-- Mat Option -->
           <div class="mt-6 space-y-7 lg:space-y-8">
             <div>
               <div
@@ -264,7 +262,6 @@
             </div>
           </div>
 
-          <!-- Size Selector -->
           <div class="mt-6 space-y-7 lg:space-y-8">
             <div>
               <div class="flex justify-between font-medium text-sm">
@@ -300,7 +297,6 @@
           </div>
         </div>
 
-        <!-- Quantity & Add to Cart -->
         <div class="flex space-x-3.5">
           <div
             class="flex items-center justify-center bg-slate-100/70 dark:bg-slate-800/70 px-2 py-3 sm:p-3.5 rounded-full">
@@ -344,7 +340,6 @@
           </button>
         </div>
 
-        <!-- Price Summary -->
         <div class="flex flex-col mt-8 space-y-4">
           <div class="space-y-2.5">
             <div class="flex justify-between text-slate-600 dark:text-slate-300">
@@ -366,6 +361,10 @@
             <span>€{{ total().toFixed(2) }}</span>
           </div>
         </div>
+      </div> -->
+
+      <div class="v-full md:v-4/12">
+        <app-product-purchase-sidebar [product]="customProduct()"></app-product-purchase-sidebar>
       </div>
     </div>
   </div>

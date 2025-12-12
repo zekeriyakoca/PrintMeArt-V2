@@ -12,6 +12,8 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { SelectedOptionDto } from '../../models/cart-item';
 import { BasePageComponent } from '../basePageComponent';
+import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
+import { ProductDto } from '../../models/product';
 
 export interface DesignFrame {
   id: number;
@@ -31,7 +33,7 @@ export interface DesignSize {
 @Component({
   selector: 'app-custom-design',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ProductPurchaseSidebarComponent],
   templateUrl: './custom-design.component.html',
   styleUrl: './custom-design.component.scss',
 })
@@ -121,6 +123,7 @@ export class CustomDesignComponent
   quantity = signal(1);
   sizeSelected = signal(this.sizes[0]);
   isDragging = signal(false);
+  customProduct = signal<ProductDto>({} as ProductDto);
 
   // Computed values
   selectedFrame = computed(() => this.frames[this.selectedFrameIndex()]);
