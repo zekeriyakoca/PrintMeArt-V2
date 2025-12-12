@@ -1,6 +1,11 @@
 <div class="contained-page py-40">
+  <!-- IMAGE GALLER  -->
   <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
+
+  <!-- PRODUCT INFO AND PURCHASE SIDEBAR -->
   <div class="container relative z-10 mt-9 sm:mt-11 flex ">
+
+    <!-- PRODUCT DETAILS -->
     <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14">
       <div>
         <h2 class="text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
@@ -24,16 +29,18 @@
       <section class="mb-12">
         <app-accordion-info [data]="productAccordionData()"
           [panelClassName]="'p-4 text-slate-700 text-sm leading-relaxed'"></app-accordion-info>
-
       </section>
 
       <app-policy></app-policy>
     </div>
+
+    <!-- PURCHASE SIDEBAR -->
     <div class="flex-grow">
       <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
     </div>
   </div>
 
+  <!-- RELATED PRODUCTS -->
   <app-related-products [categoryName]="product().categoryName" [excludeProductId]="productId">
   </app-related-products>
 </div>

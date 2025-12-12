@@ -6,10 +6,11 @@ import { CartService } from '../../services/cart/cart.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { takeUntil } from 'rxjs';
 import { CategoryDto } from '../../models/category';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [UserMenuComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

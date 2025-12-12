@@ -1,17 +1,30 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { catchError, throwError } from 'rxjs';
 
 export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthenticationService);
-  const authToken = authService.getToken() || '';
+  const platformId = inject(PLATFORM_ID);
+  const isBrowser = isPlatformBrowser(platformId);
+
+  const authToken = (authService.getToken() || '').trim();
+
+  const requestId = createRequestId();
+  const sessionId = isBrowser ? getSessionIdBrowser() : requestId;
+
+  let headers = req.headers
+    .set('x-sessionid', sessionId)
+    .set('x-requestid', requestId);
+
+  if (authToken) {
+    headers = headers.set('Authorization', authToken);
+  }
+
   const newReq = req.clone({
-    headers: req.headers
-      .set('Authorization', authToken)
-      .set('x-sessionid', getSessionId())
-      .set('x-requestid', crypto.randomUUID()),
+    headers,
     url:
       req.url.startsWith('http') || req.url.startsWith('www.')
         ? req.url
@@ -25,17 +38,33 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
         authService.logout();
       }
       return throwError(() => error);
-    })
+    }),
   );
 };
 
 const SESSION_KEY = 'session_id';
 
-function getSessionId(): string {
-  let sessionId = localStorage.getItem(SESSION_KEY);
-  if (!sessionId) {
-    sessionId = crypto.randomUUID();
-    localStorage.setItem(SESSION_KEY, sessionId);
+function getSessionIdBrowser(): string {
+  try {
+    let sessionId = sessionStorage.getItem(SESSION_KEY);
+    if (!sessionId) {
+      sessionId = createRequestId();
+      sessionStorage.setItem(SESSION_KEY, sessionId);
+    }
+    return sessionId;
+  } catch {
+    return createRequestId();
   }
-  return sessionId;
+}
+
+function createRequestId(): string {
+  const cryptoObj = (globalThis as any).crypto as Crypto | undefined;
+  if (cryptoObj?.randomUUID) return cryptoObj.randomUUID();
+
+  // RFC4122-ish v4 fallback
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
