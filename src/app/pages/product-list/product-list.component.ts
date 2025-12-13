@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   ElementRef,
   OnInit,
   signal,
@@ -49,6 +50,35 @@ export class ProductListComponent
   });
   filterOptions = signal<FilterGroupDto[]>([]);
   hideFilters = signal<boolean>(true);
+
+  activeFilters = computed(() => {
+    const filters = this.selectedFilterOptions();
+    const chips: { type: string; name: string; colorClass: string }[] = [];
+    if (filters.categoryName) {
+      chips.push({
+        type: 'categories',
+        name: filters.categoryName,
+        colorClass: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100',
+      });
+    }
+    if (filters.attributeName) {
+      chips.push({
+        type: 'attributes',
+        name: filters.attributeName,
+        colorClass: 'bg-sky-50 text-sky-600 hover:bg-sky-100',
+      });
+    }
+    return chips;
+  });
+
+  isOptionSelected(optionName: string): boolean {
+    const f = this.selectedFilterOptions();
+    return (
+      f.categoryName === optionName ||
+      f.attributeName === optionName ||
+      f.optionName === optionName
+    );
+  }
 
   constructor(
     private route: ActivatedRoute,
