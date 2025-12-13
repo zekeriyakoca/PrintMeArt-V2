@@ -20,7 +20,7 @@
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
     }
     @else if(group.name.toLowerCase() == 'size'){
-    <app-size-options [sizes]="sizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
+    <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
     }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>

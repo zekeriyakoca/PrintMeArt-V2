@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -16,7 +16,7 @@ export class CommonApiService {
     return this._httpClient
       .post<string>(
         `${environment.serviceUrls['catalog-api']}/catalog/v1/image/upload`,
-        formData
+        formData,
       )
       .pipe(
         map((response: any) => {
@@ -25,7 +25,7 @@ export class CommonApiService {
         catchError((error: HttpErrorResponse) => {
           console.error('Upload failed:', error);
           return throwError(() => new Error('Failed to upload image.'));
-        })
+        }),
       );
   }
 }

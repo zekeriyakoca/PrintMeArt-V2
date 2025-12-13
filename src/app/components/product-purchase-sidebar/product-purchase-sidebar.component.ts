@@ -1,17 +1,17 @@
-import { Component, computed, input, model, signal } from '@angular/core';
+import { SizeOption } from './../../models/size-option';
+import { Component, computed, model, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../../pages/basePageComponent';
 import { SelectedOptionDto } from '../../models/cart-item';
-import { first } from 'rxjs';
 import { OptionsComponent } from '../shared/options/options.component';
 import { CommonModule } from '@angular/common';
 import { FrameOptionsComponent } from '../frame-options/frame-options.component';
-import { InputNumberComponent } from '../shared/input-number/input-number.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
+import { SizeOptions } from '../../shared/constants';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -19,7 +19,6 @@ import { SizeOptionsComponent } from '../size-options/size-options.component';
     OptionsComponent,
     CommonModule,
     FrameOptionsComponent,
-    InputNumberComponent,
     IconComponent,
     MatOptionsComponent,
     SizeOptionsComponent,
@@ -29,23 +28,11 @@ import { SizeOptionsComponent } from '../size-options/size-options.component';
 })
 export class ProductPurchaseSidebarComponent extends BasePageComponent {
   private variantId: number = 1;
+  SizeOptions = SizeOptions;
 
   product = model<ProductDto>({} as ProductDto);
-
-  calculatedPrice = signal<number>(0);
-  quantity = signal<number>(1);
-
-  sizeOptions = [
-    { id: 1, name: '13x18', val1: 13, val2: 18 },
-    { id: 2, name: '21x30', val1: 21, val2: 30 },
-    { id: 3, name: '30x40', val1: 30, val2: 40 },
-    { id: 4, name: '40x60', val1: 40, val2: 60 },
-    { id: 5, name: '50x70', val1: 50, val2: 70 },
-    { id: 6, name: '60x90', val1: 60, val2: 90 },
-  ];
-  selectedSize = signal(this.sizeOptions[0]);
-
-  isMatIncluded = false;
+  selectedSize = model(SizeOptions[0]);
+  isMatIncluded = model<boolean>(false);
 
   constructor(
     private apiService: ApiService,
@@ -53,6 +40,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   ) {
     super();
   }
+
+  calculatedPrice = signal<number>(0);
+  quantity = signal<number>(1);
 
   hasAllOptionsSelected = computed(() => {
     if (
@@ -160,8 +150,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         this.product().optionGroups.find(
           (group) => group.name.toLowerCase() === 'including mat',
         )?.options[0].id || 0,
-      optionName: this.isMatIncluded ? 'Include Mat' : 'No Mat',
-      spec1: this.isMatIncluded ? 'true' : 'false',
+      optionName: this.isMatIncluded() ? 'Include Mat' : 'No Mat',
+      spec1: this.isMatIncluded() ? 'true' : 'false',
     } as SelectedOptionDto);
 
     selectedOptions.push({

@@ -1,19 +1,14 @@
-import {
-  Component,
-  signal,
-  computed,
-  ElementRef,
-  ViewChild,
-  inject,
-  OnDestroy,
-} from '@angular/core';
+import { ApiService } from './../../services/api/api.service';
+import { Component, signal, computed, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { SelectedOptionDto } from '../../models/cart-item';
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { ProductDto } from '../../models/product';
+import { CustomDesignUploadComponent } from '../../components/custom-design-upload/custom-design-upload.component';
+import { CustomDesignPreviewComponent } from '../../components/custom-design-preview/custom-design-preview.component';
+import { SizeOptions } from '../../shared/constants';
 
 export interface DesignFrame {
   id: number;
@@ -33,7 +28,12 @@ export interface DesignSize {
 @Component({
   selector: 'app-custom-design',
   standalone: true,
-  imports: [CommonModule, RouterLink, ProductPurchaseSidebarComponent],
+  imports: [
+    CommonModule,
+    ProductPurchaseSidebarComponent,
+    CustomDesignUploadComponent,
+    CustomDesignPreviewComponent,
+  ],
   templateUrl: './custom-design.component.html',
   styleUrl: './custom-design.component.scss',
 })
@@ -41,9 +41,25 @@ export class CustomDesignComponent
   extends BasePageComponent
   implements OnDestroy
 {
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  constructor(
+    private apiService: ApiService,
+    private cartService: CartService,
+  ) {
+    super();
+  }
 
-  private cartService = inject(CartService);
+  ngOnInit(): void {
+    this.apiService
+      .getProductById(this.productId.toString())
+      .subscribe((product) => {
+        if (product) {
+          this.customProduct.set(product);
+        }
+      });
+  }
+
+  selectedSize = signal(SizeOptions[0]);
+  isMatIncluded = signal<boolean>(false);
 
   // Frame options - using real IKEA frame thumbnails
   frames: DesignFrame[] = [
@@ -112,17 +128,14 @@ export class CustomDesignComponent
 
   // Base product
   readonly basePrice = 25;
-  readonly productId = 9999; // Custom design product ID
+  readonly productId = 719; // Custom design product ID
   readonly productName = 'Custom Design Print';
 
   // State signals
-  selectedFile = signal<File | null>(null);
   imageUrl = signal<string | null>(null);
   selectedFrameIndex = signal(0);
-  isMatIncluded = signal(false);
   quantity = signal(1);
   sizeSelected = signal(this.sizes[0]);
-  isDragging = signal(false);
   customProduct = signal<ProductDto>({} as ProductDto);
 
   // Computed values
@@ -162,49 +175,12 @@ export class CustomDesignComponent
     }
   }
 
-  handleFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.processFile(input.files[0]);
+  onImageUrlSelected(url: string | null): void {
+    const existingUrl = this.imageUrl();
+    if (existingUrl) {
+      URL.revokeObjectURL(existingUrl);
     }
-  }
-
-  handleDrop(event: DragEvent): void {
-    event.preventDefault();
-    this.isDragging.set(false);
-
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      if (file.type.startsWith('image/')) {
-        this.processFile(file);
-      }
-    }
-  }
-
-  handleDragOver(event: DragEvent): void {
-    event.preventDefault();
-    this.isDragging.set(true);
-  }
-
-  handleDragLeave(event: DragEvent): void {
-    event.preventDefault();
-    this.isDragging.set(false);
-  }
-
-  private processFile(file: File): void {
-    // Validate file size (10MB max)
-    if (file.size > 10 * 1024 * 1024) {
-      alert('File size must be less than 10MB');
-      return;
-    }
-
-    this.selectedFile.set(file);
-    this.imageUrl.set(URL.createObjectURL(file));
-  }
-
-  openFileDialog(): void {
-    this.fileInput?.nativeElement?.click();
+    this.imageUrl.set(url);
   }
 
   selectFrame(index: number): void {
@@ -230,8 +206,8 @@ export class CustomDesignComponent
   }
 
   addToCart(): void {
-    const file = this.selectedFile();
-    if (!file) return;
+    const imageUrl = this.imageUrl();
+    if (!imageUrl) return;
 
     const selectedOptions: SelectedOptionDto[] = [
       {
@@ -254,13 +230,6 @@ export class CustomDesignComponent
       });
     }
 
-    // Add custom file info
-    selectedOptions.push({
-      optionId: 999,
-      optionName: 'Custom Image',
-      spec1: file.name,
-    });
-
     this.cartService.addItemToCart(
       this.productId,
       this.productId, // variant same as product for custom
@@ -268,7 +237,7 @@ export class CustomDesignComponent
       this.basePrice,
       this.calculatedPrice(),
       this.quantity(),
-      this.imageUrl() || '',
+      imageUrl,
       selectedOptions,
     );
   }
@@ -278,11 +247,7 @@ export class CustomDesignComponent
     if (url) {
       URL.revokeObjectURL(url);
     }
-    this.selectedFile.set(null);
     this.imageUrl.set(null);
-    if (this.fileInput?.nativeElement) {
-      this.fileInput.nativeElement.value = '';
-    }
   }
 
   override ngOnDestroy(): void {

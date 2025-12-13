@@ -1,0 +1,33 @@
+<div
+    class="flex flex-col lg:flex-col space-y-14 lg:space-y-0 lg:space-x-10 items-center relative text-center lg:text-left">
+    <div class="w-screen max-w-full xl:max-w-3xl space-y-5">
+        @if (imageUrl) {
+        <div class="nc-ProductQuickView">
+            <div class="lg:flex">
+                <div class="w-full">
+                    <div class="relative overflow-hidden">
+                        @if (isRolledUp) {
+                        <div class="relative inset-0 h-full mx-auto" [class.p-[12%]]="isMatIncluded"
+                            [class.p-[3%]]="!isMatIncluded" style="aspect-ratio: 5 / 7;">
+                            <img [src]="imageUrl" class="w-full h-full object-cover" alt="product preview" />
+                        </div>
+                        } @else {
+                        <!-- Framed Preview with border simulation -->
+                        <div class="relative" style="aspect-ratio: 5 / 7;">
+                            <div class="absolute inset-0 z-10 pointer-events-none">
+                                <div class="w-full h-full border-[24px] lg:border-[32px]" [class]="frameBorderClass">
+                                </div>
+                            </div>
+                            <div class="absolute inset-0" [class.p-[12%]]="isMatIncluded"
+                                [class.bg-white]="isMatIncluded" [class.p-[3%]]="!isMatIncluded">
+                                <img [src]="imageUrl" class="w-full h-full object-cover" alt="product preview" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
