@@ -14,7 +14,7 @@
   <div class="option-group">
     <label class="option-label">{{ group.name }}</label>
     @if(group.name.toLowerCase() == 'frame'){
-    <app-frame-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-frame-options>
+    <app-frame-options [group]="group" (optionSelected)="selectFrame(groupIndex,$event)"></app-frame-options>
     }
     @else if(group.name.toLowerCase() == 'including mat'){
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>

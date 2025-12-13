@@ -1,5 +1,5 @@
 import { SizeOption } from './../../models/size-option';
-import { Component, computed, model, signal } from '@angular/core';
+import { Component, computed, model, output, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -32,6 +32,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   product = model<ProductDto>({} as ProductDto);
   isMatIncluded = model<boolean>(false);
+
+  onSelectedFrameChanged = output<string>();
 
   selectedSize = signal(SizeOptions[0]);
 
@@ -67,6 +69,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
     return isAllSelected;
   });
+
+  selectFrame(groupIndex: number, optionId: number) {
+    this.selectOption(groupIndex, optionId);
+    this.onSelectedFrameChanged.emit(
+      this.product().optionGroups[groupIndex].options.find(
+        (option) => option.id === optionId,
+      )?.value || '',
+    );
+  }
 
   selectOption(groupIndex: number, optionId: number) {
     this.product.update((currentProduct) => {

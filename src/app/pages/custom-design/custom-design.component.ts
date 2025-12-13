@@ -47,7 +47,7 @@ export class CustomDesignComponent
   isMatIncluded = signal<boolean>(false);
   imageUrl = signal<string | null>(null);
   customProduct = signal<ProductDto>({} as ProductDto);
-  selectedFrameImageUrl = signal<string | null>(FrameOptions[0].mask);
+  selectedFrameMaskUrl = signal<string | null>(null);
 
   // Base product
   readonly basePrice = 25;
@@ -56,5 +56,13 @@ export class CustomDesignComponent
 
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
+  }
+
+  onSelectedFrameChanged(frameName: string): void {
+    const frame = FrameOptions.find((frame) => frame.name === frameName)!;
+
+    var url = this.isMatIncluded() ? frame.mask : frame.maskWithoutMat;
+
+    this.selectedFrameMaskUrl.set(url);
   }
 }

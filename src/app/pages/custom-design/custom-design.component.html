@@ -11,13 +11,13 @@
 
         <!-- Preview Section -->
         <app-custom-design-preview [imageUrl]="imageUrl()" [isMatIncluded]="isMatIncluded()"
-          [selectedFrameImageUrl]="selectedFrameImageUrl()">
+          [selectedFrameMaskUrl]="selectedFrameMaskUrl()">
         </app-custom-design-preview>
       </div>
 
       <div class="v-full md:v-4/12">
-        <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded"
-          [product]="customProduct()"></app-product-purchase-sidebar>
+        <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+          (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
       </div>
     </div>
   </div>

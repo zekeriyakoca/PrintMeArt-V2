@@ -13,6 +13,6 @@ import { DesignSize } from '../../pages/custom-design/custom-design.component';
 export class CustomDesignPreviewComponent {
   imageUrl = input<string | null>(null);
   isMatIncluded = input(false);
-  selectedFrameImageUrl = input<string | null>(null);
+  selectedFrameMaskUrl = input<string | null>(null);
   isRolledUp = false;
 }
