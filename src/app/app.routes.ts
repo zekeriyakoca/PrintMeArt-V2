@@ -8,6 +8,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FramesCatalogComponent } from './pages/frames-catalog/frames-catalog.component';
 import { CustomDesignComponent } from './pages/custom-design/custom-design.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,5 +45,13 @@ export const routes: Routes = [
   {
     path: 'your-design',
     component: CustomDesignComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
   },
 ];
