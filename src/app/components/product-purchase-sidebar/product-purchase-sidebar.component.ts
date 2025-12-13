@@ -31,8 +31,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   SizeOptions = SizeOptions;
 
   product = model<ProductDto>({} as ProductDto);
-  selectedSize = model(SizeOptions[0]);
   isMatIncluded = model<boolean>(false);
+
+  selectedSize = signal(SizeOptions[0]);
 
   constructor(
     private apiService: ApiService,

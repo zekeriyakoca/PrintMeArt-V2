@@ -11,12 +11,12 @@
 
         <!-- Preview Section -->
         <app-custom-design-preview [imageUrl]="imageUrl()" [isMatIncluded]="isMatIncluded()"
-          [isRolledUp]="selectedFrame().name === 'Rolled-up (No Frame)'" [frameBorderClass]="getFrameBorderClass()">
+          [selectedFrameImageUrl]="selectedFrameImageUrl()">
         </app-custom-design-preview>
       </div>
 
       <div class="v-full md:v-4/12">
-        <app-product-purchase-sidebar [(selectedSize)]="selectedSize" [(isMatIncluded)]="isMatIncluded"
+        <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded"
           [product]="customProduct()"></app-product-purchase-sidebar>
       </div>
     </div>

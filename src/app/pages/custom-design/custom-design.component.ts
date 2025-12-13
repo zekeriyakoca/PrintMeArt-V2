@@ -1,23 +1,12 @@
 import { ApiService } from './../../services/api/api.service';
-import { Component, signal, computed, OnDestroy } from '@angular/core';
+import { Component, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart/cart.service';
-import { SelectedOptionDto } from '../../models/cart-item';
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { ProductDto } from '../../models/product';
 import { CustomDesignUploadComponent } from '../../components/custom-design-upload/custom-design-upload.component';
 import { CustomDesignPreviewComponent } from '../../components/custom-design-preview/custom-design-preview.component';
-import { SizeOptions } from '../../shared/constants';
-
-export interface DesignFrame {
-  id: number;
-  name: string;
-  price: number;
-  thumbnail: string;
-  mask: string;
-  maskWithoutMat: string;
-}
+import { FrameOptions } from '../../shared/constants';
 
 export interface DesignSize {
   id: number;
@@ -41,10 +30,7 @@ export class CustomDesignComponent
   extends BasePageComponent
   implements OnDestroy
 {
-  constructor(
-    private apiService: ApiService,
-    private cartService: CartService,
-  ) {
+  constructor(private apiService: ApiService) {
     super();
   }
 
@@ -58,203 +44,17 @@ export class CustomDesignComponent
       });
   }
 
-  selectedSize = signal(SizeOptions[0]);
   isMatIncluded = signal<boolean>(false);
-
-  // Frame options - using real IKEA frame thumbnails
-  frames: DesignFrame[] = [
-    {
-      id: 0,
-      name: 'Rolled-up (No Frame)',
-      price: 0,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/drommare-poster-wild-and-free__1074693_pe855628_s5.jpg?f=xs',
-      mask: '',
-      maskWithoutMat: '',
-    },
-    {
-      id: 1,
-      name: 'Classic Black',
-      price: 15,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/edsbruk-frame-black-stained__0723741_pe734158_s5.jpg?f=xs',
-      mask: '/assets/frames/black-mask.png',
-      maskWithoutMat: '/assets/frames/black-mask-no-mat.png',
-    },
-    {
-      id: 2,
-      name: 'Natural Oak',
-      price: 20,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/plommontrad-frame-white-stained-pine-effect__1202413_pe905936_s5.jpg?f=xs',
-      mask: '/assets/frames/oak-mask.png',
-      maskWithoutMat: '/assets/frames/oak-mask-no-mat.png',
-    },
-    {
-      id: 3,
-      name: 'White Gallery',
-      price: 18,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/edsbruk-frame-white__0706506_pe725889_s5.jpg?f=xs',
-      mask: '/assets/frames/white-mask.png',
-      maskWithoutMat: '/assets/frames/white-mask-no-mat.png',
-    },
-    {
-      id: 4,
-      name: 'Walnut Brown',
-      price: 25,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/ramsborg-frame-brown__0726700_pe735389_s5.jpg?f=xs',
-      mask: '/assets/frames/walnut-mask.png',
-      maskWithoutMat: '/assets/frames/walnut-mask-no-mat.png',
-    },
-    {
-      id: 5,
-      name: 'Modern Black',
-      price: 22,
-      thumbnail:
-        'https://www.ikea.com/nl/en/images/products/rodalm-frame-black__1251233_pe924195_s5.jpg?f=xs',
-      mask: '/assets/frames/modern-black-mask.png',
-      maskWithoutMat: '/assets/frames/modern-black-mask-no-mat.png',
-    },
-  ];
-
-  sizes: DesignSize[] = [
-    { id: 1, name: '21×30', multiplier: 1 },
-    { id: 2, name: '30×40', multiplier: 1.3 },
-    { id: 3, name: '50×70', multiplier: 1.8 },
-    { id: 4, name: '70×100', multiplier: 2.5 },
-  ];
+  imageUrl = signal<string | null>(null);
+  customProduct = signal<ProductDto>({} as ProductDto);
+  selectedFrameImageUrl = signal<string | null>(FrameOptions[0].mask);
 
   // Base product
   readonly basePrice = 25;
   readonly productId = 719; // Custom design product ID
   readonly productName = 'Custom Design Print';
 
-  // State signals
-  imageUrl = signal<string | null>(null);
-  selectedFrameIndex = signal(0);
-  quantity = signal(1);
-  sizeSelected = signal(this.sizes[0]);
-  customProduct = signal<ProductDto>({} as ProductDto);
-
-  // Computed values
-  selectedFrame = computed(() => this.frames[this.selectedFrameIndex()]);
-
-  calculatedPrice = computed(() => {
-    const sizeIndex = this.sizes.findIndex(
-      (s) => s.id === this.sizeSelected().id,
-    );
-    const properSize = this.isMatIncluded()
-      ? this.sizes[Math.min(this.sizes.length - 1, sizeIndex + 1)]
-      : this.sizeSelected();
-    const price =
-      (this.basePrice + this.selectedFrame().price) * properSize.multiplier;
-    return Math.floor(price);
-  });
-
-  subtotal = computed(() => this.calculatedPrice() * this.quantity());
-  taxEstimate = computed(() => this.subtotal() * 0.21);
-  total = computed(() => this.subtotal());
-
-  getFrameBorderClass(): string {
-    const frame = this.selectedFrame();
-    switch (frame.id) {
-      case 1:
-        return 'border-frame-black';
-      case 2:
-        return 'border-frame-oak';
-      case 3:
-        return 'border-frame-white';
-      case 4:
-        return 'border-frame-walnut';
-      case 5:
-        return 'border-frame-modern-black';
-      default:
-        return 'border-slate-800';
-    }
-  }
-
   onImageUrlSelected(url: string | null): void {
-    const existingUrl = this.imageUrl();
-    if (existingUrl) {
-      URL.revokeObjectURL(existingUrl);
-    }
     this.imageUrl.set(url);
-  }
-
-  selectFrame(index: number): void {
-    this.selectedFrameIndex.set(index);
-  }
-
-  selectSize(size: DesignSize): void {
-    this.sizeSelected.set(size);
-  }
-
-  toggleMat(): void {
-    this.isMatIncluded.update((v) => !v);
-  }
-
-  incrementQty(): void {
-    this.quantity.update((q) => q + 1);
-  }
-
-  decrementQty(): void {
-    if (this.quantity() > 1) {
-      this.quantity.update((q) => q - 1);
-    }
-  }
-
-  addToCart(): void {
-    const imageUrl = this.imageUrl();
-    if (!imageUrl) return;
-
-    const selectedOptions: SelectedOptionDto[] = [
-      {
-        optionId: this.selectedFrame().id,
-        optionName: 'Frame',
-        spec1: this.selectedFrame().name,
-      },
-      {
-        optionId: this.sizeSelected().id,
-        optionName: 'Size',
-        spec1: this.sizeSelected().name,
-      },
-    ];
-
-    if (this.isMatIncluded()) {
-      selectedOptions.push({
-        optionId: 100,
-        optionName: 'Mat',
-        spec1: 'Included',
-      });
-    }
-
-    this.cartService.addItemToCart(
-      this.productId,
-      this.productId, // variant same as product for custom
-      this.productName,
-      this.basePrice,
-      this.calculatedPrice(),
-      this.quantity(),
-      imageUrl,
-      selectedOptions,
-    );
-  }
-
-  clearImage(): void {
-    const url = this.imageUrl();
-    if (url) {
-      URL.revokeObjectURL(url);
-    }
-    this.imageUrl.set(null);
-  }
-
-  override ngOnDestroy(): void {
-    super.ngOnDestroy();
-    const url = this.imageUrl();
-    if (url) {
-      URL.revokeObjectURL(url);
-    }
   }
 }

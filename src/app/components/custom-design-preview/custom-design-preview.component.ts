@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, signal } from '@angular/core';
+import { DesignFrame } from '../../shared/constants';
+import { DesignSize } from '../../pages/custom-design/custom-design.component';
 
 @Component({
   selector: 'app-custom-design-preview',
@@ -9,8 +11,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './custom-design-preview.component.scss',
 })
 export class CustomDesignPreviewComponent {
-  @Input({ required: true }) imageUrl: string | null = null;
-  @Input({ required: true }) isMatIncluded: boolean = false;
-  @Input({ required: true }) isRolledUp: boolean = false;
-  @Input({ required: true }) frameBorderClass: string = '';
+  imageUrl = input<string | null>(null);
+  isMatIncluded = input(false);
+  selectedFrameImageUrl = input<string | null>(null);
+  isRolledUp = false;
 }
