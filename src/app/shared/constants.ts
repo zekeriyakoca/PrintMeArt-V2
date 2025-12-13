@@ -17,16 +17,8 @@ export interface DesignFrame {
 
 export const FrameOptions: DesignFrame[] = [
   {
-    id: 0,
-    name: 'Rolled-up (No Frame)',
-    thumbnail:
-      'https://genstorageaccount3116.blob.core.windows.net/print-me-product-images/no-frame.png',
-    mask: '',
-    maskWithoutMat: '',
-  },
-  {
     id: 1,
-    name: 'Black Frame | EDSBRUK',
+    name: 'Black | EDSBRUK',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/edsbruk-frame-black-stained__0723741_pe734158_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame8-edsbruk-mat.png',
@@ -35,7 +27,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 2,
-    name: 'White Stained Pine | PLOMMONTRÄD',
+    name: 'White Pine | PLOMMONTRÄD',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/plommontrad-frame-white-stained-pine-effect__1202413_pe905936_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame6-plommon-mat.png',
@@ -44,7 +36,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 3,
-    name: 'White Frame | EDSBRUK',
+    name: 'White | EDSBRUK',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/edsbruk-frame-white__0706506_pe725889_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame5-edsbruk-mat.png',
@@ -53,7 +45,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 4,
-    name: 'Brown Frame | RAMSBORG',
+    name: 'Brown | RAMSBORG',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/ramsborg-frame-brown__0726700_pe735389_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame7-ramsborg-mat.png',
@@ -62,7 +54,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 5,
-    name: 'Black Frame | RÖDALM',
+    name: 'Black | RÖDALM',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/rodalm-frame-black__1251233_pe924195_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame1-rodalm-mat.png',
@@ -71,7 +63,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 6,
-    name: 'Black Frame | KNOPPÄNG',
+    name: 'Black | KNOPPÄNG',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/knoppang-frame-black__0638249_pe698799_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame2-knoppang-mat.png',
@@ -80,7 +72,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 7,
-    name: 'Gold Frame | SILVERHÖJDEN',
+    name: 'Gold | SILVERHÖJDEN',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/silverhojden-frame-gold-colour__1179571_pe895993_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame4-silverhojden-mat.png',
@@ -89,7 +81,7 @@ export const FrameOptions: DesignFrame[] = [
   },
   {
     id: 8,
-    name: 'Black Frame | LOMVIKEN',
+    name: 'Black | LOMVIKEN',
     thumbnail:
       'https://www.ikea.com/nl/en/images/products/lomviken-frame-black__0386296_pe558681_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame3-lomviken-mat.png',

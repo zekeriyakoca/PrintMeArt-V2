@@ -1,5 +1,5 @@
 import { ApiService } from './../../services/api/api.service';
-import { Component, signal, OnDestroy } from '@angular/core';
+import { Component, signal, computed, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
@@ -30,13 +30,15 @@ export class CustomDesignComponent
   extends BasePageComponent
   implements OnDestroy
 {
+  readonly PRODUCTID = 719; // Custom design product ID
+
   constructor(private apiService: ApiService) {
     super();
   }
 
   ngOnInit(): void {
     this.apiService
-      .getProductById(this.productId.toString())
+      .getProductById(this.PRODUCTID.toString())
       .subscribe((product) => {
         if (product) {
           this.customProduct.set(product);
@@ -47,22 +49,28 @@ export class CustomDesignComponent
   isMatIncluded = signal<boolean>(false);
   imageUrl = signal<string | null>(null);
   customProduct = signal<ProductDto>({} as ProductDto);
-  selectedFrameMaskUrl = signal<string | null>(null);
+  selectedFrameName = signal<string>('Rolled-up');
 
-  // Base product
-  readonly basePrice = 25;
-  readonly productId = 719; // Custom design product ID
-  readonly productName = 'Custom Design Print';
+  selectedFrameMaskUrl = computed<string | null>(() => {
+    if (this.selectedFrameName() === 'Rolled-up') {
+      return null;
+    }
+
+    const frame = FrameOptions.find(
+      (frame) => frame.name === this.selectedFrameName(),
+    )!;
+
+    var url = this.isMatIncluded() ? frame.mask : frame.maskWithoutMat;
+    return url;
+  });
+
+  isRolledUp = computed(() => this.selectedFrameName() === 'Rolled-up');
 
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
   }
 
   onSelectedFrameChanged(frameName: string): void {
-    const frame = FrameOptions.find((frame) => frame.name === frameName)!;
-
-    var url = this.isMatIncluded() ? frame.mask : frame.maskWithoutMat;
-
-    this.selectedFrameMaskUrl.set(url);
+    this.selectedFrameName.set(frameName);
   }
 }

@@ -6,21 +6,22 @@
       <div class="lg:flex">
         <div class="w-full">
           <div class="relative overflow-hidden">
-            @if (isRolledUp) {
-            <div class="relative inset-0 h-full mx-auto" [class.p-[12%]]="isMatIncluded()"
-              [class.p-[3%]]="!isMatIncluded()" style="aspect-ratio: 5 / 7;">
+            @if (isRolledUp()) {
+            <!-- Rolled-up: No frame, just the image -->
+            <div class="relative inset-0 h-full mx-auto p-[3%]" style="aspect-ratio: 5 / 7;">
               <img [src]="imageUrl()" class="w-full h-full object-cover" alt="product preview" />
             </div>
             } @else {
-            <!-- Framed Preview with border simulation -->
-            <div class="relative" style="aspect-ratio: 5 / 7;">
-              <div class="absolute inset-0 z-10 pointer-events-none">
-                <div class="w-full h-full border-[24px] lg:border-[32px]">
-                </div>
+            <!-- Framed Preview: Frame mask overlay on top of image -->
+            <div class="relative frame-preview-enter">
+              <!-- Frame mask overlay (z-10 to be on top) -->
+              <div class="relative z-10">
+                <img [src]="selectedFrameMaskUrl()" class="w-full object-cover" alt="frame overlay" />
               </div>
-              <div class="absolute inset-0" [class.p-[12%]]="isMatIncluded()" [class.bg-white]="isMatIncluded()"
+              <!-- User image behind the frame -->
+              <div class="absolute inset-0 h-full mx-auto" [class.p-[12%]]="isMatIncluded()"
                 [class.p-[3%]]="!isMatIncluded()">
-                <img [src]="imageUrl()" class="w-full h-full object-cover" alt="product preview" />
+                <img [src]="imageUrl()" class="h-full w-full object-cover" alt="product preview" />
               </div>
             </div>
             }

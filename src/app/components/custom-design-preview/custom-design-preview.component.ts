@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, Input, signal } from '@angular/core';
-import { DesignFrame } from '../../shared/constants';
-import { DesignSize } from '../../pages/custom-design/custom-design.component';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-custom-design-preview',
@@ -14,5 +12,5 @@ export class CustomDesignPreviewComponent {
   imageUrl = input<string | null>(null);
   isMatIncluded = input(false);
   selectedFrameMaskUrl = input<string | null>(null);
-  isRolledUp = false;
+  isRolledUp = input(false);
 }
