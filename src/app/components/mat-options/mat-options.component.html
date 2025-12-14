@@ -1,13 +1,23 @@
-<div class="mt-2 space-y-7 lg:space-y-8">
-  <div>
-    <div
-      class="flex items-center justify-center px-4 py-2 text-sm rounded-full border focus:outline-none cursor-pointer select-none"
-      [class]="isMatIncluded()
-        ? 'border-indigo-500 bg-indigo-50 text-indigo-900'
-        : 'border-neutral-300 text-neutral-700 hover:border-neutral-400'" (click)="onMatToggle()">
-      <!-- PlusIcon SVG -->
-      <app-icon iconName="plus" class="w-4 h-4 text-slate-600" />
-      <span class="line-clamp-1 ml-2">Include Mat</span>
+<div class="mt-2">
+  <button type="button" (click)="onMatToggle()" class="w-full">
+    <div [class]="'flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition-all duration-200 ' +
+        (isMatIncluded() ? 'border-indigo-200 bg-[#faf6ff]' : 'border-gray-200 bg-white hover:border-gray-300')">
+      <div class="flex items-center gap-3 min-w-0">
+        <div [class]="'h-9 w-9 rounded-md border-2 border-dashed flex items-center justify-center transition-colors ' +
+          (isMatIncluded() ? 'border-indigo-300 bg-indigo-100/50' : 'border-gray-300 bg-gray-50')">
+          <div class="h-5 w-5 bg-white border border-gray-200"></div>
+        </div>
+        <div class="min-w-0">
+          <div [class]="'text-sm font-medium ' + (isMatIncluded() ? 'text-indigo-700' : 'text-gray-900')">
+            {{isMatIncluded() ? 'With' : 'Without'}} white mat
+          </div>
+          <div class="text-xs text-gray-500">Adds elegant border around your print</div>
+        </div>
+      </div>
+      <div [class]="'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium transition-colors ' +
+        (isMatIncluded() ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-500')">
+        {{ isMatIncluded() ? '✓' : '+' }}
+      </div>
     </div>
-  </div>
+  </button>
 </div>
