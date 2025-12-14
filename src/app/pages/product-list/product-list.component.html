@@ -15,13 +15,7 @@
           <app-icon iconName="arrow-right"></app-icon>
         </button>
         <span class="absolute left-5 top-1/2 -translate-y-1/2 text-2xl md:left-6 pointer-events-none">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M22 22L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+          <app-icon iconName="search" class="h-5 w-5"></app-icon>
         </span>
       </label>
     </div>
@@ -50,10 +44,8 @@
         class="group/pin inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors"
         [class]="chip.colorClass" (click)="selectOption(chip.type, chip.name)">
         {{ chip.name }}
-        <svg class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200" fill="none"
-          stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
+        <app-icon iconName="close"
+          class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
       </span>
       }
     </div>
@@ -74,10 +66,8 @@
             (click)="selectOption(group.groupType, option.name)">
             <span>{{ option.name }}</span>
             @if (isOptionSelected(option.name)) {
-            <svg class="w-4 h-4 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200" fill="none"
-              stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <app-icon iconName="close"
+              class="w-4 h-4 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
             }
           </p>
           }
@@ -97,10 +87,7 @@
       </div>
       } @else {
       <div class="flex flex-col items-center justify-center py-20">
-        <svg class="w-16 h-16 text-neutral-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
+        <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
         <p class="text-neutral-500 text-lg mb-1">No products found</p>
         <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
       </div>

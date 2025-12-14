@@ -7,10 +7,11 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { takeUntil } from 'rxjs';
 import { CategoryDto } from '../../models/category';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-header',
-  imports: [UserMenuComponent],
+  imports: [UserMenuComponent, IconComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

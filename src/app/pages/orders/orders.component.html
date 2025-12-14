@@ -26,11 +26,7 @@
     <!-- Empty State -->
     <div class="rounded-3xl bg-white py-20 text-center shadow-xl shadow-slate-200/50">
       <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="h-10 w-10 text-slate-400">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-        </svg>
+        <app-icon iconName="shopping-bag" class="h-10 w-10 text-slate-400"></app-icon>
       </div>
       <h2 class="text-xl font-semibold text-slate-900">No orders yet</h2>
       <p class="mt-2 text-slate-500">Your order history will appear here</p>
@@ -90,10 +86,7 @@
             </div>
 
             <!-- Arrow -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-              stroke="currentColor" class="h-5 w-5 text-slate-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
+            <app-icon iconName="chevron-right" class="h-5 w-5 text-slate-400"></app-icon>
           </div>
 
           <!-- Quick Actions -->
@@ -138,10 +131,7 @@
         <p class="text-sm text-slate-500">{{ formatDate(order.createdAt) }}</p>
       </div>
       <button type="button" class="rounded-full p-2 hover:bg-slate-100" (click)="closeOrderDetail()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="h-5 w-5 text-slate-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-        </svg>
+        <app-icon iconName="close" class="h-5 w-5 text-slate-500"></app-icon>
       </button>
     </div>
 

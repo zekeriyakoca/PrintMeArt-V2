@@ -1,8 +1,9 @@
 import { Component, input, model } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-input-number',
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
 })

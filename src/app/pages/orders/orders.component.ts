@@ -2,12 +2,17 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { OrdersService, Order, OrderStatus } from '../../services/orders/orders.service';
+import {
+  OrdersService,
+  Order,
+  OrderStatus,
+} from '../../services/orders/orders.service';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './orders.component.html',
 })
 export class OrdersComponent implements OnInit {
@@ -72,7 +77,9 @@ export class OrdersComponent implements OnInit {
   cancelOrder(orderId: string): void {
     this.ordersService.cancelOrder(orderId).subscribe(() => {
       this.orders.update((list) =>
-        list.map((o) => (o.id === orderId ? { ...o, status: 'cancelled' as OrderStatus } : o))
+        list.map((o) =>
+          o.id === orderId ? { ...o, status: 'cancelled' as OrderStatus } : o,
+        ),
       );
       this.closeOrderDetail();
     });

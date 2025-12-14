@@ -13,11 +13,17 @@ import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
 import { ApiService } from '../../services/api/api.service';
 import { first } from 'rxjs';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CheckoutUserInfoComponent, OrderSummaryComponent, RouterLink],
+  imports: [
+    CheckoutUserInfoComponent,
+    OrderSummaryComponent,
+    RouterLink,
+    IconComponent,
+  ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,10 +1,11 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-section-hero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IconComponent],
   templateUrl: './section-hero.component.html',
   styleUrls: ['./section-hero.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

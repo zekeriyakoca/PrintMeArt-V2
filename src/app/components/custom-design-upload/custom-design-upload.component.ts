@@ -7,11 +7,12 @@ import {
   ViewChild,
   signal,
 } from '@angular/core';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-custom-design-upload',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IconComponent],
   templateUrl: './custom-design-upload.component.html',
   styleUrl: './custom-design-upload.component.scss',
 })

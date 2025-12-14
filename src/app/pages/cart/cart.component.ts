@@ -11,10 +11,16 @@ import { CartService } from '../../services/cart/cart.service';
 import { CartItemDto } from '../../models/cart-item';
 import { Router, RouterLink } from '@angular/router';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent, OrderSummaryComponent, RouterLink],
+  imports: [
+    CartItemComponent,
+    OrderSummaryComponent,
+    RouterLink,
+    IconComponent,
+  ],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',

@@ -6,9 +6,7 @@
     <button
       class="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center"
       (click)="closeModal()">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-      </svg>
+      <app-icon iconName="chevron-left" class="w-5 h-5"></app-icon>
     </button>
     <h2 class="text-center text-2xl font-light text-neutral-900">
       All Photos
@@ -41,25 +39,19 @@
 
     <!-- Close button for selected image -->
     <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-10" (click)="closeSelectedImage()">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+      <app-icon iconName="close" class="w-8 h-8"></app-icon>
     </button>
 
     <!-- Previous button -->
     <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
       (click)="prevSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-      </svg>
+      <app-icon iconName="chevron-left" class="w-8 h-8"></app-icon>
     </button>
 
     <!-- Next button -->
     <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
       (click)="nextSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
+      <app-icon iconName="chevron-right" class="w-8 h-8"></app-icon>
     </button>
 
     <!-- Selected image -->

@@ -8,20 +8,14 @@
       </div>
       <a routerLink="/" class="continue-link">
         <span>Continue shopping</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
+        <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
       </a>
     </header>
 
     @if (cartItems().length === 0) {
     <div class="empty-cart">
       <div class="empty-icon">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 01-8 0" />
-        </svg>
+        <app-icon iconName="empty-bag" class="w-16 h-16"></app-icon>
       </div>
       <h2 class="empty-title">Your bag is empty</h2>
       <p class="empty-text">Looks like you haven't added any art to your collection yet.</p>
@@ -42,17 +36,12 @@
           <order-button>
             <button class="checkout-btn" (click)="navigateToCheckout()">
               <span>Proceed to Checkout</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <app-icon iconName="arrow-right" class="w-[18px] h-[18px]"></app-icon>
             </button>
           </order-button>
           <order-info>
             <div class="secure-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0110 0v4" />
-              </svg>
+              <app-icon iconName="lock" class="w-3.5 h-3.5"></app-icon>
               <span>Secure checkout</span>
             </div>
           </order-info>

@@ -9,11 +9,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-cart-added-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IconComponent],
   templateUrl: './cart-added-modal.component.html',
   styleUrl: './cart-added-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
