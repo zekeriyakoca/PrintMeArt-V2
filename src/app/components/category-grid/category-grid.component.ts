@@ -29,7 +29,7 @@ export class CategoryGridComponent {
   ];
 
   // Active parent category name
-  tabActive = signal<string>('');
+  tabActive = signal<string>('Famous Painters');
 
   // First four parent categories become tabs (pure)
   tabs = computed(() => {

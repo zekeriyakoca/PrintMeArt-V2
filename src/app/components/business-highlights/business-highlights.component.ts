@@ -24,7 +24,7 @@ export class BusinessHighlightsComponent {
       description:
         'Upload your image, preview it, then we print it museum-quality.',
       cta: 'Create your print',
-      link: '/custom-design',
+      link: '/your-design',
       color: 'violet',
     },
     {
@@ -32,7 +32,7 @@ export class BusinessHighlightsComponent {
       title: 'Made in Den Bosch',
       description: 'Family-run studio. Personal support. No mystery sellers.',
       cta: 'Meet the family',
-      link: '/about-us',
+      link: '/about',
       color: 'cyan',
     },
   ];
