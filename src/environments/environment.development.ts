@@ -7,4 +7,10 @@ export const environment = {
     'basket-api': 'http://localhost:5003',
     'ordering-api': 'http://localhost:5004',
   },
+  // serviceUrls: {
+  //   'catalog-api': 'https://nest.lontray.shop/catalog-api',
+  //   'basket-api': 'https://nest.lontray.shop/basket-api',
+  //   'pricing-api': 'https://nest.lontray.shop/pricing-api',
+  //   'ordering-api': 'https://nest.lontray.shop/ordering-api',
+  // },
 };

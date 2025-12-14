@@ -10,6 +10,7 @@ import { ProductPurchaseSidebarComponent } from '../../components/product-purcha
 import { AccordionInfoComponent } from '../../components/accordion-info/accordion-info.component';
 import { AccordionItem } from '../../models/accordion-item';
 import { PolicyComponent } from '../../components/policy/policy.component';
+import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,6 +21,7 @@ import { PolicyComponent } from '../../components/policy/policy.component';
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
     PolicyComponent,
+    RelatedProductsComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
@@ -51,10 +53,6 @@ export class ProductDetailComponent
 
   productAccordionData = computed(() => {
     return [
-      {
-        name: 'Title',
-        content: this.product().title || 'No title available.',
-      },
       {
         name: 'Description',
         content: this.product().description || 'No description available.',

@@ -1,3 +1,4 @@
+<!-- Search Bar  -->
 <div class="flex flex-col mt-20 mb-10 w-full">
   <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50 ">
   </div>
@@ -13,84 +14,84 @@
           (click)="search()">
           <app-icon iconName="arrow-right"></app-icon>
         </button>
-
         <span class="absolute left-5 top-1/2 -translate-y-1/2 text-2xl md:left-6 pointer-events-none">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M22 22L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+          <app-icon iconName="search" class="h-5 w-5"></app-icon>
         </span>
       </label>
     </div>
   </header>
 </div>
+
+<!-- Page Content -->
 <div class="contained-page">
-  <div>
-    <h2 class="mt-4 mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
+
+  <!-- Filter Titles  -->
+  <div class="flex items-center justify-between mt-4 pb-4 border-b border-neutral-200">
+    <!-- Hide/Show Filters on left -->
+    <h2 class="mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
       (click)="hideFilters.set(!hideFilters())">
-      <span class="inline-flex  border-indigo-900 pr-4 text-[17px]">
+      <span class="inline-flex border-indigo-900 pr-4 text-[17px]">
         {{hideFilters() ? 'View All ' : 'Hide '}}Filters
       </span>
     </h2>
-  </div>
-  <div class="flex">
-    <div id="filters" class="flex-2 mt-4" [class]="hideFilters() ? 'hidden' : ''">
-      <div>
-        @for (group of filterOptions(); track group.name; let groupIndex = $index) {
-        <div class="mb-1 pl-2">
-          <div>
-            <h3 class="mb-1 text-[16px]font-light uppercase text-slate-900 relative">
-              {{ group.name }}
-            </h3>
-          </div>
-          <div
-            [class]="group.name.toLowerCase() === 'color' ? 'grid grid-cols-4 mb-1 max-w-[80%]' : 'flex flex-col gap-1 mb-1'">
-            @for(option of group.options; track option.name; let optionIndex = $index) {
-            @if(group.name.toLowerCase() == 'color'){
-            <div
-              class="w-8 h-8 flex items-center justify-center cursor-pointer p-1 mb-2 rounded-full border-2 transition-all duration-200 hover:scale-110"
-              [style.backgroundColor]="mapColorToHex(option.name)"
-              [class.border-neutral-300]="selectedFilterOptions().optionName !== option.name"
-              [class.border-indigo-600]="selectedFilterOptions().optionName === option.name"
-              [class.ring-2]="selectedFilterOptions().optionName === option.name"
-              [class.ring-indigo-600]="selectedFilterOptions().optionName === option.name"
-              (click)="selectOption(group.groupType, option.name)">
-            </div>
-            }
-            @else{
-            <p class="category-leaf text-sm cursor-pointer mb-1 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
-              (click)="selectOption(group.groupType, option.name)" [class]="(
-                selectedFilterOptions().categoryName === option.name ||
-                selectedFilterOptions().attributeName === option.name ||
-                selectedFilterOptions().optionName === option.name
-              ) ? 'bg-indigo-50 text-indigo-700': ''">
-              <span>{{option.name }}</span>
-              @if (selectedFilterOptions().categoryName === option.name ||
-              selectedFilterOptions().attributeName === option.name ||
-              selectedFilterOptions().optionName === option.name) {
-              <svg class="w-4 h-4 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              }
-            </p>
-            }
-            }
-          </div>
-        </div>
-        <hr class="mb-4 border-b-1 border-indigo-800 w-[150px] ml-0 opacity-15">
-        }
-      </div>
+
+    <!-- Results for chips on right -->
+    @if (activeFilters().length) {
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-sm text-neutral-500">Results for</span>
+      @for (chip of activeFilters(); track chip.type) {
+      <span
+        class="group/pin inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors"
+        [class]="chip.colorClass" (click)="selectOption(chip.type, chip.name)">
+        {{ chip.name }}
+        <app-icon iconName="close"
+          class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
+      </span>
+      }
     </div>
+    }
+  </div>
+
+  <!-- Filters & Product Catalog -->
+  <div class="flex">
+    <!-- Filters -->
+    <div id="filters" class="flex-2 mt-4" [class.hidden]="hideFilters()">
+      @for (group of filterOptions(); track group.name) {
+      <div class="mb-1 pl-2">
+        <h3 class="mb-1 text-[16px] font-light uppercase text-slate-900">{{ group.name }}</h3>
+        <div class="flex flex-col gap-1 mb-1">
+          @for (option of group.options; track option.name) {
+          <p class="category-leaf text-sm cursor-pointer mb-0 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
+            [class.bg-indigo-50]="isOptionSelected(option.name)" [class.text-indigo-700]="isOptionSelected(option.name)"
+            (click)="selectOption(group.groupType, option.name)">
+            <span>{{ option.name }}</span>
+            @if (isOptionSelected(option.name)) {
+            <app-icon iconName="close"
+              class="w-4 h-4 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
+            }
+          </p>
+          }
+        </div>
+      </div>
+      <hr class="mb-4 border-b-1 border-indigo-800 w-[150px] ml-0 opacity-15">
+      }
+    </div>
+
+    <!-- Product Catalog -->
     <div class="flex-10 mb-15">
+      @if (products().data?.length) {
       <div class="grid grid-cols-4 mb-2">
         @for (product of products().data; track product.id) {
         <app-product-card [product]="product" class=""></app-product-card>
         }
       </div>
+      } @else {
+      <div class="flex flex-col items-center justify-center py-20">
+        <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
+        <p class="text-neutral-500 text-lg mb-1">No products found</p>
+        <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
+      </div>
+      }
       <div class="flex justify-center mt-12">
         <app-pagination (paginationChanged)="onPaginationChanged()" [className]="'mt-8'"
           [totalPages]="products().totalPage" [(pageIndex)]="selectedFilterOptions().pageIndex"

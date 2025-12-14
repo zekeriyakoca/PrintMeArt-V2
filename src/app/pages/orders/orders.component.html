@@ -1,0 +1,218 @@
+<div class="margin-header min-h-screen bg-slate-50">
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-20">
+    <!-- Header -->
+    <div class="mb-10 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900">My Orders</h1>
+      <p class="mt-2 text-slate-600">Track and manage your purchases</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-8 flex flex-wrap justify-center gap-2">
+      @for (filter of filterOptions; track filter) {
+      <button type="button" (click)="setFilter(filter)" [class]="activeFilter() === filter
+            ? 'rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white'
+            : 'rounded-full bg-white px-5 py-2 text-sm font-medium text-slate-600 shadow-sm hover:bg-slate-100'">
+        {{ filter === 'all' ? 'All' : (filter | titlecase) }}
+      </button>
+      }
+    </div>
+
+    <!-- Loading -->
+    @if (isLoading()) {
+    <div class="flex justify-center py-20">
+      <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900"></div>
+    </div>
+    } @else if (filteredOrders().length === 0) {
+    <!-- Empty State -->
+    <div class="rounded-3xl bg-white py-20 text-center shadow-xl shadow-slate-200/50">
+      <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
+        <app-icon iconName="shopping-bag" class="h-10 w-10 text-slate-400"></app-icon>
+      </div>
+      <h2 class="text-xl font-semibold text-slate-900">No orders yet</h2>
+      <p class="mt-2 text-slate-500">Your order history will appear here</p>
+      <a routerLink="/products"
+        class="mt-8 inline-block rounded-xl bg-slate-900 px-8 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+        Start Shopping
+      </a>
+    </div>
+    } @else {
+    <!-- Orders List -->
+    <div class="space-y-4">
+      @for (order of filteredOrders(); track order.id) {
+      <div
+        class="cursor-pointer overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-200/50 transition-all hover:shadow-xl"
+        (click)="viewOrder(order)">
+        <!-- Order Header -->
+        <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-semibold text-slate-900">#{{ order.orderNumber }}</span>
+            <span [class]="'rounded-full px-3 py-1 text-xs font-semibold ' + getStatusColor(order.status)">
+              {{ order.status | titlecase }}
+            </span>
+          </div>
+          <span class="text-lg font-bold text-slate-900">{{ formatCurrency(order.total) }}</span>
+        </div>
+
+        <!-- Order Content -->
+        <div class="p-6">
+          <div class="flex items-center gap-4">
+            <!-- Product Images -->
+            <div class="flex -space-x-3">
+              @for (item of order.items.slice(0, 3); track item.id; let i = $index) {
+              <div class="h-14 w-14 overflow-hidden rounded-xl border-2 border-white bg-slate-100"
+                [style.z-index]="3 - i">
+                @if (item.productImage) {
+                <img [src]="item.productImage" [alt]="item.productName" class="h-full w-full object-cover" />
+                }
+              </div>
+              }
+              @if (order.items.length > 3) {
+              <div
+                class="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-white bg-slate-900 text-xs font-semibold text-white">
+                +{{ order.items.length - 3 }}
+              </div>
+              }
+            </div>
+
+            <!-- Order Info -->
+            <div class="flex-1">
+              <p class="text-sm font-medium text-slate-900">
+                {{ order.items[0].productName }}
+                @if (order.items.length > 1) {
+                <span class="text-slate-400">+{{ order.items.length - 1 }} more</span>
+                }
+              </p>
+              <p class="mt-1 text-sm text-slate-500">{{ formatDate(order.createdAt) }}</p>
+            </div>
+
+            <!-- Arrow -->
+            <app-icon iconName="chevron-right" class="h-5 w-5 text-slate-400"></app-icon>
+          </div>
+
+          <!-- Quick Actions -->
+          @if (order.status === 'shipped' || order.status === 'delivered') {
+          <div class="mt-4 flex gap-3 border-t border-slate-100 pt-4">
+            @if (order.trackingUrl) {
+            <a [href]="order.trackingUrl" target="_blank" rel="noopener"
+              class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+              (click)="$event.stopPropagation()">
+              Track
+            </a>
+            }
+            @if (order.status === 'delivered') {
+            <button class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              (click)="reorder(order.id); $event.stopPropagation()">
+              Buy again
+            </button>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+@if (selectedOrder(); as order) {
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4" (click)="closeOrderDetail()">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
+
+  <!-- Modal -->
+  <div class="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
+    (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">Order #{{ order.orderNumber }}</h2>
+        <p class="text-sm text-slate-500">{{ formatDate(order.createdAt) }}</p>
+      </div>
+      <button type="button" class="rounded-full p-2 hover:bg-slate-100" (click)="closeOrderDetail()">
+        <app-icon iconName="close" class="h-5 w-5 text-slate-500"></app-icon>
+      </button>
+    </div>
+
+    <!-- Status -->
+    <div class="bg-slate-50 px-6 py-4">
+      <span [class]="'rounded-full px-4 py-1.5 text-sm font-semibold ' + getStatusColor(order.status)">
+        {{ order.status | titlecase }}
+      </span>
+      @if (order.estimatedDelivery && order.status !== 'delivered' && order.status !== 'cancelled') {
+      <p class="mt-2 text-sm text-slate-600">Arriving {{ formatDate(order.estimatedDelivery) }}</p>
+      }
+    </div>
+
+    <!-- Items -->
+    <div class="max-h-64 overflow-y-auto px-6 py-4">
+      @for (item of order.items; track item.id) {
+      <div class="flex gap-4 py-3">
+        <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+          @if (item.productImage) {
+          <img [src]="item.productImage" [alt]="item.productName" class="h-full w-full object-cover" />
+          }
+        </div>
+        <div class="flex-1">
+          <p class="font-medium text-slate-900">{{ item.productName }}</p>
+          <p class="text-sm text-slate-500">Qty: {{ item.quantity }}</p>
+        </div>
+        <p class="font-semibold text-slate-900">{{ formatCurrency(item.totalPrice) }}</p>
+      </div>
+      }
+    </div>
+
+    <!-- Summary -->
+    <div class="border-t border-slate-100 bg-slate-50 px-6 py-4">
+      <div class="flex justify-between text-sm">
+        <span class="text-slate-500">Subtotal</span>
+        <span>{{ formatCurrency(order.subtotal) }}</span>
+      </div>
+      <div class="mt-1 flex justify-between text-sm">
+        <span class="text-slate-500">Shipping</span>
+        <span>{{ formatCurrency(order.shippingCost) }}</span>
+      </div>
+      <div class="mt-1 flex justify-between text-sm">
+        <span class="text-slate-500">Tax</span>
+        <span>{{ formatCurrency(order.tax) }}</span>
+      </div>
+      <div class="mt-3 flex justify-between border-t border-slate-200 pt-3 text-base font-bold">
+        <span>Total</span>
+        <span>{{ formatCurrency(order.total) }}</span>
+      </div>
+    </div>
+
+    <!-- Shipping -->
+    <div class="border-t border-slate-100 px-6 py-4">
+      <p class="text-xs font-semibold uppercase text-slate-400">Ship to</p>
+      <p class="mt-1 text-sm text-slate-700">
+        {{ order.shippingAddress.fullName }} · {{ order.shippingAddress.street }}, {{ order.shippingAddress.city
+        }}
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-3 border-t border-slate-100 px-6 py-4">
+      @if (order.status === 'pending' || order.status === 'confirmed') {
+      <button class="flex-1 rounded-xl border border-red-200 py-3 text-sm font-semibold text-red-600 hover:bg-red-50"
+        (click)="cancelOrder(order.id)">
+        Cancel
+      </button>
+      }
+      @if (order.status === 'delivered') {
+      <button class="flex-1 rounded-xl bg-slate-900 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+        (click)="reorder(order.id)">
+        Buy again
+      </button>
+      }
+      @if (order.trackingUrl) {
+      <a [href]="order.trackingUrl" target="_blank"
+        class="flex-1 rounded-xl bg-slate-100 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-200">
+        Track
+      </a>
+      }
+    </div>
+  </div>
+</div>
+}

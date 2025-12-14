@@ -1,10 +1,11 @@
 import { Component, model, output } from '@angular/core';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-cart-item',
-  imports: [],
+  imports: [IconComponent],
   standalone: true,
   templateUrl: './cart-item.component.html',
   styleUrl: './cart-item.component.scss',

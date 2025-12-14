@@ -1,10 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import { ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-image-gallery-1',
-  imports: [ImageGalleryModalComponent],
+  imports: [ImageGalleryModalComponent, IconComponent],
   templateUrl: './image-gallery-1.component.html',
   styleUrl: './image-gallery-1.component.scss',
 })

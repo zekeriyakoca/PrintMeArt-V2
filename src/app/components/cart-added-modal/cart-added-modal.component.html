@@ -8,19 +8,14 @@
     <div class="flex items-center justify-between px-4 py-3 bg-indigo-50 border-b border-indigo-100">
       <div class="flex items-center gap-2">
         <div class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-          </svg>
+          <app-icon iconName="check" class="w-4 h-4 text-white"></app-icon>
         </div>
         <span class="font-medium text-indigo-900 text-sm">Added to cart</span>
       </div>
       <button type="button"
         class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors"
         (click)="close()">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+        <app-icon iconName="close" class="w-4 h-4"></app-icon>
       </button>
     </div>
 
@@ -66,10 +61,7 @@
       <button type="button"
         class="flex-1 py-2.5 px-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
         (click)="viewCart()">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-        </svg>
+        <app-icon iconName="shopping-cart" class="w-4 h-4"></app-icon>
         View Cart ({{ cartItemCount() }})
       </button>
     </div>

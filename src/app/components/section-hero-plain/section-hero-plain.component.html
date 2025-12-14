@@ -3,9 +3,9 @@
   <div class="absolute inset-0 bg-[#faf6ff]"></div>
 
   <div class="relative container pb-16 pt-28 sm:pt-24 lg:py-32 m-auto">
-    <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+    <div class="flex flex-col lg:flex-row items-center justify-between">
       <!-- Left: Text & Button -->
-      <div class="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
+      <div class="w-full lg:w-2/5 space-y-6 text-center lg:text-left">
         <span class="block text-base md:text-[1.40rem] font-medium" style="color: #db2877;">
           {{ subHeading() }}
         </span>
@@ -15,27 +15,21 @@
         <a [href]="btnLink()"
           class="inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-3 px-6 sm:py-5 sm:px-9 rounded-full text-sm sm:text-base font-medium">
           <span>{{ btnText() }}</span>
-          <svg class="w-5 h-5 ms-2.5" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M22 22L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+          <app-icon iconName="search" class="w-5 h-5 ms-2.5"></app-icon>
         </a>
       </div>
 
-      <!-- Right: Three Category Cards -->
-      <div class="w-full lg:w-1/2 flex gap-6 sm:gap-8 justify-center">
-        @for (cat of categories(); track cat.title) {
-        <a [href]="cat.link" class="group flex flex-col items-center text-center w-36 sm:w-44">
-          <div class="w-full aspect-[3/4] rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
-            <img [src]="cat.image" [alt]="cat.title"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+      <!-- Right: Three Category Cards - Staggered Layout -->
+      <div class="hero-cards">
+        @for (cat of categories(); track cat.title; let i = $index) {
+        <a [href]="cat.link" class="hero-card" [attr.data-index]="i">
+          <div class="card-image">
+            <img [src]="cat.image" [alt]="cat.title" />
           </div>
-          <span class="mt-3 text-sm sm:text-base font-medium text-slate-600 group-hover:text-slate-800">
-            {{ cat.title }}
-          </span>
+          <div class="card-label">
+            <span>{{ cat.title }}</span>
+            <app-icon iconName="arrow-right" class="w-3.5 h-3.5"></app-icon>
+          </div>
         </a>
         }
       </div>

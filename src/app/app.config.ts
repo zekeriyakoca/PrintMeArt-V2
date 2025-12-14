@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
       withFetch(),
-      withInterceptors([AuthenticationInterceptor])
+      withInterceptors([AuthenticationInterceptor]),
     ),
     provideRouter(routes),
     {
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '761877359482-leqnq498c781apae0456om543bf70h4g.apps.googleusercontent.com'
+              '761877359482-leqnq498c781apae0456om543bf70h4g.apps.googleusercontent.com',
             ),
           },
         ],

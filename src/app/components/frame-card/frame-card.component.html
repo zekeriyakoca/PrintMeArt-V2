@@ -1,0 +1,24 @@
+<div class="frame-card">
+  <div class="image-container">
+    <div class="image-wrapper group">
+      <!-- Default Image -->
+      <div class="image-aspect">
+        <img [src]="frame().image" [alt]="frame().name" class="frame-image default-image" />
+      </div>
+
+      <!-- Hover Image -->
+      <div class="image-aspect hover-overlay">
+        <img [src]="frame().hoverImage" [alt]="frame().name" class="frame-image hover-image" />
+      </div>
+    </div>
+
+    <!-- Show All Photos Button -->
+    <button class="show-photos-btn" (click)="onShowPhotos($event)">
+      <app-icon iconName="grid" class="btn-icon" />
+      <span class="btn-text">Show all photos</span>
+    </button>
+  </div>
+
+  <h3 class="frame-name">{{ frame().name }}</h3>
+  <p class="frame-description">{{ frame().description }}</p>
+</div>

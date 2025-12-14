@@ -1,5 +1,12 @@
 :host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  display: block;
+}
+
+// Hide default header/footer on login page for full-screen experience
+:host ::ng-deep {
+
+  app-header,
+  app-footer {
+    display: none;
+  }
 }

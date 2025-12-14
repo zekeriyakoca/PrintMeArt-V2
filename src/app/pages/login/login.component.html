@@ -1,12 +1,93 @@
-<div class="flex flex-col w-full max-w-screen-sm mt-32">
-  <div class="page-card w-full bg-indigo-300 min-h-64 mb-2">
-    <h1 class="text-3xl text-center font-bold">
-      SIGN IN
-    </h1>
-    <div class="mt-16 text-center">
-      <div style="max-width: 300px; margin:auto">
-        <asl-google-signin-button [size]="'large'" [shape]="'rectangular'" [type]="'standard'" [theme]="'outline'"
-          [text]="'signin_with'" [logo_alignment]="'left'"></asl-google-signin-button>
+<div class="min-h-screen bg-slate-50">
+  <div class="grid min-h-screen lg:grid-cols-2">
+    <!-- Left panel: Hero image -->
+    <div class="relative hidden lg:flex lg:flex-col">
+      <!-- Background image -->
+      <img
+        src="https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/3a19a6c8-bd85-4ea9-955e-391b2736e627/3a19a6c8-bd85-4ea9-955e-391b2736e627.jpeg"
+        alt="Art gallery wall with framed prints" class="absolute inset-0 h-full w-full object-cover object-bottom" />
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-slate-900/30"></div>
+
+      <!-- Logo -->
+      <div class="relative z-10 p-8">
+        <a href="/" class="inline-block">
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt"
+            class="h-8 brightness-0 invert" />
+        </a>
+      </div>
+
+      <!-- Bottom content -->
+      <div class="relative z-10 mt-auto p-8 pb-12">
+        <blockquote class="space-y-4">
+          <p class="text-2xl font-light leading-relaxed text-white/95">
+            "Transform your space with art that speaks to you. From canvas to frame, delivered to your door."
+          </p>
+          <footer class="flex items-center gap-3">
+            <div class="h-px w-8 bg-white/40"></div>
+            <span class="text-sm font-medium text-white/70">PrintMeArt</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Right panel: Sign-in form -->
+    <div class="flex flex-col">
+      <!-- Mobile logo -->
+      <div class="p-6 lg:hidden">
+        <a href="/" class="inline-block">
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt"
+            class="h-7" />
+        </a>
+      </div>
+
+      <!-- Form container -->
+      <div class="flex flex-1 flex-col items-center justify-center px-6 py-12 lg:px-8">
+        <div class="w-full max-w-sm">
+          <!-- Header -->
+          <div class="text-center">
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
+              Welcome back
+            </h1>
+            <p class="mt-2 text-sm text-slate-600">
+              Sign in to your account to continue
+            </p>
+          </div>
+
+          <!-- Google button -->
+          <div class="mt-10">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-slate-200"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="bg-slate-50 px-4 text-slate-500">Continue with</span>
+              </div>
+            </div>
+
+            <div class="mt-6 flex justify-center">
+              <div class="w-full min-h-[44px]">
+                <asl-google-signin-button class="block w-full [&>div]:!w-full [&_iframe]:!w-full" [size]="'large'"
+                  [shape]="'pill'" [type]="'standard'" [theme]="'outline'" [text]="'signin_with'"
+                  [logo_alignment]="'center'" [width]="350">
+                </asl-google-signin-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer text -->
+          <p class="mt-10 text-center text-xs leading-5 text-slate-500">
+            By continuing, you agree to our
+            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">Terms</a>
+            and
+            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom branding -->
+      <div class="hidden p-6 text-center text-xs text-slate-400 lg:block">
+        © 2025 PrintMeArt. All rights reserved.
       </div>
     </div>
   </div>

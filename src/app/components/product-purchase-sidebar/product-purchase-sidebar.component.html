@@ -1,48 +1,67 @@
-<div class="lg:shadow-lg p-8">
-  <div class="flex justify-between mb-6">
-    <p class="text-lg text-gray-500">
-      @if (hasAllOptionsSelected()) {
-      {{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}
-      } @else {
-      <span class="text-sm text-gray-400">Starting from<br /></span> {{ product().cheapestPrice |
-      currency:'EUR':'symbol':'1.2-2' }}
-      }
-    </p>
+<section class="purchase-sidebar">
+  <!-- Price -->
+  <div class="price-block">
+    @if (hasAllOptionsSelected()) {
+    <span class="price">{{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
+    } @else {
+    <span class="price-hint">From</span>
+    <span class="price">{{ product().cheapestPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+    }
   </div>
 
-  <!-- Display product options -->
+  <!-- Options -->
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
-  <div class="mb-4">
-    <h5 class="text-sm mb-1">
-      {{ group.name }} {{ getSelectedOptionName(group.selectedOptionId)}}
-    </h5>
+  <div class="option-group">
+    <label class="option-label">{{ group.name }}</label>
     @if(group.name.toLowerCase() == 'frame'){
-    <app-frame-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-frame-options>
+    <app-frame-options [group]="group" (optionSelected)="selectFrame(groupIndex,$event)"></app-frame-options>
     }
     @else if(group.name.toLowerCase() == 'including mat'){
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
     }
     @else if(group.name.toLowerCase() == 'size'){
-    <app-size-options [sizes]="sizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
+    <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
     }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
     }
   </div>
   }
-  <div class="mt-8">
-    <h5 class="text-sm mb-1">
-      Quantity
-    </h5>
-    <div class="flex gap-3">
-      <app-input-number [(value)]="quantity"></app-input-number>
-      <button type="button" [class.opacity-50]="!hasAllOptionsSelected()"
-        [class.cursor-not-allowed]="!hasAllOptionsSelected()" [class.cursor-pointer]="hasAllOptionsSelected()"
-        [disabled]="!hasAllOptionsSelected()" (click)="addToCart()"
-        class="flex-1 nc-Button flex items-center justify-center rounded-full text-sm font-medium py-3 px-4 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600">
-        <app-icon iconName="cart"></app-icon>
-        <span class="ml-3">Add to cart</span>
-      </button>
+
+  <!-- Trust points -->
+  <ul class="trust-list">
+    <li class="trust-item">
+      <span class="trust-check">✓</span>
+      <span>Great value for money</span>
+    </li>
+    <li class="trust-item">
+      <span class="trust-check">✓</span>
+      <span>14-day money-back guarantee</span>
+    </li>
+  </ul>
+
+  <!-- Add to cart -->
+  <button type="button" [class.disabled]="!hasAllOptionsSelected()" [disabled]="!hasAllOptionsSelected()"
+    (click)="addToCart()" class="add-to-cart-btn">
+    <app-icon iconName="cart"></app-icon>
+    <span>Add to cart</span>
+  </button>
+
+  <!-- Quality badges -->
+  <div class="badges">
+    <div class="badge">
+      <div class="badge-icon">
+        <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/palette_1.svg"
+          alt="" loading="lazy" />
+      </div>
+      <span class="badge-text">Museum-quality prints</span>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">
+        <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/recycle.svg" alt=""
+          loading="lazy" />
+      </div>
+      <span class="badge-text">Premium 200 g/m² mat paper</span>
     </div>
   </div>
-</div>
+</section>

@@ -1,0 +1,131 @@
+<div class="frames-page">
+  <!-- Background Decorations -->
+  <div class="bg-decorations">
+    <span class="decoration decoration-1"></span>
+    <span class="decoration decoration-2"></span>
+  </div>
+
+  <div class="contained-page">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="hero-badge">Our Frames</span>
+          <h1 class="hero-title">Choose Your Perfect Frame</h1>
+          <p class="hero-description">
+            Explore our wide range of frames to find the perfect match for your paintings and photos.
+            Our high-quality framing options ensure durability and style, enhancing the presentation of your artwork.
+            Select from various styles and finishes to suit your preferences and decor.
+          </p>
+        </div>
+        <div class="hero-image">
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/colorfull-frames.webp"
+            alt="Colorful frames collection" class="hero-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Frames Collection Section -->
+    <section id="frames" class="frames-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2 class="section-title">
+            Frames<span class="title-dot">.</span>
+            <span class="title-subtitle">Explore Our Exquisite Frame Collection</span>
+          </h2>
+          <p class="section-description">
+            PrintMeArt was founded by our passionate family, dedicated to bringing your cherished memories
+            to life through beautiful, high-quality prints
+          </p>
+        </div>
+      </div>
+
+      <div class="frames-grid">
+        @for (frame of frames; track frame.id; let i = $index) {
+        <app-frame-card [frame]="frame" (showPhotos)="openGallery(i)" />
+        }
+      </div>
+    </section>
+
+    <!-- Technical Specs Section -->
+    <section class="specs-section">
+      <div class="specs-container">
+        <div class="specs-content">
+          <h2 class="specs-title">Technical Specifications</h2>
+          <p class="specs-intro">
+            The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards.
+            The powder coated steel divider separates active cards from new ones, or can be used to archive important
+            task lists.
+          </p>
+          <dl class="specs-list">
+            <div class="spec-item">
+              <dt class="spec-label">Material</dt>
+              <dd class="spec-value">Premium wood base with a smooth matte finish.</dd>
+            </div>
+            <div class="spec-item">
+              <dt class="spec-label">Dimensions</dt>
+              <dd class="spec-value">Available in multiple sizes to fit your artwork perfectly.</dd>
+            </div>
+            <div class="spec-item">
+              <dt class="spec-label">Finish</dt>
+              <dd class="spec-value">Hand-finished with a durable, scratch-resistant coating.</dd>
+            </div>
+            <div class="spec-item">
+              <dt class="spec-label">Includes</dt>
+              <dd class="spec-value">Frame, hanging hardware, and protective glass cover.</dd>
+            </div>
+            <div class="spec-item">
+              <dt class="spec-label">Considerations</dt>
+              <dd class="spec-value">Made from natural materials. Grain and color may vary with each frame.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="specs-images">
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-1.jpg"
+            alt="Frame material detail" class="spec-img" />
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-2.jpg"
+            alt="Frame top view" class="spec-img" />
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-3.jpg"
+            alt="Frame side view" class="spec-img" />
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-4.jpg"
+            alt="Frame with cards" class="spec-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Sale Banner Section -->
+    <section class="relative py-32">
+      <div class="p-0 pt-24 overflow-hidden">
+        <div
+          class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg">
+          <div class="flex flex-col justify-center lg:w-1/2 p-6 pt-36">
+            <h2 class="text-3xl md:text-6xl font-semibold mb-0">Final Stock.</h2>
+            <h2 class="text-3xl md:text-6xl font-semibold mb-4">Up to 50% off.</h2>
+            <a routerLink="/products" class="text-md mb-6 mt-4 hover:underline">Go to sales →</a>
+          </div>
+          <div class="absolute grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:w-1/2 p-6 right-0">
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-4">
+              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-3.jpg"
+                alt="Sale item 1" class="w-full h-full object-cover max-h-72">
+            </div>
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-32">
+              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-2.jpg"
+                alt="Sale item 2" class="w-full h-full object-cover">
+            </div>
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-4">
+              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-1.jpg"
+                alt="Sale item 3" class="w-full h-full object-cover">
+            </div>
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-32">
+              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-4.jpg"
+                alt="Sale item 4" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Gallery Modal -->
+  <app-image-gallery-modal [isShowModal]="isGalleryOpen()" [images]="galleryImages" (onClose)="closeGallery()" />
+</div>

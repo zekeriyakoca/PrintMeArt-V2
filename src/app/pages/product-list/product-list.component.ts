@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   ElementRef,
   OnInit,
   signal,
@@ -50,6 +51,35 @@ export class ProductListComponent
   filterOptions = signal<FilterGroupDto[]>([]);
   hideFilters = signal<boolean>(true);
 
+  activeFilters = computed(() => {
+    const filters = this.selectedFilterOptions();
+    const chips: { type: string; name: string; colorClass: string }[] = [];
+    if (filters.categoryName) {
+      chips.push({
+        type: 'categories',
+        name: filters.categoryName,
+        colorClass: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100',
+      });
+    }
+    if (filters.attributeName) {
+      chips.push({
+        type: 'attributes',
+        name: filters.attributeName,
+        colorClass: 'bg-sky-50 text-sky-600 hover:bg-sky-100',
+      });
+    }
+    return chips;
+  });
+
+  isOptionSelected(optionName: string): boolean {
+    const f = this.selectedFilterOptions();
+    return (
+      f.categoryName === optionName ||
+      f.attributeName === optionName ||
+      f.optionName === optionName
+    );
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -62,14 +92,24 @@ export class ProductListComponent
     this.route.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((params) => {
+        const categoryName = params.get('categoryName') || undefined;
+        const attributeName = params.get('attributeName') || undefined;
+        const optionName = params.get('optionName') || undefined;
+
         this.selectedFilterOptions.set({
           pageSize: +(params.get('pageSize') ?? 12),
           pageIndex: +(params.get('pageIndex') ?? 0),
-          categoryName: params.get('categoryName') || undefined,
-          attributeName: params.get('attributeName') || undefined,
-          optionName: params.get('optionName') || undefined,
+          categoryName,
+          attributeName,
+          optionName,
           searchTerm: params.get('searchTerm') || undefined,
         });
+
+        // Show filters if any filter is applied
+        if (categoryName || attributeName || optionName) {
+          this.hideFilters.set(false);
+        }
+
         this.fetchProductsWithFilters();
       });
 

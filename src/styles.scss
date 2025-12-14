@@ -60,3 +60,9 @@ p {
 .contained-page {
   @apply max-w-screen-2xl mx-auto px-4 md:px-8;
 }
+
+.margin-header {
+  margin-top: 80px;
+
+  @media (min-width: 768px) {}
+}

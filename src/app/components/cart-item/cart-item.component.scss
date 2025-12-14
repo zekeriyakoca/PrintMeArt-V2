@@ -1,0 +1,157 @@
+.cart-item {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: white;
+  border-radius: .3rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (min-width: 768px) {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+.item-image {
+  flex-shrink: 0;
+  width: 100px;
+  height: 120px;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  background: #f8fafc;
+
+  @media (min-width: 768px) {
+    width: 140px;
+    height: 160px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.item-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.4;
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.item-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  white-space: nowrap;
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.item-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: auto;
+}
+
+.option-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.75rem;
+  border-radius: 50px;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #f8fafc;
+  border-radius: 50px;
+  padding: 0.25rem;
+}
+
+.qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: #0f172a;
+    color: #0f172a;
+  }
+}
+
+.qty-value {
+  min-width: 2.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  border-radius: 0.5rem;
+
+  &:hover {
+    color: #ef4444;
+    background: #fef2f2;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="contained-page mt-12">
+  <!-- <app-custom-design-how-it-works></app-custom-design-how-it-works> -->
+
+  <!-- Main Designer Section -->
+  <div class="container py-8 lg:py-12 space-y-12 lg:space-y-12">
+    <div class="nc-SectionHero flex flex-col-reverse md:flex-row relative" data-nc-id="SectionHero">
+      <!-- Left Section - Upload & Preview -->
+      <div class="w-full md:w-8/12">
+        <!-- Upload Section -->
+        <app-custom-design-upload (imageUrlSelected)="onImageUrlSelected($event)"></app-custom-design-upload>
+
+        <!-- Preview Section -->
+        <app-custom-design-preview [imageUrl]="imageUrl()" [isMatIncluded]="isMatIncluded()"
+          [selectedFrameMaskUrl]="selectedFrameMaskUrl()" [isRolledUp]="isRolledUp()">
+        </app-custom-design-preview>
+      </div>
+
+      <div class="v-full md:v-4/12">
+        <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+          (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
+      </div>
+    </div>
+  </div>
+
+  <!-- <app-custom-design-cta /> -->

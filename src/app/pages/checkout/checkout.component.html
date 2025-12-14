@@ -1,28 +1,71 @@
-<div class="contained-page mt-30">
-  <div class="w-full p-5">
-    <div class="flex justify-between">
-      <h1 class="text-5xl text-[#241b6a]">Checkout</h1>
-      <a href="/" class="underline text-gray-500">Continue shopping</a>
-    </div>
-    <hr class="border-slate-300 my-10 xl:my-12">
-    <div class="flex flex-wrap gap-4 min-h-48">
-      <div class="flex-1 min-w-0">
-        <app-checkout-user-info [(userDetails)]="userDetails" />
+<div class="checkout-page">
+  <div class="checkout-container">
+    <!-- Header -->
+    <div class="checkout-header">
+      <div class="header-content">
+        <h1 class="checkout-title">Checkout</h1>
+        <div class="checkout-steps">
+          <span class="step completed">
+            <app-icon iconName="check" class="w-4 h-4"></app-icon>
+            Cart
+          </span>
+          <span class="step-divider"></span>
+          <span class="step active">Shipping</span>
+          <span class="step-divider"></span>
+          <span class="step">Payment</span>
+        </div>
       </div>
-      <div class="w-1/3 min-w-0">
-        <app-order-summary [cartItems]="cartItems()">
-          <order-button>
-            <button
-              class="w-full text-indigo-800 text-md py-3 cursor-pointer border hover:text-white hover:bg-indigo-800"
-              (click)="confirmOrder()">
-              Confirm order
-            </button>
-          </order-button>
-          <order-info>
-            <p class="text-sm text-gray-500 mt-4">By placing your order, you agree to our Terms of Use and Privacy
-              Policy.</p>
-          </order-info>
-        </app-order-summary>
+      <a routerLink="/" class="back-link">
+        <app-icon iconName="arrow-left" class="w-[18px] h-[18px]"></app-icon>
+        Back to shop
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="checkout-content">
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon">
+              <app-icon iconName="user-profile" class="w-[22px] h-[22px]"></app-icon>
+            </div>
+            <div>
+              <h2 class="section-title">Contact Information</h2>
+              <p class="section-subtitle">We'll use this to send your order confirmation</p>
+            </div>
+          </div>
+          <app-checkout-user-info [(userDetails)]="userDetails" />
+        </div>
+      </div>
+
+      <!-- Summary Sidebar -->
+      <div class="summary-section">
+        <div class="summary-sticky">
+          <app-order-summary [cartItems]="cartItems()">
+            <order-button>
+              <button class="confirm-btn" (click)="confirmOrder()">
+                <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
+                Confirm Order
+                <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
+              </button>
+            </order-button>
+            <order-info>
+              <div class="order-assurance">
+                <div class="assurance-item">
+                  <app-icon iconName="lock" class="w-4 h-4"></app-icon>
+                  <span>Secure checkout</span>
+                </div>
+                <div class="assurance-item">
+                  <app-icon iconName="shield" class="w-4 h-4"></app-icon>
+                  <span>Buyer protection</span>
+                </div>
+              </div>
+              <p class="legal-text">By placing your order, you agree to our <a href="#">Terms of Service</a> and <a
+                  href="#">Privacy Policy</a>.</p>
+            </order-info>
+          </app-order-summary>
+        </div>
       </div>
     </div>
   </div>

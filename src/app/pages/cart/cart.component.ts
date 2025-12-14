@@ -9,12 +9,18 @@ import { CartItemComponent } from '../../components/cart-item/cart-item.componen
 import { BasePageComponent } from '../basePageComponent';
 import { CartService } from '../../services/cart/cart.service';
 import { CartItemDto } from '../../models/cart-item';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent, OrderSummaryComponent],
+  imports: [
+    CartItemComponent,
+    OrderSummaryComponent,
+    RouterLink,
+    IconComponent,
+  ],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
@@ -24,7 +30,10 @@ export class CartComponent extends BasePageComponent {
   @Input() @HostBinding('class') class: string = '';
   cartItems = signal<CartItemDto[]>([]);
 
-  constructor(private cartService: CartService, private router: Router) {
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+  ) {
     super();
     this.cartItems = this.cartService.cart;
   }

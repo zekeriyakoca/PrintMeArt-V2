@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input, OnChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   trigger,
@@ -12,18 +12,24 @@ import { AccordionItem } from '../../models/accordion-item';
 const DEFAULT_DATA: AccordionItem[] = [
   {
     name: 'Print Quality & Care',
-    content: `<ul class="list-disc list-inside leading-7">
-    <li>Giclée printed on 200 g/m² fine art paper (matte).</li>
-    <li>
-    Archival quality for long-lasting color and durability
-    </li>
-    <li>
-    3.0 cm blank borders for easy framing
-    </li>
-    <li>
-    Wipe clean with a soft, dry cloth to maintain its pristine condition
-    </li>
-  </ul>`,
+    content: `<div class="quality-rows">
+      <div class="quality-row">
+        <span class="row-icon" aria-hidden="true">></span>
+        <span class="row-text">Giclée printed on 200 g/m² fine art paper (matte).</span>
+      </div>
+      <div class="quality-row">
+        <span class="row-icon" aria-hidden="true">></span>
+        <span class="row-text">Archival quality for long-lasting color and durability</span>
+      </div>
+      <div class="quality-row">
+        <span class="row-icon" aria-hidden="true">></span>
+        <span class="row-text">3.0 cm blank borders for easy framing</span>
+      </div>
+      <div class="quality-row">
+        <span class="row-icon" aria-hidden="true">></span>
+        <span class="row-text">Wipe clean with a soft, dry cloth to maintain its pristine condition</span>
+      </div>
+    </div>`,
   },
   {
     name: 'Sympathize with Our Service',
@@ -73,22 +79,29 @@ const DEFAULT_DATA: AccordionItem[] = [
     ]),
   ],
 })
-export class AccordionInfoComponent {
+export class AccordionInfoComponent implements OnInit, OnChanges {
   panelClassName = input<string>(
-    'p-4 pt-3 last:pb-0 text-slate-600 text-sm leading-6',
+    'p-4 pt-3 last:pb-0 text-slate-700 text-sm leading-6 bg-white border-t border-slate-200',
   );
   data = input<AccordionItem[]>([]);
   openStates: { [key: number]: boolean } = {};
   allData: AccordionItem[] = [];
 
   ngOnInit() {
-    this.allData.forEach((_, index) => {
-      this.openStates[index] = index < 2;
-    });
+    this.setInitialOpenStates();
   }
 
   ngOnChanges() {
-    this.allData = [...this.data(), ...DEFAULT_DATA];
+    this.allData = [...DEFAULT_DATA, ...(this.data() ?? [])];
+    this.setInitialOpenStates();
+  }
+
+  private setInitialOpenStates() {
+    this.allData.forEach((_, index) => {
+      if (this.openStates[index] === undefined) {
+        this.openStates[index] = false;
+      }
+    });
   }
 
   toggleAccordion(index: number) {

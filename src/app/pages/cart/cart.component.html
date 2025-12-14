@@ -1,28 +1,53 @@
-<div class="contained-page mt-30 mb-48">
-  <div class="w-full p-5">
-    <div class="flex justify-between">
-      <h1 class="text-5xl text-[#241b6a]">Your cart</h1>
-      <a href="/" class="underline text-slate-500">Continue shopping</a>
+<div class="cart-page">
+  <div class="cart-container">
+    <!-- Header -->
+    <header class="cart-header">
+      <div class="header-content">
+        <h1 class="cart-title">Shopping Bag</h1>
+        <span class="item-count">{{ cartItems().length }} {{ cartItems().length === 1 ? 'item' : 'items' }}</span>
+      </div>
+      <a routerLink="/" class="continue-link">
+        <span>Continue shopping</span>
+        <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
+      </a>
+    </header>
+
+    @if (cartItems().length === 0) {
+    <div class="empty-cart">
+      <div class="empty-icon">
+        <app-icon iconName="empty-bag" class="w-16 h-16"></app-icon>
+      </div>
+      <h2 class="empty-title">Your bag is empty</h2>
+      <p class="empty-text">Looks like you haven't added any art to your collection yet.</p>
+      <a routerLink="/products" class="browse-btn">Browse Collection</a>
     </div>
-    <hr class="border-slate-300 my-10 xl:my-12">
-    <div class="flex flex-wrap gap-4 min-h-48">
-      <div class="flex-1 min-w-0">
-        @for (cartItem of cartItems() ; track cartItem.id; let i = $index) {
+    } @else {
+    <div class="cart-content">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        @for (cartItem of cartItems(); track cartItem.id; let i = $index) {
         <app-cart-item [(cartItem)]="cartItems()[i]" (cartItemChanged)="triggerRecalculateSummary()" />
-        <hr class="border-slate-300 my-6">
         }
       </div>
-      <div class="w-1/3 min-w-0">
+
+      <!-- Order Summary -->
+      <aside class="cart-sidebar">
         <app-order-summary [cartItems]="cartItems()">
           <order-button>
-            <button
-              class="w-full text-indigo-800 text-md py-3 cursor-pointer border hover:text-white hover:bg-indigo-800"
-              (click)="navigateToCheckout()">
-              Checkout
+            <button class="checkout-btn" (click)="navigateToCheckout()">
+              <span>Proceed to Checkout</span>
+              <app-icon iconName="arrow-right" class="w-[18px] h-[18px]"></app-icon>
             </button>
           </order-button>
+          <order-info>
+            <div class="secure-badge">
+              <app-icon iconName="lock" class="w-3.5 h-3.5"></app-icon>
+              <span>Secure checkout</span>
+            </div>
+          </order-info>
         </app-order-summary>
-      </div>
+      </aside>
     </div>
+    }
   </div>
 </div>

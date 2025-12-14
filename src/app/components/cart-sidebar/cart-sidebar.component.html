@@ -4,7 +4,7 @@
 
 <!-- Sidebar -->
 <div
-  class="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-white z-50 shadow-2xl border-l border-slate-200 flex flex-col transition-transform duration-300 ease-out"
+  class="fixed top-0 right-0 h-full w-full sm:w-[540px] bg-white z-50 shadow-2xl border-l border-slate-200 flex flex-col transition-transform duration-300 ease-out"
   [class.translate-x-0]="isOpen()" [class.translate-x-full]="!isOpen()">
   <!-- Header -->
   <div class="px-6 py-6 border-b border-slate-100 bg-slate-50/50">
@@ -17,10 +17,7 @@
       <button type="button"
         class="w-10 h-10 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
         (click)="close()">
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+        <app-icon iconName="close" class="w-5 h-5"></app-icon>
       </button>
     </div>
   </div>
@@ -29,10 +26,7 @@
   <div class="flex-1 overflow-y-auto">
     @if (cartItems().length === 0) {
     <div class="flex flex-col items-center justify-center h-full text-center px-6">
-      <svg class="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-      </svg>
+      <app-icon iconName="empty-bag" class="w-16 h-16 text-slate-300 mb-4"></app-icon>
       <p class="text-slate-500 text-sm">Your bag is empty</p>
       <button type="button" class="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-700" (click)="close()">
         Continue Shopping
@@ -57,10 +51,7 @@
               <button type="button"
                 class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-slate-600"
                 (click)="removeItem(item.id)">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
+                <app-icon iconName="close" class="w-4 h-4"></app-icon>
               </button>
             </div>
 
@@ -79,18 +70,13 @@
                 <button type="button"
                   class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-l-full transition-colors"
                   (click)="updateQuantity(item, -1)">
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M4.25 12a.75.75 0 01.75-.75h14a.75.75 0 010 1.5H5a.75.75 0 01-.75-.75z" />
-                  </svg>
+                  <app-icon iconName="minus" class="w-3 h-3"></app-icon>
                 </button>
                 <span class="w-8 text-center text-sm font-medium text-slate-900">{{ item.quantity }}</span>
                 <button type="button"
                   class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-r-full transition-colors"
                   (click)="updateQuantity(item, 1)">
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" />
-                  </svg>
+                  <app-icon iconName="plus" class="w-3 h-3"></app-icon>
                 </button>
               </div>
 

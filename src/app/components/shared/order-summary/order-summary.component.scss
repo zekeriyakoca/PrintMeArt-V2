@@ -1,0 +1,65 @@
+.order-summary {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+    @media (min-width: 768px) {
+        padding: 2rem;
+    }
+}
+
+.summary-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 1.5rem;
+}
+
+.summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row-label {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.row-value {
+    font-size: 0.9rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+}
+
+.total-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.total-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.summary-actions {
+    padding-top: 0.5rem;
+}
