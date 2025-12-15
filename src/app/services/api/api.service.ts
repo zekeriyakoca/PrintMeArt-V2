@@ -1,3 +1,4 @@
+import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
@@ -113,6 +114,7 @@ export class ApiService {
     return this.getFilteredProducts({
       pageSize: pageSize,
       pageIndex: pageIndex,
+      tags: ProductTags.Featured,
     } as ProductFilterRequestDto);
   }
 

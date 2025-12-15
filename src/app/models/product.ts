@@ -75,4 +75,13 @@ export interface ProductFilterRequestDto {
   categoryName?: string;
   attributeName?: string;
   optionName?: string;
+  tags?: ProductTags;
+}
+
+export enum ProductTags {
+  None = 0, // 0
+  OnSale = 1 << 0, // 1
+  Featured = 1 << 1, // 2
+  TopSellers = 1 << 2, // 4
+  OurPick = 1 << 3, // 8
 }
