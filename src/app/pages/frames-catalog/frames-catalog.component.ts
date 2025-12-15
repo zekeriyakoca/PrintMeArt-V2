@@ -6,6 +6,7 @@ import {
   ImageGalleryModalComponent,
   GalleryImage,
 } from '../../components/image-gallery-modal/image-gallery-modal.component';
+import { SectionTitleComponent } from '../../components/section-title/section-title.component';
 
 export interface Frame {
   id: number;
@@ -24,6 +25,7 @@ export interface Frame {
     RouterLink,
     FrameCardComponent,
     ImageGalleryModalComponent,
+    SectionTitleComponent,
   ],
   templateUrl: './frames-catalog.component.html',
   styleUrl: './frames-catalog.component.scss',

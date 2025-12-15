@@ -1,14 +1,5 @@
 <div class="nc-SectionGridFeatureItems relative">
-  <div class="mb-10 lg:mb-14">
-    <div class="flex items-center gap-4 mb-3">
-      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-      <span class="text-xs font-semibold tracking-widest text-slate-400 uppercase">Popular Now</span>
-      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-    </div>
-    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-slate-900">
-      Trending Art Pieces
-    </h2>
-  </div>
+  <app-section-title label="Popular Now" title="Trending Art Pieces" />
   <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
     @for (product of products().data; track product.id) {
     <app-product-card [product]="product"></app-product-card>

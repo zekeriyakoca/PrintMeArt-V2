@@ -23,17 +23,10 @@
 
     <!-- Frames Collection Section -->
     <section id="frames" class="frames-section py-10">
-      <div class="section-header text-center mb-10">
-        <div class="section-title-group">
-          <h2
-            class="section-title text-2xl md:text-4xl font-bold text-indigo-900 mb-2 flex items-center justify-center gap-2">
-            Frames<span class="title-dot text-indigo-500 text-4xl leading-none">.</span>
-          </h2>
-          <span class="title-subtitle block text-base md:text-lg text-gray-500 mb-2">Explore Our Exquisite Frame
-            Collection</span>
-        </div>
+      <div>
+        <app-section-title label="Explore Our Exquisite Frame
+            Collection" title="Frames." />
       </div>
-
       <div class="frames-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         @for (frame of frames; track frame.id; let i = $index) {
         <app-frame-card [frame]="frame" (showPhotos)="openGallery(i)" />
@@ -42,7 +35,7 @@
     </section>
 
     <!-- Technical Specs Section -->
-    <section class="specs-section">
+    <section class="specs-section border-b border-t border-slate-200 ">
       <div class="specs-container">
         <div class="specs-content">
           <h2 class="specs-title">Technical Specifications</h2>
@@ -88,7 +81,7 @@
     </section>
 
     <!-- Sale Banner Section -->
-    <section class="relative py-32">
+    <section class="relative py-16">
       <div class="p-0 pt-24 overflow-hidden">
         <div
           class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg">

@@ -140,10 +140,6 @@
 // Frames Section
 .frames-section {
   margin-bottom: 5rem;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 7rem;
-  }
 }
 
 .section-header {
@@ -206,12 +202,8 @@
 
 // Technical Specs Section
 .specs-section {
-  padding: 4rem 0;
+  padding: 6rem 0;
   margin-bottom: 5rem;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 8rem;
-  }
 }
 
 .specs-container {
@@ -287,6 +279,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   order: 1;
+  padding: 20px;
 
   @media (min-width: 640px) {
     gap: 1.5rem;
