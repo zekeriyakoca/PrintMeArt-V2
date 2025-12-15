@@ -65,8 +65,10 @@
   align-items: center;
   text-align: center;
   gap: 2.5rem;
+  margin-top: 30px;
 
   @media (min-width: 1024px) {
+    margin-top: 50px;
     flex-direction: row;
     text-align: left;
     gap: 2.5rem;
@@ -135,14 +137,6 @@
   }
 }
 
-.hero-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 0.75rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
 // Frames Section
 .frames-section {
   margin-bottom: 5rem;
@@ -165,13 +159,13 @@
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #171717;
   margin: 0 0 0.75rem;
 
   @media (min-width: 768px) {
-    font-size: 2.25rem;
+    font-size: 3rem;
   }
 }
 
