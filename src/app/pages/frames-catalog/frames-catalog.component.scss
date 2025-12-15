@@ -65,8 +65,10 @@
   align-items: center;
   text-align: center;
   gap: 2.5rem;
+  margin-top: 30px;
 
   @media (min-width: 1024px) {
+    margin-top: 50px;
     flex-direction: row;
     text-align: left;
     gap: 2.5rem;
@@ -135,21 +137,9 @@
   }
 }
 
-.hero-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 0.75rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
 // Frames Section
 .frames-section {
   margin-bottom: 5rem;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 7rem;
-  }
 }
 
 .section-header {
@@ -165,13 +155,13 @@
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #171717;
   margin: 0 0 0.75rem;
 
   @media (min-width: 768px) {
-    font-size: 2.25rem;
+    font-size: 3rem;
   }
 }
 
@@ -212,12 +202,8 @@
 
 // Technical Specs Section
 .specs-section {
-  padding: 4rem 0;
+  padding: 6rem 0;
   margin-bottom: 5rem;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 8rem;
-  }
 }
 
 .specs-container {
@@ -293,6 +279,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   order: 1;
+  padding: 20px;
 
   @media (min-width: 640px) {
     gap: 1.5rem;

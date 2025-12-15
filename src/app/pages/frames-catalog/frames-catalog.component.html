@@ -1,46 +1,33 @@
 <div class="frames-page">
-  <!-- Background Decorations -->
-  <div class="bg-decorations">
-    <span class="decoration decoration-1"></span>
-    <span class="decoration decoration-2"></span>
-  </div>
-
   <div class="contained-page">
     <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-text">
-          <span class="hero-badge">Our Frames</span>
-          <h1 class="hero-title">Choose Your Perfect Frame</h1>
-          <p class="hero-description">
-            Explore our wide range of frames to find the perfect match for your paintings and photos.
-            Our high-quality framing options ensure durability and style, enhancing the presentation of your artwork.
+    <section class="hero-section py-6 mb-10">
+      <div class="hero-content flex flex-col md:flex-row items-center gap-20 max-w-7xl mx-auto">
+        <div class="hero-text flex-1 text-center md:text-left">
+          <span class="hero-badge inline-block font-semibold px-4 rounded-full tracking-wide">Our
+            Frames</span>
+          <h1 class="hero-title text-3xl md:text-5xl font-bold mb-4 text-indigo-900">Choose Your Perfect Frame</h1>
+          <p class="hero-description text-lg text-gray-600 mb-6">
+            Explore our wide range of frames to find the perfect match for your paintings and photos.<br>
+            Our high-quality framing options ensure durability and style, enhancing the presentation of your
+            artwork.<br>
             Select from various styles and finishes to suit your preferences and decor.
           </p>
         </div>
-        <div class="hero-image">
-          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/colorfull-frames.webp"
-            alt="Colorful frames collection" class="hero-img" />
+        <div class="hero-image flex-1 flex justify-center md:ml-16">
+          <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/frames-main-picture2.jpg"
+            alt="Colorful frames collection" class="w-full max-w-xs md:max-w-md h-auto rounded-xl shadow-xl" />
         </div>
       </div>
     </section>
 
     <!-- Frames Collection Section -->
-    <section id="frames" class="frames-section">
-      <div class="section-header">
-        <div class="section-title-group">
-          <h2 class="section-title">
-            Frames<span class="title-dot">.</span>
-            <span class="title-subtitle">Explore Our Exquisite Frame Collection</span>
-          </h2>
-          <p class="section-description">
-            PrintMeArt was founded by our passionate family, dedicated to bringing your cherished memories
-            to life through beautiful, high-quality prints
-          </p>
-        </div>
+    <section id="frames" class="frames-section py-10">
+      <div>
+        <app-section-title label="Explore Our Exquisite Frame
+            Collection" title="Frames." />
       </div>
-
-      <div class="frames-grid">
+      <div class="frames-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         @for (frame of frames; track frame.id; let i = $index) {
         <app-frame-card [frame]="frame" (showPhotos)="openGallery(i)" />
         }
@@ -48,7 +35,7 @@
     </section>
 
     <!-- Technical Specs Section -->
-    <section class="specs-section">
+    <section class="specs-section border-b border-t border-slate-200 ">
       <div class="specs-container">
         <div class="specs-content">
           <h2 class="specs-title">Technical Specifications</h2>
@@ -94,7 +81,7 @@
     </section>
 
     <!-- Sale Banner Section -->
-    <section class="relative py-32">
+    <section class="relative py-16">
       <div class="p-0 pt-24 overflow-hidden">
         <div
           class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg">
