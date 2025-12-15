@@ -1,10 +1,49 @@
 <div class="frame-options-container">
-  <div class="grid grid-cols-6 gap-2">
-    @for (frame of group().options; track $index) {
-    <div (click)="selectOption(frame.id)"
-      [class]="'relative flex max-w-[75px] h-16 rounded-sm md:rounded-lg border-2 cursor-pointer ' + (selectedOption() === frame.id ? 'border-primary-600' : 'border-transparent')">
-      <div class="absolute inset-0.5 rounded-none md:rounded-lg overflow-hidden z-0 bg-no-repeat bg-center bg-cover"
-        [style.background-image]="'url(' + (frame.imageUrl && frame.imageUrl.trim() != '' ? frame.imageUrl : 'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg') + ')'">
+  <div class="relative">
+    <button type="button" (click)="isOpen.set(!isOpen())" class="w-full">
+      <div
+        class="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left hover:border-gray-300">
+        <div class="flex items-center gap-3 min-w-0">
+          @if (selectedItem(); as item) {
+          <img [src]="item.thumbnail" alt="" class="h-9 w-9 rounded-md object-cover" loading="lazy" />
+          <div class="min-w-0">
+            <div class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</div>
+            @if (item.description) {
+            <div class="text-xs text-gray-500 truncate">{{ item.description }}</div>
+            }
+          </div>
+          } @else {
+          <div class="h-9 w-9 rounded-md bg-gray-100"></div>
+          <div class="min-w-0">
+            <div class="text-sm font-medium text-gray-900 truncate">Select your frame</div>
+            <div class="text-xs text-gray-500 truncate">Choose a frame style to continue</div>
+          </div>
+          }
+        </div>
+        <span class="text-gray-500">▾</span>
+      </div>
+    </button>
+
+    @if (isOpen()) {
+    <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+      <div class="max-h-72 overflow-auto">
+        @for (item of items(); track item.id) {
+        <button type="button" (click)="select(item.id)" class="w-full text-left">
+          <div
+            [class]="'flex items-center gap-3 px-3 py-2 hover:bg-gray-50 ' + (selectedId() === item.id ? 'bg-gray-50' : '')">
+            <img [src]="item.thumbnail" alt="" class="h-9 w-9 rounded-md object-cover" loading="lazy" />
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</div>
+              @if (item.description) {
+              <div class="text-xs text-gray-500 truncate">{{ item.description }}</div>
+              }
+            </div>
+            @if (selectedId() === item.id) {
+            <span class="text-primary-600 text-sm">✓</span>
+            }
+          </div>
+        </button>
+        }
       </div>
     </div>
     }

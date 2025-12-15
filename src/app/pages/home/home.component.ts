@@ -16,6 +16,7 @@ import { OrderJourneyComponent } from '../../components/order-journey/order-jour
 import { VisitUsComponent } from '../../components/visit-us/visit-us.component';
 import { SectionHeroPlainComponent } from '../../components/section-hero-plain/section-hero-plain.component';
 import { FeaturedPrintsComponent } from '../../components/featured-prints/featured-prints.component';
+import { BusinessHighlightsComponent } from '../../components/business-highlights/business-highlights.component';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -26,6 +27,7 @@ import { FeaturedPrintsComponent } from '../../components/featured-prints/featur
     VisitUsComponent,
     SectionHeroPlainComponent,
     FeaturedPrintsComponent,
+    BusinessHighlightsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
