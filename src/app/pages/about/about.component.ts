@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NewsletterSignupSectionComponent } from '../../components/newsletter-signup-section/newsletter-signup-section.component';
+import { ContactFormComponent } from '../../components/contact-form/contact-form.component';
+import { SectionTitleComponent } from '../../components/section-title/section-title.component';
 
 @Component({
   selector: 'app-about',
-  imports: [NewsletterSignupSectionComponent],
+  imports: [ContactFormComponent, SectionTitleComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
