@@ -1,0 +1,43 @@
+<!-- Copied from newsletter-signup-section.component.html -->
+<div class="lg:pt-40">
+  <div
+    class="relative flex flex-col lg:flex-row bg-slate-50 rounded-2xl sm:rounded-[40px] p-4 pb-0 sm:p-5 sm:pb-0 lg:p-24">
+    <div class="absolute inset-0">
+    </div>
+    <div class="lg:w-[50%] max-w-lg relative">
+      <h2 class="font-medium text-4xl md:text-5xl mb-6 tracking-tight leading-tight drop-shadow-sm">Say hi!</h2>
+      <form method="post" action="/contact#ContactForm" id="ContactForm" accept-charset="UTF-8" class="isolate">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
+        <div class="space-y-5">
+          <div class="field">
+            <input class="field__input block w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              autocomplete="name" type="text" id="ContactForm-name" name="contact[Name]" placeholder="Name">
+          </div>
+          <div class="field">
+            <input autocomplete="email" type="email" id="ContactForm-email"
+              class="field__input block w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              name="contact[email]" spellcheck="false" autocapitalize="off" placeholder="Email" required>
+          </div>
+          <div class="field">
+            <textarea rows="5" id="ContactForm-body"
+              class="text-area field__input block w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              name="contact[Comment]" placeholder="Comment"></textarea>
+          </div>
+        </div>
+        <div class="mt-6">
+          <button type="submit"
+            class="button bg-slate-900 hover:bg-slate-800 text-white rounded-full px-5 py-2.5 font-medium text-sm w-auto min-w-[120px]">Send</button>
+        </div>
+      </form>
+    </div>
+    <div class="relative block lg:absolute lg:right-0 lg:bottom-0 mt-10 lg:mt-0 max-w-lg lg:max-w-[calc(42%-40px)]">
+      <picture class="flex h-full">
+        <source media="(min-width: 768px)"
+          srcset="https://genstorageaccount3116.blob.core.windows.net/printme-images/painting-girl.webp"><img
+          src="https://genstorageaccount3116.blob.core.windows.net/printme-images/painting-girl.webp" alt=""
+          sizes="(max-width: 768px) 100vw, 50vw" class="" style="margin-right: auto; margin-left: auto;">
+      </picture>
+    </div>
+  </div>
+</div>
