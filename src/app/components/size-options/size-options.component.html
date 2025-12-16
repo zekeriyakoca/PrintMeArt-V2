@@ -1,7 +1,7 @@
 <div class="size-grid">
   @for (size of sizes(); track size.id; let index = $index) {
   <button type="button" class="size-option" [class.selected]="isActive(size)" (click)="selectSize(size)">
-    {{ size?.name }}
+    {{ size?.name }}@if (isActive(size)) {<span class="unit">cm</span>}
   </button>
   }
 </div>

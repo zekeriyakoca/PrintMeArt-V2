@@ -2,15 +2,28 @@
   <!-- Price -->
   <div class="price-block">
     @if (hasAllOptionsSelected()) {
-    <span class="price">{{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
+    <div class="price-row">
+      <span class="price">{{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <span class="tax-note">Tax included</span>
+    </div>
     } @else {
     <span class="price-hint">From</span>
-    <span class="price">{{ product().cheapestPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+    <div class="price-row">
+      <span class="price">{{ product().cheapestPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <span class="tax-note">Tax included</span>
+    </div>
     }
   </div>
 
-  <!-- Options -->
+  <!-- Size first -->
+  <div class="option-group">
+    <label class="option-label">Size</label>
+    <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
+  </div>
+
+  <!-- Other Options -->
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
+  @if(group.name.toLowerCase() !== 'size'){
   <div class="option-group">
     <label class="option-label">{{ group.name }}</label>
     @if(group.name.toLowerCase() == 'frame'){
@@ -19,13 +32,11 @@
     @else if(group.name.toLowerCase() == 'including mat'){
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
     }
-    @else if(group.name.toLowerCase() == 'size'){
-    <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
-    }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
     }
   </div>
+  }
   }
 
   <!-- Trust points -->
