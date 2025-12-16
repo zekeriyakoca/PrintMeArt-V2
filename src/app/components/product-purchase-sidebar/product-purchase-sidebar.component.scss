@@ -1,11 +1,12 @@
 .purchase-sidebar {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
+  border-left: 1px solid #f1f5f9;
+  border-top: 1px solid #f1f5f9;
+  padding-left: 1.5rem;
+  padding-top: 1.5rem;
+  border-radius: 5px;
 }
 
 // Price
@@ -46,7 +47,7 @@
 .option-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 
 .option-label {
@@ -60,7 +61,7 @@
 .trust-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: .5rem 0;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
