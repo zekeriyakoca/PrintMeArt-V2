@@ -34,6 +34,8 @@ export class BusinessHighlightsComponent {
       cta: 'Meet the family',
       link: '/about',
       color: 'cyan',
+      image:
+        'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/1ca52204-114f-4786-b011-b020c9b61365',
     },
   ];
 }
