@@ -10,6 +10,7 @@ import { FramesCatalogComponent } from './pages/frames-catalog/frames-catalog.co
 import { CustomDesignComponent } from './pages/custom-design/custom-design.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { HowWeWorkComponent } from './pages/how-we-work/how-we-work.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,5 +54,9 @@ export const routes: Routes = [
   {
     path: 'orders',
     component: OrdersComponent,
+  },
+  {
+    path: 'how-we-print',
+    component: HowWeWorkComponent,
   },
 ];
