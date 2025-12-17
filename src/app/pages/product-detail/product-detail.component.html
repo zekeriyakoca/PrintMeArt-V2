@@ -6,32 +6,36 @@
   <div class="container relative z-10 mt-9 sm:mt-11 flex ">
 
     <!-- PRODUCT DETAILS -->
-    <div class="w-full lg:w-3/5 xl:w-2/3 space-y-10 lg:pr-14">
-      <div>
-        <h2 class="text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
-        <p class="text-base text-[#9097bb]">{{ product().title }}</p>
+    <div class="w-full lg:w-3/5 xl:w-2/3 ">
+      <div class=" space-y-10 max-w-4xl lg:pr-12">
+        <div>
+          <h2 class="text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
+          <p class="text-base text-[#9097bb]">{{ product().title }}</p>
+        </div>
+
+        <section class="product-details">
+          <h3 class="text-lg font-semibold text-slate-800 mb-3">Product details</h3>
+          <p class="text-sm text-slate-600 leading-relaxed mb-4">
+            Our giclée prints are created using cutting-edge technology to ensure exceptional detail and colour
+            accuracy.
+            Each print is made with 200 g/m² fine art paper, providing a rich matte finish that enhances the artwork's
+            depth.
+          </p>
+          <ul class="details-list">
+            <li><span class="list-marker"></span>High-quality 200 g/m² fine art paper</li>
+            <li><span class="list-marker"></span>Giclée printing for vibrant colours</li>
+            <li><span class="list-marker"></span>3.0 cm blank borders for easy framing</li>
+            <li><span class="list-marker"></span>50+ year colour guarantee</li>
+          </ul>
+        </section>
+        <section class="mb-12">
+          <app-accordion-info [data]="productAccordionData()"
+            [panelClassName]="'p-4 text-slate-700 text-sm leading-relaxed'"></app-accordion-info>
+        </section>
+
+        <app-policy></app-policy>
       </div>
 
-      <section class="product-details">
-        <h3 class="text-lg font-semibold text-slate-800 mb-3">Product details</h3>
-        <p class="text-sm text-slate-600 leading-relaxed mb-4">
-          Our giclée prints are created using cutting-edge technology to ensure exceptional detail and colour accuracy.
-          Each print is made with 200 g/m² fine art paper, providing a rich matte finish that enhances the artwork's
-          depth.
-        </p>
-        <ul class="details-list">
-          <li><span class="list-marker"></span>High-quality 200 g/m² fine art paper</li>
-          <li><span class="list-marker"></span>Giclée printing for vibrant colours</li>
-          <li><span class="list-marker"></span>3.0 cm blank borders for easy framing</li>
-          <li><span class="list-marker"></span>50+ year colour guarantee</li>
-        </ul>
-      </section>
-      <section class="mb-12">
-        <app-accordion-info [data]="productAccordionData()"
-          [panelClassName]="'p-4 text-slate-700 text-sm leading-relaxed'"></app-accordion-info>
-      </section>
-
-      <app-policy></app-policy>
     </div>
 
     <!-- PURCHASE SIDEBAR -->
