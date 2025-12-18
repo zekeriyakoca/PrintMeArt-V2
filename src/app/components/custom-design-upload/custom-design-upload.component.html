@@ -1,24 +1,24 @@
 <div
   class="flex flex-col lg:flex-col space-y-14 lg:space-y-0 lg:space-x-4 items-center relative text-center lg:text-left mb-4">
   <div class="w-screen max-w-full xl:max-w-3xl space-y-5">
-    <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Upload Your Image</label>
+    <label for="cover-photo" class="block text-xl font-[300] leading-6 text-gray-900 mb-2">Upload Your Image</label>
     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
       [class.border-indigo-500]="isDragging()" [class.bg-indigo-50]="isDragging()" (drop)="handleDrop($event)"
       (dragover)="handleDragOver($event)" (dragleave)="handleDragLeave($event)">
       <div class="text-center">
-        <div class="mt-4 flex text-sm leading-6 text-gray-600">
+        <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-1 text-sm">
           <label for="file-upload"
-            class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-            <span>
-              <app-icon iconName="photo" class="hidden sm:inline-block w-5 h-5 mb-0.5"></app-icon>
-              Upload a file
+            class="relative cursor-pointer rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-500 transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2">
+            <span class="flex items-center gap-2">
+              <app-icon iconName="photo" class="w-4 h-4"></app-icon>
+              Choose file
             </span>
             <input #fileInput id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*"
               (change)="handleFileChange($event)" />
           </label>
-          <p class="pl-1">or drag and drop</p>
+          <p class="text-slate-500">or drag and drop</p>
         </div>
-        <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 50MB</p>
+        <p class="text-xs text-slate-400 mt-3">PNG, JPG, GIF up to 50MB</p>
         @if (selectedFile()) {
         <p class="text-sm leading-5 text-gray-900 mt-2">
           Selected: {{ selectedFile()!.name }} ({{ (selectedFile()!.size / (1024 * 1024)).toFixed(2) }} MB)

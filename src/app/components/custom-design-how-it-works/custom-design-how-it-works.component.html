@@ -1,59 +1,47 @@
-<!-- Hero Section: How It Works -->
-<div class="py-10 lg:py-16">
-  <div data-nc-id="SectionHero1">
-    <div class="bg-white">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl lg:text-center">
-          <h2 class="text-sm font-semibold text-indigo-600">Print Your Design</h2>
-          <p class="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Turn Your Photos into Art</p>
-          <p class="mt-3 text-sm leading-6 text-gray-600">
-            Upload your favorite image, customize your design, and let our designer ensure a stunning framed print,
-            approved by you before we print.
-          </p>
-        </div>
-        <div class="mx-auto mt-8 max-w-5xl">
-          <dl class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-3">
-            <!-- Step 1 -->
-            <div class="relative pl-12">
-              <dt class="text-sm font-semibold text-gray-900">
-                <div class="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600">
-                  <app-icon iconName="image" class="text-white w-4 h-4" />
-                </div>
-                Upload Your Image
-              </dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-600">
-                Upload your favorite photo or artwork. We accept PNG, JPG, and GIF up to 50MB.
-              </dd>
-            </div>
+<!-- How It Works -->
+<div class="pt-16 pb-16">
+  <div class="mx-auto max-w-5xl px-6">
+    <div class="flex flex-col items-center gap-3 mb-10">
+      <div class="w-10 h-10 rounded-lg bg-cyan-50 flex items-center justify-center">
+        <app-icon iconName="lightning" class="w-5 h-5 text-cyan-600" />
+      </div>
+      <h2 class="text-2xl font-bold text-slate-900">Print Your Design</h2>
+      <p class="text-slate-500">Turn Your Photos into Art</p>
+    </div>
 
-            <!-- Step 2 -->
-            <div class="relative pl-12">
-              <dt class="text-sm font-semibold text-gray-900">
-                <div class="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600">
-                  <app-icon iconName="brush" class="text-white w-4 h-4" />
-                </div>
-                Customize Your Design
-              </dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-600">
-                Choose from frames, sizes, and mats. Visualize your design instantly.
-              </dd>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="relative pl-12">
-              <dt class="text-sm font-semibold text-gray-900">
-                <div class="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600">
-                  <app-icon iconName="document-check" class="text-white w-4 h-4" />
-                </div>
-                Professional Review
-              </dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-600">
-                Our designer reviews and adjusts your design before sending for approval.
-              </dd>
-            </div>
-          </dl>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <!-- Step 1 -->
+      <div class="group">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-3 h-3 rounded-full bg-cyan-500"></div>
+          <div class="flex-1 h-px bg-gradient-to-r from-cyan-200 to-transparent"></div>
         </div>
+        <h3 class="font-medium text-slate-900 mb-1 group-hover:text-cyan-600 transition-colors">Upload your image</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Drop your photo or artwork. PNG, JPG, GIF up to 50MB.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="group">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-3 h-3 rounded-full bg-violet-500"></div>
+          <div class="flex-1 h-px bg-gradient-to-r from-violet-200 to-transparent"></div>
+        </div>
+        <h3 class="font-medium text-slate-900 mb-1 group-hover:text-violet-600 transition-colors">Customize your print
+        </h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Choose frame, size & mat. Preview your design instantly.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="group">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+          <div class="flex-1 h-px bg-gradient-to-r from-amber-200 to-transparent"></div>
+        </div>
+        <h3 class="font-medium text-slate-900 mb-1 group-hover:text-amber-600 transition-colors">Approve & receive</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">We review your design, you approve, then we print & ship.</p>
       </div>
     </div>
+
+    <div class="mt-12 mx-auto w-150 h-px bg-slate-200"></div>
   </div>
 </div>
