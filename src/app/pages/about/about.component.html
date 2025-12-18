@@ -59,6 +59,34 @@
       }
     </div>
   </section>
+
+  <!-- Fast Facts Section -->
+  <section class="max-w-6xl mx-auto mb-32">
+    <div class="mb-10">
+      <h2 class="inline-flex items-center gap-3 text-2xl md:text-3xl font-bold text-slate-900 mb-3">
+        <app-icon iconName="rocket" class="w-6 h-6 text-cyan-600" />
+        Fast Facts
+      </h2>
+      <p class="text-slate-500 text-sm max-w-xl">
+        We're impartial and independent, and every day we create distinctive, world-class programmes and content
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      @for (fact of fastFacts; track fact.title; let i = $index) {
+      <div class="relative pl-5 border-l-2 border-slate-200 hover:border-cyan-400 transition-colors">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-cyan-600 font-bold text-lg">0{{ i + 1 }}</span>
+          <h4 class="font-semibold text-slate-800">{{ fact.title }}</h4>
+        </div>
+        <p class="text-sm text-slate-500 leading-relaxed">
+          {{ fact.description }}
+        </p>
+      </div>
+      }
+    </div>
+  </section>
+
   <div class="mt-10">
     <app-contact-form />
   </div>

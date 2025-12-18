@@ -33,4 +33,22 @@ export class AboutComponent {
       color: 'amber',
     },
   ];
+
+  fastFacts = [
+    {
+      icon: 'photo',
+      title: 'High-Quality Prints',
+      description: 'Crafted with care and top-notch Giclée technology',
+    },
+    {
+      icon: 'users',
+      title: 'Engineers Turned Artists',
+      description: 'Family-owned business led by two passionate engineers',
+    },
+    {
+      icon: 'sliders',
+      title: 'Custom Options',
+      description: 'Choose from a variety of sizes, frames, and finishes',
+    },
+  ];
 }

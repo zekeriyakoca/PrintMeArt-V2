@@ -7,6 +7,8 @@ import { ProductDto } from '../../models/product';
 import { CustomDesignUploadComponent } from '../../components/custom-design-upload/custom-design-upload.component';
 import { CustomDesignPreviewComponent } from '../../components/custom-design-preview/custom-design-preview.component';
 import { FrameOptions } from '../../shared/constants';
+import { CustomDesignCtaComponent } from '../../components/custom-design-cta/custom-design-cta.component';
+import { CustomDesignHowItWorksComponent } from '../../components/custom-design-how-it-works/custom-design-how-it-works.component';
 
 export interface DesignSize {
   id: number;
@@ -22,6 +24,8 @@ export interface DesignSize {
     ProductPurchaseSidebarComponent,
     CustomDesignUploadComponent,
     CustomDesignPreviewComponent,
+    CustomDesignCtaComponent,
+    CustomDesignHowItWorksComponent,
   ],
   templateUrl: './custom-design.component.html',
   styleUrl: './custom-design.component.scss',
