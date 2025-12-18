@@ -10,18 +10,18 @@
     <div class="w-full md:w-1/2 flex flex-col items-start">
       <h2 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Welcome to PrintMe</h2>
       <div class="text-sm sm:text-base text-neutral-600 leading-7 mb-2">
-        <p class="mb-4">We’re a family business in the Netherlands, run by a husband and wife team.</p>
-        <p class="mb-4">We’ve always loved camping trips, travelling, and spontaneous road trips—the kind where you stop
-          for a view, take a photo, and later wish you could keep that feeling around. That’s a big part of why PrintMe
+        <p class="mb-4">We're a family business in the Netherlands, run by a husband and wife team.</p>
+        <p class="mb-4">We've always loved camping trips, travelling, and spontaneous road trips—the kind where you stop
+          for a view, take a photo, and later wish you could keep that feeling around. That's a big part of why PrintMe
           exists.</p>
-        <p class="mb-4">Our prints and frames are made to bring that “good moment” onto your walls: clean, beautiful,
-          and easy to live with. Whether it’s calm nature vibes, bold photography, or something that just feels like
+        <p class="mb-4">Our prints and frames are made to bring that "good moment" onto your walls: clean, beautiful,
+          and easy to live with. Whether it's calm nature vibes, bold photography, or something that just feels like
           you, we hope it turns your house into a home.</p>
         <p>Thanks for being here.</p>
       </div>
     </div>
   </section>
-  <section class="max-w-4xl mx-auto  mb-16">
+  <section class="max-w-4xl mx-auto mb-16">
     <div class="text-sm sm:text-base text-neutral-700 leading-7 space-y-5">
       <p>We create museum-quality giclée prints made to look stunning up close and stay beautiful for years.</p>
       <p>Our collection is inspired by the places we love most—camping mornings, long road trips, quiet nature spots,
@@ -32,37 +32,31 @@
     </div>
   </section>
   <section class="max-w-6xl mx-auto mt-20 mb-32">
-    <div class="mb-6">
-      <app-section-title label="What Matters" title="Our Values"></app-section-title>
-      <span class="block mt-1 font-normal text-sm sm:text-base text-neutral-600 leading-7">
-        The principles that guide what we make and how we work. These aren’t just slogans—they’re the real reasons we
-        show up each day to create things that matter and to stay true to our values.
-      </span>
+    <div class="mb-10">
+      <app-section-title label="What We Do" title="Our Values"></app-section-title>
     </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-6">
-      <div
-        class="bg-white/80 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start justify-center py-6 px-4">
-        <h3 class="text-base md:text-lg font-semibold text-indigo-900 mb-2 flex items-center gap-2">Museum-Quality
-          Prints</h3>
-        <span class="text-xs text-neutral-500 sm:text-sm">
-          Archival prints, made to last and look great on your wall.
-        </span>
+
+    <div class="flex flex-col md:flex-row md:items-stretch md:justify-between gap-8">
+      @for (item of values; track item.title; let last = $last) {
+      <div class="flex-1 p-6 rounded-lg bg-slate-50/80">
+        <div class="flex items-center gap-3">
+          <div [class]="'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ' +
+              (item.color === 'violet' ? 'bg-[#f3ecff] text-[#4025b8]' :
+               item.color === 'amber' ? 'bg-amber-100 text-amber-600' :
+               'bg-cyan-100 text-cyan-600')">
+            <app-icon [iconName]="item.icon" class="w-5 h-5" />
+          </div>
+          <h3 class="font-semibold text-slate-900">{{ item.title }}</h3>
+        </div>
+        <p class="text-sm text-slate-500 leading-relaxed mt-3">
+          {{ item.description }}
+        </p>
       </div>
-      <div
-        class="bg-white/80 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start justify-center py-6 px-4">
-        <h3 class="text-base md:text-lg font-semibold text-indigo-900 mb-2 flex items-center gap-2">Custom Framing
-          Options</h3>
-        <span class="text-xs text-neutral-500 sm:text-sm">
-          Flexible options—pick your size, frame, and style.
-        </span>
-      </div>
-      <div
-        class="bg-white/80 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start justify-center py-6 px-4">
-        <h3 class="text-base md:text-lg font-semibold text-indigo-900 mb-2 flex items-center gap-2">Easy Experience</h3>
-        <span class="text-xs text-neutral-500 sm:text-sm">
-          Easy ordering, fast delivery, and friendly support.
-        </span>
-      </div>
+      @if (!last) {
+      <div class="hidden md:block w-px bg-slate-200 shrink-0"></div>
+      <div class="md:hidden h-px bg-slate-200"></div>
+      }
+      }
     </div>
   </section>
   <div class="mt-10">
