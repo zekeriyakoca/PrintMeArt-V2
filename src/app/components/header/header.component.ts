@@ -8,10 +8,11 @@ import { takeUntil } from 'rxjs';
 import { CategoryDto } from '../../models/category';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
 import { IconComponent } from '../shared/icon/icon.component';
+import { LanguageDropdownComponent } from '../language-dropdown/language-dropdown.component';
 
 @Component({
   selector: 'app-header',
-  imports: [UserMenuComponent, IconComponent],
+  imports: [UserMenuComponent, IconComponent, LanguageDropdownComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

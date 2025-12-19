@@ -19,7 +19,7 @@
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large"
                 (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
                 <a href="/search"
-                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   Our Catalog
                 </a>
                 <!-- Prints Mega Menu -->
@@ -81,7 +81,7 @@
               <!-- Your Design (special styling, no submenu) -->
               <li class="menu-item flex-shrink-0">
                 <a href="/your-design"
-                  class="inline-flex items-center text-sm lg:text-[15px] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
+                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
                   style="color: #db2877; font-family: fantasy; font-size: 1.09rem;">
                   Your Design
                 </a>
@@ -90,7 +90,7 @@
               <!-- Frames -->
               <li class="menu-item flex-shrink-0">
                 <a href="/frames"
-                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   Frames
                 </a>
               </li>
@@ -98,7 +98,7 @@
               <!-- About -->
               <li class="menu-item flex-shrink-0">
                 <a href="/about"
-                  class="inline-flex items-center text-sm lg:text-[15px] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   About
                 </a>
               </li>
@@ -134,10 +134,7 @@
             <!-- Language Dropdown -->
             <div class="hidden xl:block h-6 border-l border-neutral-300 ml-3"></div>
             <div class="hidden xl:flex">
-              <button type="button"
-                class="flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center">
-                <span class="text-sm font-medium">EN</span>
-              </button>
+              <app-language-dropdown></app-language-dropdown>
             </div>
           </div>
         </div>

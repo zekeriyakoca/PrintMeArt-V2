@@ -28,9 +28,9 @@
   <!-- Filter Titles  -->
   <div class="flex items-center justify-between mt-4 pb-4 border-b border-neutral-200">
     <!-- Hide/Show Filters on left -->
-    <h2 class="mb-0 pl-2 bg-white rounded-[5px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
+    <h2 class="mb-0 pl-2 bg-white rounded-[4px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
       (click)="hideFilters.set(!hideFilters())">
-      <span class="inline-flex border-indigo-900 pr-4 text-[17px]">
+      <span class="inline-flex border-indigo-900 pr-4 text-[1.1rem]">
         {{hideFilters() ? 'View All ' : 'Hide '}}Filters
       </span>
     </h2>
@@ -58,7 +58,7 @@
     <div id="filters" class="flex-2 mt-4" [class.hidden]="hideFilters()">
       @for (group of filterOptions(); track group.name) {
       <div class="mb-1 pl-2">
-        <h3 class="mb-1 text-[16px] font-light uppercase text-slate-900">{{ group.name }}</h3>
+        <h3 class="mb-1 text-[1rem] font-light uppercase text-slate-900">{{ group.name }}</h3>
         <div class="flex flex-col gap-1 mb-1">
           @for (option of group.options; track option.name) {
           <p class="category-leaf text-sm cursor-pointer mb-0 hover:text-indigo-700 px-2 py-1 rounded transition-colors group/filter flex items-center justify-between"
@@ -73,7 +73,7 @@
           }
         </div>
       </div>
-      <hr class="mb-4 border-b-1 border-indigo-800 w-[150px] ml-0 opacity-15">
+      <hr class="mb-4 border-b-1 border-indigo-800 w-[140px] ml-0 opacity-15">
       }
     </div>
 

@@ -1,0 +1,29 @@
+<div class="language-dropdown relative">
+  <button type="button" (click)="toggleDropdown()"
+    class="flex items-center gap-1.5 h-10 sm:h-12 px-3 py-1.5 rounded-full text-sm text-slate-700 font-medium hover:bg-slate-100 transition-colors focus:outline-none">
+    <app-icon iconName="world" class="w-[18px] h-[18px] opacity-80"></app-icon>
+    <span class="uppercase">{{ languageService.currentLanguageCode() }}</span>
+    <svg class="w-4 h-4 transition-transform duration-200" [class.-rotate-180]="isOpen()" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  @if (isOpen()) {
+  <div class="absolute right-0 mt-3 w-80 p-6 rounded-2xl bg-white shadow-lg ring-1 ring-black/5 z-50 animate-dropdown">
+    <div class="grid grid-cols-2 gap-8">
+      @for (language of languageService.availableLanguages; track language.code) {
+      <button type="button" (click)="selectLanguage(language)"
+        class="flex items-center p-3 -m-3 rounded-lg transition duration-150 ease-in-out hover:bg-slate-100 focus:outline-none"
+        [class.bg-slate-100]="languageService.isCurrentLanguage(language.code)"
+        [class.opacity-80]="!languageService.isCurrentLanguage(language.code)">
+        <div class="text-left whitespace-nowrap">
+          <span class="text-sm font-medium text-slate-900 block">{{ language.name }}</span>
+          <span class="text-xs text-slate-500 block">{{ language.description }}</span>
+        </div>
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>
