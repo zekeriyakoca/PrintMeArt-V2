@@ -34,19 +34,19 @@
 
     &[data-index="0"] {
       .card-image {
-        width: 320px;
+        width: 270px;
       }
     }
 
     &[data-index="1"] {
       .card-image {
-        height: 380px;
+        height: 300px;
       }
     }
 
     &[data-index="2"] {
       .card-image {
-        height: 300px;
+        height: 250px;
       }
     }
   }
@@ -60,7 +60,7 @@
   background: #e2e8f0;
 
   @media (min-width: 640px) {
-    height: 220px;
+    height: 180px;
   }
 
   &::after {

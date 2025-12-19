@@ -2,18 +2,18 @@
   <!-- BG -->
   <div class="absolute inset-0 bg-[#faf6ff]"></div>
 
-  <div class="relative container pb-16 pt-28 sm:pt-24 lg:py-32 m-auto">
+  <div class="relative contained-page pb-24 pt-32 m-auto">
     <div class="flex flex-col lg:flex-row items-center justify-between">
       <!-- Left: Text & Button -->
       <div class="w-full lg:w-2/5 space-y-6 text-center lg:text-left">
-        <span class="block text-base md:text-[1.40rem] font-medium" style="color: #db2877;">
+        <span class="block text-base md:text-[1.20rem] font-medium" style="color: #db2877;">
           {{ subHeading() }}
         </span>
-        <h2 class="font-semibold text-4xl md:text-5xl xl:text-[3.2rem] !leading-[114%] text-slate-900">
+        <h2 class="font-semibold text-4xl md:text-3xl xl:text-[2.4rem] !leading-[114%] text-slate-900">
           {{ heading() }}
         </h2>
         <a [href]="btnLink()"
-          class="inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-3 px-6 sm:py-5 sm:px-9 rounded-full text-sm sm:text-base font-medium">
+          class="inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base font-medium">
           <span>{{ btnText() }}</span>
           <app-icon iconName="search" class="w-5 h-5 ms-2.5"></app-icon>
         </a>

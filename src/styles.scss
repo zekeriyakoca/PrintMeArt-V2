@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 90%; /* Base 14.4px instead of 16px - scales everything down */
+}
+
 :root {
   --c-primary-50: 240, 249, 255;
   --c-primary-100: 224, 242, 254;
