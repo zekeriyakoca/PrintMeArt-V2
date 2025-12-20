@@ -1,4 +1,10 @@
-import { Injectable, PLATFORM_ID, Inject, signal, computed } from '@angular/core';
+import {
+  Injectable,
+  PLATFORM_ID,
+  Inject,
+  signal,
+  computed,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 export interface Language {
@@ -31,7 +37,8 @@ export class LanguageService {
 
   private initLanguage(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const storedLang = localStorage.getItem(this.STORAGE_KEY) ?? this.DEFAULT_LANG;
+      const storedLang =
+        localStorage.getItem(this.STORAGE_KEY) ?? this.DEFAULT_LANG;
       const language = AVAILABLE_LANGUAGES.find((l) => l.code === storedLang);
       if (language) {
         this._currentLanguage.set(language);

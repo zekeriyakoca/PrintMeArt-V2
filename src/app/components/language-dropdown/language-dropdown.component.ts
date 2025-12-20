@@ -1,6 +1,9 @@
 import { Component, signal, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LanguageService, Language } from '../../services/i18n/language.service';
+import {
+  LanguageService,
+  Language,
+} from '../../services/i18n/language.service';
 import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
@@ -15,7 +18,7 @@ export class LanguageDropdownComponent {
 
   constructor(
     public languageService: LanguageService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
   ) {}
 
   @HostListener('document:click', ['$event'])
