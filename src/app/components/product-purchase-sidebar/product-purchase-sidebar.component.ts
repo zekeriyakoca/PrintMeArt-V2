@@ -12,6 +12,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
+import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -22,6 +23,7 @@ import { SizeOptions } from '../../shared/constants';
     IconComponent,
     MatOptionsComponent,
     SizeOptionsComponent,
+    DpiBarComponent,
   ],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',

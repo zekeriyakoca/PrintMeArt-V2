@@ -33,6 +33,13 @@ export interface ProductDto {
   discountRate: number;
   discountAmount: number;
   isAvailable: boolean;
+  metadata: ProductMetadata;
+}
+
+export interface ProductMetadata {
+  IsHorizontal: string;
+  OriginalImageWidth: string;
+  OriginalImageHeight: string;
 }
 
 export interface ProductImageDto {
