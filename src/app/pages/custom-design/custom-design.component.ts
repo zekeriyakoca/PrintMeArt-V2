@@ -72,6 +72,38 @@ export class CustomDesignComponent
 
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
+
+    if (!url) {
+      return;
+    }
+
+    this.setMetadataForCustomProduct(url);
+  }
+
+  private setMetadataForCustomProduct(url: string) {
+    const img = new Image();
+    img.onload = () => {
+      const w = Number(img.naturalWidth);
+      const h = Number(img.naturalHeight);
+      if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
+        return;
+      }
+
+      this.customProduct.update(
+        (current) =>
+          ({
+            ...current,
+            metadata: {
+              ...(current.metadata as any),
+              OriginalImageWidth: String(w),
+              OriginalImageHeight: String(h),
+              IsHorizontal: w >= h ? 'true' : 'false',
+            },
+          }) as ProductDto,
+      );
+    };
+
+    img.src = url;
   }
 
   onSelectedFrameChanged(frameName: string): void {

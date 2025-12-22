@@ -37,7 +37,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   onSelectedFrameChanged = output<string>();
 
-  selectedSize = signal(SizeOptions[0]);
+  selectedSize = model<SizeOption | null>(SizeOptions[0]);
 
   constructor(
     private apiService: ApiService,
@@ -147,6 +147,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   private getSelectedOptions() {
+    const size = this.selectedSize() ?? SizeOptions[0];
+
     const selectedOptions = this.product()
       .optionGroups.filter((x) => x.selectedOptionId ?? 0 > 0)
       .map(
@@ -156,8 +158,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
             optionName: group.options.find(
               (option) => option.id === group.selectedOptionId,
             )?.value,
-            spec1: this.selectedSize().val1.toString(),
-            spec2: this.selectedSize().val2.toString(),
+            spec1: size.val1.toString(),
+            spec2: size.val2.toString(),
           }) as SelectedOptionDto,
       );
     selectedOptions.push({
@@ -174,9 +176,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         this.product().optionGroups.find(
           (group) => group.name.toLowerCase() === 'size',
         )?.options[0].id || 0,
-      optionName: this.selectedSize().name,
-      spec1: this.selectedSize().val1.toString(),
-      spec2: this.selectedSize().val2.toString(),
+      optionName: size.name,
+      spec1: size.val1.toString(),
+      spec2: size.val2.toString(),
     } as SelectedOptionDto);
     return selectedOptions;
   }

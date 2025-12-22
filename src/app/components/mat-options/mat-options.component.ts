@@ -1,9 +1,7 @@
-import { Component, input, model, output } from '@angular/core';
-import { IconComponent } from '../shared/icon/icon.component';
+import { Component, model } from '@angular/core';
 
 @Component({
   selector: 'app-mat-options',
-  imports: [IconComponent],
   templateUrl: './mat-options.component.html',
   styleUrl: './mat-options.component.scss',
 })
