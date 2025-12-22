@@ -31,10 +31,10 @@
 }
 
 .price {
-  font-size: 1.625rem;
-  font-weight: 600;
-  color: #1e293b;
-  letter-spacing: -0.02em;
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: #384f8c;
+  letter-spacing: -0.01em;
 }
 
 .tax-note {
@@ -73,10 +73,11 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #334155;
+  font-weight: 300;
 }
 
 .trust-check {
-  color: #16a34a;
+  color: rgb(22, 122, 146);
   font-weight: 700;
 }
 

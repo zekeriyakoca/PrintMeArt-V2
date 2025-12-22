@@ -82,7 +82,7 @@ type DpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
 
         @if (quality() === 'borderline' || quality() === 'low') {
           <div
-            class="px-4 py-2.5 bg-amber-50 border-t border-amber-100 text-xs text-amber-700 text-center"
+            class="px-4 py-2.5 bg-[rgb(252,247,240)] border-t border-[rgba(165,100,45,0.2)] text-xs text-[rgb(165,100,45)] text-center"
           >
             💡 Try a smaller size for sharper prints
           </div>
@@ -171,42 +171,42 @@ export class DpiBarComponent {
 
     switch (this.quality()) {
       case 'fineart':
-        return `${prefix} border-emerald-200 bg-emerald-50 text-emerald-900`;
+        return `${prefix} border-[rgba(22,122,146,0.3)] bg-[rgb(242,248,245)] text-[rgb(22,122,146)]`;
       case 'borderline':
-        return `${prefix} border-amber-200 bg-amber-50 text-amber-900`;
+        return `${prefix} border-[rgba(165,100,45,0.3)] bg-[rgb(252,247,240)] text-[rgb(165,100,45)]`;
       case 'low':
-        return `${prefix} border-rose-200 bg-rose-50 text-rose-900`;
+        return `${prefix} border-[rgba(195,61,61,0.3)] bg-[rgb(252,242,242)] text-[rgb(195,61,61)]`;
       case 'good':
       default:
-        return `${prefix} border-slate-200 bg-slate-50 text-slate-700`;
+        return `${prefix} border-[rgb(204,204,204)] bg-[rgb(247,246,242)] text-[rgb(92,92,95)]`;
     }
   });
 
   readonly dotClasses = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'bg-emerald-600';
+        return 'bg-[rgb(22,122,146)]';
       case 'good':
-        return 'bg-slate-500';
+        return 'bg-[rgb(92,92,95)]';
       case 'borderline':
-        return 'bg-amber-600';
+        return 'bg-[rgb(165,100,45)]';
       case 'low':
-        return 'bg-rose-600';
+        return 'bg-[rgb(195,61,61)]';
       default:
-        return 'bg-slate-300';
+        return 'bg-[rgb(204,204,204)]';
     }
   });
 
   readonly labelClasses = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'text-emerald-800';
+        return 'text-[rgb(22,122,146)]';
       case 'borderline':
-        return 'text-amber-800';
+        return 'text-[rgb(165,100,45)]';
       case 'low':
-        return 'text-rose-800';
+        return 'text-[rgb(195,61,61)]';
       default:
-        return 'text-slate-700';
+        return 'text-[rgb(92,92,95)]';
     }
   });
 
@@ -219,13 +219,13 @@ export class DpiBarComponent {
   readonly barFillClasses = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'bg-emerald-700';
+        return 'bg-[rgb(22,122,146)]';
       case 'borderline':
-        return 'bg-amber-700';
+        return 'bg-[rgb(165,100,45)]';
       case 'low':
-        return 'bg-rose-700';
+        return 'bg-[rgb(195,61,61)]';
       default:
-        return 'bg-slate-800';
+        return 'bg-[rgb(38,38,44)]';
     }
   });
 
@@ -276,15 +276,15 @@ export class DpiBarComponent {
   readonly tooltipHeaderClasses = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'bg-gradient-to-b from-emerald-50 to-white text-emerald-900';
+        return 'bg-gradient-to-b from-[rgb(242,248,245)] to-white text-[rgb(22,122,146)]';
       case 'good':
-        return 'bg-gradient-to-b from-slate-50 to-white text-slate-900';
+        return 'bg-gradient-to-b from-[rgb(247,246,242)] to-white text-[rgb(38,38,44)]';
       case 'borderline':
-        return 'bg-gradient-to-b from-amber-50 to-white text-amber-900';
+        return 'bg-gradient-to-b from-[rgb(252,247,240)] to-white text-[rgb(165,100,45)]';
       case 'low':
-        return 'bg-gradient-to-b from-rose-50 to-white text-rose-900';
+        return 'bg-gradient-to-b from-[rgb(252,242,242)] to-white text-[rgb(195,61,61)]';
       default:
-        return 'bg-gradient-to-b from-slate-50 to-white text-slate-900';
+        return 'bg-gradient-to-b from-[rgb(247,246,242)] to-white text-[rgb(38,38,44)]';
     }
   });
 
