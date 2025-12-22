@@ -1,37 +1,98 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import { ProductMetadata } from '../../models/product';
 import { SizeOption } from '../../models/size-option';
+import { IconComponent } from '../shared/icon/icon.component';
+import { TooltipComponent } from '../shared/tooltip/tooltip.component';
+
+type DpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
 
 @Component({
   selector: 'app-dpi-bar',
   standalone: true,
+  imports: [IconComponent, TooltipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      class="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-700"
-      [attr.aria-label]="ariaLabel()"
-      [attr.title]="tooltip()"
-    >
-      <span class="font-medium">DPI</span>
+    <app-tooltip [ariaLabel]="ariaLabel()">
+      <div [class]="pillClasses()">
+        <span
+          class="inline-flex h-4 w-4 items-center justify-center"
+          aria-hidden="true"
+        >
+          @if (showWarningIcon()) {
+            <app-icon iconName="warning" class="h-4 w-4"></app-icon>
+          } @else {
+            <app-icon iconName="check" class="h-4 w-4"></app-icon>
+          }
+        </span>
 
-      @if (dpi() !== null) {
-        <span class="tabular-nums">{{ dpi() }}</span>
-      } @else {
-        <span class="text-slate-500">—</span>
-      }
+        <span class="font-medium">FineArt</span>
+        <span class="opacity-40" aria-hidden="true">·</span>
+        <span class="font-semibold" [class]="labelClasses()">{{
+          qualityText()
+        }}</span>
 
-      <span class="sr-only">{{ qualityLabel() }}</span>
+        @if (dpi() !== null) {
+          <div
+            class="ml-1.5 h-1.5 w-14 overflow-hidden rounded-full bg-black/10"
+            aria-hidden="true"
+          >
+            <div
+              class="h-full"
+              [class]="barFillClasses()"
+              [style.width.%]="fillPercent() * 100"
+            ></div>
+          </div>
+        }
 
-      <div class="ml-1 h-1.5 w-16 overflow-hidden rounded bg-slate-200" aria-hidden="true">
-        <div class="h-full bg-slate-800" [style.width.%]="fillPercent() * 100"></div>
+        @if (dpi() !== null) {
+          <span class="opacity-40" aria-hidden="true">·</span>
+          <span class="tabular-nums font-medium">{{ dpi() }} dpi</span>
+        } @else {
+          <span class="opacity-60">Select size</span>
+        }
       </div>
-    </div>
+
+      <div tooltip>
+        <div [class]="tooltipHeaderClasses()" class="px-4 py-3 text-center">
+          <div class="text-2xl mb-0.5">{{ tooltipEmoji() }}</div>
+          <div class="font-semibold text-sm">{{ tooltipHeadline() }}</div>
+        </div>
+
+        <div class="px-4 py-3 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-500">Your image</span>
+            <span class="font-medium text-slate-900">{{ imagePxText() }}</span>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-500">Print size</span>
+            <span class="font-medium text-slate-900">{{ sizeText() }}</span>
+          </div>
+          <div
+            class="flex items-center justify-between text-xs pt-1 border-t border-slate-100"
+          >
+            <span class="text-slate-500">Print quality</span>
+            <span class="font-bold text-slate-900">{{ dpi() ?? '—' }} dpi</span>
+          </div>
+        </div>
+
+        @if (quality() === 'borderline' || quality() === 'low') {
+          <div
+            class="px-4 py-2.5 bg-amber-50 border-t border-amber-100 text-xs text-amber-700 text-center"
+          >
+            💡 Try a smaller size for sharper prints
+          </div>
+        }
+      </div>
+    </app-tooltip>
   `,
 })
 export class DpiBarComponent {
   readonly metadata = input.required<ProductMetadata>();
-
-  /** Selected print size in centimeters (val1 x val2). Optional; without it we can't compute DPI. */
   readonly size = input<SizeOption | null>(null);
 
   readonly dpi = computed<number | null>(() => {
@@ -42,22 +103,30 @@ export class DpiBarComponent {
 
     const pxW = Number(meta.OriginalImageWidth);
     const pxH = Number(meta.OriginalImageHeight);
-
-    if (!Number.isFinite(pxW) || !Number.isFinite(pxH) || pxW <= 0 || pxH <= 0) {
+    if (
+      !Number.isFinite(pxW) ||
+      !Number.isFinite(pxH) ||
+      pxW <= 0 ||
+      pxH <= 0
+    ) {
       return null;
     }
 
     const cmW = Number(selectedSize.val1);
     const cmH = Number(selectedSize.val2);
-
-    if (!Number.isFinite(cmW) || !Number.isFinite(cmH) || cmW <= 0 || cmH <= 0) {
+    if (
+      !Number.isFinite(cmW) ||
+      !Number.isFinite(cmH) ||
+      cmW <= 0 ||
+      cmH <= 0
+    ) {
       return null;
     }
 
     const inW = cmW / 2.54;
     const inH = cmH / 2.54;
 
-    // Allow rotating the print: pick the better-fit orientation.
+    // Allow rotating: pick the better-fit orientation.
     const dpiFit1 = Math.min(pxW / inW, pxH / inH);
     const dpiFit2 = Math.min(pxW / inH, pxH / inW);
 
@@ -67,44 +136,163 @@ export class DpiBarComponent {
     return Math.round(best);
   });
 
-  readonly qualityLabel = computed(() => {
+  readonly quality = computed<DpiQuality>(() => {
     const value = this.dpi();
-    if (value === null) return 'DPI unavailable';
-    if (value >= 300) return 'Excellent';
-    if (value >= 200) return 'Good';
-    if (value >= 150) return 'OK';
-    return 'Low';
+    if (value === null) return 'unknown';
+    if (value >= 300) return 'fineart';
+    if (value >= 200) return 'good';
+    if (value >= 150) return 'borderline';
+    return 'low';
+  });
+
+  readonly qualityText = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'Ready';
+      case 'good':
+        return 'Good';
+      case 'borderline':
+        return 'Borderline';
+      case 'low':
+        return 'Low';
+      default:
+        return '—';
+    }
+  });
+
+  readonly showWarningIcon = computed(() => {
+    const q = this.quality();
+    return q === 'borderline' || q === 'low';
+  });
+
+  readonly pillClasses = computed(() => {
+    const prefix =
+      'inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs';
+
+    switch (this.quality()) {
+      case 'fineart':
+        return `${prefix} border-emerald-200 bg-emerald-50 text-emerald-900`;
+      case 'borderline':
+        return `${prefix} border-amber-200 bg-amber-50 text-amber-900`;
+      case 'low':
+        return `${prefix} border-rose-200 bg-rose-50 text-rose-900`;
+      case 'good':
+      default:
+        return `${prefix} border-slate-200 bg-slate-50 text-slate-700`;
+    }
+  });
+
+  readonly dotClasses = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'bg-emerald-600';
+      case 'good':
+        return 'bg-slate-500';
+      case 'borderline':
+        return 'bg-amber-600';
+      case 'low':
+        return 'bg-rose-600';
+      default:
+        return 'bg-slate-300';
+    }
+  });
+
+  readonly labelClasses = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'text-emerald-800';
+      case 'borderline':
+        return 'text-amber-800';
+      case 'low':
+        return 'text-rose-800';
+      default:
+        return 'text-slate-700';
+    }
   });
 
   readonly fillPercent = computed(() => {
     const value = this.dpi();
     if (value === null) return 0;
-    // Cap at 300dpi as "full" for the bar.
     return Math.max(0, Math.min(1, value / 300));
   });
 
-  readonly tooltip = computed(() => {
-    const meta = this.metadata();
-    const selectedSize = this.size();
+  readonly barFillClasses = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'bg-emerald-700';
+      case 'borderline':
+        return 'bg-amber-700';
+      case 'low':
+        return 'bg-rose-700';
+      default:
+        return 'bg-slate-800';
+    }
+  });
 
+  readonly sizeText = computed(() => {
+    const selectedSize = this.size();
+    if (!selectedSize) return '—';
+    return `${selectedSize.val1}x${selectedSize.val2} cm`;
+  });
+
+  readonly imagePxText = computed(() => {
+    const meta = this.metadata();
     const pxW = Number(meta.OriginalImageWidth);
     const pxH = Number(meta.OriginalImageHeight);
+    if (!Number.isFinite(pxW) || !Number.isFinite(pxH)) return '—';
+    return `${Math.round(pxW)}x${Math.round(pxH)} px`;
+  });
 
-    const sizeText = selectedSize ? `${selectedSize.val1}×${selectedSize.val2} cm` : 'No size selected';
-
-    if (!Number.isFinite(pxW) || !Number.isFinite(pxH)) {
-      return `Image: unknown px • Size: ${sizeText}`;
+  readonly tooltipEmoji = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return '✨';
+      case 'good':
+        return '👍';
+      case 'borderline':
+        return '⚠️';
+      case 'low':
+        return '😬';
+      default:
+        return '🔍';
     }
+  });
 
-    const value = this.dpi();
-    const dpiText = value === null ? '—' : `${value}`;
+  readonly tooltipHeadline = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'Perfect for FineArt';
+      case 'good':
+        return 'Good quality';
+      case 'borderline':
+        return 'May look soft';
+      case 'low':
+        return 'Will look pixelated';
+      default:
+        return 'Select a size';
+    }
+  });
 
-    return `Image: ${Math.round(pxW)}×${Math.round(pxH)} px • Size: ${sizeText} • DPI: ${dpiText} (${this.qualityLabel()})`;
+  readonly tooltipHeaderClasses = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 'bg-gradient-to-b from-emerald-50 to-white text-emerald-900';
+      case 'good':
+        return 'bg-gradient-to-b from-slate-50 to-white text-slate-900';
+      case 'borderline':
+        return 'bg-gradient-to-b from-amber-50 to-white text-amber-900';
+      case 'low':
+        return 'bg-gradient-to-b from-rose-50 to-white text-rose-900';
+      default:
+        return 'bg-gradient-to-b from-slate-50 to-white text-slate-900';
+    }
   });
 
   readonly ariaLabel = computed(() => {
     const value = this.dpi();
-    if (value === null) return 'DPI not available';
-    return `DPI ${value}. ${this.qualityLabel()}`;
+    if (value === null) {
+      return 'Print quality unknown. Select a size to estimate DPI.';
+    }
+    return `Print quality ${this.qualityText()}. Estimated ${value} DPI.`;
   });
 }

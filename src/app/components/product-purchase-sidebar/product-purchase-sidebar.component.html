@@ -20,7 +20,7 @@
     <div class="flex items-center justify-between gap-2">
       <label class="option-label">Size</label>
       @if (product().metadata) {
-        <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
+      <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
       }
     </div>
     <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
