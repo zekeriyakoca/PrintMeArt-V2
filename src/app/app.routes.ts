@@ -11,6 +11,8 @@ import { CustomDesignComponent } from './pages/custom-design/custom-design.compo
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { HowWeWorkComponent } from './pages/how-we-work/how-we-work.component';
+import { LegalComponent } from './pages/legal/legal.component';
+import { LicensingComponent } from './pages/licensing/licensing.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,5 +60,13 @@ export const routes: Routes = [
   {
     path: 'how-we-print',
     component: HowWeWorkComponent,
+  },
+  {
+    path: 'legal',
+    component: LegalComponent,
+  },
+  {
+    path: 'licensing',
+    component: LicensingComponent,
   },
 ];

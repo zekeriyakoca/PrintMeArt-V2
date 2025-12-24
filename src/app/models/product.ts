@@ -34,6 +34,8 @@ export interface ProductDto {
   discountAmount: number;
   isAvailable: boolean;
   metadata: ProductMetadata;
+  sourceUrl?: string;
+  creditLine?: string;
 }
 
 export interface ProductMetadata {

@@ -52,10 +52,42 @@ export class ProductDetailComponent
   }
 
   productAccordionData = computed(() => {
+    const sourceUrl = this.product().sourceUrl;
+    const creditLine = this.product().creditLine || '—';
+    
+    const rightsContent = `
+      <div class="space-y-4">
+        <div>
+          <span class="font-medium text-slate-700">License</span>
+          <p class="text-slate-600">Public Domain / CC0 (when available)</p>
+        </div>
+        <div>
+          <span class="font-medium text-slate-700">Source</span>
+          <p class="text-slate-600">We always link the original museum/collection page for full transparency.</p>
+          ${sourceUrl ? `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-cyan-600 hover:text-cyan-700 underline text-sm">View original source →</a>` : '<span class="text-slate-400 text-sm">Source link not available</span>'}
+        </div>
+        <div>
+          <span class="font-medium text-slate-700">Credit</span>
+          <p class="text-slate-600">${creditLine}</p>
+        </div>
+        <div class="pt-2 border-t border-slate-100">
+          <p class="text-slate-500 text-sm italic">Just to be clear: museums and collections don't sponsor us — we simply love great art and carefully curate public-domain pieces for printing.</p>
+        </div>
+        <div>
+          <span class="font-medium text-slate-700">Spotted something wrong?</span>
+          <p class="text-slate-600 text-sm">Tell us at <a href="mailto:support@printme.art" class="text-cyan-600 hover:text-cyan-700">support@printme.art</a> and we'll check it fast.</p>
+        </div>
+      </div>
+    `;
+    
     return [
       {
         name: 'Description',
         content: this.product().description || 'No description available.',
+      },
+      {
+        name: 'Rights & Source',
+        content: rightsContent,
       },
     ] as AccordionItem[];
   });

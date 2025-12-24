@@ -32,7 +32,7 @@ const DEFAULT_DATA: AccordionItem[] = [
     </div>`,
   },
   {
-    name: 'Sympathize with Our Service',
+    name: 'Customer Care',
     content:
       'We are a family-run business in Den Bosch, dedicated to bringing you the best in art prints. Each piece is printed and framed with love and care, ensuring that you receive a product that is not only beautiful but also crafted with attention to detail. Visit us, enjoy a coffee, and see where the magic happens.',
   },
