@@ -10,18 +10,24 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class OrderSummaryComponent {
   cartItems = input<CartItemDto[]>([]);
-  shippingFee = signal(5);
+  shippingFee = computed(() => (this.itemsTotal() >= 50 ? 0 : 5.99));
+  taxRate = 0.08;
 
-  totalPrice = computed(() => {
-    return this.cartItems()?.reduce(
+  itemsTotal = computed(() => {
+    const items = this.cartItems() ?? [];
+    return items.reduce(
       (total, item) => total + item.unitPrice * item.quantity,
-      0
+      0,
     );
   });
 
-  taxAmount = computed(() => this.totalPrice() * 0.08);
+  // Vergi zaten fiyatın içindeyse: içindeki vergi payı
+  taxAmount = computed(
+    () => (this.itemsTotal() * this.taxRate) / (1 + this.taxRate),
+  );
 
+  // Toplam (vergi dahil) + kargo  (tax'i tekrar ekleme!)
   totalPriceWithTax = computed(
-    () => this.totalPrice() + this.taxAmount() + this.shippingFee()
+    () => this.itemsTotal() + (this.shippingFee() ?? 0),
   );
 }

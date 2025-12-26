@@ -1,5 +1,5 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
@@ -17,6 +17,7 @@ import { RelatedProductsComponent } from '../../components/related-products/rela
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
     ImageGallery1Component,
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
@@ -54,7 +55,7 @@ export class ProductDetailComponent
   productAccordionData = computed(() => {
     const sourceUrl = this.product().sourceUrl;
     const creditLine = this.product().creditLine || '—';
-    
+
     const rightsContent = `
       <div class="space-y-4">
         <div>
@@ -75,11 +76,11 @@ export class ProductDetailComponent
         </div>
         <div>
           <span class="font-medium text-slate-700">Spotted something wrong?</span>
-          <p class="text-slate-600 text-sm">Tell us at <a href="mailto:support@printme.art" class="text-cyan-600 hover:text-cyan-700">support@printme.art</a> and we'll check it fast.</p>
+          <p class="text-slate-600 text-sm">Tell us at <a href="mailto:support@printmeart.nl" class="text-cyan-600 hover:text-cyan-700">support@printmeart.nl</a> and we'll check it fast.</p>
         </div>
       </div>
     `;
-    
+
     return [
       {
         name: 'Description',

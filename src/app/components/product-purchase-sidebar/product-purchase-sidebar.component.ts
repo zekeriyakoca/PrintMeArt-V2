@@ -58,12 +58,12 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return false;
     }
 
-    let isFrameSelected =
-      this.product().optionGroups.filter((group) =>
-        group.name.toLowerCase().includes('frame'),
-      )[0].selectedOptionId !== undefined;
+    const frameGroup = this.product().optionGroups.find((group) =>
+      group.name.toLowerCase().includes('frame'),
+    );
+    const isFrameSelected = frameGroup?.selectedOptionId !== undefined;
 
-    let isAllSelected = isFrameSelected && this.selectedSize();
+    const isAllSelected = isFrameSelected && this.selectedSize();
 
     if (isAllSelected) {
       this.calculatePrice();
@@ -130,7 +130,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       this.product().id,
       this.variantId,
       this.product().name,
-      this.product().cheapestPrice,
       this.calculatedPrice(),
       this.quantity(),
       this.product().images[0].thumb,

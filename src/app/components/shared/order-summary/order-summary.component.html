@@ -3,8 +3,8 @@
 
   <div class="summary-rows">
     <div class="summary-row">
-      <span class="row-label">Subtotal</span>
-      <span class="row-value">{{ totalPrice() | currency:'EUR' }}</span>
+      <span class="row-label">Subtotal (incl. tax)</span>
+      <span class="row-value">{{ itemsTotal() | currency:'EUR' }}</span>
     </div>
     <div class="summary-row">
       <span class="row-label">Shipping</span>

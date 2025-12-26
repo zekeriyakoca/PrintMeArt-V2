@@ -48,7 +48,6 @@ export class CartService {
     productId: number,
     variantId: number,
     productName: string,
-    cheapestPrice: number,
     calculatedPrice: number,
     quantity: number,
     pictureUrl: string,

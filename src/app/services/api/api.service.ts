@@ -20,6 +20,7 @@ export class ApiService {
   private readonly CATALOG_API_URL = environment.serviceUrls['catalog-api'];
   private readonly PRICING_API_URL = environment.serviceUrls['pricing-api'];
   private readonly ORDERING_API_URL = environment.serviceUrls['ordering-api'];
+  private readonly BFF_URL = environment.serviceUrls['bff'];
   private categoriesCache$?: Observable<CategoryDto[] | undefined>;
 
   constructor(
@@ -83,7 +84,7 @@ export class ApiService {
       return of({});
     }
     return this._httpClient.post<any>(
-      `${this.ORDERING_API_URL}/bff/v1/ordering/draft-order`,
+      `${this.BFF_URL}/bff/v1/ordering/draft-order`,
       {},
     );
   }
@@ -93,7 +94,7 @@ export class ApiService {
       return of({});
     }
     return this._httpClient.post<any>(
-      `${this.ORDERING_API_URL}/bff/v1/ordering/order`,
+      `${this.BFF_URL}/bff/v1/ordering/order`,
       userInfo,
     );
   }

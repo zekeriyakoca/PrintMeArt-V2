@@ -27,9 +27,10 @@ export class FooterComponent {
       title: 'Legal',
       menus: [
         { href: '/legal#shipping', label: 'Shipping' },
-        { href: '/legal#returns', label: 'Returns & refunds' },
-        { href: '/legal#terms', label: 'Terms of service' },
-        { href: '/legal#privacy', label: 'Privacy policy' },
+        { href: '/legal#returns', label: 'Returns' },
+        { href: '/legal#terms', label: 'Terms' },
+        { href: '/legal#complaints', label: 'Complaints' },
+        { href: '/legal#privacy', label: 'Privacy' },
       ],
     },
     {
