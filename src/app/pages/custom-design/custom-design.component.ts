@@ -1,6 +1,6 @@
 import { ApiService } from './../../services/api/api.service';
 import { Component, signal, computed, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { ProductDto } from '../../models/product';
@@ -20,13 +20,12 @@ export interface DesignSize {
   selector: 'app-custom-design',
   standalone: true,
   imports: [
-    CommonModule,
     ProductPurchaseSidebarComponent,
     CustomDesignUploadComponent,
     CustomDesignPreviewComponent,
     CustomDesignCtaComponent,
-    CustomDesignHowItWorksComponent,
-  ],
+    CustomDesignHowItWorksComponent
+],
   templateUrl: './custom-design.component.html',
   styleUrl: './custom-design.component.scss',
 })

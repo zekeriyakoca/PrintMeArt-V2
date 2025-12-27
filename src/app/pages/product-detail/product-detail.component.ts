@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
-import { CommonModule } from '@angular/common';
+
 import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { AccordionInfoComponent } from '../../components/accordion-info/accordion-info.component';
@@ -16,14 +16,13 @@ import { RelatedProductsComponent } from '../../components/related-products/rela
   selector: 'app-product-detail',
   standalone: true,
   imports: [
-    CommonModule,
     RouterLink,
     ImageGallery1Component,
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
     PolicyComponent,
-    RelatedProductsComponent,
-  ],
+    RelatedProductsComponent
+],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })

@@ -1,5 +1,5 @@
 import { Component, signal, HostListener, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   LanguageService,
   Language,
@@ -9,7 +9,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-language-dropdown',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './language-dropdown.component.html',
   styleUrl: './language-dropdown.component.scss',
 })

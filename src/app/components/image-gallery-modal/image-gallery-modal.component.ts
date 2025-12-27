@@ -6,7 +6,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconComponent } from '../shared/icon/icon.component';
 
 export interface GalleryImage {
@@ -17,7 +17,7 @@ export interface GalleryImage {
 @Component({
   selector: 'app-image-gallery-modal',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './image-gallery-modal.component.html',
   styleUrls: ['./image-gallery-modal.component.scss'],
 })

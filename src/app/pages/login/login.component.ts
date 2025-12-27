@@ -1,6 +1,6 @@
 import { Component, DestroyRef, NgZone, inject } from '@angular/core';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { CommonModule } from '@angular/common';
+
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import {
   AuthenticationService,
@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, GoogleSigninButtonModule],
+  imports: [GoogleSigninButtonModule],
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

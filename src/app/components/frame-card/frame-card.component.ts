@@ -1,5 +1,5 @@
 import { Component, input, output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconComponent } from '../shared/icon/icon.component';
 
 export interface Frame {
@@ -14,7 +14,7 @@ export interface Frame {
 @Component({
   selector: 'app-frame-card',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './frame-card.component.html',
   styleUrl: './frame-card.component.scss',
 })

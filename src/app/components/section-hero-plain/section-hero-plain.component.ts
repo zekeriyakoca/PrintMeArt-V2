@@ -1,5 +1,5 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconComponent } from '../shared/icon/icon.component';
 
 export interface CategoryCard {
@@ -11,7 +11,7 @@ export interface CategoryCard {
 @Component({
   selector: 'app-section-hero-plain',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './section-hero-plain.component.html',
   styleUrls: ['./section-hero-plain.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

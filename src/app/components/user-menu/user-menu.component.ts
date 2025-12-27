@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { IconComponent } from '../shared/icon/icon.component';
@@ -15,7 +15,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-user-menu',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent],
   templateUrl: './user-menu.component.html',
 })
 export class UserMenuComponent {

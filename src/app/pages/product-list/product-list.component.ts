@@ -19,7 +19,7 @@ import {
 import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
@@ -28,11 +28,10 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
   selector: 'app-product-list',
   imports: [
     ProductCardComponent,
-    CommonModule,
     FormsModule,
     IconComponent,
-    PaginationComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })

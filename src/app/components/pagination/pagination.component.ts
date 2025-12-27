@@ -7,11 +7,11 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-pagination',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
