@@ -2,13 +2,25 @@
   <div class="form-row">
     <div class="form-group">
       <label for="first_name" class="form-label">First name</label>
-      <input [(ngModel)]="userDetails().firstName" type="text" id="first_name" class="form-input" placeholder="John"
-        required />
+      <input [field]="userForm.firstName" type="text" id="first_name" class="form-input" placeholder="John" />
+      @if (userForm.firstName().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.firstName().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
     <div class="form-group">
       <label for="last_name" class="form-label">Last name</label>
-      <input [(ngModel)]="userDetails().lastName" type="text" id="last_name" class="form-input" placeholder="Doe"
-        required />
+      <input [field]="userForm.lastName" type="text" id="last_name" class="form-input" placeholder="Doe" />
+      @if (userForm.lastName().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.lastName().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
   </div>
 
@@ -16,9 +28,17 @@
     <label for="email" class="form-label">Email address</label>
     <div class="input-with-icon">
       <app-icon iconName="email" class="input-icon w-[18px] h-[18px]" />
-      <input [(ngModel)]="userDetails().email" type="email" id="email" class="form-input with-icon"
-        placeholder="john.doe@company.com" required />
+      <input [field]="userForm.email" type="email" id="email" class="form-input with-icon"
+        placeholder="john.doe@company.com" />
     </div>
+
+    @if (userForm.email().touched() && userForm.email().invalid()) {
+    <ul class="error-list">
+      @for (error of userForm.email().errors(); track error) {
+      <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+      }
+    </ul>
+    }
   </div>
 
   <div class="form-divider">
@@ -28,26 +48,51 @@
   <div class="form-row">
     <div class="form-group">
       <label for="city" class="form-label">City</label>
-      <input [(ngModel)]="userDetails().city" type="text" id="city" class="form-input" placeholder="Amsterdam"
-        required />
+      <input [field]="userForm.city" type="text" id="city" class="form-input" placeholder="Amsterdam" />
+      @if (userForm.city().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.city().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
+
     <div class="form-group">
       <label for="country" class="form-label">Country</label>
-      <input [(ngModel)]="userDetails().country" type="text" id="country" class="form-input" placeholder="Netherlands"
-        required />
+      <input [field]="userForm.country" type="text" id="country" class="form-input" placeholder="Netherlands" />
+      @if (userForm.country().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.country().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group small">
       <label for="postal-code" class="form-label">Postal code</label>
-      <input [(ngModel)]="userDetails().postalCode" type="text" id="postal-code" class="form-input"
-        placeholder="5689 HH" required />
+      <input [field]="userForm.postalCode" type="text" id="postal-code" class="form-input" placeholder="5689 HH" />
+      @if (userForm.postalCode().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.postalCode().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
     <div class="form-group small">
       <label for="house-number" class="form-label">House number</label>
-      <input [(ngModel)]="userDetails().houseNumber" type="text" id="house-number" class="form-input" placeholder="90"
-        required />
+      <input [field]="userForm.houseNumber" type="text" id="house-number" class="form-input" placeholder="90" />
+      @if (userForm.houseNumber().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.houseNumber().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        }
+      </ul>
+      }
     </div>
   </div>
 
@@ -56,7 +101,7 @@
       Address details
       <span class="label-optional">(Optional)</span>
     </label>
-    <input [(ngModel)]="userDetails().addressDetails" type="text" id="address-details" class="form-input"
+    <input [field]="userForm.addressDetails" type="text" id="address-details" class="form-input"
       placeholder="Apartment, suite, floor, etc." />
   </div>
 </div>

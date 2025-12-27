@@ -12,8 +12,8 @@ import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
 import { ApiService } from '../../services/api/api.service';
-import { first } from 'rxjs';
 import { IconComponent } from '../../components/shared/icon/icon.component';
+import { CheckoutUserInfo } from '../../models/checkout-user-info';
 
 @Component({
   selector: 'app-checkout',
@@ -32,15 +32,15 @@ export class CheckoutComponent extends BasePageComponent {
   @Input() @HostBinding('class') class: string = '';
   cartItems = signal<CartItemDto[]>([]);
 
-  userDetails: any = {
+  userDetails: CheckoutUserInfo = {
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: '',
-    addressDetails: '',
     city: '',
-    postalCode: '',
     country: '',
+    postalCode: '',
+    houseNumber: '',
+    addressDetails: '',
   };
 
   constructor(
