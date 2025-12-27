@@ -7,7 +7,8 @@
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:StoreFront": "node dist/store-front/server/server.mjs"
+    "serve:ssr:StoreFront": "node dist/store-front/server/server.mjs",
+    "postinstall": "node scripts/patch-angular-build.js"
   },
   "private": true,
   "dependencies": {
@@ -28,7 +29,7 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^21.0.4",
+    "@angular/build": "^21.0.4",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.0.6",
     "@tailwindcss/postcss": "^4.0.6",
@@ -42,7 +43,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.5.2",
+    "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.0.6",
     "typescript": "~5.9.3"

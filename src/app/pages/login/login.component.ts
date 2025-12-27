@@ -32,7 +32,10 @@ export class LoginComponent {
         if (!user) return;
 
         this.ngZone.run(() => {
-          this.authenticationService.setToken(user.idToken);
+          const idToken = user.idToken ?? '';
+          if (!idToken) return;
+
+          this.authenticationService.setToken(idToken);
           this.authenticationService.setCurrentUser({
             id: user.id,
             name: user.name,
