@@ -6,14 +6,14 @@ import {
   signal,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconComponent } from '../icon/icon.component';
 import { CategoryDto } from '../../models/category';
 
 @Component({
   selector: 'app-category-grid',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './category-grid.component.html',
   styleUrls: ['./category-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

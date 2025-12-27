@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -12,7 +12,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-custom-design-upload',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './custom-design-upload.component.html',
   styleUrl: './custom-design-upload.component.scss',
 })

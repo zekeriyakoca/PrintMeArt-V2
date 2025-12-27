@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { FrameCardComponent } from '../../components/frame-card/frame-card.component';
 import {
@@ -21,12 +21,11 @@ export interface Frame {
   selector: 'app-frames-catalog',
   standalone: true,
   imports: [
-    CommonModule,
     RouterLink,
     FrameCardComponent,
     ImageGalleryModalComponent,
-    SectionTitleComponent,
-  ],
+    SectionTitleComponent
+],
   templateUrl: './frames-catalog.component.html',
   styleUrl: './frames-catalog.component.scss',
 })

@@ -1,5 +1,5 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -9,7 +9,7 @@ import { IconComponent } from '../../components/shared/icon/icon.component';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
+  imports: [FormsModule, IconComponent],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconComponent } from '../shared/icon/icon.component';
 
 interface PolicyFeature {
@@ -39,7 +39,7 @@ const A_FEATURES: PolicyFeature[] = [
 @Component({
   selector: 'app-policy',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './policy.component.html',
   styleUrls: ['./policy.component.scss'],
 })

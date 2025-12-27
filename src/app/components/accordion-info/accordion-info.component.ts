@@ -1,5 +1,5 @@
 import { Component, input, OnChanges, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   trigger,
   state,
@@ -68,7 +68,7 @@ const DEFAULT_DATA: AccordionItem[] = [
 @Component({
   selector: 'app-accordion-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './accordion-info.component.html',
   styleUrls: ['./accordion-info.component.scss'],
   animations: [

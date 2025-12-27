@@ -4,7 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { CartItemDto } from '../../models/cart-item';
@@ -13,7 +13,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-cart-sidebar',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [IconComponent],
   templateUrl: './cart-sidebar.component.html',
   styleUrl: './cart-sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
