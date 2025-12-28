@@ -35,7 +35,7 @@
               <p class="section-subtitle">We'll use this to send your order confirmation</p>
             </div>
           </div>
-          <app-checkout-user-info [(userDetails)]="userDetails" />
+          <app-checkout-user-info [(userDetails)]="userDetails" [(isFormValid)]="isFormValid" />
         </div>
       </div>
 
@@ -44,7 +44,7 @@
         <div class="summary-sticky">
           <app-order-summary [cartItems]="cartItems()">
             <order-button>
-              <button class="confirm-btn" (click)="confirmOrder()">
+              <button class="confirm-btn" (click)="confirmOrder()" [disabled]="!isFormValid()">
                 <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
                 Confirm Order
                 <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>

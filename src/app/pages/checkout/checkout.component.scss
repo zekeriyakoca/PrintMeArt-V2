@@ -232,17 +232,25 @@
   cursor: pointer;
   transition: all 0.2s ease;
 
-  &:hover {
+  &:not(:disabled):hover {
     background: #1e293b;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  }
+
+  &:disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   svg:last-child {
     transition: transform 0.2s ease;
   }
 
-  &:hover svg:last-child {
+  &:not(:disabled):hover svg:last-child {
     transform: translateX(3px);
   }
 }

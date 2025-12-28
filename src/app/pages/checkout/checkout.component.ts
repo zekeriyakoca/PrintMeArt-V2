@@ -31,6 +31,7 @@ import { CheckoutUserInfo } from '../../models/checkout-user-info';
 export class CheckoutComponent extends BasePageComponent {
   @Input() @HostBinding('class') class: string = '';
   cartItems = signal<CartItemDto[]>([]);
+  isFormValid = signal<boolean>(false);
 
   userDetails: CheckoutUserInfo = {
     firstName: '',

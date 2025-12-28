@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component, effect, model, output } from '@angular/core';
 import { Field, form, required, email } from '@angular/forms/signals';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
@@ -11,6 +11,15 @@ import { CheckoutUserInfo } from '../../models/checkout-user-info';
   styleUrl: './checkout-user-info.component.scss',
 })
 export class CheckoutUserInfoComponent {
+  readonly isFormValid = model<boolean>();
+
+  constructor() {
+    effect(() => {
+      const isValid = this.userForm().valid();
+      this.isFormValid.set(isValid);
+    });
+  }
+
   userDetails = model<CheckoutUserInfo>({
     firstName: '',
     lastName: '',
