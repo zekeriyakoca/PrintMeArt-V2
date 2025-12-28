@@ -77,8 +77,7 @@ export class CheckoutComponent extends BasePageComponent {
     const orderData = this.prepareOrderData();
     this.apiService.submitOrder(orderData).subscribe(() => {
       console.log('Order confirmed');
+      this.router.navigate(['/order-confirmation']);
     });
-
-    this.router.navigate(['/home']);
   }
 }

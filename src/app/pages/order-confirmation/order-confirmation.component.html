@@ -1,0 +1,54 @@
+<div class="confirmation-page">
+  <div class="confirmation-container">
+    <!-- Header -->
+    <header class="confirmation-header">
+      <h1 class="page-title">Order Confirmed</h1>
+      <a routerLink="/" class="continue-link">
+        <span>Back to shop</span>
+        <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
+      </a>
+    </header>
+
+    <!-- Success Card -->
+    <div class="success-card">
+      <div class="success-icon">
+        <app-icon iconName="check" class="w-8 h-8"></app-icon>
+      </div>
+      <h2 class="success-title">Thank you for your order!</h2>
+      <p class="order-number">Order #{{orderNumber}}</p>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">
+          <app-icon iconName="email" class="w-5 h-5"></app-icon>
+        </div>
+        <div class="info-content">
+          <h3>Confirmation Sent</h3>
+          <p>Check your email for order details</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <app-icon iconName="truck" class="w-5 h-5"></app-icon>
+        </div>
+        <div class="info-content">
+          <h3>Shipping Updates</h3>
+          <p>We'll notify you when it ships</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <a routerLink="/products" class="primary-btn">
+        <span>Continue Shopping</span>
+        <app-icon iconName="arrow-right" class="w-[18px] h-[18px]"></app-icon>
+      </a>
+      <a routerLink="/orders" class="secondary-link">
+        View Order History
+      </a>
+    </div>
+  </div>
+</div>

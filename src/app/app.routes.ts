@@ -13,6 +13,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { HowWeWorkComponent } from './pages/how-we-work/how-we-work.component';
 import { LegalComponent } from './pages/legal/legal.component';
 import { LicensingComponent } from './pages/licensing/licensing.component';
+import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -68,5 +69,9 @@ export const routes: Routes = [
   {
     path: 'licensing',
     component: LicensingComponent,
+  },
+  {
+    path: 'order-confirmation',
+    component: OrderConfirmationComponent,
   },
 ];
