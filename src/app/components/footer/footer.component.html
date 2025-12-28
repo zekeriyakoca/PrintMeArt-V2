@@ -14,7 +14,7 @@
         {{ menu.title }}
       </h2>
       <ul class="mt-5 space-y-4">
-        @for (item of menu.menus; track item.href) {
+        @for (item of menu.menus; track item.label) {
         <li>
           <a class="text-neutral-6000 dark:text-neutral-300 hover:text-black dark:hover:text-white" [href]="item.href"
             rel="noopener noreferrer">
