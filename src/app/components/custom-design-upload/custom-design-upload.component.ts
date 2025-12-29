@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -8,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { IconComponent } from '../shared/icon/icon.component';
+import { AppInsightsService } from '../../services/telemetry/app-insights.service';
 
 @Component({
   selector: 'app-custom-design-upload',
@@ -23,6 +23,8 @@ export class CustomDesignUploadComponent {
 
   selectedFile = signal<File | null>(null);
   isDragging = signal(false);
+
+  constructor(private telemetry: AppInsightsService) {}
 
   openFileDialog(): void {
     this.fileInput?.nativeElement?.click();
@@ -44,6 +46,11 @@ export class CustomDesignUploadComponent {
       const file = files[0];
       if (file.type.startsWith('image/')) {
         this.processFile(file);
+      } else {
+        this.telemetry.trackEvent('custom_upload_rejected', {
+          reason: 'not_image',
+          mimeType: file.type,
+        });
       }
     }
   }
@@ -68,9 +75,19 @@ export class CustomDesignUploadComponent {
   private processFile(file: File): void {
     // Validate file size (50MB max)
     if (file.size > 50 * 1024 * 1024) {
+      this.telemetry.trackEvent('custom_upload_rejected', {
+        reason: 'too_large',
+        sizeMb: Math.round((file.size / (1024 * 1024)) * 100) / 100,
+        mimeType: file.type,
+      });
       alert('File size must be less than 50MB');
       return;
     }
+
+    this.telemetry.trackEvent('custom_upload_selected', {
+      sizeMb: Math.round((file.size / (1024 * 1024)) * 100) / 100,
+      mimeType: file.type,
+    });
 
     this.selectedFile.set(file);
 

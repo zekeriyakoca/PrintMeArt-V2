@@ -4,6 +4,7 @@ import { map, Observable, tap } from 'rxjs';
 import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { AppInsightsService } from '../telemetry/app-insights.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class CartService {
 
   constructor(
     private _httpClient: HttpClient,
+    private telemetry: AppInsightsService,
     @Inject(PLATFORM_ID) private platformId: string,
   ) {}
 
@@ -72,6 +74,15 @@ export class CartService {
           this.summaryOptions(newItem.selectedOptions),
     );
 
+    this.telemetry.trackEvent('cart_add_item', {
+      productId,
+      variantId,
+      quantity,
+      unitPrice: calculatedPrice,
+      mergedIntoExisting: existingItemIndex >= 0,
+      selectedOptionsCount: selectedOptions?.length ?? 0,
+    });
+
     if (existingItemIndex >= 0) {
       this.cart()[existingItemIndex].quantity += newItem.quantity;
     } else {
@@ -84,7 +95,13 @@ export class CartService {
 
     this.updateCartOnBackend(this.cart()).subscribe({
       next: () => console.log('Product added to cart successfully'),
-      error: (error) => console.error('Error adding product to cart:', error),
+      error: (error) => {
+        this.telemetry.trackException(error, {
+          operation: 'updateCartOnBackend',
+          action: 'addItemToCart',
+        });
+        console.error('Error adding product to cart:', error);
+      },
     });
   }
 
@@ -113,14 +130,27 @@ export class CartService {
   }
 
   removeItemFromCart(itemId: any): void {
+    const item = this.cart().find((x) => x.id === itemId);
     const updatedCart = this.cart().filter((item) => item.id !== itemId);
+
+    this.telemetry.trackEvent('cart_remove_item', {
+      productId: item?.productId,
+      variantId: item?.variantId,
+      quantity: item?.quantity,
+      unitPrice: item?.unitPrice,
+    });
 
     this.cart.set(updatedCart);
 
     this.updateCartOnBackend(updatedCart).subscribe({
       next: () => console.log('Product removed from cart successfully'),
-      error: (error) =>
-        console.error('Error removing product from cart:', error),
+      error: (error) => {
+        this.telemetry.trackException(error, {
+          operation: 'updateCartOnBackend',
+          action: 'removeItemFromCart',
+        });
+        console.error('Error removing product from cart:', error);
+      },
     });
   }
 }

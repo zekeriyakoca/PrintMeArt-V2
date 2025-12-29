@@ -13,6 +13,7 @@ import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
 import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
+import { AppInsightsService } from '../../services/telemetry/app-insights.service';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -42,6 +43,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   constructor(
     private apiService: ApiService,
     private cartService: CartService,
+    private telemetry: AppInsightsService,
   ) {
     super();
   }
@@ -114,8 +116,19 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         next: (response) => {
           this.calculatedPrice.set(response.price);
           this.variantId = response.variantId;
+
+          this.telemetry.trackEvent('price_calculated', {
+            productId: this.product().id,
+            variantId: response.variantId,
+            price: response.price,
+            selectedOptionsCount: selectedOptions?.length ?? 0,
+          });
         },
         error: (error) => {
+          this.telemetry.trackException(error, {
+            operation: 'calculatePrice',
+            productId: this.product().id,
+          });
           console.error('Error fetching calculated price:', error);
         },
       });
@@ -123,6 +136,10 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   addToCart() {
     if (!this.hasAllOptionsSelected()) {
+      this.telemetry.trackEvent('add_to_cart_blocked', {
+        productId: this.product().id,
+        reason: 'missing_options',
+      });
       return;
     }
 

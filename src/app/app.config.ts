@@ -1,5 +1,9 @@
 import { provideRouter } from '@angular/router';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   provideHttpClient,
   withFetch,
@@ -12,10 +16,15 @@ import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
+import { AppInsightsErrorHandler } from './services/telemetry/app-insights.error-handler';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    {
+      provide: ErrorHandler,
+      useClass: AppInsightsErrorHandler,
+    },
     provideHttpClient(
       withFetch(),
       withInterceptors([AuthenticationInterceptor]),

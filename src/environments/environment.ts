@@ -1,6 +1,9 @@
 export const environment = {
   production: false,
   apiUrl: 'BACKEND BASE URL COMES HERE',
+  // Azure Application Insights (Browser SDK)
+  // Leave empty to disable telemetry locally.
+  appInsightsConnectionString: 'InstrumentationKey=***',
   // serviceUrls: {
   //   'catalog-api': 'http://localhost:5001',
   //   'pricing-api': 'http://localhost:5002',

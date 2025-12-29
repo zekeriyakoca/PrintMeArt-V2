@@ -7,6 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CartAddedModalComponent } from './components/cart-added-modal/cart-added-modal.component';
 import { CartSidebarComponent } from './components/cart-sidebar/cart-sidebar.component';
 import { CartService } from './services/cart/cart.service';
+import { AppInsightsService } from './services/telemetry/app-insights.service';
 
 @Component({
   selector: 'app-root',
@@ -27,9 +28,11 @@ export class AppComponent {
   constructor(
     private cartService: CartService,
     private router: Router,
+    private telemetry: AppInsightsService,
   ) {}
 
   ngOnInit() {
+    this.telemetry.init();
     this.cartService.fetchCartItems();
     this.setupScrollToTop();
   }
