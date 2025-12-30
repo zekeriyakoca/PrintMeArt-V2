@@ -8,6 +8,8 @@ import { CartAddedModalComponent } from './components/cart-added-modal/cart-adde
 import { CartSidebarComponent } from './components/cart-sidebar/cart-sidebar.component';
 import { CartService } from './services/cart/cart.service';
 import { AppInsightsService } from './services/telemetry/app-insights.service';
+import { GoogleAnalyticsService } from './services/telemetry/google-analytics.service';
+import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,7 @@ import { AppInsightsService } from './services/telemetry/app-insights.service';
     FooterComponent,
     CartAddedModalComponent,
     CartSidebarComponent,
+    CookieConsentComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -29,10 +32,12 @@ export class AppComponent {
     private cartService: CartService,
     private router: Router,
     private telemetry: AppInsightsService,
+    private googleAnalytics: GoogleAnalyticsService,
   ) {}
 
   ngOnInit() {
     this.telemetry.init();
+    this.googleAnalytics.init();
     this.cartService.fetchCartItems();
     this.setupScrollToTop();
   }

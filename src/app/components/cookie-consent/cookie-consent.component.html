@@ -1,0 +1,20 @@
+<!-- Cookie Consent Banner -->
+<div *ngIf="isVisible"
+  class="fixed bottom-0 inset-x-0 z-50 bg-white border-t border-neutral-200 py-4 px-4 sm:px-6 lg:px-8">
+  <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-neutral-600 text-center sm:text-left">
+      We use cookies to improve your experience.
+      <a routerLink="/legal" fragment="privacy" class="underline hover:text-black">Learn more</a>
+    </p>
+    <div class="flex items-center gap-3">
+      <button (click)="reject()" type="button"
+        class="py-2.5 px-5 text-sm font-medium text-neutral-700 border border-neutral-200 rounded-full hover:bg-neutral-50 transition-colors">
+        Reject
+      </button>
+      <button (click)="accept()" type="button"
+        class="py-2.5 px-5 text-sm font-medium text-slate-50 bg-slate-900 hover:bg-slate-800 rounded-full transition-colors">
+        Accept
+      </button>
+    </div>
+  </div>
+</div>

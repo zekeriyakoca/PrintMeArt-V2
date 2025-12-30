@@ -7,6 +7,7 @@ import {
 } from '@microsoft/applicationinsights-web';
 import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
 import { environment } from '../../../environments/environment';
+import { CookieConsentService } from '../consent/cookie-consent.service';
 
 export type TelemetryProperties = Record<
   string,
@@ -20,10 +21,12 @@ export class AppInsightsService {
   private readonly angularPlugin = new AngularPlugin();
   private readonly appInsights?: ApplicationInsights;
   private initialized = false;
+  private initSubscribed = false;
 
   constructor(
     private readonly router: Router,
     @Inject(PLATFORM_ID) private readonly platformId: object,
+    private readonly cookieConsentService: CookieConsentService,
   ) {
     const connectionString = environment.appInsightsConnectionString;
     if (!connectionString) return;
@@ -50,18 +53,26 @@ export class AppInsightsService {
     if (!isPlatformBrowser(this.platformId)) return;
     if (!this.appInsights) return;
 
-    this.appInsights.loadAppInsights();
-    this.appInsights.trackPageView();
-    this.initialized = true;
+    if (this.initSubscribed) return;
+    this.initSubscribed = true;
+
+    this.cookieConsentService.consentStatus$.subscribe((status) => {
+      if (status !== 'granted') return;
+      if (this.initialized) return;
+
+      this.appInsights?.loadAppInsights();
+      this.appInsights?.trackPageView();
+      this.initialized = true;
+    });
   }
 
   trackEvent(name: string, properties?: TelemetryProperties): void {
-    if (!this.appInsights) return;
+    if (!this.initialized || !this.appInsights) return;
     this.appInsights.trackEvent({ name }, properties);
   }
 
   trackException(error: unknown, properties?: TelemetryProperties): void {
-    if (!this.appInsights) return;
+    if (!this.initialized || !this.appInsights) return;
 
     const exception =
       error instanceof Error
