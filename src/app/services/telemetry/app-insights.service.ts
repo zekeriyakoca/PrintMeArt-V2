@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ApplicationInsights,
@@ -19,17 +19,27 @@ export type TelemetryProperties = Record<
 })
 export class AppInsightsService {
   private readonly angularPlugin = new AngularPlugin();
-  private readonly appInsights?: ApplicationInsights;
+  private appInsights?: ApplicationInsights;
   private initialized = false;
   private initSubscribed = false;
 
   constructor(
-    private readonly router: Router,
+    private readonly injector: Injector,
     @Inject(PLATFORM_ID) private readonly platformId: object,
     private readonly cookieConsentService: CookieConsentService,
-  ) {
+  ) {}
+
+  init(): void {
+    if (this.initialized) return;
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const connectionString = environment.appInsightsConnectionString;
     if (!connectionString) return;
+
+    if (this.initSubscribed) return;
+    this.initSubscribed = true;
+
+    const router = this.injector.get(Router);
 
     this.appInsights = new ApplicationInsights({
       config: {
@@ -41,20 +51,11 @@ export class AppInsightsService {
         extensions: [this.angularPlugin],
         extensionConfig: {
           [this.angularPlugin.identifier]: {
-            router: this.router,
+            router: router,
           },
         },
       },
     });
-  }
-
-  init(): void {
-    if (this.initialized) return;
-    if (!isPlatformBrowser(this.platformId)) return;
-    if (!this.appInsights) return;
-
-    if (this.initSubscribed) return;
-    this.initSubscribed = true;
 
     this.cookieConsentService.consentStatus$.subscribe((status) => {
       if (status !== 'granted') return;
