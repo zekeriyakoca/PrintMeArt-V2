@@ -5,20 +5,6 @@ export const environment = {
   // Leave empty to disable telemetry locally.
   appInsightsConnectionString: 'InstrumentationKey=***',
   // serviceUrls: {
-  //   'catalog-api': 'http://localhost:5001',
-  //   'pricing-api': 'http://localhost:5002',
-  //   'basket-api': 'http://localhost:5003',
-  //   'ordering-api': 'http://localhost:5004',
-  //   bff: 'http://localhost:5010',
-  // },
-  // serviceUrls: {
-  //   'catalog-api': 'http://4.210.248.46:30001',
-  //   'basket-api': 'http://4.210.248.46:30003',
-  //   'ordering-api': 'http://4.210.248.46:30004',
-  //   'pricing-api': 'http://4.210.248.46:30002',
-  //   'bff': 'http://4.210.248.46:5010',
-  // },
-  // serviceUrls: {
   //   'catalog-api':
   //     'https://ecommbone-apim.azure-api.net/storefront/catalog-api',
   //   'basket-api': 'https://ecommbone-apim.azure-api.net/storefront/basket-api',
@@ -27,10 +13,10 @@ export const environment = {
   //   'ordering-api': 'http://4.210.248.46:30004',
   // },
   serviceUrls: {
-    'catalog-api': 'https://nest.lontray.shop/catalog-api',
-    'basket-api': 'https://nest.lontray.shop/basket-api',
-    'pricing-api': 'https://nest.lontray.shop/pricing-api',
-    'ordering-api': 'https://nest.lontray.shop/ordering-api',
-    bff: 'https://nest.lontray.shop/bff',
+    'catalog-api': 'https://lontray.art/catalog-api',
+    'basket-api': 'https://lontray.art/basket-api',
+    'pricing-api': 'https://lontray.art/pricing-api',
+    'ordering-api': 'https://lontray.art/ordering-api',
+    bff: 'https://lontray.art/bff',
   },
 };
