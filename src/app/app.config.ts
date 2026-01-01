@@ -11,6 +11,7 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
+  SOCIAL_AUTH_CONFIG,
 } from '@abacritt/angularx-social-login';
 
 export const appConfig: ApplicationConfig = {
@@ -22,9 +23,9 @@ export const appConfig: ApplicationConfig = {
     ),
     provideRouter(routes),
     {
-      provide: 'SocialAuthServiceConfig',
+      provide: SOCIAL_AUTH_CONFIG,
       useValue: {
-        autoLogin: false, // Set to true if you want the user to be logged in automatically
+        autoLogin: false,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
