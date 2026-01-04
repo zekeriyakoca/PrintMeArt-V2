@@ -1,4 +1,4 @@
-<div class="nc-SectionHeroPlain flex flex-col-reverse lg:flex-col relative overflow-hidden {{ className() }}">
+<div class="nc-SectionHeroPlain flex flex-col-reverse lg:flex-col relative overflow-hidden mt-16">
   <!-- BG -->
   <div class="absolute inset-0 bg-[#faf6ff]"></div>
 
@@ -7,21 +7,21 @@
       <!-- Left: Text & Button -->
       <div class="w-full lg:w-2/5 space-y-6 text-center lg:text-left">
         <span class="block text-base md:text-[1.20rem] font-medium" style="color: #db2877;">
-          {{ subHeading() }}
+          Giclée print on fine-art paper — fast delivery in NL
         </span>
         <h2 class="font-semibold text-4xl md:text-3xl xl:text-[2.4rem] !leading-[114%] text-slate-900">
-          {{ heading() }}
+          Museum-Quality Art Prints — Priced Fairly
         </h2>
-        <a [href]="btnLink()"
+        <a href="/search"
           class="inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base font-medium">
-          <span>{{ btnText() }}</span>
+          <span>Explore Collection</span>
           <app-icon iconName="search" class="w-5 h-5 ms-2.5"></app-icon>
         </a>
       </div>
 
       <!-- Right: Three Category Cards - Staggered Layout -->
       <div class="hero-cards">
-        @for (cat of categories(); track cat.title; let i = $index) {
+        @for (cat of categories; track cat.title; let i = $index) {
         <a [href]="cat.link" class="hero-card" [attr.data-index]="i">
           <div class="card-image">
             <img [src]="cat.image" [alt]="cat.title" />
