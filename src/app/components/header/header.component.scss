@@ -6,6 +6,17 @@
   transition: color 0.3s;
 }
 
+.ttnc-logo img {
+  height: 20px;
+  margin-left: 40px;
+}
+
+@media (min-width: 640px) {
+  .ttnc-logo img {
+    height: 36px;
+  }
+}
+
 .nc-Navigation {
   .menu-item {
     a {
@@ -97,19 +108,6 @@ button:hover svg {
 .mobile-menu::-webkit-scrollbar-thumb {
   background: #d1d5db;
   border-radius: 2px;
-}
-
-// Responsive adjustments
-@media (max-width: 640px) {
-  .ttnc-logo img {
-    height: 2rem;
-  }
-}
-
-@media (min-width: 640px) {
-  .ttnc-logo img {
-    height: 2.5rem;
-  }
 }
 
 .container {

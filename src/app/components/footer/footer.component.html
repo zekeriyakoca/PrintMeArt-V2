@@ -17,7 +17,7 @@
       <ul class="mt-4 sm:mt-5 space-y-3">
         @for (item of menu.menus; track item.label) {
         <li>
-          <a class="inline-flex min-h-[44px] items-center text-neutral-6000 hover:text-black" [href]="item.href"
+          <a class="inline-flex items-center text-neutral-6000 hover:text-black" [href]="item.href"
             rel="noopener noreferrer">
             {{ item.label }}
           </a>
