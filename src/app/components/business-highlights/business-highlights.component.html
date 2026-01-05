@@ -1,10 +1,10 @@
-<section class="py-12">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex flex-col md:flex-row md:items-stretch md:justify-between gap-8 md:gap-12">
+<section class="py-12 ">
+  <div class="max-w-6xl mx-auto px-4 flex">
+    <div class="flex flex-col items-center md:flex-row md:items-stretch md:justify-between gap-2 md:gap-12">
       @for (item of highlights; track item.title; let last = $last) {
       <a [routerLink]="item.link"
         class="group relative flex-1 p-6 rounded-lg hover:bg-slate-50/80 transition-colors duration-200">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 justify-center">
           <div [class]="'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-200 ' +
               (item.color === 'violet' ? 'bg-[#faf6ff] text-[#4025b8] group-hover:bg-[#f3ecff]' :
                'bg-cyan-50 text-cyan-600 group-hover:bg-cyan-100')">

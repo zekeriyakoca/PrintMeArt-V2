@@ -53,6 +53,11 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 p {
   letter-spacing: 0.6px;
   line-height: 29px;

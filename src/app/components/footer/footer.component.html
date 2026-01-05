@@ -1,22 +1,23 @@
-<div class="nc-Footer relative py-20 lg:pt-28 lg:pb-24 border-t border-neutral-200">
-  <div class="container grid grid-cols-2 gap-y-10 gap-x-8 md:grid-cols-4 lg:grid-cols-5 m-auto">
+<div class="nc-Footer relative border-t border-neutral-200 py-14 sm:py-16 px-12 lg:pt-28 lg:pb-24">
+  <div
+    class="container m-auto px-4 sm:px-6 lg:px-0 grid grid-cols-1 gap-y-10 gap-x-3 sm:gap-x-4 md:gap-x-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
     <div class="col-span-2 md:col-span-4 lg:col-span-1">
       <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="Logo"
-        class="max-h-16 w-auto" />
-      <div class="mt-5 border-l-2 border-[#a7bae9] pl-3">
+        class="max-h-12 sm:max-h-14 w-auto" />
+      <div class="mt-4 sm:mt-5 border-l-2 border-[#a7bae9] pl-3">
         <p class="text-xs uppercase tracking-wider text-slate-400">Family-Owned Studio</p>
         <p class="text-sm font-medium text-slate-700">Den Bosch, Netherlands</p>
       </div>
     </div>
     @for (menu of widgetMenus; track menu.id) {
     <div class="text-sm">
-      <h2 class="font-semibold text-neutral-700 dark:text-neutral-200">
+      <h2 class="text-sm font-semibold text-neutral-700">
         {{ menu.title }}
       </h2>
-      <ul class="mt-5 space-y-4">
+      <ul class="mt-4 sm:mt-5 space-y-3">
         @for (item of menu.menus; track item.label) {
         <li>
-          <a class="text-neutral-6000 dark:text-neutral-300 hover:text-black dark:hover:text-white" [href]="item.href"
+          <a class="inline-flex items-center text-neutral-6000 hover:text-black" [href]="item.href"
             rel="noopener noreferrer">
             {{ item.label }}
           </a>
@@ -28,16 +29,16 @@
   </div>
 
   <!-- Payment Methods & Copyright -->
-  <div class="container m-auto mt-16 pt-8 border-t border-neutral-200 dark:border-neutral-700">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+  <div class="container m-auto px-4 sm:px-6 lg:px-0 mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-neutral-200 ">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">
       <!-- Copyright -->
-      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+      <p class="text-sm text-neutral-500">
         © {{ currentYear }} PrintMe Art. All rights reserved.
       </p>
 
       <!-- Payment Methods -->
-      <div class="flex items-center gap-3">
-        <span class="text-xs text-neutral-400 dark:text-neutral-500 mr-2">We accept</span>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span class="mr-2 text-xs text-neutral-400 ">We accept</span>
         <app-icon iconName="mastercard" class="w-10 h-6" title="Mastercard"></app-icon>
         <app-icon iconName="visa" class="w-10 h-6" title="Visa"></app-icon>
         <div class="w-9 h-6 bg-white rounded border border-slate-200 flex items-center justify-center" title="iDEAL">

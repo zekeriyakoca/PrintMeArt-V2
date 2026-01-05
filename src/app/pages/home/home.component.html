@@ -1,23 +1,27 @@
 <div class="w-full">
   <!-- <app-section-hero subHeading="Shop Stunning Prints & Frames for Your Home Decor."
     heading="Affordable High-Quality Art Prints" btnText="Shop Now" btnLink="/search" className="mt-[80px]" /> -->
-  <app-section-hero-plain subHeading="Giclée print on fine-art paper — fast delivery in NL"
-    heading="Museum-Quality Art Prints — Priced Fairly" btnText="Explore Collection" btnLink="/search"
-    className="mt-16" />
-  <app-business-highlights />
-  <div class="container mx-auto mt-0 border-b border-slate-200 pb-16 pt-4">
+  <div>
+    <app-section-hero-plain />
+  </div>
+  <div>
+    <app-business-highlights />
+  </div>
+  <div class="container mx-auto mt-0 border-b border-slate-200 px-4 sm:px-6 lg:px-0 pb-12 md:pb-16 pt-4">
     <app-featured-prints />
   </div>
-  <div id="section-categories" class="container mx-auto mt-16 px-0 bg-slate-50 py-16 rounded-sm">
+  <div id="section-categories"
+    class="container mx-auto mt-10 md:mt-16 px-4 sm:px-6 lg:px-0 bg-slate-50 py-10 md:py-16 rounded-sm">
     <app-category-grid [categories]="childCategories()" />
   </div>
-  <div class="container mx-auto border-t border-slate-200 pt-32 mt-16">
+  <div class="container mx-auto border-t border-slate-200 px-4 sm:px-6 lg:px-0 pt-14 md:pt-32 mt-12 md:mt-16">
     <app-order-journey />
   </div>
-  <div id="section-our-services" class="container mx-auto border-t border-slate-200 mt-24">
+  <div id="section-our-services"
+    class="container mx-auto border-t border-slate-200 px-4 sm:px-6 lg:px-0 mt-14 md:mt-24">
     <app-our-services />
   </div>
-  <div class="container mx-auto py-24 ">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-0 py-14 md:py-24">
     <app-visit-us />
   </div>
 </div>

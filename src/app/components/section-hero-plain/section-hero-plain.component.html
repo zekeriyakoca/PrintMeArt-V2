@@ -1,27 +1,28 @@
-<div class="nc-SectionHeroPlain flex flex-col-reverse lg:flex-col relative overflow-hidden {{ className() }}">
+<div class="nc-SectionHeroPlain flex flex-col-reverse lg:flex-col relative overflow-hidden">
   <!-- BG -->
   <div class="absolute inset-0 bg-[#faf6ff]"></div>
 
-  <div class="relative contained-page pb-24 pt-32 m-auto">
+  <div class="relative contained-page pb-12 md:pb-24 pt-14 md:pt-32 m-auto">
     <div class="flex flex-col lg:flex-row items-center justify-between">
       <!-- Left: Text & Button -->
-      <div class="w-full lg:w-2/5 space-y-6 text-center lg:text-left">
+      <div class="w-full lg:w-2/5 space-y-5 md:space-y-6 text-center lg:text-left">
         <span class="block text-base md:text-[1.20rem] font-medium" style="color: #db2877;">
-          {{ subHeading() }}
+          Giclée print on fine-art paper — fast delivery in NL
         </span>
-        <h2 class="font-semibold text-4xl md:text-3xl xl:text-[2.4rem] !leading-[114%] text-slate-900">
-          {{ heading() }}
+        <h2
+          class="font-semibold text-[1.85rem] sm:text-[2.15rem] md:text-3xl xl:text-[2.4rem] !leading-[115%] text-slate-900">
+          Museum-Quality Art Prints — Priced Fairly
         </h2>
-        <a [href]="btnLink()"
-          class="inline-flex items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base font-medium">
-          <span>{{ btnText() }}</span>
+        <a href="/search"
+          class="inline-flex w-full sm:w-auto justify-center items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-3 px-5 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base font-medium">
+          <span>Explore Collection</span>
           <app-icon iconName="search" class="w-5 h-5 ms-2.5"></app-icon>
         </a>
       </div>
 
       <!-- Right: Three Category Cards - Staggered Layout -->
       <div class="hero-cards">
-        @for (cat of categories(); track cat.title; let i = $index) {
+        @for (cat of categories; track cat.title; let i = $index) {
         <a [href]="cat.link" class="hero-card" [attr.data-index]="i">
           <div class="card-image">
             <img [src]="cat.image" [alt]="cat.title" />
