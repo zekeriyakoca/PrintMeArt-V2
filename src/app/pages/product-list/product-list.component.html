@@ -1,20 +1,20 @@
 <!-- Search Bar  -->
-<div class="flex flex-col mt-20 mb-10 w-full">
-  <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50 ">
+<div class="flex flex-col mb-10 w-full">
+  <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50">
   </div>
-  <header class="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7 w-full">
+  <header class="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7 w-full px-4 sm:px-0">
     <div class="relative w-full">
       <label for="search-input" class="text-neutral-500">
         <span class="sr-only">Search all products</span>
         <input #searchInput id="search-input" type="text"
-          class="w-full shadow-lg border border-neutral-200 text-sm rounded-full pl-14 pr-14 py-5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200"
+          class="w-full shadow-lg border border-neutral-200 text-sm rounded-full pl-12 sm:pl-14 pr-14 py-4 sm:py-5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200"
           [(ngModel)]="selectedFilterOptions().searchTerm" (keyup.enter)="search()" placeholder="Type your keywords" />
         <button type="button"
           class="absolute right-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black hover:bg-black text-white flex items-center justify-center hover:cursor-pointer"
           (click)="search()">
           <app-icon iconName="arrow-right"></app-icon>
         </button>
-        <span class="absolute left-5 top-1/2 -translate-y-1/2 text-2xl md:left-6 pointer-events-none">
+        <span class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-2xl md:left-6 pointer-events-none">
           <app-icon iconName="search" class="h-5 w-5"></app-icon>
         </span>
       </label>
@@ -26,14 +26,16 @@
 <div class="contained-page">
 
   <!-- Filter Titles  -->
-  <div class="flex items-center justify-between mt-4 pb-4 border-b border-neutral-200">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-4 pb-4 border-b border-neutral-200">
     <!-- Hide/Show Filters on left -->
-    <h2 class="mb-0 pl-2 bg-white rounded-[4px] filter-title hover:cursor-pointer" [class.clicked]="!hideFilters()"
+    <button type="button"
+      class="self-start inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
       (click)="hideFilters.set(!hideFilters())">
-      <span class="inline-flex border-indigo-900 pr-4 text-[1.1rem]">
-        {{hideFilters() ? 'View All ' : 'Hide '}}Filters
+      <app-icon iconName="filter" class="w-4 h-4"></app-icon>
+      <span>
+        {{hideFilters() ? 'Show' : 'Hide'}} filters
       </span>
-    </h2>
+    </button>
 
     <!-- Results for chips on right -->
     @if (activeFilters().length) {
@@ -53,9 +55,10 @@
   </div>
 
   <!-- Filters & Product Catalog -->
-  <div class="flex">
+  <div class="flex flex-col lg:flex-row lg:gap-10">
     <!-- Filters -->
-    <div id="filters" class="flex-2 mt-4" [class.hidden]="hideFilters()">
+    <div id="filters" class="mt-4 w-full lg:w-[280px] lg:shrink-0 rounded-2xl border border-neutral-200 bg-white p-4"
+      [class.hidden]="hideFilters()">
       @for (group of filterOptions(); track group.name) {
       <div class="mb-1 pl-2">
         <h3 class="mb-1 text-[1rem] font-light uppercase text-slate-900">{{ group.name }}</h3>
@@ -78,9 +81,9 @@
     </div>
 
     <!-- Product Catalog -->
-    <div class="flex-10 mb-15">
+    <div class="mt-6 lg:mt-4 w-full mb-15">
       @if (products().data?.length) {
-      <div class="grid grid-cols-4 mb-2">
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mb-2">
         @for (product of products().data; track product.id) {
         <app-product-card [product]="product" class=""></app-product-card>
         }

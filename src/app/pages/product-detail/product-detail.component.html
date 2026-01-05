@@ -1,9 +1,9 @@
-<div class="contained-page py-40">
+<div class="contained-page">
   <!-- IMAGE GALLER  -->
   <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
 
   <!-- PRODUCT INFO AND PURCHASE SIDEBAR -->
-  <div class="container relative z-10 mt-9 sm:mt-11 flex ">
+  <div class="container relative z-10 mt-9 sm:mt-11 flex flex-col lg:flex-row gap-10 lg:gap-0">
 
     <!-- PRODUCT DETAILS -->
     <div class="w-full lg:w-3/5 xl:w-2/3 ">
@@ -41,6 +41,10 @@
             {{product().description}}
           </p>
         </div>
+        <!-- PURCHASE SIDEBAR (mobile/tablet) -->
+        <div class="lg:hidden">
+          <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
+        </div>
 
         <section class="product-details">
           <h3 class="text-lg font-semibold text-slate-800 mb-3">Product details</h3>
@@ -67,8 +71,8 @@
 
     </div>
 
-    <!-- PURCHASE SIDEBAR -->
-    <div class="flex-grow">
+    <!-- PURCHASE SIDEBAR (desktop) -->
+    <div class="hidden lg:block flex-grow">
       <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
     </div>
   </div>
