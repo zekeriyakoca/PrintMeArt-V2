@@ -8,12 +8,13 @@
 
 .ttnc-logo img {
   height: 20px;
-  margin-left: 40px;
+  margin-left: 35px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 1024px) {
   .ttnc-logo img {
     height: 36px;
+    margin-left: 150px;
   }
 }
 
@@ -145,7 +146,5 @@ button:hover svg {
 @media (min-width: 1536px) {
   .container {
     max-width: 1536px;
-    padding-left: 128px;
-    padding-right: 128px;
   }
 }

@@ -1,7 +1,7 @@
 .checkout-page {
   min-height: 100vh;
   background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
-  padding: 10rem 1.5rem 6rem;
+  padding: 6rem 2rem 1rem;
 
   @media (min-width: 768px) {
     padding: 12rem 2rem 8rem;
@@ -65,6 +65,7 @@
 .checkout-steps {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.5rem;
 
@@ -114,6 +115,10 @@
   height: 2px;
   background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
   border-radius: 1px;
+
+  @media (max-width: 420px) {
+    display: none;
+  }
 
   @media (min-width: 768px) {
     width: 32px;
@@ -210,7 +215,7 @@
   @media (min-width: 1024px) {
     .summary-sticky {
       position: sticky;
-      top: 8rem;
+      top: 7rem;
     }
   }
 }
