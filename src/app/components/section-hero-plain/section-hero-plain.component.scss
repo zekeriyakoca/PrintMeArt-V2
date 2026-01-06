@@ -10,7 +10,7 @@
   }
 
   @media (min-width: 1024px) {
-    width: 55%;
+    width: 65%;
     display: flex;
     align-items: flex-end;
     gap: 1.5rem;
@@ -40,7 +40,7 @@
 
     &[data-index="1"] {
       .card-image {
-        height: 300px;
+        height: 320px;
       }
     }
 
