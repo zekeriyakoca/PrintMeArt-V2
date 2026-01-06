@@ -1,7 +1,13 @@
 <div
   class="flex flex-col lg:flex-col space-y-14 lg:space-y-0 lg:space-x-4 items-center relative text-center lg:text-left mb-4">
   <div class="w-screen max-w-full xl:max-w-3xl space-y-5">
-    <label for="cover-photo" class="block text-xl font-[300] leading-6 text-gray-900 mb-2">Upload Your Image</label>
+    <label for="cover-photo"
+      class="inline-flex items-center gap-3 text-lg sm:text-xl font-semibold tracking-tight text-slate-900 mb-3">
+      <span class="relative">
+        Upload Your Image
+        <span class="absolute -bottom-1 left-0 h-0.5 w-full bg-indigo-200 rounded-full"></span>
+      </span>
+    </label>
     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
       [class.border-indigo-500]="isDragging()" [class.bg-indigo-50]="isDragging()" (drop)="handleDrop($event)"
       (dragover)="handleDragOver($event)" (dragleave)="handleDragLeave($event)">
