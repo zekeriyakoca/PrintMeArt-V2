@@ -2,12 +2,13 @@
   <div class="contained-page">
     <!-- Hero Section -->
     <section class="hero-section py-6 mb-10">
-      <div class="hero-content flex flex-col md:flex-row items-center gap-20 max-w-7xl mx-auto">
-        <div class="hero-text flex-1 text-center md:text-left">
+      <div
+        class="hero-content flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20 max-w-7xl mx-auto px-4 sm:px-0">
+        <div class="hero-text flex-1 text-left">
           <span class="hero-badge inline-block font-semibold px-4 rounded-full tracking-wide">Our
             Frames</span>
           <h1 class="hero-title text-3xl md:text-5xl font-bold mb-4 text-indigo-900">Choose Your Perfect Frame</h1>
-          <p class="hero-description text-lg text-gray-600 mb-6">
+          <p class="hero-description text-base sm:text-lg text-gray-600 mb-6">
             Explore our wide range of frames to find the perfect match for your paintings and photos.<br>
             Our high-quality framing options ensure durability and style, enhancing the presentation of your
             artwork.<br>
@@ -27,7 +28,7 @@
         <app-section-title label="Explore Our Exquisite Frame
             Collection" title="Frames." />
       </div>
-      <div class="frames-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="frames-grid">
         @for (frame of frames; track frame.id; let i = $index) {
         <app-frame-card [frame]="frame" (showPhotos)="openGallery(i)" />
         }
@@ -81,29 +82,29 @@
     </section>
 
     <!-- Sale Banner Section -->
-    <section class="relative py-16">
-      <div class="p-0 pt-24 overflow-hidden">
+    <section class="relative py-12 sm:py-16">
+      <div class="p-0 pt-10 sm:pt-16 lg:pt-24 overflow-hidden">
         <div
-          class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg">
-          <div class="flex flex-col justify-center lg:w-1/2 p-6 pt-36">
+          class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg overflow-hidden">
+          <div class="flex flex-col justify-center lg:w-1/2 p-6 pt-10 sm:pt-12 lg:pt-36">
             <h2 class="text-3xl md:text-6xl font-semibold mb-0">Final Stock.</h2>
             <h2 class="text-3xl md:text-6xl font-semibold mb-4">Up to 50% off.</h2>
             <a routerLink="/products" class="text-md mb-6 mt-4 hover:underline">Go to sales →</a>
           </div>
-          <div class="absolute grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:w-1/2 p-6 right-0">
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-4">
+          <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:absolute lg:grid-cols-2 lg:gap-4 lg:w-1/2 p-6 lg:right-0">
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-2 lg:-translate-y-4">
               <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-3.jpg"
                 alt="Sale item 1" class="w-full h-full object-cover max-h-72">
             </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-32">
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-8 sm:-translate-y-10 lg:-translate-y-32">
               <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-2.jpg"
                 alt="Sale item 2" class="w-full h-full object-cover">
             </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-4">
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-2 lg:-translate-y-4">
               <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-1.jpg"
                 alt="Sale item 3" class="w-full h-full object-cover">
             </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-32">
+            <div class="rounded-lg overflow-hidden bg-white -translate-y-8 sm:-translate-y-10 lg:-translate-y-32">
               <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-4.jpg"
                 alt="Sale item 4" class="w-full h-full object-cover">
             </div>
