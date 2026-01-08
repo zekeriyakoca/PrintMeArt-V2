@@ -53,10 +53,14 @@ export class HeaderComponent extends BaseAppComponent {
     this.cartService.openCartSidebar();
   }
   toggleMobileMenu() {
-    const mobileMenu = document.querySelector('.mobile-menu');
-    if (mobileMenu) {
-      mobileMenu.classList.toggle('open');
-    }
+    this.isMobileMenuOpen.update(v => !v);
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = this.isMobileMenuOpen() ? 'hidden' : '';
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
+    document.body.style.overflow = '';
   }
   showDropdown(dropdown: string) {
     this.activeDropdown = this.activeDropdown === dropdown ? null : dropdown;

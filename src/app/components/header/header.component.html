@@ -81,8 +81,8 @@
               <!-- Your Design (special styling, no submenu) -->
               <li class="menu-item flex-shrink-0">
                 <a href="/your-design"
-                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
-                  style="color: #db2877; font-family: fantasy; font-size: 1.09rem;">
+                  class="inline-flex items-center text-sm lg:text-[1.1rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
+                  style="color: #db2877; font-family: 'Dancing Script', cursive; font-weight: 600;">
                   Your Design
                 </a>
               </li>
@@ -159,62 +159,121 @@
     </div>
   </div>
 
-  <!-- Mobile menu -->
-  @if(isMobileMenuOpen()){
-  <div class="lg:hidden fixed inset-0 z-50 bg-white" role="dialog" aria-modal="true">
-    <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
+  <!-- Mobile menu overlay -->
+  <div 
+    class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+    [class.opacity-0]="!isMobileMenuOpen()"
+    [class.pointer-events-none]="!isMobileMenuOpen()"
+    [class.opacity-100]="isMobileMenuOpen()"
+    (click)="closeMobileMenu()"
+    role="presentation">
+  </div>
+
+  <!-- Mobile menu panel -->
+  <div 
+    class="lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-out"
+    [class.translate-x-full]="!isMobileMenuOpen()"
+    [class.translate-x-0]="isMobileMenuOpen()"
+    role="dialog" 
+    aria-modal="true"
+    aria-label="Mobile navigation">
+    
+    <div class="flex flex-col h-full">
       <!-- Mobile menu header -->
-      <div class="flex items-center justify-between">
-        <a href="#" class="ttnc-logo inline-block text-slate-600">
-          <img class="block w-auto" src="assets/logo.svg" alt="PrintMeArt Logo">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+        <a href="/" class="inline-block" (click)="closeMobileMenu()">
+          <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" width="108" height="40">
         </a>
-        <button type="button" class="-m-2.5 rounded-md p-2.5 text-slate-700" (click)="toggleMobileMenu()">
+        <button 
+          type="button" 
+          class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+          (click)="closeMobileMenu()">
           <span class="sr-only">Close menu</span>
           <app-icon iconName="close" class="h-6 w-6"></app-icon>
         </button>
       </div>
 
       <!-- Mobile menu content -->
-      <div class="mt-6 flow-root">
-        <div class="-my-6 divide-y divide-gray-500/10">
-          <div class="space-y-2 py-6">
+      <nav class="flex-1 overflow-y-auto px-6 py-6">
+        <ul class="space-y-1">
+          <li>
             <a href="/search"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-              (click)="toggleMobileMenu()">
-              Our Catalog
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+              (click)="closeMobileMenu()">
+              <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">Our Catalog</span>
             </a>
+          </li>
+          <li>
             <a href="/your-design"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50"
-              style="color: #db2877;" (click)="toggleMobileMenu()">
-              Your Design
+              class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors"
+              style="color: #db2877;"
+              (click)="closeMobileMenu()">
+              <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
+              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem;">Your Design</span>
             </a>
+          </li>
+          <li>
             <a href="/frames"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-              (click)="toggleMobileMenu()">
-              Frames
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+              (click)="closeMobileMenu()">
+              <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">Frames</span>
             </a>
+          </li>
+          <li>
             <a href="/about"
-              class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-              (click)="toggleMobileMenu()">
-              About
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+              (click)="closeMobileMenu()">
+              <app-icon iconName="users" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">About</span>
             </a>
-          </div>
-          <div class="py-6">
-            <button type="button"
-              class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-left"
-              (click)="navigateToCart(); toggleMobileMenu()">
-              Cart ({{ totalItemCountInCart() }})
-            </button>
-            <button type="button"
-              class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-left mt-2"
-              (click)="toggleMobileMenu()">
-              Profile
-            </button>
-          </div>
+          </li>
+          <li>
+            <a href="/how-we-work"
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+              (click)="closeMobileMenu()">
+              <app-icon iconName="rocket" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">How We Work</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="mt-6 pt-6 border-t border-slate-100">
+          <ul class="space-y-1">
+            <li>
+              <button 
+                type="button"
+                class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                (click)="navigateToCart(); closeMobileMenu()">
+                <app-icon iconName="shopping-cart" class="w-5 h-5 text-slate-400"></app-icon>
+                <span class="font-medium">Cart</span>
+                @if(totalItemCountInCart() > 0) {
+                  <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+                    {{ totalItemCountInCart() }}
+                  </span>
+                }
+              </button>
+            </li>
+            <li>
+              <a href="/profile"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                (click)="closeMobileMenu()">
+                <app-icon iconName="user" class="w-5 h-5 text-slate-400"></app-icon>
+                <span class="font-medium">Profile</span>
+              </a>
+            </li>
+          </ul>
         </div>
+      </nav>
+
+      <!-- Mobile menu footer -->
+      <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
+        <p class="text-xs text-slate-500 text-center">
+          Museum-Quality Art Prints — Priced Fairly
+        </p>
       </div>
     </div>
   </div>
-  }
 
 </header>

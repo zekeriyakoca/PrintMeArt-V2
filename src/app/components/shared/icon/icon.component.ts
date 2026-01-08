@@ -7,8 +7,9 @@ import { Component, input, ViewEncapsulation } from '@angular/core';
   styleUrl: './icon.component.scss',
   encapsulation: ViewEncapsulation.None,
   host: {
-    'style': 'display: inline-flex; align-items: center; justify-content: center;'
-  }
+    style:
+      'display: inline-flex; align-items: center; justify-content: center;',
+  },
 })
 export class IconComponent {
   iconName = input('');
