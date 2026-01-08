@@ -4,6 +4,9 @@ app-icon {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  /* Default size when no class is provided */
+  width: 1.5rem;  /* 24px - w-6 */
+  height: 1.5rem; /* 24px - h-6 */
 }
 
 /* SVG inside icon component fills container */
