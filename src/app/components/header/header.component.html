@@ -160,32 +160,25 @@
   </div>
 
   <!-- Mobile menu overlay -->
-  <div 
-    class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
-    [class.opacity-0]="!isMobileMenuOpen()"
-    [class.pointer-events-none]="!isMobileMenuOpen()"
-    [class.opacity-100]="isMobileMenuOpen()"
-    (click)="closeMobileMenu()"
-    role="presentation">
+  <div class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+    [class.opacity-0]="!isMobileMenuOpen()" [class.pointer-events-none]="!isMobileMenuOpen()"
+    [class.opacity-100]="isMobileMenuOpen()" (click)="closeMobileMenu()" role="presentation">
   </div>
 
   <!-- Mobile menu panel -->
-  <div 
+  <div
     class="lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-out"
-    [class.translate-x-full]="!isMobileMenuOpen()"
-    [class.translate-x-0]="isMobileMenuOpen()"
-    role="dialog" 
-    aria-modal="true"
-    aria-label="Mobile navigation">
-    
+    [class.translate-x-full]="!isMobileMenuOpen()" [class.translate-x-0]="isMobileMenuOpen()" role="dialog"
+    aria-modal="true" aria-label="Mobile navigation">
+
     <div class="flex flex-col h-full">
       <!-- Mobile menu header -->
       <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
         <a href="/" class="inline-block" (click)="closeMobileMenu()">
-          <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" width="108" height="40">
+          <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg"
+            alt="PrintMeArt Logo" width="108" height="40">
         </a>
-        <button 
-          type="button" 
+        <button type="button"
           class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
           (click)="closeMobileMenu()">
           <span class="sr-only">Close menu</span>
@@ -207,10 +200,10 @@
           <li>
             <a href="/your-design"
               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors"
-              style="color: #db2877;"
-              (click)="closeMobileMenu()">
+              style="color: #db2877;" (click)="closeMobileMenu()">
               <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
-              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem;">Your Design</span>
+              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem;">Your
+                Design</span>
             </a>
           </li>
           <li>
@@ -242,16 +235,15 @@
         <div class="mt-6 pt-6 border-t border-slate-100">
           <ul class="space-y-1">
             <li>
-              <button 
-                type="button"
+              <button type="button"
                 class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
                 (click)="navigateToCart(); closeMobileMenu()">
                 <app-icon iconName="shopping-cart" class="w-5 h-5 text-slate-400"></app-icon>
                 <span class="font-medium">Cart</span>
                 @if(totalItemCountInCart() > 0) {
-                  <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
-                    {{ totalItemCountInCart() }}
-                  </span>
+                <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+                  {{ totalItemCountInCart() }}
+                </span>
                 }
               </button>
             </li>

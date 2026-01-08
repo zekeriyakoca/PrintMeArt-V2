@@ -7,7 +7,7 @@ import {
   effect,
 } from '@angular/core';
 
-import { IconComponent } from '../icon/icon.component';
+import { IconComponent } from '../shared/icon/icon.component';
 import { CategoryDto } from '../../models/category';
 
 @Component({

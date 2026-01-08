@@ -53,7 +53,7 @@ export class HeaderComponent extends BaseAppComponent {
     this.cartService.openCartSidebar();
   }
   toggleMobileMenu() {
-    this.isMobileMenuOpen.update(v => !v);
+    this.isMobileMenuOpen.update((v) => !v);
     // Prevent body scroll when menu is open
     document.body.style.overflow = this.isMobileMenuOpen() ? 'hidden' : '';
   }

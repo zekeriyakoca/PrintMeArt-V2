@@ -8,7 +8,7 @@
       <button type="button" (click)="setTab(tab.name)"
         class="px-8 py-3 rounded-full transition-colors whitespace-nowrap flex items-center space-x-2 text-sm"
         [class]="tabActive() === tab.name ? 'bg-slate-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'">
-        <app-icon [name]="tab.iconName" />
+        <app-icon [iconName]="tab.iconName" class="w-5 h-5" />
         <span>{{ tab.name }}</span>
       </button>
       }
