@@ -4,7 +4,7 @@
     <!-- Main large image -->
     <div class="md:h-full col-span-2 md:col-span-1 row-span-2 relative rounded-md sm:rounded-xl cursor-pointer"
       (click)="openGallery()">
-      <img [src]="images()[0].original" alt=""
+      <img [src]="images()[0].large" [alt]="images()[0].name"
         class="object-cover rounded-md sm:rounded-xl w-full h-full aspect-[3/4] md:aspect-auto">
       <div
         class="absolute inset-0 bg-neutral-900/20 opacity-0 hover:opacity-40 transition-opacity rounded-md sm:rounded-xl">
@@ -15,7 +15,7 @@
     @for (item of images().slice(1, 4); track $index; let i = $index) {
     <div class="relative rounded-md sm:rounded-xl overflow-hidden z-0 cursor-pointer"
       [class]="i === 0 ? 'col-span-1 row-span-2' : ''" (click)="openGallery(i + 1)">
-      <img [src]="item.original" alt="" class="object-cover w-full h-full rounded-md sm:rounded-xl"
+      <img [src]="item.large" [alt]="item.name" class="object-cover w-full h-full rounded-md sm:rounded-xl"
         [class]="i === 0 ? '' : 'aspect-[6/5] lg:aspect-[6/4]'">
       <div class="absolute inset-0 bg-slate-900/20 opacity-0 hover:opacity-60 transition-opacity"></div>
     </div>

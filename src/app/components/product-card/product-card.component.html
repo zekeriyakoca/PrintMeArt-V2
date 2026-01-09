@@ -1,11 +1,11 @@
 <div class="cursor-pointer flex flex-col p-5 h-full flex-grow group" (click)="goToProduct()">
   <div class="mb-3 h-full relative overflow-hidden">
     <img class="rounded-sm h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
-      [src]="product().image.original" [alt]="product().name" />
-    @if (product().secondImage?.original) {
+      [src]="product().image.small" [alt]="product().name" />
+    @if (product().secondImage?.small) {
     <img
       class="rounded-sm h-full w-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      [src]="product().secondImage.original" [alt]="product().name" />
+      [src]="product().secondImage.small" [alt]="product().name" />
     }
   </div>
   <div class="flex flex-col">

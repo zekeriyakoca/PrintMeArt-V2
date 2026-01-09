@@ -5,7 +5,7 @@
         class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left hover:border-slate-300 transition-colors">
         <div class="flex items-center gap-3 min-w-0">
           @if (selectedItem(); as item) {
-          <img [src]="item.thumbnail" alt="" class="h-11 w-11 rounded-lg object-cover" loading="lazy" />
+          <img [src]="item.thumbnail" [alt]="item.name" class="h-11 w-11 rounded-lg object-cover" loading="lazy" />
           <div class="min-w-0">
             <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ item.name }}</div>
             @if (item.description) {
@@ -34,7 +34,7 @@
         <button type="button" (click)="select(item.id)" class="w-full text-left">
           <div
             [class]="'flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors ' + (selectedId() === item.id ? 'bg-slate-50' : '')">
-            <img [src]="item.thumbnail" alt="" class="h-11 w-11 rounded-lg object-cover" loading="lazy" />
+            <img [src]="item.thumbnail" [alt]="item.name" class="h-11 w-11 rounded-lg object-cover" loading="lazy" />
             <div class="min-w-0 flex-1">
               <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ item.name }}</div>
               @if (item.description) {
