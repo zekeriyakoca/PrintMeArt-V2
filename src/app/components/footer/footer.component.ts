@@ -19,7 +19,7 @@ export class FooterComponent {
       menus: [
         { href: '/about', label: 'About us' },
         { href: '/about', label: 'Contact' },
-        { href: '/how-we-print', label: 'How we print' },
+        { href: '/how-we-work', label: 'How we work' },
       ],
     },
     {

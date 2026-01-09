@@ -59,7 +59,7 @@ export const routes: Routes = [
     component: OrdersComponent,
   },
   {
-    path: 'how-we-print',
+    path: 'how-we-work',
     component: HowWeWorkComponent,
   },
   {

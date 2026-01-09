@@ -15,7 +15,7 @@ export class BusinessHighlightsComponent {
       title: 'How We Print',
       description: 'Fine-art paper & our print process—see the details.',
       cta: 'See our process',
-      link: '/how-we-print',
+      link: '/how-we-work',
       color: 'cyan',
     },
     {
