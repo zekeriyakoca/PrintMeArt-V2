@@ -10,6 +10,7 @@ import { CartService } from './services/cart/cart.service';
 import { AppInsightsService } from './services/telemetry/app-insights.service';
 import { GoogleAnalyticsService } from './services/telemetry/google-analytics.service';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
+import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { CookieConsentComponent } from './components/cookie-consent/cookie-conse
     CartAddedModalComponent,
     CartSidebarComponent,
     CookieConsentComponent,
+    ToastContainerComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

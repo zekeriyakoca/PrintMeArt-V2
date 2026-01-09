@@ -1,0 +1,193 @@
+<div class="p-6 rounded-xl bg-white border border-slate-200 shadow-sm">
+    <div class="flex items-start gap-4 mb-6">
+        <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-xl font-bold text-slate-900 mb-1">Report a Compliance Issue</h3>
+            <p class="text-sm text-slate-500">
+                Use this form to report copyright infringement, trademark violations, or other legal concerns about
+                content on our platform.
+            </p>
+        </div>
+    </div>
+
+    <!-- Success State -->
+    @if (submitted()) {
+    <div class="p-6 rounded-xl bg-green-50 border border-green-200 text-center">
+        <div class="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-green-800 mb-2">Report Submitted</h4>
+        <p class="text-green-700 text-sm mb-4">
+            Thank you for your report. Our legal team will review it and respond within 5 business days.
+        </p>
+        <button type="button" (click)="resetSubmitted()" class="text-sm text-green-600 hover:text-green-800 underline">
+            Submit another report
+        </button>
+    </div>
+    } @else {
+    <!-- Compliance Form -->
+    <form (ngSubmit)="onSubmit()" class="space-y-5">
+        <div class="grid md:grid-cols-2 gap-5">
+            <!-- Name Field -->
+            <div class="field">
+                <label for="compliance-name" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Your Name <span class="text-red-500">*</span>
+                </label>
+                <input id="compliance-name" type="text" autocomplete="name" placeholder="Full name"
+                    [value]="formData().name" (input)="updateField('name', $any($event.target).value)"
+                    class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    [class.border-red-300]="errors().name" [class.border-slate-200]="!errors().name" />
+                @if (errors().name) {
+                <p class="mt-2 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 px-2.5 py-1.5 rounded-md">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {{ errors().name }}
+                </p>
+                }
+            </div>
+
+            <!-- Email Field -->
+            <div class="field">
+                <label for="compliance-email" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Email <span class="text-red-500">*</span>
+                </label>
+                <input id="compliance-email" type="email" autocomplete="email" placeholder="your@email.com"
+                    [value]="formData().email" (input)="updateField('email', $any($event.target).value)"
+                    class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    [class.border-red-300]="errors().email" [class.border-slate-200]="!errors().email" />
+                @if (errors().email) {
+                <p class="mt-2 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 px-2.5 py-1.5 rounded-md">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {{ errors().email }}
+                </p>
+                }
+            </div>
+        </div>
+
+        <!-- Issue Type -->
+        <div class="field">
+            <label class="block text-sm font-medium text-slate-700 mb-2">
+                Issue Type <span class="text-red-500">*</span>
+            </label>
+            <div class="grid sm:grid-cols-2 gap-3">
+                @for (option of issueTypeOptions; track option.value) {
+                <label
+                    class="relative flex items-start p-3 rounded-lg border cursor-pointer transition-all hover:bg-slate-50"
+                    [class.border-orange-500]="formData().issueType === option.value"
+                    [class.bg-orange-50]="formData().issueType === option.value"
+                    [class.border-slate-200]="formData().issueType !== option.value">
+                    <input type="radio" name="issueType" [value]="option.value"
+                        [checked]="formData().issueType === option.value"
+                        (change)="updateField('issueType', option.value)"
+                        class="mt-0.5 h-4 w-4 text-orange-600 border-slate-300 focus:ring-orange-500" />
+                    <div class="ml-3">
+                        <span class="block text-sm font-medium text-slate-800">{{ option.label }}</span>
+                        <span class="block text-xs text-slate-500">{{ option.description }}</span>
+                    </div>
+                </label>
+                }
+            </div>
+            @if (errors().issueType) {
+            <p class="mt-2 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 px-2.5 py-1.5 rounded-md w-fit">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+                {{ errors().issueType }}
+            </p>
+            }
+        </div>
+
+        <!-- Reported URL (Optional) -->
+        <div class="field">
+            <label for="compliance-url" class="block text-sm font-medium text-slate-700 mb-1.5">
+                URL of Content <span class="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input id="compliance-url" type="url" placeholder="https://printmeart.nl/product/..."
+                [value]="formData().reportedUrl" (input)="updateField('reportedUrl', $any($event.target).value)"
+                class="block w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+            <p class="mt-1 text-xs text-slate-500">Link to the specific page or product you're reporting</p>
+        </div>
+
+        <!-- Product ID (Optional) -->
+        <div class="field">
+            <label for="compliance-product" class="block text-sm font-medium text-slate-700 mb-1.5">
+                Product ID <span class="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input id="compliance-product" type="text" placeholder="e.g., 12345" [value]="formData().productId"
+                (input)="updateField('productId', $any($event.target).value)"
+                class="block w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+        </div>
+
+        <!-- Details -->
+        <div class="field">
+            <label for="compliance-details" class="block text-sm font-medium text-slate-700 mb-1.5">
+                Describe the Issue <span class="text-red-500">*</span>
+            </label>
+            <textarea id="compliance-details" rows="4"
+                placeholder="Please provide as much detail as possible about the issue, including any evidence or documentation that supports your claim..."
+                [value]="formData().details" (input)="updateField('details', $any($event.target).value)"
+                class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                [class.border-red-300]="errors().details" [class.border-slate-200]="!errors().details"></textarea>
+            @if (errors().details) {
+            <p class="mt-2 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 px-2.5 py-1.5 rounded-md">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+                {{ errors().details }}
+            </p>
+            }
+        </div>
+
+        <!-- Legal Notice -->
+        <div class="p-4 rounded-lg bg-amber-50 border border-amber-100">
+            <p class="text-xs text-amber-800">
+                <strong>Important:</strong> By submitting this report, you confirm that the information provided is
+                accurate
+                to the best of your knowledge. False reports may have legal consequences. We take all reports seriously
+                and
+                will investigate each submission promptly.
+            </p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+            <button type="submit" [disabled]="isSubmitting()"
+                class="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-300 text-white rounded-lg px-6 py-2.5 font-medium text-sm w-full sm:w-auto min-w-[160px] transition-colors flex items-center justify-center gap-2">
+                @if (isSubmitting()) {
+                <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                <span>Submitting...</span>
+                } @else {
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                <span>Submit Report</span>
+                }
+            </button>
+        </div>
+    </form>
+    }
+</div>

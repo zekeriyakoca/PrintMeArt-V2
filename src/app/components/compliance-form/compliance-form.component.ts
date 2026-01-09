@@ -2,28 +2,29 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ContactService,
-  ContactFormData,
+  ComplianceFormData,
 } from '../../services/contact/contact.service';
 import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
-  selector: 'app-contact-form',
+  selector: 'app-compliance-form',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.scss',
+  templateUrl: './compliance-form.component.html',
+  styleUrl: './compliance-form.component.scss',
 })
-export class ContactFormComponent {
+export class ComplianceFormComponent {
   private readonly contactService = inject(ContactService);
   private readonly toastService = inject(ToastService);
 
-  // Form model with two-way binding
-  formData = signal<ContactFormData>({
+  // Form model
+  formData = signal<ComplianceFormData>({
     name: '',
     email: '',
-    subject: '',
-    message: '',
-    orderNumber: '',
+    issueType: 'Copyright',
+    details: '',
+    reportedUrl: '',
+    productId: '',
   });
 
   // Form state
@@ -31,31 +32,47 @@ export class ContactFormComponent {
   submitted = signal(false);
 
   // Validation errors
-  errors = signal<Partial<Record<keyof ContactFormData, string>>>({});
+  errors = signal<Partial<Record<keyof ComplianceFormData, string>>>({});
 
-  // Subject options
-  readonly subjectOptions = [
-    { value: '', label: 'Select a topic' },
-    { value: 'Order Question', label: 'Question about my order' },
-    { value: 'Product Inquiry', label: 'Product inquiry' },
-    { value: 'Custom Design', label: 'Custom design request' },
-    { value: 'Returns', label: 'Returns & refunds' },
-    { value: 'Shipping', label: 'Shipping question' },
-    { value: 'Other', label: 'Other' },
+  // Issue type options
+  readonly issueTypeOptions: {
+    value: ComplianceFormData['issueType'];
+    label: string;
+    description: string;
+  }[] = [
+    {
+      value: 'Copyright',
+      label: 'Copyright Infringement',
+      description: 'Unauthorized use of copyrighted content',
+    },
+    {
+      value: 'Trademark',
+      label: 'Trademark Violation',
+      description: 'Unauthorized use of trademarks or logos',
+    },
+    {
+      value: 'Privacy',
+      label: 'Privacy Concern',
+      description: 'Personal information or privacy issues',
+    },
+    {
+      value: 'Other',
+      label: 'Other Legal Issue',
+      description: 'Other compliance or legal matters',
+    },
   ];
 
-  updateField<K extends keyof ContactFormData>(
+  updateField<K extends keyof ComplianceFormData>(
     field: K,
-    value: ContactFormData[K],
+    value: ComplianceFormData[K],
   ): void {
     this.formData.update((data) => ({ ...data, [field]: value }));
-    // Clear error when user starts typing
     this.errors.update((errs) => ({ ...errs, [field]: undefined }));
   }
 
   private validate(): boolean {
     const data = this.formData();
-    const newErrors: Partial<Record<keyof ContactFormData, string>> = {};
+    const newErrors: Partial<Record<keyof ComplianceFormData, string>> = {};
 
     if (!data.name.trim()) {
       newErrors.name = 'Name is required';
@@ -67,14 +84,14 @@ export class ContactFormComponent {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!data.subject) {
-      newErrors.subject = 'Please select a topic';
+    if (!data.issueType) {
+      newErrors.issueType = 'Please select an issue type';
     }
 
-    if (!data.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (data.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+    if (!data.details.trim()) {
+      newErrors.details = 'Please describe the issue';
+    } else if (data.details.trim().length < 20) {
+      newErrors.details = 'Please provide more detail (at least 20 characters)';
     }
 
     this.errors.set(newErrors);
@@ -96,20 +113,20 @@ export class ContactFormComponent {
 
     this.isSubmitting.set(true);
 
-    this.contactService.submitContactForm(this.formData()).subscribe({
+    this.contactService.submitComplianceReport(this.formData()).subscribe({
       next: () => {
         this.submitted.set(true);
         this.isSubmitting.set(false);
         this.toastService.success(
-          "Your message has been sent! We'll get back to you soon.",
+          "Your report has been submitted. We'll review it promptly.",
         );
         this.resetForm();
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        console.error('Contact form submission error:', err);
+        console.error('Compliance form submission error:', err);
         this.toastService.error(
-          'Something went wrong. Please try again or email us directly.',
+          'Something went wrong. Please try again or email us at legal@printmeart.nl',
         );
       },
     });
@@ -119,9 +136,10 @@ export class ContactFormComponent {
     this.formData.set({
       name: '',
       email: '',
-      subject: '',
-      message: '',
-      orderNumber: '',
+      issueType: 'Copyright',
+      details: '',
+      reportedUrl: '',
+      productId: '',
     });
     this.errors.set({});
   }
