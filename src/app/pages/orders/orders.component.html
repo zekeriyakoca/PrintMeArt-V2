@@ -128,7 +128,8 @@
                 <span class="text-slate-400">+{{ order.orderItemsCount - 1 }} more</span>
                 }
               </p>
-              <p class="mt-1 text-sm text-slate-500">{{ order.orderItemsCount }} item{{ order.orderItemsCount > 1 ? 's' : ''
+              <p class="mt-1 text-sm text-slate-500">{{ order.orderItemsCount }} item{{ order.orderItemsCount > 1 ? 's'
+                : ''
                 }}</p>
             </div>
 
@@ -267,7 +268,11 @@
         <div class="space-y-2">
           <div class="flex justify-between text-sm">
             <span class="text-slate-500">Subtotal</span>
-            <span>{{ formatCurrency(order.total) }}</span>
+            <span>{{ formatCurrency(order.subtotal) }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Shipping Cost</span>
+            <span>{{ formatCurrency(order.shippingCost) }}</span>
           </div>
           <div class="flex justify-between border-t border-slate-200 pt-2 text-base font-bold">
             <span>Total</span>

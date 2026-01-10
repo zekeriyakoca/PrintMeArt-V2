@@ -210,6 +210,8 @@ export class OrdersComponent implements OnInit {
         zipCode: '',
       },
       orderItems: [],
+      shippingCost: 0,
+      subtotal: 0,
       total: order.total,
       trackingNumber: order.trackingNumber,
       canCancel: order.canCancel,

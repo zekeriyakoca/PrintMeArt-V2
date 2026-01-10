@@ -72,6 +72,8 @@ export interface OrderDto {
     zipCode: string;
   };
   orderItems: OrderItemDto[];
+  subtotal: number;
+  shippingCost: number;
   total: number;
   trackingNumber: string;
   canCancel: boolean;
