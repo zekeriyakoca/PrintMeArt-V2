@@ -29,46 +29,57 @@ export type OrderStatusGroup =
   | 'delivered'
   | 'cancelled';
 
-export interface OrderItemDto {
-  id: number;
-  productId: number;
-  productName: string;
-  pictureUrl?: string;
-  unitPrice: number;
-  quantity: number;
-  totalPrice: number;
-  selectedOptions?: { optionName: string; optionValue: string }[];
-}
-
-export interface OrderDto {
+// List DTO (orders listing)
+export interface OrderSummary {
   id: number;
   orderNumber: string;
   status: BackendOrderStatus;
-  statusDisplayName: string;
-  items: OrderItemDto[];
-  subtotal: number;
-  shippingCost: number;
-  tax: number;
+  statusGroup: number;
+  orderItemsCount: number;
+  orderCreatedDate: string;
+  address: string;
   total: number;
-  currency: string;
-  shippingAddress: {
-    fullName: string;
-    street: string;
+  buyerName: string;
+  trackingNumber: string;
+  canCancel: boolean;
+  cancelReason: string | null;
+}
+
+// Detail DTO (single order details)
+export interface OrderItemDto {
+  productId: number;
+  variantId: number;
+  productName: string;
+  pictureUrl: string;
+  unitPrice: number;
+  discount: number;
+  units: number;
+  selectedOptions: Array<unknown>;
+}
+
+export interface OrderDto {
+  orderId: number;
+  orderNumber: string;
+  date: string;
+  status: BackendOrderStatus;
+  statusGroup: number;
+  description: string;
+  address: {
     city: string;
-    state?: string;
-    postalCode: string;
+    street: string;
+    state: string;
     country: string;
+    zipCode: string;
   };
-  trackingNumber?: string;
-  trackingUrl?: string;
-  createdAt: string;
-  updatedAt: string;
-  estimatedDelivery?: string;
-  customerEmail: string;
+  orderItems: OrderItemDto[];
+  total: number;
+  trackingNumber: string;
+  canCancel: boolean;
+  cancelReason: string | null;
 }
 
 export interface OrdersResponse {
-  data: OrderDto[];
+  data: OrderSummary[];
   totalCount: number;
   pageIndex: number;
   pageSize: number;

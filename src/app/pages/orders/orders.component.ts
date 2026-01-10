@@ -12,10 +12,10 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import {
   OrdersService,
+  OrderSummary,
   OrderDto,
   OrderStatusGroup,
   BackendOrderStatus,
-  CanCancelResponse,
 } from '../../services/orders/orders.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { IconComponent } from '../../components/shared/icon/icon.component';
@@ -43,7 +43,7 @@ export class OrdersComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
 
   // State
-  orders = signal<OrderDto[]>([]);
+  orders = signal<OrderSummary[]>([]);
   isLoading = signal(true);
   activeTab = signal<OrderStatusGroup>('all');
   searchTerm = signal('');
@@ -57,7 +57,6 @@ export class OrdersComponent implements OnInit {
   // Order detail modal
   selectedOrder = signal<OrderDto | null>(null);
   isLoadingDetail = signal(false);
-  canCancelInfo = signal<CanCancelResponse | null>(null);
 
   // Cancel modal
   showCancelModal = signal(false);
@@ -194,24 +193,35 @@ export class OrdersComponent implements OnInit {
   }
 
   // Order Detail
-  viewOrder(order: OrderDto): void {
-    this.selectedOrder.set(order);
+  viewOrder(order: OrderSummary): void {
+    // Set a lightweight placeholder so the modal can render immediately.
+    this.selectedOrder.set({
+      orderId: order.id,
+      orderNumber: order.orderNumber,
+      date: order.orderCreatedDate,
+      status: order.status,
+      statusGroup: order.statusGroup,
+      description: '',
+      address: {
+        city: '',
+        street: '',
+        state: '',
+        country: '',
+        zipCode: '',
+      },
+      orderItems: [],
+      total: order.total,
+      trackingNumber: order.trackingNumber,
+      canCancel: order.canCancel,
+      cancelReason: order.cancelReason,
+    });
     this.isLoadingDetail.set(true);
-    this.canCancelInfo.set(null);
 
-    // Load full order details and cancel eligibility
+    // Load full order details
     this.ordersService.getOrder(order.id).subscribe({
       next: (fullOrder) => {
         this.selectedOrder.set(fullOrder);
         this.isLoadingDetail.set(false);
-
-        // Check if cancellable
-        if (this.ordersService.isCancellable(fullOrder.status)) {
-          this.ordersService.canCancelOrder(fullOrder.id).subscribe({
-            next: (canCancel) => this.canCancelInfo.set(canCancel),
-            error: () => this.canCancelInfo.set({ canCancel: false }),
-          });
-        }
       },
       error: () => {
         this.isLoadingDetail.set(false);
@@ -222,7 +232,6 @@ export class OrdersComponent implements OnInit {
 
   closeOrderDetail(): void {
     this.selectedOrder.set(null);
-    this.canCancelInfo.set(null);
   }
 
   // Cancel flow
@@ -243,7 +252,7 @@ export class OrdersComponent implements OnInit {
     this.isCancelling.set(true);
 
     this.ordersService
-      .cancelOrder(order.id, this.cancelReason() || undefined)
+      .cancelOrder(order.orderId, this.cancelReason() || undefined)
       .subscribe({
         next: () => {
           this.toastService.success('Order cancelled successfully.');
@@ -294,18 +303,35 @@ export class OrdersComponent implements OnInit {
     }).format(amount);
   }
 
+  formatSelectedOption(opt: unknown): string {
+    if (!opt) return '';
+    if (typeof opt === 'string') return opt;
+    if (typeof opt === 'number' || typeof opt === 'boolean') return String(opt);
+
+    if (typeof opt === 'object') {
+      const anyOpt = opt as Record<string, unknown>;
+      const value = anyOpt['optionValue'] ?? anyOpt['value'] ?? anyOpt['name'];
+      if (typeof value === 'string' && value.trim()) return value;
+    }
+
+    return '';
+  }
+
+  getImagePlaceholders(itemCount: number): number[] {
+    const count = Math.min(Math.max(itemCount, 0), 3);
+    return Array.from({ length: count }, (_, i) => i);
+  }
+
   getTabCount(tab: OrderStatusGroup): number {
     // This could be enhanced to show counts from the API
     return 0;
   }
 
-  canShowCancelButton(): boolean {
-    const order = this.selectedOrder();
-    if (!order) return false;
-    return this.ordersService.isCancellable(order.status);
+  canCancelOrder(): boolean {
+    return this.selectedOrder()?.canCancel ?? false;
   }
 
-  canCancelOrder(): boolean {
-    return this.canCancelInfo()?.canCancel ?? false;
+  cancelNotAllowedReason(): string | null {
+    return this.selectedOrder()?.cancelReason ?? null;
   }
 }
