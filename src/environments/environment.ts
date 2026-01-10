@@ -17,6 +17,6 @@ export const environment = {
     'basket-api': 'https://lontray.art/basket-api',
     'pricing-api': 'https://lontray.art/pricing-api',
     'ordering-api': 'https://lontray.art/ordering-api',
-    bff: 'https://lontray.art/bff',
+    bff: 'https://lontray.art/bff-web',
   },
 };
