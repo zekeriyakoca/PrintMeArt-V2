@@ -44,10 +44,20 @@
         <div class="summary-sticky">
           <app-order-summary [cartItems]="cartItems()">
             <order-button>
-              <button class="confirm-btn" (click)="confirmOrder()" [disabled]="!isFormValid()">
+              <button class="confirm-btn" (click)="confirmOrder()" [disabled]="!isFormValid() || isProcessing()">
+                @if (isProcessing()) {
+                <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+                Processing...
+                } @else {
                 <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
-                Confirm Order
+                Proceed to Payment
                 <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
+                }
               </button>
             </order-button>
             <order-info>
@@ -61,8 +71,8 @@
                   <span>Buyer protection</span>
                 </div>
               </div>
-              <p class="legal-text">By placing your order, you agree to our <a href="#">Terms of Service</a> and <a
-                  href="#">Privacy Policy</a>.</p>
+              <p class="legal-text">By placing your order, you agree to our <a href="/legal">Terms of Service</a> and <a
+                  href="/legal">Privacy Policy</a>.</p>
             </order-info>
           </app-order-summary>
         </div>

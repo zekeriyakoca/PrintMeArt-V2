@@ -14,6 +14,8 @@ import { HowWeWorkComponent } from './pages/how-we-work/how-we-work.component';
 import { LegalComponent } from './pages/legal/legal.component';
 import { LicensingComponent } from './pages/licensing/licensing.component';
 import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
+import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -73,5 +75,13 @@ export const routes: Routes = [
   {
     path: 'order-confirmation',
     component: OrderConfirmationComponent,
+  },
+  {
+    path: 'checkout/success',
+    component: PaymentSuccessComponent,
+  },
+  {
+    path: 'checkout/cancel',
+    component: PaymentCancelComponent,
   },
 ];

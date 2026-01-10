@@ -2,18 +2,25 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   HostBinding,
+  inject,
   Input,
+  PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CheckoutUserInfoComponent } from '../../components/checkout-user-info/checkout-user-info.component';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
 import { Router, RouterLink } from '@angular/router';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
-import { ApiService } from '../../services/api/api.service';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
+import {
+  CheckoutService,
+  CreateOrderFromDraftDto,
+} from '../../services/checkout/checkout.service';
+import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
   selector: 'app-checkout',
@@ -30,8 +37,17 @@ import { CheckoutUserInfo } from '../../models/checkout-user-info';
 })
 export class CheckoutComponent extends BasePageComponent {
   @Input() @HostBinding('class') class: string = '';
+
+  private readonly checkoutService = inject(CheckoutService);
+  private readonly cartService = inject(CartService);
+  private readonly router = inject(Router);
+  private readonly toastService = inject(ToastService);
+  private readonly platformId = inject(PLATFORM_ID);
+
   cartItems = signal<CartItemDto[]>([]);
   isFormValid = signal<boolean>(false);
+  isProcessing = signal<boolean>(false);
+  currentOrderId = signal<number | null>(null);
 
   userDetails: CheckoutUserInfo = {
     firstName: '',
@@ -44,29 +60,36 @@ export class CheckoutComponent extends BasePageComponent {
     addressDetails: '',
   };
 
-  constructor(
-    private apiService: ApiService,
-    private cartService: CartService,
-    private router: Router,
-  ) {
+  constructor() {
     super();
     this.cartItems = this.cartService.cart;
   }
 
   ngOnInit() {
-    this.apiService.createDraftOrder().subscribe(() => {
-      console.log('Draft order created');
+    // Create draft order when entering checkout
+    this.checkoutService.createDraftOrder().subscribe({
+      next: (response) => {
+        this.currentOrderId.set(response.orderId);
+        console.log('Draft order created:', response.orderId);
+      },
+      error: (err) => {
+        console.error('Failed to create draft order:', err);
+        this.toastService.error(
+          'Failed to initialize checkout. Please try again.',
+        );
+      },
     });
   }
 
-  prepareOrderData() {
+  private prepareOrderData(): CreateOrderFromDraftDto {
     return {
       customerFullName: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
       customerEmail: this.userDetails.email,
       shipmentAddress: {
         city: this.userDetails.city,
-        street: this.userDetails.addressDetails,
-        state: this.userDetails.country,
+        street:
+          `${this.userDetails.houseNumber} ${this.userDetails.addressDetails}`.trim(),
+        state: '',
         country: this.userDetails.country,
         zipCode: this.userDetails.postalCode,
       },
@@ -74,10 +97,61 @@ export class CheckoutComponent extends BasePageComponent {
   }
 
   confirmOrder() {
+    if (!this.isFormValid() || this.isProcessing()) {
+      return;
+    }
+
+    this.isProcessing.set(true);
+
     const orderData = this.prepareOrderData();
-    this.apiService.submitOrder(orderData).subscribe(() => {
-      console.log('Order confirmed');
-      this.router.navigate(['/order-confirmation']);
+
+    // Step 1: Create order from draft with shipping details
+    this.checkoutService.createOrderFromDraft(orderData).subscribe({
+      next: (orderResponse) => {
+        console.log('Order created:', orderResponse.orderId);
+
+        // Step 2: Initiate Stripe checkout
+        this.checkoutService
+          .initiateCheckout({
+            orderId: orderResponse.orderId,
+            customerEmail: this.userDetails.email,
+            currency: 'EUR',
+          })
+          .subscribe({
+            next: (checkoutResponse) => {
+              console.log('Checkout initiated:', checkoutResponse);
+
+              // Store session ID for verification after redirect
+              if (isPlatformBrowser(this.platformId)) {
+                sessionStorage.setItem(
+                  'checkoutSessionId',
+                  checkoutResponse.sessionId,
+                );
+                sessionStorage.setItem('checkoutEmail', this.userDetails.email);
+              }
+
+              // Redirect to Stripe checkout
+              if (checkoutResponse.checkoutUrl) {
+                window.location.href = checkoutResponse.checkoutUrl;
+              } else {
+                this.isProcessing.set(false);
+                this.toastService.error('Failed to create checkout session.');
+              }
+            },
+            error: (err) => {
+              console.error('Checkout initiation failed:', err);
+              this.isProcessing.set(false);
+              this.toastService.error(
+                'Failed to initiate payment. Please try again.',
+              );
+            },
+          });
+      },
+      error: (err) => {
+        console.error('Order creation failed:', err);
+        this.isProcessing.set(false);
+        this.toastService.error('Failed to create order. Please try again.');
+      },
     });
   }
 }

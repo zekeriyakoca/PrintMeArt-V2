@@ -128,4 +128,48 @@ export class ApiService {
       filterBody,
     );
   }
+
+  // ============ Stripe Checkout ============
+
+  /**
+   * Initiate Stripe checkout and get redirect URL
+   */
+  initiateCheckout(data: {
+    orderId: number;
+    customerEmail: string;
+    currency: string;
+  }): Observable<{ checkoutUrl: string; sessionId: string }> {
+    if (this.isSSR) {
+      return of({ checkoutUrl: '', sessionId: '' });
+    }
+    return this._httpClient.post<{ checkoutUrl: string; sessionId: string }>(
+      `${this.BFF_URL}/bff/v1/ordering/checkout`,
+      data,
+    );
+  }
+
+  /**
+   * Get checkout session status (used after Stripe redirect)
+   */
+  getCheckoutSession(sessionId: string): Observable<{
+    sessionId: string;
+    status: 'open' | 'complete' | 'expired';
+    paymentStatus: 'unpaid' | 'paid' | 'no_payment_required';
+    customerEmail?: string;
+    orderId?: number;
+    orderNumber?: string;
+    amountTotal?: number;
+    currency?: string;
+  }> {
+    if (this.isSSR) {
+      return of({
+        sessionId: '',
+        status: 'expired' as const,
+        paymentStatus: 'unpaid' as const,
+      });
+    }
+    return this._httpClient.get<any>(
+      `${this.BFF_URL}/bff/v1/ordering/checkout/${sessionId}`,
+    );
+  }
 }

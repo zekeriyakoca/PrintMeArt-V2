@@ -153,4 +153,28 @@ export class CartService {
       },
     });
   }
+
+  /**
+   * Clear the entire cart (used after successful payment)
+   */
+  clearCart(): void {
+    this.telemetry.trackEvent('cart_clear', {
+      itemCount: this.cart().length,
+    });
+
+    this.cart.set([]);
+
+    if (!this.isSSR) {
+      this.updateCartOnBackend([]).subscribe({
+        next: () => console.log('Cart cleared successfully'),
+        error: (error) => {
+          this.telemetry.trackException(error, {
+            operation: 'updateCartOnBackend',
+            action: 'clearCart',
+          });
+          console.error('Error clearing cart:', error);
+        },
+      });
+    }
+  }
 }

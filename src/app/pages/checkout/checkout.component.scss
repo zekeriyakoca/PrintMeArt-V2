@@ -2,10 +2,6 @@
   min-height: 100vh;
   background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
   padding: 6rem 2rem 1rem;
-
-  @media (min-width: 768px) {
-    padding: 12rem 2rem 8rem;
-  }
 }
 
 .checkout-container {
