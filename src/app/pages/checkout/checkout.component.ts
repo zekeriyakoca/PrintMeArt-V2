@@ -69,8 +69,7 @@ export class CheckoutComponent extends BasePageComponent {
     // Create draft order when entering checkout
     this.checkoutService.createDraftOrder().subscribe({
       next: (response) => {
-        this.currentOrderId.set(response.orderId);
-        console.log('Draft order created:', response.orderId);
+        console.log('Draft order created');
       },
       error: (err) => {
         console.error('Failed to create draft order:', err);

@@ -1,36 +1,56 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-export type OrderStatus =
+// Backend status enum values
+export type BackendOrderStatus =
+  | 'PendingForPayment'
+  | 'PaymentFailed'
+  | 'Paid'
+  | 'AwaitingValidation'
+  | 'StockConfirmed'
+  | 'Shipped'
+  | 'Delivered'
+  | 'Completed'
+  | 'Cancelled'
+  | 'Returning'
+  | 'Returned'
+  | 'RefundRequested'
+  | 'Refunded';
+
+// UI status groups for tabs
+export type OrderStatusGroup =
+  | 'all'
   | 'pending'
-  | 'confirmed'
   | 'processing'
   | 'shipped'
   | 'delivered'
   | 'cancelled';
 
-export interface OrderItem {
-  id: string;
-  productId: string;
+export interface OrderItemDto {
+  id: number;
+  productId: number;
   productName: string;
-  productImage?: string;
-  quantity: number;
+  pictureUrl?: string;
   unitPrice: number;
+  quantity: number;
   totalPrice: number;
-  selectedOptions?: { name: string; value: string }[];
+  selectedOptions?: { optionName: string; optionValue: string }[];
 }
 
-export interface Order {
-  id: string;
+export interface OrderDto {
+  id: number;
   orderNumber: string;
-  status: OrderStatus;
-  items: OrderItem[];
+  status: BackendOrderStatus;
+  statusDisplayName: string;
+  items: OrderItemDto[];
   subtotal: number;
   shippingCost: number;
   tax: number;
   total: number;
+  currency: string;
   shippingAddress: {
     fullName: string;
     street: string;
@@ -44,87 +64,208 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   estimatedDelivery?: string;
+  customerEmail: string;
 }
 
 export interface OrdersResponse {
-  data: Order[];
-  total: number;
-  page: number;
+  data: OrderDto[];
+  totalCount: number;
+  pageIndex: number;
   pageSize: number;
+  totalPages: number;
 }
+
+export interface CanCancelResponse {
+  canCancel: boolean;
+  reason?: string;
+}
+
+export interface CancelOrderRequest {
+  reason?: string;
+}
+
+// Status group mapping for UI tabs
+export const STATUS_GROUP_MAP: Record<OrderStatusGroup, BackendOrderStatus[]> =
+  {
+    all: [],
+    pending: ['PendingForPayment', 'PaymentFailed'],
+    processing: ['Paid', 'AwaitingValidation', 'StockConfirmed'],
+    shipped: ['Shipped'],
+    delivered: ['Delivered', 'Completed'],
+    cancelled: [
+      'Cancelled',
+      'Returning',
+      'Returned',
+      'RefundRequested',
+      'Refunded',
+    ],
+  };
+
+// Cancellable statuses
+export const CANCELLABLE_STATUSES: BackendOrderStatus[] = [
+  'PendingForPayment',
+  'PaymentFailed',
+  'Paid',
+  'AwaitingValidation',
+];
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.serviceUrls['ordering-api'];
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly bffUrl = environment.serviceUrls['bff'];
+
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
 
   /**
    * Get paginated list of orders for the current user
    */
-  getOrders(page = 1, pageSize = 10): Observable<OrdersResponse> {
-    // TODO: Implement API call
-    // return this.http.get<OrdersResponse>(`${this.baseUrl}/orders`, {
-    //   params: { page: page.toString(), pageSize: pageSize.toString() },
-    // });
-    return of({ data: [], total: 0, page, pageSize });
+  getOrders(
+    params: {
+      status?: OrderStatusGroup;
+      pageIndex?: number;
+      pageSize?: number;
+      searchTerm?: string;
+    } = {},
+  ): Observable<OrdersResponse> {
+    if (!this.isBrowser) {
+      return of({
+        data: [],
+        totalCount: 0,
+        pageIndex: 0,
+        pageSize: 10,
+        totalPages: 0,
+      });
+    }
+
+    let httpParams = new HttpParams();
+
+    if (params.status && params.status !== 'all') {
+      httpParams = httpParams.set('status', params.status);
+    }
+    if (params.pageIndex !== undefined) {
+      httpParams = httpParams.set('pageIndex', params.pageIndex.toString());
+    }
+    if (params.pageSize !== undefined) {
+      httpParams = httpParams.set('pageSize', params.pageSize.toString());
+    }
+    if (params.searchTerm) {
+      httpParams = httpParams.set('searchTerm', params.searchTerm);
+    }
+
+    return this.http.get<OrdersResponse>(
+      `${this.bffUrl}/bff/v1/ordering/orders`,
+      { params: httpParams },
+    );
   }
 
   /**
    * Get a single order by ID
    */
-  getOrder(orderId: string): Observable<Order> {
-    // TODO: Implement API call
-    // return this.http.get<Order>(`${this.baseUrl}/orders/${orderId}`);
-    return of({} as Order);
+  getOrder(orderId: number): Observable<OrderDto> {
+    if (!this.isBrowser) {
+      return of({} as OrderDto);
+    }
+    return this.http.get<OrderDto>(
+      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}`,
+    );
   }
 
   /**
-   * Cancel an order (only allowed for pending/confirmed orders)
+   * Check if an order can be cancelled
    */
-  cancelOrder(orderId: string): Observable<Order> {
-    // TODO: Implement API call
-    // return this.http.post<Order>(`${this.baseUrl}/orders/${orderId}/cancel`, {});
-    return of({} as Order);
+  canCancelOrder(orderId: number): Observable<CanCancelResponse> {
+    if (!this.isBrowser) {
+      return of({ canCancel: false });
+    }
+    return this.http.get<CanCancelResponse>(
+      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}/can-cancel`,
+    );
   }
 
   /**
-   * Request a return for a delivered order
+   * Cancel an order
    */
-  requestReturn(
-    orderId: string,
-    reason: string,
-    itemIds?: string[],
-  ): Observable<void> {
-    // TODO: Implement API call
-    // return this.http.post<void>(`${this.baseUrl}/orders/${orderId}/return`, {
-    //   reason,
-    //   itemIds,
-    // });
-    return of(undefined);
+  cancelOrder(orderId: number, reason?: string): Observable<void> {
+    if (!this.isBrowser) {
+      return of(undefined);
+    }
+    const body: CancelOrderRequest = reason ? { reason } : {};
+    return this.http.post<void>(
+      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}/cancel`,
+      body,
+    );
   }
 
   /**
-   * Reorder — add all items from an existing order to cart
+   * Get display color classes for a status
    */
-  reorder(orderId: string): Observable<void> {
-    // TODO: Implement API call
-    // return this.http.post<void>(`${this.baseUrl}/orders/${orderId}/reorder`, {});
-    return of(undefined);
+  getStatusColor(status: BackendOrderStatus): string {
+    const colorMap: Record<string, string> = {
+      // Pending group - yellow/amber
+      PendingForPayment: 'bg-amber-100 text-amber-800',
+      PaymentFailed: 'bg-red-100 text-red-800',
+      // Processing group - blue/indigo
+      Paid: 'bg-blue-100 text-blue-800',
+      AwaitingValidation: 'bg-indigo-100 text-indigo-800',
+      StockConfirmed: 'bg-violet-100 text-violet-800',
+      // Shipped - purple
+      Shipped: 'bg-purple-100 text-purple-800',
+      // Delivered group - green
+      Delivered: 'bg-green-100 text-green-800',
+      Completed: 'bg-emerald-100 text-emerald-800',
+      // Cancelled group - gray/red
+      Cancelled: 'bg-slate-100 text-slate-600',
+      Returning: 'bg-orange-100 text-orange-800',
+      Returned: 'bg-slate-200 text-slate-700',
+      RefundRequested: 'bg-rose-100 text-rose-800',
+      Refunded: 'bg-slate-100 text-slate-600',
+    };
+    return colorMap[status] || 'bg-slate-100 text-slate-600';
   }
 
   /**
-   * Get order tracking info
+   * Get status group for a backend status
    */
-  getTracking(orderId: string): Observable<{
-    trackingNumber?: string;
-    trackingUrl?: string;
-    status: string;
-    events: { date: string; description: string; location?: string }[];
-  }> {
-    // TODO: Implement API call
-    // return this.http.get(`${this.baseUrl}/orders/${orderId}/tracking`);
-    return of({ status: '', events: [] });
+  getStatusGroup(status: BackendOrderStatus): OrderStatusGroup {
+    for (const [group, statuses] of Object.entries(STATUS_GROUP_MAP)) {
+      if (statuses.includes(status)) {
+        return group as OrderStatusGroup;
+      }
+    }
+    return 'all';
+  }
+
+  /**
+   * Check if status is in a cancellable state (client-side check)
+   */
+  isCancellable(status: BackendOrderStatus): boolean {
+    return CANCELLABLE_STATUSES.includes(status);
+  }
+
+  /**
+   * Format status for display (spaces and readable format)
+   */
+  formatStatusDisplay(status: BackendOrderStatus): string {
+    const displayMap: Record<BackendOrderStatus, string> = {
+      PendingForPayment: 'Pending Payment',
+      PaymentFailed: 'Payment Failed',
+      Paid: 'Paid',
+      AwaitingValidation: 'Validating',
+      StockConfirmed: 'Confirmed',
+      Shipped: 'Shipped',
+      Delivered: 'Delivered',
+      Completed: 'Completed',
+      Cancelled: 'Cancelled',
+      Returning: 'Returning',
+      Returned: 'Returned',
+      RefundRequested: 'Refund Requested',
+      Refunded: 'Refunded',
+    };
+    return displayMap[status] || status;
   }
 }

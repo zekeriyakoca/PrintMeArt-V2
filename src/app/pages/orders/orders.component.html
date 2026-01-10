@@ -1,20 +1,46 @@
 <div class="margin-header min-h-screen bg-slate-50">
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-20">
+  <div class="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
-    <div class="mb-10 text-center">
+    <div class="mb-8">
       <h1 class="text-3xl font-bold tracking-tight text-slate-900">My Orders</h1>
       <p class="mt-2 text-slate-600">Track and manage your purchases</p>
     </div>
 
-    <!-- Filters -->
-    <div class="mb-8 flex flex-wrap justify-center gap-2">
-      @for (filter of filterOptions; track filter) {
-      <button type="button" (click)="setFilter(filter)" [class]="activeFilter() === filter
-            ? 'rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white'
-            : 'rounded-full bg-white px-5 py-2 text-sm font-medium text-slate-600 shadow-sm hover:bg-slate-100'">
-        {{ filter === 'all' ? 'All' : (filter | titlecase) }}
-      </button>
+    <!-- Search and Filters Bar -->
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <!-- Search -->
+      <div class="relative w-full sm:max-w-xs">
+        <input type="text" placeholder="Search orders..." [value]="searchTerm()" (input)="onSearchInput($event)"
+          class="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200" />
+        <app-icon iconName="search"
+          class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"></app-icon>
+        @if (searchTerm()) {
+        <button type="button" (click)="clearSearch()"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+          <app-icon iconName="close" class="h-4 w-4"></app-icon>
+        </button>
+        }
+      </div>
+
+      <!-- Results count -->
+      @if (!isLoading() && totalCount() > 0) {
+      <p class="text-sm text-slate-500">{{ currentPageRange() }}</p>
       }
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-6 -mx-4 px-4 overflow-x-auto">
+      <div class="flex gap-1 min-w-max border-b border-slate-200">
+        @for (tab of tabs; track tab.key) {
+        <button type="button" (click)="setTab(tab.key)"
+          [class]="activeTab() === tab.key
+              ? 'flex items-center gap-2 px-4 py-3 text-sm font-semibold text-slate-900 border-b-2 border-slate-900 -mb-px'
+              : 'flex items-center gap-2 px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px'">
+          <app-icon [iconName]="tab.icon" class="h-4 w-4"></app-icon>
+          {{ tab.label }}
+        </button>
+        }
+      </div>
     </div>
 
     <!-- Loading -->
@@ -22,88 +48,108 @@
     <div class="flex justify-center py-20">
       <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900"></div>
     </div>
-    } @else if (filteredOrders().length === 0) {
+    } @else if (!hasOrders()) {
     <!-- Empty State -->
-    <div class="rounded-3xl bg-white py-20 text-center shadow-xl shadow-slate-200/50">
+    <div class="rounded-2xl bg-white py-16 text-center shadow-sm">
       <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
         <app-icon iconName="shopping-bag" class="h-10 w-10 text-slate-400"></app-icon>
       </div>
+      @if (searchTerm()) {
+      <h2 class="text-xl font-semibold text-slate-900">No orders found</h2>
+      <p class="mt-2 text-slate-500">Try a different search term</p>
+      <button type="button" (click)="clearSearch()"
+        class="mt-6 inline-flex items-center gap-2 rounded-xl bg-slate-100 px-6 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200">
+        Clear search
+      </button>
+      } @else if (activeTab() !== 'all') {
+      <h2 class="text-xl font-semibold text-slate-900">No {{ activeTab() }} orders</h2>
+      <p class="mt-2 text-slate-500">You don't have any orders in this category</p>
+      <button type="button" (click)="setTab('all')"
+        class="mt-6 inline-flex items-center gap-2 rounded-xl bg-slate-100 px-6 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200">
+        View all orders
+      </button>
+      } @else {
       <h2 class="text-xl font-semibold text-slate-900">No orders yet</h2>
       <p class="mt-2 text-slate-500">Your order history will appear here</p>
       <a routerLink="/products"
-        class="mt-8 inline-block rounded-xl bg-slate-900 px-8 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+        class="mt-6 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">
         Start Shopping
+        <app-icon iconName="arrow-right" class="h-4 w-4"></app-icon>
       </a>
+      }
     </div>
     } @else {
     <!-- Orders List -->
     <div class="space-y-4">
-      @for (order of filteredOrders(); track order.id) {
+      @for (order of orders(); track order.id) {
       <div
-        class="cursor-pointer overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-200/50 transition-all hover:shadow-xl"
+        class="cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:shadow-md border border-slate-100"
         (click)="viewOrder(order)">
         <!-- Order Header -->
-        <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-semibold text-slate-900">#{{ order.orderNumber }}</span>
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-sm font-bold text-slate-900">#{{ order.orderNumber }}</span>
             <span [class]="'rounded-full px-3 py-1 text-xs font-semibold ' + getStatusColor(order.status)">
-              {{ order.status | titlecase }}
+              {{ formatStatus(order.status) }}
             </span>
           </div>
-          <span class="text-lg font-bold text-slate-900">{{ formatCurrency(order.total) }}</span>
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-slate-500">{{ formatDate(order.createdAt) }}</span>
+            <span class="text-lg font-bold text-slate-900">{{ formatCurrency(order.total, order.currency) }}</span>
+          </div>
         </div>
 
         <!-- Order Content -->
-        <div class="p-6">
+        <div class="p-5">
           <div class="flex items-center gap-4">
             <!-- Product Images -->
             <div class="flex -space-x-3">
               @for (item of order.items.slice(0, 3); track item.id; let i = $index) {
-              <div class="h-14 w-14 overflow-hidden rounded-xl border-2 border-white bg-slate-100"
+              <div class="h-14 w-14 overflow-hidden rounded-xl border-2 border-white bg-slate-100 shadow-sm"
                 [style.z-index]="3 - i">
-                @if (item.productImage) {
-                <img [src]="item.productImage" [alt]="item.productName" class="h-full w-full object-cover" />
+                @if (item.pictureUrl) {
+                <img [src]="item.pictureUrl" [alt]="item.productName" class="h-full w-full object-cover" />
+                } @else {
+                <div class="flex h-full w-full items-center justify-center">
+                  <app-icon iconName="image" class="h-6 w-6 text-slate-300"></app-icon>
+                </div>
                 }
               </div>
               }
               @if (order.items.length > 3) {
               <div
-                class="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-white bg-slate-900 text-xs font-semibold text-white">
+                class="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-white bg-slate-800 text-xs font-semibold text-white shadow-sm">
                 +{{ order.items.length - 3 }}
               </div>
               }
             </div>
 
             <!-- Order Info -->
-            <div class="flex-1">
-              <p class="text-sm font-medium text-slate-900">
-                {{ order.items[0].productName }}
+            <div class="flex-1 min-w-0">
+              <p class="truncate text-sm font-medium text-slate-900">
+                {{ order.items[0]?.productName || 'Order items' }}
                 @if (order.items.length > 1) {
                 <span class="text-slate-400">+{{ order.items.length - 1 }} more</span>
                 }
               </p>
-              <p class="mt-1 text-sm text-slate-500">{{ formatDate(order.createdAt) }}</p>
+              <p class="mt-1 text-sm text-slate-500">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : ''
+                }}</p>
             </div>
 
             <!-- Arrow -->
-            <app-icon iconName="chevron-right" class="h-5 w-5 text-slate-400"></app-icon>
+            <app-icon iconName="chevron-right" class="h-5 w-5 flex-shrink-0 text-slate-400"></app-icon>
           </div>
 
-          <!-- Quick Actions -->
-          @if (order.status === 'shipped' || order.status === 'delivered') {
-          <div class="mt-4 flex gap-3 border-t border-slate-100 pt-4">
+          <!-- Quick Actions for shipped/delivered -->
+          @if (order.status === 'Shipped' || order.status === 'Delivered' || order.status === 'Completed') {
+          <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
             @if (order.trackingUrl) {
             <a [href]="order.trackingUrl" target="_blank" rel="noopener"
-              class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200"
               (click)="$event.stopPropagation()">
-              Track
+              <app-icon iconName="truck" class="h-3.5 w-3.5"></app-icon>
+              Track Package
             </a>
-            }
-            @if (order.status === 'delivered') {
-            <button class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-              (click)="reorder(order.id); $event.stopPropagation()">
-              Buy again
-            </button>
             }
           </div>
           }
@@ -111,6 +157,37 @@
       </div>
       }
     </div>
+
+    <!-- Pagination -->
+    @if (showPagination()) {
+    <div class="mt-8 flex items-center justify-center gap-2">
+      <button type="button" (click)="prevPage()" [disabled]="!hasPrevPage()"
+        class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100">
+        <app-icon iconName="chevron-left" class="h-4 w-4"></app-icon>
+        Previous
+      </button>
+
+      <div class="flex items-center gap-1">
+        @for (page of [].constructor(totalPages()); track $index) {
+        @if ($index < 3 || $index>= totalPages() - 2 || ($index >= pageIndex() - 1 && $index <= pageIndex() + 1)) {
+            <button type="button" (click)="goToPage($index)" [class]="pageIndex() === $index
+                ? 'h-9 w-9 rounded-lg bg-slate-900 text-sm font-semibold text-white'
+                : 'h-9 w-9 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100'">
+            {{ $index + 1 }}
+            </button>
+            } @else if ($index === 3 || $index === totalPages() - 3) {
+            <span class="px-1 text-slate-400">...</span>
+            }
+            }
+      </div>
+
+      <button type="button" (click)="nextPage()" [disabled]="!hasNextPage()"
+        class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100">
+        Next
+        <app-icon iconName="chevron-right" class="h-4 w-4"></app-icon>
+      </button>
+    </div>
+    }
     }
   </div>
 </div>
@@ -119,99 +196,214 @@
 @if (selectedOrder(); as order) {
 <div class="fixed inset-0 z-50 flex items-center justify-center p-4" (click)="closeOrderDetail()">
   <!-- Backdrop -->
-  <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
 
   <!-- Modal -->
-  <div class="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
+  <div class="relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col"
     (click)="$event.stopPropagation()">
     <!-- Header -->
-    <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+    <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4 flex-shrink-0">
       <div>
         <h2 class="text-lg font-bold text-slate-900">Order #{{ order.orderNumber }}</h2>
-        <p class="text-sm text-slate-500">{{ formatDate(order.createdAt) }}</p>
+        <p class="text-sm text-slate-500">{{ formatDateTime(order.createdAt) }}</p>
       </div>
-      <button type="button" class="rounded-full p-2 hover:bg-slate-100" (click)="closeOrderDetail()">
+      <button type="button" class="rounded-full p-2 hover:bg-slate-100 transition-colors" (click)="closeOrderDetail()">
         <app-icon iconName="close" class="h-5 w-5 text-slate-500"></app-icon>
       </button>
     </div>
 
-    <!-- Status -->
-    <div class="bg-slate-50 px-6 py-4">
-      <span [class]="'rounded-full px-4 py-1.5 text-sm font-semibold ' + getStatusColor(order.status)">
-        {{ order.status | titlecase }}
-      </span>
-      @if (order.estimatedDelivery && order.status !== 'delivered' && order.status !== 'cancelled') {
-      <p class="mt-2 text-sm text-slate-600">Arriving {{ formatDate(order.estimatedDelivery) }}</p>
-      }
+    <!-- Loading State -->
+    @if (isLoadingDetail()) {
+    <div class="flex justify-center py-12">
+      <div class="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900"></div>
     </div>
-
-    <!-- Items -->
-    <div class="max-h-64 overflow-y-auto px-6 py-4">
-      @for (item of order.items; track item.id) {
-      <div class="flex gap-4 py-3">
-        <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-slate-100">
-          @if (item.productImage) {
-          <img [src]="item.productImage" [alt]="item.productName" class="h-full w-full object-cover" />
+    } @else {
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto">
+      <!-- Status Banner -->
+      <div class="bg-slate-50 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <span [class]="'rounded-full px-4 py-1.5 text-sm font-semibold ' + getStatusColor(order.status)">
+            {{ formatStatus(order.status) }}
+          </span>
+          @if (order.estimatedDelivery && order.status !== 'Delivered' && order.status !== 'Completed' && order.status
+          !== 'Cancelled') {
+          <p class="text-sm text-slate-600">
+            Est. delivery: {{ formatDate(order.estimatedDelivery) }}
+          </p>
           }
         </div>
-        <div class="flex-1">
-          <p class="font-medium text-slate-900">{{ item.productName }}</p>
-          <p class="text-sm text-slate-500">Qty: {{ item.quantity }}</p>
+        @if (order.trackingNumber) {
+        <div class="mt-3 flex items-center gap-2 text-sm">
+          <span class="text-slate-500">Tracking:</span>
+          <span class="font-medium text-slate-700">{{ order.trackingNumber }}</span>
+          @if (order.trackingUrl) {
+          <a [href]="order.trackingUrl" target="_blank" rel="noopener"
+            class="text-blue-600 hover:text-blue-700 underline">
+            Track
+          </a>
+          }
         </div>
-        <p class="font-semibold text-slate-900">{{ formatCurrency(item.totalPrice) }}</p>
+        }
+      </div>
+
+      <!-- Items -->
+      <div class="px-6 py-4">
+        <h3 class="text-xs font-semibold uppercase text-slate-400 mb-3">Items</h3>
+        <div class="space-y-3">
+          @for (item of order.items; track item.id) {
+          <div class="flex gap-4">
+            <div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100">
+              @if (item.pictureUrl) {
+              <img [src]="item.pictureUrl" [alt]="item.productName" class="h-full w-full object-cover" />
+              } @else {
+              <div class="flex h-full w-full items-center justify-center">
+                <app-icon iconName="image" class="h-6 w-6 text-slate-300"></app-icon>
+              </div>
+              }
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-slate-900 truncate">{{ item.productName }}</p>
+              <p class="text-sm text-slate-500">Qty: {{ item.quantity }} × {{ formatCurrency(item.unitPrice,
+                order.currency) }}</p>
+              @if (item.selectedOptions?.length) {
+              <p class="text-xs text-slate-400 mt-0.5">
+                @for (opt of item.selectedOptions; track opt.optionName; let last = $last) {
+                {{ opt.optionValue }}{{ last ? '' : ', ' }}
+                }
+              </p>
+              }
+            </div>
+            <p class="font-semibold text-slate-900">{{ formatCurrency(item.totalPrice, order.currency) }}</p>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="border-t border-slate-100 bg-slate-50 px-6 py-4">
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Subtotal</span>
+            <span>{{ formatCurrency(order.subtotal, order.currency) }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Shipping</span>
+            <span>{{ formatCurrency(order.shippingCost, order.currency) }}</span>
+          </div>
+          @if (order.tax > 0) {
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Tax</span>
+            <span>{{ formatCurrency(order.tax, order.currency) }}</span>
+          </div>
+          }
+          <div class="flex justify-between border-t border-slate-200 pt-2 text-base font-bold">
+            <span>Total</span>
+            <span>{{ formatCurrency(order.total, order.currency) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Address -->
+      @if (order.shippingAddress) {
+      <div class="border-t border-slate-100 px-6 py-4">
+        <h3 class="text-xs font-semibold uppercase text-slate-400 mb-2">Ship to</h3>
+        <p class="text-sm text-slate-700">
+          {{ order.shippingAddress.fullName }}<br />
+          {{ order.shippingAddress.street }}<br />
+          {{ order.shippingAddress.postalCode }} {{ order.shippingAddress.city }}<br />
+          {{ order.shippingAddress.country }}
+        </p>
       </div>
       }
-    </div>
 
-    <!-- Summary -->
-    <div class="border-t border-slate-100 bg-slate-50 px-6 py-4">
-      <div class="flex justify-between text-sm">
-        <span class="text-slate-500">Subtotal</span>
-        <span>{{ formatCurrency(order.subtotal) }}</span>
+      <!-- Contact -->
+      @if (order.customerEmail) {
+      <div class="border-t border-slate-100 px-6 py-4">
+        <h3 class="text-xs font-semibold uppercase text-slate-400 mb-2">Contact</h3>
+        <p class="text-sm text-slate-700">{{ order.customerEmail }}</p>
       </div>
-      <div class="mt-1 flex justify-between text-sm">
-        <span class="text-slate-500">Shipping</span>
-        <span>{{ formatCurrency(order.shippingCost) }}</span>
-      </div>
-      <div class="mt-1 flex justify-between text-sm">
-        <span class="text-slate-500">Tax</span>
-        <span>{{ formatCurrency(order.tax) }}</span>
-      </div>
-      <div class="mt-3 flex justify-between border-t border-slate-200 pt-3 text-base font-bold">
-        <span>Total</span>
-        <span>{{ formatCurrency(order.total) }}</span>
-      </div>
-    </div>
-
-    <!-- Shipping -->
-    <div class="border-t border-slate-100 px-6 py-4">
-      <p class="text-xs font-semibold uppercase text-slate-400">Ship to</p>
-      <p class="mt-1 text-sm text-slate-700">
-        {{ order.shippingAddress.fullName }} · {{ order.shippingAddress.street }}, {{ order.shippingAddress.city
-        }}
-      </p>
+      }
     </div>
 
     <!-- Actions -->
-    <div class="flex gap-3 border-t border-slate-100 px-6 py-4">
-      @if (order.status === 'pending' || order.status === 'confirmed') {
-      <button class="flex-1 rounded-xl border border-red-200 py-3 text-sm font-semibold text-red-600 hover:bg-red-50"
-        (click)="cancelOrder(order.id)">
-        Cancel
+    <div class="flex gap-3 border-t border-slate-100 px-6 py-4 flex-shrink-0 bg-white">
+      @if (canShowCancelButton()) {
+      @if (canCancelOrder()) {
+      <button type="button" (click)="openCancelModal()"
+        class="flex-1 rounded-xl border border-red-200 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">
+        Cancel Order
       </button>
+      } @else if (canCancelInfo()?.reason) {
+      <p class="flex-1 text-center text-sm text-slate-500 py-3">{{ canCancelInfo()?.reason }}</p>
       }
-      @if (order.status === 'delivered') {
-      <button class="flex-1 rounded-xl bg-slate-900 py-3 text-sm font-semibold text-white hover:bg-slate-800"
-        (click)="reorder(order.id)">
-        Buy again
-      </button>
       }
       @if (order.trackingUrl) {
-      <a [href]="order.trackingUrl" target="_blank"
-        class="flex-1 rounded-xl bg-slate-100 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-200">
-        Track
+      <a [href]="order.trackingUrl" target="_blank" rel="noopener"
+        class="flex-1 rounded-xl bg-slate-900 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+        Track Package
       </a>
       }
+      @if (!canShowCancelButton() && !order.trackingUrl) {
+      <button type="button" (click)="closeOrderDetail()"
+        class="flex-1 rounded-xl bg-slate-100 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-200 transition-colors">
+        Close
+      </button>
+      }
+    </div>
+    }
+  </div>
+</div>
+}
+
+<!-- Cancel Confirmation Modal -->
+@if (showCancelModal()) {
+<div class="fixed inset-0 z-[60] flex items-center justify-center p-4" (click)="closeCancelModal()">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-slate-900/70 backdrop-blur-sm"></div>
+
+  <!-- Modal -->
+  <div class="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl" (click)="$event.stopPropagation()">
+    <div class="mb-6 text-center">
+      <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+        <app-icon iconName="close" class="h-7 w-7 text-red-600"></app-icon>
+      </div>
+      <h3 class="text-lg font-bold text-slate-900">Cancel Order?</h3>
+      <p class="mt-2 text-sm text-slate-500">
+        Are you sure you want to cancel order #{{ selectedOrder()?.orderNumber }}? This action cannot be undone.
+      </p>
+    </div>
+
+    <!-- Reason Input -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-slate-700 mb-1.5">
+        Reason for cancellation <span class="text-slate-400 font-normal">(optional)</span>
+      </label>
+      <textarea rows="3" placeholder="Let us know why you're cancelling..." [ngModel]="cancelReason()"
+        (ngModelChange)="cancelReason.set($event)"
+        class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 resize-none"></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-3">
+      <button type="button" (click)="closeCancelModal()" [disabled]="isCancelling()"
+        class="flex-1 rounded-xl border border-slate-200 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50">
+        Keep Order
+      </button>
+      <button type="button" (click)="confirmCancel()" [disabled]="isCancelling()"
+        class="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+        @if (isCancelling()) {
+        <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+          </path>
+        </svg>
+        Cancelling...
+        } @else {
+        Cancel Order
+        }
+      </button>
     </div>
   </div>
 </div>

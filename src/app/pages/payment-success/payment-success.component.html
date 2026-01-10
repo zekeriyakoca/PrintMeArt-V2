@@ -82,7 +82,7 @@
                         <span>Continue Shopping</span>
                         <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
                     </a>
-                    <a routerLink="/orders"
+                    <a routerLink="/orders" [queryParams]="{ status: 'processing' }"
                         class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 px-6 rounded-xl transition-colors">
                         <app-icon iconName="order" class="w-4 h-4"></app-icon>
                         <span>View Order History</span>

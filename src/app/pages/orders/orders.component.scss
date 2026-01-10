@@ -1,0 +1,100 @@
+// Orders Component Styles
+
+// Animation for modal entry
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+// Modal backdrop animation
+@keyframes backdrop-enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+// Apply animations to modals
+.fixed.inset-0 {
+    animation: backdrop-enter 0.2s ease-out;
+
+    >.relative {
+        animation: modal-enter 0.25s ease-out;
+    }
+}
+
+// Tab scrollbar styling (hide on mobile)
+.overflow-x-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// Improve touch targets on mobile
+@media (max-width: 640px) {
+
+    button,
+    a {
+        min-height: 44px;
+    }
+}
+
+// Pagination number input styling
+.pagination-input {
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+// Order card hover state
+.cursor-pointer {
+    &:hover {
+        .order-arrow {
+            transform: translateX(2px);
+        }
+    }
+}
+
+// Search input clear button animation
+button[type="button"] {
+    &.absolute {
+        transition: opacity 0.15s ease;
+    }
+}
+
+// Smooth status badge transitions
+[class*="rounded-full"][class*="px-3"] {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+// Modal content scroll shadow
+.overflow-y-auto {
+    background:
+        linear-gradient(white 30%, rgba(255, 255, 255, 0)),
+        linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+        radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0)) 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+}
