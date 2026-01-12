@@ -1,87 +1,85 @@
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-4">
-    <div class="max-w-lg mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <!-- Cancel Header -->
-            <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-10 text-center">
-                <div
-                    class="w-20 h-20 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Payment Cancelled</h1>
-                <p class="text-amber-100">Your order has not been processed</p>
-            </div>
+  <div class="max-w-lg mx-auto">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Cancel Header -->
+      <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-10 text-center">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Payment Cancelled</h1>
+        <p class="text-amber-100">Your order has not been processed</p>
+      </div>
 
-            <!-- Content -->
-            <div class="p-8">
-                <div class="text-center mb-8">
-                    <p class="text-slate-600 mb-4">
-                        No worries! Your payment was cancelled and you have not been charged.
-                        Your cart items are still saved.
-                    </p>
-                    <p class="text-sm text-slate-500">
-                        If you experienced any issues during checkout, please don't hesitate to contact us.
-                    </p>
-                </div>
-
-                <!-- Why Section -->
-                <div class="bg-slate-50 rounded-xl p-5 mb-8">
-                    <h3 class="font-semibold text-slate-800 mb-3">What happened?</h3>
-                    <ul class="space-y-2 text-sm text-slate-600">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>You clicked "Cancel" or closed the payment window</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>The payment session may have expired</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>There was a temporary issue with the payment provider</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex flex-col gap-3">
-                    <a routerLink="/checkout"
-                        class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 px-6 rounded-xl transition-colors">
-                        <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
-                        <span>Return to Checkout</span>
-                    </a>
-                    <a routerLink="/cart"
-                        class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 px-6 rounded-xl transition-colors">
-                        <app-icon iconName="cart" class="w-5 h-5"></app-icon>
-                        <span>View Cart</span>
-                    </a>
-                    <a routerLink="/products"
-                        class="w-full flex items-center justify-center text-slate-500 hover:text-slate-700 font-medium py-2 transition-colors">
-                        <span>Continue Shopping</span>
-                    </a>
-                </div>
-            </div>
+      <!-- Content -->
+      <div class="p-8">
+        <div class="text-center mb-8">
+          <p class="text-slate-600 mb-4">
+            No worries! Your payment was cancelled and you have not been charged.
+            Your cart items are still saved.
+          </p>
+          <p class="text-sm text-slate-500">
+            If you experienced any issues during checkout, please don't hesitate to contact us.
+          </p>
         </div>
 
-        <!-- Support Info -->
-        <div class="mt-6 text-center">
-            <p class="text-sm text-slate-500">
-                Need help? <a routerLink="/about" class="text-slate-700 underline hover:text-slate-900">Contact us</a>
-            </p>
+        <!-- Why Section -->
+        <div class="bg-slate-50 rounded-xl p-5 mb-8">
+          <h3 class="font-semibold text-slate-800 mb-3">What happened?</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>You clicked "Cancel" or closed the payment window</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>The payment session may have expired</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>There was a temporary issue with the payment provider</span>
+            </li>
+          </ul>
         </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col gap-3">
+          <a routerLink="/checkout"
+            class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 px-6 rounded-xl transition-colors">
+            <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
+            <span>Return to Checkout</span>
+          </a>
+          <a routerLink="/cart"
+            class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 px-6 rounded-xl transition-colors cursor-pointer">
+            <app-icon iconName="cart" class="w-5 h-5"></app-icon>
+            <span>View Cart</span>
+          </a>
+          <a routerLink="/products"
+            class="w-full flex items-center justify-center text-slate-500 hover:text-slate-700 font-medium py-2 transition-colors">
+            <span>Continue Shopping</span>
+          </a>
+        </div>
+      </div>
     </div>
+
+    <!-- Support Info -->
+    <div class="mt-6 text-center">
+      <p class="text-sm text-slate-500">
+        Need help? <a routerLink="/about" class="text-slate-700 underline hover:text-slate-900">Contact us</a>
+      </p>
+    </div>
+  </div>
 </div>

@@ -7,7 +7,7 @@
       @for (tab of tabs(); track tab.name) {
       <button type="button" (click)="setTab(tab.name)"
         class="px-3 py-1 md:px-8 md:py-3 rounded-full transition-colors whitespace-nowrap flex items-center space-x-2 text-sm"
-        [class]="tabActive() === tab.name ? 'bg-slate-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'">
+        [class]="tabActive() === tab.name ? 'bg-slate-900 text-white' : 'text-neutral-600 hover:bg-neutral-100 cursor-pointer'">
         <app-icon [iconName]="tab.iconName" class="w-5 h-5" />
         <span>{{ tab.name }}</span>
       </button>

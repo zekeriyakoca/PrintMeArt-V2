@@ -8,13 +8,13 @@
     <!-- Header -->
     <div class="flex items-center justify-between px-4 py-3 bg-indigo-50 border-b border-indigo-100">
       <div class="flex items-center gap-2">
-        <div class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center">
+        <div class="w-6 h-6 rounded-full bg-[#384f8c] flex items-center justify-center">
           <app-icon iconName="check" class="w-4 h-4 text-white"></app-icon>
         </div>
-        <span class="font-medium text-indigo-900 text-sm">Added to cart</span>
+        <span class="font-medium text-[#384f8c] text-sm">Added to cart</span>
       </div>
       <button type="button"
-        class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors"
+        class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors cursor-pointer"
         (click)="close()">
         <app-icon iconName="close" class="w-4 h-4"></app-icon>
       </button>
@@ -55,12 +55,12 @@
     <!-- Actions -->
     <div class="px-4 pb-4 flex gap-2">
       <button type="button"
-        class="flex-1 py-2.5 px-3 rounded-full border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors"
+        class="flex-1 py-2.5 px-3 rounded-full border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
         (click)="continueShopping()">
         Continue
       </button>
       <button type="button"
-        class="flex-1 py-2.5 px-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
+        class="flex-1 py-2.5 px-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
         (click)="viewCart()">
         <app-icon iconName="shopping-cart" class="w-4 h-4"></app-icon>
         View Cart ({{ cartItemCount() }})
