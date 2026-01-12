@@ -112,13 +112,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     });
   }
 
-  setQuantity(change: number) {
-    this.quantity.update((currentQuantity) => {
-      const newQuantity = currentQuantity + change;
-      return Math.max(newQuantity, 1);
-    });
-  }
-
   calculatePrice() {
     const selectedOptions = this.getSelectedOptions();
 

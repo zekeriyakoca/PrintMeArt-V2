@@ -62,8 +62,8 @@
   </ul>
 
   <!-- Add to cart -->
-  <button type="button" [class.disabled]="!hasAllOptionsSelected()" [disabled]="!hasAllOptionsSelected()"
-    (click)="addToCart()" class="add-to-cart-btn">
+  <button type="button" [class.disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
+    [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0" (click)="addToCart()" class="add-to-cart-btn">
     <app-icon iconName="cart"></app-icon>
     <span>Add to cart</span>
   </button>

@@ -1,12 +1,9 @@
 <div class="language-dropdown relative">
   <button type="button" (click)="toggleDropdown()"
-    class="flex items-center gap-1.5 h-10 sm:h-12 px-3 py-1.5 rounded-full text-sm text-slate-700 font-medium hover:bg-slate-100 transition-colors focus:outline-none">
+    class="flex items-center gap-1.5 h-10 sm:h-12 px-3 py-1.5 rounded-full text-sm text-slate-700 font-medium hover:bg-slate-100 transition-colors focus:outline-none cursor-pointer">
     <app-icon iconName="world" class="w-[18px] h-[18px] opacity-80"></app-icon>
     <span class="uppercase">{{ languageService.currentLanguageCode() }}</span>
-    <app-icon 
-      iconName="chevron-down" 
-      class="w-4 h-4 transition-transform duration-200"
-      [class.-rotate-180]="isOpen()">
+    <app-icon iconName="chevron-down" class="w-4 h-4 transition-transform duration-200" [class.-rotate-180]="isOpen()">
     </app-icon>
   </button>
 
@@ -15,7 +12,7 @@
     <div class="grid grid-cols-2 gap-8">
       @for (language of languageService.availableLanguages; track language.code) {
       <button type="button" (click)="selectLanguage(language)"
-        class="flex items-center p-3 -m-3 rounded-lg transition duration-150 ease-in-out hover:bg-slate-100 focus:outline-none"
+        class="flex items-center p-3 -m-3 rounded-lg transition duration-150 ease-in-out hover:bg-slate-100 focus:outline-none cursor-pointer"
         [class.bg-slate-100]="languageService.isCurrentLanguage(language.code)"
         [class.opacity-80]="!languageService.isCurrentLanguage(language.code)">
         <div class="text-left whitespace-nowrap">
