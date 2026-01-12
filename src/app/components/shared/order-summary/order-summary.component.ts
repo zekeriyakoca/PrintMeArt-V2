@@ -1,6 +1,7 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { CartItemDto } from '../../../models/cart-item';
 import { CurrencyPipe } from '@angular/common';
+import { Bootstrap } from '../../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-order-summary',
@@ -10,7 +11,13 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class OrderSummaryComponent {
   cartItems = input<CartItemDto[]>([]);
-  shippingFee = computed(() => (this.itemsTotal() >= 50 ? 0 : 5.99));
+  shippingFee = computed(() => {
+    const shippingInfo = this.bootstrap.shippingInfo();
+    const shippingFee = shippingInfo?.shippingFee ?? 4.95;
+    return this.itemsTotal() >= shippingInfo?.freeShippingThreshold
+      ? 0
+      : shippingFee;
+  });
   taxRate = 0.08;
 
   itemsTotal = computed(() => {
@@ -30,4 +37,6 @@ export class OrderSummaryComponent {
   totalPriceWithTax = computed(
     () => this.itemsTotal() + (this.shippingFee() ?? 0),
   );
+
+  constructor(private bootstrap: Bootstrap) {}
 }
