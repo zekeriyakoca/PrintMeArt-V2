@@ -15,7 +15,7 @@ export class CommonApiService {
 
     return this._httpClient
       .post<string>(
-        `${environment.serviceUrls['catalog-api']}/catalog/v1/image/upload`,
+        `${environment.serviceUrls['catalog-api']}/catalog/v1/images/upload`,
         formData,
       )
       .pipe(

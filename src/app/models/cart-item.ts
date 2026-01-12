@@ -25,3 +25,21 @@ export interface SelectedOptionDto {
   spec5?: string;
   name?: string;
 }
+
+/**
+ * Options that should not be displayed in the cart UI
+ * (internal options used for backend tracking)
+ */
+const HIDDEN_OPTION_NAMES = ['CustomProductUrl'];
+
+/**
+ * Filters out internal options that shouldn't be displayed in the cart UI
+ */
+export function getDisplayableOptions(
+  options: SelectedOptionDto[] | undefined,
+): SelectedOptionDto[] {
+  if (!options) return [];
+  return options.filter(
+    (opt) => !HIDDEN_OPTION_NAMES.includes(opt.optionName || opt.name || ''),
+  );
+}

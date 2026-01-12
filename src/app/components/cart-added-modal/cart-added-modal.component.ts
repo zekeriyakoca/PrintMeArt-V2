@@ -10,6 +10,10 @@ import {
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { IconComponent } from '../shared/icon/icon.component';
+import {
+  SelectedOptionDto,
+  getDisplayableOptions,
+} from '../../models/cart-item';
 
 @Component({
   selector: 'app-cart-added-modal',
@@ -34,6 +38,13 @@ export class CartAddedModalComponent implements OnDestroy {
       .cart()
       .reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
   );
+
+  /** Filter out internal options like CustomProductUrl */
+  getDisplayOptions(
+    options: SelectedOptionDto[] | undefined,
+  ): SelectedOptionDto[] {
+    return getDisplayableOptions(options);
+  }
 
   constructor() {
     effect(() => {

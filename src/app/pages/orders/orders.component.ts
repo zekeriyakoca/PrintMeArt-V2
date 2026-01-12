@@ -21,6 +21,9 @@ import { ToastService } from '../../services/toast/toast.service';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
+/** Options that should not be displayed in the orders UI (internal options) */
+const HIDDEN_OPTION_NAMES = ['CustomProductUrl'];
+
 interface TabConfig {
   key: OrderStatusGroup;
   label: string;
@@ -317,6 +320,21 @@ export class OrdersComponent implements OnInit {
     }
 
     return '';
+  }
+
+  /** Filter out internal options like CustomProductUrl from display */
+  getDisplayableOptions(options: unknown[]): unknown[] {
+    if (!options) return [];
+    return options.filter((opt) => {
+      if (!opt || typeof opt !== 'object') return true;
+      const anyOpt = opt as Record<string, unknown>;
+      const optionName =
+        anyOpt['optionName'] ?? anyOpt['name'] ?? anyOpt['optionValue'];
+      if (typeof optionName === 'string') {
+        return !HIDDEN_OPTION_NAMES.includes(optionName);
+      }
+      return true;
+    });
   }
 
   getImagePlaceholders(itemCount: number): number[] {

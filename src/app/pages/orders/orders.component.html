@@ -249,9 +249,9 @@
             <div class="flex-1 min-w-0">
               <p class="font-medium text-slate-900 truncate">{{ item.productName }}</p>
               <p class="text-sm text-slate-500">Qty: {{ item.units }} × {{ formatCurrency(item.unitPrice) }}</p>
-              @if (item.selectedOptions.length) {
+              @if (getDisplayableOptions(item.selectedOptions).length) {
               <p class="text-xs text-slate-400 mt-0.5">
-                @for (opt of item.selectedOptions; track $index; let last = $last) {
+                @for (opt of getDisplayableOptions(item.selectedOptions); track $index; let last = $last) {
                 {{ formatSelectedOption(opt) }}{{ last ? '' : ', ' }}
                 }
               </p>

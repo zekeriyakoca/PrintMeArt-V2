@@ -1,5 +1,9 @@
 import { Component, model, output } from '@angular/core';
-import { CartItemDto } from '../../models/cart-item';
+import {
+  CartItemDto,
+  SelectedOptionDto,
+  getDisplayableOptions,
+} from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { IconComponent } from '../shared/icon/icon.component';
 
@@ -15,6 +19,11 @@ export class CartItemComponent {
   cartItemChanged = output();
 
   constructor(private cartService: CartService) {}
+
+  /** Get displayable options (filters out internal options like CustomProductUrl) */
+  get displayOptions(): SelectedOptionDto[] {
+    return getDisplayableOptions(this.cartItem()?.selectedOptions);
+  }
 
   removeItem() {
     if (this.cartItem()?.id) {

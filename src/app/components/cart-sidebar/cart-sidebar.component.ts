@@ -7,7 +7,11 @@ import {
 
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
-import { CartItemDto } from '../../models/cart-item';
+import {
+  CartItemDto,
+  SelectedOptionDto,
+  getDisplayableOptions,
+} from '../../models/cart-item';
 import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
@@ -35,6 +39,11 @@ export class CartSidebarComponent {
   cartItemCount = computed(() =>
     this.cartItems().reduce((sum, item) => sum + item.quantity, 0),
   );
+
+  /** Filter out internal options like CustomProductUrl */
+  getDisplayOptions(options: SelectedOptionDto[] | undefined): SelectedOptionDto[] {
+    return getDisplayableOptions(options);
+  }
 
   close(): void {
     this.cartService.closeCartSidebar();

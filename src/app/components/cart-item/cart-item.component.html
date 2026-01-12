@@ -10,11 +10,10 @@
     </div>
 
     <div class="item-options">
-      @if (cartItem()?.selectedOptions?.[0]?.optionName) {
-      <span class="option-tag">{{ cartItem()?.selectedOptions?.[0]?.optionName }}</span>
-      }
-      @if (cartItem()?.selectedOptions?.[1]?.optionName) {
-      <span class="option-tag">{{ cartItem()?.selectedOptions?.[1]?.optionName }}</span>
+      @for (option of displayOptions; track option.optionId; let i = $index) {
+        @if (i < 3) {
+          <span class="option-tag">{{ option.optionName || option.name }}</span>
+        }
       }
     </div>
 

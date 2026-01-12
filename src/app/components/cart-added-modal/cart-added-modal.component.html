@@ -36,9 +36,9 @@
           </h3>
 
           <!-- Selected Options -->
-          @if (addedItem()!.selectedOptions?.length) {
+          @if (getDisplayOptions(addedItem()!.selectedOptions).length) {
           <div class="mt-1 text-xs text-slate-500 truncate">
-            @for (option of addedItem()!.selectedOptions; track option.optionId; let last = $last) {
+            @for (option of getDisplayOptions(addedItem()!.selectedOptions); track option.optionId; let last = $last) {
             <span>{{ option.optionName || option.name }}{{ last ? '' : ', ' }}</span>
             }
           </div>

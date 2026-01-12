@@ -1,5 +1,5 @@
 import { SizeOption } from './../../models/size-option';
-import { Component, computed, model, output, signal } from '@angular/core';
+import { Component, computed, input, model, output, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -14,6 +14,7 @@ import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
 import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
 import { AppInsightsService } from '../../services/telemetry/app-insights.service';
+import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -35,6 +36,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   product = model<ProductDto>({} as ProductDto);
   isMatIncluded = model<boolean>(false);
+  /** Custom image URL for custom design products (uploaded to backend) */
+  customImageUrl = input<string | null>(null);
 
   onSelectedFrameChanged = output<string>();
 
@@ -44,6 +47,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     private apiService: ApiService,
     private cartService: CartService,
     private telemetry: AppInsightsService,
+    private toastService: ToastService,
   ) {
     super();
   }
@@ -65,7 +69,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     );
     const isFrameSelected = frameGroup?.selectedOptionId !== undefined;
 
-    const isAllSelected = isFrameSelected && this.selectedSize();
+    // For custom products, require uploaded image URL
+    const isCustomProduct = this.product().hasCustomOptions;
+    const hasCustomProductDetails = this.product().optionGroups.some(
+      (g) => g.name === 'CustomProductDetails',
+    );
+    const needsImageUrl = isCustomProduct && hasCustomProductDetails;
+    const hasImageUrl = !needsImageUrl || !!this.customImageUrl();
+
+    const isAllSelected = isFrameSelected && this.selectedSize() && hasImageUrl;
 
     if (isAllSelected) {
       this.calculatePrice();
@@ -136,6 +148,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   addToCart() {
     if (!this.hasAllOptionsSelected()) {
+      // Check if it's specifically missing the custom image
+      const hasCustomProductDetails = this.product().optionGroups.some(
+        (g) => g.name === 'CustomProductDetails',
+      );
+      if (hasCustomProductDetails && !this.customImageUrl()) {
+        this.toastService.error(
+          'Please wait for your image to finish uploading before adding to cart.',
+        );
+      }
       this.telemetry.trackEvent('add_to_cart_blocked', {
         productId: this.product().id,
         reason: 'missing_options',
@@ -143,13 +164,18 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return;
     }
 
+    // Determine picture URL: use custom image URL for custom products, otherwise use product image
+    const customUrl = this.customImageUrl();
+    const productImages = this.product().images;
+    const pictureUrl = customUrl || (productImages && productImages.length > 0 ? productImages[0].thumb : '');
+
     this.cartService.addItemToCart(
       this.product().id,
       this.variantId,
       this.product().name,
       this.calculatedPrice(),
       this.quantity(),
-      this.product().images[0].thumb,
+      pictureUrl,
       this.getSelectedOptions(),
     );
   }
@@ -196,6 +222,27 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       spec1: size.val1.toString(),
       spec2: size.val2.toString(),
     } as SelectedOptionDto);
+
+    // Add CustomProductDetails option with uploaded image URL for custom products
+    const customImageUrl = this.customImageUrl();
+    if (customImageUrl) {
+      const customProductDetailsGroup = this.product().optionGroups.find(
+        (group) => group.name === 'CustomProductDetails',
+      );
+      if (customProductDetailsGroup) {
+        const customProductUrlOption = customProductDetailsGroup.options.find(
+          (opt) => opt.value === 'CustomProductUrl',
+        );
+        if (customProductUrlOption) {
+          selectedOptions.push({
+            optionId: customProductUrlOption.id,
+            optionName: 'CustomProductUrl',
+            spec1: customImageUrl,
+          } as SelectedOptionDto);
+        }
+      }
+    }
+
     return selectedOptions;
   }
 }

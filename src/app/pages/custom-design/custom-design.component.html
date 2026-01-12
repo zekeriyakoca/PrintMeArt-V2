@@ -7,7 +7,11 @@
       <!-- Left Section - Upload & Preview -->
       <div class="w-full md:w-8/12">
         <!-- Upload Section -->
-        <app-custom-design-upload (imageUrlSelected)="onImageUrlSelected($event)"></app-custom-design-upload>
+        <app-custom-design-upload 
+          (imageUrlSelected)="onImageUrlSelected($event)"
+          (imageUploaded)="onImageUploaded($event)"
+          (uploadError)="onUploadError($event)">
+        </app-custom-design-upload>
 
         <!-- Preview Section -->
         <app-custom-design-preview [imageUrl]="imageUrl()" [isMatIncluded]="isMatIncluded()"
@@ -17,6 +21,7 @@
         <!-- Purchase Sidebar (mobile only, after preview) -->
         <div class="md:hidden mt-8">
           <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+            [customImageUrl]="uploadedImageUrl()"
             (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
         </div>
       </div>
@@ -24,6 +29,7 @@
       <!-- Purchase Sidebar (md+ only, right column) -->
       <div class="hidden md:block w-full md:w-4/12">
         <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+          [customImageUrl]="uploadedImageUrl()"
           (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
       </div>
     </div>

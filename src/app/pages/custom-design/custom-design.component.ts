@@ -1,5 +1,5 @@
 import { ApiService } from './../../services/api/api.service';
-import { Component, signal, computed, OnDestroy } from '@angular/core';
+import { Component, signal, computed, OnDestroy, inject } from '@angular/core';
 
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
@@ -9,6 +9,7 @@ import { CustomDesignPreviewComponent } from '../../components/custom-design-pre
 import { FrameOptions } from '../../shared/constants';
 import { CustomDesignCtaComponent } from '../../components/custom-design-cta/custom-design-cta.component';
 import { CustomDesignHowItWorksComponent } from '../../components/custom-design-how-it-works/custom-design-how-it-works.component';
+import { ToastService } from '../../services/toast/toast.service';
 
 export interface DesignSize {
   id: number;
@@ -34,6 +35,7 @@ export class CustomDesignComponent
   implements OnDestroy
 {
   readonly PRODUCTID = 719; // Custom design product ID
+  private readonly toastService = inject(ToastService);
 
   constructor(private apiService: ApiService) {
     super();
@@ -50,7 +52,10 @@ export class CustomDesignComponent
   }
 
   isMatIncluded = signal<boolean>(false);
+  /** Local blob URL for preview display */
   imageUrl = signal<string | null>(null);
+  /** Permanent URL from backend storage for cart/order */
+  uploadedImageUrl = signal<string | null>(null);
   customProduct = signal<ProductDto>({} as ProductDto);
   selectedFrameName = signal<string>('Rolled-up');
 
@@ -71,12 +76,22 @@ export class CustomDesignComponent
 
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
+    // Reset uploaded URL when new image is selected
+    this.uploadedImageUrl.set(null);
 
     if (!url) {
       return;
     }
 
     this.setMetadataForCustomProduct(url);
+  }
+
+  onImageUploaded(uploadedUrl: string): void {
+    this.uploadedImageUrl.set(uploadedUrl);
+  }
+
+  onUploadError(errorMessage: string): void {
+    this.toastService.error(errorMessage);
   }
 
   private setMetadataForCustomProduct(url: string) {
