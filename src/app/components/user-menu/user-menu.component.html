@@ -1,6 +1,6 @@
 <div class="relative">
   <button type="button"
-    class="flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center"
+    class="flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center cursor-pointer"
     (click)="toggle()" aria-haspopup="menu" [attr.aria-expanded]="isOpen()">
     @if (isAuthenticated() && user()?.profilePictureUrl) {
     <img [src]="user()!.profilePictureUrl!" [alt]="user()!.name" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"

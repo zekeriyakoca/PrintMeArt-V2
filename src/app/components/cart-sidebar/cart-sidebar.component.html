@@ -15,7 +15,7 @@
         </p>
       </div>
       <button type="button"
-        class="w-10 h-10 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+        class="w-10 h-10 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
         (click)="close()">
         <app-icon iconName="close" class="w-5 h-5"></app-icon>
       </button>
@@ -28,7 +28,8 @@
     <div class="flex flex-col items-center justify-center h-full text-center px-6">
       <app-icon iconName="empty-bag" class="w-16 h-16 text-slate-300 mb-4"></app-icon>
       <p class="text-slate-500 text-sm">Your bag is empty</p>
-      <button type="button" class="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-700" (click)="close()">
+      <button type="button" class="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-700 cursor-pointer"
+        (click)="close()">
         Continue Shopping
       </button>
     </div>
@@ -49,7 +50,7 @@
                 {{ item.productName }}
               </h3>
               <button type="button"
-                class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-slate-600"
+                class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-slate-600 cursor-pointer"
                 (click)="removeItem(item.id)">
                 <app-icon iconName="close" class="w-4 h-4"></app-icon>
               </button>
@@ -68,13 +69,13 @@
               <!-- Quantity -->
               <div class="flex items-center border border-slate-200 rounded-full">
                 <button type="button"
-                  class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-l-full transition-colors"
+                  class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-l-full transition-colors cursor-pointer"
                   (click)="updateQuantity(item, -1)">
                   <app-icon iconName="minus" class="w-3 h-3"></app-icon>
                 </button>
                 <span class="w-8 text-center text-sm font-medium text-slate-900">{{ item.quantity }}</span>
                 <button type="button"
-                  class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-r-full transition-colors"
+                  class="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-100 rounded-r-full transition-colors cursor-pointer"
                   (click)="updateQuantity(item, 1)">
                   <app-icon iconName="plus" class="w-3 h-3"></app-icon>
                 </button>
@@ -101,12 +102,12 @@
       <!-- Buttons -->
       <div class="space-y-3 pt-2">
         <button type="button"
-          class="w-full py-3.5 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-800 transition-colors"
+          class="w-full py-3.5 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
           (click)="goToCheckout()">
           Checkout
         </button>
         <button type="button"
-          class="w-full py-3 px-4 text-slate-700 font-medium text-sm hover:text-slate-900 transition-colors"
+          class="w-full py-3 px-4 text-slate-700 font-medium text-sm hover:text-slate-900 transition-colors cursor-pointer"
           (click)="goToCart()">
           View Full Cart
         </button>

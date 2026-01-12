@@ -37,4 +37,8 @@ export class CartItemComponent {
     this.cartService.updateCartOnBackend(updatedCart).subscribe();
     this.cartItemChanged.emit();
   }
+
+  goToProduct() {
+    window.location.href = `/products/${this.cartItem()?.productId}`;
+  }
 }
