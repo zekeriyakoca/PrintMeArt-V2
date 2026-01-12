@@ -21,6 +21,7 @@ import {
   CreateOrderFromDraftDto,
 } from '../../services/checkout/checkout.service';
 import { ToastService } from '../../services/toast/toast.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-checkout',
@@ -43,6 +44,7 @@ export class CheckoutComponent extends BasePageComponent {
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly authService = inject(AuthenticationService);
 
   cartItems = signal<CartItemDto[]>([]);
   isFormValid = signal<boolean>(false);
@@ -66,6 +68,14 @@ export class CheckoutComponent extends BasePageComponent {
   }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.userDetails = {
+        ...this.userDetails,
+        email: this.authService.currentUser()?.email || '',
+        firstName: this.authService.currentUser()?.name.split(' ')[0] || '',
+        lastName: this.authService.currentUser()?.name.split(' ')[1] || '',
+      };
+    }
     // Create draft order when entering checkout
     this.checkoutService.createDraftOrder().subscribe({
       next: (response) => {

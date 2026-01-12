@@ -16,6 +16,7 @@ import { LicensingComponent } from './pages/licensing/licensing.component';
 import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
+import { AuthenticationGuard } from './services/authentication/authentication.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -59,6 +60,7 @@ export const routes: Routes = [
   {
     path: 'orders',
     component: OrdersComponent,
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'how-we-work',
