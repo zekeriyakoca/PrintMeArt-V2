@@ -11,6 +11,7 @@ import { AppInsightsService } from './services/telemetry/app-insights.service';
 import { GoogleAnalyticsService } from './services/telemetry/google-analytics.service';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
+import { Bootstrap } from './services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,7 @@ export class AppComponent {
     private router: Router,
     private telemetry: AppInsightsService,
     private googleAnalytics: GoogleAnalyticsService,
+    private bootstrap: Bootstrap,
   ) {}
 
   ngOnInit() {
@@ -42,6 +44,7 @@ export class AppComponent {
     this.googleAnalytics.init();
     this.cartService.fetchCartItems();
     this.setupScrollToTop();
+    this.bootstrap.fetchShippingInfo();
   }
 
   private setupScrollToTop(): void {

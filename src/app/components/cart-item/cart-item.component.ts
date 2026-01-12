@@ -19,16 +19,22 @@ export class CartItemComponent {
   removeItem() {
     if (this.cartItem()?.id) {
       this.cartService.removeItemFromCart(this.cartItem()?.id);
+      this.cartItemChanged.emit();
     }
   }
 
   changeQuantity(change: number) {
-    this.cartItemChanged.emit();
-    this.cartItem.update((x) => {
-      if (x) {
-        x.quantity += change;
+    const updatedCart = this.cartService.cart().map((item) => {
+      if (item.id === this.cartItem()?.id) {
+        return {
+          ...item,
+          quantity: item.quantity + change,
+        };
       }
-      return x;
+      return item;
     });
+
+    this.cartService.updateCartOnBackend(updatedCart).subscribe();
+    this.cartItemChanged.emit();
   }
 }
