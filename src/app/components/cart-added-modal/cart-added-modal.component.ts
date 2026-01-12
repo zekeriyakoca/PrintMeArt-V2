@@ -6,14 +6,10 @@ import {
   effect,
   OnDestroy,
 } from '@angular/core';
-
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { IconComponent } from '../shared/icon/icon.component';
-import {
-  SelectedOptionDto,
-  getDisplayableOptions,
-} from '../../models/cart-item';
+import { getDisplayableOptions } from '../../models/cart-item';
 
 @Component({
   selector: 'app-cart-added-modal',
@@ -24,14 +20,13 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartAddedModalComponent implements OnDestroy {
-  private router = inject(Router);
-  private cartService = inject(CartService);
+  private readonly router = inject(Router);
+  private readonly cartService = inject(CartService);
   private autoHideTimeout: ReturnType<typeof setTimeout> | null = null;
   private isPaused = false;
 
   isVisible = this.cartService.showCartNotification;
   addedItem = this.cartService.lastAddedItem;
-
   cartItemCount = computed(() => this.cartService.cart().length);
   cartTotal = computed(() =>
     this.cartService
@@ -40,11 +35,7 @@ export class CartAddedModalComponent implements OnDestroy {
   );
 
   /** Filter out internal options like CustomProductUrl */
-  getDisplayOptions(
-    options: SelectedOptionDto[] | undefined,
-  ): SelectedOptionDto[] {
-    return getDisplayableOptions(options);
-  }
+  getDisplayOptions = getDisplayableOptions;
 
   constructor() {
     effect(() => {

@@ -4,14 +4,9 @@ import {
   computed,
   inject,
 } from '@angular/core';
-
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
-import {
-  CartItemDto,
-  SelectedOptionDto,
-  getDisplayableOptions,
-} from '../../models/cart-item';
+import { CartItemDto, getDisplayableOptions } from '../../models/cart-item';
 import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
@@ -23,27 +18,23 @@ import { IconComponent } from '../shared/icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartSidebarComponent {
-  private router = inject(Router);
-  private cartService = inject(CartService);
+  private readonly router = inject(Router);
+  private readonly cartService = inject(CartService);
 
   isOpen = this.cartService.isCartSidebarOpen;
   cartItems = this.cartService.cart;
-
   cartTotal = computed(() =>
     this.cartItems().reduce(
       (sum, item) => sum + item.unitPrice * item.quantity,
       0,
     ),
   );
-
   cartItemCount = computed(() =>
     this.cartItems().reduce((sum, item) => sum + item.quantity, 0),
   );
 
   /** Filter out internal options like CustomProductUrl */
-  getDisplayOptions(options: SelectedOptionDto[] | undefined): SelectedOptionDto[] {
-    return getDisplayableOptions(options);
-  }
+  getDisplayOptions = getDisplayableOptions;
 
   close(): void {
     this.cartService.closeCartSidebar();

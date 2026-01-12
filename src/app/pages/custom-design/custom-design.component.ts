@@ -1,6 +1,4 @@
-import { ApiService } from './../../services/api/api.service';
 import { Component, signal, computed, OnDestroy, inject } from '@angular/core';
-
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { ProductDto } from '../../models/product';
@@ -10,12 +8,7 @@ import { FrameOptions } from '../../shared/constants';
 import { CustomDesignCtaComponent } from '../../components/custom-design-cta/custom-design-cta.component';
 import { CustomDesignHowItWorksComponent } from '../../components/custom-design-how-it-works/custom-design-how-it-works.component';
 import { ToastService } from '../../services/toast/toast.service';
-
-export interface DesignSize {
-  id: number;
-  name: string;
-  multiplier: number;
-}
+import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-custom-design',
@@ -25,8 +18,8 @@ export interface DesignSize {
     CustomDesignUploadComponent,
     CustomDesignPreviewComponent,
     CustomDesignCtaComponent,
-    CustomDesignHowItWorksComponent
-],
+    CustomDesignHowItWorksComponent,
+  ],
   templateUrl: './custom-design.component.html',
   styleUrl: './custom-design.component.scss',
 })
@@ -34,93 +27,73 @@ export class CustomDesignComponent
   extends BasePageComponent
   implements OnDestroy
 {
-  readonly PRODUCTID = 719; // Custom design product ID
+  private readonly PRODUCT_ID = 719;
+  private readonly apiService = inject(ApiService);
   private readonly toastService = inject(ToastService);
 
-  constructor(private apiService: ApiService) {
-    super();
-  }
+  // State
+  isMatIncluded = signal(false);
+  imageUrl = signal<string | null>(null);
+  uploadedImageUrl = signal<string | null>(null);
+  customProduct = signal<ProductDto>({} as ProductDto);
+  selectedFrameName = signal('Rolled-up');
+
+  // Computed
+  isRolledUp = computed(() => this.selectedFrameName() === 'Rolled-up');
+
+  selectedFrameMaskUrl = computed(() => {
+    if (this.isRolledUp()) return null;
+    const frame = FrameOptions.find((f) => f.name === this.selectedFrameName());
+    return frame
+      ? this.isMatIncluded()
+        ? frame.mask
+        : frame.maskWithoutMat
+      : null;
+  });
 
   ngOnInit(): void {
     this.apiService
-      .getProductById(this.PRODUCTID.toString())
+      .getProductById(this.PRODUCT_ID.toString())
       .subscribe((product) => {
-        if (product) {
-          this.customProduct.set(product);
-        }
+        if (product) this.customProduct.set(product);
       });
   }
 
-  isMatIncluded = signal<boolean>(false);
-  /** Local blob URL for preview display */
-  imageUrl = signal<string | null>(null);
-  /** Permanent URL from backend storage for cart/order */
-  uploadedImageUrl = signal<string | null>(null);
-  customProduct = signal<ProductDto>({} as ProductDto);
-  selectedFrameName = signal<string>('Rolled-up');
-
-  selectedFrameMaskUrl = computed<string | null>(() => {
-    if (this.selectedFrameName() === 'Rolled-up') {
-      return null;
-    }
-
-    const frame = FrameOptions.find(
-      (frame) => frame.name === this.selectedFrameName(),
-    )!;
-
-    var url = this.isMatIncluded() ? frame.mask : frame.maskWithoutMat;
-    return url;
-  });
-
-  isRolledUp = computed(() => this.selectedFrameName() === 'Rolled-up');
-
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
-    // Reset uploaded URL when new image is selected
     this.uploadedImageUrl.set(null);
-
-    if (!url) {
-      return;
-    }
-
-    this.setMetadataForCustomProduct(url);
+    if (url) this.setMetadataFromImage(url);
   }
 
-  onImageUploaded(uploadedUrl: string): void {
-    this.uploadedImageUrl.set(uploadedUrl);
+  onImageUploaded(url: string): void {
+    this.uploadedImageUrl.set(url);
   }
 
-  onUploadError(errorMessage: string): void {
-    this.toastService.error(errorMessage);
-  }
-
-  private setMetadataForCustomProduct(url: string) {
-    const img = new Image();
-    img.onload = () => {
-      const w = Number(img.naturalWidth);
-      const h = Number(img.naturalHeight);
-      if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
-        return;
-      }
-
-      this.customProduct.update(
-        (current) =>
-          ({
-            ...current,
-            metadata: {
-              ...(current.metadata as any),
-              OriginalImageWidth: String(w),
-              OriginalImageHeight: String(h),
-              IsHorizontal: w >= h ? 'true' : 'false',
-            },
-          }) as ProductDto,
-      );
-    };
-
-    img.src = url;
+  onUploadError(message: string): void {
+    this.toastService.error(message);
   }
 
   onSelectedFrameChanged(frameName: string): void {
     this.selectedFrameName.set(frameName);
+  }
+
+  private setMetadataFromImage(url: string): void {
+    const img = new Image();
+    img.onload = () => {
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+      if (w > 0 && h > 0) {
+        this.customProduct.update((p) => ({
+          ...p,
+          metadata: {
+            ...p.metadata,
+            OriginalImageWidth: String(w),
+            OriginalImageHeight: String(h),
+            IsHorizontal: w >= h ? 'true' : 'false',
+          },
+        }));
+      }
+    };
+    img.src = url;
   }
 }
