@@ -10,13 +10,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { OrdersService } from '../../services/orders/orders.service';
 import {
-  OrdersService,
   OrderSummary,
   OrderDto,
   OrderStatusGroup,
   BackendOrderStatus,
-} from '../../services/orders/orders.service';
+} from '../../models/orders';
 import { ToastService } from '../../services/toast/toast.service';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
