@@ -26,6 +26,7 @@ export interface ProductDto {
   categoryName: string;
   images: ProductImageDto[];
   attributeIds: number[];
+  attributes: string[];
   hasCustomOptions: boolean;
   optionGroups: OptionGroupDto[];
   tags: number;

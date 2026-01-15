@@ -11,6 +11,7 @@ import { AccordionInfoComponent } from '../../components/accordion-info/accordio
 import { AccordionItem } from '../../models/accordion-item';
 import { PolicyComponent } from '../../components/policy/policy.component';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
+import { MUSEUMS, Museum } from '../../data/museums';
 
 @Component({
   selector: 'app-product-detail',
@@ -21,8 +22,8 @@ import { RelatedProductsComponent } from '../../components/related-products/rela
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
     PolicyComponent,
-    RelatedProductsComponent
-],
+    RelatedProductsComponent,
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -50,6 +51,23 @@ export class ProductDetailComponent
         this.fetchProduct();
       });
   }
+  museum = computed<Museum | null>(() => {
+    const attributes = this.product().attributes;
+    if (!attributes || attributes.length === 0) {
+      return null;
+    }
+
+    for (const museum of MUSEUMS) {
+      const foundAttribute = attributes.find((attr) =>
+        attr.toLowerCase().includes(museum.name),
+      );
+      if (foundAttribute) {
+        return museum;
+      }
+    }
+
+    return null;
+  });
 
   productAccordionData = computed(() => {
     const sourceUrl = this.product().sourceUrl;

@@ -30,8 +30,8 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     ProductCardComponent,
     FormsModule,
     IconComponent,
-    PaginationComponent
-],
+    PaginationComponent,
+  ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -124,9 +124,8 @@ export class ProductListComponent
   fetchFilterOptions() {
     this.apiService.getFilterOptions().subscribe((filterOptions) => {
       const onlyCategoryAndAttributeOptions = filterOptions.filter(
-        (o) =>
-          o.groupType.toLowerCase().includes('categories') ||
-          o.groupType.toLowerCase().includes('attributes'),
+        (o) => o.groupType.toLowerCase().includes('categories'),
+        // || o.groupType.toLowerCase().includes('attributes'),
       );
       this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
     });
