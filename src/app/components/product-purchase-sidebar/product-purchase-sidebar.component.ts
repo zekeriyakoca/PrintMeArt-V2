@@ -95,6 +95,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   selectFrame(groupIndex: number, optionId: number) {
     this.selectOption(groupIndex, optionId);
+
     const selectedFrame =
       this.product().optionGroups[groupIndex].options.find(
         (option) => option.id === optionId,

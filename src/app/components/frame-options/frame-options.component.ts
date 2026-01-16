@@ -49,16 +49,18 @@ export class FrameOptionsComponent {
     }),
   );
 
-  selectedId = computed(() => this.group().selectedOptionId ?? 0);
+  selectedId = computed(() => {
+    return this.group().selectedOptionId ?? this.select(this.items()[0].id);
+  });
 
   selectedItem = computed(
-    () =>
-      this.items().find((i) => i.id === this.selectedId()) ?? this.items()[0],
+    () => this.items().find((i) => i.id === this.selectedId()) ?? null,
   );
 
-  select(id: number) {
+  select(id: number): number {
     this.optionSelected.emit(id);
     this.isOpen.set(false);
+    return id;
   }
 
   @HostListener('document:click', ['$event'])
