@@ -1,5 +1,12 @@
 import { SizeOption } from './../../models/size-option';
-import { Component, computed, input, model, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  model,
+  output,
+  signal,
+} from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -160,7 +167,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     // Determine picture URL: use custom image URL for custom products, otherwise use product image
     const customUrl = this.customImageUrl();
     const productImages = this.product().images;
-    const pictureUrl = customUrl || (productImages && productImages.length > 0 ? productImages[0].thumb : '');
+    const pictureUrl =
+      customUrl ||
+      (productImages && productImages.length > 0 ? productImages[0].thumb : '');
 
     this.cartService.addItemToCart(
       this.product().id,

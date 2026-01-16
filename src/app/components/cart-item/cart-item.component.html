@@ -6,15 +6,14 @@
   <div class="item-details">
     <div class="item-header">
       <h3 class="item-name cursor-pointer" (click)="goToProduct()">{{ cartItem()?.productName }}</h3>
-      <p class="item-price">€{{ cartItem()?.noDiscountUnitPrice }}</p>
+      <p class="item-price">{{ cartItem()?.noDiscountUnitPrice | currency:'EUR' }}</p>
     </div>
 
     <div class="item-options">
       @for (option of displayOptions; track option.optionId; let i = $index) {
-        @if (i < 3) {
-          <span class="option-tag">{{ option.optionName || option.name }}</span>
+      @if (i < 3) { <span class="option-tag">{{ option.optionName || option.name }}</span>
         }
-      }
+        }
     </div>
 
     <div class="item-actions">

@@ -52,7 +52,8 @@ export class FrameOptionsComponent {
   selectedId = computed(() => this.group().selectedOptionId ?? 0);
 
   selectedItem = computed(
-    () => this.items().find((i) => i.id === this.selectedId()) ?? null,
+    () =>
+      this.items().find((i) => i.id === this.selectedId()) ?? this.items()[0],
   );
 
   select(id: number) {

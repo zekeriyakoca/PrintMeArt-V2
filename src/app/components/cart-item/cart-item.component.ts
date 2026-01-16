@@ -6,10 +6,11 @@ import {
 } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { IconComponent } from '../shared/icon/icon.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart-item',
-  imports: [IconComponent],
+  imports: [IconComponent, CurrencyPipe],
   standalone: true,
   templateUrl: './cart-item.component.html',
   styleUrl: './cart-item.component.scss',

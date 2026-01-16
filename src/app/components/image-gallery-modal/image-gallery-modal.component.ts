@@ -40,14 +40,14 @@ export class ImageGalleryModalComponent {
     if (this.selectedImageIndex !== null && this.selectedImageIndex > 0) {
       this.selectedImageIndex--;
     } else if (this.selectedImageIndex !== null) {
-      this.selectedImageIndex = this.images.length - 1;
+      this.selectedImageIndex = this.images().length - 1;
     }
   }
 
   nextSelectedImage() {
     if (
       this.selectedImageIndex !== null &&
-      this.selectedImageIndex < this.images.length - 1
+      this.selectedImageIndex < this.images().length - 1
     ) {
       this.selectedImageIndex++;
     } else if (this.selectedImageIndex !== null) {
