@@ -8,6 +8,7 @@ import {
 
 import { routes } from './app.routes';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
       withFetch(),
-      withInterceptors([AuthenticationInterceptor]),
+      withInterceptors([AuthenticationInterceptor, ErrorInterceptor]),
     ),
     provideRouter(routes),
     {

@@ -76,4 +76,8 @@ export class HeaderComponent extends BaseAppComponent {
   encodeURIComponent(value: string): string {
     return encodeURIComponent(value);
   }
+
+  navigateToProductListPage() {
+    this.router.navigate(['/products']);
+  }
 }
