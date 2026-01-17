@@ -26,7 +26,7 @@ export class ImageGallery1Component {
     return [
       ...this.images().map((item, index) => ({
         id: index,
-        url: item.original,
+        url: item.large,
       })),
       { id: -1, url: this.frameGuideImage },
       { id: -2, url: this.paperImage },

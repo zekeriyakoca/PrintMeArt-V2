@@ -28,10 +28,12 @@
                   <div class="bg-white shadow-lg">
                     <div class="container">
                       <div class="flex text-sm border-t border-slate-200 py-14">
-                        <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
+                        <div class="flex-1 grid grid-cols-3 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (category of printCategories(); track category.id) {
                           <div>
-                            <p class="font-medium text-slate-900">{{ category.name }}</p>
+                            <a class="font-medium text-[#384f8c] uppercase"
+                              [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ category.name
+                              }}</a>
                             <ul class="grid space-y-4 mt-4">
                               @for (child of category.childCategories; track child.id) {
                               <li><a class="font-normal text-slate-600 hover:text-black"
