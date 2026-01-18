@@ -11,8 +11,9 @@
         <div>
           <div class="flex items-start justify-between gap-3">
             <div>
-              <h2 class="text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
-              <p class="text-base text-[#9097bb]">{{ product().title }}</p>
+              <h2 class="text-xl md:text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
+              <p class="!leading-6 md:!leading-8 font-extralight md:font-light text-sm md:text-base text-[#9097bb]">{{
+                product().title }}</p>
             </div>
             <div class="flex flex-col items-end gap-2">
               <!-- Public Domain Badge -->
@@ -24,7 +25,8 @@
                     <path
                       d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
                   </svg>
-                  <span class="text-xs font-medium text-slate-600 group-hover:text-slate-700">Public Domain</span>
+                  <span class="text-[9px] md:text-xs font-medium text-slate-600 group-hover:text-slate-700">Public
+                    Domain</span>
                 </div>
               </a>
               <!-- Museum Badge -->
@@ -46,7 +48,7 @@
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Story</span>
             <span class="flex-1 h-px bg-slate-200 w-16"></span>
           </div>
-          <p class="text-[#384f8c] leading-7 text-sm">
+          <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm">
             {{product().description}}
           </p>
         </div>

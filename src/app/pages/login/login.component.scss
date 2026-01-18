@@ -1,12 +1,48 @@
-:host {
-  display: block;
+// Custom Google button
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #1f2937;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+  }
+
+  &:active {
+    background-color: #f3f4f6;
+  }
 }
 
-// Hide default header/footer on login page for full-screen experience
-:host ::ng-deep {
+// Hidden Google Sign-In button (positioned over custom button)
+.google-btn-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
 
-  app-header,
-  app-footer {
-    display: none;
+  ::ng-deep {
+
+    asl-google-signin-button,
+    asl-google-signin-button>div,
+    asl-google-signin-button iframe {
+      width: 100% !important;
+      height: 100% !important;
+      cursor: pointer;
+    }
   }
 }

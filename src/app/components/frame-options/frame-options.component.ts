@@ -5,6 +5,7 @@ import {
   HostListener,
   inject,
   input,
+  linkedSignal,
   output,
   signal,
 } from '@angular/core';
@@ -49,18 +50,22 @@ export class FrameOptionsComponent {
     }),
   );
 
-  selectedId = computed(() => {
-    return this.group().selectedOptionId ?? this.select(this.items()[0].id);
+  selectedId = linkedSignal(() => {
+    const selectedOptionId = this.group().selectedOptionId;
+    if (selectedOptionId) return selectedOptionId;
+    const firstId = this.items()[0]?.id;
+    if (firstId) this.optionSelected.emit(firstId);
+    return firstId;
   });
 
   selectedItem = computed(
     () => this.items().find((i) => i.id === this.selectedId()) ?? null,
   );
 
-  select(id: number): number {
+  select(id: number): void {
+    this.selectedId.set(id);
     this.optionSelected.emit(id);
     this.isOpen.set(false);
-    return id;
   }
 
   @HostListener('document:click', ['$event'])
