@@ -175,6 +175,7 @@ export class ProductListComponent
       .getFilteredProducts(this.selectedFilterOptions())
       .subscribe((products) => {
         if (products?.data) {
+          products.data.sort((a, b) => b.imageRatio - a.imageRatio);
           this.products.set(products);
         }
       });

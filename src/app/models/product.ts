@@ -12,10 +12,12 @@ export interface ProductSimpleDto {
   description: string;
   image: ProductImageDto;
   secondImage: ProductImageDto;
+  thirdImage: ProductImageDto;
   isAvailable: boolean;
   cheapestPrice: number;
   discountRate: number;
   discountAmount: number;
+  imageRatio: number;
 }
 
 export interface ProductDto {

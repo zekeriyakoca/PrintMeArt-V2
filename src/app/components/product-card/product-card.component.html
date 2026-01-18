@@ -1,17 +1,29 @@
-<div class="cursor-pointer flex flex-col p-5 h-full flex-grow group" (click)="goToProduct()">
-  <div class="mb-3 h-full relative overflow-hidden">
-    <img class="rounded-sm h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+<div class="cursor-pointer flex flex-col px-1 py-3 h-full flex-grow group" (click)="goToProduct()">
+  <div class="mb-3 relative overflow-hidden" [style.aspect-ratio]="product().imageRatio.toFixed(2)">
+    <img class="rounded-sm w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
       [src]="product().image.small" [alt]="product().name" />
+
+    @if(isHorizontal()){
+    @if (product().thirdImage?.small) {
+    <img
+      class="rounded-sm h-full w-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      [src]="product().thirdImage.small" [alt]="product().name" />
+    }
+    }
+    @else{
     @if (product().secondImage?.small) {
     <img
       class="rounded-sm h-full w-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       [src]="product().secondImage.small" [alt]="product().name" />
     }
+    }
+
   </div>
   <div class="flex flex-col">
-    <p class="text-sm leading-[.9rem] font-extralight uppercase tracking-tight text-gray-700 mb-0">{{product().name}}
+    <p class="text-sm !leading-[1.3rem] font-extralight uppercase tracking-tight text-gray-700 mb-0">
+      {{product().name}}
     </p>
-    <p class="text-sm tracking-tight text-balance text-[#535981]" style="line-height: 12px;">
+    <p class="text-sm mt-1 tracking-tight text-balance text-[#535981]" style="line-height: 12px;">
       <span class="text-xs">FROM </span>
       €{{product().cheapestPrice.toFixed(2)}}
     </p>

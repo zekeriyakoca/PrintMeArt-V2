@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { ProductSimpleDto } from '../../models/product';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class ProductCardComponent {
   product = input.required<ProductSimpleDto>();
+  isHorizontal = computed(() => {
+    return this.product().imageRatio >= 1;
+  });
 
   constructor(private router: Router) {}
 
