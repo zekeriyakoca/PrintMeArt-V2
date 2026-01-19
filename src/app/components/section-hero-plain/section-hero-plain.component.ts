@@ -22,7 +22,7 @@ export class SectionHeroPlainComponent {
       title: 'Museum Art Prints',
       image:
         'https://ecombone.blob.core.windows.net/ecomm-processed-images/localhost/1764/1764-small.jpeg',
-      link: '/search?categoryName=Art prints',
+      link: '/search?categoryName=Art Prints',
     },
     {
       title: 'Your Custom Design',

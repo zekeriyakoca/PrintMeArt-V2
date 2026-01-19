@@ -57,7 +57,7 @@ export class ProductListComponent
       chips.push({
         type: 'categories',
         name: filters.categoryName,
-        colorClass: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100',
+        colorClass: 'bg-indigo-50 text-[#384f8cd9] hover:bg-indigo-100',
       });
     }
     if (filters.attributeName) {
