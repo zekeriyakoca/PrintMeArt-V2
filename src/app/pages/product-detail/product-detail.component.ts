@@ -6,6 +6,7 @@ import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
 
 import { ImageGallery1Component } from '../../components/image-gallery-1/image-gallery-1.component';
+import { ImageGallery2Component } from '../../components/image-gallery-2/image-gallery-2.component';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { AccordionInfoComponent } from '../../components/accordion-info/accordion-info.component';
 import { AccordionItem } from '../../models/accordion-item';
@@ -19,6 +20,7 @@ import { MUSEUMS, Museum } from '../../data/museums';
   imports: [
     RouterLink,
     ImageGallery1Component,
+    ImageGallery2Component,
     ProductPurchaseSidebarComponent,
     AccordionInfoComponent,
     PolicyComponent,
@@ -35,6 +37,16 @@ export class ProductDetailComponent
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
+
+  isProductHorizontal = computed(() => {
+    if (this.product()?.metadata?.OriginalImageWidth == null) {
+      return false;
+    }
+    return (
+      +this.product().metadata.OriginalImageWidth >
+      +this.product().metadata.OriginalImageHeight
+    );
+  });
 
   constructor(
     private route: ActivatedRoute,

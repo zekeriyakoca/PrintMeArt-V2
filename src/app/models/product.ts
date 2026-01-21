@@ -41,10 +41,9 @@ export interface ProductDto {
   creditLine?: string;
 }
 
-export interface ProductMetadata {
-  IsHorizontal: string;
-  OriginalImageWidth: string;
-  OriginalImageHeight: string;
+export class ProductMetadata {
+  OriginalImageWidth: string = '0';
+  OriginalImageHeight: string = '0';
 }
 
 export interface ProductImageDto {

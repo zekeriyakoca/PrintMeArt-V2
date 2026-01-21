@@ -89,7 +89,6 @@ export class CustomDesignComponent
             ...p.metadata,
             OriginalImageWidth: String(w),
             OriginalImageHeight: String(h),
-            IsHorizontal: w >= h ? 'true' : 'false',
           },
         }));
       }

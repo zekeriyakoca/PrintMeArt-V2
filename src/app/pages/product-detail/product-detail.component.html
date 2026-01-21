@@ -1,6 +1,11 @@
 <div class="contained-page">
   <!-- IMAGE GALLER  -->
+  @if(isProductHorizontal()){
+  <app-image-gallery-2 [images]="product().images"></app-image-gallery-2>
+  }
+  @else{
   <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
+  }
 
   <!-- PRODUCT INFO AND PURCHASE SIDEBAR -->
   <div class="container relative z-10 mt-9 sm:mt-11 flex flex-col lg:flex-row gap-10 lg:gap-0">
