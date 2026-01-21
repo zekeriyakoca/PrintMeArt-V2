@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  input,
-  output,
-} from '@angular/core';
-
+import { Component, input, output, signal } from '@angular/core';
 import { IconComponent } from '../shared/icon/icon.component';
 
 export interface GalleryImage {
@@ -24,51 +16,46 @@ export interface GalleryImage {
 export class ImageGalleryModalComponent {
   isShowModal = input<boolean>(false);
   images = input<GalleryImage[]>([]);
+  startIndex = input<number>(0);
   onClose = output<void>();
 
-  selectedImageIndex: number | null = null;
+  currentIndex = signal(0);
 
-  selectImage(index: number) {
-    this.selectedImageIndex = index;
+  ngOnChanges() {
+    if (this.isShowModal()) {
+      this.currentIndex.set(this.startIndex());
+    }
   }
 
-  closeSelectedImage() {
-    this.selectedImageIndex = null;
+  selectImage(index: number) {
+    this.currentIndex.set(index);
   }
 
   prevSelectedImage() {
-    if (this.selectedImageIndex !== null && this.selectedImageIndex > 0) {
-      this.selectedImageIndex--;
-    } else if (this.selectedImageIndex !== null) {
-      this.selectedImageIndex = this.images().length - 1;
+    const current = this.currentIndex();
+    if (current > 0) {
+      this.currentIndex.set(current - 1);
+    } else {
+      this.currentIndex.set(this.images().length - 1);
     }
   }
 
   nextSelectedImage() {
-    if (
-      this.selectedImageIndex !== null &&
-      this.selectedImageIndex < this.images().length - 1
-    ) {
-      this.selectedImageIndex++;
-    } else if (this.selectedImageIndex !== null) {
-      this.selectedImageIndex = 0;
+    const current = this.currentIndex();
+    if (current < this.images().length - 1) {
+      this.currentIndex.set(current + 1);
+    } else {
+      this.currentIndex.set(0);
     }
   }
 
   closeModal() {
-    this.selectedImageIndex = null;
     this.onClose.emit();
-  }
-
-  onBackdropClick(event: Event) {
-    if (event.target === event.currentTarget) {
-      this.closeModal();
-    }
   }
 
   onSelectedImageKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      this.closeSelectedImage();
+      this.closeModal();
     } else if (event.key === 'ArrowRight') {
       this.nextSelectedImage();
     } else if (event.key === 'ArrowLeft') {

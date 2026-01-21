@@ -1,0 +1,66 @@
+<div class="image-container">
+  @if (images() && images().length > 0) {
+  <!-- Mobile -->
+  <div class="flex flex-col gap-2 md:hidden">
+    <div
+      class="w-full aspect-[4/3] relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
+      (click)="openGallery()">
+      <img [src]="images()[0].large" [alt]="images()[0].name" class="max-w-[95%] max-h-[90%] object-contain shadow-md">
+    </div>
+    <div class="flex gap-2">
+      @if (images()[2]) {
+      <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(2)">
+        <img [src]="images()[2].large" [alt]="images()[2].name" class="w-full h-auto">
+      </div>
+      }
+      @if (images()[3]) {
+      <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(3)">
+        <img [src]="images()[3].large" [alt]="images()[3].name" class="w-full h-auto">
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Desktop -->
+  <div class="hidden md:grid grid-cols-3 grid-rows-2 gap-3 aspect-[5/2]">
+    <div
+      class="col-span-2 row-span-2 relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
+      (click)="openGallery()">
+      <img [src]="images()[0].large" [alt]="images()[0].name"
+        class="max-w-[95%] max-h-[90%] object-contain shadow-md transition-all duration-300 group-hover:scale-105">
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+    </div>
+
+    @if (images()[2]) {
+    <div class="relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center"
+      (click)="openGallery(2)">
+      <img [src]="images()[2].large" [alt]="images()[2].name"
+        class="max-w-full max-h-full object-contain transition-all duration-300 group-hover:scale-105">
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+    </div>
+    }
+
+    @if (images()[3]) {
+    <div class="relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center"
+      (click)="openGallery(3)">
+      <img [src]="images()[3].large" [alt]="images()[3].name"
+        class="max-w-full max-h-full object-contain transition-all duration-300 group-hover:scale-105">
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+    </div>
+    }
+  </div>
+
+  <!-- Show all photos button -->
+  <div
+    class="absolute hidden md:flex items-center gap-2 left-3 bottom-3 px-4 py-2 rounded-lg bg-[#384f8cd9] text-white shadow-sm cursor-pointer hover:bg-[#2f4378] transition-colors z-10"
+    (click)="openGallery()">
+    <app-icon iconName="grid" class="h-4 w-4 text-white" />
+    <span class="text-white text-sm font-medium">Show all</span>
+  </div>
+
+  <!-- Gallery Component -->
+  <app-image-gallery-modal [isShowModal]="showGallery" [images]="galleryImages()" [startIndex]="galleryStartIndex()"
+    (onClose)="closeGallery()">
+  </app-image-gallery-modal>
+  }
+</div>
