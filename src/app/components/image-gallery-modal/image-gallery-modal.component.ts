@@ -21,22 +21,47 @@ export class ImageGalleryModalComponent {
 
   currentIndex = signal(0);
 
-  readonly isZoomed = signal(false);
-  readonly zoomScale = signal(1);
-  readonly panX = signal(0);
-  readonly panY = signal(0);
-  readonly isPanning = signal(false);
-  private panStartX = 0;
-  private panStartY = 0;
-  private pointerStartX = 0;
-  private pointerStartY = 0;
+  // Zoom state
+  isZoomed = signal(false);
+  mouseX = signal(50);
+  mouseY = signal(50);
 
-  readonly imageTransform = computed(() => {
-    const scale = this.zoomScale();
-    const x = this.panX();
-    const y = this.panY();
-    return `translate(${x}px, ${y}px) scale(${scale})`;
+  zoomTransform = computed(() => {
+    if (!this.isZoomed()) return 'scale(1)';
+    const x = this.mouseX();
+    const y = this.mouseY();
+    return `scale(1.5) translate(${50 - x}%, ${50 - y}%)`;
   });
+
+  toggleZoom(event: MouseEvent) {
+    event.stopPropagation();
+    if (this.isZoomed()) {
+      this.isZoomed.set(false);
+    } else {
+      this.isZoomed.set(true);
+      this.updateMousePosition(event);
+    }
+  }
+
+  onZoomMouseMove(event: MouseEvent) {
+    if (!this.isZoomed()) return;
+    this.updateMousePosition(event);
+  }
+
+  private updateMousePosition(event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    this.mouseX.set(Math.max(0, Math.min(100, x)));
+    this.mouseY.set(Math.max(0, Math.min(100, y)));
+  }
+
+  resetZoom() {
+    this.isZoomed.set(false);
+    this.mouseX.set(50);
+    this.mouseY.set(50);
+  }
 
   ngOnChanges() {
     if (this.isShowModal()) {
@@ -57,7 +82,6 @@ export class ImageGalleryModalComponent {
     } else {
       this.currentIndex.set(this.images().length - 1);
     }
-    this.resetZoom();
   }
 
   nextSelectedImage() {
@@ -67,11 +91,9 @@ export class ImageGalleryModalComponent {
     } else {
       this.currentIndex.set(0);
     }
-    this.resetZoom();
   }
 
   closeModal() {
-    this.resetZoom();
     this.onClose.emit();
   }
 
@@ -79,72 +101,6 @@ export class ImageGalleryModalComponent {
     if (event.target === event.currentTarget) {
       this.closeModal();
     }
-  }
-
-  zoom(event?: MouseEvent) {
-    if (event) event.stopPropagation();
-    this.toggleZoom();
-  }
-
-  toggleZoom(event?: MouseEvent) {
-    if (event) event.stopPropagation();
-
-    if (!this.isZoomed()) {
-      this.isZoomed.set(true);
-      this.zoomScale.set(2);
-      this.panX.set(0);
-      this.panY.set(0);
-      return;
-    }
-
-    this.resetZoom();
-  }
-
-  resetZoom() {
-    this.isPanning.set(false);
-    this.isZoomed.set(false);
-    this.zoomScale.set(1);
-    this.panX.set(0);
-    this.panY.set(0);
-  }
-
-  onImageWheel(event: WheelEvent) {
-    if (!this.isZoomed()) return;
-
-    const delta = event.deltaY;
-    const direction = delta > 0 ? -1 : 1;
-    const current = this.zoomScale();
-    const next = Math.min(4, Math.max(1, current + direction * 0.25));
-    this.zoomScale.set(next);
-    if (next <= 1) {
-      this.resetZoom();
-    }
-  }
-
-  onImagePointerDown(event: PointerEvent) {
-    if (!this.isZoomed()) return;
-    this.isPanning.set(true);
-    this.pointerStartX = event.clientX;
-    this.pointerStartY = event.clientY;
-    this.panStartX = this.panX();
-    this.panStartY = this.panY();
-    try {
-      (event.currentTarget as HTMLElement | null)?.setPointerCapture(event.pointerId);
-    } catch {
-      // ignore
-    }
-  }
-
-  onImagePointerMove(event: PointerEvent) {
-    if (!this.isZoomed() || !this.isPanning()) return;
-    const dx = event.clientX - this.pointerStartX;
-    const dy = event.clientY - this.pointerStartY;
-    this.panX.set(this.panStartX + dx);
-    this.panY.set(this.panStartY + dy);
-  }
-
-  onImagePointerUp() {
-    this.isPanning.set(false);
   }
 
   onSelectedImageKeyDown(event: KeyboardEvent) {
@@ -156,8 +112,10 @@ export class ImageGalleryModalComponent {
       }
     } else if (event.key === 'ArrowRight') {
       this.nextSelectedImage();
+      this.resetZoom();
     } else if (event.key === 'ArrowLeft') {
       this.prevSelectedImage();
+      this.resetZoom();
     }
   }
 }

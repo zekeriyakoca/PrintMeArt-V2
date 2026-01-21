@@ -23,9 +23,12 @@
       </button>
 
       <!-- Main image -->
-      <div class="flex-1 flex items-center justify-center p-4 pb-0">
+      <div class="flex-1 flex items-center justify-center p-4 pb-0 overflow-hidden"
+        (mousemove)="onZoomMouseMove($event)">
         <img [src]="images()[currentIndex()].url" [alt]="'Image ' + (currentIndex() + 1)"
-          class="max-w-[94vw] max-h-[78vh] object-contain" (click)="$event.stopPropagation()">
+          class="max-w-[94vw] max-h-[78vh] object-contain transition-transform duration-150 ease-out"
+          [class.cursor-zoom-in]="!isZoomed()" [class.cursor-zoom-out]="isZoomed()" [style.transform]="zoomTransform()"
+          (click)="toggleZoom($event)">
       </div>
 
       <!-- Thumbnail navigation -->

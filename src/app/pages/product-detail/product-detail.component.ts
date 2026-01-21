@@ -71,7 +71,7 @@ export class ProductDetailComponent
 
     for (const museum of MUSEUMS) {
       const foundAttribute = attributes.find((attr) =>
-        attr.toLowerCase().includes(museum.name),
+        attr.toLowerCase().includes(museum.name.toLowerCase()),
       );
       if (foundAttribute) {
         return museum;

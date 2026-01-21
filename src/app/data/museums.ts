@@ -6,90 +6,177 @@ export interface Museum {
 
 export const MUSEUMS: Museum[] = [
   {
-    name: 'national gallery of art',
+    name: 'National Postal Museum',
     badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/national gallery of art.svg',
-    websiteUrl: 'https://www.nga.gov',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Smithsonian_logo_color.svg/960px-Smithsonian_logo_color.svg.png',
+    websiteUrl: 'https://postalmuseum.si.edu/',
   },
   {
-    name: 'rijksmuseum',
+    name: 'Clark Art Institute',
+    badgeUrl: 'https://www.clarkart.edu/dist/images/logo.png',
+    websiteUrl: 'https://www.clarkart.edu/',
+  },
+  {
+    name: 'Museum Kunstpalast',
+    badgeUrl:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Logo_Museum_Kunstpalast.svg.png',
+    websiteUrl: 'https://www.kunstpalast.de/en/',
+  },
+  {
+    name: 'Yale University Art Gallery',
+    badgeUrl:
+      'https://artgallery.yale.edu/themes/custom/yuag/assets/dist/images/logo--stacked.svg',
+    websiteUrl: 'https://artgallery.yale.edu',
+  },
+  {
+    name: 'Metropolitan Museum of Art',
+    badgeUrl:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/The_Metropolitan_Museum_of_Art_Logo.svg.png',
+    websiteUrl: 'https://www.metmuseum.org',
+  },
+  {
+    name: 'Columbus Museum of Art',
+    badgeUrl: 'https://prod.speakcdn.com/sitefiles/3048/images/CMoA-ko.svg',
+    websiteUrl: 'https://www.columbusmuseum.org/',
+  },
+  {
+    name: "Musée d'Orsay",
+    badgeUrl: 'https://www.musee-orsay.fr/themes/custom/orsay/logo.svg',
+    websiteUrl: 'https://www.musee-orsay.fr/',
+  },
+  {
+    name: 'Birmingham Museums Trust',
+    badgeUrl: '',
+    websiteUrl: 'https://www.birminghammuseums.org.uk/',
+  },
+  {
+    name: 'Museums and Art Gallery, Birmingham',
+    badgeUrl: '',
+    websiteUrl:
+      'https://www.birminghammuseums.org.uk/birmingham-museum-and-art-gallery',
+  },
+  { name: 'Private collection', badgeUrl: '', websiteUrl: '' },
+  { name: 'Royal Collection', badgeUrl: '', websiteUrl: 'https://www.rct.uk/' },
+  {
+    name: 'Rijksmuseum (Amsterdam)',
     badgeUrl:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/rijkmuseum.png',
     websiteUrl: 'https://www.rijksmuseum.nl',
   },
   {
-    name: 'the met',
-    badgeUrl: '/assets/badges/the-met.png',
-    websiteUrl: 'https://www.metmuseum.org',
+    name: 'Spencer Museum of Art',
+    badgeUrl: '',
+    websiteUrl: 'https://spencerart.ku.edu/',
   },
   {
-    name: 'the art institute of chicago',
-    badgeUrl: '/assets/badges/art-institute-chicago.png',
-    websiteUrl: 'https://www.artic.edu',
+    name: 'Mauritshuis',
+    badgeUrl:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Mauritshuis_museum_logo.png',
+    websiteUrl: 'https://www.mauritshuis.nl/',
   },
   {
-    name: 'cleveland museum of art',
-    badgeUrl: '/assets/badges/cleveland-museum-of-art.png',
+    name: 'Art Gallery, Northampton Gallery',
+    badgeUrl: '',
+    websiteUrl: 'https://www.northamptonmuseums.com/',
+  },
+  { name: 'National Museum', badgeUrl: '', websiteUrl: '' },
+  {
+    name: 'Amsterdam Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://www.amsterdammuseum.nl/',
+  },
+  {
+    name: 'East Slovak Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://www.vsmuzeum.sk/',
+  },
+  {
+    name: 'Carmen Thyssen Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://www.carmenthyssenmalaga.org/',
+  },
+  {
+    name: 'Kröller-Müller Museum',
+    badgeUrl:
+      'https://images.seeklogo.com/logo-png/38/2/kroller-muller-museum-logo-png_seeklogo-388711.png',
+    websiteUrl: 'https://krollermuller.nl/en',
+  },
+  {
+    name: 'Barnes Foundation',
+    badgeUrl: 'https://www.barnesfoundation.org/dist/images/logo.png',
+    websiteUrl: 'https://www.barnesfoundation.org/',
+  },
+  {
+    name: 'Smithsonian American Art Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://americanart.si.edu/',
+  },
+  {
+    name: 'National Gallery Kraków',
+    badgeUrl: '',
+    websiteUrl: 'https://mnk.pl/',
+  },
+  { name: 'Saltworks Museum', badgeUrl: '', websiteUrl: '' },
+  {
+    name: 'Musée des Beaux-Arts de la ville de Paris',
+    badgeUrl: '',
+    websiteUrl: 'https://www.petitpalais.paris.fr/en',
+  },
+  {
+    name: 'Telfair Museum of Art',
+    badgeUrl: '',
+    websiteUrl: 'https://www.telfair.org/',
+  },
+  {
+    name: 'National Gallery, London',
+    badgeUrl:
+      'https://www.nationalgallery.org.uk/v2/img/logos/ng-logo-white-320.png',
+    websiteUrl: 'https://www.nationalgallery.org.uk/',
+  },
+  {
+    name: 'National Gallery of Art',
+    badgeUrl:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/national gallery of art.svg',
+    websiteUrl: 'https://www.nga.gov',
+  },
+  {
+    name: 'British Museum',
+    badgeUrl:
+      'https://www.britishmuseum.org/themes/custom/numiko/dist/img/british-museum-logo.svg',
+    websiteUrl: 'https://www.britishmuseum.org/',
+  },
+  { name: 'Tate', badgeUrl: '', websiteUrl: 'https://www.tate.org.uk/' },
+  {
+    name: 'National Museum of Art, Architecture and Design',
+    badgeUrl: '',
+    websiteUrl: 'https://www.nasjonalmuseet.no/en/',
+  },
+  { name: 'Municipal Museum of Arts', badgeUrl: '', websiteUrl: '' },
+  {
+    name: 'Cleveland Museum of Art',
+    badgeUrl:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Cleveland_Museum_of_Art_logo.png',
     websiteUrl: 'https://www.clevelandart.org',
   },
   {
-    name: 'dma',
-    badgeUrl: '/assets/badges/dma.png',
-    websiteUrl: 'https://www.dma.org',
+    name: 'Noordbrabants Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://www.hetnoordbrabantsmuseum.nl/en/',
   },
   {
-    name: 'sf moma',
-    badgeUrl: '/assets/badges/sf-moma.png',
-    websiteUrl: 'https://www.sfmoma.org',
+    name: 'Petit Palais',
+    badgeUrl: '',
+    websiteUrl: 'https://www.petitpalais.paris.fr/en',
   },
   {
-    name: 'getty museum',
-    badgeUrl: '/assets/badges/getty-museum.png',
-    websiteUrl: 'https://www.getty.edu',
+    name: 'Amon Carter Museum',
+    badgeUrl: '',
+    websiteUrl: 'https://www.cartermuseum.org/',
   },
   {
-    name: 'lacma',
-    badgeUrl: '/assets/badges/lacma.png',
-    websiteUrl: 'https://www.lacma.org',
+    name: 'Telfair Museums',
+    badgeUrl: '',
+    websiteUrl: 'https://www.telfair.org/',
   },
-  {
-    name: 'mfa boston',
-    badgeUrl: '/assets/badges/mfa-boston.png',
-    websiteUrl: 'https://www.mfa.org',
-  },
-  {
-    name: 'brooklyn museum',
-    badgeUrl: '/assets/badges/brooklyn-museum.png',
-    websiteUrl: 'https://www.brooklynmuseum.org',
-  },
-  {
-    name: 'nelson-atkins museum of art',
-    badgeUrl: '/assets/badges/nelson-atkins.png',
-    websiteUrl: 'https://www.nelson-atkins.org',
-  },
-  {
-    name: 'vmfa',
-    badgeUrl: '/assets/badges/vmfa.png',
-    websiteUrl: 'https://www.vmfa.museum',
-  },
-  {
-    name: 'philadelphia museum of art',
-    badgeUrl: '/assets/badges/philadelphia-museum-of-art.png',
-    websiteUrl: 'https://www.philamuseum.org',
-  },
-  {
-    name: 'harvard art museums',
-    badgeUrl: '/assets/badges/harvard-art-museums.png',
-    websiteUrl: 'https://www.harvardartmuseums.org',
-  },
-  {
-    name: 'yale university art gallery',
-    badgeUrl: '/assets/badges/yale-art-gallery.png',
-    websiteUrl: 'https://artgallery.yale.edu',
-  },
-  {
-    name: 'princeton university art museum',
-    badgeUrl: '/assets/badges/princeton-art-museum.png',
-    websiteUrl: 'https://artmuseum.princeton.edu',
-  },
+  { name: 'National Gallery of Norway', badgeUrl: '', websiteUrl: '' },
 ];
