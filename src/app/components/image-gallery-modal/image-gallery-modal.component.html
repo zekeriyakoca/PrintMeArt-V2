@@ -1,46 +1,49 @@
 @if (isShowModal() && images().length > 0) {
 <div class="fixed inset-0 z-50">
-  <div class="absolute inset-0 bg-[#0f172a]/90 backdrop-blur-sm" (click)="closeModal()"></div>
+  <div class="absolute inset-0 bg-[#0f172a]/90 backdrop-blur-sm" (click)="closeModal()">
 
-  <div class="relative z-10 flex h-full flex-col" (keydown)="onSelectedImageKeyDown($event)" tabindex="0">
+    <div class="relative z-10 flex h-full flex-col" (keydown)="onSelectedImageKeyDown($event)" tabindex="0">
 
-    <!-- Close button -->
-    <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-10" (click)="closeModal()">
-      <app-icon iconName="close" class="w-8 h-8"></app-icon>
-    </button>
+      <!-- Close button -->
+      <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+        (click)="closeModal(); $event.stopPropagation()">
+        <app-icon iconName="close" class="w-8 h-8"></app-icon>
+      </button>
 
-    <!-- Previous button -->
-    <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
-      (click)="prevSelectedImage()" [disabled]="images().length <= 1">
-      <app-icon iconName="chevron-left" class="w-10 h-10"></app-icon>
-    </button>
+      <!-- Previous button -->
+      <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
+        (click)="prevSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
+        <app-icon iconName="chevron-left" class="w-10 h-10"></app-icon>
+      </button>
 
-    <!-- Next button -->
-    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
-      (click)="nextSelectedImage()" [disabled]="images().length <= 1">
-      <app-icon iconName="chevron-right" class="w-10 h-10"></app-icon>
-    </button>
+      <!-- Next button -->
+      <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
+        (click)="nextSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
+        <app-icon iconName="chevron-right" class="w-10 h-10"></app-icon>
+      </button>
 
-    <!-- Main image -->
-    <div class="flex-1 flex items-center justify-center p-4 pb-0">
-      <img [src]="images()[currentIndex()].url" [alt]="'Image ' + (currentIndex() + 1)"
-        class="max-w-[94vw] max-h-[78vh] object-contain">
-    </div>
-
-    <!-- Thumbnail navigation -->
-    <div class="p-4">
-      <div class="flex gap-2 overflow-x-auto justify-center">
-        @for (image of images(); track image.id; let i = $index) {
-        <button
-          class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 hover:opacity-100"
-          [class.border-white]="i === currentIndex()" [class.border-transparent]="i !== currentIndex()"
-          [class.opacity-50]="i !== currentIndex()" [class.opacity-100]="i === currentIndex()" (click)="selectImage(i)">
-          <img [src]="image.url" [alt]="'Thumbnail ' + (i + 1)" class="w-full h-full object-cover">
-        </button>
-        }
+      <!-- Main image -->
+      <div class="flex-1 flex items-center justify-center p-4 pb-0">
+        <img [src]="images()[currentIndex()].url" [alt]="'Image ' + (currentIndex() + 1)"
+          class="max-w-[94vw] max-h-[78vh] object-contain" (click)="$event.stopPropagation()">
       </div>
-    </div>
 
+      <!-- Thumbnail navigation -->
+      <div class="p-4">
+        <div class="flex gap-2 overflow-x-auto justify-center">
+          @for (image of images(); track image.id; let i = $index) {
+          <button
+            class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 hover:opacity-100"
+            [class.border-white]="i === currentIndex()" [class.border-transparent]="i !== currentIndex()"
+            [class.opacity-50]="i !== currentIndex()" [class.opacity-100]="i === currentIndex()"
+            (click)="selectImage(i); $event.stopPropagation()">
+            <img [src]="image.url" [alt]="'Thumbnail ' + (i + 1)" class="w-full h-full object-cover">
+          </button>
+          }
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 }
