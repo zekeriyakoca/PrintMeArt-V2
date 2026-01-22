@@ -2,11 +2,13 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { catchError, throwError } from 'rxjs';
 
 export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthenticationService);
+  const router = inject(Router);
   const platformId = inject(PLATFORM_ID);
   const isBrowser = isPlatformBrowser(platformId);
 
@@ -36,6 +38,7 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 401) {
         console.warn('Unauthorized request detected. Handling 401...');
         authService.logout();
+        router.navigate(['/login']);
       }
       return throwError(() => error);
     }),

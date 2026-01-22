@@ -34,6 +34,7 @@ export const appConfig: ApplicationConfig = {
               '761877359482-leqnq498c781apae0456om543bf70h4g.apps.googleusercontent.com',
               {
                 oneTapEnabled: false, // Disable One Tap to avoid FedCM issues
+                scopes: 'openid profile email',
               },
             ),
           },
