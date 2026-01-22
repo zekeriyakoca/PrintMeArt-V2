@@ -8,6 +8,7 @@ import {
 } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LoginComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly ngZone = inject(NgZone);
+  private readonly cartService = inject(CartService);
 
   user: SocialUser | null = null;
   constructor(
@@ -44,7 +46,11 @@ export class LoginComponent {
             profilePictureUrl: user.photoUrl,
           } as User);
 
-          this.router.navigate(['/']);
+          // Sync cart with backend after login, then navigate
+          this.cartService.syncCartAfterLogin().subscribe({
+            next: () => this.router.navigate(['/']),
+            error: () => this.router.navigate(['/']), // Navigate even if sync fails
+          });
         });
       });
   }
