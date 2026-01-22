@@ -35,7 +35,7 @@
                 </div>
               </a>
               <!-- Museum Badge -->
-              @if (museum()) {
+              @if (museum() && museum()!.badgeUrl) {
               <a [href]="museum()!.websiteUrl" target="_blank" rel="noopener noreferrer"
                 class="flex-shrink-0 transition-opacity hover:opacity-80" [title]="'Visit ' + museum()!.name">
                 <img [src]="museum()!.badgeUrl" [alt]="museum()!.name + ' logo'" class="h-8 max-w-32 object-contain" />
