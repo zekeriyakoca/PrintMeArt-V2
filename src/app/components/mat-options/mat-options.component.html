@@ -4,18 +4,18 @@
         (isMatIncluded() ? 'border-indigo-200 bg-[#faf6ff]' : 'border-gray-200 bg-white hover:border-gray-300')">
       <div class="flex items-center gap-3 min-w-0">
         <div [class]="'h-9 w-9 rounded-md border-2 border-dashed flex items-center justify-center transition-colors ' +
-          (isMatIncluded() ? 'border-indigo-300 bg-indigo-100/50' : 'border-gray-300 bg-gray-50')">
+          (isMatIncluded() ? 'border-[#384f8c] bg-indigo-100/50' : 'border-gray-300 bg-gray-50')">
           <div class="h-5 w-5 bg-white border border-gray-200"></div>
         </div>
         <div class="min-w-0">
-          <div [class]="'text-sm font-medium ' + (isMatIncluded() ? 'text-indigo-700' : 'text-gray-900')">
+          <div [class]="'text-sm font-medium ' + (isMatIncluded() ? 'text-[#384f8c]' : 'text-gray-900')">
             {{isMatIncluded() ? 'With' : 'Without'}} white mat
           </div>
           <div class="text-xs text-gray-500">Adds elegant border around your print</div>
         </div>
       </div>
       <div [class]="'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium transition-colors ' +
-        (isMatIncluded() ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-500')">
+        (isMatIncluded() ? 'bg-[#384f8c] text-white' : 'bg-gray-100 text-gray-500')">
         {{ isMatIncluded() ? '✓' : '+' }}
       </div>
     </div>
