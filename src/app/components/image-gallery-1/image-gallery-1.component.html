@@ -31,7 +31,8 @@
   </div>
 
   <!-- Gallery Component -->
-  <app-image-gallery-modal [isShowModal]="showGallery" [images]="galleryImages()" (onClose)="closeGallery()">
+  <app-image-gallery-modal [isShowModal]="showGallery" [images]="galleryImages()" (onClose)="closeGallery()"
+    [startIndex]="galleryStartIndex()">
   </app-image-gallery-modal>
   }
 </div>

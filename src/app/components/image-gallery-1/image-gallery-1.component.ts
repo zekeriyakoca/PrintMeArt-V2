@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
 import { IconComponent } from '../shared/icon/icon.component';
@@ -12,6 +12,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 export class ImageGallery1Component {
   images = input<ProductImageDto[]>([]);
   showGallery = false;
+  galleryStartIndex = signal(0);
 
   frameGuideImage =
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-guide.avif';
@@ -39,7 +40,7 @@ export class ImageGallery1Component {
 
   openGallery(startIndex: number = 0) {
     this.showGallery = true;
-    // You can set the starting index if needed
+    this.galleryStartIndex.set(startIndex);
   }
 
   closeGallery() {
