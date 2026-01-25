@@ -6,13 +6,13 @@ export interface Museum {
 
 export const MUSEUMS: Museum[] = [
   {
-    name: 'National Postal Museum',
+    name: 'National Postal',
     badgeUrl:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Smithsonian_logo_color.svg/960px-Smithsonian_logo_color.svg.png',
     websiteUrl: 'https://postalmuseum.si.edu/',
   },
   {
-    name: 'Clark Art Institute',
+    name: 'Clark Art',
     badgeUrl: 'https://www.clarkart.edu/dist/images/logo.png',
     websiteUrl: 'https://www.clarkart.edu/',
   },
@@ -23,19 +23,19 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.kunstpalast.de/en/',
   },
   {
-    name: 'Yale University Art Gallery',
+    name: 'Yale University',
     badgeUrl:
       'https://artgallery.yale.edu/themes/custom/yuag/assets/dist/images/logo--stacked.svg',
     websiteUrl: 'https://artgallery.yale.edu',
   },
   {
-    name: 'Metropolitan Museum of Art',
+    name: 'Metropolitan',
     badgeUrl:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/The_Metropolitan_Museum_of_Art_Logo.svg.png',
     websiteUrl: 'https://www.metmuseum.org',
   },
   {
-    name: 'Columbus Museum of Art',
+    name: 'Columbus',
     badgeUrl: 'https://prod.speakcdn.com/sitefiles/3048/images/CMoA-ko.svg',
     websiteUrl: 'https://www.columbusmuseum.org/',
   },
@@ -45,7 +45,7 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.musee-orsay.fr/',
   },
   {
-    name: 'Birmingham Museums Trust',
+    name: 'Birmingham Museums',
     badgeUrl: '',
     websiteUrl: 'https://www.birminghammuseums.org.uk/',
   },
@@ -58,13 +58,13 @@ export const MUSEUMS: Museum[] = [
   { name: 'Private collection', badgeUrl: '', websiteUrl: '' },
   { name: 'Royal Collection', badgeUrl: '', websiteUrl: 'https://www.rct.uk/' },
   {
-    name: 'Rijksmuseum (Amsterdam)',
+    name: 'Rijksmuseum',
     badgeUrl:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/rijkmuseum.png',
     websiteUrl: 'https://www.rijksmuseum.nl',
   },
   {
-    name: 'Spencer Museum of Art',
+    name: 'Spencer',
     badgeUrl: '',
     websiteUrl: 'https://spencerart.ku.edu/',
   },
@@ -75,7 +75,7 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.mauritshuis.nl/',
   },
   {
-    name: 'Art Gallery, Northampton Gallery',
+    name: 'Northampton Gallery',
     badgeUrl: '',
     websiteUrl: 'https://www.northamptonmuseums.com/',
   },
@@ -86,17 +86,17 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.amsterdammuseum.nl/',
   },
   {
-    name: 'East Slovak Museum',
+    name: 'East Slovak',
     badgeUrl: '',
     websiteUrl: 'https://www.vsmuzeum.sk/',
   },
   {
-    name: 'Carmen Thyssen Museum',
+    name: 'Carmen Thyssen',
     badgeUrl: '',
     websiteUrl: 'https://www.carmenthyssenmalaga.org/',
   },
   {
-    name: 'Kröller-Müller Museum',
+    name: 'Kröller-Müller',
     badgeUrl:
       'https://images.seeklogo.com/logo-png/38/2/kroller-muller-museum-logo-png_seeklogo-388711.png',
     websiteUrl: 'https://krollermuller.nl/en',
@@ -107,7 +107,7 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.barnesfoundation.org/',
   },
   {
-    name: 'Smithsonian American Art Museum',
+    name: 'Smithsonian American',
     badgeUrl: '',
     websiteUrl: 'https://americanart.si.edu/',
   },
@@ -147,19 +147,19 @@ export const MUSEUMS: Museum[] = [
   },
   { name: 'Tate', badgeUrl: '', websiteUrl: 'https://www.tate.org.uk/' },
   {
-    name: 'National Museum of Art, Architecture and Design',
+    name: 'National Museum of Art',
     badgeUrl: '',
     websiteUrl: 'https://www.nasjonalmuseet.no/en/',
   },
   { name: 'Municipal Museum of Arts', badgeUrl: '', websiteUrl: '' },
   {
-    name: 'Cleveland Museum of Art',
+    name: 'Cleveland',
     badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Cleveland_Museum_of_Art_logo.png',
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/cleveland-museum-logo.svg',
     websiteUrl: 'https://www.clevelandart.org',
   },
   {
-    name: 'Noordbrabants Museum',
+    name: 'Noordbrabants',
     badgeUrl: '',
     websiteUrl: 'https://www.hetnoordbrabantsmuseum.nl/en/',
   },

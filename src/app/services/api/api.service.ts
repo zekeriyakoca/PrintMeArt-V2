@@ -23,8 +23,7 @@ export class ApiService {
   private readonly BFF_URL = environment.serviceUrls['bff'];
   private categoriesCache$?: Observable<CategoryDto[] | undefined>;
 
-  private readonly FromPrice = signal(0);
-  readonly fromPrice = this.FromPrice.asReadonly();
+  public readonly FromPrice = signal(0);
 
   constructor(
     private _httpClient: HttpClient,
@@ -99,7 +98,7 @@ export class ApiService {
         }),
         tap((priceResult) => {
           if (priceResult?.price) {
-            const fromPrice = +priceResult.price.toFixed(0) + 0.99;
+            const fromPrice = Math.floor(priceResult.price) + 0.99;
             this.FromPrice.set(fromPrice);
           }
         }),

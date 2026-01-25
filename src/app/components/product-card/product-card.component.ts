@@ -13,7 +13,7 @@ export class ProductCardComponent {
   private apiService = inject(ApiService);
 
   product = input.required<ProductSimpleDto>();
-  fromPrice = this.apiService.fromPrice;
+  fromPrice = this.apiService.FromPrice;
   isHorizontal = computed(() => {
     return this.product().imageRatio >= 1;
   });
