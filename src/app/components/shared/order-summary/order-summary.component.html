@@ -23,6 +23,27 @@
 
   <div class="summary-actions">
     <ng-content select="order-button"></ng-content>
-    <ng-content select="order-info"></ng-content>
+    <div class="flex items-center justify-center gap-1 py-2 mt-4">
+      <span class="text-sm text-slate-400 mr-2">Secure payment with</span>
+      <app-icon iconName="stripe" class="w-10 h-7" title="Stripe"></app-icon>
+      <app-icon iconName="klarna" class="w-10 h-7" title="Klarna"></app-icon>
+      <app-icon iconName="ideal" class="w-10 h-7" title="ideal"></app-icon>
+      <app-icon iconName="mastercard" class="w-10 h-7" title="Mastercard"></app-icon>
+      <app-icon iconName="visa" class="w-10 h-7" title="Visa"></app-icon>
+    </div>
+    <div>
+      <div class="order-assurance">
+        <div class="assurance-item">
+          <app-icon iconName="lock" class="w-4 h-4"></app-icon>
+          <span>Secure checkout</span>
+        </div>
+        <div class="assurance-item">
+          <app-icon iconName="shield" class="w-4 h-4"></app-icon>
+          <span>Buyer protection</span>
+        </div>
+      </div>
+      <p class="legal-text">By placing your order, you agree to our <a href="/legal">Terms of Service</a> and <a
+          href="/legal">Privacy Policy</a>.</p>
+    </div>
   </div>
 </div>

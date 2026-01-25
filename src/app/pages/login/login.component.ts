@@ -21,6 +21,7 @@ export class LoginComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly ngZone = inject(NgZone);
   private readonly cartService = inject(CartService);
+  currentYear = new Date().getFullYear();
 
   user: SocialUser | null = null;
   constructor(
