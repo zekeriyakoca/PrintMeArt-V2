@@ -1,0 +1,47 @@
+/* Styles for the DPI Bar Component */
+
+.tooltip-header {
+    text-align: center;
+    padding: 1rem;
+}
+
+.tooltip-header .text-2xl {
+    margin-bottom: 0.5rem;
+}
+
+.tooltip-header .font-semibold {
+    font-size: 0.875rem;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.pill.fineart {
+    border-color: rgba(22, 122, 146, 0.3);
+    background-color: rgb(242, 248, 245);
+    color: rgb(22, 122, 146);
+}
+
+.pill.borderline {
+    border-color: rgba(165, 100, 45, 0.3);
+    background-color: rgb(252, 247, 240);
+    color: rgb(165, 100, 45);
+}
+
+.pill.low {
+    border-color: rgba(195, 61, 61, 0.3);
+    background-color: rgb(252, 242, 242);
+    color: rgb(195, 61, 61);
+}
+
+.pill.good {
+    border-color: rgb(204, 204, 204);
+    background-color: rgb(247, 246, 242);
+    color: rgb(92, 92, 95);
+}

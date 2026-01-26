@@ -3,7 +3,11 @@ export interface Museum {
   badgeUrl: string;
   websiteUrl: string;
 }
-
+export const MUSEUMS_SPECIAL: string[] = [
+  'Yale University',
+  'Rijksmuseum',
+  'National Gallery of Art',
+];
 export const MUSEUMS: Museum[] = [
   {
     name: 'National Postal',

@@ -1,3 +1,4 @@
+import { Museum } from './../data/museums';
 export interface PaginatedListDto<T> {
   pageIndex: number;
   pageSize: number;
@@ -44,6 +45,7 @@ export interface ProductDto {
 export class ProductMetadata {
   OriginalImageWidth: string = '0';
   OriginalImageHeight: string = '0';
+  Museum: string = '';
 }
 
 export interface ProductImageDto {

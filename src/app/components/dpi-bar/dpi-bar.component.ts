@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
+  computed,
 } from '@angular/core';
 import { ProductMetadata } from '../../models/product';
 import { SizeOption } from '../../models/size-option';
+import { MuseumHighRes } from '../../utils/museum-highres';
 import { IconComponent } from '../shared/icon/icon.component';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
 
@@ -16,80 +17,8 @@ type DpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
   standalone: true,
   imports: [IconComponent, TooltipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <app-tooltip [ariaLabel]="ariaLabel()">
-      <div [class]="pillClasses()">
-        <span
-          class="inline-flex h-4 w-4 items-center justify-center"
-          aria-hidden="true"
-        >
-          @if (showWarningIcon()) {
-            <app-icon iconName="warning" class="h-4 w-4"></app-icon>
-          } @else {
-            <app-icon iconName="check" class="h-4 w-4"></app-icon>
-          }
-        </span>
-
-        <span class="font-medium">FineArt</span>
-        <span class="opacity-40" aria-hidden="true">·</span>
-        <span class="font-semibold" [class]="labelClasses()">{{
-          qualityText()
-        }}</span>
-
-        @if (dpi() !== null) {
-          <div
-            class="ml-1.5 h-1.5 w-14 overflow-hidden rounded-full bg-black/10"
-            aria-hidden="true"
-          >
-            <div
-              class="h-full"
-              [class]="barFillClasses()"
-              [style.width.%]="fillPercent() * 100"
-            ></div>
-          </div>
-        }
-
-        @if (dpi() !== null) {
-          <span class="opacity-40" aria-hidden="true">·</span>
-          <span class="tabular-nums font-medium">{{ dpi() }} dpi</span>
-        } @else {
-          <span class="opacity-60">Select size</span>
-        }
-      </div>
-
-      <div tooltip>
-        <div [class]="tooltipHeaderClasses()" class="px-4 py-3 text-center">
-          <div class="text-2xl mb-0.5">{{ tooltipEmoji() }}</div>
-          <div class="font-semibold text-sm">{{ tooltipHeadline() }}</div>
-        </div>
-
-        <div class="px-4 py-3 space-y-2">
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-slate-500">Your image</span>
-            <span class="font-medium text-slate-900">{{ imagePxText() }}</span>
-          </div>
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-slate-500">Print size</span>
-            <span class="font-medium text-slate-900">{{ sizeText() }}</span>
-          </div>
-          <div
-            class="flex items-center justify-between text-xs pt-1 border-t border-slate-100"
-          >
-            <span class="text-slate-500">Print quality</span>
-            <span class="font-bold text-slate-900">{{ dpi() ?? '—' }} dpi</span>
-          </div>
-        </div>
-
-        @if (quality() === 'borderline' || quality() === 'low') {
-          <div
-            class="px-4 py-2.5 bg-[rgb(252,247,240)] border-t border-[rgba(165,100,45,0.2)] text-xs text-[rgb(165,100,45)] text-center"
-          >
-            💡 Try a smaller size for sharper prints
-          </div>
-        }
-      </div>
-    </app-tooltip>
-  `,
+  templateUrl: './dpi-bar.component.html',
+  styleUrls: ['./dpi-bar.component.scss'],
 })
 export class DpiBarComponent {
   readonly metadata = input.required<ProductMetadata>();
@@ -101,8 +30,8 @@ export class DpiBarComponent {
 
     if (!selectedSize) return null;
 
-    const pxW = Number(meta.OriginalImageWidth);
-    const pxH = Number(meta.OriginalImageHeight);
+    const { widthPx: pxW, heightPx: pxH } =
+      MuseumHighRes.getEffectiveImagePixels(meta);
     if (
       !Number.isFinite(pxW) ||
       !Number.isFinite(pxH) ||
@@ -237,8 +166,8 @@ export class DpiBarComponent {
 
   readonly imagePxText = computed(() => {
     const meta = this.metadata();
-    const pxW = Number(meta.OriginalImageWidth);
-    const pxH = Number(meta.OriginalImageHeight);
+    const { widthPx: pxW, heightPx: pxH } =
+      MuseumHighRes.getEffectiveImagePixels(meta);
     if (!Number.isFinite(pxW) || !Number.isFinite(pxH)) return '—';
     return `${Math.round(pxW)}x${Math.round(pxH)} px`;
   });
