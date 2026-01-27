@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { FrameOptionsComponent } from '../frame-options/frame-options.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
+import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
 import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
@@ -31,6 +32,7 @@ import { ToastService } from '../../services/toast/toast.service';
     FrameOptionsComponent,
     IconComponent,
     MatOptionsComponent,
+    PaperOptionsComponent,
     SizeOptionsComponent,
     DpiBarComponent,
   ],

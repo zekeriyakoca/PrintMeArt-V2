@@ -110,3 +110,96 @@ export const FrameOptionsByValue: Record<string, DesignFrame> =
     },
     {} as Record<string, DesignFrame>,
   );
+
+export interface PremiumPaper {
+  id: string;
+  category: string;
+  name: string;
+  weightGsm: number;
+  surface: string;
+  printType: string;
+  lookFeel: string[];
+  bestFor: string[];
+  notIdealFor: string[];
+  uxLabels: string[];
+  badgeTitle: string;
+  thumbnail: string;
+}
+
+export const PaperOptions: PremiumPaper[] = [
+  {
+    id: 'art_photo_rag_308',
+    category: 'Art Print',
+    name: 'Hahnemühle Photo Rag',
+    weightGsm: 308,
+    surface: 'Smooth, Matte',
+    printType: 'Fine art pigment (giclée class)',
+    lookFeel: [
+      'Natural colors',
+      'Balanced contrast',
+      'No glare',
+      'Premium cotton feel',
+    ],
+    bestFor: [
+      'Paintings / art reproductions',
+      'Illustrations',
+      'Soft tones, gallery style',
+    ],
+    notIdealFor: ['People who want glossy / punchy photo look'],
+    uxLabels: ['Museum grade', 'Mat', 'Smooth', 'Signature choice'],
+    badgeTitle: 'Museum Smooth',
+    thumbnail:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photorag-placeholder.jpg',
+  },
+  {
+    id: 'art_german_etching_310',
+    category: 'Art Print',
+    name: 'Hahnemühle German Etching',
+    weightGsm: 310,
+    surface: 'Textured, Matte',
+    printType: 'Fine art pigment (giclée class)',
+    lookFeel: ['Painterly texture', 'Rich, tactile paper feel', 'No glare'],
+    bestFor: [
+      'Oil/acrylic style paintings',
+      'Artworks where texture adds value',
+    ],
+    notIdealFor: ['Ultra-fine line art where texture may distract'],
+    uxLabels: ['Museum grade', 'Textured', 'Mat', 'Painterly'],
+    badgeTitle: 'Museum Textured',
+    thumbnail:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-etching-placeholder.jpg',
+  },
+  {
+    id: 'art_canson_rag_photographique_310',
+    category: 'Art Print',
+    name: 'Canson Infinity Rag Photographique II',
+    weightGsm: 310,
+    surface: 'Smooth, Matte',
+    printType: 'Fine art pigment (giclée class)',
+    lookFeel: [
+      'Clean, neutral matte finish',
+      'High detail with a soft fine-art feel',
+      'No glare',
+      'Premium rag paper feel',
+    ],
+    bestFor: [
+      'Art reproductions and paintings',
+      'Photography that should look "fine art" (not glossy)',
+      'Neutral, color-accurate prints',
+    ],
+    notIdealFor: ['Glossy or ultra-punchy photo look'],
+    uxLabels: ['Museum grade', 'Mat', 'Smooth', 'Color-accurate'],
+    badgeTitle: 'Museum Smooth (Alternative)',
+    thumbnail:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-canson-placeholder.jpg',
+  },
+];
+
+export const PaperOptionsByValue: Record<string, PremiumPaper> =
+  PaperOptions.reduce(
+    (acc, paper) => {
+      acc[paper.name] = paper;
+      return acc;
+    },
+    {} as Record<string, PremiumPaper>,
+  );
