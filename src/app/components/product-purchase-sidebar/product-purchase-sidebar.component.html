@@ -38,7 +38,7 @@
     @else if(group.name.toLowerCase() == 'including mat'){
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
     }
-    @else if(group.name.toLowerCase() == 'paper' || group.name.toLowerCase() == 'paper type' || group.name.toLowerCase() == 'paper quality'){
+    @else if(group.name.toLowerCase().startsWith('paper')){
     <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-paper-options>
     }
     @else{
@@ -92,11 +92,9 @@
     </div>
     <div class="badge">
       <div class="badge-icon">
-        <!-- <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/recycle.svg" alt=""
-          loading="lazy" /> -->
         <app-icon iconName="document" class="w-6 h-6"></app-icon>
       </div>
-      <span class="badge-text">Premium 200 g/m² matte paper</span>
+      <span class="badge-text">Premium 310 g/m² 100% cotton paper</span>
     </div>
   </div>
 </section>

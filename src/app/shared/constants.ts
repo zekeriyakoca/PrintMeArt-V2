@@ -10,6 +10,9 @@ export const SizeOptions = [
 export const RolledUpDefaultThumbnailUrl =
   'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg';
 
+export const HahnemühleLogoUrl =
+  'https://genstorageaccount3116.blob.core.windows.net/printme-images/hahnemuehle.jpg';
+
 export interface DesignFrame {
   id: number;
   name: string;
@@ -149,7 +152,7 @@ export const PaperOptions: PremiumPaper[] = [
     uxLabels: ['Museum grade', 'Mat', 'Smooth', 'Signature choice'],
     badgeTitle: 'Museum Smooth',
     thumbnail:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photorag-placeholder.jpg',
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp',
   },
   {
     id: 'art_german_etching_310',
@@ -167,7 +170,7 @@ export const PaperOptions: PremiumPaper[] = [
     uxLabels: ['Museum grade', 'Textured', 'Mat', 'Painterly'],
     badgeTitle: 'Museum Textured',
     thumbnail:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-etching-placeholder.jpg',
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp',
   },
   {
     id: 'art_canson_rag_photographique_310',
@@ -191,7 +194,7 @@ export const PaperOptions: PremiumPaper[] = [
     uxLabels: ['Museum grade', 'Mat', 'Smooth', 'Color-accurate'],
     badgeTitle: 'Museum Smooth (Alternative)',
     thumbnail:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-canson-placeholder.jpg',
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp',
   },
 ];
 
