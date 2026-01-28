@@ -11,10 +11,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OptionGroupDto } from '../../models/product';
-import {
-  PaperOptionsByValue,
-  RolledUpDefaultThumbnailUrl,
-} from '../../shared/constants';
+import { PaperOptionsByValue } from '../../shared/constants';
 import { IconComponent } from '../shared/icon/icon.component';
 
 interface PaperItem {
@@ -48,8 +45,7 @@ export class PaperOptionsComponent {
       return {
         id: opt.id,
         name: opt.value,
-        thumbnail:
-          paper?.thumbnail || opt.imageUrl || RolledUpDefaultThumbnailUrl,
+        thumbnail: paper?.thumbnail || opt.imageUrl,
         weightGsm: paper?.weightGsm || 0,
         surface: paper?.surface || '',
         badgeTitle: paper?.badgeTitle || '',

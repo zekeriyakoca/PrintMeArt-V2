@@ -27,7 +27,7 @@ export class ImageGallery2Component {
   frameGuideImage =
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-guide.avif';
   paperImage =
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper.webp';
+    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp';
   genericImages = [
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-1 2.png',
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-2 2.png',
