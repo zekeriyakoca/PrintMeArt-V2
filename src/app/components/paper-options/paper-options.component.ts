@@ -5,26 +5,18 @@ import {
   HostListener,
   inject,
   input,
-  linkedSignal,
   output,
   signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OptionGroupDto } from '../../models/product';
-import { PaperOptionsByValue } from '../../shared/constants';
+import {
+  AllPapers,
+  GradeBadgeColors,
+  PriceTierColors,
+  PremiumPaper,
+} from '../../shared/constants';
 import { IconComponent } from '../shared/icon/icon.component';
-
-interface PaperItem {
-  id: number;
-  name: string;
-  thumbnail: string;
-  weightGsm: number;
-  surface: string;
-  badgeTitle: string;
-  uxLabels: string[];
-  lookFeel: string[];
-  bestFor: string[];
-}
 
 @Component({
   selector: 'app-paper-options',
@@ -39,38 +31,31 @@ export class PaperOptionsComponent {
   isOpen = signal(false);
   private el = inject(ElementRef<HTMLElement>);
 
-  items = computed<PaperItem[]>(() =>
-    this.group().options.map((opt) => {
-      const paper = PaperOptionsByValue[opt.value];
-      return {
-        id: opt.id,
-        name: opt.value,
-        thumbnail: paper?.thumbnail || opt.imageUrl,
-        weightGsm: paper?.weightGsm || 0,
-        surface: paper?.surface || '',
-        badgeTitle: paper?.badgeTitle || '',
-        uxLabels: paper?.uxLabels || [],
-        lookFeel: paper?.lookFeel || [],
-        bestFor: paper?.bestFor || [],
-      };
-    }),
-  );
+  gradeBadgeColors = GradeBadgeColors;
+  priceTierColors = PriceTierColors;
 
-  selectedId = linkedSignal(() => {
-    const selectedOptionId = this.group().selectedOptionId;
-    if (selectedOptionId) return selectedOptionId;
-    const firstId = this.items()[0]?.id;
-    if (firstId) this.optionSelected.emit(firstId);
-    return firstId;
-  });
+  // Frontend paper listesi
+  papers = AllPapers;
 
-  selectedItem = computed(
-    () => this.items().find((i) => i.id === this.selectedId()) ?? null,
-  );
+  // Seçili paper index
+  selectedIndex = signal(0);
 
-  select(id: number): void {
-    this.selectedId.set(id);
-    this.optionSelected.emit(id);
+  // Seçili paper
+  selectedPaper = computed(() => this.papers[this.selectedIndex()]);
+
+  // Seçim yapıldığında: paper'ın grade'ine göre backend option'ı bul ve emit et
+  select(paper: PremiumPaper, index: number): void {
+    this.selectedIndex.set(index);
+
+    // Backend option'ını bul (grade'e göre: Museum, Gallery, Studio, Home)
+    const backendOption = this.group().options.find(
+      (opt) => opt.value === paper.grade,
+    );
+
+    if (backendOption) {
+      this.optionSelected.emit(backendOption.id);
+    }
+
     this.isOpen.set(false);
   }
 

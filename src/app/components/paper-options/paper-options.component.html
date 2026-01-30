@@ -4,19 +4,11 @@
       <div
         class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left hover:border-slate-300 transition-colors">
         <div class="flex items-center gap-3 min-w-0">
-          @if (selectedItem(); as item) {
-          <img [src]="item.thumbnail" [alt]="item.name" class="h-12 w-12 rounded-lg object-cover" loading="lazy" />
+          @if (selectedPaper(); as paper) {
+          <img [src]="paper.thumbnail" [alt]="paper.name" class="h-12 w-12 rounded-lg object-cover" loading="lazy" />
           <div class="min-w-0">
-            <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ item.name }}</div>
-            @if (item.weightGsm && item.surface) {
-            <div class="text-xs text-slate-500 truncate">{{ item.weightGsm }} g/m² · {{ item.surface }}</div>
-            }
-          </div>
-          } @else {
-          <div class="h-12 w-12 rounded-lg bg-slate-100"></div>
-          <div class="min-w-0">
-            <div class="text-[0.95rem] font-semibold text-slate-900 truncate">Select your paper</div>
-            <div class="text-xs text-slate-500 truncate">Choose premium quality</div>
+            <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ paper.name }}</div>
+            <div class="text-xs text-slate-500 truncate">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
           </div>
           }
         </div>
@@ -30,35 +22,39 @@
     @if (isOpen()) {
     <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
       <div class="max-h-100 overflow-auto">
-        @for (item of items(); track item.id) {
-        <button type="button" (click)="select(item.id)" class="w-full text-left">
+        @for (paper of papers; track paper.id; let i = $index) {
+        <button type="button" (click)="select(paper, i)" class="w-full text-left">
           <div
-            [class]="'flex items-start gap-3 px-4 py-4 hover:bg-slate-50 transition-colors ' + (selectedId() === item.id ? 'bg-slate-50' : '')">
-            <img [src]="item.thumbnail" [alt]="item.name" class="h-14 w-14 rounded-lg object-cover flex-shrink-0"
+            [class]="'flex gap-3 px-4 py-4 hover:bg-slate-50 transition-colors ' + (selectedIndex() === i ? 'bg-slate-50' : '')">
+            <img [src]="paper.thumbnail" [alt]="paper.name" class="h-14 w-14 rounded-lg object-cover flex-shrink-0"
               loading="lazy" />
-            <div class="min-w-0 flex-1">
-              <div class="text-[0.95rem] font-semibold text-slate-900 mb-1 truncate">{{ item.name }}</div>
-              @if (item.weightGsm && item.surface) {
-              <div class="text-xs text-slate-500 mb-2">{{ item.weightGsm }} g/m² · {{ item.surface }}</div>
-              }
-              @if (item.uxLabels.length > 0) {
-              <div class="flex flex-wrap gap-1 mb-2">
-                @for (label of item.uxLabels.slice(0, 3); track label) {
-                <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                  {{ label }}
-                </span>
+            <div class="min-w-0 flex-1 flex flex-col">
+              <div class="text-[0.95rem] font-semibold text-slate-900 truncate mb-0.5">{{ paper.name }}</div>
+              <div class="text-xs text-slate-500 mb-1.5">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+              @if (paper.uxLabels.length > 0) {
+              <div class="flex flex-wrap gap-1 mb-1.5">
+                @for (label of paper.uxLabels.slice(0, 3); track label) {
+                <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{{ label
+                  }}</span>
                 }
               </div>
               }
-              @if (item.bestFor.length > 0) {
-              <div class="text-[0.7rem] text-slate-600">
-                <span class="font-semibold">Best for:</span>
-                {{ item.bestFor[0] }}
+              <div class="flex items-end justify-between mt-auto">
+                @if (paper.bestFor.length > 0) {
+                <div class="text-[0.7rem] text-slate-600 flex-1 mr-2">
+                  <span class="font-semibold">Best for:</span> {{ paper.bestFor[0] }}
+                </div>
+                }
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                  <span [class]="'text-xs font-bold ' + priceTierColors[paper.priceTier]">{{ paper.priceTier }}</span>
+                  <span
+                    [class]="'text-[0.6rem] font-semibold px-1.5 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text">{{
+                    paper.grade }}</span>
+                </div>
               </div>
-              }
             </div>
-            @if (selectedId() === item.id) {
-            <span class="text-cyan-600 text-sm font-medium flex-shrink-0">✓</span>
+            @if (selectedIndex() === i) {
+            <span class="text-cyan-600 text-sm font-medium flex-shrink-0 self-center">✓</span>
             }
           </div>
         </button>

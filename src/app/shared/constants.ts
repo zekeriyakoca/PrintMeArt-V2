@@ -114,6 +114,9 @@ export const FrameOptionsByValue: Record<string, DesignFrame> =
     {} as Record<string, DesignFrame>,
   );
 
+export type PaperGrade = 'Museum' | 'Gallery' | 'Studio' | 'Home';
+export type PriceTier = '$' | '$$' | '$$$';
+
 export interface PremiumPaper {
   id: string;
   category: string;
@@ -127,6 +130,8 @@ export interface PremiumPaper {
   uxLabels: string[];
   badgeTitle: string;
   thumbnail: string;
+  grade: PaperGrade;
+  priceTier: PriceTier;
 }
 
 export const PaperOptions: PremiumPaper[] = [
@@ -153,6 +158,8 @@ export const PaperOptions: PremiumPaper[] = [
     badgeTitle: 'Museum Smooth',
     thumbnail:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp',
+    grade: 'Museum',
+    priceTier: '$$$',
   },
   {
     id: 'art_german_etching_310',
@@ -171,6 +178,8 @@ export const PaperOptions: PremiumPaper[] = [
     badgeTitle: 'Museum Textured',
     thumbnail:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp',
+    grade: 'Museum',
+    priceTier: '$$$',
   },
   {
     id: 'art_canson_rag_photographique_310',
@@ -195,8 +204,39 @@ export const PaperOptions: PremiumPaper[] = [
     badgeTitle: 'Museum Smooth (Alternative)',
     thumbnail:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp',
+    grade: 'Museum',
+    priceTier: '$$$',
   },
 ];
+
+// Home grade paper (Gelato Fine Art Poster)
+const HomePaper: PremiumPaper = {
+  id: 'home_fineart_poster',
+  category: 'Home',
+  name: 'Fine Art Poster',
+  weightGsm: 200,
+  surface: 'Smooth, Matte',
+  printType: 'Giclée 12-color fine art printing',
+  lookFeel: [
+    'Vivid, accurate colors',
+    'Stunning depth',
+    'Smooth matte finish',
+    'Glare-free display',
+  ],
+  bestFor: [
+    'Art lovers',
+    'Designers',
+    'Everyday art display',
+    'Budget-conscious buyers',
+  ],
+  notIdealFor: ['Archival/museum-grade requirements'],
+  uxLabels: ['Eco-friendly', 'FSC-certified', 'Vivid colors'],
+  badgeTitle: 'Home',
+  thumbnail:
+    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp',
+  grade: 'Home',
+  priceTier: '$',
+};
 
 export const PaperOptionsByValue: Record<string, PremiumPaper> =
   PaperOptions.reduce(
@@ -206,3 +246,24 @@ export const PaperOptionsByValue: Record<string, PremiumPaper> =
     },
     {} as Record<string, PremiumPaper>,
   );
+
+// All papers to show in UI (Museum papers + Home paper)
+export const AllPapers: PremiumPaper[] = [...PaperOptions, HomePaper];
+
+// Grade badge colors
+export const GradeBadgeColors: Record<
+  PaperGrade,
+  { bg: string; text: string }
+> = {
+  Museum: { bg: 'bg-amber-100', text: 'text-amber-800' },
+  Gallery: { bg: 'bg-indigo-100', text: 'text-indigo-800' },
+  Studio: { bg: 'bg-emerald-100', text: 'text-emerald-800' },
+  Home: { bg: 'bg-slate-100', text: 'text-slate-700' },
+};
+
+// Price tier colors
+export const PriceTierColors: Record<PriceTier, string> = {
+  $: 'text-emerald-600',
+  $$: 'text-amber-600',
+  $$$: 'text-rose-600',
+};
