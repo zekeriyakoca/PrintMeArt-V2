@@ -39,7 +39,8 @@
     <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
     }
     @else if(group.name.toLowerCase().startsWith('paper')){
-    <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-paper-options>
+    <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"
+      (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
     }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>

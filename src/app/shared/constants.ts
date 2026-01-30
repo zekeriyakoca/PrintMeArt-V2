@@ -233,7 +233,7 @@ const HomePaper: PremiumPaper = {
   uxLabels: ['Eco-friendly', 'FSC-certified', 'Vivid colors'],
   badgeTitle: 'Home',
   thumbnail:
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp',
+    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp',
   grade: 'Home',
   priceTier: '$',
 };

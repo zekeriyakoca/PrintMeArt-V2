@@ -27,6 +27,8 @@ import { IconComponent } from '../shared/icon/icon.component';
 export class PaperOptionsComponent {
   group = input.required<OptionGroupDto>();
   optionSelected = output<number>();
+  /** Emits the paper name for display and spec3 */
+  paperNameSelected = output<string>();
 
   isOpen = signal(false);
   private el = inject(ElementRef<HTMLElement>);
@@ -54,6 +56,7 @@ export class PaperOptionsComponent {
 
     if (backendOption) {
       this.optionSelected.emit(backendOption.id);
+      this.paperNameSelected.emit(paper.name);
     }
 
     this.isOpen.set(false);
