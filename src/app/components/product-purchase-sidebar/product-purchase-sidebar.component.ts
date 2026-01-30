@@ -51,6 +51,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   onSelectedFrameChanged = output<string>();
 
   selectedSize = model<SizeOption | null>(SizeOptions[0]);
+  /** Selected paper name for display and spec3 */
+  selectedPaperName = signal<string>('Hahnemühle Photo Rag');
 
   constructor(
     private apiService: ApiService,
@@ -281,20 +283,24 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   private getSelectedOptions() {
     const size = this.selectedSize() ?? SizeOptions[0];
+    const paperName = this.selectedPaperName();
 
     const selectedOptions = this.product()
       .optionGroups.filter((x) => x.selectedOptionId ?? 0 > 0)
-      .map(
-        (group) =>
-          ({
-            optionId: group.selectedOptionId!,
-            optionName: group.options.find(
-              (option) => option.id === group.selectedOptionId,
-            )?.value,
-            spec1: size.val1.toString(),
-            spec2: size.val2.toString(),
-          }) as SelectedOptionDto,
-      );
+      .map((group) => {
+        const isPaper = group.name.toLowerCase().startsWith('paper');
+        return {
+          optionId: group.selectedOptionId!,
+          optionName: isPaper
+            ? paperName
+            : group.options.find(
+                (option) => option.id === group.selectedOptionId,
+              )?.value,
+          spec1: size.val1.toString(),
+          spec2: size.val2.toString(),
+          spec3: isPaper ? paperName : undefined,
+        } as SelectedOptionDto;
+      });
 
     selectedOptions.push({
       optionId:

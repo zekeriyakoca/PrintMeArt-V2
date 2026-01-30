@@ -21,7 +21,7 @@
 
     @if (isOpen()) {
     <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-      <div class="max-h-100 overflow-auto">
+      <div class="max-h-150 overflow-auto">
         @for (paper of papers; track paper.id; let i = $index) {
         <button type="button" (click)="select(paper, i)" class="w-full text-left">
           <div
