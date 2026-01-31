@@ -19,6 +19,7 @@ import {
 import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
+import { isDesktopViewport } from '../../shared/device';
 
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
@@ -103,9 +104,9 @@ export class ProductListComponent
           optionName,
           searchTerm: params.get('searchTerm') || undefined,
         });
-
-        // Show filters if any filter is applied
-        if (categoryName || attributeName || optionName) {
+        if (!isDesktopViewport()) {
+          this.hideFilters.set(true);
+        } else if (categoryName || attributeName || optionName) {
           this.hideFilters.set(false);
         }
 
