@@ -117,7 +117,7 @@ export const FrameOptionsByValue: Record<string, DesignFrame> =
 export type PaperGrade = 'Museum' | 'Gallery' | 'Studio' | 'Home';
 export type PriceTier = '$' | '$$' | '$$$';
 
-export interface PremiumPaper {
+export interface Paper {
   id: string;
   category: string;
   name: string;
@@ -134,7 +134,8 @@ export interface PremiumPaper {
   priceTier: PriceTier;
 }
 
-export const PaperOptions: PremiumPaper[] = [
+// Museum grade papers
+export const MuseumPapers: Paper[] = [
   {
     id: 'art_photo_rag_308',
     category: 'Art Print',
@@ -181,6 +182,10 @@ export const PaperOptions: PremiumPaper[] = [
     grade: 'Museum',
     priceTier: '$$$',
   },
+];
+
+// Gallery grade paper
+export const GalleryPapers: Paper[] = [
   {
     id: 'art_canson_rag_photographique_310',
     category: 'Art Print',
@@ -200,70 +205,70 @@ export const PaperOptions: PremiumPaper[] = [
       'Neutral, color-accurate prints',
     ],
     notIdealFor: ['Glossy or ultra-punchy photo look'],
-    uxLabels: ['Museum grade', 'Mat', 'Smooth', 'Color-accurate'],
-    badgeTitle: 'Museum Smooth (Alternative)',
+    uxLabels: ['Gallery grade', 'Mat', 'Smooth', 'Color-accurate'],
+    badgeTitle: 'Gallery Smooth (Alternative)',
     thumbnail:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp',
-    grade: 'Museum',
-    priceTier: '$$$',
+    grade: 'Studio',
+    priceTier: '$$',
   },
 ];
 
-// Home grade paper (Gelato Fine Art Poster)
-const HomePaper: PremiumPaper = {
-  id: 'home_fineart_poster',
-  category: 'Home',
-  name: 'Fine Art Poster',
-  weightGsm: 200,
-  surface: 'Smooth, Matte',
-  printType: 'Giclée 12-color fine art printing',
-  lookFeel: [
-    'Vivid, accurate colors',
-    'Stunning depth',
-    'Smooth matte finish',
-    'Glare-free display',
-  ],
-  bestFor: [
-    'Art lovers',
-    'Designers',
-    'Everyday art display',
-    'Budget-conscious buyers',
-  ],
-  notIdealFor: ['Archival/museum-grade requirements'],
-  uxLabels: ['Eco-friendly', 'FSC-certified', 'Vivid colors'],
-  badgeTitle: 'Home',
-  thumbnail:
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp',
-  grade: 'Home',
-  priceTier: '$',
-};
+const StudioPapers: Paper[] = [];
 
-export const PaperOptionsByValue: Record<string, PremiumPaper> =
-  PaperOptions.reduce(
-    (acc, paper) => {
-      acc[paper.name] = paper;
-      return acc;
-    },
-    {} as Record<string, PremiumPaper>,
-  );
+// Home grade paper
+const HomePapers: Paper[] = [
+  {
+    id: 'home_fineart_poster',
+    category: 'Home',
+    name: 'Fine Art Poster',
+    weightGsm: 200,
+    surface: 'Smooth, Matte',
+    printType: 'Giclée 12-color fine art printing',
+    lookFeel: [
+      'Vivid, accurate colors',
+      'Stunning depth',
+      'Smooth matte finish',
+      'Glare-free display',
+    ],
+    bestFor: [
+      'Best value art prints',
+      'Designers',
+      'Everyday art display',
+      'Budget-conscious buyers',
+    ],
+    notIdealFor: ['Archival/museum-grade requirements'],
+    uxLabels: ['Home grade', 'FSC-certified', 'Mat & Smooth'],
+    badgeTitle: 'Home',
+    thumbnail:
+      'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp',
+    grade: 'Home',
+    priceTier: '$',
+  },
+];
 
-// All papers to show in UI (Museum papers + Home paper)
-export const AllPapers: PremiumPaper[] = [...PaperOptions, HomePaper];
+// All papers to show in UI (Museum papers + Gallery papers + Home papers)
+export const AllPapers: Paper[] = [
+  ...MuseumPapers,
+  ...GalleryPapers,
+  ...StudioPapers,
+  ...HomePapers,
+];
 
 // Grade badge colors
 export const GradeBadgeColors: Record<
   PaperGrade,
   { bg: string; text: string }
 > = {
-  Museum: { bg: 'bg-amber-100', text: 'text-amber-800' },
-  Gallery: { bg: 'bg-indigo-100', text: 'text-indigo-800' },
-  Studio: { bg: 'bg-emerald-100', text: 'text-emerald-800' },
-  Home: { bg: 'bg-slate-100', text: 'text-slate-700' },
+  Museum: { bg: 'bg-[#384f8c]/10', text: 'text-[#db2877]' },
+  Gallery: { bg: 'bg-[#384f8c]/10', text: 'text-[#db2877]' },
+  Studio: { bg: 'bg-[#384f8c]/10', text: 'text-[#384f8c]' },
+  Home: { bg: 'bg-[#384f8c]/10', text: 'text-[#167a92]' },
 };
 
 // Price tier colors
 export const PriceTierColors: Record<PriceTier, string> = {
   $: 'text-[#167a92]',
-  $$: 'text-[#167a92]',
-  $$$: 'text-[#384f8c]',
+  $$: 'text-[#384f8c]',
+  $$$: 'text-[#db2877]',
 };

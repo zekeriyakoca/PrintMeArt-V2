@@ -14,7 +14,7 @@ import {
   AllPapers,
   GradeBadgeColors,
   PriceTierColors,
-  PremiumPaper,
+  Paper,
 } from '../../shared/constants';
 import { IconComponent } from '../shared/icon/icon.component';
 
@@ -46,7 +46,7 @@ export class PaperOptionsComponent {
   selectedPaper = computed(() => this.papers[this.selectedIndex()]);
 
   // Seçim yapıldığında: paper'ın grade'ine göre backend option'ı bul ve emit et
-  select(paper: PremiumPaper, index: number): void {
+  select(paper: Paper, index: number): void {
     this.selectedIndex.set(index);
 
     // Backend option'ını bul (grade'e göre: Museum, Gallery, Studio, Home)
