@@ -104,12 +104,11 @@
       Museum-grade cotton papers. All 308-310 gsm, fade-resistant, and built to last.
     </p>
 
-    <div class="grid md:grid-cols-2 gap-6 mb-10">
-      <!-- Photo Rag -->
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
-        <img
-          src="https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/c87414a1-1618-4800-a9c3-047f9fa4e78b"
-          alt="Hahnemühle Photo Rag paper" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
+    <div class="grid md:grid-cols-3 gap-4 mb-14">
+      @for (paper of premiumPapers; track paper.id) {
+      <div [id]="paper.id"
+        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
+        <img [src]="paper.thumbnail" [alt]="paper.name + ' paper'" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
           <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> Photo Rag</h3>
           <p class="text-sm text-slate-500 mb-3">308 g/m² · 100% Cotton · Smooth Matte</p>
@@ -143,110 +142,108 @@
         </div>
       </div>
 
-      <!-- Canson Rag -->
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
-        <img
-          src="https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/c87414a1-1618-4800-a9c3-047f9fa4e78b"
-          alt="Canson Rag Photographique paper" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
-        <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Canson Infinity</strong> Rag Photographique</h3>
-          <p class="text-sm text-slate-500 mb-3">310 g/m² · 100% Cotton Rag · Smooth Matte</p>
-          <p class="text-slate-700 leading-relaxed mb-4">
-            French-made cotton-rag with exceptional color accuracy. High D-max for deep blacks and perfect tonal range.
-          </p>
-          <ul class="text-slate-600 space-y-2 leading-relaxed">
-            <li><span class="font-semibold">Printing:</span> 12-color giclée pigment inks</li>
-            <li><span class="font-semibold">Best for:</span> Photography, color-critical work</li>
-            <li><span class="font-semibold">Lifespan:</span> 100+ years fade-resistant</li>
-          </ul>
+      <div class="grid md:grid-cols-3 gap-4">
+        @for (paper of homePapers; track paper.id) {
+        <div [id]="paper.id"
+          class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
+          <img [src]="paper.thumbnail" [alt]="paper.name + ' paper'" class="w-full h-64 sm:h-80 object-cover" />
+          <div class="p-6">
+            <h4 class="text-lg font-semibold text-slate-900 mb-2">{{ paper.name }}</h4>
+            <p class="text-sm text-slate-500 mb-3">{{ paper.weightGsm }} g/m² · {{ paper.material }} · {{ paper.surface
+              }}</p>
+            <p class="text-sm text-slate-700 !leading-relaxed mb-4">{{ paper.description }}</p>
+            <ul class="text-sm text-slate-600 space-y-2 !leading-relaxed">
+              <li><span class="font-semibold">Printing:</span> {{ paper.printType }}</li>
+              <li><span class="font-semibold">Best for:</span> {{ paper.bestForSummary }}</li>
+              @if (paper.notIdealFor.length > 0) {
+              <li><span class="font-semibold">Note:</span> Not {{ paper.notIdealFor[0].toLowerCase() }}</li>
+              }
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Decision Helper -->
-    <div class="bg-gradient-to-br from-indigo-50 to-slate-50 rounded-xl p-8 md:p-10 mb-8 border border-indigo-100">
-      <div class="text-center mb-8">
-        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Find your perfect paper</h3>
-        <p class="text-slate-600 text-base">Quick guide to help you decide</p>
-      </div>
+    <div class="bg-slate-50 rounded-2xl p-8 md:p-10 border border-slate-200">
+      <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-2">Which paper should I choose?</h3>
+      <p class="text-slate-500 mb-8">Think about your artwork and what matters most to you.</p>
 
-      <div class="grid md:grid-cols-3 gap-6 mb-10">
-        <!-- Scenario 1 -->
-        <div class="bg-white rounded-xl p-7 shadow-sm hover:shadow-md transition-all border border-slate-200 hover:border-indigo-200">
-          <div class="w-14 h-14 bg-indigo-50 rounded-lg flex items-center justify-center mb-5">
-            <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      <div class="space-y-4 mb-8">
+        <div class="flex items-center gap-4 bg-white rounded-xl p-5 border border-slate-200">
+          <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h4 class="font-bold text-slate-900 text-lg mb-3">Art reproductions</h4>
-          <p class="text-slate-600 mb-4 leading-relaxed">Soft, natural colors with a gallery feel</p>
-          <div class="text-base font-semibold text-indigo-900">→ Hahnemühle Photo Rag</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-slate-900 mb-1">Art reproductions & illustrations</div>
+            <div class="text-sm text-slate-500 leading-relaxed">Soft, natural colors with a gallery feel. Smooth
+              surface brings out fine details without distraction. Our most versatile choice.</div>
+          </div>
+          <a routerLink="." fragment="art_photo_rag_308"
+            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap ml-4 hover:underline">Photo Rag →</a>
         </div>
 
-        <!-- Scenario 2 -->
-        <div class="bg-white rounded-xl p-7 shadow-sm hover:shadow-md transition-all border border-slate-200 hover:border-indigo-200">
-          <div class="w-14 h-14 bg-indigo-50 rounded-lg flex items-center justify-center mb-5">
-            <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+        <div class="flex items-center gap-4 bg-white rounded-xl p-5 border border-slate-200">
+          <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
             </svg>
           </div>
-          <h4 class="font-bold text-slate-900 text-lg mb-3">Textured artworks</h4>
-          <p class="text-slate-600 mb-4 leading-relaxed">Hand-painted, tactile character</p>
-          <div class="text-base font-semibold text-indigo-900">→ Hahnemühle German Etching</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-slate-900 mb-1">Oil & acrylic style paintings</div>
+            <div class="text-sm text-slate-500 leading-relaxed">Visible texture adds a hand-painted, tactile quality.
+              Makes brushstrokes feel real. Great for classical art or expressive works.</div>
+          </div>
+          <a routerLink="." fragment="art_german_etching_310"
+            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap ml-4 hover:underline">German Etching →</a>
         </div>
 
-        <!-- Scenario 3 -->
-        <div class="bg-white rounded-xl p-7 shadow-sm hover:shadow-md transition-all border border-slate-200 hover:border-indigo-200">
-          <div class="w-14 h-14 bg-indigo-50 rounded-lg flex items-center justify-center mb-5">
-            <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        <div class="flex items-center gap-4 bg-white rounded-xl p-5 border border-slate-200">
+          <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </div>
-          <h4 class="font-bold text-slate-900 text-lg mb-3">Photography</h4>
-          <p class="text-slate-600 mb-4 leading-relaxed">Accurate colors and fine detail</p>
-          <div class="text-base font-semibold text-indigo-900">→ Canson Rag Photographique</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-slate-900 mb-1">Photography & color-critical work</div>
+            <div class="text-sm text-slate-500 leading-relaxed">Maximum color accuracy and deep blacks. Perfect tonal
+              range from highlights to shadows. Ideal when precise color reproduction matters.</div>
+          </div>
+          <a routerLink="." fragment="art_canson_rag_photographique_310"
+            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap ml-4 hover:underline">Rag Photographique →</a>
+        </div>
+
+        <div class="flex items-center gap-4 bg-white rounded-xl p-5 border border-slate-200">
+          <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-slate-900 mb-1">Everyday art & best value</div>
+            <div class="text-sm text-slate-500 leading-relaxed">Same giclée printing quality on a lighter paper.
+              Vivid colors, smooth matte finish. Perfect for decorating without the premium price.</div>
+          </div>
+          <a routerLink="." fragment="home_fineart_poster"
+            class="text-sm font-semibold text-[#167a92] whitespace-nowrap ml-4 hover:underline">Fine Art Poster →</a>
         </div>
       </div>
 
-      <!-- Premium brands highlight -->
-      <div class="bg-white rounded-xl p-6 border border-indigo-100">
-        <div class="text-center mb-6">
-          <h4 class="font-bold text-slate-900 text-lg mb-2">Premium paper brands we use</h4>
-          <p class="text-slate-600 text-sm">Industry-leading manufacturers trusted by museums and galleries worldwide</p>
-        </div>
-        <div class="grid sm:grid-cols-2 gap-6 mb-6">
-          <div class="text-center">
-            <div class="text-2xl font-bold text-slate-900 mb-1">Hahnemühle</div>
-            <div class="text-sm text-slate-600">German heritage since 1584. Giclée-class fine art papers.</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-slate-900 mb-1">Canson Infinity</div>
-            <div class="text-sm text-slate-600">French excellence. Archival-grade cotton-rag papers.</div>
-          </div>
-        </div>
-        <div class="grid sm:grid-cols-3 gap-6 text-center pt-6 border-t border-slate-200">
-          <div>
-            <div class="text-2xl font-bold text-slate-900 mb-1">308-310</div>
-            <div class="text-sm text-slate-600 font-medium">g/m² thickness</div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-slate-900 mb-1">100%</div>
-            <div class="text-sm text-slate-600 font-medium">Cotton quality</div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-slate-900 mb-1">Museum</div>
-            <div class="text-sm text-slate-600 font-medium">Grade archival</div>
-          </div>
-        </div>
+      <div class="bg-[#384f8c]/5 rounded-xl p-5">
+        <p class="text-sm text-slate-700 leading-relaxed">
+          <span class="font-semibold">Still not sure?</span> Go with Photo Rag—it works beautifully for almost
+          anything. All our premium papers are museum-quality, fade-resistant for 100+ years, and printed with
+          the same 12-color giclée process.
+        </p>
       </div>
-    </div>
-
-    <div class="bg-[#faf6ff] rounded-xl p-6 border border-indigo-100">
-      <h4 class="font-semibold text-indigo-900 mb-2">Still not sure?</h4>
-      <p class="text-indigo-800/80 text-sm leading-relaxed">
-        <strong>Photo Rag</strong> works for almost everything—it's the safe bet. All three are museum-quality and fade-resistant.
-      </p>
     </div>
   </section>
 
@@ -366,7 +363,7 @@
         <div class="flex flex-wrap gap-3">
           <a routerLink="/products"
             class="inline-flex items-center px-5 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-colors">
-            Shop Prints
+            Shop Artwork
           </a>
           <a routerLink="/your-design"
             class="inline-flex items-center px-5 py-2.5 border border-slate-300 text-slate-700 text-sm font-medium rounded-full hover:border-slate-400 hover:bg-slate-50 transition-colors">

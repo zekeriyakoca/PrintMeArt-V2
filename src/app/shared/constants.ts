@@ -249,10 +249,10 @@ const HomePapers: Paper[] = [
 
 // All papers to show in UI (Museum papers + Gallery papers + Home papers)
 export const AllPapers: Paper[] = [
+  ...HomePapers,
+  ...StudioPapers,
   ...MuseumPapers,
   ...GalleryPapers,
-  ...StudioPapers,
-  ...HomePapers,
 ];
 
 // Grade badge colors
