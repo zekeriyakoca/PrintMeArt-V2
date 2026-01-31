@@ -7,7 +7,7 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-
+import { isDesktopViewport } from '../../shared/device';
 
 @Component({
   selector: 'app-pagination',
@@ -45,11 +45,12 @@ export class PaginationComponent implements OnInit {
   }
 
   getVisiblePages(): number[] {
-    return Array.from(
-      { length: this.totalPages() },
-      (_, index) => index,
-    ).filter(
-      (index) => index >= this.pageIndex() - 4 && index <= this.pageIndex() + 4,
+    const visibleRange = isDesktopViewport() ? 4 : 2;
+    const start = this.pageIndex() - visibleRange;
+    const end = this.pageIndex() + visibleRange;
+
+    return Array.from({ length: this.totalPages() }, (_, i) => i).filter(
+      (i) => i >= start && i <= end,
     );
   }
 
