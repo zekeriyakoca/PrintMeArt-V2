@@ -105,15 +105,17 @@
     </p>
 
     <div class="grid md:grid-cols-3 gap-4 mb-14">
-      @for (paper of premiumPapers; track paper.id) {
-      <div [id]="paper.id"
+      <!-- Photo Rag -->
+      <div id="art_photo_rag_308"
         class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
-        <img [src]="paper.thumbnail" [alt]="paper.name + ' paper'" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
+        <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp"
+          alt="Hahnemühle Photo Rag paper" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
           <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> Photo Rag</h3>
           <p class="text-sm text-slate-500 mb-3">308 g/m² · 100% Cotton · Smooth Matte</p>
           <p class="text-slate-700 leading-relaxed mb-4">
-            Premium German fine art paper with natural white tone. Museum-grade archival quality used by galleries worldwide.
+            Premium German fine art paper with natural white tone. Museum-grade archival quality used by galleries
+            worldwide.
           </p>
           <ul class="text-slate-600 space-y-2 leading-relaxed">
             <li><span class="font-semibold">Printing:</span> 12-color giclée pigment inks</li>
@@ -124,15 +126,16 @@
       </div>
 
       <!-- German Etching -->
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
-        <img
-          src="https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/c87414a1-1618-4800-a9c3-047f9fa4e78b"
+      <div id="art_german_etching_310"
+        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
+        <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp"
           alt="Hahnemühle German Etching paper" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
           <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> German Etching</h3>
           <p class="text-sm text-slate-500 mb-3">310 g/m² · 100% Cotton · Textured Matte</p>
           <p class="text-slate-700 leading-relaxed mb-4">
-            Traditional German mould-made paper with visible texture. Originally designed for printmaking, now a favorite for fine art.
+            Traditional German mould-made paper with visible texture. Originally designed for printmaking, now a
+            favorite for fine art.
           </p>
           <ul class="text-slate-600 space-y-2 leading-relaxed">
             <li><span class="font-semibold">Printing:</span> 12-color giclée pigment inks</li>
@@ -142,24 +145,23 @@
         </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-4">
-        @for (paper of homePapers; track paper.id) {
-        <div [id]="paper.id"
-          class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
-          <img [src]="paper.thumbnail" [alt]="paper.name + ' paper'" class="w-full h-64 sm:h-80 object-cover" />
-          <div class="p-6">
-            <h4 class="text-lg font-semibold text-slate-900 mb-2">{{ paper.name }}</h4>
-            <p class="text-sm text-slate-500 mb-3">{{ paper.weightGsm }} g/m² · {{ paper.material }} · {{ paper.surface
-              }}</p>
-            <p class="text-sm text-slate-700 !leading-relaxed mb-4">{{ paper.description }}</p>
-            <ul class="text-sm text-slate-600 space-y-2 !leading-relaxed">
-              <li><span class="font-semibold">Printing:</span> {{ paper.printType }}</li>
-              <li><span class="font-semibold">Best for:</span> {{ paper.bestForSummary }}</li>
-              @if (paper.notIdealFor.length > 0) {
-              <li><span class="font-semibold">Note:</span> Not {{ paper.notIdealFor[0].toLowerCase() }}</li>
-              }
-            </ul>
-          </div>
+      <!-- Fine Art Poster -->
+      <div id="home_fineart_poster"
+        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
+        <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp"
+          alt="Fine Art Poster paper" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">Fine Art Poster</h3>
+          <p class="text-sm text-slate-500 mb-3">200 g/m² · FSC-certified · Smooth Matte</p>
+          <p class="text-slate-700 leading-relaxed mb-4">
+            Vivid, accurate colors with stunning depth. Smooth matte finish for glare-free display. Best value for
+            everyday art.
+          </p>
+          <ul class="text-slate-600 space-y-2 leading-relaxed">
+            <li><span class="font-semibold">Printing:</span> 12-color giclée pigment inks</li>
+            <li><span class="font-semibold">Best for:</span> Designers, everyday art, budget-conscious</li>
+            <li><span class="font-semibold">Note:</span> Not archival/museum-grade</li>
+          </ul>
         </div>
       </div>
     </div>

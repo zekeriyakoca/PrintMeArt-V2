@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
             provider: new GoogleLoginProvider(
               '761877359482-leqnq498c781apae0456om543bf70h4g.apps.googleusercontent.com',
               {
-                oneTapEnabled: false, // Disable One Tap to avoid FedCM issues
+                oneTapEnabled: true, // Disable One Tap to avoid FedCM issues
                 scopes: 'openid profile email',
               },
             ),

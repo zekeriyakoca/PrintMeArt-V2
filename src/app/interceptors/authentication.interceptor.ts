@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { catchError, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 
 export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthenticationService);
@@ -35,10 +35,30 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(newReq).pipe(
     catchError((error) => {
-      if (error.status === 401) {
-        console.warn('Unauthorized request detected. Handling 401...');
-        authService.logout();
-        router.navigate(['/login']);
+      if (error.status === 401 && authService.isAuthenticated()) {
+        // Try to refresh the token silently
+        return authService.refreshToken().pipe(
+          switchMap((newToken) => {
+            if (!newToken) {
+              authService.logout();
+              router.navigate(['/login']);
+              return throwError(() => error);
+            }
+
+            // Retry the request with the new token
+            const retryReq = req.clone({
+              headers: req.headers.set('Authorization', newToken),
+              url: newReq.url,
+            });
+            return next(retryReq);
+          }),
+          catchError(() => {
+            // Refresh failed, logout
+            authService.logout();
+            router.navigate(['/login']);
+            return throwError(() => error);
+          }),
+        );
       }
       return throwError(() => error);
     }),
