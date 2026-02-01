@@ -1,3 +1,5 @@
+import { SelectedOptionDto } from './cart-item';
+
 // Backend status enum values
 export type BackendOrderStatus =
   | 'PendingForPayment'
@@ -48,7 +50,7 @@ export interface OrderItemDto {
   unitPrice: number;
   discount: number;
   units: number;
-  selectedOptions: Array<unknown>;
+  selectedOptions: Array<SelectedOptionDto>;
 }
 
 export interface OrderDto {
