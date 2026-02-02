@@ -1,22 +1,38 @@
+import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
+import { map } from 'rxjs';
 
 /**
- * Guard that requires authentication.
- * Redirects to login page with returnUrl if user is not authenticated.
+ * Route guard that checks BFF session authentication.
+ * Redirects to login if not authenticated.
  */
 export const AuthenticationGuard: CanActivateFn = (route, state) => {
-  const auth = inject(AuthenticationService);
+  const authService = inject(AuthenticationService);
   const router = inject(Router);
 
-  if (auth.isAuthenticated()) {
-    return true;
+  // If we already know auth state and not loading, use it
+  if (!authService.isLoading()) {
+    if (authService.isAuthenticated()) {
+      return true;
+    }
+    router.navigate(['/login'], {
+      queryParams: { returnUrl: state.url },
+    });
+    return false;
   }
 
-  // Redirect to login with return URL
-  router.navigate(['/login'], {
-    queryParams: { returnUrl: state.url },
-  });
-  return false;
+  // Otherwise check with server
+  return authService.checkAuthState().pipe(
+    map((authState) => {
+      if (authState.isAuthenticated) {
+        return true;
+      }
+      router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url },
+      });
+      return false;
+    }),
+  );
 };

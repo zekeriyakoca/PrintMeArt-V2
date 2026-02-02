@@ -1,259 +1,199 @@
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import {
-  GoogleLoginProvider,
-  SocialAuthService,
-} from '@abacritt/angularx-social-login';
-import {
-  BehaviorSubject,
-  filter,
-  firstValueFrom,
-  Observable,
-  of,
-  switchMap,
-  take,
-  catchError,
-} from 'rxjs';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthenticationService {
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly socialAuth = inject(SocialAuthService, { optional: true });
-
-  private readonly AUTH_TOKEN_KEY = 'authToken';
-  private readonly CURRENT_USER_KEY = 'currentUser';
-  private readonly TOKEN_EXPIRY_KEY = 'tokenExpiry';
-
-  private readonly token = signal<string>('');
-  private refreshInProgress$ = new BehaviorSubject<boolean>(false);
-  private refreshInterval: ReturnType<typeof setInterval> | null = null;
-
-  public currentUser = signal<User | null>(null);
-
-  constructor() {
-    this.hydrateFromStorage();
-    this.setupProactiveRefresh();
-  }
-
-  private hydrateFromStorage(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    try {
-      const token = localStorage.getItem(this.AUTH_TOKEN_KEY) ?? '';
-      this.token.set(token);
-
-      const rawUser = localStorage.getItem(this.CURRENT_USER_KEY);
-      if (rawUser) {
-        this.currentUser.set(JSON.parse(rawUser) as User);
-      }
-    } catch {
-      // Ignore storage/parse errors
-    }
-  }
-
-  public getToken(): string {
-    return this.token();
-  }
-
-  public setToken(token: string) {
-    const normalized = token
-      ? token.startsWith('Bearer ')
-        ? token
-        : `Bearer ${token}`
-      : '';
-
-    this.token.set(normalized);
-
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    try {
-      if (!normalized) {
-        localStorage.removeItem(this.AUTH_TOKEN_KEY);
-        this.clearTokenExpiry();
-      } else {
-        localStorage.setItem(this.AUTH_TOKEN_KEY, normalized);
-        this.setTokenExpiry();
-      }
-    } catch {
-      // Ignore storage errors
-    }
-  }
-
-  public setCurrentUser(user: User | null): void {
-    this.currentUser.set(user);
-
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    try {
-      if (!user) {
-        localStorage.removeItem(this.CURRENT_USER_KEY);
-        return;
-      }
-
-      localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(user));
-    } catch {
-      // Ignore storage errors
-    }
-  }
-
-  public isAuthenticated(): boolean {
-    // return true; // Temporary change
-    const token = this.token().trim();
-    if (!token) return false;
-    return token.startsWith('Bearer ') ? token.length > 'Bearer '.length : true;
-  }
-  public logout() {
-    this.setToken('');
-    this.setCurrentUser(null);
-    this.clearTokenExpiry();
-
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
-      this.refreshInterval = null;
-    }
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.socialAuth?.signOut().catch(() => {
-        // Ignore sign-out errors
-      });
-    }
-  }
-
-  /**
-   * Silently refresh the Google token.
-   * Returns an observable that emits the new token or throws on failure.
-   */
-  public refreshToken(): Observable<string> {
-    if (!isPlatformBrowser(this.platformId) || !this.socialAuth) {
-      return of('');
-    }
-
-    // If refresh is already in progress, wait for it to complete
-    if (this.refreshInProgress$.value) {
-      return this.refreshInProgress$.pipe(
-        filter((inProgress) => !inProgress),
-        take(1),
-        switchMap(() => of(this.getToken())),
-      );
-    }
-
-    this.refreshInProgress$.next(true);
-
-    return new Observable<string>((subscriber) => {
-      // Subscribe to authState to get the new user/token
-      const authStateSub = this.socialAuth!.authState
-        .pipe(
-          filter((user) => !!user?.idToken),
-          take(1),
-        )
-        .subscribe({
-          next: (user) => {
-            const newToken = user.idToken ?? '';
-            this.setToken(newToken);
-            subscriber.next(this.getToken());
-            subscriber.complete();
-            this.refreshInProgress$.next(false);
-          },
-          error: (err) => {
-            subscriber.error(err);
-            this.refreshInProgress$.next(false);
-          },
-        });
-
-      // Trigger the refresh
-      this.socialAuth!.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID).catch(
-        (err) => {
-          authStateSub.unsubscribe();
-          subscriber.error(err);
-          this.refreshInProgress$.next(false);
-        },
-      );
-
-      // Timeout after 10 seconds
-      setTimeout(() => {
-        if (!subscriber.closed) {
-          authStateSub.unsubscribe();
-          subscriber.error(new Error('Token refresh timeout'));
-          this.refreshInProgress$.next(false);
-        }
-      }, 10000);
-    });
-  }
-
-  /**
-   * Attempt to refresh the token, returning the new token or empty string on failure.
-   */
-  public async tryRefreshToken(): Promise<string> {
-    try {
-      return await firstValueFrom(
-        this.refreshToken().pipe(catchError(() => of(''))),
-      );
-    } catch {
-      return '';
-    }
-  }
-
-  private setupProactiveRefresh(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    // Check token expiry every minute
-    this.refreshInterval = setInterval(() => {
-      if (!this.isAuthenticated()) return;
-
-      const expiry = this.getTokenExpiry();
-      if (!expiry) return;
-
-      const now = Date.now();
-      const timeUntilExpiry = expiry - now;
-      const fiveMinutes = 5 * 60 * 1000;
-
-      // Refresh if token expires within 5 minutes
-      if (timeUntilExpiry > 0 && timeUntilExpiry < fiveMinutes) {
-        this.refreshToken().pipe(take(1)).subscribe();
-      }
-    }, 60 * 1000);
-  }
-
-  private setTokenExpiry(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    try {
-      // Google ID tokens typically expire in 1 hour
-      const expiry = Date.now() + 55 * 60 * 1000; // 55 minutes from now
-      localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiry.toString());
-    } catch {
-      // Ignore storage errors
-    }
-  }
-
-  private getTokenExpiry(): number | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
-
-    try {
-      const expiry = localStorage.getItem(this.TOKEN_EXPIRY_KEY);
-      return expiry ? parseInt(expiry, 10) : null;
-    } catch {
-      return null;
-    }
-  }
-
-  private clearTokenExpiry(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    try {
-      localStorage.removeItem(this.TOKEN_EXPIRY_KEY);
-    } catch {
-      // Ignore storage errors
-    }
-  }
-}
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: string;
+  picture?: string;
   profilePictureUrl?: string;
+}
+
+export interface AuthState {
+  isAuthenticated: boolean;
+  user: User | null;
+}
+
+/**
+ * BFF-style authentication service.
+ * - No JWT handling in the browser
+ * - Uses HTTP-only session cookies managed by the backend
+ * - All API calls use withCredentials: true
+ */
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthenticationService {
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  // Auth state using signals for Angular reactivity
+  public currentUser = signal<User | null>(null);
+  public isLoading = signal<boolean>(true);
+
+  // BehaviorSubject for components that need Observable
+  private authState$ = new BehaviorSubject<AuthState>({
+    isAuthenticated: false,
+    user: null,
+  });
+
+  private get bffUrl(): string {
+    // Use BFF URL - in production this should point to your BFF backend
+    return (
+      (environment as any).serviceUrls?.['bff'] ||
+      (environment as any).apiUrl ||
+      ''
+    );
+  }
+
+  constructor() {
+    // Check auth state on service initialization (only in browser)
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkAuthState().subscribe();
+    } else {
+      this.isLoading.set(false);
+    }
+  }
+
+  /**
+   * Initiates login by redirecting to BFF's Google OAuth endpoint.
+   * The BFF handles the entire OAuth flow and sets the session cookie.
+   */
+  login(returnUrl: string = '/'): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const loginUrl = `${this.bffUrl}/api/auth/login?returnUrl=${encodeURIComponent(
+      window.location.origin + returnUrl,
+    )}`;
+    window.location.href = loginUrl;
+  }
+
+  /**
+   * Logs out by calling the BFF logout endpoint.
+   * This clears the session cookie server-side.
+   */
+  logout(): Observable<void> {
+    return this.http
+      .post<void>(
+        `${this.bffUrl}/api/auth/logout`,
+        {},
+        { withCredentials: true },
+      )
+      .pipe(
+        tap(() => {
+          this.clearAuthState();
+          this.router.navigate(['/login']);
+        }),
+        catchError((error) => {
+          console.error('Logout failed:', error);
+          this.clearAuthState();
+          this.router.navigate(['/login']);
+          return of(undefined);
+        }),
+      );
+  }
+
+  /**
+   * Checks current authentication state by calling BFF's /me endpoint.
+   * Called on app initialization and after OAuth callback.
+   */
+  checkAuthState(): Observable<AuthState> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return of({ isAuthenticated: false, user: null });
+    }
+
+    this.isLoading.set(true);
+
+    return this.http
+      .get<{
+        isAuthenticated: boolean;
+        user?: User;
+      }>(`${this.bffUrl}/api/auth/me`, { withCredentials: true })
+      .pipe(
+        tap((response) => {
+          if (response.isAuthenticated && response.user) {
+            this.setAuthState(response.user);
+          } else {
+            this.clearAuthState();
+          }
+          this.isLoading.set(false);
+        }),
+        map((response) => ({
+          isAuthenticated: response.isAuthenticated,
+          user: response.user || null,
+        })),
+        catchError((error) => {
+          console.error('Auth check failed:', error);
+          this.clearAuthState();
+          this.isLoading.set(false);
+          return of({ isAuthenticated: false, user: null });
+        }),
+      );
+  }
+
+  /**
+   * Refreshes the session. Call this periodically to extend session lifetime.
+   */
+  refreshSession(): Observable<AuthState> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return of({ isAuthenticated: false, user: null });
+    }
+
+    return this.http
+      .post<{
+        isAuthenticated: boolean;
+        user?: User;
+      }>(`${this.bffUrl}/api/auth/refresh`, {}, { withCredentials: true })
+      .pipe(
+        tap((response) => {
+          if (response.isAuthenticated && response.user) {
+            this.setAuthState(response.user);
+          } else {
+            this.clearAuthState();
+          }
+        }),
+        map((response) => ({
+          isAuthenticated: response.isAuthenticated,
+          user: response.user || null,
+        })),
+        catchError((error) => {
+          console.error('Session refresh failed:', error);
+          return of({ isAuthenticated: false, user: null });
+        }),
+      );
+  }
+
+  /**
+   * Returns the auth state as an Observable for components that need it.
+   */
+  getAuthState(): Observable<AuthState> {
+    return this.authState$.asObservable();
+  }
+
+  /**
+   * Returns whether user is currently authenticated.
+   */
+  isAuthenticated(): boolean {
+    return this.authState$.value.isAuthenticated;
+  }
+
+  private setAuthState(user: User): void {
+    // Normalize user data - map 'picture' to 'profilePictureUrl' for consistency
+    const normalizedUser: User = {
+      ...user,
+      profilePictureUrl: user.profilePictureUrl || user.picture,
+    };
+    this.currentUser.set(normalizedUser);
+    this.authState$.next({ isAuthenticated: true, user: normalizedUser });
+  }
+
+  private clearAuthState(): void {
+    this.currentUser.set(null);
+    this.authState$.next({ isAuthenticated: false, user: null });
+  }
 }

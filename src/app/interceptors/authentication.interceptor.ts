@@ -1,64 +1,45 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { AuthenticationService } from '../services/authentication/authentication.service';
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 
+/**
+ * BFF-style HTTP interceptor.
+ * - Adds withCredentials: true for cookie authentication
+ * - Adds session tracking headers
+ * - Handles 401 responses by redirecting to login
+ */
 export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthenticationService);
   const router = inject(Router);
   const platformId = inject(PLATFORM_ID);
   const isBrowser = isPlatformBrowser(platformId);
 
-  const authToken = (authService.getToken() || '').trim();
-
   const requestId = createRequestId();
   const sessionId = isBrowser ? getSessionIdBrowser() : requestId;
 
-  let headers = req.headers
-    .set('x-sessionid', sessionId)
-    .set('x-requestid', requestId);
+  // Build the full URL if not absolute
+  const url =
+    req.url.startsWith('http') || req.url.startsWith('www.')
+      ? req.url
+      : `${environment.apiUrl}${req.url}`;
 
-  if (authToken) {
-    headers = headers.set('Authorization', authToken);
-  }
-
+  // Clone request with credentials and tracking headers
   const newReq = req.clone({
-    headers,
-    url:
-      req.url.startsWith('http') || req.url.startsWith('www.')
-        ? req.url
-        : `${environment.apiUrl}${req.url}`,
+    url,
+    withCredentials: true, // Send cookies with every request
+    setHeaders: {
+      'x-sessionid': sessionId,
+      'x-requestid': requestId,
+    },
   });
 
   return next(newReq).pipe(
     catchError((error) => {
-      if (error.status === 401 && authService.isAuthenticated()) {
-        // Try to refresh the token silently
-        return authService.refreshToken().pipe(
-          switchMap((newToken) => {
-            if (!newToken) {
-              authService.logout();
-              router.navigate(['/login']);
-              return throwError(() => error);
-            }
-
-            // Retry the request with the new token
-            const retryReq = req.clone({
-              headers: req.headers.set('Authorization', newToken),
-              url: newReq.url,
-            });
-            return next(retryReq);
-          }),
-          catchError(() => {
-            // Refresh failed, logout
-            authService.logout();
-            router.navigate(['/login']);
-            return throwError(() => error);
-          }),
-        );
+      if (error.status === 401) {
+        // Session expired or invalid - redirect to login
+        router.navigate(['/login']);
       }
       return throwError(() => error);
     }),

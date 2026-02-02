@@ -1,5 +1,9 @@
 import { provideRouter } from '@angular/router';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection,
+  APP_INITIALIZER,
+} from '@angular/core';
 import {
   provideHttpClient,
   withFetch,
@@ -9,11 +13,15 @@ import {
 import { routes } from './app.routes';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-import {
-  GoogleLoginProvider,
-  SocialAuthServiceConfig,
-  SOCIAL_AUTH_CONFIG,
-} from '@abacritt/angularx-social-login';
+import { AuthenticationService } from './services/authentication/authentication.service';
+
+/**
+ * App initializer that checks auth state on startup.
+ * This ensures the session is validated before the app renders.
+ */
+function initializeAuth(authService: AuthenticationService) {
+  return () => authService.checkAuthState().toPromise();
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,23 +31,12 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([AuthenticationInterceptor, ErrorInterceptor]),
     ),
     provideRouter(routes),
+    // Initialize auth state on app startup
     {
-      provide: SOCIAL_AUTH_CONFIG,
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '761877359482-leqnq498c781apae0456om543bf70h4g.apps.googleusercontent.com',
-              {
-                oneTapEnabled: true, // Disable One Tap to avoid FedCM issues
-                scopes: 'openid profile email',
-              },
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
+      provide: APP_INITIALIZER,
+      useFactory: initializeAuth,
+      deps: [AuthenticationService],
+      multi: true,
     },
   ],
 };

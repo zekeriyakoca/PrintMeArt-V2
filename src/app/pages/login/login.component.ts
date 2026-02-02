@@ -1,61 +1,72 @@
-import { Component, DestroyRef, NgZone, inject } from '@angular/core';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-
-import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
-import {
-  AuthenticationService,
-  User,
-} from '../../services/authentication/authentication.service';
-import { Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { CartService } from '../../services/cart/cart.service';
 
+/**
+ * Login component for BFF-style authentication.
+ * Renders a login button that triggers backend OAuth flow.
+ */
 @Component({
   selector: 'app-login',
-  imports: [GoogleSigninButtonModule],
+  imports: [CommonModule],
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly ngZone = inject(NgZone);
+export class LoginComponent implements OnInit {
+  private readonly authService = inject(AuthenticationService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly cartService = inject(CartService);
+
   currentYear = new Date().getFullYear();
+  isLoading = false;
+  error: string | null = null;
 
-  user: SocialUser | null = null;
-  constructor(
-    private authService: SocialAuthService,
-    private authenticationService: AuthenticationService,
-    private router: Router,
-  ) {
-    this.authService.authState
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((user) => {
-        if (!user) return;
+  ngOnInit(): void {
+    // Check if user is already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.syncCartAndNavigate('/');
+      return;
+    }
 
-        this.ngZone.run(() => {
-          const idToken = user.idToken ?? '';
-          if (!idToken) return;
-
-          this.authenticationService.setToken(idToken);
-          this.authenticationService.setCurrentUser({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: '',
-            profilePictureUrl: user.photoUrl,
-          } as User);
-
-          // Sync cart with backend after login, then navigate
-          this.cartService.syncCartAfterLogin().subscribe({
-            next: () => this.router.navigate(['/']),
-            error: () => this.router.navigate(['/']), // Navigate even if sync fails
-          });
-        });
-      });
+    // Check for OAuth callback (user returned from Google)
+    // The BFF redirects back to returnUrl after setting the cookie
+    this.authService.checkAuthState().subscribe((state) => {
+      if (state.isAuthenticated) {
+        // Get the intended destination or default to home
+        const returnUrl =
+          this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+        this.syncCartAndNavigate(returnUrl);
+      }
+    });
   }
-  signOut(): void {
-    this.authService.signOut();
+
+  /**
+   * Initiates Google OAuth login via BFF.
+   * User is redirected to Google, then back to BFF callback,
+   * then finally back to Angular app with session cookie set.
+   */
+  signIn(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    // Get current URL to return to after login
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+
+    // Redirect to BFF login endpoint
+    this.authService.login(returnUrl);
+  }
+
+  /**
+   * Syncs cart with backend after login and navigates to target URL.
+   */
+  private syncCartAndNavigate(targetUrl: string): void {
+    this.cartService.syncCartAfterLogin().subscribe({
+      next: () => this.router.navigate([targetUrl]),
+      error: () => this.router.navigate([targetUrl]), // Navigate even if sync fails
+    });
   }
 }

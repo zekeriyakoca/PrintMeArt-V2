@@ -55,7 +55,8 @@ export class UserMenuComponent {
 
   logout(): void {
     this.close();
-    this.auth.logout();
+    // BFF-style logout - subscribe to trigger the HTTP call
+    this.auth.logout().subscribe();
   }
 
   @HostListener('document:click', ['$event'])
