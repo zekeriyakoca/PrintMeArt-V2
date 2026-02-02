@@ -29,9 +29,17 @@ export class ToastService {
   show(message: string, type: ToastType = 'info', duration = 5000): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
+    const normalizedMessage = message.trim();
+    if (!normalizedMessage) return;
+
+    const isDuplicate = this._toasts().some(
+      (toast) => toast.type === type && toast.message === normalizedMessage,
+    );
+    if (isDuplicate) return;
+
     const toast: Toast = {
       id: this.nextId++,
-      message,
+      message: normalizedMessage,
       type,
       duration,
     };
