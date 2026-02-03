@@ -18,13 +18,10 @@ export interface AuthState {
   user: User | null;
 }
 
-const SESSION_STORAGE_KEY = 'bff_session_id';
-
 /**
  * BFF-style authentication service.
  * - No JWT handling in the browser
  * - Uses HTTP-only session cookies managed by the backend
- * - Falls back to x-sessionid header for cross-domain scenarios
  * - All API calls use withCredentials: true
  */
 @Injectable({
@@ -55,44 +52,12 @@ export class AuthenticationService {
   }
 
   constructor() {
+    // Check auth state on service initialization (only in browser)
     if (isPlatformBrowser(this.platformId)) {
-      // Check for session_id in URL (from OAuth callback redirect)
-      this.captureSessionIdFromUrl();
       this.checkAuthState().subscribe();
     } else {
       this.isLoading.set(false);
     }
-  }
-
-  /**
-   * Captures session_id from URL query params (set by OAuth callback)
-   * and stores it in localStorage for cross-domain auth.
-   */
-  private captureSessionIdFromUrl(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sessionId = urlParams.get('session_id');
-
-    if (sessionId) {
-      // Store the session ID
-      localStorage.setItem(SESSION_STORAGE_KEY, sessionId);
-
-      // Remove session_id from URL (clean up)
-      urlParams.delete('session_id');
-      const newUrl = urlParams.toString()
-        ? `${window.location.pathname}?${urlParams.toString()}`
-        : window.location.pathname;
-      window.history.replaceState({}, '', newUrl);
-
-      console.log('[Auth] Session ID captured from OAuth callback');
-    }
-  }
-
-  /**
-   * Gets the stored session ID (for cross-domain scenarios).
-   */
-  getSessionId(): string | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
-    return localStorage.getItem(SESSION_STORAGE_KEY);
   }
 
   /**
@@ -121,14 +86,11 @@ export class AuthenticationService {
       )
       .pipe(
         tap(() => {
-          // Clear stored session ID
-          localStorage.removeItem(SESSION_STORAGE_KEY);
           this.clearAuthState();
           this.router.navigate(['/login']);
         }),
         catchError((error) => {
           console.error('Logout failed:', error);
-          localStorage.removeItem(SESSION_STORAGE_KEY);
           this.clearAuthState();
           this.router.navigate(['/login']);
           return of(undefined);
