@@ -46,11 +46,17 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-const SESSION_KEY = 'session_id';
+const SESSION_KEY = 'bff_session_id';
 
 function getSessionIdBrowser(): string {
   try {
-    let sessionId = sessionStorage.getItem(SESSION_KEY);
+    // First try to get the actual session ID from localStorage (set during OAuth callback)
+    let sessionId = localStorage.getItem(SESSION_KEY);
+    if (sessionId) {
+      return sessionId;
+    }
+    // Fall back to sessionStorage for request tracking
+    sessionId = sessionStorage.getItem(SESSION_KEY);
     if (!sessionId) {
       sessionId = createRequestId();
       sessionStorage.setItem(SESSION_KEY, sessionId);
