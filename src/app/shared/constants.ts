@@ -206,14 +206,15 @@ export const GalleryPapers: Paper[] = [
     ],
     notIdealFor: ['Glossy or ultra-punchy photo look'],
     uxLabels: ['Gallery grade', 'Mat', 'Smooth', 'Color-accurate'],
-    badgeTitle: 'Gallery Smooth (Alternative)',
+    badgeTitle: 'Gallery Smooth',
     thumbnail:
       'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp',
-    grade: 'Studio',
+    grade: 'Gallery',
     priceTier: '$$',
   },
 ];
 
+// Studio grade paper (currently no papers in this tier)
 const StudioPapers: Paper[] = [];
 
 // Home grade paper
@@ -247,12 +248,12 @@ const HomePapers: Paper[] = [
   },
 ];
 
-// All papers to show in UI (Museum papers + Gallery papers + Home papers)
+// All papers to show in UI (Best quality first: Museum > Gallery > Studio > Home)
 export const AllPapers: Paper[] = [
-  ...HomePapers,
-  ...StudioPapers,
   ...MuseumPapers,
   ...GalleryPapers,
+  ...StudioPapers,
+  ...HomePapers,
 ];
 
 // Grade badge colors
