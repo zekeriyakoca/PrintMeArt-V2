@@ -124,11 +124,17 @@ export class ProductListComponent
 
   fetchFilterOptions() {
     this.apiService.getFilterOptions().subscribe((filterOptions) => {
-      const onlyCategoryAndAttributeOptions = filterOptions.filter(
-        (o) => o.groupType.toLowerCase().includes('categories'),
-        // || o.groupType.toLowerCase().includes('attributes'),
+      const onlyCategoryOptions = filterOptions.filter((o) =>
+        o.groupType.toLowerCase().includes('categories'),
       );
-      this.filterOptions.set(onlyCategoryAndAttributeOptions ?? []);
+
+      const onlyAttributeOptions = filterOptions.filter((o) =>
+        o.groupType.toLowerCase().includes('attributes'),
+      );
+      this.filterOptions.set([
+        ...(onlyCategoryOptions ?? []),
+        ...(onlyAttributeOptions ?? []),
+      ]);
     });
   }
 

@@ -1,4 +1,4 @@
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
   ApplicationConfig,
   provideZoneChangeDetection,
@@ -16,7 +16,7 @@ import { AuthenticationService } from './services/authentication/authentication.
  * This ensures the session is validated before the app renders.
  */
 function initializeAuth(authService: AuthenticationService) {
-  return () => authService.checkAuthState().toPromise();
+  return () => authService.checkAuthState();
 }
 
 export const appConfig: ApplicationConfig = {
@@ -25,7 +25,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([AuthenticationInterceptor, ErrorInterceptor]),
     ),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'top',
+      }),
+    ),
     // Initialize auth state on app startup
     {
       provide: APP_INITIALIZER,

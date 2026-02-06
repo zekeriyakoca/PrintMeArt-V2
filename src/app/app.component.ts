@@ -1,7 +1,5 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CartAddedModalComponent } from './components/cart-added-modal/cart-added-modal.component';
@@ -30,11 +28,9 @@ import { ApiService } from './services/api/api.service';
 })
 export class AppComponent {
   title = 'StoreFront';
-  private platformId = inject(PLATFORM_ID);
 
   constructor(
     private cartService: CartService,
-    private router: Router,
     private telemetry: AppInsightsService,
     private googleAnalytics: GoogleAnalyticsService,
     private bootstrap: Bootstrap,
@@ -45,20 +41,7 @@ export class AppComponent {
     this.telemetry.init();
     this.googleAnalytics.init();
     this.cartService.fetchCartItems();
-    this.setupScrollToTop();
     this.bootstrap.fetchShippingInfo();
     this.apiService.fetchFromPrice();
-  }
-
-  private setupScrollToTop(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        requestAnimationFrame(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      });
   }
 }

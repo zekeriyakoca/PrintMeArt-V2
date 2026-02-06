@@ -52,10 +52,7 @@ export class AuthenticationService {
   }
 
   constructor() {
-    // Check auth state on service initialization (only in browser)
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkAuthState().subscribe();
-    } else {
+    if (!isPlatformBrowser(this.platformId)) {
       this.isLoading.set(false);
     }
   }
