@@ -49,6 +49,8 @@ export class ProductListComponent
     pageIndex: 0,
   });
   filterOptions = signal<FilterGroupDto[]>([]);
+  filterSearchTerms = signal<Record<string, string>>({});
+  expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
 
   activeFilters = computed(() => {
@@ -128,13 +130,18 @@ export class ProductListComponent
         o.groupType.toLowerCase().includes('categories'),
       );
 
-      const onlyAttributeOptions = filterOptions.filter((o) =>
-        o.groupType.toLowerCase().includes('attributes'),
-      );
+      const onlyAttributeOptions = filterOptions
+        .filter((o) => o.groupType.toLowerCase().includes('attributes'))
+        .filter((o) => o.name.trim().toLowerCase() !== 'image quality');
+
       this.filterOptions.set([
         ...(onlyCategoryOptions ?? []),
         ...(onlyAttributeOptions ?? []),
       ]);
+
+      if (onlyCategoryOptions.length > 0) {
+        this.toggleGroup(onlyCategoryOptions[0].name);
+      }
     });
   }
 
@@ -199,6 +206,32 @@ export class ProductListComponent
 
   onPaginationChanged(): void {
     this.navigateWithFilters(this.selectedFilterOptions());
+  }
+
+  toggleGroup(groupName: string): void {
+    this.expandedGroups.update((prev) => {
+      const next = new Set(prev);
+      if (next.has(groupName)) {
+        next.delete(groupName);
+      } else {
+        next.add(groupName);
+      }
+      return next;
+    });
+  }
+
+  isGroupExpanded(groupName: string): boolean {
+    return this.expandedGroups().has(groupName);
+  }
+
+  updateFilterSearch(groupName: string, term: string): void {
+    this.filterSearchTerms.update((prev) => ({ ...prev, [groupName]: term }));
+  }
+
+  getFilteredOptions(group: FilterGroupDto): FilterGroupDto['options'] {
+    const term = this.filterSearchTerms()[group.name]?.toLowerCase();
+    if (!term) return group.options;
+    return group.options.filter((o) => o.name.toLowerCase().includes(term));
   }
 
   mapColorToHex(color: string): string {
