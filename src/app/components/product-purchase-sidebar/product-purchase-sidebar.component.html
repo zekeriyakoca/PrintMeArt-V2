@@ -42,6 +42,9 @@
     <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"
       (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
     }
+    @else if(group.name.toLowerCase().startsWith('customproductdetails')){
+    <!-- Nothing to show -->
+    }
     @else{
     <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
     }

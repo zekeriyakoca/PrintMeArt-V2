@@ -77,9 +77,9 @@ export class DpiBarComponent {
   readonly qualityText = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'Ready';
+        return 'Excellent';
       case 'good':
-        return 'Good';
+        return 'Very Good';
       case 'borderline':
         return 'Borderline';
       case 'low':
