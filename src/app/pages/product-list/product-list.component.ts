@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
 import { ApiService } from '../../services/api/api.service';
 import {
   FilterGroupDto,
@@ -29,6 +30,7 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
   selector: 'app-product-list',
   imports: [
     ProductCardComponent,
+    ProductGalleryCardComponent,
     FormsModule,
     IconComponent,
     PaginationComponent,
@@ -52,6 +54,7 @@ export class ProductListComponent
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
+  galleryView = signal<boolean>(false);
 
   activeFilters = computed(() => {
     const filters = this.selectedFilterOptions();

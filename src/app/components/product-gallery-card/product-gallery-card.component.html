@@ -1,0 +1,34 @@
+<div class="gallery-card cursor-pointer group" (click)="goToProduct()">
+  <div class="gallery-card-inner relative overflow-hidden rounded-sm">
+    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      [src]="product().image.large || product().image.medium || product().image.small" [alt]="product().name" />
+
+    @if(isHorizontal()){
+    @if (product().thirdImage?.small) {
+    <img
+      class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105"
+      [src]="product().thirdImage.large || product().thirdImage.medium || product().thirdImage.small"
+      [alt]="product().name" />
+    }
+    }
+    @else{
+    @if (product().secondImage?.small) {
+    <img
+      class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105"
+      [src]="product().secondImage.large || product().secondImage.medium || product().secondImage.small"
+      [alt]="product().name" />
+    }
+    }
+
+    <div
+      class="absolute bottom-0 left-0 right-0 bg-black/25 px-5 py-3 sm:px-6 sm:py-4 translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+      <p class="text-white text-base sm:text-lg font-light uppercase tracking-wide leading-tight mb-1">
+        {{product().name}}
+      </p>
+      <p class="text-white/80 text-sm sm:text-base tracking-tight">
+        <span class="text-xs font-light">FROM </span>
+        <span class="font-medium">&euro;{{(fromPrice()).toFixed(2)}}</span>
+      </p>
+    </div>
+  </div>
+</div>

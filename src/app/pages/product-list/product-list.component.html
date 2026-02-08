@@ -37,9 +37,9 @@
       </span>
     </button>
 
-    <!-- Results for chips on right -->
-    @if (activeFilters().length) {
+    <!-- Results for chips + gallery toggle on right -->
     <div class="flex flex-wrap items-center gap-2">
+      @if (activeFilters().length) {
       <span class="text-sm text-neutral-500">Results for</span>
       @for (chip of activeFilters(); track chip.type) {
       <span
@@ -50,8 +50,31 @@
           class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
       </span>
       }
+      <span class="mx-1"></span>
+      }
+
+      <!-- View toggle buttons -->
+      <div class="inline-flex items-center rounded-full border border-neutral-200 p-0.5">
+        <button type="button"
+          class="inline-flex items-center justify-center w-8 h-8 rounded-full transition-colors cursor-pointer"
+          [class.bg-[#384f8cd9]]="!galleryView()"
+          [class.text-white]="!galleryView()"
+          [class.text-neutral-400]="galleryView()"
+          [class.hover:text-neutral-600]="galleryView()"
+          (click)="galleryView.set(false)">
+          <app-icon iconName="grid" class="w-3.5 h-3.5"></app-icon>
+        </button>
+        <button type="button"
+          class="inline-flex items-center justify-center w-8 h-8 rounded-full transition-colors cursor-pointer"
+          [class.bg-[#384f8cd9]]="galleryView()"
+          [class.text-white]="galleryView()"
+          [class.text-neutral-400]="!galleryView()"
+          [class.hover:text-neutral-600]="!galleryView()"
+          (click)="galleryView.set(true)">
+          <app-icon iconName="gallery-view" class="w-3.5 h-3.5"></app-icon>
+        </button>
+      </div>
     </div>
-    }
   </div>
 
   <!-- Filters & Product Catalog -->
@@ -130,11 +153,21 @@
     <!-- Product Catalog -->
     <div class="mt-6 lg:mt-4 w-full mb-15">
       @if (products().data?.length) {
+      @if (galleryView()) {
+      <!-- Gallery View: masonry 2 columns -->
+      <div class="columns-1 sm:columns-2 gap-4 md:gap-6 mb-2">
+        @for (product of products().data; track product.id) {
+        <app-product-gallery-card [product]="product"></app-product-gallery-card>
+        }
+      </div>
+      } @else {
+      <!-- Default Grid View: 4 columns -->
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-0 md:gap-6 mb-2">
         @for (product of products().data; track product.id) {
         <app-product-card [product]="product" class=""></app-product-card>
         }
       </div>
+      }
       } @else {
       <div class="flex flex-col items-center justify-center py-20">
         <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
