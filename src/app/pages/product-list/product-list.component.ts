@@ -54,7 +54,7 @@ export class ProductListComponent
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
-  galleryView = signal<boolean>(false);
+  viewMode = signal<'grid' | 'gallery-2' | 'gallery-3'>('grid');
 
   activeFilters = computed(() => {
     const filters = this.selectedFilterOptions();
