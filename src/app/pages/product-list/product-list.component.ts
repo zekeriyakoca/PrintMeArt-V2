@@ -54,7 +54,14 @@ export class ProductListComponent
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
-  viewMode = signal<'grid' | 'gallery-2' | 'gallery-3'>('grid');
+  viewMode = signal<'grid' | 'gallery-2' | 'gallery-3'>(
+    (localStorage.getItem('viewMode') as 'grid' | 'gallery-2' | 'gallery-3') || 'grid',
+  );
+
+  setViewMode(mode: 'grid' | 'gallery-2' | 'gallery-3') {
+    this.viewMode.set(mode);
+    localStorage.setItem('viewMode', mode);
+  }
 
   activeFilters = computed(() => {
     const filters = this.selectedFilterOptions();
