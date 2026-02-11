@@ -72,6 +72,7 @@ export class CartService {
 
     const existingItemIndex = this.cart().findIndex(
       (c) =>
+        c.productId == newItem.productId &&
         c.variantId == newItem.variantId &&
         this.summaryOptions(c.selectedOptions) ===
           this.summaryOptions(newItem.selectedOptions),
@@ -110,7 +111,7 @@ export class CartService {
 
   private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
     return selectedOptionDto
-      .map((o) => o.optionName)
+      .map((o) => `${o.optionName}:${o.optionValue}`)
       .sort()
       .join('_');
   }
@@ -194,6 +195,7 @@ export class CartService {
     for (const localItem of localCart) {
       const existingIndex = merged.findIndex(
         (item) =>
+          item.productId === localItem.productId &&
           item.variantId === localItem.variantId &&
           this.summaryOptions(item.selectedOptions) ===
             this.summaryOptions(localItem.selectedOptions),
