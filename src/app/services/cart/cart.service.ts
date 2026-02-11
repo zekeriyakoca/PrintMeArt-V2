@@ -111,7 +111,7 @@ export class CartService {
 
   private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
     return selectedOptionDto
-      .map((o) => `${o.optionName}:${o.optionValue}`)
+      .map((o) => `${o.optionName}:${o.name}`)
       .sort()
       .join('_');
   }

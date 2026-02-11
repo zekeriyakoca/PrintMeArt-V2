@@ -57,29 +57,23 @@
       <div class="inline-flex items-center gap-1">
         <button type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'grid'"
-          [class.text-white]="viewMode() === 'grid'"
-          [class.text-neutral-300]="viewMode() !== 'grid'"
-          [class.hover:text-neutral-500]="viewMode() !== 'grid'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'grid'" [class.text-white]="viewMode() === 'grid'"
+          [class.text-neutral-300]="viewMode() !== 'grid'" [class.hover:text-neutral-500]="viewMode() !== 'grid'"
           (click)="setViewMode('grid')">
           <app-icon iconName="grid" class="w-5 h-5"></app-icon>
         </button>
         <button type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'"
-          [class.text-white]="viewMode() === 'gallery-3'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'" [class.text-white]="viewMode() === 'gallery-3'"
           [class.text-neutral-300]="viewMode() !== 'gallery-3'"
-          [class.hover:text-neutral-500]="viewMode() !== 'gallery-3'"
-          (click)="setViewMode('gallery-3')">
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-3'" (click)="setViewMode('gallery-3')">
           <app-icon iconName="gallery-3" class="w-5 h-5"></app-icon>
         </button>
         <button type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'"
-          [class.text-white]="viewMode() === 'gallery-2'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'" [class.text-white]="viewMode() === 'gallery-2'"
           [class.text-neutral-300]="viewMode() !== 'gallery-2'"
-          [class.hover:text-neutral-500]="viewMode() !== 'gallery-2'"
-          (click)="setViewMode('gallery-2')">
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-2'" (click)="setViewMode('gallery-2')">
           <app-icon iconName="gallery-2" class="w-5 h-5"></app-icon>
         </button>
       </div>
@@ -93,9 +87,8 @@
       @for (group of filterOptions(); track group.name) {
       <div class="mb-0.5 pl-2">
         <!-- Group header — click to collapse/expand -->
-        <h3 class="mb-0 px-2 py-1.5 text-[0.9rem] font-light uppercase text-[#384f8c] cursor-pointer
-          rounded transition-colors flex items-center justify-between select-none"
-          [class.bg-indigo-50]="isOptionSelected(group.name)" (click)="toggleGroup(group.name)">
+        <h3 class="mb-0 pl-1 pr-2 py-1.5 text-[1.05rem] -translate-x-5 font-light uppercase text-[#384f8c] cursor-pointer
+          transition-colors flex items-center justify-between select-none" (click)="toggleGroup(group.name)">
           <span>{{ group.name }}</span>
           <app-icon iconName="chevron-down"
             class="w-3.5 h-3.5 text-[#384f8c] opacity-40 transition-transform duration-300"
@@ -133,6 +126,14 @@
             } @else {
             <!-- Category filter -->
             <div class="flex flex-col mb-0.5">
+              <p class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug text-[#384f8c]"
+                [class.bg-indigo-50]="isOptionSelected(group.name)" (click)="selectOption(group.groupType, group.name)">
+                <span>View all</span>
+                @if (isOptionSelected(group.name)) {
+                <app-icon iconName="close"
+                  class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
+                }
+              </p>
               @for (option of group.options; track option.name) {
               <p class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug"
                 [class.bg-indigo-50]="isOptionSelected(option.name)"
@@ -145,17 +146,12 @@
                 }
               </p>
               }
-              <p class="text-[0.75rem] cursor-pointer mb-0 px-2 py-[5px] rounded transition-colors
-                text-[#384f8c] font-normal tracking-wide leading-snug text-right"
-                (click)="selectOption(group.groupType, group.name)">
-                View all
-              </p>
             </div>
             }
           </div>
         </div>
       </div>
-      <hr class="mb-2 mt-1 border-b-1 border-indigo-800 w-[140px] ml-0 opacity-10">
+      <hr class="my-1.5 border-t border-neutral-300/30 w-[85%] my-3">
       }
     </div>
 
@@ -182,8 +178,7 @@
       @default {
       <!-- Default Grid View: 3 columns when filters open, 4 when closed -->
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-0 md:gap-6 mb-2"
-        [class.xl:grid-cols-4]="hideFilters()"
-        [class.xl:grid-cols-3]="!hideFilters()">
+        [class.xl:grid-cols-4]="hideFilters()" [class.xl:grid-cols-3]="!hideFilters()">
         @for (product of products().data; track product.id) {
         <app-product-card [product]="product" class=""></app-product-card>
         }
