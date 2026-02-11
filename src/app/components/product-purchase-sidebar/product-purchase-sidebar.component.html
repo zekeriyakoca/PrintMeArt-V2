@@ -24,7 +24,7 @@
       <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
       }
     </div>
-    <app-size-options [sizes]="SizeOptions" [(sizeSelected)]="selectedSize"></app-size-options>
+    <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize"></app-size-options>
   </div>
 
   <!-- Other Options -->

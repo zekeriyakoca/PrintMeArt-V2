@@ -2,6 +2,7 @@ import { SizeOption } from './../../models/size-option';
 import {
   Component,
   computed,
+  effect,
   input,
   model,
   output,
@@ -23,6 +24,7 @@ import { SizeOptions } from '../../shared/constants';
 import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
 import { AppInsightsService } from '../../services/telemetry/app-insights.service';
 import { ToastService } from '../../services/toast/toast.service';
+import { DimensionParser } from '../../utils/dimension-parser';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -50,9 +52,24 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   onSelectedFrameChanged = output<string>();
 
-  selectedSize = model<SizeOption | null>(SizeOptions[0]);
+  selectedSize = model<SizeOption | null>(null);
   /** Selected paper name for display and spec3 */
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
+
+  availableSizes = computed<SizeOption[]>(() =>
+    DimensionParser.filterSizes(
+      this.product().metadata?.Dimensions ?? '',
+      SizeOptions,
+    ) ?? SizeOptions,
+  );
+
+  private syncSelectedSize = effect(() => {
+    const sizes = this.availableSizes();
+    const current = this.selectedSize();
+    if (!current || !sizes.find((s) => s.id === current.id)) {
+      this.selectedSize.set(sizes[0]);
+    }
+  }, { allowSignalWrites: true });
 
   constructor(
     private apiService: ApiService,

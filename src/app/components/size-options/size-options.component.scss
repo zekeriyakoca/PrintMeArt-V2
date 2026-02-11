@@ -1,10 +1,16 @@
-.size-grid {
+.size-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.size-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
 }
 
 .size-option {
+  position: relative;
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -17,10 +23,23 @@
   font-weight: 400;
   cursor: pointer;
   transition: all 0.15s ease;
+  overflow: hidden;
 
   &:hover:not(.selected) {
     background: #f8fafc;
     border-color: #cbd5e1;
+  }
+
+  &.original {
+    font-weight: 500;
+    background: rgb(242, 248, 245);
+    border-color: rgb(206, 232, 218, 0);
+    color: rgb(22, 122, 146);
+
+    &:hover:not(.selected) {
+      background: rgb(232, 243, 237);
+      border-color: rgb(180, 216, 198, 0);
+    }
   }
 
   &.selected {
@@ -36,5 +55,34 @@
       margin-left: 0.125rem;
       opacity: 0.7;
     }
+
+    .original-badge {
+      color: white;
+    }
   }
+}
+
+::ng-deep .original-tooltip-wrapper {
+  display: flex;
+  min-width: 0;
+
+  > span {
+    display: flex;
+    width: 100%;
+
+    > .size-option {
+      width: 100%;
+    }
+  }
+}
+
+.original-badge {
+  font-size: 40px;
+  font-weight: 50;
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  color: rgb(22, 122, 146);
+  pointer-events: none;
+  line-height: 1;
 }
