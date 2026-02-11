@@ -16,6 +16,7 @@ export interface CartItemDto {
 }
 
 export interface SelectedOptionDto {
+  optionValue: any;
   optionId: number;
   optionName?: string | undefined;
   spec1?: string;

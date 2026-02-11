@@ -38,7 +38,7 @@
     </button>
 
     <!-- Results for chips + gallery toggle on right -->
-    <div class="flex flex-wrap items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 justify-end">
       @if (activeFilters().length) {
       <span class="text-sm text-neutral-500">Results for</span>
       @for (chip of activeFilters(); track chip.type) {
@@ -54,7 +54,8 @@
       }
 
       <!-- View toggle buttons -->
-      <div class="inline-flex items-center gap-1">
+      <div class="inline-flex items-center gap-1 shrink-0">
+        <!-- grid: mobile + desktop -->
         <button type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'grid'" [class.text-white]="viewMode() === 'grid'"
@@ -62,15 +63,25 @@
           (click)="setViewMode('grid')">
           <app-icon iconName="grid" class="w-5 h-5"></app-icon>
         </button>
+        <!-- gallery-1: mobile + desktop -->
         <button type="button"
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
+          class="inline-flex md:hidden items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-1'" [class.text-white]="viewMode() === 'gallery-1'"
+          [class.text-neutral-300]="viewMode() !== 'gallery-1'"
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-1'" (click)="setViewMode('gallery-1')">
+          <app-icon iconName="gallery-1" class="w-5 h-5"></app-icon>
+        </button>
+        <!-- gallery-3: tablet + desktop -->
+        <button type="button"
+          class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'" [class.text-white]="viewMode() === 'gallery-3'"
           [class.text-neutral-300]="viewMode() !== 'gallery-3'"
           [class.hover:text-neutral-500]="viewMode() !== 'gallery-3'" (click)="setViewMode('gallery-3')">
           <app-icon iconName="gallery-3" class="w-5 h-5"></app-icon>
         </button>
+        <!-- gallery-2: tablet + desktop -->
         <button type="button"
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
+          class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'" [class.text-white]="viewMode() === 'gallery-2'"
           [class.text-neutral-300]="viewMode() !== 'gallery-2'"
           [class.hover:text-neutral-500]="viewMode() !== 'gallery-2'" (click)="setViewMode('gallery-2')">
@@ -159,6 +170,14 @@
     <div class="mt-6 lg:mt-4 w-full mb-15">
       @if (products().data?.length) {
       @switch (viewMode()) {
+      @case ('gallery-1') {
+      <!-- Gallery View: single column -->
+      <div class="columns-1 gap-4 md:gap-6 mb-2">
+        @for (product of products().data; track product.id) {
+        <app-product-gallery-card [product]="product"></app-product-gallery-card>
+        }
+      </div>
+      }
       @case ('gallery-2') {
       <!-- Gallery View: masonry 2 columns -->
       <div class="columns-1 sm:columns-2 gap-4 md:gap-6 mb-2">

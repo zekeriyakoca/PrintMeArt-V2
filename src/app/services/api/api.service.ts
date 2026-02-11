@@ -69,6 +69,7 @@ export class ApiService {
               optionName: group.options[0].value,
               spec1: size.val1.toString(),
               spec2: size.val2.toString(),
+              optionValue: undefined,
             }));
 
           const matGroup = product.optionGroups.find(
@@ -79,6 +80,7 @@ export class ApiService {
               optionId: matGroup.options[0].id,
               optionName: 'No Mat',
               spec1: 'false',
+              optionValue: undefined,
             });
           }
 
@@ -91,6 +93,7 @@ export class ApiService {
               optionName: size.name,
               spec1: size.val1.toString(),
               spec2: size.val2.toString(),
+              optionValue: undefined,
             });
           }
 
