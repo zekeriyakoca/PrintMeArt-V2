@@ -1,6 +1,6 @@
 {
   "singleQuote": true,
-  "printWidth": 160,
+  "printWidth": 200,
   "overrides": [
     {
       "files": "*.component.html",

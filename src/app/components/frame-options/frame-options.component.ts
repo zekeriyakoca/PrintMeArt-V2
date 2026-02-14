@@ -16,6 +16,7 @@ import {
   RolledUpDefaultThumbnailUrl,
 } from '../../shared/constants';
 import { IconComponent } from '../shared/icon/icon.component';
+import { InfoPopupComponent } from '../shared/info-popup/info-popup.component';
 
 interface FrameItem {
   id: number;
@@ -26,7 +27,7 @@ interface FrameItem {
 
 @Component({
   selector: 'app-frame-options',
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, InfoPopupComponent],
   templateUrl: './frame-options.component.html',
   styleUrl: './frame-options.component.scss',
 })

@@ -17,10 +17,11 @@ import {
   Paper,
 } from '../../shared/constants';
 import { IconComponent } from '../shared/icon/icon.component';
+import { InfoPopupComponent } from '../shared/info-popup/info-popup.component';
 
 @Component({
   selector: 'app-paper-options',
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, InfoPopupComponent],
   templateUrl: './paper-options.component.html',
   styleUrl: './paper-options.component.scss',
 })

@@ -1,67 +1,111 @@
 <div class="paper-options-container">
   <div class="relative">
-    <button type="button" (click)="isOpen.set(!isOpen())" class="w-full cursor-pointer">
-      <div
-        class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left hover:border-slate-300 transition-colors">
-        <div class="flex items-center gap-3 min-w-0">
-          @if (selectedPaper(); as paper) {
-          <img [src]="paper.thumbnail" [alt]="paper.name" class="h-12 w-12 rounded-lg object-cover" loading="lazy" />
-          <div class="min-w-0">
-            <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ paper.name }}</div>
-            <div class="text-xs text-slate-500 truncate">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+    <app-info-popup ariaLabel="Paper quality info" [disabled]="isOpen()">
+      <button type="button" (click)="isOpen.set(!isOpen())" class="w-full cursor-pointer">
+        <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left hover:border-slate-300 transition-colors">
+          <div class="flex items-center gap-3 min-w-0">
+            @if (selectedPaper(); as paper) {
+              <img [src]="paper.thumbnail" [alt]="paper.name" class="h-12 w-12 rounded-lg object-cover" loading="lazy" />
+              <div class="min-w-0">
+                <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ paper.name }}</div>
+                <div class="text-xs text-slate-500 truncate">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+              </div>
+            }
           </div>
-          }
+          <svg class="w-5 h-5 text-slate-400 transition-transform" [class.rotate-180]="isOpen()" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
-        <svg class="w-5 h-5 text-slate-400 transition-transform" [class.rotate-180]="isOpen()" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-    </button>
-
-    @if (isOpen()) {
-    <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-      <div class="max-h-150 overflow-auto">
-        @for (paper of papers; track paper.id; let i = $index) {
-        <button type="button" (click)="select(paper, i)" class="w-full text-left">
-          <div
-            [class]="'relative flex gap-3 px-4 py-4 pr-2 hover:bg-slate-50 transition-colors ' + (selectedIndex() === i ? 'bg-slate-50' : '')">
-            <img [src]="paper.thumbnail" [alt]="paper.name" class="h-14 w-14 rounded-lg object-cover flex-shrink-0"
-              loading="lazy" />
-            <div class="min-w-0 flex-1 flex flex-col">
-              <div class="text-[0.95rem] font-semibold text-slate-900 truncate mb-0.5">{{ paper.name }}</div>
-              <div class="text-xs text-slate-500 mb-1.5">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
-              @if (paper.uxLabels.length > 0) {
-              <div class="flex flex-wrap gap-1 mb-1.5">
-                @for (label of paper.uxLabels.slice(0, 3); track label) {
-                <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{{ label
-                  }}</span>
-                }
-              </div>
-              }
-              <div class="flex items-end justify-between mt-auto">
-                @if (paper.bestFor.length > 0) {
-                <div class="text-[0.7rem] text-slate-600 flex-1 mr-2">
-                  <span class="font-semibold">Best for:</span> {{ paper.bestFor[0] }}
-                </div>
-                }
-                <div class="flex items-center gap-1.5 flex-shrink-0">
-                  <span [class]="'text-xs font-bold ' + priceTierColors[paper.priceTier]">{{ paper.priceTier }}</span>
-                  <span
-                    [class]="'text-[0.6rem] font-semibold px-1.5 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text">{{
-                    paper.grade }} grade</span>
-                </div>
-              </div>
-              @if (selectedIndex() === i) {
-              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-600 text-sm font-medium">✓</span>
-              }
-            </div>
-
+      </button>
+      <div popup>
+        @if (selectedPaper(); as paper) {
+          <div class="bg-slate-50 p-4 flex items-center justify-center">
+            <img [src]="paper.thumbnail" [alt]="paper.name" class="h-56 object-contain" />
           </div>
-        </button>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-base font-bold text-slate-900">{{ paper.name }}</div>
+              <span
+                [class]="'text-[0.65rem] font-semibold px-2 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text"
+              >
+                {{ paper.grade }} grade
+              </span>
+            </div>
+            <div class="text-sm text-slate-500 mb-3">{{ paper.weightGsm }} g/m² · {{ paper.surface }} · {{ paper.printType }}</div>
+            @if (paper.lookFeel.length > 0) {
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                @for (trait of paper.lookFeel; track trait) {
+                  <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded-md">{{ trait }}</span>
+                }
+              </div>
+            }
+            @if (paper.bestFor.length > 0) {
+              <div class="mb-3">
+                <div class="text-xs font-semibold text-slate-700 mb-1">Best for</div>
+                <ul class="list-none space-y-0.5">
+                  @for (use of paper.bestFor; track use) {
+                    <li class="text-sm text-slate-500 flex items-start gap-1.5">
+                      <span class="mt-1.5 h-1 w-1 rounded-full bg-slate-400 flex-shrink-0"></span>
+                      {{ use }}
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Archival quality · Fade-resistant pigment ink</span>
+            </div>
+          </div>
         }
       </div>
-    </div>
+    </app-info-popup>
+
+    @if (isOpen()) {
+      <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+        <div class="max-h-150 overflow-auto">
+          @for (paper of papers; track paper.id; let i = $index) {
+            <button type="button" (click)="select(paper, i)" class="w-full text-left">
+              <div [class]="'relative flex gap-3 px-4 py-4 pr-2 hover:bg-slate-50 transition-colors ' + (selectedIndex() === i ? 'bg-slate-50' : '')">
+                <img [src]="paper.thumbnail" [alt]="paper.name" class="h-14 w-14 rounded-lg object-cover flex-shrink-0" loading="lazy" />
+                <div class="min-w-0 flex-1 flex flex-col">
+                  <div class="text-[0.95rem] font-semibold text-slate-900 truncate mb-0.5">{{ paper.name }}</div>
+                  <div class="text-xs text-slate-500 mb-1.5">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+                  @if (paper.uxLabels.length > 0) {
+                    <div class="flex flex-wrap gap-1 mb-1.5">
+                      @for (label of paper.uxLabels.slice(0, 3); track label) {
+                        <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{{ label }}</span>
+                      }
+                    </div>
+                  }
+                  <div class="flex items-end justify-between mt-auto">
+                    @if (paper.bestFor.length > 0) {
+                      <div class="text-[0.7rem] text-slate-600 flex-1 mr-2"><span class="font-semibold">Best for:</span> {{ paper.bestFor[0] }}</div>
+                    }
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                      <span [class]="'text-xs font-bold ' + priceTierColors[paper.priceTier]">{{ paper.priceTier }}</span>
+                      <span
+                        [class]="
+                          'text-[0.6rem] font-semibold px-1.5 py-0.5 rounded-full ' +
+                          gradeBadgeColors[paper.grade].bg +
+                          ' ' +
+                          gradeBadgeColors[paper.grade].text
+                        "
+                        >{{ paper.grade }} grade</span
+                      >
+                    </div>
+                  </div>
+                  @if (selectedIndex() === i) {
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-600 text-sm font-medium">✓</span>
+                  }
+                </div>
+              </div>
+            </button>
+          }
+        </div>
+      </div>
     }
   </div>
   <a routerLink="/how-we-work" fragment="paper-options" class="papers-link">

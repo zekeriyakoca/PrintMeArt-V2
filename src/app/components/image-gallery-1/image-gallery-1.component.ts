@@ -14,10 +14,8 @@ export class ImageGallery1Component {
   showGallery = false;
   galleryStartIndex = signal(0);
 
-  frameGuideImage =
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-guide.avif';
-  paperImage =
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp';
+  frameGuideImage = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-guide.avif';
+  paperImage = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp';
   genericImages = [
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-1 2.png',
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-2 2.png',
@@ -29,8 +27,8 @@ export class ImageGallery1Component {
         id: index,
         url: item.large,
       })),
-      { id: -1, url: this.frameGuideImage },
-      { id: -2, url: this.paperImage },
+      { id: -1, url: this.paperImage },
+      { id: -2, url: this.frameGuideImage },
       ...this.genericImages.map((url, index) => ({
         id: -3 - index,
         url: url,
