@@ -2,18 +2,18 @@
   <!-- Price -->
   <div class="price-block">
     @if (hasAllOptionsSelected()) {
-    <div class="price-row">
-      <span class="price">{{ calculatedPrice() | currency:'EUR':'symbol':'1.2-2' }}</span>
-      <span class="tax-note">Tax included</span>
-    </div>
+      <div class="price-row">
+        <span class="price">{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+        <span class="tax-note">Tax included</span>
+      </div>
     } @else {
-    <span class="price-hint">From</span>
-    <div class="price-row">
-      <span class="price">{{ product().cheapestPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
-      <span class="tax-note">Tax included</span>
-    </div>
+      <span class="price-hint">From</span>
+      <div class="price-row">
+        <span class="price">{{ product().cheapestPrice | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+        <span class="tax-note">Tax included</span>
+      </div>
     }
-    <p class="text-xs text-slate-400 mt-1">Made in Den Bosch by a small family studio </p>
+    <p class="text-xs text-slate-400 mt-1">Made in Den Bosch by a small family studio</p>
   </div>
 
   <!-- Size first -->
@@ -21,35 +21,37 @@
     <div class="flex items-center justify-between gap-2">
       <label class="option-label">Size</label>
       @if (product().metadata) {
-      <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
+        <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
       }
     </div>
     <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize"></app-size-options>
   </div>
-
   <!-- Other Options -->
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
-  @if(group.name.toLowerCase() !== 'size'){
-  <div class="option-group">
-    <label class="option-label">{{ group.name }}</label>
-    @if(group.name.toLowerCase() == 'frame'){
-    <app-frame-options [group]="group" (optionSelected)="selectFrame(groupIndex,$event)"></app-frame-options>
+    @if (group.name.toLowerCase() == 'frame') {
+      <div class="option-group">
+        <label class="option-label">{{ group.name }}</label>
+        <app-frame-options [group]="group" (optionSelected)="selectFrame(groupIndex, $event)"></app-frame-options>
+      </div>
+    } @else if (group.name.toLowerCase() == 'including mat' && isFrameSelected()) {
+      <div class="option-group">
+        <label class="option-label">{{ group.name }}</label>
+        <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
+      </div>
+    } @else if (group.name.toLowerCase().startsWith('paper')) {
+      <div class="option-group">
+        <label class="option-label">{{ group.name }}</label>
+        <app-paper-options
+          [group]="group"
+          (optionSelected)="selectOption(groupIndex, $event)"
+          (paperNameSelected)="selectedPaperName.set($event)"
+        ></app-paper-options>
+      </div>
+    } @else if (group.name.toLowerCase().startsWith('customproductdetails')) {
+      <!-- Nothing to show -->
+    } @else if (group.name.toLowerCase() === 'size') {
+      <!-- Nothing to show -->
     }
-    @else if(group.name.toLowerCase() == 'including mat'){
-    <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
-    }
-    @else if(group.name.toLowerCase().startsWith('paper')){
-    <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"
-      (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
-    }
-    @else if(group.name.toLowerCase().startsWith('customproductdetails')){
-    <!-- Nothing to show -->
-    }
-    @else{
-    <app-options [group]="group" (optionSelected)="selectOption(groupIndex,$event)"></app-options>
-    }
-  </div>
-  }
   }
 
   <!-- Trust points -->
@@ -69,8 +71,13 @@
   </ul>
 
   <!-- Add to cart -->
-  <button type="button" [class.disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
-    [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0" (click)="addToCart()" class="add-to-cart-btn">
+  <button
+    type="button"
+    [class.disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
+    [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
+    (click)="addToCart()"
+    class="add-to-cart-btn"
+  >
     <app-icon iconName="cart"></app-icon>
     <span>Add to cart</span>
   </button>
@@ -89,10 +96,9 @@
   <div class="badges">
     <div class="badge">
       <div class="badge-icon">
-        <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/palette_1.svg"
-          alt="" loading="lazy" />
+        <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/palette_1.svg" alt="" loading="lazy" />
       </div>
-      <span class="badge-text">Museum-quality prints</span>
+      <span class="badge-text">Museum-quality Giclée prints</span>
     </div>
     <div class="badge">
       <div class="badge-icon">

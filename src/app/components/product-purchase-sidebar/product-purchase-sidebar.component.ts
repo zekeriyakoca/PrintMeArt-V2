@@ -56,20 +56,24 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   /** Selected paper name for display and spec3 */
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
 
-  availableSizes = computed<SizeOption[]>(() =>
-    DimensionParser.filterSizes(
-      this.product().metadata?.Dimensions ?? '',
-      SizeOptions,
-    ) ?? SizeOptions,
+  availableSizes = computed<SizeOption[]>(
+    () =>
+      DimensionParser.filterSizes(
+        this.product().metadata?.Dimensions ?? '',
+        SizeOptions,
+      ) ?? SizeOptions,
   );
 
-  private syncSelectedSize = effect(() => {
-    const sizes = this.availableSizes();
-    const current = this.selectedSize();
-    if (!current || !sizes.find((s) => s.id === current.id)) {
-      this.selectedSize.set(sizes[0]);
-    }
-  }, { allowSignalWrites: true });
+  private syncSelectedSize = effect(
+    () => {
+      const sizes = this.availableSizes();
+      const current = this.selectedSize();
+      if (!current || !sizes.find((s) => s.id === current.id)) {
+        this.selectedSize.set(sizes[0]);
+      }
+    },
+    { allowSignalWrites: true },
+  );
 
   constructor(
     private apiService: ApiService,
@@ -82,6 +86,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
+  isFrameSelected = signal(false);
 
   hasAllOptionsSelected = computed(() => {
     if (
@@ -121,6 +126,12 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       this.product().optionGroups[groupIndex].options.find(
         (option) => option.id === optionId,
       )?.value || '';
+
+    if (selectedFrame.toLowerCase() == 'rolled-up') {
+      this.isFrameSelected.set(false);
+    } else {
+      this.isFrameSelected.set(true);
+    }
 
     this.onSelectedFrameChanged.emit(selectedFrame);
   }

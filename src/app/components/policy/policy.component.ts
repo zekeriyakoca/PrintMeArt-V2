@@ -19,13 +19,13 @@ const A_FEATURES: PolicyFeature[] = [
   {
     color: 'bg-sky-50',
     name: 'Very easy to return',
-    desc: 'Just phone number.',
+    desc: 'contact us and we’ll take care of the rest.',
     svg: `return`,
   },
   {
     color: 'bg-green-50',
-    name: 'Nationwide Delivery',
-    desc: 'Fast delivery nationwide in 2 days.',
+    name: 'Within the Netherlands',
+    desc: 'Fast delivery within the Netherlands in 3 days.',
     svg: `world`,
   },
   {
