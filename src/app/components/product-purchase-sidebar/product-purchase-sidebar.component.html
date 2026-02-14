@@ -70,17 +70,32 @@
     </li>
   </ul>
 
-  <!-- Add to cart -->
-  <button
-    type="button"
-    [class.disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
-    [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
-    (click)="addToCart()"
-    class="add-to-cart-btn"
-  >
-    <app-icon iconName="cart"></app-icon>
-    <span>Add to cart</span>
-  </button>
+  <!-- Action buttons (side by side) -->
+  <div class="action-buttons">
+    <button
+      type="button"
+      class="preview-btn"
+      [class.disabled]="!selectedSize()"
+      [disabled]="!selectedSize()"
+      (click)="showPreview.set(true)"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+      <span>Preview</span>
+    </button>
+    <button
+      type="button"
+      [class.disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
+      [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0"
+      (click)="addToCart()"
+      class="add-to-cart-btn"
+    >
+      <app-icon iconName="cart"></app-icon>
+      <span>Add to cart</span>
+    </button>
+  </div>
 
   <!-- Payment Methods -->
   <div class="flex items-center justify-center gap-1 py-2">
@@ -108,3 +123,20 @@
     </div>
   </div>
 </section>
+
+<!-- Product Preview Modal -->
+@if (selectedSize(); as size) {
+  @if (product().images.length) {
+    <app-product-preview
+      [isOpen]="showPreview()"
+      [imageUrl]="product().images[0].large"
+      [sizes]="availableSizes()"
+      [selectedSize]="size"
+      (selectedSizeChange)="selectedSize.set($event)"
+      [frameName]="selectedFrameName()"
+      [(isMatIncluded)]="isMatIncluded"
+      [paperName]="selectedPaperName()"
+      (onClose)="showPreview.set(false)"
+    ></app-product-preview>
+  }
+}

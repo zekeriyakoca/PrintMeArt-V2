@@ -25,6 +25,7 @@ import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
 import { AppInsightsService } from '../../services/telemetry/app-insights.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
+import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -37,6 +38,7 @@ import { DimensionParser } from '../../utils/dimension-parser';
     PaperOptionsComponent,
     SizeOptionsComponent,
     DpiBarComponent,
+    ProductPreviewComponent,
   ],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
@@ -68,7 +70,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     () => {
       const sizes = this.availableSizes();
       const current = this.selectedSize();
-      if (!current || !sizes.find((s) => s.id === current.id)) {
+      if (!current || (current.id !== 'custom' && !sizes.find((s) => s.id === current.id))) {
         this.selectedSize.set(sizes[0]);
       }
     },
@@ -83,6 +85,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   ) {
     super();
   }
+
+  showPreview = signal(false);
+  selectedFrameName = signal<string | null>(null);
 
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
@@ -129,8 +134,10 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
     if (selectedFrame.toLowerCase() == 'rolled-up') {
       this.isFrameSelected.set(false);
+      this.selectedFrameName.set(null);
     } else {
       this.isFrameSelected.set(true);
+      this.selectedFrameName.set(selectedFrame);
     }
 
     this.onSelectedFrameChanged.emit(selectedFrame);

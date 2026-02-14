@@ -1,0 +1,225 @@
+@if (isOpen()) {
+  <div class="preview-modal">
+    <!-- Backdrop -->
+    <div class="backdrop" (click)="close()"></div>
+
+    <!-- Close button -->
+    <button class="close-btn" (click)="close()" aria-label="Close preview">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="preview-layout">
+      <!-- LEFT: Preview area -->
+      <div class="preview-area">
+        <!-- Toolbar (compact, centered) -->
+        <div class="toolbar">
+          <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">Contain</button>
+          <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">Cover</button>
+
+          <div class="toolbar-divider"></div>
+
+          <!-- Rotate 90° -->
+          <button class="tool-btn" [class.active]="isLandscape()" (click)="toggleLandscape()" title="Rotate 90° (R)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>90°</span>
+          </button>
+
+          <!-- Center -->
+          <button class="tool-btn" (click)="centerImage()" title="Center (C)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <line x1="12" y1="1" x2="12" y2="4"></line>
+              <line x1="12" y1="20" x2="12" y2="23"></line>
+              <line x1="1" y1="12" x2="4" y2="12"></line>
+              <line x1="20" y1="12" x2="23" y2="12"></line>
+            </svg>
+            <span>Center</span>
+          </button>
+
+          <div class="toolbar-divider"></div>
+
+          <!-- Ghost overflow toggle -->
+          <button class="tool-btn" [class.active]="showGhost()" (click)="showGhost.set(!showGhost())">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>Overflow</span>
+          </button>
+        </div>
+
+        <!-- Artboard area -->
+        <div class="artboard-container">
+          <!-- Ghost layer -->
+          @if (showGhost()) {
+            <div class="ghost-layer" [style.aspect-ratio]="artboardRatio()" [style.--ratio]="artboardRatioNum()">
+              <div class="ghost-image-wrap" [style.padding]="imagePaddingPercent() > 0 ? imagePaddingPercent() + '%' : null">
+                <img [src]="imageUrl()" class="ghost-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" alt="" draggable="false" />
+              </div>
+            </div>
+          }
+
+          <!-- Artboard -->
+          <div class="artboard" [style.aspect-ratio]="artboardRatio()" [style.--ratio]="artboardRatioNum()">
+            <!-- Frame mask overlay -->
+            @if (frameMaskUrl()) {
+              <div class="frame-overlay" [class.ghost-active]="showGhost()">
+                <img [src]="frameMaskUrl()" alt="frame overlay" />
+              </div>
+            }
+
+            <!-- Image viewport -->
+            <div
+              #viewport
+              class="image-viewport"
+              [class.matt]="isMatIncluded()"
+              [style.padding]="imagePaddingPercent() > 0 ? imagePaddingPercent() + '%' : null"
+              [class.cover-mode]="fitMode() === 'cover'"
+              (wheel)="onWheel($event)"
+              (pointerdown)="onPointerDown($event); onMultiPointerDown($event)"
+              (pointermove)="onPointerMove($event); onMultiPointerMove($event)"
+              (pointerup)="onPointerUp($event); onMultiPointerUp($event)"
+              (pointercancel)="onPointerUp($event); onMultiPointerUp($event)"
+            >
+              <img [src]="imageUrl()" class="preview-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" alt="Print preview" draggable="false" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Zoom bar (bottom) -->
+        <div class="zoom-bar">
+          <button class="zoom-btn" (click)="zoomOut()" aria-label="Zoom out">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <input
+            type="range"
+            class="zoom-slider"
+            min="0.7"
+            max="2"
+            step="0.01"
+            [ngModel]="clampedScale()"
+            (ngModelChange)="scale.set($event)"
+          />
+          <button class="zoom-btn" (click)="zoomIn()" aria-label="Zoom in">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+          <span class="zoom-value">{{ zoomPercent() }}%</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Side panel -->
+      <div class="side-panel">
+        <h3 class="panel-title">Print options</h3>
+
+        <!-- Size selector -->
+        <div class="panel-section">
+          <label class="panel-label">Size</label>
+          <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize"></app-size-options>
+        </div>
+
+        <!-- More sizes dropdown (hidden when frame selected) -->
+        @if (!hasFrame()) {
+          <div class="panel-section">
+            <button class="more-sizes-toggle" (click)="showMoreSizes.set(!showMoreSizes())">
+              <span>More sizes</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.rotated]="showMoreSizes()">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            @if (showMoreSizes()) {
+              <div class="more-sizes-grid">
+                @for (size of moreSizes; track size.id) {
+                  <button class="more-size-btn" [class.active]="selectedSize().id === size.id || (selectedSize().val1 === size.val1 && selectedSize().val2 === size.val2)" (click)="selectMoreSize(size)">
+                    {{ size.val1 }}×{{ size.val2 }}
+                  </button>
+                }
+              </div>
+              <div class="custom-size-row">
+                <input
+                  type="number"
+                  class="custom-input"
+                  [ngModel]="customWidth()"
+                  (ngModelChange)="customWidth.set($event)"
+                  (blur)="applyCustomSize()"
+                  (keydown.enter)="applyCustomSize()"
+                  placeholder="W"
+                  min="1"
+                  max="200"
+                />
+                <span class="custom-sep">×</span>
+                <input
+                  type="number"
+                  class="custom-input"
+                  [ngModel]="customHeight()"
+                  (ngModelChange)="customHeight.set($event)"
+                  (blur)="applyCustomSize()"
+                  (keydown.enter)="applyCustomSize()"
+                  placeholder="H"
+                  min="1"
+                  max="200"
+                />
+                <span class="custom-unit">cm</span>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Mat (toggleable) -->
+        @if (hasFrame()) {
+          <div class="panel-section">
+            <label class="panel-label">Mat</label>
+            <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
+          </div>
+        }
+
+        <!-- Paper (readonly) -->
+        @if (paperName()) {
+          <div class="panel-section">
+            <div class="panel-label-row">
+              <label class="panel-label">Paper</label>
+              <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <span class="panel-value">{{ paperName() }}</span>
+          </div>
+        }
+
+        <!-- Frame (readonly) -->
+        <div class="panel-section">
+          <div class="panel-label-row">
+            <label class="panel-label">Frame</label>
+            <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span class="panel-value">{{ frameName() || 'Rolled up (no frame)' }}</span>
+        </div>
+
+        <!-- Size display -->
+        <div class="panel-section size-display-section">
+          <span class="size-display">{{ effectiveSize().val1 }} × {{ effectiveSize().val2 }} cm</span>
+        </div>
+
+        <!-- Reassurance -->
+        <div class="reassurance">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>This is just a preview. Our professional team will fine-tune your artwork before printing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+}
