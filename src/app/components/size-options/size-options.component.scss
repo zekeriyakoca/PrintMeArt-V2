@@ -62,6 +62,30 @@
   }
 }
 
+.more-toggle {
+  gap: 0.3rem;
+
+  svg {
+    transition: transform 0.2s ease;
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.more-sizes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+  max-height: 10rem;
+  overflow-y: auto;
+}
+
+.more-size-btn {
+  height: 2rem;
+  font-size: 0.72rem;
+}
+
 ::ng-deep .original-tooltip-wrapper {
   display: flex;
   min-width: 0;

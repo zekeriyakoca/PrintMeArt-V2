@@ -91,20 +91,16 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  flex: 0 0 auto;
+  flex: 1;
   padding: 0.85rem 1rem;
   border: none;
   border-radius: 999px;
-  background: #16a34a;
+  // background: #167a92;
   color: #ffffff;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s ease, opacity 0.15s ease;
-
-  &:hover:not(.disabled) {
-    background: #15803d;
-  }
 
   &.disabled {
     opacity: 0.5;

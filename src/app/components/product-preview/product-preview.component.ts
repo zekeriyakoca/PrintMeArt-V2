@@ -13,7 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
-import { FrameOptionsByValue } from '../../shared/constants';
+import { AllPapers, FrameOptionsByValue, Paper } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 
@@ -50,8 +50,6 @@ export class ProductPreviewComponent {
   isDragging = signal(false);
   showGhost = signal(false);
 
-  // More sizes dropdown
-  showMoreSizes = signal(false);
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
     { id: 'more-2', name: '15x20', val1: 15, val2: 20 },
@@ -74,10 +72,6 @@ export class ProductPreviewComponent {
     { id: 'more-19', name: '70x100', val1: 70, val2: 100 },
     { id: 'more-20', name: '80x120', val1: 80, val2: 120 },
   ];
-
-  // Custom size
-  customWidth = signal(0);
-  customHeight = signal(0);
 
   // Drag state
   private dragStartX = 0;
@@ -112,12 +106,18 @@ export class ProductPreviewComponent {
 
   hasFrame = computed(() => !!this.frameName());
 
-  frameMaskUrl = computed(() => {
+  frameInfo = computed(() => {
     const name = this.frameName();
     if (!name) return null;
-    const frame = FrameOptionsByValue[name];
-    if (!frame) return null;
-    return frame.maskWithoutMat;
+    return FrameOptionsByValue[name] ?? null;
+  });
+
+  frameMaskUrl = computed(() => this.frameInfo()?.maskWithoutMat ?? null);
+
+  paperInfo = computed<Paper | null>(() => {
+    const name = this.paperName();
+    if (!name) return null;
+    return AllPapers.find((p) => p.name === name) ?? null;
   });
 
   // Mat padding: when frame + mat → extra space for the matt texture to show
@@ -155,18 +155,6 @@ export class ProductPreviewComponent {
       this.scale.set(1);
       this.translateX.set(0);
       this.translateY.set(0);
-    },
-    { allowSignalWrites: true },
-  );
-
-  // Sync custom inputs from selected preset
-  private syncCustomSize = effect(
-    () => {
-      const size = this.selectedSize();
-      if (size.id !== 'custom') {
-        this.customWidth.set(size.val1);
-        this.customHeight.set(size.val2);
-      }
     },
     { allowSignalWrites: true },
   );
@@ -216,30 +204,6 @@ export class ProductPreviewComponent {
     event.preventDefault();
     const delta = event.deltaY > 0 ? -0.05 : 0.05;
     this.scale.update((s) => Math.max(0.7, Math.min(2, s + delta)));
-  }
-
-  selectMoreSize(size: SizeOption) {
-    this.selectedSize.set({
-      id: 'custom',
-      name: size.name,
-      val1: size.val1,
-      val2: size.val2,
-    });
-    this.showMoreSizes.set(false);
-  }
-
-  // Custom size
-  applyCustomSize() {
-    const w = this.customWidth();
-    const h = this.customHeight();
-    if (w > 0 && h > 0) {
-      this.selectedSize.set({
-        id: 'custom',
-        name: `${w}x${h}`,
-        val1: w,
-        val2: h,
-      });
-    }
   }
 
   // Drag / Pan

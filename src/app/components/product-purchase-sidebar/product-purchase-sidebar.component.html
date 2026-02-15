@@ -24,7 +24,7 @@
         <app-dpi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-dpi-bar>
       }
     </div>
-    <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize"></app-size-options>
+    <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize" [moreSizes]="isFrameSelected() ? [] : moreSizes"></app-size-options>
   </div>
   <!-- Other Options -->
   @for (group of this.product().optionGroups; track group.name; let groupIndex = $index) {
@@ -41,11 +41,7 @@
     } @else if (group.name.toLowerCase().startsWith('paper')) {
       <div class="option-group">
         <label class="option-label">{{ group.name }}</label>
-        <app-paper-options
-          [group]="group"
-          (optionSelected)="selectOption(groupIndex, $event)"
-          (paperNameSelected)="selectedPaperName.set($event)"
-        ></app-paper-options>
+        <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex, $event)" (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
       </div>
     } @else if (group.name.toLowerCase().startsWith('customproductdetails')) {
       <!-- Nothing to show -->
@@ -72,13 +68,7 @@
 
   <!-- Action buttons (side by side) -->
   <div class="action-buttons">
-    <button
-      type="button"
-      class="preview-btn"
-      [class.disabled]="!selectedSize()"
-      [disabled]="!selectedSize()"
-      (click)="showPreview.set(true)"
-    >
+    <button type="button" class="preview-btn bg-rose-700 hover:bg-rose-600" [class.disabled]="!selectedSize()" [disabled]="!selectedSize()" (click)="showPreview.set(true)">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
         <circle cx="12" cy="12" r="3"></circle>

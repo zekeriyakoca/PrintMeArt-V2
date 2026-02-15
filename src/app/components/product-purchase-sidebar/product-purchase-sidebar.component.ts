@@ -88,6 +88,28 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   showPreview = signal(false);
   selectedFrameName = signal<string | null>(null);
+  readonly moreSizes: SizeOption[] = [
+    { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
+    { id: 'more-2', name: '15x20', val1: 15, val2: 20 },
+    { id: 'more-3', name: '18x24', val1: 18, val2: 24 },
+    { id: 'more-4', name: '20x25', val1: 20, val2: 25 },
+    { id: 'more-5', name: '20x30', val1: 20, val2: 30 },
+    { id: 'more-6', name: '24x30', val1: 24, val2: 30 },
+    { id: 'more-7', name: '25x35', val1: 25, val2: 35 },
+    { id: 'more-8', name: '28x35', val1: 28, val2: 35 },
+    { id: 'more-9', name: '30x30', val1: 30, val2: 30 },
+    { id: 'more-10', name: '30x45', val1: 30, val2: 45 },
+    { id: 'more-11', name: '35x50', val1: 35, val2: 50 },
+    { id: 'more-12', name: '40x40', val1: 40, val2: 40 },
+    { id: 'more-13', name: '40x50', val1: 40, val2: 50 },
+    { id: 'more-14', name: '45x60', val1: 45, val2: 60 },
+    { id: 'more-15', name: '50x50', val1: 50, val2: 50 },
+    { id: 'more-16', name: '50x75', val1: 50, val2: 75 },
+    { id: 'more-17', name: '60x60', val1: 60, val2: 60 },
+    { id: 'more-18', name: '60x80', val1: 60, val2: 80 },
+    { id: 'more-19', name: '70x100', val1: 70, val2: 100 },
+    { id: 'more-20', name: '80x120', val1: 80, val2: 120 },
+  ];
 
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);

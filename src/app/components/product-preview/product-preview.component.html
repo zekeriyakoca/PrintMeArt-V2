@@ -118,60 +118,13 @@
 
       <!-- RIGHT: Side panel -->
       <div class="side-panel">
-        <h3 class="panel-title">Print options</h3>
+        <h3 class="panel-title">Print details</h3>
 
         <!-- Size selector -->
         <div class="panel-section">
           <label class="panel-label">Size</label>
-          <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize"></app-size-options>
+          <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize" [moreSizes]="hasFrame() ? [] : moreSizes"></app-size-options>
         </div>
-
-        <!-- More sizes dropdown (hidden when frame selected) -->
-        @if (!hasFrame()) {
-          <div class="panel-section">
-            <button class="more-sizes-toggle" (click)="showMoreSizes.set(!showMoreSizes())">
-              <span>More sizes</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.rotated]="showMoreSizes()">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-            @if (showMoreSizes()) {
-              <div class="more-sizes-grid">
-                @for (size of moreSizes; track size.id) {
-                  <button class="more-size-btn" [class.active]="selectedSize().id === size.id || (selectedSize().val1 === size.val1 && selectedSize().val2 === size.val2)" (click)="selectMoreSize(size)">
-                    {{ size.val1 }}×{{ size.val2 }}
-                  </button>
-                }
-              </div>
-              <div class="custom-size-row">
-                <input
-                  type="number"
-                  class="custom-input"
-                  [ngModel]="customWidth()"
-                  (ngModelChange)="customWidth.set($event)"
-                  (blur)="applyCustomSize()"
-                  (keydown.enter)="applyCustomSize()"
-                  placeholder="W"
-                  min="1"
-                  max="200"
-                />
-                <span class="custom-sep">×</span>
-                <input
-                  type="number"
-                  class="custom-input"
-                  [ngModel]="customHeight()"
-                  (ngModelChange)="customHeight.set($event)"
-                  (blur)="applyCustomSize()"
-                  (keydown.enter)="applyCustomSize()"
-                  placeholder="H"
-                  min="1"
-                  max="200"
-                />
-                <span class="custom-unit">cm</span>
-              </div>
-            }
-          </div>
-        }
 
         <!-- Mat (toggleable) -->
         @if (hasFrame()) {
@@ -181,30 +134,42 @@
           </div>
         }
 
-        <!-- Paper (readonly) -->
-        @if (paperName()) {
-          <div class="panel-section">
-            <div class="panel-label-row">
-              <label class="panel-label">Paper</label>
-              <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
+        <!-- Paper card -->
+        @if (paperInfo(); as paper) {
+          <div class="spec-card">
+            <img [src]="paper.thumbnail" class="spec-card-thumb" alt="" />
+            <div class="spec-card-body">
+              <span class="spec-card-name">{{ paper.name }}</span>
+              <span class="spec-card-meta">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</span>
+              <div class="spec-card-tags">
+                @for (label of paper.uxLabels; track label; let i = $index) {
+                  @if (i < 2) {
+                    <span class="spec-tag">{{ label }}</span>
+                  }
+                }
+              </div>
             </div>
-            <span class="panel-value">{{ paperName() }}</span>
+          </div>
+        } @else if (paperName()) {
+          <div class="spec-card spec-card-simple">
+            <span class="spec-card-name">{{ paperName() }}</span>
           </div>
         }
 
-        <!-- Frame (readonly) -->
-        <div class="panel-section">
-          <div class="panel-label-row">
-            <label class="panel-label">Frame</label>
-            <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-          </div>
-          <span class="panel-value">{{ frameName() || 'Rolled up (no frame)' }}</span>
+        <!-- Frame card -->
+        <div class="spec-card">
+          @if (frameInfo(); as frame) {
+            <img [src]="frame.thumbnail" class="spec-card-thumb" alt="" />
+            <div class="spec-card-body">
+              <span class="spec-card-name">{{ frame.name }}</span>
+              <span class="spec-card-meta">{{ frame.description }}</span>
+            </div>
+          } @else {
+            <div class="spec-card-body">
+              <span class="spec-card-name">No frame</span>
+              <span class="spec-card-meta">Rolled up in a protective tube</span>
+            </div>
+          }
         </div>
 
         <!-- Size display -->
