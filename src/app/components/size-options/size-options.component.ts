@@ -1,10 +1,11 @@
 import { Component, computed, input, model, signal } from '@angular/core';
 import { SizeOption } from '../../models/size-option';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-size-options',
-  imports: [TooltipComponent],
+  imports: [TooltipComponent, IconComponent],
   templateUrl: './size-options.component.html',
   styleUrl: './size-options.component.scss',
 })
@@ -25,9 +26,7 @@ export class SizeOptionsComponent {
   selectedMoreSize = computed<SizeOption | null>(() => {
     const current = this.sizeSelected();
     if (!current) return null;
-    return this.moreSizes().find(
-      (s) => s.val1 === current.val1 && s.val2 === current.val2,
-    ) ?? null;
+    return this.moreSizes().find((s) => s.val1 === current.val1 && s.val2 === current.val2) ?? null;
   });
 
   isActive(size: SizeOption): boolean {

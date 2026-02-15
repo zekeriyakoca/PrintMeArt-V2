@@ -41,25 +41,47 @@
     </div>
   }
   @if (moreSizes().length) {
-    <button type="button" class="size-option more-toggle" [class.selected]="selectedMoreSize()" (click)="showMoreSizes.set(!showMoreSizes())">
+    <button type="button" class="size-option" [class.selected]="selectedMoreSize()" (click)="showMoreSizes.set(!showMoreSizes())">
       @if (selectedMoreSize(); as ms) {
-        {{ ms.val1 }}×{{ ms.val2 }}<span class="unit">cm</span>
+        <span class="flex justify-between align-center w-full">
+          <span class="px-6">{{ ms.val1 }}×{{ ms.val2 }}<span class="unit">cm</span></span>
+          <app-icon iconName="check" />
+          <span class="more-toggle px-4">
+            More sizes
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              [class.rotated]="showMoreSizes()"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </span>
       } @else {
-        More sizes
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          [class.rotated]="showMoreSizes()"
-        >
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
+        <span class="more-toggle">
+          More sizes
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            [class.rotated]="showMoreSizes()"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
       }
     </button>
     @if (showMoreSizes()) {
