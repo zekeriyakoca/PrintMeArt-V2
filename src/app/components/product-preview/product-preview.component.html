@@ -132,63 +132,84 @@
           <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize" [moreSizes]="hasFrame() ? [] : moreSizes"></app-size-options>
         </div>
 
-        <!-- Mat (toggleable) -->
-        @if (hasFrame()) {
-          <div class="panel-section">
-            <label class="panel-label">Mat</label>
-            <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
-          </div>
-        }
+        <!-- Divider: Your selections -->
+        <div class="selections-divider">
+          <span>Your selections</span>
+        </div>
 
-        <!-- Paper card -->
+        <!-- Paper showcase -->
         @if (paperInfo(); as paper) {
-          <div class="spec-card">
-            <img [src]="paper.thumbnail" class="spec-card-thumb" alt="" />
-            <div class="spec-card-body">
-              <span class="spec-card-name">{{ paper.name }}</span>
-              <span class="spec-card-meta">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</span>
-              <div class="spec-card-tags">
+          <div class="showcase-card">
+            <img [src]="paper.thumbnail" class="showcase-img" alt="" />
+            <div class="showcase-body">
+              <div class="showcase-header">
+                <span class="showcase-grade">{{ paper.grade }}</span>
+                <span class="showcase-name">{{ paper.name }}</span>
+              </div>
+              <span class="showcase-meta">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</span>
+              <span class="showcase-meta">{{ paper.printType }}</span>
+              <div class="showcase-tags">
                 @for (label of paper.uxLabels; track label; let i = $index) {
-                  @if (i < 2) {
-                    <span class="spec-tag">{{ label }}</span>
+                  @if (i < 3) {
+                    <span class="showcase-tag">{{ label }}</span>
                   }
                 }
               </div>
             </div>
           </div>
         } @else if (paperName()) {
-          <div class="spec-card spec-card-simple">
-            <span class="spec-card-name">{{ paperName() }}</span>
+          <div class="showcase-card showcase-card-minimal">
+            <span class="showcase-name">{{ paperName() }}</span>
           </div>
         }
 
-        <!-- Frame card -->
-        <div class="spec-card">
+        <!-- Mat showcase -->
+        @if (hasFrame()) {
+          <div class="showcase-card showcase-mat" [class.showcase-active]="isMatIncluded()">
+            <div class="showcase-body">
+              <span class="showcase-name">{{ isMatIncluded() ? 'High quality Mat included' : 'No mat' }}</span>
+              <span class="showcase-meta">{{ isMatIncluded() ? 'Acid-free, museum-grade white mat board' : 'Print sits directly in frame' }}</span>
+            </div>
+          </div>
+        }
+
+        <!-- Frame showcase -->
+        <div class="showcase-card">
           @if (frameInfo(); as frame) {
-            <img [src]="frame.thumbnail" class="spec-card-thumb" alt="" />
-            <div class="spec-card-body">
-              <span class="spec-card-name">{{ frame.name }}</span>
-              <span class="spec-card-meta">{{ frame.description }}</span>
+            <img [src]="frame.thumbnail" class="showcase-img" alt="" />
+            <div class="showcase-body">
+              <span class="showcase-name">{{ frame.name }}</span>
+              <span class="showcase-meta">{{ frame.description }}</span>
             </div>
           } @else {
-            <div class="spec-card-body">
-              <span class="spec-card-name">No frame</span>
-              <span class="spec-card-meta">Rolled up in a protective tube</span>
+            <div class="showcase-body">
+              <span class="showcase-name">No frame</span>
+              <span class="showcase-meta">Rolled up in a protective tube</span>
             </div>
           }
         </div>
 
-        <!-- Size display -->
-        <div class="panel-section size-display-section">
-          <span class="size-display">{{ effectiveSize().val1 }} × {{ effectiveSize().val2 }} cm</span>
-        </div>
-
-        <!-- Reassurance -->
-        <div class="reassurance">
+        <!-- Save design button -->
+        <button type="button" class="save-design-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
           </svg>
-          <p>This is just a preview. Our professional team will fine-tune your artwork before printing.</p>
+          Save my design
+        </button>
+
+        <!-- Reassurance banner -->
+        <div class="reassurance-banner">
+          <div class="reassurance-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="reassurance-text">
+            <strong>Preview only</strong>
+            <span>Our team will professionally optimize your artwork for the perfect print.</span>
+          </div>
         </div>
       </div>
     </div>
