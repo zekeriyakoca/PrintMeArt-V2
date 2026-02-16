@@ -570,6 +570,54 @@
   }
 }
 
+// Guide info boxes (left of artboard)
+.guide-info-stack {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 14.5rem;
+  z-index: 30;
+}
+
+.guide-info-box {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f0fdfa;
+  border: 1px solid #b2dfdb;
+  border-radius: 0.5rem;
+  align-items: flex-start;
+}
+
+.guide-info-icon {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #167a92;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.guide-info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  strong { font-size: 0.8rem; font-weight: 600; color: #167a92; }
+  span { font-size: 0.72rem; color: #0e5e71; line-height: 1.45; }
+}
+
+.guide-info-mat .guide-info-icon { background: #384f8c; }
+.guide-info-mat strong { color: #384f8c; }
+.guide-info-mat { background: #f0f4ff; border-color: #c7d2e8; }
+.guide-info-mat span { color: #475569; }
+
 // Dimension guides
 .guides-overlay {
   position: absolute;
@@ -732,6 +780,10 @@ $line-color: oklch(52.5% 0.223 3.958);
   }
 
   .guides-btn span {
+    display: none;
+  }
+
+  .guide-info-stack {
     display: none;
   }
 
