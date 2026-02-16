@@ -1,4 +1,4 @@
-import { Component, computed, effect, ElementRef, HostListener, input, model, output, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
@@ -6,6 +6,7 @@ import { ProductMetadata } from '../../models/product';
 import { AllPapers, FrameOptionsByValue, Paper } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
+import { CommonApiService } from '../../services/api/common-api.service';
 
 type FitMode = 'cover' | 'contain';
 
@@ -28,6 +29,10 @@ export class ProductPreviewComponent {
 
   // Outputs
   onClose = output<void>();
+  onDesignSaved = output<string>();
+
+  // Services
+  private commonApi = inject(CommonApiService);
 
   // Refs
   viewportRef = viewChild<ElementRef<HTMLDivElement>>('viewport');
@@ -42,6 +47,7 @@ export class ProductPreviewComponent {
   showGhost = signal(false);
   showGuides = signal(false);
   showGuideInfo = signal(true);
+  isSaving = signal(false);
 
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
@@ -193,6 +199,91 @@ export class ProductPreviewComponent {
     } else {
       this.scale.set(1);
     }
+  }
+
+  saveDesign() {
+    if (this.isSaving()) return;
+    this.isSaving.set(true);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const size = this.effectiveSize();
+      const canvasW = 1200;
+      const canvasH = Math.round(canvasW * (size.val2 / size.val1));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      const ctx = canvas.getContext('2d')!;
+
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Calculate padding for mat
+      const pad = this.imagePaddingPercent() / 100;
+      const drawX = canvasW * pad;
+      const drawY = canvasH * pad;
+      const drawW = canvasW * (1 - 2 * pad);
+      const drawH = canvasH * (1 - 2 * pad);
+
+      // Draw image with current fit mode
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const boxRatio = drawW / drawH;
+      let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+
+      if (this.fitMode() === 'cover') {
+        if (imgRatio > boxRatio) {
+          sw = img.naturalHeight * boxRatio;
+          sx = (img.naturalWidth - sw) / 2;
+        } else {
+          sh = img.naturalWidth / boxRatio;
+          sy = (img.naturalHeight - sh) / 2;
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, drawX, drawY, drawW, drawH);
+      } else {
+        // Contain
+        let dw: number, dh: number;
+        if (imgRatio > boxRatio) {
+          dw = drawW;
+          dh = drawW / imgRatio;
+        } else {
+          dh = drawH;
+          dw = drawH * imgRatio;
+        }
+        const dx = drawX + (drawW - dw) / 2;
+        const dy = drawY + (drawH - dh) / 2;
+        ctx.drawImage(img, dx, dy, dw, dh);
+      }
+
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          console.error('Canvas toBlob failed');
+          this.isSaving.set(false);
+          return;
+        }
+        const file = new File([blob], 'preview-design.png', { type: 'image/png' });
+        this.commonApi.uploadImage(file).subscribe({
+          next: (url) => {
+            this.onDesignSaved.emit(url);
+            this.isSaving.set(false);
+          },
+          error: (err) => {
+            console.error('Design upload failed:', err);
+            this.isSaving.set(false);
+          },
+        });
+      }, 'image/png');
+    };
+
+    img.onerror = () => {
+      console.error('Failed to load image for capture');
+      this.isSaving.set(false);
+    };
+
+    const sep = this.imageUrl().includes('?') ? '&' : '?';
+    img.src = this.imageUrl() + sep + '_t=' + Date.now();
   }
 
   close() {

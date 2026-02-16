@@ -63,6 +63,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   showPreview = signal(false);
+  savedDesignUrl = signal<string | null>(null);
   selectedFrameName = signal<string | null>(null);
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
