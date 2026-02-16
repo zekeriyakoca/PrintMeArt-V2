@@ -116,7 +116,7 @@
 
 <!-- Product Preview Modal -->
 @if (selectedSize(); as size) {
-  @if (product().images.length) {
+  @if (product().images?.length) {
     <app-product-preview
       [isOpen]="showPreview()"
       [imageUrl]="product().images[0].large"
@@ -126,6 +126,7 @@
       [frameName]="selectedFrameName()"
       [(isMatIncluded)]="isMatIncluded"
       [paperName]="selectedPaperName()"
+      [metadata]="product().metadata"
       (onClose)="showPreview.set(false)"
     ></app-product-preview>
   }

@@ -1,18 +1,8 @@
-import {
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  HostListener,
-  input,
-  model,
-  output,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, input, model, output, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
+import { ProductMetadata } from '../../models/product';
 import { AllPapers, FrameOptionsByValue, Paper } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
@@ -34,6 +24,7 @@ export class ProductPreviewComponent {
   frameName = input<string | null>(null);
   isMatIncluded = model<boolean>(false);
   paperName = input<string>('');
+  metadata = input<ProductMetadata | null>(null);
 
   // Outputs
   onClose = output<void>();
@@ -49,6 +40,7 @@ export class ProductPreviewComponent {
   isLandscape = signal(false);
   isDragging = signal(false);
   showGhost = signal(false);
+  showGuides = signal(false);
 
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
@@ -148,6 +140,19 @@ export class ProductPreviewComponent {
     }
   });
 
+  // Smart init when preview opens
+  private prevOpen = false;
+  private initEffect = effect(
+    () => {
+      const open = this.isOpen();
+      if (open && !this.prevOpen) {
+        this.smartInit();
+      }
+      this.prevOpen = open;
+    },
+    { allowSignalWrites: true },
+  );
+
   // Reset view on size change
   private sizeChangeEffect = effect(
     () => {
@@ -158,6 +163,36 @@ export class ProductPreviewComponent {
     },
     { allowSignalWrites: true },
   );
+
+  private smartInit() {
+    const meta = this.metadata();
+    const size = this.selectedSize();
+
+    // Always contain + overflow visible
+    this.fitMode.set('contain');
+    this.showGhost.set(true);
+    this.translateX.set(0);
+    this.translateY.set(0);
+
+    // Detect image orientation from metadata
+    if (meta) {
+      const imgW = parseFloat(meta.OriginalImageWidth) || 1;
+      const imgH = parseFloat(meta.OriginalImageHeight) || 1;
+      const imageIsLandscape = imgW > imgH;
+      const sizeIsLandscape = size.val1 > size.val2;
+      // Toggle landscape if image and size orientation don't match
+      this.isLandscape.set(imageIsLandscape !== sizeIsLandscape);
+    } else {
+      this.isLandscape.set(false);
+    }
+
+    // Set zoom: if mat, zoom out slightly to show mat border; otherwise fit
+    if (this.isMatIncluded() && this.hasFrame()) {
+      this.scale.set(0.92);
+    } else {
+      this.scale.set(1);
+    }
+  }
 
   close() {
     document.body.style.overflow = '';
@@ -251,9 +286,7 @@ export class ProductPreviewComponent {
   }
 
   onMultiPointerMove(event: PointerEvent) {
-    const idx = this.activeTouches.findIndex(
-      (t) => t.pointerId === event.pointerId,
-    );
+    const idx = this.activeTouches.findIndex((t) => t.pointerId === event.pointerId);
     if (idx >= 0) this.activeTouches[idx] = event;
     if (this.activeTouches.length === 2) {
       const dist = this.getTouchDist();
@@ -263,9 +296,7 @@ export class ProductPreviewComponent {
   }
 
   onMultiPointerUp(event: PointerEvent) {
-    this.activeTouches = this.activeTouches.filter(
-      (t) => t.pointerId !== event.pointerId,
-    );
+    this.activeTouches = this.activeTouches.filter((t) => t.pointerId !== event.pointerId);
   }
 
   private getTouchDist(): number {
@@ -292,11 +323,7 @@ export class ProductPreviewComponent {
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (!this.isOpen()) return;
-    if (
-      event.target instanceof HTMLInputElement ||
-      event.target instanceof HTMLTextAreaElement
-    )
-      return;
+    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
 
     switch (event.key) {
       case 'Escape':

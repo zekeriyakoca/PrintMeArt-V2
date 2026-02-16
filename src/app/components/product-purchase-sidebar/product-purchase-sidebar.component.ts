@@ -1,13 +1,5 @@
 import { SizeOption } from './../../models/size-option';
-import {
-  Component,
-  computed,
-  effect,
-  input,
-  model,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, computed, effect, input, model, output, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -29,17 +21,7 @@ import { ProductPreviewComponent } from '../product-preview/product-preview.comp
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [
-    OptionsComponent,
-    CommonModule,
-    FrameOptionsComponent,
-    IconComponent,
-    MatOptionsComponent,
-    PaperOptionsComponent,
-    SizeOptionsComponent,
-    DpiBarComponent,
-    ProductPreviewComponent,
-  ],
+  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, DpiBarComponent, ProductPreviewComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -58,13 +40,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   /** Selected paper name for display and spec3 */
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
 
-  availableSizes = computed<SizeOption[]>(
-    () =>
-      DimensionParser.filterSizes(
-        this.product().metadata?.Dimensions ?? '',
-        SizeOptions,
-      ) ?? SizeOptions,
-  );
+  availableSizes = computed<SizeOption[]>(() => DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions);
 
   private syncSelectedSize = effect(
     () => {
@@ -116,24 +92,16 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   isFrameSelected = signal(false);
 
   hasAllOptionsSelected = computed(() => {
-    if (
-      this.selectedSize() == null ||
-      this.product().optionGroups == null ||
-      this.product().optionGroups.length === 0
-    ) {
+    if (this.selectedSize() == null || this.product().optionGroups == null || this.product().optionGroups.length === 0) {
       return false;
     }
 
-    const frameGroup = this.product().optionGroups.find((group) =>
-      group.name.toLowerCase().includes('frame'),
-    );
+    const frameGroup = this.product().optionGroups.find((group) => group.name.toLowerCase().includes('frame'));
     const isFrameSelected = frameGroup?.selectedOptionId !== undefined;
 
     // For custom products, require uploaded image URL
     const isCustomProduct = this.product().hasCustomOptions;
-    const hasCustomProductDetails = this.product().optionGroups.some(
-      (g) => g.name === 'CustomProductDetails',
-    );
+    const hasCustomProductDetails = this.product().optionGroups.some((g) => g.name === 'CustomProductDetails');
     const needsImageUrl = isCustomProduct && hasCustomProductDetails;
     const hasImageUrl = !needsImageUrl || !!this.customImageUrl();
 
@@ -149,10 +117,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   selectFrame(groupIndex: number, optionId: number) {
     this.selectOption(groupIndex, optionId);
 
-    const selectedFrame =
-      this.product().optionGroups[groupIndex].options.find(
-        (option) => option.id === optionId,
-      )?.value || '';
+    const selectedFrame = this.product().optionGroups[groupIndex].options.find((option) => option.id === optionId)?.value || '';
 
     if (selectedFrame.toLowerCase() == 'rolled-up') {
       this.isFrameSelected.set(false);
@@ -173,8 +138,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         }
         return {
           ...group,
-          selectedOptionId:
-            group.selectedOptionId === optionId ? undefined : optionId,
+          selectedOptionId: group.selectedOptionId === optionId ? undefined : optionId,
         };
       });
       return { ...currentProduct, optionGroups: updatedGroups };
@@ -184,40 +148,34 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   calculatePrice() {
     const selectedOptions = this.getSelectedOptions();
 
-    this.apiService
-      .calculatePrice(this.product().id.toString(), selectedOptions)
-      .subscribe({
-        next: (response) => {
-          this.calculatedPrice.set(response.price);
-          this.variantId = response.variantId;
+    this.apiService.calculatePrice(this.product().id.toString(), selectedOptions).subscribe({
+      next: (response) => {
+        this.calculatedPrice.set(response.price);
+        this.variantId = response.variantId;
 
-          this.telemetry.trackEvent('price_calculated', {
-            productId: this.product().id,
-            variantId: response.variantId,
-            price: response.price,
-            selectedOptionsCount: selectedOptions?.length ?? 0,
-          });
-        },
-        error: (error) => {
-          this.telemetry.trackException(error, {
-            operation: 'calculatePrice',
-            productId: this.product().id,
-          });
-          console.error('Error fetching calculated price:', error);
-        },
-      });
+        this.telemetry.trackEvent('price_calculated', {
+          productId: this.product().id,
+          variantId: response.variantId,
+          price: response.price,
+          selectedOptionsCount: selectedOptions?.length ?? 0,
+        });
+      },
+      error: (error) => {
+        this.telemetry.trackException(error, {
+          operation: 'calculatePrice',
+          productId: this.product().id,
+        });
+        console.error('Error fetching calculated price:', error);
+      },
+    });
   }
 
   addToCart() {
     if (!this.hasAllOptionsSelected()) {
       // Check if it's specifically missing the custom image
-      const hasCustomProductDetails = this.product().optionGroups.some(
-        (g) => g.name === 'CustomProductDetails',
-      );
+      const hasCustomProductDetails = this.product().optionGroups.some((g) => g.name === 'CustomProductDetails');
       if (hasCustomProductDetails && !this.customImageUrl()) {
-        this.toastService.error(
-          'Please wait for your image to finish uploading before adding to cart.',
-        );
+        this.toastService.error('Please wait for your image to finish uploading before adding to cart.');
       }
       this.telemetry.trackEvent('add_to_cart_blocked', {
         productId: this.product().id,
@@ -229,19 +187,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     // Determine picture URL: use custom image URL for custom products, otherwise use product image
     const customUrl = this.customImageUrl();
     const productImages = this.product().images;
-    const pictureUrl =
-      customUrl ||
-      (productImages && productImages.length > 0 ? productImages[0].thumb : '');
+    const pictureUrl = customUrl || (productImages && productImages.length > 0 ? productImages[0].thumb : '');
 
-    this.cartService.addItemToCart(
-      this.product().id,
-      this.variantId,
-      this.product().name,
-      this.calculatedPrice(),
-      this.quantity(),
-      pictureUrl,
-      this.getSelectedOptions(),
-    );
+    this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions());
   }
 
   getSelectedOptionName(optionId?: number): string {
@@ -262,11 +210,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         const isPaper = group.name.toLowerCase().startsWith('paper');
         return {
           optionId: group.selectedOptionId!,
-          optionName: isPaper
-            ? paperName
-            : group.options.find(
-                (option) => option.id === group.selectedOptionId,
-              )?.value,
+          optionName: isPaper ? paperName : group.options.find((option) => option.id === group.selectedOptionId)?.value,
           spec1: size.val1.toString(),
           spec2: size.val2.toString(),
           spec3: isPaper ? paperName : undefined,
@@ -274,19 +218,13 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       });
 
     selectedOptions.push({
-      optionId:
-        this.product().optionGroups.find(
-          (group) => group.name.toLowerCase() === 'including mat',
-        )?.options[0].id || 0,
+      optionId: this.product().optionGroups.find((group) => group.name.toLowerCase() === 'including mat')?.options[0].id || 0,
       optionName: this.isMatIncluded() ? 'Include Mat' : 'No Mat',
       spec1: this.isMatIncluded() ? 'true' : 'false',
     } as SelectedOptionDto);
 
     selectedOptions.push({
-      optionId:
-        this.product().optionGroups.find(
-          (group) => group.name.toLowerCase() === 'size',
-        )?.options[0].id || 0,
+      optionId: this.product().optionGroups.find((group) => group.name.toLowerCase() === 'size')?.options[0].id || 0,
       optionName: size.name,
       spec1: size.val1.toString(),
       spec2: size.val2.toString(),
@@ -295,13 +233,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     // Add CustomProductDetails option with uploaded image URL for custom products
     const customImageUrl = this.customImageUrl();
     if (customImageUrl) {
-      const customProductDetailsGroup = this.product().optionGroups.find(
-        (group) => group.name === 'CustomProductDetails',
-      );
+      const customProductDetailsGroup = this.product().optionGroups.find((group) => group.name === 'CustomProductDetails');
       if (customProductDetailsGroup) {
-        const customProductUrlOption = customProductDetailsGroup.options.find(
-          (opt) => opt.value === 'CustomProductUrl',
-        );
+        const customProductUrlOption = customProductDetailsGroup.options.find((opt) => opt.value === 'CustomProductUrl');
         if (customProductUrlOption) {
           selectedOptions.push({
             optionId: customProductUrlOption.id,
