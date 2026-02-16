@@ -41,6 +41,7 @@ export class ProductPreviewComponent {
   isDragging = signal(false);
   showGhost = signal(false);
   showGuides = signal(false);
+  showGuideInfo = signal(true);
 
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },

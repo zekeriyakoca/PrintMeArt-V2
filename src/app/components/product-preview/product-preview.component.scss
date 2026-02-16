@@ -517,8 +517,17 @@
   flex-direction: column;
   gap: 0.15rem;
 
-  strong { font-size: 0.8rem; color: #167a92; font-weight: 600; }
-  span { font-size: 0.72rem; color: #0e5e71; line-height: 1.4; }
+  strong {
+    font-size: 0.8rem;
+    color: #167a92;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 0.72rem;
+    color: #0e5e71;
+    line-height: 1.4;
+  }
 }
 
 // Selections divider
@@ -571,16 +580,42 @@
 }
 
 // Guide info boxes (left of artboard)
+.guide-info-dismiss {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  background: #fff;
+  color: #94a3b8;
+  cursor: pointer;
+  z-index: 31;
+  transition: all 0.12s ease;
+  &:hover { color: #334155; border-color: #94a3b8; }
+}
+
 .guide-info-stack {
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 20%;
+  transform: translate(-100%, 0);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 14.5rem;
   z-index: 30;
+}
+
+@media (max-width: 1400px) {
+  .guide-info-stack {
+    left: 0;
+    transform: translate(-20%, 0);
+  }
 }
 
 .guide-info-box {
@@ -609,14 +644,36 @@
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  strong { font-size: 0.8rem; font-weight: 600; color: #167a92; }
-  span { font-size: 0.72rem; color: #0e5e71; line-height: 1.45; }
+
+  strong {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #167a92;
+  }
+
+  span {
+    font-size: 0.72rem;
+    color: #0e5e71;
+    line-height: 1.45;
+  }
 }
 
-.guide-info-mat .guide-info-icon { background: #384f8c; }
-.guide-info-mat strong { color: #384f8c; }
-.guide-info-mat { background: #f0f4ff; border-color: #c7d2e8; }
-.guide-info-mat span { color: #475569; }
+.guide-info-mat .guide-info-icon {
+  background: #384f8c;
+}
+
+.guide-info-mat strong {
+  color: #384f8c;
+}
+
+.guide-info-mat {
+  background: #f0f4ff;
+  border-color: #c7d2e8;
+}
+
+.guide-info-mat span {
+  color: #475569;
+}
 
 // Dimension guides
 .guides-overlay {
@@ -747,8 +804,19 @@ $line-color: oklch(52.5% 0.223 3.958);
   transform: translateX(-50%);
 }
 
-// Mobile
-@media (max-width: 768px) {
+// Guide info boxes: only on large screens (>1024px)
+.guide-info-stack {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .guide-info-stack {
+    display: flex;
+  }
+}
+
+// Tablet (769px – 1024px): side panel as bottom drawer, compact layout
+@media (max-width: 1024px) {
   .preview-layout {
     flex-direction: column;
     width: 100vw;
@@ -758,12 +826,82 @@ $line-color: oklch(52.5% 0.223 3.958);
   }
 
   .side-panel {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    max-height: 30vh;
+    overflow-y: auto;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .panel-title {
+    display: none;
+  }
+
+  .panel-section {
+    flex: 1;
+    min-width: 10rem;
+  }
+
+  // Hide showcase details, keep compact
+  .selections-divider {
+    display: none;
+  }
+
+  .showcase-img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .showcase-tags {
+    display: none;
+  }
+
+  .showcase-meta:nth-child(n+3) {
+    display: none;
+  }
+
+  .save-design-btn {
+    margin-top: 0;
+  }
+
+  .reassurance-banner {
     display: none;
   }
 
   .toolbar {
     gap: 0.2rem;
-    padding: 0.3rem 0.4rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .guides-btn span {
+    display: none;
+  }
+
+  .zoom-slider {
+    width: 14rem;
+  }
+}
+
+// Mobile (<= 768px): preview only, no side panel
+@media (max-width: 768px) {
+  .preview-layout {
+    flex-direction: column;
+    width: 100vw;
+    height: 100dvh;
+    padding: 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .side-panel {
+    display: none;
+  }
+
+  .toolbar {
+    gap: 0.2rem;
+    padding: 0.25rem 0.4rem;
 
     .tool-btn span {
       display: none;
@@ -783,16 +921,17 @@ $line-color: oklch(52.5% 0.223 3.958);
     display: none;
   }
 
-  .guide-info-stack {
-    display: none;
-  }
-
   .zoom-bar {
     padding: 0.3rem 0.75rem;
     gap: 0.4rem;
   }
 
   .zoom-slider {
-    width: 12rem;
+    width: 10rem;
+  }
+
+  .top-right-actions {
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
