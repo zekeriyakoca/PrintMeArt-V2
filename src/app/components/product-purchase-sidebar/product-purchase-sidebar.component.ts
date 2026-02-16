@@ -173,6 +173,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   addToCart() {
     if (!this.hasAllOptionsSelected()) {
+      debugger;
       // Check if it's specifically missing the custom image
       const hasCustomProductDetails = this.product().optionGroups.some((g) => g.name === 'CustomProductDetails');
       if (hasCustomProductDetails && !this.customImageUrl()) {
@@ -242,6 +243,22 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
             optionId: customProductUrlOption.id,
             optionName: 'CustomProductUrl',
             spec1: customImageUrl,
+          } as SelectedOptionDto);
+        }
+      }
+    }
+
+    // Add preview snapshot URL (optional)
+    const designUrl = this.savedDesignUrl();
+    if (designUrl) {
+      const snapshotGroup = this.product().optionGroups.find((group) => group.name === 'PreviewSnapshot');
+      if (snapshotGroup) {
+        const snapshotOption = snapshotGroup.options.find((opt) => opt.value === 'PreviewSnapshotUrl');
+        if (snapshotOption) {
+          selectedOptions.push({
+            optionId: snapshotOption.id,
+            optionName: 'PreviewSnapshotUrl',
+            spec1: designUrl,
           } as SelectedOptionDto);
         }
       }

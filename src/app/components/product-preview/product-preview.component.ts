@@ -203,87 +203,149 @@ export class ProductPreviewComponent {
 
   saveDesign() {
     if (this.isSaving()) return;
+
+    const viewport = this.viewportRef()?.nativeElement;
+    if (!viewport) return;
+
+    // Read actual DOM content area (img element fills this)
+    // clientWidth/Height includes padding; subtract it to get content box
+    const vpStyle = getComputedStyle(viewport);
+    const domPadL = parseFloat(vpStyle.paddingLeft) || 0;
+    const domPadR = parseFloat(vpStyle.paddingRight) || 0;
+    const domPadT = parseFloat(vpStyle.paddingTop) || 0;
+    const domPadB = parseFloat(vpStyle.paddingBottom) || 0;
+    const domContentW = viewport.clientWidth - domPadL - domPadR;
+    const domContentH = viewport.clientHeight - domPadT - domPadB;
+
     this.isSaving.set(true);
 
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const size = this.effectiveSize();
-      const canvasW = 1200;
-      const canvasH = Math.round(canvasW * (size.val2 / size.val1));
+    // Snapshot user transforms
+    const tx = this.translateX();
+    const ty = this.translateY();
+    const userScale = this.clampedScale();
+    const fitMode = this.fitMode();
+    const hasFrame = this.hasFrame();
+    const padPercent = this.imagePaddingPercent();
 
-      const canvas = document.createElement('canvas');
-      canvas.width = canvasW;
-      canvas.height = canvasH;
-      const ctx = canvas.getContext('2d')!;
+    const frameMaskUrl = this.frameMaskUrl();
+    const loads: Promise<HTMLImageElement>[] = [this.loadImage(this.imageUrl())];
+    if (frameMaskUrl) loads.push(this.loadImage(frameMaskUrl));
 
-      // White background
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvasW, canvasH);
+    Promise.all(loads)
+      .then(([img, frameImg]) => {
+        const size = this.effectiveSize();
+        const canvasW = 1200;
+        const canvasH = Math.round(canvasW * (size.val2 / size.val1));
 
-      // Calculate padding for mat
-      const pad = this.imagePaddingPercent() / 100;
-      const drawX = canvasW * pad;
-      const drawY = canvasH * pad;
-      const drawW = canvasW * (1 - 2 * pad);
-      const drawH = canvasH * (1 - 2 * pad);
+        const canvas = document.createElement('canvas');
+        canvas.width = canvasW;
+        canvas.height = canvasH;
+        const ctx = canvas.getContext('2d')!;
 
-      // Draw image with current fit mode
-      const imgRatio = img.naturalWidth / img.naturalHeight;
-      const boxRatio = drawW / drawH;
-      let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+        // White background (artboard)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvasW, canvasH);
 
-      if (this.fitMode() === 'cover') {
-        if (imgRatio > boxRatio) {
-          sw = img.naturalHeight * boxRatio;
-          sx = (img.naturalWidth - sw) / 2;
+        // 1. Viewport rect in canvas — matches .paper-behind-frame margins
+        //    CSS % margin resolves against containing block WIDTH
+        let cvpX = 0, cvpY = 0, cvpW = canvasW, cvpH = canvasH;
+        if (hasFrame) {
+          const mLR = 0.04 * canvasW;
+          const mTB = 0.02 * canvasW;
+          cvpX = mLR;
+          cvpY = mTB;
+          cvpW = canvasW - 2 * mLR;
+          cvpH = canvasH - 2 * mTB;
+        }
+
+        // 2. Content rect in canvas — matches CSS padding on .image-viewport
+        //    CSS % padding resolves against containing block WIDTH (= artboard width)
+        const padPx = (padPercent / 100) * canvasW;
+        const cntX = cvpX + padPx;
+        const cntY = cvpY + padPx;
+        const cntW = cvpW - 2 * padPx;
+        const cntH = cvpH - 2 * padPx;
+
+        // 3. Clip to viewport (overflow: hidden clips to padding box)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(cvpX, cvpY, cvpW, cvpH);
+        ctx.clip();
+
+        // 4. Base image size from object-fit within content area
+        const imgRatio = img.naturalWidth / img.naturalHeight;
+        const cntRatio = cntW / cntH;
+        let baseW: number, baseH: number;
+
+        if (fitMode === 'cover') {
+          if (imgRatio > cntRatio) {
+            baseH = cntH;
+            baseW = cntH * imgRatio;
+          } else {
+            baseW = cntW;
+            baseH = cntW / imgRatio;
+          }
         } else {
-          sh = img.naturalWidth / boxRatio;
-          sy = (img.naturalHeight - sh) / 2;
+          if (imgRatio > cntRatio) {
+            baseW = cntW;
+            baseH = cntW / imgRatio;
+          } else {
+            baseH = cntH;
+            baseW = cntH * imgRatio;
+          }
         }
-        ctx.drawImage(img, sx, sy, sw, sh, drawX, drawY, drawW, drawH);
-      } else {
-        // Contain
-        let dw: number, dh: number;
-        if (imgRatio > boxRatio) {
-          dw = drawW;
-          dh = drawW / imgRatio;
-        } else {
-          dh = drawH;
-          dw = drawH * imgRatio;
-        }
-        const dx = drawX + (drawW - dw) / 2;
-        const dy = drawY + (drawH - dh) / 2;
-        ctx.drawImage(img, dx, dy, dw, dh);
-      }
 
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          console.error('Canvas toBlob failed');
-          this.isSaving.set(false);
-          return;
+        // 5. Map user translate from DOM content pixels → canvas content pixels
+        const ratioX = cntW / domContentW;
+        const ratioY = cntH / domContentH;
+        const canvasTx = tx * ratioX;
+        const canvasTy = ty * ratioY;
+
+        // 6. Draw: CSS transform = translate(tx,ty) scale(s) with origin at center
+        //    Center of content area = where img element center is
+        const cx = cntX + cntW / 2;
+        const cy = cntY + cntH / 2;
+        const finalW = baseW * userScale;
+        const finalH = baseH * userScale;
+        const dx = cx + canvasTx - finalW / 2;
+        const dy = cy + canvasTy - finalH / 2;
+
+        ctx.drawImage(img, dx, dy, finalW, finalH);
+        ctx.restore();
+
+        // 7. Frame overlay on top (covers full artboard, above clip)
+        if (frameImg) {
+          ctx.drawImage(frameImg, 0, 0, canvasW, canvasH);
         }
-        const file = new File([blob], 'preview-design.png', { type: 'image/png' });
-        this.commonApi.uploadImage(file).subscribe({
-          next: (url) => {
-            this.onDesignSaved.emit(url);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
             this.isSaving.set(false);
-          },
-          error: (err) => {
-            console.error('Design upload failed:', err);
-            this.isSaving.set(false);
-          },
-        });
-      }, 'image/png');
-    };
+            return;
+          }
+          const file = new File([blob], 'preview-design.png', { type: 'image/png' });
+          this.commonApi.uploadImage(file).subscribe({
+            next: (url) => {
+              this.onDesignSaved.emit(url);
+              this.isSaving.set(false);
+              this.close();
+            },
+            error: () => this.isSaving.set(false),
+          });
+        }, 'image/png');
+      })
+      .catch(() => this.isSaving.set(false));
+  }
 
-    img.onerror = () => {
-      console.error('Failed to load image for capture');
-      this.isSaving.set(false);
-    };
-
-    const sep = this.imageUrl().includes('?') ? '&' : '?';
-    img.src = this.imageUrl() + sep + '_t=' + Date.now();
+  private loadImage(url: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Failed to load: ' + url));
+      const sep = url.includes('?') ? '&' : '?';
+      img.src = url + sep + '_t=' + Date.now();
+    });
   }
 
   close() {
