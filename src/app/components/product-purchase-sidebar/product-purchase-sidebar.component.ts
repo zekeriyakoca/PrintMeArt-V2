@@ -63,6 +63,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   showPreview = signal(false);
+  showMobileMessage = signal(false);
+
+  onPreviewClick() {
+    if (window.innerWidth < 768) {
+      this.showMobileMessage.set(true);
+    } else {
+      this.showPreview.set(true);
+    }
+  }
   savedDesignUrl = signal<string | null>(null);
   selectedFrameName = signal<string | null>(null);
   readonly moreSizes: SizeOption[] = [
