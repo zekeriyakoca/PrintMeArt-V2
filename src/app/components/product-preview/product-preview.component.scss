@@ -594,7 +594,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // Guide info boxes (left of artboard)
@@ -614,14 +616,18 @@
   cursor: pointer;
   z-index: 31;
   transition: all 0.12s ease;
-  &:hover { color: #334155; border-color: #94a3b8; }
+
+  &:hover {
+    color: #334155;
+    border-color: #94a3b8;
+  }
 }
 
 .guide-info-stack {
   position: absolute;
   left: 0;
   top: 20%;
-  transform: translate(-100%, 0);
+  transform: translate(-70%, 0);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -629,12 +635,22 @@
   z-index: 30;
 }
 
+
+
 @media (max-width: 1400px) {
   .guide-info-stack {
     left: 0;
     transform: translate(-20%, 0);
   }
 }
+
+@media (max-width: 1024px) {
+  .guide-info-stack {
+    display: none;
+  }
+}
+
+
 
 .guide-info-box {
   display: flex;
@@ -820,17 +836,6 @@ $line-color: oklch(52.5% 0.223 3.958);
   bottom: calc(5% + 8px);
   left: 50%;
   transform: translateX(-50%);
-}
-
-// Guide info boxes: only on large screens (>1024px)
-.guide-info-stack {
-  display: none;
-}
-
-@media (min-width: 1025px) {
-  .guide-info-stack {
-    display: flex;
-  }
 }
 
 // Tablet (769px – 1024px): side panel as bottom drawer, compact layout

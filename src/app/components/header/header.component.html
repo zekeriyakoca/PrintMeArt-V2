@@ -1,12 +1,11 @@
-<header class="inset-x-0 top-0 z-50 nc-Header sticky top-0 w-full left-0 right-0 z-40 bg-white">
+<header class="inset-x-0 top-0 z-50 nc-Header sticky top-0 w-full left-0 right-0 bg-white">
   <div class="bg-white">
     <div class="container">
       <div class="h-20 flex justify-between">
         <!-- Logo section -->
         <div class="flex items-center lg:flex-1">
           <a href="#" class="ttnc-logo inline-block text-slate-600 flex-shrink-0 pt-14">
-            <img class="block" style="transform: scale(2.7);"
-              src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo">
+            <img class="block" style="transform: scale(2.7)" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" />
           </a>
         </div>
 
@@ -16,63 +15,53 @@
           <nav class="flex items-center space-x-8">
             <ul class="nc-Navigation flex items-center">
               <!-- Prints Mega Menu -->
-              <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large"
-                (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
-                <a href="/search"
-                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+              <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
+                <a href="/search" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   Our Catalog
                 </a>
                 <!-- Prints Mega Menu -->
-                <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50"
-                  [class.visible]="activeDropdown === 'prints'">
+                <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'prints'">
                   <div class="bg-white shadow-lg">
                     <div class="container">
                       <div class="flex text-sm border-t border-slate-200 py-14">
                         <div class="flex-1 grid grid-cols-3 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (category of printCategories(); track category.id) {
-                          <div>
-                            <a class="font-medium text-[#384f8c] uppercase"
-                              [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ category.name
-                              }}</a>
-                            <ul class="grid space-y-4 mt-4">
-                              @for (child of category.childCategories; track child.id) {
-                              <li><a class="font-normal text-slate-600 hover:text-black"
-                                  [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ child.name
-                                  }}</a>
-                              </li>
-                              }
-                            </ul>
-                          </div>
+                            <div>
+                              <a class="font-medium text-[#384f8c] uppercase" [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ category.name }}</a>
+                              <ul class="grid space-y-4 mt-4">
+                                @for (child of category.childCategories; track child.id) {
+                                  <li>
+                                    <a class="font-normal text-slate-600 hover:text-black" [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ child.name }}</a>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
                           }
                         </div>
                         <!-- Right side card -->
                         <div class="w-[40%] xl:w-[35%] max-w-[450px]">
                           <div class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group">
-                            <div class="absolute flex flex-col h-full w-full p-8 z-40 ">
+                            <div class="absolute flex flex-col h-full w-full p-8 z-40">
                               <img
                                 src="https://genstorageaccount3116.blob.core.windows.net/printme-images/coffee-invitation.webp"
                                 class="absolute end-0 w-1/2 max-w-[260px] h-full object-contain drop-shadow-xl"
-                                alt="Visit Our Space">
+                                alt="Visit Our Space"
+                              />
                               <div class="max-w-xs">
-                                <span class="block mb-2 text-sm text-slate-700">
-                                  Visit Our Space
-                                </span>
-                                <h2 class="text-md md:text-lg lg:text-2xl text-slate-900 font-semibold">
-                                  Pick up prints,<br />enjoy coffee.
-                                </h2>
+                                <span class="block mb-2 text-sm text-slate-700"> Visit Our Space </span>
+                                <h2 class="text-md md:text-lg lg:text-2xl text-slate-900 font-semibold">Pick up prints,<br />enjoy coffee.</h2>
                               </div>
                               <div class="mt-auto">
                                 <button
                                   class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 transition-colors cursor-pointer drop-shadow-xl"
-                                  (click)="navigateToProductListPage()">
+                                  (click)="navigateToProductListPage()"
+                                >
                                   Show me all
                                 </button>
                               </div>
                             </div>
-                            <span
-                              class="opacity-0 group-hover:opacity-40 absolute inset-0 bg-black/10 transition-opacity"></span>
-                            <div>
-                            </div>
+                            <span class="opacity-0 group-hover:opacity-40 absolute inset-0 bg-black/10 transition-opacity"></span>
+                            <div></div>
                           </div>
                         </div>
                       </div>
@@ -83,25 +72,25 @@
 
               <!-- Your Design (special styling, no submenu) -->
               <li class="menu-item flex-shrink-0">
-                <a href="/your-design"
+                <a
+                  href="/your-design"
                   class="inline-flex items-center text-sm lg:text-[1.1rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
-                  style="color: #db2877; font-family: 'Dancing Script', cursive; font-weight: 600;">
+                  style="color: #db2877; font-family: 'Dancing Script', cursive; font-weight: 600"
+                >
                   Your Design
                 </a>
               </li>
 
               <!-- Frames -->
               <li class="menu-item flex-shrink-0">
-                <a href="/how-we-work"
-                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a href="/how-we-work" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   How We Work
                 </a>
               </li>
 
               <!-- About -->
               <li class="menu-item flex-shrink-0">
-                <a href="/about"
-                  class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a href="/about" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   About
                 </a>
               </li>
@@ -111,8 +100,11 @@
           <!-- Right side icons -->
           <div class="flex items-center space-x-1">
             <!-- Search Icon -->
-            <button type="button" (click)="navigateToSearch()"
-              class="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center cursor-pointer">
+            <button
+              type="button"
+              (click)="navigateToSearch()"
+              class="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center cursor-pointer"
+            >
               <app-icon iconName="search" class="w-[22px] h-[22px]"></app-icon>
             </button>
 
@@ -120,18 +112,18 @@
             <app-user-menu></app-user-menu>
 
             <!-- Cart Icon with Badge -->
-            <button type="button"
+            <button
+              type="button"
               class="relative flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center cursor-pointer"
-              (click)="navigateToCart()">
+              (click)="navigateToCart()"
+            >
               <app-icon iconName="shopping-cart" class="w-6 h-6"></app-icon>
               <!-- Cart Badge -->
-              @if(totalItemCountInCart() > 0){
-              <span
-                class="absolute -top-2 -right-2 w-5 h-5 bg-[#384f8cd9] text-white text-xs rounded-full flex items-center justify-center transform scale-75">
-                {{ totalItemCountInCart() }}
-              </span>
+              @if (totalItemCountInCart() > 0) {
+                <span class="absolute -top-2 -right-2 w-5 h-5 bg-[#384f8cd9] text-white text-xs rounded-full flex items-center justify-center transform scale-75">
+                  {{ totalItemCountInCart() }}
+                </span>
               }
-
             </button>
 
             <!-- Language Dropdown -->
@@ -144,18 +136,17 @@
 
         <!-- Mobile menu button -->
         <div class="flex items-center lg:hidden">
-          <button type="button"
+          <button
+            type="button"
             class="focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
-            (click)="toggleMobileMenu()">
+            (click)="toggleMobileMenu()"
+          >
             <span class="sr-only">Open main menu</span>
-            @if(!isMobileMenuOpen()) {
-            <app-icon iconName="menu" class="block h-6 w-6"></app-icon>
+            @if (!isMobileMenuOpen()) {
+              <app-icon iconName="menu" class="block h-6 w-6"></app-icon>
+            } @else if (isMobileMenuOpen()) {
+              <app-icon iconName="close" class="block h-6 w-6"></app-icon>
             }
-
-            @else if(isMobileMenuOpen()) {
-            <app-icon iconName="close" class="block h-6 w-6"></app-icon>
-            }
-
           </button>
         </div>
       </div>
@@ -163,27 +154,31 @@
   </div>
 
   <!-- Mobile menu overlay -->
-  <div class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
-    [class.opacity-0]="!isMobileMenuOpen()" [class.pointer-events-none]="!isMobileMenuOpen()"
-    [class.opacity-100]="isMobileMenuOpen()" (click)="closeMobileMenu()" role="presentation">
-  </div>
+  <div
+    class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+    [class.opacity-0]="!isMobileMenuOpen()"
+    [class.pointer-events-none]="!isMobileMenuOpen()"
+    [class.opacity-100]="isMobileMenuOpen()"
+    (click)="closeMobileMenu()"
+    role="presentation"
+  ></div>
 
   <!-- Mobile menu panel -->
   <div
     class="lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-out"
-    [class.translate-x-full]="!isMobileMenuOpen()" [class.translate-x-0]="isMobileMenuOpen()" role="dialog"
-    aria-modal="true" aria-label="Mobile navigation">
-
+    [class.translate-x-full]="!isMobileMenuOpen()"
+    [class.translate-x-0]="isMobileMenuOpen()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile navigation"
+  >
     <div class="flex flex-col h-full">
       <!-- Mobile menu header -->
       <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
         <a href="/" class="inline-block" (click)="closeMobileMenu()">
-          <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg"
-            alt="PrintMeArt Logo" width="108" height="40">
+          <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" width="108" height="40" />
         </a>
-        <button type="button"
-          class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-          (click)="closeMobileMenu()">
+        <button type="button" class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" (click)="closeMobileMenu()">
           <span class="sr-only">Close menu</span>
           <app-icon iconName="close" class="h-6 w-6"></app-icon>
         </button>
@@ -193,42 +188,31 @@
       <nav class="flex-1 overflow-y-auto px-6 py-6">
         <ul class="space-y-1">
           <li>
-            <a href="/search"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-              (click)="closeMobileMenu()">
+            <a href="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">Our Catalog</span>
             </a>
           </li>
           <li>
-            <a href="/your-design"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors"
-              style="color: #db2877;" (click)="closeMobileMenu()">
+            <a href="/your-design" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors" style="color: #db2877" (click)="closeMobileMenu()">
               <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
-              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem;">Your
-                Design</span>
+              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem">Your Design</span>
             </a>
           </li>
           <li>
-            <a href="/how-we-work"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-              (click)="closeMobileMenu()">
+            <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">How We Work</span>
             </a>
           </li>
           <li>
-            <a href="/about"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-              (click)="closeMobileMenu()">
+            <a href="/about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="users" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">About</span>
             </a>
           </li>
           <li>
-            <a href="/how-we-work"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-              (click)="closeMobileMenu()">
+            <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rocket" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">How We Work</span>
             </a>
@@ -238,22 +222,22 @@
         <div class="mt-6 pt-6 border-t border-slate-100">
           <ul class="space-y-1">
             <li>
-              <button type="button"
+              <button
+                type="button"
                 class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-                (click)="navigateToCart(); closeMobileMenu()">
+                (click)="navigateToCart(); closeMobileMenu()"
+              >
                 <app-icon iconName="shopping-cart" class="w-5 h-5 text-slate-400"></app-icon>
                 <span class="font-medium">Cart</span>
-                @if(totalItemCountInCart() > 0) {
-                <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
-                  {{ totalItemCountInCart() }}
-                </span>
+                @if (totalItemCountInCart() > 0) {
+                  <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+                    {{ totalItemCountInCart() }}
+                  </span>
                 }
               </button>
             </li>
             <li>
-              <a href="/profile"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-                (click)="closeMobileMenu()">
+              <a href="/profile" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
                 <app-icon iconName="user" class="w-5 h-5 text-slate-400"></app-icon>
                 <span class="font-medium">Profile</span>
               </a>
@@ -264,11 +248,8 @@
 
       <!-- Mobile menu footer -->
       <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
-        <p class="text-xs text-slate-500 text-center">
-          Museum-Quality Art Prints — Priced Fairly
-        </p>
+        <p class="text-xs text-slate-500 text-center">Museum-Quality Art Prints — Priced Fairly</p>
       </div>
     </div>
   </div>
-
 </header>
