@@ -3,16 +3,11 @@ export interface Museum {
   badgeUrl: string;
   websiteUrl: string;
 }
-export const MUSEUMS_SPECIAL: string[] = [
-  'Yale University',
-  'Rijksmuseum',
-  'National Gallery of Art',
-];
+export const MUSEUMS_SPECIAL: string[] = ['Yale University', 'Rijksmuseum', 'National Gallery of Art', 'Art Institute of Chicago'];
 export const MUSEUMS: Museum[] = [
   {
     name: 'National Postal',
-    badgeUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Smithsonian_logo_color.svg/960px-Smithsonian_logo_color.svg.png',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Smithsonian_logo_color.svg/960px-Smithsonian_logo_color.svg.png',
     websiteUrl: 'https://postalmuseum.si.edu/',
   },
   {
@@ -22,20 +17,17 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Museum Kunstpalast',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Logo_Museum_Kunstpalast.svg.png',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/Logo_Museum_Kunstpalast.svg.png',
     websiteUrl: 'https://www.kunstpalast.de/en/',
   },
   {
     name: 'Yale University',
-    badgeUrl:
-      'https://artgallery.yale.edu/themes/custom/yuag/assets/dist/images/logo--stacked.svg',
+    badgeUrl: 'https://artgallery.yale.edu/themes/custom/yuag/assets/dist/images/logo--stacked.svg',
     websiteUrl: 'https://artgallery.yale.edu',
   },
   {
     name: 'Metropolitan',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/The_Metropolitan_Museum_of_Art_Logo.svg.png',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/The_Metropolitan_Museum_of_Art_Logo.svg.png',
     websiteUrl: 'https://www.metmuseum.org',
   },
   {
@@ -56,15 +48,13 @@ export const MUSEUMS: Museum[] = [
   {
     name: 'Museums and Art Gallery, Birmingham',
     badgeUrl: '',
-    websiteUrl:
-      'https://www.birminghammuseums.org.uk/birmingham-museum-and-art-gallery',
+    websiteUrl: 'https://www.birminghammuseums.org.uk/birmingham-museum-and-art-gallery',
   },
   { name: 'Private collection', badgeUrl: '', websiteUrl: '' },
   { name: 'Royal Collection', badgeUrl: '', websiteUrl: 'https://www.rct.uk/' },
   {
     name: 'Rijksmuseum',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/rijkmuseum.png',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/rijkmuseum.png',
     websiteUrl: 'https://www.rijksmuseum.nl',
   },
   {
@@ -74,8 +64,7 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Mauritshuis',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/Mauritshuis_museum_logo.png',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/Mauritshuis_museum_logo.png',
     websiteUrl: 'https://www.mauritshuis.nl/',
   },
   {
@@ -101,8 +90,7 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Kröller-Müller',
-    badgeUrl:
-      'https://images.seeklogo.com/logo-png/38/2/kroller-muller-museum-logo-png_seeklogo-388711.png',
+    badgeUrl: 'https://images.seeklogo.com/logo-png/38/2/kroller-muller-museum-logo-png_seeklogo-388711.png',
     websiteUrl: 'https://krollermuller.nl/en',
   },
   {
@@ -133,20 +121,17 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'National Gallery, London',
-    badgeUrl:
-      'https://www.nationalgallery.org.uk/v2/img/logos/ng-logo-white-320.png',
+    badgeUrl: 'https://www.nationalgallery.org.uk/v2/img/logos/ng-logo-white-320.png',
     websiteUrl: 'https://www.nationalgallery.org.uk/',
   },
   {
     name: 'National Gallery of Art',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/national gallery of art.svg',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/national gallery of art.svg',
     websiteUrl: 'https://www.nga.gov',
   },
   {
     name: 'British Museum',
-    badgeUrl:
-      'https://www.britishmuseum.org/themes/custom/numiko/dist/img/british-museum-logo.svg',
+    badgeUrl: 'https://www.britishmuseum.org/themes/custom/numiko/dist/img/british-museum-logo.svg',
     websiteUrl: 'https://www.britishmuseum.org/',
   },
   { name: 'Tate', badgeUrl: '', websiteUrl: 'https://www.tate.org.uk/' },
@@ -158,8 +143,7 @@ export const MUSEUMS: Museum[] = [
   { name: 'Municipal Museum of Arts', badgeUrl: '', websiteUrl: '' },
   {
     name: 'Cleveland',
-    badgeUrl:
-      'https://genstorageaccount3116.blob.core.windows.net/printme-images/cleveland-museum-logo.svg',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/cleveland-museum-logo.svg',
     websiteUrl: 'https://www.clevelandart.org',
   },
   {
@@ -183,4 +167,9 @@ export const MUSEUMS: Museum[] = [
     websiteUrl: 'https://www.telfair.org/',
   },
   { name: 'National Gallery of Norway', badgeUrl: '', websiteUrl: '' },
+  {
+    name: 'Art Institute of Chicago',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/www.artic.edu_artworks_81561_street-in-moret.png',
+    websiteUrl: 'https://www.artic.edu/',
+  },
 ];
