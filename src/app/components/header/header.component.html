@@ -70,6 +70,13 @@
                 </div>
               </li>
 
+              <!-- Collections -->
+              <li class="menu-item flex-shrink-0">
+                <a href="/collections" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  Collections
+                </a>
+              </li>
+
               <!-- Your Design (special styling, no submenu) -->
               <li class="menu-item flex-shrink-0">
                 <a
@@ -191,6 +198,12 @@
             <a href="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">Our Catalog</span>
+            </a>
+          </li>
+          <li>
+            <a href="/collections" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+              <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">Collections</span>
             </a>
           </li>
           <li>

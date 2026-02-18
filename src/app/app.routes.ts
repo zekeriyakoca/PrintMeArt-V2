@@ -1,6 +1,7 @@
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { CollectionsComponent } from './pages/collections/collections.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { CartComponent } from './pages/cart/cart.component';
@@ -20,6 +21,7 @@ import { AuthenticationGuard } from './services/authentication/authentication.gu
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'collections', component: CollectionsComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'products',
