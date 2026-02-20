@@ -7,16 +7,16 @@
     <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-none tracking-tight mb-4">Find what<br />moves you.</h1>
     <p class="text-white/55 text-sm leading-relaxed max-w-[360px] mb-8">Great art from 1700 to 1900 — 30 collections, one click away.</p>
     <div class="flex flex-wrap gap-2">
-      <a href="#picks" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
+      <a href="#picks" (click)="scrollTo('picks', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
         >Editor's Picks</a
       >
-      <a href="#museums" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Museums</a>
-      <a href="#scenes" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Scenes</a>
-      <a href="#painters" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
+      <a href="#museums" (click)="scrollTo('museums', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Museums</a>
+      <a href="#scenes" (click)="scrollTo('scenes', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Scenes</a>
+      <a href="#painters" (click)="scrollTo('painters', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
         >The Masters</a
       >
-      <a href="#styles" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Styles</a>
-      <a href="#featured" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
+      <a href="#styles" (click)="scrollTo('styles', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8">Styles</a>
+      <a href="#featured" (click)="scrollTo('featured', $event)" class="px-3.5 py-1.5 rounded-full text-white/65 hover:text-white text-xs font-medium transition-all border border-white/12 hover:border-white/35 hover:bg-white/8"
         >Featured</a
       >
     </div>

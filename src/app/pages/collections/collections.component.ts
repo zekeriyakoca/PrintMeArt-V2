@@ -313,6 +313,11 @@ export class CollectionsComponent implements OnInit {
     },
   ];
 
+  scrollTo(id: string, event: Event) {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   ngOnInit() {
     const all = [...this.starters, ...this.museums, ...this.scenes, ...this.painters, ...this.styles, ...this.featured];
     const requests = all
