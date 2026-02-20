@@ -70,11 +70,58 @@
                 </div>
               </li>
 
-              <!-- Collections -->
-              <li class="menu-item flex-shrink-0">
+              <!-- Collections Mega Menu -->
+              <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('collections')" (mouseleave)="hideDropdown('collections')">
                 <a href="/collections" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   Collections
                 </a>
+                <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'collections'">
+                  <div class="bg-white shadow-lg">
+                    <div class="container">
+                      <div class="flex text-sm border-t border-slate-200 py-14">
+                        <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
+                          @for (group of collectionGroups; track group.name) {
+                            <div>
+                              <a class="font-medium text-[#384f8c] uppercase" [href]="group.href">{{ group.name }}</a>
+                              <ul class="grid space-y-4 mt-4">
+                                @for (item of group.items; track item.name) {
+                                  <li>
+                                    <a class="font-normal text-slate-600 hover:text-black" [href]="item.href">{{ item.name }}</a>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+                          }
+                        </div>
+                        <!-- Right side card -->
+                        <div class="w-[40%] xl:w-[35%] max-w-[450px]">
+                          <a href="/collections" class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group block">
+                            <img
+                              src="https://genstorageaccount3116.blob.core.windows.net/printme-images/menu-collections-1.webp"
+                              class="absolute inset-0 w-full h-full object-cover"
+                              alt="Collections"
+                            />
+                            <div class="absolute inset-0 bg-black/40"></div>
+                            <div class="absolute flex flex-col h-full w-full p-8 z-10">
+                              <div class="max-w-xs">
+                                <span class="block mb-2 text-sm text-white/70">Browse Collections</span>
+                                <h2 class="text-md md:text-lg lg:text-2xl text-white font-semibold">30 curated<br />collections.</h2>
+                              </div>
+                              <div class="mt-auto">
+                                <span
+                                  class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 transition-colors drop-shadow-xl inline-block"
+                                >
+                                  Shop by Collection
+                                </span>
+                              </div>
+                            </div>
+                            <span class="opacity-0 group-hover:opacity-30 absolute inset-0 bg-black/20 transition-opacity"></span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </li>
 
               <!-- Your Design (special styling, no submenu) -->

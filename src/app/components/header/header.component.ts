@@ -29,6 +29,58 @@ export class HeaderComponent extends BaseAppComponent {
     return prints?.childCategories ?? [];
   });
 
+  readonly collectionGroups = [
+    {
+      name: "Picks & Featured",
+      href: '/collections#picks',
+      items: [
+        { name: "Editor's Picks", href: '/products?tags=8' },
+        { name: 'In the Spotlight', href: '/products?tags=2' },
+        { name: 'Timeless Classics', href: '/products?attributeName=Classics' },
+        { name: 'Dutch Masters', href: '/products?categoryName=Dutch%20Masters' },
+        { name: 'Van Gogh Collection', href: '/products?attributeName=Vincent%20van%20Gogh' },
+      ],
+    },
+    {
+      name: 'Museums',
+      href: '/collections#museums',
+      items: [
+        { name: 'Rijksmuseum', href: '/products?attributeName=Rijksmuseum' },
+        { name: 'The Met', href: '/products?attributeName=Metropolitan%20Museum%20of%20Art' },
+        { name: 'National Gallery', href: '/products?attributeName=National%20Gallery%2C%20London' },
+        { name: 'Cleveland Museum of Art', href: '/products?attributeName=Cleveland%20Museum%20of%20Art' },
+        { name: 'Clark Art Institute', href: '/products?attributeName=Clark%20Art%20Institute' },
+        { name: "Musée d'Orsay", href: "/products?attributeName=Mus%C3%A9e%20d'Orsay" },
+        { name: 'Yale Art Gallery', href: '/products?attributeName=Yale%20University%20Art%20Gallery' },
+      ],
+    },
+    {
+      name: 'The Masters',
+      href: '/collections#painters',
+      items: [
+        { name: 'Claude Monet', href: '/products?attributeName=Claude%20Monet' },
+        { name: 'Vincent van Gogh', href: '/products?attributeName=Vincent%20van%20Gogh' },
+        { name: 'Camille Pissarro', href: '/products?attributeName=Camille%20Pissarro' },
+        { name: 'Alfred Sisley', href: '/products?attributeName=Alfred%20Sisley' },
+        { name: 'Pierre-Auguste Renoir', href: '/products?attributeName=Pierre-Auguste%20Renoir' },
+        { name: 'J.M.W. Turner', href: '/products?attributeName=J.%20M.%20W.%20Turner' },
+        { name: 'John Singer Sargent', href: '/products?attributeName=John%20Singer%20Sargent' },
+      ],
+    },
+    {
+      name: 'Styles & Periods',
+      href: '/collections#styles',
+      items: [
+        { name: 'Renaissance', href: '/products?attributeName=Renaissance' },
+        { name: 'Romanticism', href: '/products?attributeName=Romanticism' },
+        { name: 'Impressionism', href: '/products?attributeName=Impressionism' },
+        { name: 'Post-Impressionism', href: '/products?attributeName=Post-Impressionism' },
+        { name: 'Realism', href: '/products?attributeName=Realism' },
+        { name: 'Art Nouveau', href: '/products?attributeName=Art%20Nouveau' },
+      ],
+    },
+  ];
+
   constructor(
     private router: Router,
     private cartService: CartService,
