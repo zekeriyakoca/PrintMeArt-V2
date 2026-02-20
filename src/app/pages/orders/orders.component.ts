@@ -1,22 +1,10 @@
-import {
-  Component,
-  inject,
-  signal,
-  OnInit,
-  computed,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, inject, signal, OnInit, computed, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { OrdersService } from '../../services/orders/orders.service';
-import {
-  OrderSummary,
-  OrderDto,
-  OrderStatusGroup,
-  BackendOrderStatus,
-} from '../../models/orders';
+import { OrderSummary, OrderDto, OrderStatusGroup, BackendOrderStatus } from '../../models/orders';
 import { ToastService } from '../../services/toast/toast.service';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -54,7 +42,7 @@ export class OrdersComponent implements OnInit {
 
   // Pagination
   pageIndex = signal(0);
-  pageSize = signal(10);
+  pageSize = signal(20);
   totalCount = signal(0);
   totalPages = signal(0);
 
@@ -87,10 +75,7 @@ export class OrdersComponent implements OnInit {
 
   currentPageRange = computed(() => {
     const start = this.pageIndex() * this.pageSize() + 1;
-    const end = Math.min(
-      (this.pageIndex() + 1) * this.pageSize(),
-      this.totalCount(),
-    );
+    const end = Math.min((this.pageIndex() + 1) * this.pageSize(), this.totalCount());
     return `${start}-${end} of ${this.totalCount()}`;
   });
 
@@ -108,13 +93,11 @@ export class OrdersComponent implements OnInit {
     }
 
     // Setup search debounce
-    this.searchSubject
-      .pipe(debounceTime(400), distinctUntilChanged())
-      .subscribe((term) => {
-        this.searchTerm.set(term);
-        this.pageIndex.set(0);
-        this.loadOrders();
-      });
+    this.searchSubject.pipe(debounceTime(400), distinctUntilChanged()).subscribe((term) => {
+      this.searchTerm.set(term);
+      this.pageIndex.set(0);
+      this.loadOrders();
+    });
 
     // Read initial tab from query params
     const statusParam = this.route.snapshot.queryParamMap.get('status');
@@ -257,22 +240,20 @@ export class OrdersComponent implements OnInit {
 
     this.isCancelling.set(true);
 
-    this.ordersService
-      .cancelOrder(order.orderId, this.cancelReason() || undefined)
-      .subscribe({
-        next: () => {
-          this.toastService.success('Order cancelled successfully.');
-          this.isCancelling.set(false);
-          this.closeCancelModal();
-          this.closeOrderDetail();
-          this.loadOrders(); // Refresh the list
-        },
-        error: (err) => {
-          console.error('Cancel failed:', err);
-          this.toastService.error('Failed to cancel order. Please try again.');
-          this.isCancelling.set(false);
-        },
-      });
+    this.ordersService.cancelOrder(order.orderId, this.cancelReason() || undefined).subscribe({
+      next: () => {
+        this.toastService.success('Order cancelled successfully.');
+        this.isCancelling.set(false);
+        this.closeCancelModal();
+        this.closeOrderDetail();
+        this.loadOrders(); // Refresh the list
+      },
+      error: (err) => {
+        console.error('Cancel failed:', err);
+        this.toastService.error('Failed to cancel order. Please try again.');
+        this.isCancelling.set(false);
+      },
+    });
   }
 
   // Helpers
@@ -326,9 +307,7 @@ export class OrdersComponent implements OnInit {
   /** Filter out internal options like CustomProductUrl from display */
   getDisplayableOptions(options: SelectedOptionDto[]): string[] {
     if (!options) return [];
-    return options
-      .map((o) => o?.optionName ?? '')
-      .filter((n) => n !== '' && !HIDDEN_OPTION_NAMES.includes(n as string));
+    return options.map((o) => o?.optionName ?? '').filter((n) => n !== '' && !HIDDEN_OPTION_NAMES.includes(n as string));
   }
 
   getImagePlaceholders(itemCount: number): number[] {

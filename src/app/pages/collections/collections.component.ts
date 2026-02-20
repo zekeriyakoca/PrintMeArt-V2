@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ApiService } from '../../services/api/api.service';
+import { ProductFilterRequestDto, ProductTags } from '../../models/product';
+
+type CollectionFilter = { type: 'tag'; tags: ProductTags } | { type: 'category'; categoryName: string } | { type: 'attribute'; attributeName: string };
 
 interface Collection {
   name: string;
   tagline: string;
-  imageUrl: string;
+  imageUrl: string | undefined;
   queryParams: Record<string, string>;
   badge?: string;
+  filter?: CollectionFilter;
 }
 
 @Component({
@@ -15,28 +23,37 @@ interface Collection {
   templateUrl: './collections.component.html',
   styleUrl: './collections.component.scss',
 })
-export class CollectionsComponent {
+export class CollectionsComponent implements OnInit {
+  private readonly apiService = inject(ApiService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly thumbnails = signal(new Map<string, string>());
+  readonly mediumSizeImages = signal(new Map<string, string>());
+
   readonly featured: Collection[] = [
     {
       name: 'Dutch Masters',
       tagline: 'Rembrandt, Vermeer and their contemporaries — the golden age of Dutch painting, 1600–1700.',
-      imageUrl: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=1400&q=80',
-      queryParams: { attributeName: 'Dutch Masters' },
+      imageUrl: undefined,
+      queryParams: { categoryName: 'Dutch Masters' },
       badge: 'Collection',
+      filter: { type: 'category', categoryName: 'Dutch masters' },
     },
     {
       name: 'Impressionism',
       tagline: 'Light, colour and the fleeting moment — Paris, 1870s.',
-      imageUrl: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Impressionism' },
       badge: 'Movement',
+      filter: { type: 'attribute', attributeName: 'Impressionism' },
     },
     {
       name: 'Van Gogh Collection',
       tagline: 'Post-Impressionist fire — bold strokes, vivid colour, unmatched emotion.',
-      imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Vincent van Gogh' },
       badge: 'Painter',
+      filter: { type: 'attribute', attributeName: 'Vincent van Gogh' },
     },
   ];
 
@@ -44,36 +61,41 @@ export class CollectionsComponent {
     {
       name: "Editor's Picks",
       tagline: 'Our favourite finds, chosen by the team',
-      imageUrl: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=1200&q=80',
-      queryParams: { categoryName: "Editor's Picks" },
+      imageUrl: undefined,
+      queryParams: { tags: String(ProductTags.OurPick) },
       badge: 'Staff Pick',
+      filter: { type: 'tag', tags: ProductTags.OurPick },
     },
     {
       name: 'In the Spotlight',
       tagline: 'The prints everyone is looking at',
-      imageUrl: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&q=80',
-      queryParams: { categoryName: 'In the Spotlight' },
+      imageUrl: undefined,
+      queryParams: { tags: String(ProductTags.Featured) },
       badge: 'Trending',
+      filter: { type: 'tag', tags: ProductTags.Featured },
     },
     {
       name: 'Timeless Classics',
       tagline: 'Art that never goes out of style',
-      imageUrl: 'https://images.unsplash.com/photo-1529154691942-2e4bfdc0a5c5?w=800&q=80',
-      queryParams: { categoryName: 'Timeless Classics' },
+      imageUrl: undefined,
+      queryParams: { attributeName: 'Classics' },
+      filter: { type: 'attribute', attributeName: 'Classics' },
     },
     {
       name: 'Dutch Masters',
       tagline: 'The golden era of Dutch painting',
-      imageUrl: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80',
-      queryParams: { attributeName: 'Dutch Masters' },
+      imageUrl: undefined,
+      queryParams: { categoryName: 'Dutch Masters' },
       badge: 'Collection',
+      filter: { type: 'category', categoryName: 'Dutch masters' },
     },
     {
       name: 'Van Gogh Collection',
       tagline: 'Bold strokes, vivid colour',
-      imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Vincent van Gogh' },
       badge: 'Fan Favourite',
+      filter: { type: 'attribute', attributeName: 'Vincent van Gogh' },
     },
   ];
 
@@ -81,44 +103,58 @@ export class CollectionsComponent {
     {
       name: 'Rijksmuseum Highlights',
       tagline: 'Dutch golden age masterpieces',
-      imageUrl: 'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Rijksmuseum' },
       badge: 'Amsterdam',
+      filter: { type: 'attribute', attributeName: 'Rijksmuseum' },
     },
     {
       name: 'The Met Collection',
       tagline: '5,000 years of art history',
-      imageUrl: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Metropolitan Museum of Art' },
       badge: 'New York',
+      filter: { type: 'attribute', attributeName: 'Metropolitan Museum of Art' },
     },
     {
       name: 'National Gallery Picks',
       tagline: 'European masters since 1824',
-      imageUrl: 'https://images.unsplash.com/photo-1461360228754-6e81c478b882?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'National Gallery' },
       badge: 'London',
+      filter: { type: 'attribute', attributeName: 'National Gallery, London' },
     },
     {
-      name: 'British Museum',
+      name: 'Cleveland Museum of Art Picks',
+      tagline: 'World-class collection since 1913',
+      imageUrl: undefined,
+      queryParams: { attributeName: 'Cleveland Museum of Art' },
+      badge: 'Cleveland',
+      filter: { type: 'attribute', attributeName: 'Cleveland Museum of Art' },
+    },
+    {
+      name: 'Clark Art Institute',
       tagline: 'Two million years of history',
-      imageUrl: 'https://images.unsplash.com/photo-1524230572899-a752b3835840?w=800&q=80',
-      queryParams: { attributeName: 'British Museum' },
-      badge: 'London',
+      imageUrl: undefined,
+      queryParams: { attributeName: 'Clark Art Institute' },
+      badge: 'Williamstown',
+      filter: { type: 'attribute', attributeName: 'Clark Art Institute' },
     },
     {
       name: "Musée d'Orsay Corner",
       tagline: 'The home of Impressionism',
-      imageUrl: 'https://images.unsplash.com/photo-1578926288207-a90a5366d4f4?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: "Musée d'Orsay" },
       badge: 'Paris',
+      filter: { type: 'attribute', attributeName: "Musée d'Orsay" },
     },
     {
       name: 'Yale Art Collection',
       tagline: 'Three centuries of American art',
-      imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Yale University Art Gallery' },
       badge: 'New Haven',
+      filter: { type: 'attribute', attributeName: 'Yale University Art Gallery' },
     },
   ];
 
@@ -126,38 +162,44 @@ export class CollectionsComponent {
     {
       name: 'Alpine Peaks & Valleys',
       tagline: 'Where the air is crisp and clear',
-      imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Alpine Peaks & Valleys' },
+      filter: { type: 'attribute', attributeName: 'Alps' },
     },
     {
       name: 'Landscapes',
       tagline: 'Wide horizons and open skies',
-      imageUrl: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Landscapes' },
+      filter: { type: 'category', categoryName: 'Landscape' },
     },
     {
       name: 'Forest & Countryside',
       tagline: 'Quiet paths and dappled light',
-      imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Forest & Countryside' },
+      filter: { type: 'attribute', attributeName: 'Forest&Countryside' },
     },
     {
       name: 'Winter Scenes',
       tagline: 'Frost, snow and still moments',
-      imageUrl: 'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Winter Scenes' },
+      filter: { type: 'attribute', attributeName: 'Winter' },
     },
     {
       name: 'Cities in Art',
       tagline: 'Urban life captured in paint',
-      imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Cities in Art' },
+      filter: { type: 'category', categoryName: 'Cityscapes & Architecture' },
     },
     {
       name: 'Garden Blooms',
       tagline: 'Colour, life and quiet beauty',
-      imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { categoryName: 'Garden Blooms' },
+      filter: { type: 'category', categoryName: 'Botanical art' },
     },
   ];
 
@@ -165,58 +207,50 @@ export class CollectionsComponent {
     {
       name: 'Renaissance',
       tagline: 'The rebirth of art and humanism',
-      imageUrl: 'https://images.unsplash.com/photo-1529154691942-2e4bfdc0a5c5?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Renaissance' },
       badge: 'c. 1400s',
+      filter: { type: 'attribute', attributeName: 'Renaissance' },
     },
     {
       name: 'Romanticism',
       tagline: 'Emotion, nature and sublime drama',
-      imageUrl: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Romanticism' },
       badge: 'c. 1800',
+      filter: { type: 'attribute', attributeName: 'Romanticism' },
     },
     {
       name: 'Impressionism',
       tagline: 'Light, colour and the fleeting moment',
-      imageUrl: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Impressionism' },
       badge: 'c. 1870s',
+      filter: { type: 'attribute', attributeName: 'Impressionism' },
     },
     {
       name: 'Post-Impressionism',
       tagline: 'Beyond the visible — into the felt',
-      imageUrl: 'https://images.unsplash.com/photo-1543499776-e57e0e3e7e50?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Post-Impressionism' },
       badge: 'c. 1880s',
+      filter: { type: 'attribute', attributeName: 'Post-Impressionism' },
     },
     {
       name: 'Realism',
       tagline: 'Life as it truly is — without pretence',
-      imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Realism' },
       badge: 'c. 1850s',
+      filter: { type: 'attribute', attributeName: 'Realism' },
     },
     {
       name: 'Art Nouveau',
       tagline: "Nature's curves in art and design",
-      imageUrl: 'https://images.unsplash.com/photo-1519326882449-4b4e1ccde5e9?w=800&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Art Nouveau' },
       badge: 'c. 1890s',
-    },
-    {
-      name: 'Baroque',
-      tagline: 'Drama, shadow and divine grandeur',
-      imageUrl: 'https://images.unsplash.com/photo-1578926288207-a90a5366d4f4?w=800&q=80',
-      queryParams: { attributeName: 'Baroque' },
-      badge: 'c. 1620s',
-    },
-    {
-      name: 'Neoclassicism',
-      tagline: 'Order, reason and ancient beauty',
-      imageUrl: 'https://images.unsplash.com/photo-1461360228754-6e81c478b882?w=800&q=80',
-      queryParams: { attributeName: 'Neoclassicism' },
-      badge: 'c. 1780s',
+      filter: { type: 'attribute', attributeName: 'Art Nouveau' },
     },
   ];
 
@@ -224,51 +258,97 @@ export class CollectionsComponent {
     {
       name: 'Claude Monet',
       tagline: 'Father of Impressionism',
-      imageUrl: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Claude Monet' },
       badge: '1840 – 1926',
+      filter: { type: 'attribute', attributeName: 'Claude Monet' },
     },
     {
       name: 'Vincent van Gogh',
       tagline: 'Post-Impressionist visionary',
-      imageUrl: 'https://images.unsplash.com/photo-1543499776-e57e0e3e7e50?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Vincent van Gogh' },
       badge: '1853 – 1890',
+      filter: { type: 'attribute', attributeName: 'Vincent van Gogh' },
     },
     {
       name: 'Camille Pissarro',
       tagline: 'Gentle giant of Impressionism',
-      imageUrl: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Camille Pissarro' },
       badge: '1830 – 1903',
+      filter: { type: 'attribute', attributeName: 'Camille Pissarro' },
     },
     {
       name: 'Alfred Sisley',
       tagline: 'The quiet Impressionist',
-      imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Alfred Sisley' },
       badge: '1839 – 1899',
+      filter: { type: 'attribute', attributeName: 'Alfred Sisley' },
     },
     {
       name: 'Pierre-Auguste Renoir',
       tagline: 'Joy and beauty in every stroke',
-      imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'Pierre-Auguste Renoir' },
       badge: '1841 – 1919',
+      filter: { type: 'attribute', attributeName: 'Pierre-Auguste Renoir' },
     },
     {
       name: 'J.M.W. Turner',
       tagline: 'The painter of light',
-      imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'J.M.W. Turner' },
       badge: '1775 – 1851',
+      filter: { type: 'attribute', attributeName: 'J. M. W. Turner' },
     },
     {
       name: 'John Singer Sargent',
       tagline: 'The greatest portrait painter',
-      imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&q=80',
+      imageUrl: undefined,
       queryParams: { attributeName: 'John Singer Sargent' },
       badge: '1856 – 1925',
+      filter: { type: 'attribute', attributeName: 'John Singer Sargent' },
     },
   ];
+
+  ngOnInit() {
+    const all = [...this.starters, ...this.museums, ...this.scenes, ...this.painters, ...this.styles, ...this.featured];
+    const requests = all
+      .filter((c): c is Collection & { filter: CollectionFilter } => !!c.filter)
+      .map((c) =>
+        this.apiService.getFilteredProducts(this.toFilterBody(c.filter)).pipe(
+          map((res) => ({ name: c.name, url: res?.data?.[0]?.image?.medium, urlMedium: res?.data?.[0]?.image?.large })),
+          catchError(() => of({ name: c.name, url: undefined as string | undefined, urlMedium: undefined as string | undefined })),
+        ),
+      );
+
+    if (requests.length === 0) return;
+
+    forkJoin(requests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((results) => {
+        const map = new Map<string, string>();
+        const mapForMediumImages = new Map<string, string>();
+        for (const r of results) {
+          if (r.url) map.set(r.name, r.url);
+          if (r.urlMedium) mapForMediumImages.set(r.name, r.urlMedium);
+        }
+        this.thumbnails.set(map);
+        this.mediumSizeImages.set(mapForMediumImages);
+      });
+  }
+
+  private toFilterBody(filter: CollectionFilter): ProductFilterRequestDto {
+    const base: ProductFilterRequestDto = { pageSize: 1, pageIndex: 0 };
+    switch (filter.type) {
+      case 'tag':
+        return { ...base, tags: filter.tags };
+      case 'category':
+        return { ...base, categoryName: filter.categoryName };
+      case 'attribute':
+        return { ...base, attributeName: filter.attributeName };
+    }
+  }
 }

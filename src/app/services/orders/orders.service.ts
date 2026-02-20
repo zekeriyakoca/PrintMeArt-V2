@@ -3,16 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import {
-  BackendOrderStatus,
-  CanCancelResponse,
-  CancelOrderRequest,
-  OrderDto,
-  OrdersResponse,
-  OrderStatusGroup,
-  STATUS_GROUP_MAP,
-  CANCELLABLE_STATUSES,
-} from '../../models/orders';
+import { BackendOrderStatus, CanCancelResponse, CancelOrderRequest, OrderDto, OrdersResponse, OrderStatusGroup, STATUS_GROUP_MAP, CANCELLABLE_STATUSES } from '../../models/orders';
 
 // Status group mapping for UI tabs
 @Injectable({
@@ -43,7 +34,7 @@ export class OrdersService {
         data: [],
         totalCount: 0,
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 20,
         totalPages: 0,
       });
     }
@@ -63,10 +54,7 @@ export class OrdersService {
       httpParams = httpParams.set('searchTerm', params.searchTerm);
     }
 
-    return this.http.get<OrdersResponse>(
-      `${this.bffUrl}/bff/v1/ordering/orders`,
-      { params: httpParams },
-    );
+    return this.http.get<OrdersResponse>(`${this.bffUrl}/bff/v1/ordering/orders`, { params: httpParams });
   }
 
   /**
@@ -76,9 +64,7 @@ export class OrdersService {
     if (!this.isBrowser) {
       return of({} as OrderDto);
     }
-    return this.http.get<OrderDto>(
-      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}`,
-    );
+    return this.http.get<OrderDto>(`${this.bffUrl}/bff/v1/ordering/orders/${orderId}`);
   }
 
   /**
@@ -88,9 +74,7 @@ export class OrdersService {
     if (!this.isBrowser) {
       return of({ canCancel: false });
     }
-    return this.http.get<CanCancelResponse>(
-      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}/can-cancel`,
-    );
+    return this.http.get<CanCancelResponse>(`${this.bffUrl}/bff/v1/ordering/orders/${orderId}/can-cancel`);
   }
 
   /**
@@ -101,10 +85,7 @@ export class OrdersService {
       return of(undefined);
     }
     const body: CancelOrderRequest = reason ? { reason } : {};
-    return this.http.post<void>(
-      `${this.bffUrl}/bff/v1/ordering/orders/${orderId}/cancel`,
-      body,
-    );
+    return this.http.post<void>(`${this.bffUrl}/bff/v1/ordering/orders/${orderId}/cancel`, body);
   }
 
   /**

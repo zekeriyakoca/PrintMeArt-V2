@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+}
+
 html {
   font-size: 90%;
   /* Base 14.4px instead of 16px - scales everything down */

@@ -1,35 +1,37 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/*.{html,ts}",
-    "./src/**/*.{html,ts}",
-    "./src/**/**/*.{html,ts}",
-    "./src/**/**/**/*.{html,ts}",
-    "./src/**/**/**/**/*.{html,ts}",
-  ],
+  content: ['./src/*.{html,ts}', './src/**/*.{html,ts}', './src/**/**/*.{html,ts}', './src/**/**/**/*.{html,ts}', './src/**/**/**/**/*.{html,ts}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
+        sans: ['Poppins', 'sans-serif'],
       },
       spacing: {
-        "8xl": "96rem",
-        "9xl": "128rem",
-        13: "3.25rem",
-        15: "3.75rem",
-        128: "32rem",
-        144: "36rem",
+        '8xl': '96rem',
+        '9xl': '128rem',
+        13: '3.25rem',
+        15: '3.75rem',
+        128: '32rem',
+        144: '36rem',
+      },
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
+      maxWidth: {
+        'screen-3xl': '1920px',
+        'screen-4xl': '2560px',
       },
       borderRadius: {
-        "4xl": "2rem",
+        '4xl': '2rem',
       },
       colors: {
         primary: {
           ...colors.indigo,
-          500: "#ff0000", // Override 500 to be red for testing
+          500: '#ff0000', // Override 500 to be red for testing
         },
         secondary: {
           ...colors.rose,

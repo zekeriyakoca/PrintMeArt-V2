@@ -2,32 +2,36 @@
   <!-- First Button -->
   <button
     class="inline-flex w-[50px] h-[50px] items-center justify-center rounded-full bg-white text-slate-600 disabled:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 transition-colors cursor-pointer"
-    [disabled]="isFirstButtonDisabled()" (click)="goToFirstPage()">
+    [disabled]="isFirstButtonDisabled()"
+    (click)="goToFirstPage()"
+  >
     First
   </button>
 
   <!-- Page Numbers -->
   @for (index of getVisiblePages(); track index) {
-  @if (isCurrentPage(index)) {
-  <!-- Current Page -->
-  <span
-    class="inline-flex w-[50px] h-[50px] items-center justify-center rounded-full bg-[#384f8cd9] text-white focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2">
-    {{ index + 1 }}
-  </span>
-  } @else {
-  <!-- Other Pages -->
-  <button
-    class="inline-flex w-[50px] h-[50px] items-center justify-center rounded-full bg-white hover:bg-[#f8f8f8]  text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 transition-colors cursor-pointer"
-    (click)="setPageIndex(index)">
-    {{ index + 1 }}
-  </button>
-  }
+    @if (isCurrentPage(index)) {
+      <!-- Current Page -->
+      <span class="inline-flex w-[40px] h-[40px] items-center justify-center rounded-full bg-[#384f8cd9] text-white focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2">
+        {{ index + 1 }}
+      </span>
+    } @else {
+      <!-- Other Pages -->
+      <button
+        class="inline-flex w-[40px] h-[40px] items-center justify-center rounded-full bg-white hover:bg-[#f8f8f8] text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 transition-colors cursor-pointer"
+        (click)="setPageIndex(index)"
+      >
+        {{ index + 1 }}
+      </button>
+    }
   }
 
   <!-- Last Button -->
   <button
     class="relative w-[50px] h-[50px] items-center justify-center rounded-full bg-white text-slate-600 disabled:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 transition-colors cursor-pointer"
-    [disabled]="isLastButtonDisabled()" (click)="goToLastPage()">
+    [disabled]="isLastButtonDisabled()"
+    (click)="goToLastPage()"
+  >
     Last
     <span class="absolute top-0 right-0 text-md text-[#a8bae9] z-10 shadow-none">{{ totalPages() }}</span>
   </button>

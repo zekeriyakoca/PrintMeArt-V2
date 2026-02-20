@@ -1,12 +1,4 @@
-import {
-  Component,
-  effect,
-  input,
-  Input,
-  model,
-  OnInit,
-  output,
-} from '@angular/core';
+import { Component, effect, input, Input, model, OnInit, output } from '@angular/core';
 import { isDesktopViewport } from '../../shared/device';
 
 @Component({
@@ -19,7 +11,7 @@ export class PaginationComponent implements OnInit {
   className = input<string>('');
   totalPages = input<number>(1);
 
-  pageSize = model<number>(10);
+  pageSize = model<number>(20);
   pageIndex = model<number>(0);
   paginationChanged = output<void>();
 
@@ -49,9 +41,7 @@ export class PaginationComponent implements OnInit {
     const start = this.pageIndex() - visibleRange;
     const end = this.pageIndex() + visibleRange;
 
-    return Array.from({ length: this.totalPages() }, (_, i) => i).filter(
-      (i) => i >= start && i <= end,
-    );
+    return Array.from({ length: this.totalPages() }, (_, i) => i).filter((i) => i >= start && i <= end);
   }
 
   isFirstButtonDisabled(): boolean {

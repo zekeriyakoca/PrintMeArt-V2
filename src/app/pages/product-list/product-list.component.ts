@@ -1,22 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  ElementRef,
-  OnInit,
-  signal,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
 import { ApiService } from '../../services/api/api.service';
-import {
-  FilterGroupDto,
-  PaginatedListDto,
-  ProductFilterRequestDto,
-  ProductSimpleDto,
-} from '../../models/product';
+import { FilterGroupDto, PaginatedListDto, ProductFilterRequestDto, ProductSimpleDto, ProductTags } from '../../models/product';
 import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
@@ -28,35 +15,22 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
 
 @Component({
   selector: 'app-product-list',
-  imports: [
-    ProductCardComponent,
-    ProductGalleryCardComponent,
-    FormsModule,
-    IconComponent,
-    PaginationComponent,
-  ],
+  imports: [ProductCardComponent, ProductGalleryCardComponent, FormsModule, IconComponent, PaginationComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent
-  extends BasePageComponent
-  implements OnInit, AfterViewInit
-{
+export class ProductListComponent extends BasePageComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
-  products = signal<PaginatedListDto<ProductSimpleDto>>(
-    {} as PaginatedListDto<ProductSimpleDto>,
-  );
+  products = signal<PaginatedListDto<ProductSimpleDto>>({} as PaginatedListDto<ProductSimpleDto>);
   selectedFilterOptions = signal<ProductFilterRequestDto>({
-    pageSize: 12,
+    pageSize: 20,
     pageIndex: 0,
   });
   filterOptions = signal<FilterGroupDto[]>([]);
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
-  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>(
-    (localStorage.getItem('viewMode') as 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3') || 'grid',
-  );
+  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>((localStorage.getItem('viewMode') as 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3') || 'grid');
 
   setViewMode(mode: 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3') {
     this.viewMode.set(mode);
@@ -85,11 +59,7 @@ export class ProductListComponent
 
   isOptionSelected(optionName: string): boolean {
     const f = this.selectedFilterOptions();
-    return (
-      f.categoryName === optionName ||
-      f.attributeName === optionName ||
-      f.optionName === optionName
-    );
+    return f.categoryName === optionName || f.attributeName === optionName || f.optionName === optionName;
   }
 
   constructor(
@@ -101,29 +71,30 @@ export class ProductListComponent
   }
 
   ngOnInit() {
-    this.route.queryParamMap
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((params) => {
-        const categoryName = params.get('categoryName') || undefined;
-        const attributeName = params.get('attributeName') || undefined;
-        const optionName = params.get('optionName') || undefined;
+    this.route.queryParamMap.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params) => {
+      const categoryName = params.get('categoryName') || undefined;
+      const attributeName = params.get('attributeName') || undefined;
+      const optionName = params.get('optionName') || undefined;
+      const tagsParam = params.get('tags');
+      const tags = tagsParam != null ? (+tagsParam as ProductTags) : undefined;
 
-        this.selectedFilterOptions.set({
-          pageSize: +(params.get('pageSize') ?? 12),
-          pageIndex: +(params.get('pageIndex') ?? 0),
-          categoryName,
-          attributeName,
-          optionName,
-          searchTerm: params.get('searchTerm') || undefined,
-        });
-        if (!isDesktopViewport()) {
-          this.hideFilters.set(true);
-        } else if (categoryName || attributeName || optionName) {
-          this.hideFilters.set(false);
-        }
-
-        this.fetchProductsWithFilters();
+      this.selectedFilterOptions.set({
+        pageSize: +20,
+        pageIndex: +(params.get('pageIndex') ?? 0),
+        categoryName,
+        attributeName,
+        optionName,
+        searchTerm: params.get('searchTerm') || undefined,
+        tags,
       });
+      if (!isDesktopViewport()) {
+        this.hideFilters.set(true);
+      } else if (categoryName || attributeName || optionName) {
+        this.hideFilters.set(false);
+      }
+
+      this.fetchProductsWithFilters();
+    });
 
     this.fetchFilterOptions();
   }
@@ -136,18 +107,11 @@ export class ProductListComponent
 
   fetchFilterOptions() {
     this.apiService.getFilterOptions().subscribe((filterOptions) => {
-      const onlyCategoryOptions = filterOptions.filter((o) =>
-        o.groupType.toLowerCase().includes('categories'),
-      );
+      const onlyCategoryOptions = filterOptions.filter((o) => o.groupType.toLowerCase().includes('categories'));
 
-      const onlyAttributeOptions = filterOptions
-        .filter((o) => o.groupType.toLowerCase().includes('attributes'))
-        .filter((o) => o.name.trim().toLowerCase() !== 'image quality');
+      const onlyAttributeOptions = filterOptions.filter((o) => o.groupType.toLowerCase().includes('attributes')).filter((o) => o.name.trim().toLowerCase() !== 'image quality');
 
-      this.filterOptions.set([
-        ...(onlyCategoryOptions ?? []),
-        ...(onlyAttributeOptions ?? []),
-      ]);
+      this.filterOptions.set([...(onlyCategoryOptions ?? []), ...(onlyAttributeOptions ?? [])]);
 
       if (onlyCategoryOptions.length > 0) {
         this.toggleGroup(onlyCategoryOptions[0].name);
@@ -184,25 +148,22 @@ export class ProductListComponent
   private navigateWithFilters(filters: ProductFilterRequestDto) {
     const queryParams: Record<string, string | number | undefined> = {};
     if (filters.pageIndex) queryParams['pageIndex'] = filters.pageIndex;
-    if (filters.pageSize !== 12) queryParams['pageSize'] = filters.pageSize;
-    if (filters.categoryName)
-      queryParams['categoryName'] = filters.categoryName;
-    if (filters.attributeName)
-      queryParams['attributeName'] = filters.attributeName;
+    if (filters.pageSize !== 20) queryParams['pageSize'] = filters.pageSize;
+    if (filters.categoryName) queryParams['categoryName'] = filters.categoryName;
+    if (filters.attributeName) queryParams['attributeName'] = filters.attributeName;
     if (filters.optionName) queryParams['optionName'] = filters.optionName;
     if (filters.searchTerm) queryParams['searchTerm'] = filters.searchTerm;
+    if (filters.tags !== undefined) queryParams['tags'] = filters.tags;
     this.router.navigate([], { queryParams });
   }
 
   fetchProductsWithFilters() {
-    this.apiService
-      .getFilteredProducts(this.selectedFilterOptions())
-      .subscribe((products) => {
-        if (products?.data) {
-          products.data.sort((a, b) => b.imageRatio - a.imageRatio);
-          this.products.set(products);
-        }
-      });
+    this.apiService.getFilteredProducts(this.selectedFilterOptions()).subscribe((products) => {
+      if (products?.data) {
+        products.data.sort((a, b) => b.imageRatio - a.imageRatio);
+        this.products.set(products);
+      }
+    });
   }
 
   search(): void {

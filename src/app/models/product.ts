@@ -80,6 +80,7 @@ export interface FilterGroupDto {
   options: FilterOptionDto[];
 }
 export interface FilterOptionDto {
+  id?: number;
   name: string;
 }
 export interface ProductFilterRequestDto {
@@ -90,6 +91,8 @@ export interface ProductFilterRequestDto {
   attributeName?: string;
   optionName?: string;
   tags?: ProductTags;
+  categoryIds?: number[];
+  attributeIds?: number[];
 }
 
 export enum ProductTags {
