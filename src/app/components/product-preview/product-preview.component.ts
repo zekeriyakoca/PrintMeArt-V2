@@ -147,26 +147,44 @@ export class ProductPreviewComponent {
     }
   });
 
-  // Smart init when preview opens
+  // Smart init: only on first open or after options change
+  private needsSmartInit = true;
+  private hasEverOpened = false;
   private prevOpen = false;
-  private initEffect = effect(
+  private readonly initEffect = effect(
     () => {
       const open = this.isOpen();
       if (open && !this.prevOpen) {
-        this.smartInit();
+        this.hasEverOpened = true;
+        if (this.needsSmartInit) {
+          this.smartInit();
+          this.needsSmartInit = false;
+        }
       }
       this.prevOpen = open;
     },
     { allowSignalWrites: true },
   );
 
-  // Reset view on size change
-  private sizeChangeEffect = effect(
+  // Reset view on size change (skip before first open)
+  private readonly sizeChangeEffect = effect(
     () => {
       this.selectedSize();
-      this.scale.set(1);
-      this.translateX.set(0);
-      this.translateY.set(0);
+      if (!this.hasEverOpened) return;
+      this.smartInit();
+      this.needsSmartInit = false;
+    },
+    { allowSignalWrites: true },
+  );
+
+  // Reset view on frame/mat change (skip before first open)
+  private readonly optionsChangeEffect = effect(
+    () => {
+      this.frameName();
+      this.isMatIncluded();
+      if (!this.hasEverOpened) return;
+      this.smartInit();
+      this.needsSmartInit = false;
     },
     { allowSignalWrites: true },
   );
@@ -248,7 +266,10 @@ export class ProductPreviewComponent {
 
         // 1. Viewport rect in canvas — matches .paper-behind-frame margins
         //    CSS % margin resolves against containing block WIDTH
-        let cvpX = 0, cvpY = 0, cvpW = canvasW, cvpH = canvasH;
+        let cvpX = 0,
+          cvpY = 0,
+          cvpW = canvasW,
+          cvpH = canvasH;
         if (hasFrame) {
           const mLR = 0.04 * canvasW;
           const mTB = 0.02 * canvasW;
@@ -376,11 +397,11 @@ export class ProductPreviewComponent {
 
   // Zoom
   zoomIn() {
-    this.scale.update((s) => Math.min(2, s + 0.1));
+    this.scale.update((s) => Math.min(2, s + 0.03));
   }
 
   zoomOut() {
-    this.scale.update((s) => Math.max(0.7, s - 0.1));
+    this.scale.update((s) => Math.max(0.7, s - 0.03));
   }
 
   resetZoom() {
