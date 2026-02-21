@@ -14,15 +14,15 @@
         </app-custom-design-upload>
 
         <!-- Preview Section -->
-        <app-custom-design-preview [imageUrl]="imageUrl()" [isMatIncluded]="isMatIncluded()"
-          [selectedFrameMaskUrl]="selectedFrameMaskUrl()" [isRolledUp]="isRolledUp()">
-        </app-custom-design-preview>
+        <app-custom-design-preview [imageUrl]="savedDesignImageUrl() ?? imageUrl()"></app-custom-design-preview>
 
         <!-- Purchase Sidebar (mobile only, after preview) -->
         <div class="md:hidden mt-8">
           <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
             [customImageUrl]="uploadedImageUrl()"
-            (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
+            [openPreviewTrigger]="previewOpenTrigger()"
+            (designSaved)="onSavedDesign($event)"
+            (onSelectedFrameChanged)="onSelectedFrameChanged($event)"></app-product-purchase-sidebar>
         </div>
       </div>
 
@@ -30,7 +30,9 @@
       <div class="hidden md:block w-full md:w-4/12">
         <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
           [customImageUrl]="uploadedImageUrl()"
-          (onSelectedFrameChanged)="onSelectedFrameChanged($event) "></app-product-purchase-sidebar>
+          [openPreviewTrigger]="previewOpenTrigger()"
+          (designSaved)="onSavedDesign($event)"
+          (onSelectedFrameChanged)="onSelectedFrameChanged($event)"></app-product-purchase-sidebar>
       </div>
     </div>
   </div>

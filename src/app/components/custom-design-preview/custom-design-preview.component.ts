@@ -1,4 +1,3 @@
-
 import { Component, input } from '@angular/core';
 
 @Component({
@@ -10,7 +9,4 @@ import { Component, input } from '@angular/core';
 })
 export class CustomDesignPreviewComponent {
   imageUrl = input<string | null>(null);
-  isMatIncluded = input(false);
-  selectedFrameMaskUrl = input<string | null>(null);
-  isRolledUp = input(false);
 }

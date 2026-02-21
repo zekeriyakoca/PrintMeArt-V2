@@ -33,8 +33,11 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   isMatIncluded = model<boolean>(false);
   /** Custom image URL for custom design products (uploaded to backend) */
   customImageUrl = input<string | null>(null);
+  /** Increment to programmatically open the preview popup */
+  openPreviewTrigger = input<number>(0);
 
   onSelectedFrameChanged = output<string>();
+  designSaved = output<string>();
 
   selectedSize = model<SizeOption | null>(null);
   /** Selected paper name for display and spec3 */
@@ -48,6 +51,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       const current = this.selectedSize();
       if (!current || (current.id !== 'custom' && !sizes.find((s) => s.id === current.id))) {
         this.selectedSize.set(sizes[0]);
+      }
+    },
+    { allowSignalWrites: true },
+  );
+
+  private readonly autoOpenPreviewEffect = effect(
+    () => {
+      if (this.openPreviewTrigger() > 0) {
+        this.showPreview.set(true);
       }
     },
     { allowSignalWrites: true },

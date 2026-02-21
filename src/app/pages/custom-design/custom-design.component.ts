@@ -35,6 +35,8 @@ export class CustomDesignComponent
   isMatIncluded = signal(false);
   imageUrl = signal<string | null>(null);
   uploadedImageUrl = signal<string | null>(null);
+  savedDesignImageUrl = signal<string | null>(null);
+  previewOpenTrigger = signal(0);
   customProduct = signal<ProductDto>({} as ProductDto);
   selectedFrameName = signal('Rolled-up');
 
@@ -62,11 +64,17 @@ export class CustomDesignComponent
   onImageUrlSelected(url: string | null): void {
     this.imageUrl.set(url);
     this.uploadedImageUrl.set(null);
+    this.savedDesignImageUrl.set(null);
     if (url) this.setMetadataFromImage(url);
   }
 
   onImageUploaded(url: string): void {
     this.uploadedImageUrl.set(url);
+    this.previewOpenTrigger.update((v) => v + 1);
+  }
+
+  onSavedDesign(url: string): void {
+    this.savedDesignImageUrl.set(url);
   }
 
   onUploadError(message: string): void {

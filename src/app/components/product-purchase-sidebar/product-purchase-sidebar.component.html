@@ -138,10 +138,10 @@
 
 <!-- Product Preview Modal -->
 @if (selectedSize(); as size) {
-  @if (product().images?.length) {
+  @if (customImageUrl() || product().images?.length) {
     <app-product-preview
       [isOpen]="showPreview()"
-      [imageUrl]="product().images[0].large"
+      [imageUrl]="customImageUrl() || product().images[0].large"
       [sizes]="availableSizes()"
       [selectedSize]="size"
       (selectedSizeChange)="selectedSize.set($event)"
@@ -150,7 +150,7 @@
       [paperName]="selectedPaperName()"
       [metadata]="product().metadata"
       (onClose)="showPreview.set(false)"
-      (onDesignSaved)="savedDesignUrl.set($event)"
+      (onDesignSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
     ></app-product-preview>
   }
 }
