@@ -739,12 +739,17 @@
   position: absolute;
   left: 0;
   top: 20%;
-  transform: translate(-60%, 0);
+  transform: translate(-30%, 0);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 14.5rem;
   z-index: 30;
+
+  &:hover {
+    transform: translate(-10%, 0);
+    transition: all 0.4s ease;
+  }
 }
 
 .guide-info-box {
@@ -819,10 +824,14 @@
   .guide-info-stack {
     left: 0;
     transform: translate(-20%, 0);
+
+    &:hover {
+      transform: translate(-0%, 0);
+    }
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023) {
   .guide-info-stack {
     display: none;
   }
