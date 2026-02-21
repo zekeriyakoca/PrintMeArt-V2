@@ -53,14 +53,14 @@
                               </div>
                               <div class="mt-auto">
                                 <button
-                                  class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 transition-colors cursor-pointer drop-shadow-xl"
+                                  class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 cursor-pointer drop-shadow-xl"
                                   (click)="navigateToProductListPage()"
                                 >
                                   Show me all
                                 </button>
                               </div>
                             </div>
-                            <span class="opacity-0 group-hover:opacity-40 absolute inset-0 bg-black/10 transition-opacity"></span>
+                            <span class="opacity-0 group-hover:opacity-40 absolute inset-0 bg-black/10"></span>
                             <div></div>
                           </div>
                         </div>
@@ -115,7 +115,7 @@
                                 </span>
                               </div>
                             </div>
-                            <span class="opacity-0 group-hover:opacity-30 absolute inset-0 bg-black/20 transition-opacity"></span>
+                            <span class="opacity-0 group-hover:opacity-30 absolute inset-0 bg-black/20"></span>
                           </a>
                         </div>
                       </div>
@@ -209,7 +209,7 @@
 
   <!-- Mobile menu overlay -->
   <div
-    class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+    class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
     [class.opacity-0]="!isMobileMenuOpen()"
     [class.pointer-events-none]="!isMobileMenuOpen()"
     [class.opacity-100]="isMobileMenuOpen()"

@@ -1,17 +1,24 @@
 <!-- Search Bar  -->
 <div class="flex flex-col mb-10 w-full">
-  <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50">
-  </div>
+  <div class="header-background h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-sky-50"></div>
   <header class="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7 w-full px-4 sm:px-0">
     <div class="relative w-full">
       <label for="search-input" class="text-neutral-500">
         <span class="sr-only">Search all products</span>
-        <input #searchInput id="search-input" type="text"
+        <input
+          #searchInput
+          id="search-input"
+          type="text"
           class="w-full shadow-lg border border-neutral-200 text-sm rounded-full pl-12 sm:pl-14 pr-14 py-4 sm:py-5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200"
-          [(ngModel)]="selectedFilterOptions().searchTerm" (keyup.enter)="search()" placeholder="Type your keywords" />
-        <button type="button"
+          [(ngModel)]="selectedFilterOptions().searchTerm"
+          (keyup.enter)="search()"
+          placeholder="Type your keywords"
+        />
+        <button
+          type="button"
           class="absolute right-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black hover:bg-black text-white flex items-center justify-center hover:cursor-pointer"
-          (click)="search()">
+          (click)="search()"
+        >
           <app-icon iconName="arrow-right"></app-icon>
         </button>
         <span class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-2xl md:left-6 pointer-events-none">
@@ -24,67 +31,83 @@
 
 <!-- Page Content -->
 <div class="contained-page">
-
   <!-- Filter Titles  -->
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-4 pb-4 border-b border-neutral-200">
     <!-- Hide/Show Filters on left -->
-    <button type="button"
+    <button
+      type="button"
       class="self-start inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-[#384f8cd9] px-4 py-2 text-sm font-medium text-white hover:bg-[#384f8cc9] cursor-pointer"
-      (click)="hideFilters.set(!hideFilters())">
+      (click)="hideFilters.set(!hideFilters())"
+    >
       <app-icon iconName="filter" class="w-4 h-4"></app-icon>
-      <span>
-        {{hideFilters() ? 'Show' : 'Hide'}} filters
-      </span>
+      <span> {{ hideFilters() ? 'Show' : 'Hide' }} filters </span>
     </button>
 
     <!-- Results for chips + gallery toggle on right -->
     <div class="flex flex-wrap items-center gap-2 justify-end">
       @if (activeFilters().length) {
-      <span class="text-sm text-neutral-500">Results for</span>
-      @for (chip of activeFilters(); track chip.type) {
-      <span
-        class="group/pin inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors"
-        [class]="chip.colorClass" (click)="selectOption(chip.type, chip.name)">
-        {{ chip.name }}
-        <app-icon iconName="close"
-          class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
-      </span>
-      }
-      <span class="mx-1"></span>
+        <span class="text-sm text-neutral-500">Results for</span>
+        @for (chip of activeFilters(); track chip.type) {
+          <span
+            class="group/pin inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors"
+            [class]="chip.colorClass"
+            (click)="selectOption(chip.type, chip.name)"
+          >
+            {{ chip.name }}
+            <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
+          </span>
+        }
+        <span class="mx-1"></span>
       }
 
       <!-- View toggle buttons -->
       <div class="inline-flex items-center gap-1 shrink-0">
         <!-- grid: mobile + desktop -->
-        <button type="button"
+        <button
+          type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'grid'" [class.text-white]="viewMode() === 'grid'"
-          [class.text-neutral-300]="viewMode() !== 'grid'" [class.hover:text-neutral-500]="viewMode() !== 'grid'"
-          (click)="setViewMode('grid')">
+          [class.bg-[#384f8cd9]]="viewMode() === 'grid'"
+          [class.text-white]="viewMode() === 'grid'"
+          [class.text-neutral-300]="viewMode() !== 'grid'"
+          [class.hover:text-neutral-500]="viewMode() !== 'grid'"
+          (click)="setViewMode('grid')"
+        >
           <app-icon iconName="grid" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-1: mobile + desktop -->
-        <button type="button"
+        <button
+          type="button"
           class="inline-flex md:hidden items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-1'" [class.text-white]="viewMode() === 'gallery-1'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-1'"
+          [class.text-white]="viewMode() === 'gallery-1'"
           [class.text-neutral-300]="viewMode() !== 'gallery-1'"
-          [class.hover:text-neutral-500]="viewMode() !== 'gallery-1'" (click)="setViewMode('gallery-1')">
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-1'"
+          (click)="setViewMode('gallery-1')"
+        >
           <app-icon iconName="gallery-1" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-3: tablet + desktop -->
-        <button type="button"
+        <button
+          type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'" [class.text-white]="viewMode() === 'gallery-3'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'"
+          [class.text-white]="viewMode() === 'gallery-3'"
           [class.text-neutral-300]="viewMode() !== 'gallery-3'"
-          [class.hover:text-neutral-500]="viewMode() !== 'gallery-3'" (click)="setViewMode('gallery-3')">
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-3'"
+          (click)="setViewMode('gallery-3')"
+        >
           <app-icon iconName="gallery-3" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-2: tablet + desktop -->
-        <button type="button"
+        <button
+          type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
-          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'" [class.text-white]="viewMode() === 'gallery-2'"
+          [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'"
+          [class.text-white]="viewMode() === 'gallery-2'"
           [class.text-neutral-300]="viewMode() !== 'gallery-2'"
-          [class.hover:text-neutral-500]="viewMode() !== 'gallery-2'" (click)="setViewMode('gallery-2')">
+          [class.hover:text-neutral-500]="viewMode() !== 'gallery-2'"
+          (click)="setViewMode('gallery-2')"
+        >
           <app-icon iconName="gallery-2" class="w-5 h-5"></app-icon>
         </button>
       </div>
@@ -96,127 +119,135 @@
     <!-- Filters -->
     <div id="filters" class="mt-4 w-full lg:w-[280px] lg:shrink-0 p-4" [class.hidden]="hideFilters()">
       @for (group of filterOptions(); track group.name) {
-      <div class="mb-0.5 pl-2">
-        <!-- Group header — click to collapse/expand -->
-        <h3 class="mb-0 pl-1 pr-2 py-1.5 text-[1.05rem] -translate-x-5 font-light uppercase text-[#384f8c] cursor-pointer
-          transition-colors flex items-center justify-between select-none" (click)="toggleGroup(group.name)">
-          <span>{{ group.name }}</span>
-          <app-icon iconName="chevron-down"
-            class="w-3.5 h-3.5 text-[#384f8c] opacity-40 transition-transform duration-300"
-            [class.rotate-180]="isGroupExpanded(group.name)"></app-icon>
-        </h3>
+        <div class="mb-0.5 pl-2">
+          <!-- Group header — click to collapse/expand -->
+          <h3
+            class="mb-0 pl-1 pr-2 py-1.5 text-[1.05rem] -translate-x-5 font-light uppercase text-[#384f8c] cursor-pointer transition-colors flex items-center justify-between select-none"
+            (click)="toggleGroup(group.name)"
+          >
+            <span>{{ group.name }}</span>
+            <app-icon iconName="chevron-down" class="w-3.5 h-3.5 text-[#384f8c] opacity-40 transition-transform duration-300" [class.rotate-180]="isGroupExpanded(group.name)"></app-icon>
+          </h3>
 
-        <!-- Collapsible body -->
-        <div class="filter-collapse-body" [class.expanded]="isGroupExpanded(group.name)">
-          <div class="min-h-0">
-            @if (group.groupType === 'Attributes') {
-            <div class="relative mt-1.5 mb-0.5">
-              <input type="text" placeholder="Search {{ group.name.toLowerCase() }}..."
-                class="w-full text-xs border-b border-neutral-200 bg-transparent pl-2 pr-6 py-1 focus:outline-none focus:border-[#384f8c] transition-colors"
-                [ngModel]="filterSearchTerms()[group.name] || ''"
-                (ngModelChange)="updateFilterSearch(group.name, $event)" />
-              <app-icon iconName="search"
-                class="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 text-neutral-400 pointer-events-none"></app-icon>
-            </div>
-            <div class="filter-scroll-container flex flex-col mb-0.5">
-              @for (option of getFilteredOptions(group); track option.name) {
-              <p class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug"
-                [class.bg-indigo-50]="isOptionSelected(option.name)"
-                [class.text-[#384f8c]]="isOptionSelected(option.name)"
-                (click)="selectOption(group.groupType, option.name)">
-                <span>{{ option.name }}</span>
-                @if (isOptionSelected(option.name)) {
-                <app-icon iconName="close"
-                  class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
-                }
-              </p>
-              } @empty {
-              <p class="text-xs text-neutral-400 px-2 py-1">No matches</p>
+          <!-- Collapsible body -->
+          <div class="filter-collapse-body" [class.expanded]="isGroupExpanded(group.name)">
+            <div class="min-h-0">
+              @if (group.groupType === 'Attributes') {
+                <div class="relative mt-1.5 mb-0.5">
+                  <input
+                    type="text"
+                    placeholder="Search {{ group.name.toLowerCase() }}..."
+                    class="w-full text-xs border-b border-neutral-200 bg-transparent pl-2 pr-6 py-1 focus:outline-none focus:border-[#384f8c] transition-colors"
+                    [ngModel]="filterSearchTerms()[group.name] || ''"
+                    (ngModelChange)="updateFilterSearch(group.name, $event)"
+                  />
+                  <app-icon iconName="search" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 text-neutral-400 pointer-events-none"></app-icon>
+                </div>
+                <div class="filter-scroll-container flex flex-col mb-0.5">
+                  @for (option of getFilteredOptions(group); track option.name) {
+                    <p
+                      class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug"
+                      [class.bg-indigo-50]="isOptionSelected(option.name)"
+                      [class.text-[#384f8c]]="isOptionSelected(option.name)"
+                      (click)="selectOption(group.groupType, option.name)"
+                    >
+                      <span>{{ option.name }}</span>
+                      @if (isOptionSelected(option.name)) {
+                        <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
+                      }
+                    </p>
+                  } @empty {
+                    <p class="text-xs text-neutral-400 px-2 py-1">No matches</p>
+                  }
+                </div>
+              } @else {
+                <!-- Category filter -->
+                <div class="flex flex-col mb-0.5">
+                  <p
+                    class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug text-[#384f8c]"
+                    [class.bg-indigo-50]="isOptionSelected(group.name)"
+                    (click)="selectOption(group.groupType, group.name)"
+                  >
+                    <span>View all</span>
+                    @if (isOptionSelected(group.name)) {
+                      <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
+                    }
+                  </p>
+                  @for (option of group.options; track option.name) {
+                    <p
+                      class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug"
+                      [class.bg-indigo-50]="isOptionSelected(option.name)"
+                      [class.text-[#384f8c]]="isOptionSelected(option.name)"
+                      (click)="selectOption(group.groupType, option.name)"
+                    >
+                      <span>{{ option.name }}</span>
+                      @if (isOptionSelected(option.name)) {
+                        <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
+                      }
+                    </p>
+                  }
+                </div>
               }
             </div>
-            } @else {
-            <!-- Category filter -->
-            <div class="flex flex-col mb-0.5">
-              <p class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug text-[#384f8c]"
-                [class.bg-indigo-50]="isOptionSelected(group.name)" (click)="selectOption(group.groupType, group.name)">
-                <span>View all</span>
-                @if (isOptionSelected(group.name)) {
-                <app-icon iconName="close"
-                  class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
-                }
-              </p>
-              @for (option of group.options; track option.name) {
-              <p class="category-leaf text-[0.82rem] cursor-pointer mb-0 hover:text-[#384f8c] px-2 py-[5px] rounded transition-colors group/filter flex items-center justify-between leading-snug"
-                [class.bg-indigo-50]="isOptionSelected(option.name)"
-                [class.text-[#384f8c]]="isOptionSelected(option.name)"
-                (click)="selectOption(group.groupType, option.name)">
-                <span>{{ option.name }}</span>
-                @if (isOptionSelected(option.name)) {
-                <app-icon iconName="close"
-                  class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
-                }
-              </p>
-              }
-            </div>
-            }
           </div>
         </div>
-      </div>
-      <hr class="my-1.5 border-t border-neutral-300/30 w-[85%] my-3">
+        <hr class="my-1.5 border-t border-neutral-300/30 w-[85%] my-3" />
       }
     </div>
 
     <!-- Product Catalog -->
     <div class="mt-6 lg:mt-4 w-full mb-15">
       @if (products().data?.length) {
-      @switch (viewMode()) {
-      @case ('gallery-1') {
-      <!-- Gallery View: single column -->
-      <div class="columns-1 gap-4 md:gap-6 mb-2">
-        @for (product of products().data; track product.id) {
-        <app-product-gallery-card [product]="product"></app-product-gallery-card>
+        @switch (viewMode()) {
+          @case ('gallery-1') {
+            <!-- Gallery View: single column -->
+            <div class="columns-1 gap-4 md:gap-6 mb-2">
+              @for (product of products().data; track product.id) {
+                <app-product-gallery-card [product]="product" [showLargeImage]="true"></app-product-gallery-card>
+              }
+            </div>
+          }
+          @case ('gallery-2') {
+            <!-- Gallery View: masonry 2 columns -->
+            <div class="columns-1 sm:columns-2 gap-4 md:gap-6 mb-2">
+              @for (product of products().data; track product.id) {
+                <app-product-gallery-card [product]="product" [showLargeImage]="true"></app-product-gallery-card>
+              }
+            </div>
+          }
+          @case ('gallery-3') {
+            <!-- Gallery View: masonry 3 columns -->
+            <div class="columns-1 sm:columns-2 md:columns-3 gap-4 md:gap-6 mb-2">
+              @for (product of products().data; track product.id) {
+                <app-product-gallery-card [product]="product"></app-product-gallery-card>
+              }
+            </div>
+          }
+          @default {
+            <!-- Default Grid View: 3 columns when filters open, 4 when closed -->
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-0 md:gap-6 mb-2" [class.xl:grid-cols-4]="hideFilters()" [class.xl:grid-cols-3]="!hideFilters()">
+              @for (product of products().data; track product.id) {
+                <app-product-card [product]="product" class=""></app-product-card>
+              }
+            </div>
+          }
         }
-      </div>
-      }
-      @case ('gallery-2') {
-      <!-- Gallery View: masonry 2 columns -->
-      <div class="columns-1 sm:columns-2 gap-4 md:gap-6 mb-2">
-        @for (product of products().data; track product.id) {
-        <app-product-gallery-card [product]="product"></app-product-gallery-card>
-        }
-      </div>
-      }
-      @case ('gallery-3') {
-      <!-- Gallery View: masonry 3 columns -->
-      <div class="columns-1 sm:columns-2 md:columns-3 gap-4 md:gap-6 mb-2">
-        @for (product of products().data; track product.id) {
-        <app-product-gallery-card [product]="product"></app-product-gallery-card>
-        }
-      </div>
-      }
-      @default {
-      <!-- Default Grid View: 3 columns when filters open, 4 when closed -->
-      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-0 md:gap-6 mb-2"
-        [class.xl:grid-cols-4]="hideFilters()" [class.xl:grid-cols-3]="!hideFilters()">
-        @for (product of products().data; track product.id) {
-        <app-product-card [product]="product" class=""></app-product-card>
-        }
-      </div>
-      }
-      }
       } @else {
-      <div class="flex flex-col items-center justify-center py-20">
-        <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
-        <p class="text-neutral-500 text-lg mb-1">No products found</p>
-        <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
-      </div>
+        <div class="flex flex-col items-center justify-center py-20">
+          <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
+          <p class="text-neutral-500 text-lg mb-1">No products found</p>
+          <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
+        </div>
       }
       <div class="flex justify-center mt-12">
-        <app-pagination (paginationChanged)="onPaginationChanged()" [className]="'mt-8'"
-          [totalPages]="products().totalPage" [(pageIndex)]="selectedFilterOptions().pageIndex"
-          [(pageSize)]="selectedFilterOptions().pageSize"></app-pagination>
+        <app-pagination
+          (paginationChanged)="onPaginationChanged()"
+          [className]="'mt-8'"
+          [totalPages]="products().totalPage"
+          [(pageIndex)]="selectedFilterOptions().pageIndex"
+          [(pageSize)]="selectedFilterOptions().pageSize"
+        ></app-pagination>
       </div>
     </div>
-
   </div>
 </div>

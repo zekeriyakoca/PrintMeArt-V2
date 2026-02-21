@@ -1,11 +1,3 @@
-.nc-Header {
-  transition: all 0.3s ease-in-out;
-}
-
-.ttnc-logo {
-  transition: color 0.3s;
-}
-
 .ttnc-logo img {
   height: 20px;
   margin-left: 35px;
@@ -18,17 +10,6 @@
   }
 }
 
-.nc-Navigation {
-  .menu-item {
-    a {
-      // transition: all 0.2s ease-in-out;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-  }
-}
 
 // Mega Menu Styles (only for Prints)
 .menu-item.menu-megamenu:hover {
@@ -38,9 +19,11 @@
 }
 
 .sub-menu {
-  transition: all 0.3s ease;
+  // transition: all 0.3s;
   left: 0;
   right: 0;
+  top: 50px;
+  padding-top: 20px;
 
   &.visible {
     visibility: visible;
