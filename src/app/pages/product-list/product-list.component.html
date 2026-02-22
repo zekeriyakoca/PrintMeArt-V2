@@ -125,7 +125,7 @@
             class="mb-0 pl-1 pr-2 py-1.5 text-[1.05rem] -translate-x-5 font-light uppercase text-[#384f8c] cursor-pointer transition-colors flex items-center justify-between select-none"
             (click)="toggleGroup(group.name)"
           >
-            <span>{{ group.name }}</span>
+            <span>{{ getFilterGroupName(group.name) }}</span>
             <app-icon iconName="chevron-down" class="w-3.5 h-3.5 text-[#384f8c] opacity-40 transition-transform duration-300" [class.rotate-180]="isGroupExpanded(group.name)"></app-icon>
           </h3>
 

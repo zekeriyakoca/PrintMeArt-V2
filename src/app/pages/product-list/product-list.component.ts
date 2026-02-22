@@ -191,6 +191,13 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     });
   }
 
+  getFilterGroupName(name: string) {
+    if (name.toLowerCase() == 'origin') {
+      return 'Museum';
+    }
+    return name;
+  }
+
   isGroupExpanded(groupName: string): boolean {
     return this.expandedGroups().has(groupName);
   }
