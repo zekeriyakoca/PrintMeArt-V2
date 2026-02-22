@@ -42,7 +42,7 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Birmingham Museums',
-    badgeUrl: '',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/logo (1).png',
     websiteUrl: 'https://www.birminghammuseums.org.uk/',
   },
   {
