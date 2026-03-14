@@ -13,7 +13,7 @@ import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
-import { DpiBarComponent } from '../dpi-bar/dpi-bar.component';
+import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AppInsightsService } from '../../services/telemetry/app-insights.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
@@ -21,7 +21,7 @@ import { ProductPreviewComponent } from '../product-preview/product-preview.comp
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, DpiBarComponent, ProductPreviewComponent],
+  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })

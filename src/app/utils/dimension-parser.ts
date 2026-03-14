@@ -18,30 +18,32 @@ export class DimensionParser {
    * Returns null if parsing fails.
    */
   static parse(dimensions: string): ParsedDimensions | null {
-    if (!dimensions) return null;
+    if (!dimensions || dimensions.trim().toLowerCase() === 'null') return null;
 
-    // Pattern A: W x H cm
+    // Pattern A: W x H cm/mm or W cm x H cm/mm
     const patternA =
-      /(\d+(?:[.,]\d+)?)\s*[x×]\s*(\d+(?:[.,]\d+)?)\s*cm/i;
+      /(\d+(?:[.,]\d+)?)\s*(cm|mm)?\s*[x×]\s*(\d+(?:[.,]\d+)?)\s*(cm|mm)\b/i;
     const matchA = dimensions.match(patternA);
     if (matchA) {
-      const w = parseFloat(matchA[1].replace(',', '.'));
-      const h = parseFloat(matchA[2].replace(',', '.'));
+      const unit1 = (matchA[2] || matchA[4] || 'cm').toLowerCase();
+      const unit2 = matchA[4].toLowerCase();
+      const w = DimensionParser.toCm(matchA[1], unit1);
+      const h = DimensionParser.toCm(matchA[3], unit2);
       if (!isNaN(w) && !isNaN(h) && w > 0 && h > 0) {
         return { widthCm: w, heightCm: h };
       }
     }
 
-    // Pattern B: height: X cm ... width: Y cm
+    // Pattern B: height/width or hoogte/breedte with optional colon in cm/mm
     const heightMatch = dimensions.match(
-      /height:\s*(\d+(?:[.,]\d+)?)\s*cm/i,
+      /\b(?:height|hoogte)\s*:?\s*(\d+(?:[.,]\d+)?)\s*(cm|mm)\b/i,
     );
     const widthMatch = dimensions.match(
-      /width:\s*(\d+(?:[.,]\d+)?)\s*cm/i,
+      /\b(?:width|breedte)\s*:?\s*(\d+(?:[.,]\d+)?)\s*(cm|mm)\b/i,
     );
     if (heightMatch && widthMatch) {
-      const h = parseFloat(heightMatch[1].replace(',', '.'));
-      const w = parseFloat(widthMatch[1].replace(',', '.'));
+      const h = DimensionParser.toCm(heightMatch[1], heightMatch[2]);
+      const w = DimensionParser.toCm(widthMatch[1], widthMatch[2]);
       if (!isNaN(w) && !isNaN(h) && w > 0 && h > 0) {
         return { widthCm: w, heightCm: h };
       }
@@ -91,5 +93,11 @@ export class DimensionParser {
     const oneExtra = exceeding.length > 0 ? [exceeding[0]] : [];
 
     return [...fitting, originalSize, ...oneExtra];
+  }
+
+  private static toCm(value: string, unit: string): number {
+    const numeric = parseFloat(value.replace(',', '.'));
+    if (isNaN(numeric)) return NaN;
+    return unit.toLowerCase() === 'mm' ? numeric / 10 : numeric;
   }
 }

@@ -1,4 +1,4 @@
-import { MUSEUMS } from '../data/museums';
+import { MUSEUMS_SPECIAL } from '../data/museums';
 import { ProductMetadata } from '../models/product';
 
 export class MuseumHighRes {
@@ -8,8 +8,8 @@ export class MuseumHighRes {
     const candidate = MuseumHighRes.normalize(museumName);
     if (!candidate) return false;
 
-    for (const museum of MUSEUMS) {
-      const known = MuseumHighRes.normalize(museum.name);
+    for (const museum of MUSEUMS_SPECIAL) {
+      const known = MuseumHighRes.normalize(museum);
       if (!known) continue;
 
       if (candidate === known) return true;
@@ -25,9 +25,7 @@ export class MuseumHighRes {
     heightPx: number;
     overridden: boolean;
   } {
-    const overridden =
-      MuseumHighRes.isHighResMuseumName(meta?.Museum) &&
-      MuseumHighRes.OVERRIDE_PX > +meta?.OriginalImageWidth;
+    const overridden = MuseumHighRes.isHighResMuseumName(meta?.Museum) && MuseumHighRes.OVERRIDE_PX > +meta?.OriginalImageWidth;
     if (overridden) {
       return {
         widthPx: MuseumHighRes.OVERRIDE_PX,

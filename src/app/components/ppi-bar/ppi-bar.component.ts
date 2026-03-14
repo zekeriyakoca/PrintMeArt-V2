@@ -6,32 +6,42 @@ import {
 } from '@angular/core';
 import { ProductMetadata } from '../../models/product';
 import { SizeOption } from '../../models/size-option';
-import { MuseumHighRes } from '../../utils/museum-highres';
+import {
+  EffectiveImagePixels,
+  EffectiveImagePixelsResolver,
+} from '../../utils/effective-image-pixels';
 import { IconComponent } from '../shared/icon/icon.component';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
 
-type DpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
+type PpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
 
 @Component({
-  selector: 'app-dpi-bar',
+  selector: 'app-ppi-bar',
   standalone: true,
   imports: [IconComponent, TooltipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './dpi-bar.component.html',
-  styleUrls: ['./dpi-bar.component.scss'],
+  templateUrl: './ppi-bar.component.html',
+  styleUrls: ['./ppi-bar.component.scss'],
 })
-export class DpiBarComponent {
+export class PpiBarComponent {
   readonly metadata = input.required<ProductMetadata>();
   readonly size = input<SizeOption | null>(null);
 
-  readonly dpi = computed<number | null>(() => {
-    const meta = this.metadata();
+  readonly effectivePixels = computed<EffectiveImagePixels>(() =>
+    EffectiveImagePixelsResolver.resolve(this.metadata()),
+  );
+
+  readonly isEstimated = computed(() => {
+    const mode = this.effectivePixels().mode;
+    return mode === 'estimated' || mode === 'fallback';
+  });
+
+  readonly ppi = computed<number | null>(() => {
     const selectedSize = this.size();
 
     if (!selectedSize) return null;
 
-    const { widthPx: pxW, heightPx: pxH } =
-      MuseumHighRes.getEffectiveImagePixels(meta);
+    const { widthPx: pxW, heightPx: pxH } = this.effectivePixels();
     if (
       !Number.isFinite(pxW) ||
       !Number.isFinite(pxH) ||
@@ -56,17 +66,17 @@ export class DpiBarComponent {
     const inH = cmH / 2.54;
 
     // Allow rotating: pick the better-fit orientation.
-    const dpiFit1 = Math.min(pxW / inW, pxH / inH);
-    const dpiFit2 = Math.min(pxW / inH, pxH / inW);
+    const ppiFit1 = Math.min(pxW / inW, pxH / inH);
+    const ppiFit2 = Math.min(pxW / inH, pxH / inW);
 
-    const best = Math.max(dpiFit1, dpiFit2);
+    const best = Math.max(ppiFit1, ppiFit2);
     if (!Number.isFinite(best) || best <= 0) return null;
 
     return Math.round(best);
   });
 
-  readonly quality = computed<DpiQuality>(() => {
-    const value = this.dpi();
+  readonly quality = computed<PpiQuality>(() => {
+    const value = this.ppi();
     if (value === null) return 'unknown';
     if (value >= 300) return 'fineart';
     if (value >= 200) return 'good';
@@ -140,7 +150,7 @@ export class DpiBarComponent {
   });
 
   readonly fillPercent = computed(() => {
-    const value = this.dpi();
+    const value = this.ppi();
     if (value === null) return 0;
     return Math.max(0, Math.min(1, value / 300));
   });
@@ -165,11 +175,17 @@ export class DpiBarComponent {
   });
 
   readonly imagePxText = computed(() => {
-    const meta = this.metadata();
-    const { widthPx: pxW, heightPx: pxH } =
-      MuseumHighRes.getEffectiveImagePixels(meta);
+    const { widthPx: pxW, heightPx: pxH } = this.effectivePixels();
     if (!Number.isFinite(pxW) || !Number.isFinite(pxH)) return '—';
-    return `${Math.round(pxW)}x${Math.round(pxH)} px`;
+    return `${this.isEstimated() ? '~' : ''}${Math.round(pxW)}x${Math.round(
+      pxH,
+    )} px`;
+  });
+
+  readonly ppiText = computed(() => {
+    const value = this.ppi();
+    if (value === null) return '—';
+    return `${value} ppi`;
   });
 
   readonly tooltipEmoji = computed(() => {
@@ -218,10 +234,11 @@ export class DpiBarComponent {
   });
 
   readonly ariaLabel = computed(() => {
-    const value = this.dpi();
+    const value = this.ppi();
     if (value === null) {
-      return 'Print quality unknown. Select a size to estimate DPI.';
+      return 'Print quality unknown. Select a size to estimate PPI.';
     }
-    return `Print quality ${this.qualityText()}. Estimated ${value} DPI.`;
+    const prefix = this.isEstimated() ? 'Estimated ' : '';
+    return `Print quality ${this.qualityText()}. ${prefix}${value} PPI.`;
   });
 }
