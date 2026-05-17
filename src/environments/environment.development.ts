@@ -13,6 +13,7 @@ export const environment = {
     'pricing-api': 'http://localhost:5002',
     'basket-api': 'http://localhost:5003',
     'ordering-api': 'http://localhost:5004',
+    'analytics-api': 'http://localhost:5008',
     bff: 'http://localhost:5010',
   },
   // serviceUrls: {
@@ -20,6 +21,7 @@ export const environment = {
   //   'basket-api': 'https://lontray.art/basket-api',
   //   'pricing-api': 'https://lontray.art/pricing-api',
   //   'ordering-api': 'https://lontray.art/ordering-api',
+  //   'analytics-api': 'https://lontray.art/analytics-api',
   //   bff: 'https://lontray.art/bff-web',
   // },
 };

@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, fromEvent, interval, map, merge, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CartItemDto } from '../../models/cart-item';
 import { ProductDto, ProductSimpleDto } from '../../models/product';
@@ -38,7 +38,22 @@ type QueuedEvent = {
   sendPosthog: boolean;
 };
 
+type FirstPartyEventRequest = {
+  clientEventId: string;
+  userId?: string;
+  anonymousId?: string;
+  sessionId?: string;
+  eventName: string;
+  occurredAt: string;
+  source: 'storefront';
+  propertiesJson: string;
+};
+
 const GA4_EVENTS = new Set(['view_item_list', 'view_item', 'search', 'add_to_cart', 'remove_from_cart', 'view_cart', 'begin_checkout', 'add_payment_info', 'purchase']);
+const FIRST_PARTY_BATCH_SIZE = 20;
+const FIRST_PARTY_MAX_QUEUE_SIZE = 200;
+const FIRST_PARTY_FLUSH_INTERVAL_MS = 5000;
+const KEEPALIVE_MAX_BYTES = 60 * 1024;
 
 @Injectable({
   providedIn: 'root',
@@ -49,11 +64,23 @@ export class AnalyticsService {
   private posthogInitialized = false;
   private pageViewsStarted = false;
   private currentUserId?: string;
-  private posthog?: { capture: (name: string, props?: AnalyticsProperties) => void; identify: (id: string, props?: AnalyticsProperties) => void; reset: () => void; startSessionRecording: () => void; stopSessionRecording: () => void };
+  private posthog?: {
+    capture: (name: string, props?: AnalyticsProperties) => void;
+    identify: (id: string, props?: AnalyticsProperties) => void;
+    reset: () => void;
+    startSessionRecording: () => void;
+    stopSessionRecording: () => void;
+  };
   private sessionRecordingStarted = false;
   private readonly queue: QueuedEvent[] = [];
+  private readonly firstPartyQueue: FirstPartyEventRequest[] = [];
+  private readonly firstPartyFlushRequests$ = new Subject<boolean>();
+  private firstPartyFlushInFlight = false;
+  private anonymousId?: string;
+  private sessionId?: string;
 
   private readonly config: AnalyticsConfig = (environment as { analytics?: AnalyticsConfig }).analytics ?? {};
+  private readonly analyticsApiUrl = (environment as { serviceUrls?: Record<string, string> }).serviceUrls?.['analytics-api'];
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: object,
@@ -70,6 +97,7 @@ export class AnalyticsService {
       this.applyUserId();
     });
 
+    this.initFirstPartyTracking();
     this.afterIdle(() => this.initAdapters());
   }
 
@@ -81,6 +109,8 @@ export class AnalyticsService {
     const sendPosthog = options.posthog ?? true;
     const needsGa4 = sendGa4 && !!this.config.ga4MeasurementId;
     const needsPosthog = sendPosthog && !!this.config.posthogKey;
+
+    this.enqueueFirstParty(name, enriched);
 
     if (!needsGa4 && !needsPosthog) return;
 
@@ -315,6 +345,80 @@ export class AnalyticsService {
     this.posthog.capture(name, properties);
   }
 
+  private initFirstPartyTracking(): void {
+    if (!this.analyticsApiUrl) return;
+
+    this.anonymousId = this.getOrCreateBrowserId('pma_anonymous_id', localStorage);
+    this.sessionId = this.getOrCreateBrowserId('pma_session_id', sessionStorage);
+
+    merge(
+      interval(FIRST_PARTY_FLUSH_INTERVAL_MS).pipe(map(() => false)),
+      this.firstPartyFlushRequests$,
+      fromEvent(window, 'pagehide').pipe(map(() => true)),
+      fromEvent(document, 'visibilitychange').pipe(
+        filter(() => document.visibilityState === 'hidden'),
+        map(() => true),
+      ),
+    ).subscribe((useBeacon) => this.flushFirstParty(useBeacon));
+  }
+
+  private enqueueFirstParty(name: string, properties: AnalyticsProperties): void {
+    if (!this.analyticsApiUrl || !this.anonymousId || !this.sessionId) return;
+
+    if (this.firstPartyQueue.length >= FIRST_PARTY_MAX_QUEUE_SIZE) {
+      this.firstPartyQueue.shift();
+    }
+
+    this.firstPartyQueue.push({
+      clientEventId: this.createId(),
+      userId: this.currentUserId,
+      anonymousId: this.anonymousId,
+      sessionId: this.sessionId,
+      eventName: name,
+      occurredAt: new Date().toISOString(),
+      source: 'storefront',
+      propertiesJson: JSON.stringify(this.removeUndefined(properties)),
+    });
+
+    if (this.firstPartyQueue.length >= FIRST_PARTY_BATCH_SIZE) {
+      this.firstPartyFlushRequests$.next(false);
+    }
+  }
+
+  private flushFirstParty(useBeacon = false): void {
+    if (!this.analyticsApiUrl || this.firstPartyFlushInFlight || this.firstPartyQueue.length === 0) return;
+
+    const batch = this.firstPartyQueue.splice(0, FIRST_PARTY_BATCH_SIZE);
+    const body = JSON.stringify(batch);
+    const url = `${this.analyticsApiUrl}/analytics/v1/events/batch`;
+
+    if (useBeacon && navigator.sendBeacon) {
+      const sent = navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
+      if (!sent) {
+        this.firstPartyQueue.unshift(...batch);
+      }
+      return;
+    }
+
+    this.firstPartyFlushInFlight = true;
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      credentials: 'include',
+      keepalive: body.length <= KEEPALIVE_MAX_BYTES,
+    })
+      .catch(() => {
+        this.firstPartyQueue.unshift(...batch);
+        if (this.firstPartyQueue.length > FIRST_PARTY_MAX_QUEUE_SIZE) {
+          this.firstPartyQueue.splice(0, this.firstPartyQueue.length - FIRST_PARTY_MAX_QUEUE_SIZE);
+        }
+      })
+      .finally(() => {
+        this.firstPartyFlushInFlight = false;
+      });
+  }
+
   private startPageViewTracking(): void {
     if (this.pageViewsStarted) return;
     this.pageViewsStarted = true;
@@ -395,6 +499,39 @@ export class AnalyticsService {
     }
 
     window.setTimeout(callback, 1000);
+  }
+
+  private getOrCreateBrowserId(key: string, storage: Storage): string {
+    try {
+      const existing = storage.getItem(key);
+      if (existing) return existing;
+
+      const created = this.createId();
+      storage.setItem(key, created);
+      return created;
+    } catch {
+      return this.createId();
+    }
+  }
+
+  private createId(): string {
+    return crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  private removeUndefined(value: AnalyticsValue): AnalyticsValue {
+    if (Array.isArray(value)) {
+      return value.map((item) => this.removeUndefined(item));
+    }
+
+    if (value && typeof value === 'object') {
+      return Object.fromEntries(
+        Object.entries(value)
+          .filter(([, item]) => item !== undefined)
+          .map(([key, item]) => [key, this.removeUndefined(item)]),
+      );
+    }
+
+    return value;
   }
 
   private cartValue(items: CartItemDto[]): number {
