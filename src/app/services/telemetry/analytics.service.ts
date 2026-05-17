@@ -50,6 +50,19 @@ type FirstPartyEventRequest = {
 };
 
 const GA4_EVENTS = new Set(['view_item_list', 'view_item', 'search', 'add_to_cart', 'remove_from_cart', 'view_cart', 'begin_checkout', 'add_payment_info', 'purchase']);
+const FIRST_PARTY_EVENTS = new Set([
+  'view_item',
+  'search',
+  'add_to_cart',
+  'view_cart',
+  'begin_checkout',
+  'add_payment_info',
+  'payment_failed',
+  'purchase',
+  'custom_upload_rejected',
+  'custom_upload_selected',
+  'custom_upload_success',
+]);
 const FIRST_PARTY_BATCH_SIZE = 20;
 const FIRST_PARTY_MAX_QUEUE_SIZE = 200;
 const FIRST_PARTY_FLUSH_INTERVAL_MS = 5000;
@@ -110,7 +123,9 @@ export class AnalyticsService {
     const needsGa4 = sendGa4 && !!this.config.ga4MeasurementId;
     const needsPosthog = sendPosthog && !!this.config.posthogKey;
 
-    this.enqueueFirstParty(name, enriched);
+    if (FIRST_PARTY_EVENTS.has(name)) {
+      this.enqueueFirstParty(name, enriched);
+    }
 
     if (!needsGa4 && !needsPosthog) return;
 
