@@ -23,6 +23,7 @@
     "@angular/router": "^21.0.6",
     "@angular/ssr": "^21.0.4",
     "express": "^4.18.2",
+    "posthog-js": "^1.373.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

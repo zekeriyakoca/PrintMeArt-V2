@@ -5,6 +5,8 @@ export const environment = {
     enabled: true,
     tenant: 'printmeart.nl',
     ga4MeasurementId: 'G-1LMLTH4RW1',
+    posthogKey: 'phc_uEijbYsS6ZLP5X5KkZXz6EU3exibBL6wm7Z4FtNLTziU',
+    posthogHost: 'https://us.i.posthog.com',
   },
   serviceUrls: {
     'catalog-api': 'https://lontray.art/catalog-api',
