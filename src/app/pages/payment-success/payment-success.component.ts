@@ -1,21 +1,12 @@
-import {
-  Component,
-  computed,
-  inject,
-  OnInit,
-  PLATFORM_ID,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BasePageComponent } from '../basePageComponent';
 import { IconComponent } from '../../components/shared/icon/icon.component';
-import {
-  CheckoutService,
-  CheckoutSessionStatus,
-} from '../../services/checkout/checkout.service';
+import { CheckoutService, CheckoutSessionStatus } from '../../services/checkout/checkout.service';
 import { CartService } from '../../services/cart/cart.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -24,16 +15,14 @@ import { AuthenticationService } from '../../services/authentication/authenticat
   templateUrl: './payment-success.component.html',
   styleUrl: './payment-success.component.scss',
 })
-export class PaymentSuccessComponent
-  extends BasePageComponent
-  implements OnInit
-{
+export class PaymentSuccessComponent extends BasePageComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly checkoutService = inject(CheckoutService);
   private readonly cartService = inject(CartService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly auth = inject(AuthenticationService);
+  private readonly analytics = inject(AnalyticsService);
 
   isLoading = signal(true);
 
@@ -49,9 +38,7 @@ export class PaymentSuccessComponent
     }
 
     // Get session_id from URL query params (Stripe redirect)
-    const sessionId =
-      this.route.snapshot.queryParamMap.get('session_id') ||
-      sessionStorage.getItem('checkoutSessionId');
+    const sessionId = this.route.snapshot.queryParamMap.get('session_id') || sessionStorage.getItem('checkoutSessionId');
 
     if (!sessionId) {
       this.isLoading.set(false);
@@ -66,12 +53,19 @@ export class PaymentSuccessComponent
 
         if (session.status === 'complete' && session.paymentStatus === 'paid') {
           this.isSuccess.set(true);
+          this.analytics.trackOrderCompleted({
+            orderId: session.orderId,
+            orderNumber: session.orderNumber,
+            amountTotal: session.amountTotal,
+            currency: session.currency,
+          });
           // Clear the cart after successful payment
           this.cartService.clearCart();
           // Clean up session storage
           sessionStorage.removeItem('checkoutSessionId');
           sessionStorage.removeItem('checkoutEmail');
         } else {
+          this.analytics.trackPaymentFailed('payment_not_completed', session.orderId);
           this.errorMessage.set('Payment was not completed.');
         }
 
@@ -79,9 +73,8 @@ export class PaymentSuccessComponent
       },
       error: (err) => {
         console.error('Failed to verify checkout session:', err);
-        this.errorMessage.set(
-          'Failed to verify payment. Please contact support.',
-        );
+        this.analytics.trackPaymentFailed('checkout_session_verification_failed');
+        this.errorMessage.set('Failed to verify payment. Please contact support.');
         this.isLoading.set(false);
       },
     });
@@ -92,11 +85,7 @@ export class PaymentSuccessComponent
   }
 
   get customerEmail(): string {
-    return (
-      this.sessionData()?.customerEmail ||
-      sessionStorage.getItem('checkoutEmail') ||
-      ''
-    );
+    return this.sessionData()?.customerEmail || sessionStorage.getItem('checkoutEmail') || '';
   }
 
   get formattedAmount(): string {

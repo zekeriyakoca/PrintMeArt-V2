@@ -13,26 +13,16 @@ import { AccordionItem } from '../../models/accordion-item';
 import { PolicyComponent } from '../../components/policy/policy.component';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
 import { MUSEUMS, Museum } from '../../data/museums';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [
-    RouterLink,
-    ImageGallery1Component,
-    ImageGallery2Component,
-    ProductPurchaseSidebarComponent,
-    AccordionInfoComponent,
-    PolicyComponent,
-    RelatedProductsComponent,
-  ],
+  imports: [RouterLink, ImageGallery1Component, ImageGallery2Component, ProductPurchaseSidebarComponent, AccordionInfoComponent, PolicyComponent, RelatedProductsComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
-export class ProductDetailComponent
-  extends BasePageComponent
-  implements OnInit
-{
+export class ProductDetailComponent extends BasePageComponent implements OnInit {
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
@@ -42,26 +32,22 @@ export class ProductDetailComponent
     if (this.product()?.metadata?.OriginalImageWidth == null) {
       return false;
     }
-    return (
-      +this.product().metadata.OriginalImageWidth >
-      +this.product().metadata.OriginalImageHeight
-    );
+    return +this.product().metadata.OriginalImageWidth > +this.product().metadata.OriginalImageHeight;
   });
 
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
 
   ngOnInit() {
-    this.route.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((params) => {
-        this.productId = params.get('productId') || '';
-        this.fetchProduct();
-      });
+    this.route.paramMap.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params) => {
+      this.productId = params.get('productId') || '';
+      this.fetchProduct();
+    });
   }
   museum = computed<Museum | null>(() => {
     const attributes = this.product().attributes;
@@ -70,9 +56,7 @@ export class ProductDetailComponent
     }
 
     for (const museum of MUSEUMS) {
-      const foundAttribute = attributes.find((attr) =>
-        attr.toLowerCase().includes(museum.name.toLowerCase()),
-      );
+      const foundAttribute = attributes.find((attr) => attr.toLowerCase().includes(museum.name.toLowerCase()));
       if (foundAttribute) {
         return museum;
       }
@@ -126,6 +110,7 @@ export class ProductDetailComponent
     this.apiService.getProductById(this.productId).subscribe((product) => {
       if (product) {
         this.product.set(product);
+        this.analytics.trackProductViewed(product);
       }
     });
   }

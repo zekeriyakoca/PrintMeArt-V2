@@ -14,7 +14,7 @@ import { PaperOptionsComponent } from '../paper-options/paper-options.component'
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { SizeOptions } from '../../shared/constants';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
-import { AppInsightsService } from '../../services/telemetry/app-insights.service';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
@@ -68,7 +68,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   constructor(
     private apiService: ApiService,
     private cartService: CartService,
-    private telemetry: AppInsightsService,
+    private analytics: AnalyticsService,
     private toastService: ToastService,
   ) {
     super();
@@ -174,19 +174,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       next: (response) => {
         this.calculatedPrice.set(response.price);
         this.variantId = response.variantId;
-
-        this.telemetry.trackEvent('price_calculated', {
-          productId: this.product().id,
-          variantId: response.variantId,
-          price: response.price,
-          selectedOptionsCount: selectedOptions?.length ?? 0,
-        });
       },
       error: (error) => {
-        this.telemetry.trackException(error, {
-          operation: 'calculatePrice',
-          productId: this.product().id,
-        });
         console.error('Error fetching calculated price:', error);
       },
     });
@@ -194,16 +183,12 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   addToCart() {
     if (!this.hasAllOptionsSelected()) {
-      debugger;
       // Check if it's specifically missing the custom image
       const hasCustomProductDetails = this.product().optionGroups.some((g) => g.name === 'CustomProductDetails');
       if (hasCustomProductDetails && !this.customImageUrl()) {
         this.toastService.error('Please wait for your image to finish uploading before adding to cart.');
       }
-      this.telemetry.trackEvent('add_to_cart_blocked', {
-        productId: this.product().id,
-        reason: 'missing_options',
-      });
+      this.analytics.trackAddToCartBlocked(this.product().id, 'missing_options');
       return;
     }
 

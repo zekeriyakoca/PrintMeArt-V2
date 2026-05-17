@@ -12,6 +12,7 @@ import { isDesktopViewport } from '../../shared/device';
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-product-list',
@@ -66,6 +67,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
@@ -162,12 +164,25 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
       if (products?.data) {
         products.data.sort((a, b) => b.imageRatio - a.imageRatio);
         this.products.set(products);
+        const filters = this.selectedFilterOptions();
+        this.analytics.trackProductListViewed(
+          {
+            category_name: filters.categoryName,
+            attribute_name: filters.attributeName,
+            option_name: filters.optionName,
+            search_term: filters.searchTerm,
+            tags: filters.tags,
+            result_count: products.count,
+          },
+          products.data,
+        );
       }
     });
   }
 
   search(): void {
     const current = this.selectedFilterOptions();
+    this.analytics.trackSearch(current.searchTerm || '');
     this.navigateWithFilters({
       pageIndex: 0,
       pageSize: current.pageSize,

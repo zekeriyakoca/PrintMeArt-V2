@@ -1,9 +1,14 @@
 export const environment = {
   production: false,
   apiUrl: 'BACKEND BASE URL COMES HERE',
-  // Azure Application Insights (Browser SDK)
-  // Leave empty to disable telemetry locally.
-  appInsightsConnectionString: 'InstrumentationKey=***',
+  analytics: {
+    enabled: true,
+    tenant: 'printmeart.nl',
+    ga4MeasurementId: 'G-1LMLTH4RW1',
+    posthogKey: 'phc_uEijbYsS6ZLP5X5KkZXz6EU3exibBL6wm7Z4FtNLTziU',
+    posthogHost: 'https://us.i.posthog.com',
+    pageViewsWithoutConsent: true,
+  },
   // serviceUrls: {
   //   'catalog-api':
   //     'https://ecommbone-apim.azure-api.net/storefront/catalog-api',

@@ -1,12 +1,4 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  HostBinding,
-  inject,
-  Input,
-  PLATFORM_ID,
-  signal,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CheckoutUserInfoComponent } from '../../components/checkout-user-info/checkout-user-info.component';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
@@ -16,22 +8,15 @@ import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
-import {
-  CheckoutService,
-  CreateOrderFromDraftDto,
-} from '../../services/checkout/checkout.service';
+import { CheckoutService, CreateOrderFromDraftDto } from '../../services/checkout/checkout.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [
-    CheckoutUserInfoComponent,
-    OrderSummaryComponent,
-    RouterLink,
-    IconComponent,
-  ],
+  imports: [CheckoutUserInfoComponent, OrderSummaryComponent, RouterLink, IconComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -45,6 +30,7 @@ export class CheckoutComponent extends BasePageComponent {
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly authService = inject(AuthenticationService);
+  private readonly analytics = inject(AnalyticsService);
 
   cartItems = signal<CartItemDto[]>([]);
   isFormValid = signal<boolean>(false);
@@ -68,6 +54,8 @@ export class CheckoutComponent extends BasePageComponent {
   }
 
   ngOnInit() {
+    this.analytics.trackCheckoutStarted(this.cartItems());
+
     if (this.authService.isAuthenticated()) {
       this.userDetails = {
         ...this.userDetails,
@@ -83,9 +71,7 @@ export class CheckoutComponent extends BasePageComponent {
       },
       error: (err) => {
         console.error('Failed to create draft order:', err);
-        this.toastService.error(
-          'Failed to initialize checkout. Please try again.',
-        );
+        this.toastService.error('Failed to initialize checkout. Please try again.');
       },
     });
   }
@@ -96,8 +82,7 @@ export class CheckoutComponent extends BasePageComponent {
       customerEmail: this.userDetails.email,
       shipmentAddress: {
         city: this.userDetails.city,
-        street:
-          `${this.userDetails.houseNumber} ${this.userDetails.addressDetails}`.trim(),
+        street: `${this.userDetails.houseNumber} ${this.userDetails.addressDetails}`.trim(),
         state: '',
         country: this.userDetails.country,
         zipCode: this.userDetails.postalCode,
@@ -129,13 +114,11 @@ export class CheckoutComponent extends BasePageComponent {
           .subscribe({
             next: (checkoutResponse) => {
               console.log('Checkout initiated:', checkoutResponse);
+              this.analytics.trackPaymentStarted(orderResponse.orderId, 'EUR');
 
               // Store session ID for verification after redirect
               if (isPlatformBrowser(this.platformId)) {
-                sessionStorage.setItem(
-                  'checkoutSessionId',
-                  checkoutResponse.sessionId,
-                );
+                sessionStorage.setItem('checkoutSessionId', checkoutResponse.sessionId);
                 sessionStorage.setItem('checkoutEmail', this.userDetails.email);
               }
 
@@ -149,15 +132,15 @@ export class CheckoutComponent extends BasePageComponent {
             },
             error: (err) => {
               console.error('Checkout initiation failed:', err);
+              this.analytics.trackPaymentFailed('checkout_initiation_failed', orderResponse.orderId);
               this.isProcessing.set(false);
-              this.toastService.error(
-                'Failed to initiate payment. Please try again.',
-              );
+              this.toastService.error('Failed to initiate payment. Please try again.');
             },
           });
       },
       error: (err) => {
         console.error('Order creation failed:', err);
+        this.analytics.trackPaymentFailed('order_creation_failed');
         this.isProcessing.set(false);
         this.toastService.error('Failed to create order. Please try again.');
       },

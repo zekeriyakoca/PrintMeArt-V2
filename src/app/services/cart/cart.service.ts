@@ -4,7 +4,7 @@ import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AppInsightsService } from '../telemetry/app-insights.service';
+import { AnalyticsService } from '../telemetry/analytics.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class CartService {
 
   constructor(
     private _httpClient: HttpClient,
-    private telemetry: AppInsightsService,
+    private analytics: AnalyticsService,
     @Inject(PLATFORM_ID) private platformId: string,
   ) {}
 
@@ -49,15 +49,7 @@ export class CartService {
     this.isCartSidebarOpen.update((open) => !open);
   }
 
-  addItemToCart(
-    productId: number,
-    variantId: number,
-    productName: string,
-    calculatedPrice: number,
-    quantity: number,
-    pictureUrl: string,
-    selectedOptions: SelectedOptionDto[],
-  ): void {
+  addItemToCart(productId: number, variantId: number, productName: string, calculatedPrice: number, quantity: number, pictureUrl: string, selectedOptions: SelectedOptionDto[]): void {
     const newItem: CartItemDto = {
       id: crypto.randomUUID(),
       productId,
@@ -71,16 +63,13 @@ export class CartService {
     };
 
     const existingItemIndex = this.cart().findIndex(
-      (c) =>
-        c.productId == newItem.productId &&
-        c.variantId == newItem.variantId &&
-        this.summaryOptions(c.selectedOptions) ===
-          this.summaryOptions(newItem.selectedOptions),
+      (c) => c.productId == newItem.productId && c.variantId == newItem.variantId && this.summaryOptions(c.selectedOptions) === this.summaryOptions(newItem.selectedOptions),
     );
 
-    this.telemetry.trackEvent('cart_add_item', {
+    this.analytics.trackAddToCart({
       productId,
       variantId,
+      productName,
       quantity,
       unitPrice: calculatedPrice,
       mergedIntoExisting: existingItemIndex >= 0,
@@ -100,10 +89,6 @@ export class CartService {
     this.updateCartOnBackend(this.cart()).subscribe({
       next: () => console.log('Product added to cart successfully'),
       error: (error) => {
-        this.telemetry.trackException(error, {
-          operation: 'updateCartOnBackend',
-          action: 'addItemToCart',
-        });
         console.error('Error adding product to cart:', error);
       },
     });
@@ -117,20 +102,16 @@ export class CartService {
   }
 
   updateCartOnBackend(cartItems: CartItemDto[]): Observable<CartItemDto[]> {
-    return this._httpClient
-      .put<CustomerCart>(`${this.BASKET_API_URL}/basket/v1/basket`, cartItems)
-      .pipe(
-        map((customerCart: CustomerCart) => customerCart.items),
-        tap((cartItems) => this.cart.set(cartItems)),
-      );
+    return this._httpClient.put<CustomerCart>(`${this.BASKET_API_URL}/basket/v1/basket`, cartItems).pipe(
+      map((customerCart: CustomerCart) => customerCart.items),
+      tap((cartItems) => this.cart.set(cartItems)),
+    );
   }
 
   fetchCartItems(): void {
     if (this.isSSR) return;
 
-    this._httpClient
-      .get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`)
-      .subscribe((cartItems) => this.cart.set(cartItems));
+    this._httpClient.get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`).subscribe((cartItems) => this.cart.set(cartItems));
   }
 
   /**
@@ -142,43 +123,27 @@ export class CartService {
     this.cartSyncedAfterLogin = true;
     const localCart = [...this.cart()];
 
-    this.telemetry.trackEvent('cart_sync_after_login', {
-      localItemCount: localCart.length,
-    });
-
     // First, fetch the user's existing cart from backend
-    return this._httpClient
-      .get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`)
-      .pipe(
-        switchMap((backendCart) => {
-          // Merge local cart with backend cart
-          const mergedCart = this.mergeCartItems(backendCart, localCart);
+    return this._httpClient.get<CartItemDto[]>(`${this.BASKET_API_URL}/basket/v1/basket`).pipe(
+      switchMap((backendCart) => {
+        // Merge local cart with backend cart
+        const mergedCart = this.mergeCartItems(backendCart, localCart);
 
-          this.telemetry.trackEvent('cart_merge_result', {
-            backendItemCount: backendCart.length,
-            localItemCount: localCart.length,
-            mergedItemCount: mergedCart.length,
-          });
+        // If merged cart differs from backend, sync it back
+        if (mergedCart.length > 0 && localCart.length > 0) {
+          return this.updateCartOnBackend(mergedCart).pipe(
+            tap((syncedCart) => {
+              console.log('Cart merged and synced after login:', syncedCart.length, 'items');
+            }),
+          );
+        }
 
-          // If merged cart differs from backend, sync it back
-          if (mergedCart.length > 0 && localCart.length > 0) {
-            return this.updateCartOnBackend(mergedCart).pipe(
-              tap((syncedCart) => {
-                console.log(
-                  'Cart merged and synced after login:',
-                  syncedCart.length,
-                  'items',
-                );
-              }),
-            );
-          }
-
-          // No local items to merge, just use backend cart
-          this.cart.set(backendCart);
-          console.log('Cart fetched after login:', backendCart.length, 'items');
-          return of(backendCart);
-        }),
-      );
+        // No local items to merge, just use backend cart
+        this.cart.set(backendCart);
+        console.log('Cart fetched after login:', backendCart.length, 'items');
+        return of(backendCart);
+      }),
+    );
   }
 
   /**
@@ -186,19 +151,12 @@ export class CartService {
    * If an item exists in both (same variantId + options), increase quantity.
    * Otherwise, add the item from local cart.
    */
-  private mergeCartItems(
-    backendCart: CartItemDto[],
-    localCart: CartItemDto[],
-  ): CartItemDto[] {
+  private mergeCartItems(backendCart: CartItemDto[], localCart: CartItemDto[]): CartItemDto[] {
     const merged = [...backendCart];
 
     for (const localItem of localCart) {
       const existingIndex = merged.findIndex(
-        (item) =>
-          item.productId === localItem.productId &&
-          item.variantId === localItem.variantId &&
-          this.summaryOptions(item.selectedOptions) ===
-            this.summaryOptions(localItem.selectedOptions),
+        (item) => item.productId === localItem.productId && item.variantId === localItem.variantId && this.summaryOptions(item.selectedOptions) === this.summaryOptions(localItem.selectedOptions),
       );
 
       if (existingIndex >= 0) {
@@ -227,22 +185,13 @@ export class CartService {
     const item = this.cart().find((x) => x.id === itemId);
     const updatedCart = this.cart().filter((item) => item.id !== itemId);
 
-    this.telemetry.trackEvent('cart_remove_item', {
-      productId: item?.productId,
-      variantId: item?.variantId,
-      quantity: item?.quantity,
-      unitPrice: item?.unitPrice,
-    });
+    this.analytics.trackRemoveFromCart(item);
 
     this.cart.set(updatedCart);
 
     this.updateCartOnBackend(updatedCart).subscribe({
       next: () => console.log('Product removed from cart successfully'),
       error: (error) => {
-        this.telemetry.trackException(error, {
-          operation: 'updateCartOnBackend',
-          action: 'removeItemFromCart',
-        });
         console.error('Error removing product from cart:', error);
       },
     });
@@ -252,20 +201,12 @@ export class CartService {
    * Clear the entire cart (used after successful payment)
    */
   clearCart(): void {
-    this.telemetry.trackEvent('cart_clear', {
-      itemCount: this.cart().length,
-    });
-
     this.cart.set([]);
 
     if (!this.isSSR) {
       this.updateCartOnBackend([]).subscribe({
         next: () => console.log('Cart cleared successfully'),
         error: (error) => {
-          this.telemetry.trackException(error, {
-            operation: 'updateCartOnBackend',
-            action: 'clearCart',
-          });
           console.error('Error clearing cart:', error);
         },
       });

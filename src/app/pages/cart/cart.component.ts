@@ -1,10 +1,4 @@
-import {
-  Component,
-  HostBinding,
-  Input,
-  signal,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { Component, HostBinding, Input, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CartItemComponent } from '../../components/cart-item/cart-item.component';
 import { BasePageComponent } from '../basePageComponent';
 import { CartService } from '../../services/cart/cart.service';
@@ -12,15 +6,11 @@ import { CartItemDto } from '../../models/cart-item';
 import { Router, RouterLink } from '@angular/router';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
 import { IconComponent } from '../../components/shared/icon/icon.component';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [
-    CartItemComponent,
-    OrderSummaryComponent,
-    RouterLink,
-    IconComponent,
-  ],
+  imports: [CartItemComponent, OrderSummaryComponent, RouterLink, IconComponent],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
@@ -33,12 +23,15 @@ export class CartComponent extends BasePageComponent {
   constructor(
     private cartService: CartService,
     private router: Router,
+    private analytics: AnalyticsService,
   ) {
     super();
     this.cartItems = this.cartService.cart;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.analytics.trackCartViewed(this.cartItems());
+  }
 
   triggerRecalculateSummary() {
     this.cartItems.update((x) => {
