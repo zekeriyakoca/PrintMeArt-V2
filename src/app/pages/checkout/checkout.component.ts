@@ -1,4 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { CheckoutUserInfoComponent } from '../../components/checkout-user-info/checkout-user-info.component';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
@@ -51,11 +53,13 @@ export class CheckoutComponent extends BasePageComponent {
   constructor() {
     super();
     this.cartItems = this.cartService.cart;
+
+    toObservable(this.cartItems)
+      .pipe(first((items) => items.length > 0))
+      .subscribe((items) => this.analytics.trackCheckoutStarted(items));
   }
 
   ngOnInit() {
-    this.analytics.trackCheckoutStarted(this.cartItems());
-
     if (this.authService.isAuthenticated()) {
       this.userDetails = {
         ...this.userDetails,
@@ -66,7 +70,7 @@ export class CheckoutComponent extends BasePageComponent {
     }
     // Create draft order when entering checkout
     this.checkoutService.createDraftOrder().subscribe({
-      next: (response) => {
+      next: () => {
         console.log('Draft order created');
       },
       error: (err) => {

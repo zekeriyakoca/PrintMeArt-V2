@@ -1,4 +1,6 @@
 import { Component, HostBinding, Input, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { first } from 'rxjs/operators';
 import { CartItemComponent } from '../../components/cart-item/cart-item.component';
 import { BasePageComponent } from '../basePageComponent';
 import { CartService } from '../../services/cart/cart.service';
@@ -27,10 +29,10 @@ export class CartComponent extends BasePageComponent {
   ) {
     super();
     this.cartItems = this.cartService.cart;
-  }
 
-  ngOnInit() {
-    this.analytics.trackCartViewed(this.cartItems());
+    toObservable(this.cartItems)
+      .pipe(first((items) => items.length > 0))
+      .subscribe((items) => this.analytics.trackCartViewed(items));
   }
 
   triggerRecalculateSummary() {

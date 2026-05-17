@@ -1,11 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, first } from 'rxjs';
+import { filter } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CartItemDto } from '../../models/cart-item';
 import { ProductDto, ProductSimpleDto } from '../../models/product';
-import { CookieConsentService } from '../consent/cookie-consent.service';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 declare global {
   interface Window {
@@ -22,24 +22,12 @@ type AnalyticsConfig = {
   enabled?: boolean;
   tenant?: string;
   ga4MeasurementId?: string;
-  posthogKey?: string;
-  posthogHost?: string;
-  pageViewsWithoutConsent?: boolean;
-};
-
-type TrackOptions = {
-  ga4?: boolean;
-  posthog?: boolean;
 };
 
 type QueuedEvent = {
   name: string;
   properties: AnalyticsProperties;
-  sendGa4: boolean;
-  sendPosthog: boolean;
 };
-
-const GA4_EVENTS = new Set(['view_item_list', 'view_item', 'search', 'add_to_cart', 'remove_from_cart', 'view_cart', 'begin_checkout', 'add_payment_info', 'purchase']);
 
 @Injectable({
   providedIn: 'root',
@@ -47,50 +35,41 @@ const GA4_EVENTS = new Set(['view_item_list', 'view_item', 'search', 'add_to_car
 export class AnalyticsService {
   private initialized = false;
   private ga4Initialized = false;
-  private posthogInitialized = false;
   private pageViewsStarted = false;
-  private posthog?: { capture: (name: string, props?: AnalyticsProperties) => void };
+  private currentUserId?: string;
   private readonly queue: QueuedEvent[] = [];
 
   private readonly config: AnalyticsConfig = (environment as { analytics?: AnalyticsConfig }).analytics ?? {};
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: object,
-    private readonly cookieConsentService: CookieConsentService,
     private readonly router: Router,
+    private readonly authService: AuthenticationService,
   ) {}
 
   init(): void {
     if (this.initialized || !this.isEnabled()) return;
     this.initialized = true;
-    this.cookieConsentService.consentStatus$.pipe(first((status) => status === 'granted' || true)).subscribe(() => this.afterIdle(() => this.initAdapters()));
+
+    this.authService.getAuthState().subscribe((state) => {
+      this.currentUserId = state.user?.id;
+      this.applyUserId();
+    });
+
+    this.afterIdle(() => this.initGa4());
   }
 
-  track(name: string, properties: AnalyticsProperties = {}, options: TrackOptions = {}): void {
-    if (!this.isEnabled() || this.cookieConsentService.getStatus() !== 'granted') return;
+  track(name: string, properties: AnalyticsProperties = {}): void {
+    if (!this.isEnabled() || !this.config.ga4MeasurementId) return;
 
-    const enriched = {
-      tenant: this.config.tenant,
-      ...properties,
-    };
+    const enriched = this.enrich(properties);
 
-    const sendGa4 = options.ga4 ?? GA4_EVENTS.has(name);
-    const sendPosthog = options.posthog ?? true;
-    const needsGa4 = sendGa4 && !!this.config.ga4MeasurementId;
-    const needsPosthog = sendPosthog && !!this.config.posthogKey;
-
-    if ((needsGa4 && !this.ga4Initialized) || (needsPosthog && !this.posthogInitialized)) {
-      this.enqueue({ name, properties: enriched, sendGa4, sendPosthog });
+    if (!this.ga4Initialized) {
+      this.enqueue({ name, properties: enriched });
       return;
     }
 
-    if (sendGa4) {
-      this.trackGa4(name, enriched);
-    }
-
-    if (sendPosthog) {
-      this.trackPostHog(name, enriched);
-    }
+    this.trackGa4(name, enriched);
   }
 
   trackProductViewed(product: ProductDto): void {
@@ -154,27 +133,24 @@ export class AnalyticsService {
       item_name: item.productName,
       variant_id: String(item.variantId),
       quantity: item.quantity,
-      items: [
-        {
-          item_id: String(item.productId),
-          item_name: item.productName,
-          item_variant: String(item.variantId),
-          price: item.unitPrice,
-          quantity: item.quantity,
-        },
-      ],
+      items: [this.toCartGa4Item(item)],
     });
   }
 
   trackCartViewed(items: CartItemDto[]): void {
+    if (items.length === 0) return;
+
     this.track('view_cart', {
       currency: 'EUR',
       value: this.cartValue(items),
+      item_count: items.reduce((total, item) => total + item.quantity, 0),
       items: items.map((item) => this.toCartGa4Item(item)),
     });
   }
 
   trackCheckoutStarted(items: CartItemDto[]): void {
+    if (items.length === 0) return;
+
     this.track('begin_checkout', {
       currency: 'EUR',
       value: this.cartValue(items),
@@ -191,14 +167,10 @@ export class AnalyticsService {
   }
 
   trackPaymentFailed(reason: string, orderId?: number): void {
-    this.track(
-      'payment_failed',
-      {
-        order_id: orderId ? String(orderId) : undefined,
-        reason,
-      },
-      { ga4: false, posthog: true },
-    );
+    this.track('payment_failed', {
+      order_id: orderId ? String(orderId) : undefined,
+      reason,
+    });
   }
 
   trackOrderCompleted(data: { orderId?: number; orderNumber?: string; amountTotal?: number; currency?: string }): void {
@@ -210,34 +182,19 @@ export class AnalyticsService {
   }
 
   trackAddToCartBlocked(productId: number, reason: string): void {
-    this.track(
-      'add_to_cart_blocked',
-      {
-        product_id: String(productId),
-        reason,
-      },
-      { ga4: false, posthog: true },
-    );
+    this.track('add_to_cart_blocked', {
+      product_id: String(productId),
+      reason,
+    });
   }
 
   trackCustomUpload(name: 'custom_upload_rejected' | 'custom_upload_selected' | 'custom_upload_success', props: AnalyticsProperties): void {
-    this.track(name, props, { ga4: false, posthog: true });
+    this.track(name, props);
   }
 
-  private initAdapters(): void {
-    this.initGa4('granted');
-    this.startPageViewTracking();
-    void this.initPostHog().finally(() => this.flushQueue());
-  }
-
-  private initGa4(consent: 'denied' | 'granted'): void {
+  private initGa4(): void {
     const measurementId = this.config.ga4MeasurementId;
-    if (!measurementId) return;
-
-    if (this.ga4Initialized) {
-      this.updateGa4Consent(consent);
-      return;
-    }
+    if (!measurementId || this.ga4Initialized) return;
 
     const script = document.createElement('script');
     script.async = true;
@@ -249,44 +206,31 @@ export class AnalyticsService {
       window.dataLayer.push(arguments);
     };
 
-    this.updateGa4Consent(consent);
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId, { send_page_view: false });
-    this.ga4Initialized = true;
-  }
-
-  private updateGa4Consent(consent: 'denied' | 'granted'): void {
-    if (typeof window.gtag !== 'function') return;
-
-    window.gtag('consent', this.ga4Initialized ? 'update' : 'default', {
+    window.gtag('consent', 'default', {
       ad_personalization: 'denied',
       ad_storage: 'denied',
       ad_user_data: 'denied',
-      analytics_storage: consent,
+      analytics_storage: 'granted',
     });
+    window.gtag('js', new Date());
+    window.gtag('config', measurementId, {
+      send_page_view: false,
+      user_id: this.currentUserId,
+    });
+
+    this.ga4Initialized = true;
+    this.applyUserId();
+    this.startPageViewTracking();
+    this.flushQueue();
   }
 
-  private async initPostHog(): Promise<void> {
-    const key = this.config.posthogKey;
-    if (!key || this.posthogInitialized) return;
+  private applyUserId(): void {
+    if (!this.ga4Initialized || typeof window.gtag !== 'function') return;
 
-    const module = await import('posthog-js');
-    const posthog = module.default;
-    posthog.init(key, {
-      api_host: this.config.posthogHost || 'https://eu.i.posthog.com',
-      autocapture: false,
-      capture_pageview: false,
-      disable_session_recording: true,
-      persistence: 'localStorage+cookie',
-      loaded: (client) => {
-        if (this.config.tenant) {
-          client.register({ tenant: this.config.tenant });
-        }
-      },
+    window.gtag('set', {
+      user_id: this.currentUserId,
+      app_user_id: this.currentUserId,
     });
-
-    this.posthog = posthog;
-    this.posthogInitialized = true;
   }
 
   private trackGa4(name: string, properties: AnalyticsProperties): void {
@@ -303,16 +247,14 @@ export class AnalyticsService {
   }
 
   private trackPageView(url: string): void {
-    this.trackGa4('page_view', {
-      tenant: this.config.tenant,
-      page_path: this.sanitizePath(url),
-      page_title: document.title,
-    });
-  }
-
-  private trackPostHog(name: string, properties: AnalyticsProperties): void {
-    if (!this.posthogInitialized || !this.posthog) return;
-    this.posthog.capture(name, properties);
+    this.trackGa4(
+      'page_view',
+      this.enrich({
+        page_path: this.sanitizePath(url),
+        page_location: window.location.origin + this.sanitizePath(url),
+        page_title: document.title,
+      }),
+    );
   }
 
   private enqueue(event: QueuedEvent): void {
@@ -326,15 +268,16 @@ export class AnalyticsService {
     while (this.queue.length > 0) {
       const event = this.queue.shift();
       if (!event) return;
-
-      if (event.sendGa4) {
-        this.trackGa4(event.name, event.properties);
-      }
-
-      if (event.sendPosthog) {
-        this.trackPostHog(event.name, event.properties);
-      }
+      this.trackGa4(event.name, event.properties);
     }
+  }
+
+  private enrich(properties: AnalyticsProperties): AnalyticsProperties {
+    return {
+      tenant: this.config.tenant,
+      app_user_id: this.currentUserId,
+      ...properties,
+    };
   }
 
   private isEnabled(): boolean {
