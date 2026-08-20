@@ -16,6 +16,11 @@ export interface EffectiveImagePixels {
 
 export class EffectiveImagePixelsResolver {
   static readonly TRUSTED_SOURCE_PPI = 300;
+  /**
+   * AI-upscaled files gain pixels but not real detail, so only part of the
+   * gain is credited when reporting print quality.
+   */
+  static readonly UPSCALED_CREDIT_FACTOR = 0.7;
   static readonly TRUSTED_FALLBACK_LONG_EDGE_PX = 12_000;
   static readonly ASPECT_RATIO_TOLERANCE = 0.08;
 
@@ -114,8 +119,38 @@ export class EffectiveImagePixelsResolver {
   private static parsePixels(
     meta: ProductMetadata | null | undefined,
   ): Omit<EffectiveImagePixels, 'mode'> | null {
-    const widthPx = Number(meta?.OriginalImageWidth);
-    const heightPx = Number(meta?.OriginalImageHeight);
+    const original = EffectiveImagePixelsResolver.readPixels(
+      meta?.OriginalImageWidth,
+      meta?.OriginalImageHeight,
+    );
+    const upscaled = EffectiveImagePixelsResolver.readPixels(
+      meta?.UpscaledImageWidth,
+      meta?.UpscaledImageHeight,
+    );
+
+    if (!upscaled) return original;
+
+    const credited = {
+      widthPx: Math.round(
+        upscaled.widthPx * EffectiveImagePixelsResolver.UPSCALED_CREDIT_FACTOR,
+      ),
+      heightPx: Math.round(
+        upscaled.heightPx * EffectiveImagePixelsResolver.UPSCALED_CREDIT_FACTOR,
+      ),
+    };
+
+    // Never report worse than the untouched original.
+    return original
+      ? EffectiveImagePixelsResolver.preferHigherQuality(original, credited)
+      : credited;
+  }
+
+  private static readPixels(
+    width: string | null | undefined,
+    height: string | null | undefined,
+  ): Omit<EffectiveImagePixels, 'mode'> | null {
+    const widthPx = Number(width);
+    const heightPx = Number(height);
     if (
       !Number.isFinite(widthPx) ||
       !Number.isFinite(heightPx) ||

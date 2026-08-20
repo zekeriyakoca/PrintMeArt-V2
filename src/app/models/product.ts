@@ -45,6 +45,8 @@ export interface ProductDto {
 export class ProductMetadata {
   OriginalImageWidth: string = '0';
   OriginalImageHeight: string = '0';
+  UpscaledImageWidth?: string;
+  UpscaledImageHeight?: string;
   Museum: string = '';
   Dimensions: string = '';
 }
