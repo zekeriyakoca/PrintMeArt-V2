@@ -65,7 +65,7 @@ export class ProductPreviewComponent {
     { id: 'more-13', name: '40x50', val1: 40, val2: 50 },
     { id: 'more-14', name: '45x60', val1: 45, val2: 60 },
     { id: 'more-15', name: '50x50', val1: 50, val2: 50 },
-    { id: 'more-16', name: '50x75', val1: 50, val2: 75 },
+    { id: 'more-16', name: '50x70', val1: 50, val2: 70 },
     { id: 'more-17', name: '60x60', val1: 60, val2: 60 },
     { id: 'more-18', name: '60x80', val1: 60, val2: 80 },
     { id: 'more-19', name: '70x100', val1: 70, val2: 100 },
