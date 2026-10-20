@@ -56,6 +56,10 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
 
   artistBio = computed(() => this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP)?.description);
 
+  // Story starts collapsed to two lines; the artist bio is only shown when expanded
+  storyExpanded = signal(false);
+  hasMoreStory = computed(() => this.storyParagraphs().length > 1 || !!this.artistBio() || this.storyParagraphs()[0].length > 160);
+
   museum = computed<Museum | null>(() => {
     const attributes = this.product().attributes;
     if (!attributes || attributes.length === 0) {
@@ -118,6 +122,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     this.apiService.getProductById(this.productId).subscribe((product) => {
       if (product) {
         this.product.set(product);
+        this.storyExpanded.set(false);
         this.analytics.trackProductViewed(product);
       }
     });

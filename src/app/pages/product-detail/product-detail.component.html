@@ -51,19 +51,27 @@
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Story</span>
             <span class="flex-1 h-px bg-slate-200 w-16"></span>
           </div>
-          @for (paragraph of storyParagraphs(); track $index) {
-            <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm mb-3 last:mb-0">{{ paragraph }}</p>
+          <div [class.line-clamp-2]="!storyExpanded()">
+            @for (paragraph of storyExpanded() ? storyParagraphs() : storyParagraphs().slice(0, 1); track $index) {
+              <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm mb-3 last:mb-0">{{ paragraph }}</p>
+            }
+          </div>
+          @if (storyExpanded() && artistBio(); as bio) {
+            <div class="mt-6 pl-4 border-l-2 border-slate-200">
+              <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">About the artist</span>
+              <p class="text-slate-500 !leading-7 text-sm">{{ bio }}</p>
+            </div>
+          }
+          @if (hasMoreStory()) {
+            <button type="button" (click)="storyExpanded.set(!storyExpanded())"
+              class="mt-3 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-[#384f8c] transition-colors">
+              {{ storyExpanded() ? 'Show less' : 'Show more' }}
+              <svg class="w-3.5 h-3.5 transition-transform" [class.rotate-180]="storyExpanded()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
           }
         </div>
-        @if (artistBio(); as bio) {
-          <div>
-            <div class="inline-flex items-center gap-2 mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">About the artist</span>
-              <span class="flex-1 h-px bg-slate-200 w-16"></span>
-            </div>
-            <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm">{{ bio }}</p>
-          </div>
-        }
         <!-- PURCHASE SIDEBAR (mobile/tablet) -->
         <div class="lg:hidden">
           <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
