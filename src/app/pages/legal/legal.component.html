@@ -105,19 +105,13 @@
         <div class="p-6 rounded-xl bg-slate-50">
           <h3 class="font-semibold text-slate-800 mb-4">Shipping Costs</h3>
           <div class="grid gap-3">
-            <div class="flex justify-between items-center py-2 border-b border-slate-200">
-              <span class="text-slate-600">Netherlands</span>
-              <span class="font-medium text-green-600">{{ info.rateNl | currency:'EUR' }} - Free above {{
-                info.freeShippingThresholdNl | currency:'EUR' }}</span>
+            @for (zone of info.zones; track zone.name) {
+            <div class="flex justify-between items-center py-2 border-b border-slate-200 last:border-0">
+              <span class="text-slate-600">{{ zone.name }}</span>
+              <span class="font-medium text-slate-800">{{ zone.rate | currency:'EUR' }}@if (zone.freeShippingFrom != null) {
+                - Free above {{ zone.freeShippingFrom | currency:'EUR' }}}</span>
             </div>
-            <div class="flex justify-between items-center py-2 border-b border-slate-200">
-              <span class="text-slate-600">Belgium & Germany</span>
-              <span class="font-medium text-slate-800">{{ info.rateBeDe | currency:'EUR' }}</span>
-            </div>
-            <div class="flex justify-between items-center py-2">
-              <span class="text-slate-600">Rest of EU</span>
-              <span class="font-medium text-slate-800">{{ info.rateEu | currency:'EUR' }}</span>
-            </div>
+            }
           </div>
         </div>
         }

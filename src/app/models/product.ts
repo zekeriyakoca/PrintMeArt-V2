@@ -38,9 +38,16 @@ export interface ProductDto {
   discountAmount: number;
   isAvailable: boolean;
   metadata: ProductMetadata;
-  artistBio?: string;
+  attributeDetails?: ProductAttributeDetailDto[];
   sourceUrl?: string;
   creditLine?: string;
+}
+
+export interface ProductAttributeDetailDto {
+  group: string;
+  name: string;
+  description: string;
+  metadata: Record<string, string> | null;
 }
 
 export class ProductMetadata {

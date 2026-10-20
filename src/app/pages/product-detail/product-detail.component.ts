@@ -15,6 +15,8 @@ import { RelatedProductsComponent } from '../../components/related-products/rela
 import { MUSEUMS, Museum } from '../../data/museums';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
+const ARTIST_GROUP = 'Artist';
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -51,6 +53,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   }
   // The museum-based story where we have one, otherwise the short product description
   storyParagraphs = computed(() => (this.product().metadata?.Story ?? this.product().description ?? '').split('\n\n'));
+
+  artistBio = computed(() => this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP)?.description);
 
   museum = computed<Museum | null>(() => {
     const attributes = this.product().attributes;

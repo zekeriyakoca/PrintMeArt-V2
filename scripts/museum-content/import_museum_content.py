@@ -1,8 +1,8 @@
 """
 Writes museum facts (museum-data.json) and stories (stories.json) into
 catalog."Products"."Metadata", and artist bios (artists.json) into the Artist
-attributes' Description / DescriptionNl. Existing metadata keys are kept: only
-the keys below are added or overwritten, so the script is safe to re-run.
+attributes' Description and Metadata.Description_nl. Existing metadata keys are
+kept: only the keys below are added or overwritten, so the script is safe to re-run.
 
     python3 import_museum_content.py            # dry run: shows what would change
     DATABASE_URL=postgresql://... python3 import_museum_content.py --apply
@@ -44,7 +44,8 @@ def to_sql(patches, bios):
         f'"UpdatedAt" = now() WHERE "Id" = {pid};'
         for pid, patch in sorted(patches.items())
     ] + [
-        f'UPDATE catalog."ProductAttributes" SET "Description" = {quote(bio["bio"])}, "DescriptionNl" = {quote(bio["bio_nl"])} '
+        f'UPDATE catalog."ProductAttributes" SET "Description" = {quote(bio["bio"])}, '
+        f'"Metadata" = coalesce("Metadata", \'{{}}\'::jsonb) || jsonb_build_object(\'Description_nl\', {quote(bio["bio_nl"])}) '
         f'WHERE "Id" = {int(aid)} AND "GroupId" = {ARTIST_GROUP_ID};'
         for aid, bio in sorted(bios.items(), key=lambda item: int(item[0]))
     ]

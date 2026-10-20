@@ -28,13 +28,18 @@ export class PolicyComponent {
     if (!info) {
       return [];
     }
+    const freeZone = info.zones.find((zone) => zone.freeShippingFrom != null);
     return [
-      {
-        color: 'bg-red-50',
-        name: 'Free shipping',
-        desc: `Free shipping on all orders above ${this.currency.transform(info.freeShippingThresholdNl, 'EUR')} within the Netherlands.`,
-        svg: `truck`,
-      },
+      ...(freeZone
+        ? [
+            {
+              color: 'bg-red-50',
+              name: 'Free shipping',
+              desc: `Free shipping on all orders above ${this.currency.transform(freeZone.freeShippingFrom, 'EUR')} within ${freeZone.name}.`,
+              svg: `truck`,
+            },
+          ]
+        : []),
       {
         color: 'bg-sky-50',
         name: 'Very easy to return',

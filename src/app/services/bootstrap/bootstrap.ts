@@ -2,15 +2,19 @@ import { Injectable, signal, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
+export type ShippingZone = {
+  name: string;
+  countries: string[];
+  rate: number;
+  freeShippingFrom: number | null;
+};
+
 export type ShippingInfo = {
   currency: string;
-  rateNl: number;
-  rateBeDe: number;
-  rateEu: number;
-  freeShippingThresholdNl: number;
+  zones: ShippingZone[];
+  countries: string[];
   deliveryDays: number;
   returnDays: number;
-  countries: string[];
 };
 
 @Injectable({
@@ -32,18 +36,13 @@ export class Bootstrap {
       });
   }
 
-  // Mirrors the backend rule; null while shipping info or country is unknown.
+  // Mirrors the backend rule; null while shipping info is unknown or nobody ships to the country.
   shippingCost(countryCode: string, subtotal: number): number | null {
-    const info = this._shippingInfo();
-    if (!info) {
+    const zone = this._shippingInfo()?.zones.find((z) => z.countries.includes(countryCode));
+    if (!zone) {
       return null;
     }
-    if (countryCode === 'NL') {
-      return subtotal >= info.freeShippingThresholdNl ? 0 : info.rateNl;
-    }
-    if (countryCode === 'BE' || countryCode === 'DE') {
-      return info.rateBeDe;
-    }
-    return info.countries.includes(countryCode) ? info.rateEu : null;
+    return zone.freeShippingFrom != null && subtotal >= zone.freeShippingFrom ? 0 : zone.rate;
   }
+
 }
