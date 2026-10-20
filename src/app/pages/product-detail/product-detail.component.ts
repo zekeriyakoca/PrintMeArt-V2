@@ -49,6 +49,9 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
       this.fetchProduct();
     });
   }
+  // The museum-based story where we have one, otherwise the short product description
+  storyParagraphs = computed(() => (this.product().metadata?.Story ?? this.product().description ?? '').split('\n\n'));
+
   museum = computed<Museum | null>(() => {
     const attributes = this.product().attributes;
     if (!attributes || attributes.length === 0) {
@@ -67,7 +70,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
 
   productAccordionData = computed(() => {
     const sourceUrl = this.product().sourceUrl;
-    const creditLine = this.product().creditLine || '—';
+    const { CreditLine, ObjectNumber } = this.product().metadata ?? {};
+    const creditLine = [CreditLine ?? this.product().creditLine, ObjectNumber].filter(Boolean).join(' · ') || '—';
 
     const rightsContent = `
       <div class="space-y-4">

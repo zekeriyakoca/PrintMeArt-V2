@@ -51,10 +51,19 @@
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Story</span>
             <span class="flex-1 h-px bg-slate-200 w-16"></span>
           </div>
-          <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm">
-            {{ product().description }}
-          </p>
+          @for (paragraph of storyParagraphs(); track $index) {
+            <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm mb-3 last:mb-0">{{ paragraph }}</p>
+          }
         </div>
+        @if (product().artistBio) {
+          <div>
+            <div class="inline-flex items-center gap-2 mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">About the artist</span>
+              <span class="flex-1 h-px bg-slate-200 w-16"></span>
+            </div>
+            <p class="text-[#384f8c] !leading-7 md:!leading-8 text-sm">{{ product().artistBio }}</p>
+          </div>
+        }
         <!-- PURCHASE SIDEBAR (mobile/tablet) -->
         <div class="lg:hidden">
           <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>

@@ -38,6 +38,7 @@ export interface ProductDto {
   discountAmount: number;
   isAvailable: boolean;
   metadata: ProductMetadata;
+  artistBio?: string;
   sourceUrl?: string;
   creditLine?: string;
 }
@@ -49,6 +50,9 @@ export class ProductMetadata {
   UpscaledImageHeight?: string;
   Museum: string = '';
   Dimensions: string = '';
+  Story?: string;
+  CreditLine?: string;
+  ObjectNumber?: string;
 }
 
 export interface ProductImageDto {
