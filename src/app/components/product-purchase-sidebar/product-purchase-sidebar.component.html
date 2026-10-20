@@ -60,10 +60,12 @@
       <span class="trust-check">✓</span>
       <span>Fair value, premium quality</span>
     </li>
+    @if (shippingInfo(); as info) {
     <li class="trust-item">
       <span class="trust-check">✓</span>
-      <span>30-day returns</span>
+      <span>{{ info.returnDays }}-day returns</span>
     </li>
+    }
   </ul>
 
   <!-- Action buttons (side by side) -->

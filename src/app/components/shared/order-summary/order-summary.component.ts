@@ -12,13 +12,10 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class OrderSummaryComponent {
   cartItems = input<CartItemDto[]>([]);
-  shippingFee = computed(() => {
-    const shippingInfo = this.bootstrap.shippingInfo();
-    const shippingFee = shippingInfo?.shippingFee ?? 4.95;
-    return this.itemsTotal() >= shippingInfo?.freeShippingThreshold
-      ? 0
-      : shippingFee;
-  });
+  country = input<string>('');
+  shippingFee = computed(() =>
+    this.bootstrap.shippingCost(this.country(), this.itemsTotal()),
+  );
   taxRate = 0.08;
 
   itemsTotal = computed(() => {

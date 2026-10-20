@@ -44,7 +44,7 @@ export class CheckoutComponent extends BasePageComponent {
     lastName: '',
     email: '',
     city: '',
-    country: '',
+    country: 'NL',
     postalCode: '',
     houseNumber: '',
     addressDetails: '',

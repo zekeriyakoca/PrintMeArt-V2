@@ -5,7 +5,7 @@
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-    @for (step of steps; track $index) {
+    @for (step of steps(); track $index) {
     <div class="group text-center">
       <!-- Step number badge + Icon -->
       <div class="relative inline-flex flex-col items-center mb-6 px-4 bg-white">

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-how-we-work',
@@ -8,4 +9,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './how-we-work.component.scss',
   standalone: true,
 })
-export class HowWeWorkComponent {}
+export class HowWeWorkComponent {
+  readonly shippingInfo = inject(Bootstrap).shippingInfo;
+}

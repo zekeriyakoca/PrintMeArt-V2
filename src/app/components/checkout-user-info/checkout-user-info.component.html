@@ -60,7 +60,11 @@
 
     <div class="form-group">
       <label for="country" class="form-label">Country</label>
-      <input [field]="userForm.country" type="text" id="country" class="form-input" placeholder="Netherlands" />
+      <select [field]="userForm.country" id="country" class="form-input">
+        @for (country of countries(); track country.code) {
+        <option [value]="country.code">{{ country.name }}</option>
+        }
+      </select>
       @if (userForm.country().touched()) {
       <ul class="error-list">
         @for (error of userForm.country().errors(); track error) {

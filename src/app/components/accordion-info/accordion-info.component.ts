@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, OnInit } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
 import {
   trigger,
@@ -8,8 +8,9 @@ import {
   animate,
 } from '@angular/animations';
 import { AccordionItem } from '../../models/accordion-item';
+import { Bootstrap, ShippingInfo } from '../../services/bootstrap/bootstrap';
 
-const DEFAULT_DATA: AccordionItem[] = [
+const defaultData = (info: ShippingInfo | null): AccordionItem[] => [
   {
     name: 'Print Quality & Care',
     content: `<div class="quality-rows">
@@ -45,13 +46,13 @@ const DEFAULT_DATA: AccordionItem[] = [
     name: 'FAQ',
     content: `
     <ul class="list-disc list-inside leading-7">
-    <li><b>Can I return or exchange my order?</b>
-      </br>Yes, returns and exchanges are accepted within 30 days of purchase if the item is in its original condition.
+    ${info ? `<li><b>Can I return or exchange my order?</b>
+      </br>Yes, returns and exchanges are accepted within ${info.returnDays} days of purchase if the item is in its original condition.
     </li>
     <li>
     <b>How long does shipping take?</b>
-    </br>Unframed prints ship within 2-4 days. Framed prints require an additional 7-8 days for processing.
-    </li>
+    </br>Orders are delivered within ${info.deliveryDays} days.
+    </li>` : ''}
     <li>
     <b>Do you offer custom prints?</b>
     </br>Yes, we offer custom printing services. Contact us for more details.
@@ -79,30 +80,18 @@ const DEFAULT_DATA: AccordionItem[] = [
     ]),
   ],
 })
-export class AccordionInfoComponent implements OnInit, OnChanges {
+export class AccordionInfoComponent {
+  private readonly bootstrap = inject(Bootstrap);
+
   panelClassName = input<string>(
     'p-4 pt-3 last:pb-0 text-slate-700 text-sm leading-6 bg-white border-t border-slate-200',
   );
   data = input<AccordionItem[]>([]);
   openStates: { [key: number]: boolean } = {};
-  allData: AccordionItem[] = [];
-
-  ngOnInit() {
-    this.setInitialOpenStates();
-  }
-
-  ngOnChanges() {
-    this.allData = [...DEFAULT_DATA, ...(this.data() ?? [])];
-    this.setInitialOpenStates();
-  }
-
-  private setInitialOpenStates() {
-    this.allData.forEach((_, index) => {
-      if (this.openStates[index] === undefined) {
-        this.openStates[index] = false;
-      }
-    });
-  }
+  allData = computed(() => [
+    ...defaultData(this.bootstrap.shippingInfo()),
+    ...(this.data() ?? []),
+  ]);
 
   toggleAccordion(index: number) {
     this.openStates[index] = !this.openStates[index];

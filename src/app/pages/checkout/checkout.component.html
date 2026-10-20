@@ -42,7 +42,7 @@
       <!-- Summary Sidebar -->
       <div class="summary-section">
         <div class="summary-sticky">
-          <app-order-summary [cartItems]="cartItems()">
+          <app-order-summary [cartItems]="cartItems()" [country]="userDetails.country">
             <order-button>
               <button class="confirm-btn" (click)="confirmOrder()" [disabled]="!isFormValid() || isProcessing()">
                 @if (isProcessing()) {

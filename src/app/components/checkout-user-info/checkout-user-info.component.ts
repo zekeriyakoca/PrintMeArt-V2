@@ -1,7 +1,8 @@
-import { Component, effect, model, output } from '@angular/core';
+import { Component, computed, effect, inject, model, output } from '@angular/core';
 import { Field, form, required, email } from '@angular/forms/signals';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
+import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-checkout-user-info',
@@ -13,10 +14,27 @@ import { CheckoutUserInfo } from '../../models/checkout-user-info';
 export class CheckoutUserInfoComponent {
   readonly isFormValid = model<boolean>();
 
+  private readonly bootstrap = inject(Bootstrap);
+  private readonly regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+
+  countries = computed(() =>
+    (this.bootstrap.shippingInfo()?.countries ?? [])
+      .map((code) => ({ code, name: this.regionNames.of(code) ?? code }))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  );
+
   constructor() {
     effect(() => {
       const isValid = this.userForm().valid();
       this.isFormValid.set(isValid);
+    });
+
+    // Fall back to NL when the prefilled country is not one we ship to.
+    effect(() => {
+      const countries = this.bootstrap.shippingInfo()?.countries;
+      if (countries && !countries.includes(this.userDetails().country)) {
+        this.userDetails.update((details) => ({ ...details, country: 'NL' }));
+      }
     });
   }
 
@@ -25,7 +43,7 @@ export class CheckoutUserInfoComponent {
     lastName: '',
     email: '',
     city: '',
-    country: '',
+    country: 'NL',
     postalCode: '',
     houseNumber: '',
     addressDetails: '',

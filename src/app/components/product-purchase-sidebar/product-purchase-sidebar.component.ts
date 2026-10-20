@@ -1,5 +1,5 @@
 import { SizeOption } from './../../models/size-option';
-import { Component, computed, effect, input, model, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -18,6 +18,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
+import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
@@ -28,6 +29,7 @@ import { ProductPreviewComponent } from '../product-preview/product-preview.comp
 export class ProductPurchaseSidebarComponent extends BasePageComponent {
   private variantId: number = 1;
   SizeOptions = SizeOptions;
+  readonly shippingInfo = inject(Bootstrap).shippingInfo;
 
   product = model<ProductDto>({} as ProductDto);
   isMatIncluded = model<boolean>(false);

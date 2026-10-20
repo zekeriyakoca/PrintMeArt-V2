@@ -1,5 +1,5 @@
 <div class="info-accordion w-full space-y-3">
-  @for (item of allData; track $index; let i = $index) {
+  @for (item of allData(); track $index; let i = $index) {
   <div class="info-card">
     <button class="info-button" (click)="toggleAccordion(i)" [attr.aria-expanded]="isOpen(i)">
 

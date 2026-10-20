@@ -8,7 +8,11 @@
     </div>
     <div class="summary-row">
       <span class="row-label">Shipping</span>
+      @if (shippingFee() !== null) {
       <span class="row-value">{{ shippingFee() | currency:'EUR' }}</span>
+      } @else {
+      <span class="row-value">Calculated at checkout</span>
+      }
     </div>
     <div class="summary-row">
       <span class="row-label">Tax</span>

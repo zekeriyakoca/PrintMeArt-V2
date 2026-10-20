@@ -358,6 +358,7 @@
       </details>
 
       <!-- FAQ 4 -->
+      @if (shippingInfo(); as info) {
       <details class="group py-5">
         <summary class="flex items-center justify-between cursor-pointer list-none select-none">
           <span class="font-medium text-slate-900 pr-6">How long does shipping take?</span>
@@ -367,10 +368,11 @@
           </svg>
         </summary>
         <p class="mt-3 text-slate-600 leading-relaxed pr-6 sm:pr-12">
-          We ship within 2–5 business days for prints, and 5–7 for framed orders. Delivery times vary by location,
-          but we always use tracked shipping so you know when to expect it.
+          Orders are delivered within {{ info.deliveryDays }} days. We always use tracked shipping so you know when
+          to expect it.
         </p>
       </details>
+      }
     </div>
   </section>
 
