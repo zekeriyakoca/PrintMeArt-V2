@@ -684,14 +684,20 @@
   }
 }
 
-// Save design button
-.save-design-btn {
+// Design actions: save, and see the design in a room
+.design-actions {
   margin-top: 20px;
   display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.save-design-btn {
+  display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  width: 100%;
   padding: 0.7rem 1rem;
   border: none;
   border-radius: 999px;
@@ -709,6 +715,28 @@
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+  }
+}
+
+.room-design-btn {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #fff;
+  color: #384f8c;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #384f8c;
+    background: #f8fafc;
   }
 }
 
@@ -1092,7 +1120,7 @@ $line-color: oklch(52.5% 0.223 3.958);
     display: none;
   }
 
-  .save-design-btn {
+  .design-actions {
     margin-top: 0;
   }
 

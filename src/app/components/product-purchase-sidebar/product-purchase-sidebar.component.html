@@ -141,6 +141,20 @@
 <!-- Product Preview Modal -->
 @if (selectedSize(); as size) {
   @if (customImageUrl() || product().images?.length) {
+    @if (roomLayout(); as layout) {
+    <app-room-view
+      [title]="product().name"
+      [imageUrl]="customImageUrl() || product().images[0].large"
+      [frameName]="selectedFrameName()"
+      [matIncluded]="isMatIncluded()"
+      [layout]="layout"
+      [sizes]="availableSizes()"
+      [(selectedSize)]="selectedSize"
+      (close)="roomLayout.set(null)"
+      (editDesign)="roomLayout.set(null); showPreview.set(true)"
+      (designSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
+    ></app-room-view>
+    }
     <app-product-preview
       [isOpen]="showPreview()"
       [imageUrl]="customImageUrl() || product().images[0].large"
@@ -153,6 +167,7 @@
       [metadata]="product().metadata"
       (onClose)="showPreview.set(false)"
       (onDesignSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
+      (onViewInRoom)="roomLayout.set($event); showPreview.set(false)"
     ></app-product-preview>
   }
 }

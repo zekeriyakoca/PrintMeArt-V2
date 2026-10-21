@@ -17,12 +17,14 @@ import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
+import { RoomViewComponent } from '../room-view/room-view.component';
+import { DesignLayout } from '../../shared/design-composer';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent],
+  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -77,6 +79,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   showPreview = signal(false);
+  /** Design shown in the room view while it is open */
+  roomLayout = signal<DesignLayout | null>(null);
   showMobileMessage = signal(false);
 
   onPreviewClick() {
