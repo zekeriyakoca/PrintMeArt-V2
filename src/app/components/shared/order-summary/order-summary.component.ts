@@ -16,7 +16,6 @@ export class OrderSummaryComponent {
   shippingFee = computed(() =>
     this.bootstrap.shippingCost(this.country(), this.itemsTotal()),
   );
-  taxRate = 0.08;
 
   itemsTotal = computed(() => {
     const items = this.cartItems() ?? [];
@@ -26,15 +25,11 @@ export class OrderSummaryComponent {
     );
   });
 
-  // Vergi zaten fiyatın içindeyse: içindeki vergi payı
-  taxAmount = computed(
-    () => (this.itemsTotal() * this.taxRate) / (1 + this.taxRate),
-  );
+  // Fiyatlar BTW dahil: toplam = ara toplam + kargo (Stripe'ın çektiği tutar)
+  total = computed(() => this.itemsTotal() + (this.shippingFee() ?? 0));
 
-  // Toplam (vergi dahil) + kargo  (tax'i tekrar ekleme!)
-  totalPriceWithTax = computed(
-    () => this.itemsTotal() + (this.shippingFee() ?? 0),
-  );
+  // Toplamın içindeki BTW payı (%21, fiyata dahil)
+  vatAmount = computed(() => this.total() - this.total() / 1.21);
 
   constructor(private bootstrap: Bootstrap) {}
 }

@@ -3,7 +3,7 @@
 
   <div class="summary-rows">
     <div class="summary-row">
-      <span class="row-label">Subtotal (incl. tax)</span>
+      <span class="row-label">Subtotal (incl. VAT)</span>
       <span class="row-value">{{ itemsTotal() | currency:'EUR' }}</span>
     </div>
     <div class="summary-row">
@@ -14,15 +14,14 @@
       <span class="row-value">Calculated at checkout</span>
       }
     </div>
-    <div class="summary-row">
-      <span class="row-label">Tax</span>
-      <span class="row-value">{{ taxAmount() | currency:'EUR' }}</span>
-    </div>
   </div>
 
   <div class="summary-total">
     <span class="total-label">Total</span>
-    <span class="total-value">{{ totalPriceWithTax() | currency:'EUR' }}</span>
+    <div class="text-right">
+      <span class="total-value">{{ total() | currency:'EUR' }}</span>
+      <p class="text-xs text-slate-400 m-0">incl. {{ vatAmount() | currency:'EUR' }} VAT</p>
+    </div>
   </div>
 
   <div class="summary-actions">
