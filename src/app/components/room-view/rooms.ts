@@ -23,7 +23,7 @@ export const ROOM_SCENES: RoomScene[] = [
     // Scale from the sofa back and the organ against the wall (~3.8 px/cm)
     id: 'living-room',
     name: 'Living room',
-    image: '/rooms/living-room.jpg',
+    image: '/rooms/living-room.webp',
     widthCm: 282,
     anchor: { x: 0.556, y: 0.422, align: 'bottom' },
     wallAlbedo: 0.88,
@@ -34,7 +34,7 @@ export const ROOM_SCENES: RoomScene[] = [
     // Scale from the planters and the uncropped ceiling height (~5.3 px/cm)
     id: 'white-wall',
     name: 'White wall',
-    image: '/rooms/white-wall.jpg',
+    image: '/rooms/white-wall.webp',
     widthCm: 283,
     anchor: { x: 0.433, y: 0.338, align: 'center' },
     wallAlbedo: 0.85,
@@ -45,7 +45,7 @@ export const ROOM_SCENES: RoomScene[] = [
     // Scale from the turntable, the window and the ceiling height (~6 px/cm)
     id: 'record-corner',
     name: 'Record corner',
-    image: '/rooms/record-corner.jpg',
+    image: '/rooms/record-corner.webp',
     widthCm: 222,
     anchor: { x: 0.45, y: 0.44, align: 'bottom' },
     wallAlbedo: 0.85,

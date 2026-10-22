@@ -23,6 +23,12 @@
       }
     },
     {
+      "route": "/rooms/*",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    },
+    {
       "route": "/index.html",
       "headers": {
         "Cache-Control": "no-cache"
