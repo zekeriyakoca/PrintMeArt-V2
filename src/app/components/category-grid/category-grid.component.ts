@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   ChangeDetectionStrategy,
@@ -14,7 +16,7 @@ import { CategoryDto } from '../../models/category';
 @Component({
   selector: 'app-category-grid',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [RouterLink, LinkPipe, TranslatePipe, IconComponent],
   templateUrl: './category-grid.component.html',
   styleUrls: ['./category-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

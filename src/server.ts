@@ -44,15 +44,17 @@ app.get('/sitemap.xml', (_req, res, next) => {
     .catch(next);
 });
 
-// Every page lives under /en or /nl. A link without one keeps the language of the page it came from,
-// otherwise the language the visitor chose before, otherwise Dutch.
+// Every page lives under /en or /nl, and the language of the last page opened is remembered.
+// An address without one goes to that language, or Dutch the first time.
 app.use((req, res, next) => {
-  if (/^\/(en|nl)(\/|$)/.test(req.path)) return next();
-  const referrer = req.get('referer');
-  const fromPage = referrer ? new URL(referrer).pathname.split('/')[1] : undefined;
-  const chosen = req.get('cookie')?.match(new RegExp(`(?:^|; )${LANGUAGE_COOKIE}=(\\w+)`))?.[1];
-  const language = [fromPage, chosen].find(isLanguage) ?? DEFAULT_LANGUAGE;
-  res.redirect(req.path === '/' ? 302 : 301, `/${language}${req.originalUrl === '/' ? '' : req.originalUrl}`);
+  const language = req.path.split('/')[1];
+  if (isLanguage(language)) {
+    res.cookie(LANGUAGE_COOKIE, language, { maxAge: 31536000000, sameSite: 'lax' });
+    return next();
+  }
+  const remembered = req.get('cookie')?.match(new RegExp(`(?:^|; )${LANGUAGE_COOKIE}=(\\w+)`))?.[1];
+  const target = isLanguage(remembered) ? remembered : DEFAULT_LANGUAGE;
+  res.set('Cache-Control', 'no-store').redirect(302, `/${target}${req.originalUrl === '/' ? '' : req.originalUrl}`);
 });
 
 // Pages that depend on the visitor render in the browser only

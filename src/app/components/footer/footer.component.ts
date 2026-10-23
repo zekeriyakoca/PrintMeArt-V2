@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 
@@ -6,7 +8,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [RouterLink, LinkPipe, TranslatePipe, IconComponent],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })

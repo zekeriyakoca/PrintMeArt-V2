@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
@@ -7,7 +9,7 @@ import { Bootstrap } from '../../services/bootstrap/bootstrap';
 @Component({
   selector: 'app-legal',
   standalone: true,
-  imports: [TranslatePipe, ComplianceFormComponent, CurrencyPipe],
+  imports: [RouterLink, LinkPipe, TranslatePipe, ComplianceFormComponent, CurrencyPipe],
   templateUrl: './legal.component.html',
   styleUrls: ['./legal.component.scss'],
 })

@@ -1,5 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, model, output } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   CartItemDto,
   SelectedOptionDto,
@@ -19,6 +20,8 @@ import { CurrencyPipe } from '@angular/common';
 export class CartItemComponent {
   cartItem = model<CartItemDto>();
   cartItemChanged = output();
+
+  private readonly router = inject(Router);
 
   constructor(private cartService: CartService) {}
 
@@ -50,6 +53,6 @@ export class CartItemComponent {
   }
 
   goToProduct() {
-    window.location.href = `/products/${this.cartItem()?.productId}`;
+    this.router.navigate(['/products', this.cartItem()?.productId]);
   }
 }

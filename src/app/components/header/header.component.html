@@ -16,7 +16,7 @@
             <ul class="nc-Navigation flex items-center">
               <!-- Prints Mega Menu -->
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
-                <a href="/search" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a routerLink="/search" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   {{ 'header.catalog' | t }}
                 </a>
                 <!-- Prints Mega Menu -->
@@ -27,11 +27,11 @@
                         <div class="flex-1 grid grid-cols-3 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (category of printCategories(); track category.id) {
                             <div>
-                              <a class="font-medium text-[#384f8c] uppercase" [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ 'name.' + category.name | t }}</a>
+                              <a class="font-medium text-[#384f8c] uppercase" [routerLink]="'/products?categoryName=' + encodeURIComponent(category.name) | link">{{ 'name.' + category.name | t }}</a>
                               <ul class="grid space-y-4 mt-4">
                                 @for (child of category.childCategories; track child.id) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black" [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ 'name.' + child.name | t }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black" [routerLink]="'/products?categoryName=' + encodeURIComponent(child.name) | link">{{ 'name.' + child.name | t }}</a>
                                   </li>
                                 }
                               </ul>
@@ -72,7 +72,7 @@
 
               <!-- Collections Mega Menu -->
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('collections')" (mouseleave)="hideDropdown('collections')">
-                <a href="/collections" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a routerLink="/collections" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   {{ 'header.collections' | t }}
                 </a>
                 <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'collections'">
@@ -82,11 +82,11 @@
                         <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (group of collectionGroups; track group.name) {
                             <div>
-                              <a class="font-medium text-[#384f8c] uppercase" [href]="group.href">{{ group.name | t }}</a>
+                              <a class="font-medium text-[#384f8c] uppercase" [routerLink]="group.href | link">{{ group.name | t }}</a>
                               <ul class="grid space-y-4 mt-4">
                                 @for (item of group.items; track item.name) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black" [href]="item.href">{{ item.name | t }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black" [routerLink]="item.href | link">{{ item.name | t }}</a>
                                   </li>
                                 }
                               </ul>
@@ -95,7 +95,7 @@
                         </div>
                         <!-- Right side card -->
                         <div class="w-[40%] xl:w-[35%] max-w-[450px]">
-                          <a href="/collections" class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group block">
+                          <a routerLink="/collections" class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group block">
                             <img
                               src="https://genstorageaccount3116.blob.core.windows.net/printme-images/menu-collections-1.webp"
                               class="absolute inset-0 w-full h-full object-cover"
@@ -127,7 +127,7 @@
               <!-- Your Design (special styling, no submenu) -->
               <li class="menu-item flex-shrink-0">
                 <a
-                  href="/your-design"
+                  routerLink="/your-design"
                   class="inline-flex items-center text-sm lg:text-[1.1rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
                   style="color: #db2877; font-family: 'Dancing Script', cursive; font-weight: 600"
                 >
@@ -137,14 +137,14 @@
 
               <!-- Frames -->
               <li class="menu-item flex-shrink-0">
-                <a href="/how-we-work" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a routerLink="/how-we-work" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   {{ 'header.howWeWork' | t }}
                 </a>
               </li>
 
               <!-- About -->
               <li class="menu-item flex-shrink-0">
-                <a href="/about" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a routerLink="/about" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   {{ 'header.about' | t }}
                 </a>
               </li>
@@ -229,7 +229,7 @@
     <div class="flex flex-col h-full">
       <!-- Mobile menu header -->
       <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-        <a href="/" class="inline-block" (click)="closeMobileMenu()">
+        <a routerLink="/" class="inline-block" (click)="closeMobileMenu()">
           <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" width="108" height="40" />
         </a>
         <button type="button" class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" (click)="closeMobileMenu()">
@@ -242,37 +242,37 @@
       <nav class="flex-1 overflow-y-auto px-6 py-6">
         <ul class="space-y-1">
           <li>
-            <a href="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.catalog' | t }}</span>
             </a>
           </li>
           <li>
-            <a href="/collections" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/collections" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.collections' | t }}</span>
             </a>
           </li>
           <li>
-            <a href="/your-design" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors" style="color: #db2877" (click)="closeMobileMenu()">
+            <a routerLink="/your-design" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors" style="color: #db2877" (click)="closeMobileMenu()">
               <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
               <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem">{{ 'header.yourDesign' | t }}</span>
             </a>
           </li>
           <li>
-            <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.howWeWork' | t }}</span>
             </a>
           </li>
           <li>
-            <a href="/about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="users" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.about' | t }}</span>
             </a>
           </li>
           <li>
-            <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rocket" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.howWeWork' | t }}</span>
             </a>
@@ -297,7 +297,7 @@
               </button>
             </li>
             <li>
-              <a href="/profile" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+              <a routerLink="/profile" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
                 <app-icon iconName="user" class="w-5 h-5 text-slate-400"></app-icon>
                 <span class="font-medium">{{ 'header.profile' | t }}</span>
               </a>

@@ -1,6 +1,6 @@
 <div class="relative flex flex-col lg:flex-row">
   <div class="relative self-center flex-shrink-0 mb-10 sm:mb-16 lg:mb-0 lg:mr-10 lg:w-2/5"><a
-      class="ttnc-logo hidden lg:inline-block text-slate-600 w-24 sm:w-28" title="" href="/">
+      class="ttnc-logo hidden lg:inline-block text-slate-600 w-24 sm:w-28" title="" routerLink="/">
       <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg"
         sizes="(min-width: 768px) 200px, 100vw" alt="Logo"
         class="block h-16 sm:h-20 w-auto main-logo max-w-[130px] sm:max-w-[150px] md:max-w-[200px]" width="235"
@@ -14,11 +14,11 @@
     </span>
     <div class="flex flex-col sm:flex-row gap-3 sm:gap-5 mt-6 sm:mt-12">
       <a class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  ttnc-ButtonPrimary disabled:bg-opacity-90 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 "
-        title="" href="/about#contact-us">
+        title="" [routerLink]="'/about#contact-us' | link">
         <span dir="auto" style="vertical-align: inherit;">{{ 'visit.plan' | t }}</span>
       </a>
       <a class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  ttnc-ButtonSecondary bg-white text-slate-700 hover:bg-gray-100 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 "
-        title="" href="/search">
+        title="" routerLink="/search">
         <span dir="auto" style="vertical-align: inherit;">{{ 'visit.browse' | t }}</span>
       </a>
     </div>

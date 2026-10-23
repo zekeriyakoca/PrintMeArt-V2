@@ -47,14 +47,14 @@
           </h2>
         </div>
 
-        <a [href]="'/products?categoryName=' + encodeURIComponent(item.name)"
+        <a [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
           class="flex items-center text-xs md:text-sm group-hover:text-primary-500 transition-colors">
           <span>{{ 'categories.seePrints' | t }}</span>
           <app-icon iconName="see-prints" class="w-4 h-4 ml-2.5" />
         </a>
       </div>
 
-      <a class="absolute inset-0" [href]="'/products?categoryName=' + encodeURIComponent(item.name)"
+      <a class="absolute inset-0" [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
         [aria-label]="'categories.show' | t"></a>
     </div>
     }

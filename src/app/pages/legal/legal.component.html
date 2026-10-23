@@ -8,7 +8,7 @@
   <!-- Quick Nav Cards -->
   <section class="max-w-6xl mx-auto mb-20">
     <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
-      <a href="/legal#shipping"
+      <a [routerLink]="'/legal#shipping' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-cyan-50 border border-slate-100 hover:border-cyan-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -18,7 +18,7 @@
         </div>
         <h3 class="font-semibold text-slate-800 group-hover:text-cyan-700 text-sm">{{ 'footer.shipping' | t }}</h3>
       </a>
-      <a href="/legal#returns"
+      <a [routerLink]="'/legal#returns' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@
         <p class="text-xs text-slate-500 mt-1">{{ 'product.returns' | t: { days: info.returnDays } }}</p>
         }
       </a>
-      <a href="/legal#terms"
+      <a [routerLink]="'/legal#terms' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-violet-50 border border-slate-100 hover:border-violet-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +41,7 @@
         </div>
         <h3 class="font-semibold text-slate-800 group-hover:text-violet-700 text-sm">{{ 'footer.terms' | t }}</h3>
       </a>
-      <a href="/legal#complaints"
+      <a [routerLink]="'/legal#complaints' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-rose-50 border border-slate-100 hover:border-rose-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@
         </div>
         <h3 class="font-semibold text-slate-800 group-hover:text-rose-700 text-sm">{{ 'footer.complaints' | t }}</h3>
       </a>
-      <a href="/legal#compliance"
+      <a [routerLink]="'/legal#compliance' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@
         </div>
         <h3 class="font-semibold text-slate-800 group-hover:text-orange-700 text-sm">{{ 'legal.compliance' | t }}</h3>
       </a>
-      <a href="/legal#privacy"
+      <a [routerLink]="'/legal#privacy' | link"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-green-50 border border-slate-100 hover:border-green-200 transition-all">
         <div class="w-10 h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-3">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

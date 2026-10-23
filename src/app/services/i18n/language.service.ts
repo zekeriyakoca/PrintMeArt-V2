@@ -1,7 +1,7 @@
 import { APP_BASE_HREF, DOCUMENT, isPlatformServer, PlatformLocation } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID, Provider, REQUEST_CONTEXT } from '@angular/core';
 import { Router } from '@angular/router';
-import { AVAILABLE_LANGUAGES, LANGUAGE_COOKIE, languageOfPath } from './languages';
+import { AVAILABLE_LANGUAGES, languageOfPath } from './languages';
 
 export { AVAILABLE_LANGUAGES, type Language } from './languages';
 
@@ -39,10 +39,9 @@ export class LanguageService {
     this.document.documentElement.lang = this.currentLanguage.code;
   }
 
-  /** Remembers the choice and opens the same page in that language. */
+  /** Opens the same page in that language; the server remembers it for next time. */
   setLanguage(languageCode: string): void {
     if (languageCode === this.currentLanguage.code) return;
-    this.document.cookie = `${LANGUAGE_COOKIE}=${languageCode}; Path=/; Max-Age=31536000; SameSite=Lax`;
     this.document.location.assign(`/${languageCode}${this.router.url}`);
   }
 

@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 
@@ -12,7 +14,7 @@ export interface CategoryCard {
 @Component({
   selector: 'app-section-hero-plain',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [RouterLink, LinkPipe, TranslatePipe, IconComponent],
   templateUrl: './section-hero-plain.component.html',
   styleUrls: ['./section-hero-plain.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

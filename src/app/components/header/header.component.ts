@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { ApiService } from './../../services/api/api.service';
 import { Component, computed, signal } from '@angular/core';
@@ -13,7 +15,7 @@ import { LanguageDropdownComponent } from '../language-dropdown/language-dropdow
 
 @Component({
   selector: 'app-header',
-  imports: [TranslatePipe, UserMenuComponent, IconComponent, LanguageDropdownComponent],
+  imports: [RouterLink, LinkPipe, TranslatePipe, UserMenuComponent, IconComponent, LanguageDropdownComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
