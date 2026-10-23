@@ -43,6 +43,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   onSelectedFrameChanged = output<string>();
   designSaved = output<string>();
+  /** The price of the options chosen now, for the page's search engine description */
+  priceChange = output<number>();
 
   selectedSize = model<SizeOption | null>(null);
   /** Selected paper name for display and spec3 */
@@ -181,6 +183,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       next: (response) => {
         this.calculatedPrice.set(response.price);
         this.variantId = response.variantId;
+        this.priceChange.emit(response.price);
       },
       error: (error) => {
         console.error('Error fetching calculated price:', error);

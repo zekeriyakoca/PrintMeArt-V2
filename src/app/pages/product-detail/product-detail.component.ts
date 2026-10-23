@@ -148,7 +148,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     });
   }
 
-  private describeForSearch(product: ProductDto) {
+  /** Called again with the price once the purchase panel has worked it out */
+  describeForSearch(product: ProductDto, price?: number) {
     const facts = (product.metadata ?? {}) as unknown as Record<string, string | undefined>;
     const painter = facts['Painter'];
     const path = `/products/${productPath(product)}`;
@@ -165,6 +166,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
       path,
       image: images[0],
       type: 'product',
+      price,
       structuredData: [
         {
           '@type': 'Product',
@@ -175,6 +177,9 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
           url,
           brand: { '@type': 'Brand', name: 'PrintMeArt' },
           category: product.categoryName,
+          ...(price
+            ? { offers: { '@type': 'Offer', price: price.toFixed(2), priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url } }
+            : {}),
         },
         {
           '@type': 'VisualArtwork',

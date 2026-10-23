@@ -9,7 +9,8 @@ import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '../i18n/languages';
 import { TranslationService } from '../i18n/translation.service';
 
 const SITE_NAME = 'PrintMeArt';
-const DEFAULT_IMAGE = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/home-hero-1.webp';
+/** Shared look of the home page and collections: logo, tagline and three framed artworks (1200×630) */
+const DEFAULT_IMAGE = `${environment.siteUrl}/share.jpg`;
 const OG_LOCALES: Record<string, string> = { nl: 'nl_NL', en: 'en_GB' };
 
 export interface PageSeo {
@@ -19,6 +20,8 @@ export interface PageSeo {
   path?: string;
   image?: string;
   type?: 'website' | 'product';
+  /** Product price in euros, for Pinterest's product pins */
+  price?: number;
   /** schema.org objects for this page, besides the site-wide ones */
   structuredData?: object[];
   /** Pages that only make sense to the visitor (cart, account) stay out of search results */
@@ -75,6 +78,13 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
     this.meta.updateTag({ name: 'twitter:description', content: page.description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
+    if (page.price) {
+      this.meta.updateTag({ property: 'product:price:amount', content: page.price.toFixed(2) });
+      this.meta.updateTag({ property: 'product:price:currency', content: 'EUR' });
+      this.meta.updateTag({ property: 'og:availability', content: 'instock' });
+    } else {
+      ['product:price:amount', 'product:price:currency', 'og:availability'].forEach((name) => this.meta.removeTag(`property="${name}"`));
+    }
 
     // Canonical and the same page in every language; x-default is the Dutch page
     this.replaceHead('link[data-seo]', [
@@ -109,12 +119,21 @@ export class SeoService {
 
   private organization(): object {
     return {
-      '@type': 'Organization',
+      '@type': 'OnlineStore',
+      '@id': `${environment.siteUrl}/#organization`,
       name: SITE_NAME,
       url: environment.siteUrl,
       logo: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg',
+      image: DEFAULT_IMAGE,
       email: 'support@printmeart.nl',
       address: { '@type': 'PostalAddress', addressLocality: "'s-Hertogenbosch", addressCountry: 'NL' },
+      areaServed: 'NL',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'support@printmeart.nl',
+        availableLanguage: ['nl', 'en'],
+      },
       description: this.i18n.t('seo.home.description'),
     };
   }

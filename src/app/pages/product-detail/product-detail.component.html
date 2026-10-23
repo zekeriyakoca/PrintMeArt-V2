@@ -74,7 +74,7 @@
         </div>
         <!-- PURCHASE SIDEBAR (mobile/tablet) -->
         <div class="lg:hidden">
-          <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
+          <app-product-purchase-sidebar [product]="product()" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
         </div>
 
         <section class="product-details">
@@ -99,7 +99,7 @@
 
     <!-- PURCHASE SIDEBAR (desktop) -->
     <div class="hidden lg:block flex-grow">
-      <app-product-purchase-sidebar [product]="product()"></app-product-purchase-sidebar>
+      <app-product-purchase-sidebar [product]="product()" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
     </div>
   </div>
 
