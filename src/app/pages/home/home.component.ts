@@ -17,7 +17,6 @@ import { VisitUsComponent } from '../../components/visit-us/visit-us.component';
 import { SectionHeroPlainComponent } from '../../components/section-hero-plain/section-hero-plain.component';
 import { FeaturedPrintsComponent } from '../../components/featured-prints/featured-prints.component';
 import { BusinessHighlightsComponent } from '../../components/business-highlights/business-highlights.component';
-import { MuseumSourcesComponent } from '../../components/museum-sources/museum-sources.component';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -29,7 +28,6 @@ import { MuseumSourcesComponent } from '../../components/museum-sources/museum-s
     SectionHeroPlainComponent,
     FeaturedPrintsComponent,
     BusinessHighlightsComponent,
-    MuseumSourcesComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
