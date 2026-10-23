@@ -1,9 +1,0 @@
-[build]
-  command = "npm run build"
-  publish = "dist/store-front/browser"
-  functions = "dist/store-front/server"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
