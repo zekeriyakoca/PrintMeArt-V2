@@ -60,6 +60,7 @@ spec:
   routes:
     - match: Host(`printmeart.nl`) || Host(`www.printmeart.nl`)
       kind: Rule
+      priority: 10
       services:
         - name: storefront
           port: 80
