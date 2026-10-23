@@ -1,0 +1,33 @@
+name: Deploy storefront
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One rollout at a time; a newer push waits for the running one
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # The k3s VM is arm64, so the image is built natively on an arm64 runner
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          username: zekeriyakoca
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build, push and roll out
+        env:
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/vm-key"
+          printf '%s\n' "$VM_SSH_KEY" > "$RUNNER_TEMP/vm-key"
+          SSH_KEY="$RUNNER_TEMP/vm-key" bash DevOps/deploy-to-vm.sh
