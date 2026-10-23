@@ -4,6 +4,7 @@ import { inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { catchError, throwError } from 'rxjs';
+import { prerenderRequest } from './prerender';
 
 /**
  * BFF-style HTTP interceptor.
@@ -35,7 +36,7 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
     },
   });
 
-  return next(newReq).pipe(
+  return (isBrowser ? next(newReq) : prerenderRequest(newReq, next)).pipe(
     catchError((error) => {
       if (error.status === 401) {
         // Session expired or invalid - redirect to login

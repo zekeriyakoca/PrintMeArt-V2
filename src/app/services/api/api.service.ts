@@ -2,7 +2,7 @@ import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { Observable, of, shareReplay, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -110,9 +110,6 @@ export class ApiService {
   }
 
   getCategories(): Observable<CategoryDto[] | undefined> {
-    if (this.isSSR) {
-      return of([]);
-    }
     if (!this.categoriesCache$) {
       this.categoriesCache$ = this._httpClient
         .get<CategoryDto[]>(`${this.CATALOG_API_URL}/catalog/v1/categories`)
@@ -129,12 +126,11 @@ export class ApiService {
     } as ProductFilterRequestDto);
   }
 
-  getProductById(productId: string): Observable<ProductDto> {
-    if (this.isSSR) {
-      return of({} as ProductDto);
-    }
+  /** `fresh` skips the copy embedded in a prerendered page and always asks the API. */
+  getProductById(productId: string, fresh = false): Observable<ProductDto> {
     return this._httpClient.get<ProductDto>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`,
+      { transferCache: !fresh },
     );
   }
 
@@ -142,8 +138,9 @@ export class ApiService {
     productId: string,
     selectedOptions: SelectedOptionDto[],
   ): Observable<any> {
+    // Prices are always worked out live in the browser, never baked into a prerendered page
     if (this.isSSR) {
-      return of({});
+      return EMPTY;
     }
     const requestBody = {
       productId: productId,
@@ -177,9 +174,6 @@ export class ApiService {
   }
 
   getFilterOptions(): Observable<FilterGroupDto[]> {
-    if (this.isSSR) {
-      return of([] as FilterGroupDto[]);
-    }
     return this._httpClient.get<any>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`,
     );
@@ -197,9 +191,6 @@ export class ApiService {
   }
 
   getFilteredProducts(filterBody: ProductFilterRequestDto) {
-    if (this.isSSR) {
-      return of({} as PaginatedListDto<ProductSimpleDto>);
-    }
     return this._httpClient.post<PaginatedListDto<ProductSimpleDto>>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/search`,
       filterBody,

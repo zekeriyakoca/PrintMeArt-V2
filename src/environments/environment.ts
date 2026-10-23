@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'BACKEND BASE URL COMES HERE',
+  siteUrl: 'https://printmeart.nl',
   analytics: {
     enabled: true,
     tenant: 'printmeart.nl',

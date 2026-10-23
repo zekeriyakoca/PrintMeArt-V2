@@ -1,5 +1,5 @@
 import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
@@ -140,12 +140,9 @@ export class ProductPreviewComponent {
   objectFit = computed(() => (this.fitMode() === 'cover' ? 'cover' : 'contain'));
 
   // Body scroll lock
+  private readonly document = inject(DOCUMENT);
   private scrollLockEffect = effect(() => {
-    if (this.isOpen()) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    this.document.body.style.overflow = this.isOpen() ? 'hidden' : '';
   });
 
   // Smart init: only on first open or after options change
@@ -267,7 +264,7 @@ export class ProductPreviewComponent {
   }
 
   close() {
-    document.body.style.overflow = '';
+    this.document.body.style.overflow = '';
     this.onClose.emit();
   }
 
