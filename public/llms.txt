@@ -1,0 +1,28 @@
+# PrintMeArt
+
+> PrintMeArt is a family-run print studio in 's-Hertogenbosch (Den Bosch), the Netherlands. We sell museum-quality giclée prints of public-domain masterpieces — Rembrandt, Vermeer, Van Gogh, Monet, the Dutch Golden Age and more — on fine-art paper, in many sizes, optionally framed and with a white mat. Customers can also upload their own photo or artwork to have it printed.
+
+The shop is available in Dutch (default) and English: every page exists under https://printmeart.nl/nl/ and https://printmeart.nl/en/. Prices include Dutch VAT (btw). We ship within the Netherlands and the EU.
+
+## Shop
+
+- [All art prints](https://printmeart.nl/en/products): the full catalog, filterable by category, artist and museum
+- [Collections](https://printmeart.nl/en/collections): curated collections — museum highlights (Rijksmuseum, The Met, Art Institute of Chicago, …), famous painters, styles and periods, scenes
+- [Your design](https://printmeart.nl/en/your-design): print your own photo or artwork
+- [Frames](https://printmeart.nl/en/frames): frame options
+
+Every product page tells the story of the artwork and its artist, and names the museum and credit line it comes from.
+
+## How it works
+
+- [How we work](https://printmeart.nl/en/how-we-work): our papers (Hahnemühle Photo Rag, Hahnemühle German Etching, Canson Rag Photographique, Fine Art Poster), 12-colour giclée printing, quality checks, framing and care, FAQ
+
+## Policies
+
+- [Shipping, returns, terms and privacy](https://printmeart.nl/en/legal): current shipping costs per region, delivery times, the return period and how to start a return
+- [Licensing and credits](https://printmeart.nl/en/licensing): where the artworks come from (public domain, museum open-access collections) and how to report an issue
+
+## Contact
+
+- Email: support@printmeart.nl
+- Studio: 's-Hertogenbosch, the Netherlands

@@ -1,2 +1,12 @@
+# Search engines and AI assistants (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User,
+# PerplexityBot, Claude-SearchBot, …) are welcome everywhere except the personal pages.
 User-agent: *
 Allow: /
+Disallow: /*/cart
+Disallow: /*/checkout
+Disallow: /*/profile
+Disallow: /*/orders
+Disallow: /*/login
+Disallow: /*/order-confirmation
+
+Sitemap: https://printmeart.nl/sitemap.xml

@@ -3,6 +3,7 @@ import express from 'express';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i18n/languages';
+import { sitemapXml } from './sitemap';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
 
@@ -10,6 +11,12 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 app.disable('x-powered-by');
+
+// One address for the shop: www.printmeart.nl moves to printmeart.nl
+app.use((req, res, next) => {
+  if (!req.hostname.startsWith('www.')) return next();
+  res.redirect(301, `https://${req.hostname.slice(4)}${req.originalUrl}`);
+});
 app.use((_req, res, next) => {
   res.set({
     'X-Content-Type-Options': 'nosniff',
@@ -30,6 +37,12 @@ app.use(
     },
   }),
 );
+
+app.get('/sitemap.xml', (_req, res, next) => {
+  sitemapXml()
+    .then((xml) => res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml))
+    .catch(next);
+});
 
 // Every page lives under /en or /nl. A link without one keeps the language of the page it came from,
 // otherwise the language the visitor chose before, otherwise Dutch.

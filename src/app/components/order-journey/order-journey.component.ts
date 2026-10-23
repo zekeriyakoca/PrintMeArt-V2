@@ -13,7 +13,7 @@ interface OrderJourneyStep {
 
 @Component({
   selector: 'app-order-journey',
-  imports: [TranslatePipe, ],
+  imports: [TranslatePipe],
   templateUrl: './order-journey.component.html',
   styleUrl: './order-journey.component.scss',
 })

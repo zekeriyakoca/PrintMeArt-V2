@@ -1,9 +1,9 @@
 <div class="contained-page">
   <!-- IMAGE GALLER  -->
   @if (isProductHorizontal()) {
-    <app-image-gallery-2 [images]="product().images"></app-image-gallery-2>
+    <app-image-gallery-2 [images]="product().images" [alt]="imageAlt()"></app-image-gallery-2>
   } @else {
-    <app-image-gallery-1 [images]="product().images"></app-image-gallery-1>
+    <app-image-gallery-1 [images]="product().images" [alt]="imageAlt()"></app-image-gallery-1>
   }
 
   <!-- PRODUCT INFO AND PURCHASE SIDEBAR -->

@@ -17,6 +17,8 @@ import { MUSEUMS, Museum } from '../../data/museums';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { LanguageService } from '../../services/i18n/language.service';
 import { TranslationService } from '../../services/i18n/translation.service';
+import { SeoService } from '../../services/seo/seo.service';
+import { productPath } from '../../shared/product-path';
 
 const ARTIST_GROUP = 'Artist';
 
@@ -30,6 +32,7 @@ const ARTIST_GROUP = 'Artist';
 export class ProductDetailComponent extends BasePageComponent implements OnInit {
   private readonly dutch = inject(LanguageService).currentLanguageCode() === 'nl';
   private readonly i18n = inject(TranslationService);
+  private readonly seo = inject(SeoService);
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
@@ -52,7 +55,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
 
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params) => {
-      this.productId = params.get('productId') || '';
+      this.productId = String(parseInt(params.get('productId') ?? '', 10) || '');
       this.fetchProduct();
     });
   }
@@ -60,6 +63,11 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   storyParagraphs = computed(() => {
     const metadata = this.product().metadata;
     return ((this.dutch && metadata?.Story_nl) || metadata?.Story || this.product().description || '').split('\n\n');
+  });
+
+  imageAlt = computed(() => {
+    const painter = (this.product().metadata as unknown as Record<string, string | undefined> | undefined)?.['Painter'];
+    return [this.product().name, painter].filter(Boolean).join(' – ');
   });
 
   artistBio = computed(() => {
@@ -134,8 +142,62 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
       if (product) {
         this.product.set(product);
         this.storyExpanded.set(false);
+        this.describeForSearch(product);
         this.analytics.trackProductViewed(product);
       }
+    });
+  }
+
+  private describeForSearch(product: ProductDto) {
+    const facts = (product.metadata ?? {}) as unknown as Record<string, string | undefined>;
+    const painter = facts['Painter'];
+    const path = `/products/${productPath(product)}`;
+    const url = this.seo.absoluteUrl(this.i18n.language, path);
+    const firstParagraph = this.storyParagraphs()[0] ?? '';
+    const description = firstParagraph
+      ? firstParagraph.length > 160 ? `${firstParagraph.slice(0, firstParagraph.lastIndexOf(' ', 157))}…` : firstParagraph
+      : this.i18n.t('seo.product.description', { name: product.name });
+    const images = (product.images ?? []).map((image) => image.large);
+
+    this.seo.setPage({
+      title: `${product.name}${painter ? ` – ${painter}` : ''} | ${this.i18n.t('seo.product.kind')}`,
+      description,
+      path,
+      image: images[0],
+      type: 'product',
+      structuredData: [
+        {
+          '@type': 'Product',
+          name: product.name,
+          description,
+          image: images,
+          sku: String(product.id),
+          url,
+          brand: { '@type': 'Brand', name: 'PrintMeArt' },
+          category: product.categoryName,
+        },
+        {
+          '@type': 'VisualArtwork',
+          name: product.name,
+          ...(painter ? { creator: { '@type': 'Person', name: painter } } : {}),
+          ...(facts['Date'] ? { dateCreated: facts['Date'] } : {}),
+          ...(facts['Medium'] ? { artMedium: facts['Medium'] } : {}),
+          ...(facts['CreditLine'] ? { creditText: facts['CreditLine'] } : {}),
+          ...(facts['Museum'] ? { sourceOrganization: { '@type': 'Museum', name: facts['Museum'] } } : {}),
+          image: images[0],
+          url,
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'PrintMeArt', item: this.seo.absoluteUrl(this.i18n.language, '/') },
+            ...(product.categoryName
+              ? [{ '@type': 'ListItem', position: 2, name: this.i18n.t('name.' + product.categoryName), item: `${this.seo.absoluteUrl(this.i18n.language, '/products')}?categoryName=${encodeURIComponent(product.categoryName)}` }]
+              : []),
+            { '@type': 'ListItem', position: product.categoryName ? 3 : 2, name: product.name, item: url },
+          ],
+        },
+      ],
     });
   }
 }

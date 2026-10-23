@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component } from '@angular/core';
+import { Component, inject, RESPONSE_INIT } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 
@@ -9,4 +9,10 @@ import { IconComponent } from '../../components/shared/icon/icon.component';
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',
 })
-export class NotFoundComponent {}
+export class NotFoundComponent {
+  constructor() {
+    // Rendered on the server, the page answers 404 so search engines drop the address
+    const response = inject(RESPONSE_INIT, { optional: true });
+    if (response) response.status = 404;
+  }
+}

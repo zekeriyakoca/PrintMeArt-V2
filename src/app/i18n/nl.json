@@ -1069,5 +1069,57 @@
     "retention": "Bewaartermijnen",
     "retentionText": "Bestelgegevens bewaren we 7 jaar (wettelijke fiscale bewaarplicht). Accountgegevens bewaren we tot je je account verwijdert. Eigen geüploade afbeeldingen verwijderen we nadat je bestelling is afgerond.",
     "exercise": "Wil je je rechten uitoefenen of heb je vragen? Mail naar support@printmeart.nl — we reageren binnen 30 dagen."
+  },
+  "seo": {
+    "home": {
+      "title": "Kunstprints van museumkwaliteit — eerlijk geprijsd",
+      "description": "Giclée-prints van beroemde schilderijen uit het publieke domein, op fine-art papier en met een lijst naar keuze. Met de hand gemaakt in onze familiestudio in Den Bosch."
+    },
+    "collections": {
+      "title": "Kunstcollecties — Hollandse meesters, musea en meer",
+      "description": "30 zorgvuldig samengestelde collecties grote kunst van 1700 tot 1900: museumhoogtepunten, beroemde schilders, stijlen en taferelen, als fine-art print."
+    },
+    "catalog": {
+      "title": "Alle kunstprints",
+      "description": "Bekijk giclée-prints van museumkwaliteit van meesterwerken uit het publieke domein, in veel formaten en met een lijst naar keuze.",
+      "namedTitle": "{{name}} — kunstprints",
+      "namedDescription": "Ontdek {{name}} als giclée-prints van museumkwaliteit op fine-art papier, met de hand gemaakt in Den Bosch."
+    },
+    "product": {
+      "kind": "Kunstprint",
+      "description": "{{name}} als giclée-print van museumkwaliteit op fine-art papier, met een lijst naar keuze."
+    },
+    "about": {
+      "title": "Over ons — een familiestudio in Den Bosch",
+      "description": "PrintMeArt is een familiebedrijf in Den Bosch dat giclée-prints en lijsten van museumkwaliteit maakt voor echte huizen."
+    },
+    "frames": {
+      "title": "Lijsten voor je kunstprints",
+      "description": "Kies een zwarte, witte, houten of gouden lijst voor je print, met of zonder wit passe-partout. Klaar om op te hangen geleverd."
+    },
+    "yourDesign": {
+      "title": "Je eigen foto of kunstwerk laten printen",
+      "description": "Upload je foto of ontwerp en wij printen het als giclée-print van museumkwaliteit, ingelijst en klaar om op te hangen."
+    },
+    "howWeWork": {
+      "title": "Hoe wij werken — fine-art papier en ons printproces",
+      "description": "Van je klik tot aan je muur: onze papiersoorten, giclée-druk, kwaliteitscontrole, lijsten en onderhoudstips."
+    },
+    "legal": {
+      "title": "Verzending, retourneren, voorwaarden en privacy",
+      "description": "Verzendkosten en levertijden, retourneren, onze algemene voorwaarden en hoe we met je gegevens omgaan."
+    },
+    "licensing": {
+      "title": "Licenties en bronnen",
+      "description": "Waar onze kunstwerken vandaan komen, hoe we musea en fotografen vermelden en hoe je een probleem meldt."
+    },
+    "private": {
+      "title": "PrintMeArt",
+      "description": "Kunstprints van museumkwaliteit uit een familiestudio in Den Bosch."
+    },
+    "notFound": {
+      "title": "Pagina niet gevonden",
+      "description": "Deze pagina bestaat niet (meer)."
+    }
   }
 }

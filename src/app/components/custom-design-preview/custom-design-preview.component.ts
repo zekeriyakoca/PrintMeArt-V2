@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'app-custom-design-preview',
   standalone: true,
-  imports: [TranslatePipe, ],
+  imports: [TranslatePipe],
   templateUrl: './custom-design-preview.component.html',
   styleUrl: './custom-design-preview.component.scss',
 })

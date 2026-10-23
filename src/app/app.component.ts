@@ -18,7 +18,7 @@ import { ApiService } from './services/api/api.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'StoreFront';
+  title = 'PrintMeArt';
 
   constructor(
     private cartService: CartService,

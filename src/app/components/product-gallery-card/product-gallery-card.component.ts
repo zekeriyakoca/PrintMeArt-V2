@@ -1,12 +1,13 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, input } from '@angular/core';
 import { ProductSimpleDto } from '../../models/product';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { productPath } from '../../shared/product-path';
 import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-product-gallery-card',
-  imports: [TranslatePipe, ],
+  imports: [TranslatePipe, RouterLink],
   templateUrl: './product-gallery-card.component.html',
   styleUrl: './product-gallery-card.component.scss',
 })
@@ -34,12 +35,5 @@ export class ProductGalleryCardComponent {
       : this.product().thirdImage.medium || this.product().thirdImage.small;
   });
 
-  constructor(private router: Router) {}
-
-  goToProduct() {
-    const productId = this.product()?.id;
-    if (productId) {
-      this.router.navigate(['/products', productId]);
-    }
-  }
+  readonly productPath = productPath;
 }

@@ -4,7 +4,7 @@ import { isDesktopViewport } from '../../shared/device';
 
 @Component({
   selector: 'app-pagination',
-  imports: [TranslatePipe, ],
+  imports: [TranslatePipe],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })

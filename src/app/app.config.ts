@@ -10,6 +10,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 import { provideLanguageBase } from './services/i18n/language.service';
 import { TranslationService } from './services/i18n/translation.service';
+import { SeoService } from './services/seo/seo.service';
 
 import { routes } from './app.routes';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay(), withHttpTransferCacheOptions({ includePostRequests: true })),
     provideLanguageBase(),
     provideAppInitializer(() => inject(TranslationService).load()),
+    provideAppInitializer(() => inject(SeoService).init()),
     provideRouter(
       routes,
       withInMemoryScrolling({

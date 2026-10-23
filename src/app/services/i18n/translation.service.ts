@@ -13,7 +13,7 @@ const DICTIONARIES: Record<string, () => Promise<{ default: Dictionary }>> = {
   providedIn: 'root',
 })
 export class TranslationService {
-  private readonly language = inject(LanguageService).currentLanguageCode();
+  readonly language = inject(LanguageService).currentLanguageCode();
   private dictionary: Dictionary = {};
 
   /** Loads only the current language, once, before the app renders. */

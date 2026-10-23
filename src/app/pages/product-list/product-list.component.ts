@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { afterNextRender, AfterViewInit, Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { afterNextRender, AfterViewInit, Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
+import { SeoService } from '../../services/seo/seo.service';
+import { TranslationService } from '../../services/i18n/translation.service';
 
 @Component({
   selector: 'app-product-list',
@@ -69,6 +71,9 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     return f.categoryName === optionName || f.attributeName === optionName || f.optionName === optionName;
   }
 
+  private readonly seo = inject(SeoService);
+  private readonly i18n = inject(TranslationService);
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -95,6 +100,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
         searchTerm: params.get('searchTerm') || undefined,
         tags,
       });
+      this.describeForSearch(categoryName ?? attributeName ?? params.get('searchTerm') ?? undefined);
       if (!isDesktopViewport()) {
         this.hideFilters.set(true);
       } else if (categoryName || attributeName || optionName) {
@@ -235,5 +241,14 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
 
   mapColorToHex(color: string): string {
     return mapColorToHex(color);
+  }
+
+  /** A category, museum or artist page gets its own title; the plain catalog the general one. */
+  private describeForSearch(name: string | undefined) {
+    const shown = name ? this.i18n.t('name.' + name) : undefined;
+    this.seo.setPage({
+      title: shown ? this.i18n.t('seo.catalog.namedTitle', { name: shown }) : this.i18n.t('seo.catalog.title'),
+      description: shown ? this.i18n.t('seo.catalog.namedDescription', { name: shown }) : this.i18n.t('seo.catalog.description'),
+    });
   }
 }

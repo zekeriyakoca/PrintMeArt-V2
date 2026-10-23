@@ -12,6 +12,8 @@ import { IconComponent } from '../shared/icon/icon.component';
 })
 export class ImageGallery2Component {
   images = input<ProductImageDto[]>([]);
+  /** What the pictures show, for screen readers and image search */
+  alt = input('');
   showGallery = false;
   mainImageIndex = signal(0);
   galleryStartIndex = signal(0);
