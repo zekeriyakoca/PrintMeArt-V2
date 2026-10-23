@@ -7,8 +7,8 @@
 
   @if (products().length > 0) {
   <div class="section-header">
-    <span class="section-tag">Curated for you</span>
-    <h2 class="section-title">You may also like</h2>
+    <span class="section-tag">{{ 'related.curated' | t }}</span>
+    <h2 class="section-title">{{ 'related.title' | t }}</h2>
   </div>
   <div class="products-grid md:gap-[1.5rem]">
     @for (product of products(); track product.id; let i = $index) {

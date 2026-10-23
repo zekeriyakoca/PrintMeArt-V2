@@ -4,7 +4,7 @@
     <div class="relative hidden lg:flex lg:flex-col">
       <img
         src="https://genstorageaccount3116.blob.core.windows.net/printme-processed-images/3a19a6c8-bd85-4ea9-955e-391b2736e627/3a19a6c8-bd85-4ea9-955e-391b2736e627.jpeg"
-        alt="Art gallery wall with framed prints" class="absolute inset-0 h-full w-full object-cover object-bottom" />
+        [alt]="'login.imageAlt' | t" class="absolute inset-0 h-full w-full object-cover object-bottom" />
       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-slate-900/30"></div>
 
       <div class="relative z-10 p-8">
@@ -17,7 +17,7 @@
       <div class="relative z-10 mt-auto p-8 pb-12">
         <blockquote class="space-y-4">
           <p class="text-2xl font-light leading-relaxed text-white/95">
-            "Transform your space with art that speaks to you. From canvas to frame, delivered to your door."
+            {{ 'login.quote' | t }}
           </p>
           <footer class="flex items-center gap-3">
             <div class="h-px w-8 bg-white/40"></div>
@@ -42,10 +42,10 @@
         <div class="w-full max-w-sm">
           <div class="text-center">
             <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
-              Welcome back
+              {{ 'login.welcome' | t }}
             </h1>
             <p class="mt-2 text-sm text-slate-600">
-              Sign in to your account to continue
+              {{ 'login.subtitle' | t }}
             </p>
           </div>
 
@@ -67,7 +67,7 @@
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
                 <span class="text-gray-700 font-medium">
-                  {{ isLoading ? 'Signing in...' : 'Sign in with Google' }}
+                  {{ (isLoading ? 'login.signingIn' : 'login.google') | t }}
                 </span>
               </button>
 
@@ -78,17 +78,17 @@
           </div>
 
           <p class="mt-8 text-center text-xs leading-5 text-slate-500">
-            By continuing, you agree to our
-            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">Terms</a>
-            and
-            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">Privacy Policy</a>.
+            {{ 'login.agree' | t }}
+            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">{{ 'login.terms' | t }}</a>
+            {{ 'summary.and' | t }}
+            <a href="#" class="font-medium text-slate-700 hover:text-slate-900">{{ 'summary.privacy' | t }}</a>.
           </p>
         </div>
       </div>
 
       <!-- Bottom branding -->
       <div class="hidden shrink-0 p-6 text-center text-xs text-slate-400 lg:block">
-        ©{{currentYear}} PrintMeArt. All rights reserved.
+        ©{{currentYear}} PrintMeArt. {{ 'footer.rights' | t }}
       </div>
     </div>
   </div>

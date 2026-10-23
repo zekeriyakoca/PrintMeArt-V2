@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../components/shared/icon/icon.component';
@@ -6,7 +7,7 @@ import { BasePageComponent } from '../basePageComponent';
 @Component({
   selector: 'app-order-confirmation',
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent],
   templateUrl: './order-confirmation.component.html',
   styleUrl: './order-confirmation.component.scss',
 })

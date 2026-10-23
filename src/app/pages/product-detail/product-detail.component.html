@@ -19,14 +19,14 @@
             </div>
             <div class="flex flex-col items-end gap-2">
               <!-- Public Domain Badge -->
-              <a routerLink="/licensing" class="flex-shrink-0 group cursor-pointer" title="This artwork is in the Public Domain (CC0)">
+              <a routerLink="/licensing" class="flex-shrink-0 group cursor-pointer" [title]="'product.publicDomainTitle' | t">
                 <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors">
                   <svg class="w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="currentColor">
                     <path
                       d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
                     />
                   </svg>
-                  <span class="text-[9px] md:text-xs font-medium text-slate-600 group-hover:text-slate-700">Public Domain</span>
+                  <span class="text-[9px] md:text-xs font-medium text-slate-600 group-hover:text-slate-700">{{ 'product.publicDomain' | t }}</span>
                 </div>
               </a>
               <!-- Museum Badge -->
@@ -48,7 +48,7 @@
                 d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.39m3.421 3.415a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.764m3.42 3.417a6.776 6.776 0 00-3.42-3.417"
               />
             </svg>
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Story</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">{{ 'product.story' | t }}</span>
             <span class="flex-1 h-px bg-slate-200 w-16"></span>
           </div>
           <div [class.line-clamp-2]="!storyExpanded()">
@@ -58,14 +58,14 @@
           </div>
           @if (storyExpanded() && artistBio(); as bio) {
             <div class="mt-6 pl-4 border-l-2 border-slate-200">
-              <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">About the artist</span>
+              <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{{ 'product.aboutArtist' | t }}</span>
               <p class="text-slate-500 !leading-7 text-sm">{{ bio }}</p>
             </div>
           }
           @if (hasMoreStory()) {
             <button type="button" (click)="storyExpanded.set(!storyExpanded())"
               class="mt-3 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-[#384f8c] transition-colors">
-              {{ storyExpanded() ? 'Show less' : 'Show more' }}
+              {{ (storyExpanded() ? 'product.showLess' : 'product.showMore') | t }}
               <svg class="w-3.5 h-3.5 transition-transform" [class.rotate-180]="storyExpanded()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -78,16 +78,15 @@
         </div>
 
         <section class="product-details">
-          <h3 class="text-lg font-semibold text-slate-800 mb-3">Product details</h3>
+          <h3 class="text-lg font-semibold text-slate-800 mb-3">{{ 'product.details' | t }}</h3>
           <p class="text-sm text-slate-600 leading-relaxed mb-4">
-            Our giclée prints are created using cutting-edge technology to ensure exceptional detail and colour accuracy. Each print is made with 200 g/m² fine art paper, providing a rich matte finish
-            that enhances the artwork's depth.
+            {{ 'product.detailsText' | t }}
           </p>
           <ul class="details-list">
-            <li><span class="list-marker"></span>High-quality 200 g/m² fine art paper</li>
-            <li><span class="list-marker"></span>Giclée printing for vibrant colours</li>
-            <li><span class="list-marker"></span>3.0 cm blank borders for easy framing</li>
-            <li><span class="list-marker"></span>50+ year colour guarantee</li>
+            <li><span class="list-marker"></span>{{ 'product.detailPaper' | t }}</li>
+            <li><span class="list-marker"></span>{{ 'product.detailGiclee' | t }}</li>
+            <li><span class="list-marker"></span>{{ 'product.detailBorders' | t }}</li>
+            <li><span class="list-marker"></span>{{ 'product.detailGuarantee' | t }}</li>
           </ul>
         </section>
         <section class="mb-12">

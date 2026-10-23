@@ -9,9 +9,9 @@
         </div>
         <div class="min-w-0">
           <div [class]="'text-sm font-medium ' + (isMatIncluded() ? 'text-[#384f8c]' : 'text-gray-900')">
-            {{isMatIncluded() ? 'With' : 'Without'}} white mat
+            {{ (isMatIncluded() ? 'mat.with' : 'mat.without') | t }}
           </div>
-          <div class="text-xs text-gray-500">Adds elegant border around your print</div>
+          <div class="text-xs text-gray-500">{{ 'mat.hint' | t }}</div>
         </div>
       </div>
       <div [class]="'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium transition-colors ' +

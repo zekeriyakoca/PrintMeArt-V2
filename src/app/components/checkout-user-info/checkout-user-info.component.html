@@ -1,23 +1,23 @@
 <div class="user-info-form">
   <div class="form-row">
     <div class="form-group">
-      <label for="first_name" class="form-label">First name</label>
-      <input [field]="userForm.firstName" type="text" id="first_name" class="form-input" placeholder="John" />
+      <label for="first_name" class="form-label">{{ 'checkout.firstName' | t }}</label>
+      <input [field]="userForm.firstName" type="text" id="first_name" class="form-input" [placeholder]="'checkout.firstNamePlaceholder' | t" />
       @if (userForm.firstName().touched()) {
       <ul class="error-list">
         @for (error of userForm.firstName().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
     </div>
     <div class="form-group">
-      <label for="last_name" class="form-label">Last name</label>
-      <input [field]="userForm.lastName" type="text" id="last_name" class="form-input" placeholder="Doe" />
+      <label for="last_name" class="form-label">{{ 'checkout.lastName' | t }}</label>
+      <input [field]="userForm.lastName" type="text" id="last_name" class="form-input" [placeholder]="'checkout.lastNamePlaceholder' | t" />
       @if (userForm.lastName().touched()) {
       <ul class="error-list">
         @for (error of userForm.lastName().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
@@ -25,41 +25,41 @@
   </div>
 
   <div class="form-group">
-    <label for="email" class="form-label">Email address</label>
+    <label for="email" class="form-label">{{ 'checkout.email' | t }}</label>
     <div class="input-with-icon">
       <app-icon iconName="email" class="input-icon w-[18px] h-[18px]" />
       <input [field]="userForm.email" type="email" id="email" class="form-input with-icon"
-        placeholder="john.doe@company.com" />
+        [placeholder]="'checkout.emailPlaceholder' | t" />
     </div>
 
     @if (userForm.email().touched() && userForm.email().invalid()) {
     <ul class="error-list">
       @for (error of userForm.email().errors(); track error) {
-      <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+      <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
       }
     </ul>
     }
   </div>
 
   <div class="form-divider">
-    <span>Shipping Address</span>
+    <span>{{ 'checkout.address' | t }}</span>
   </div>
 
   <div class="form-row">
     <div class="form-group">
-      <label for="city" class="form-label">City</label>
+      <label for="city" class="form-label">{{ 'checkout.city' | t }}</label>
       <input [field]="userForm.city" type="text" id="city" class="form-input" placeholder="Amsterdam" />
       @if (userForm.city().touched()) {
       <ul class="error-list">
         @for (error of userForm.city().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
     </div>
 
     <div class="form-group">
-      <label for="country" class="form-label">Country</label>
+      <label for="country" class="form-label">{{ 'checkout.country' | t }}</label>
       <select [field]="userForm.country" id="country" class="form-input">
         @for (country of countries(); track country.code) {
         <option [value]="country.code">{{ country.name }}</option>
@@ -68,7 +68,7 @@
       @if (userForm.country().touched()) {
       <ul class="error-list">
         @for (error of userForm.country().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
@@ -77,23 +77,23 @@
 
   <div class="form-row">
     <div class="form-group small">
-      <label for="postal-code" class="form-label">Postal code</label>
+      <label for="postal-code" class="form-label">{{ 'checkout.postalCode' | t }}</label>
       <input [field]="userForm.postalCode" type="text" id="postal-code" class="form-input" placeholder="5689 HH" />
       @if (userForm.postalCode().touched()) {
       <ul class="error-list">
         @for (error of userForm.postalCode().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
     </div>
     <div class="form-group small">
-      <label for="house-number" class="form-label">House number</label>
+      <label for="house-number" class="form-label">{{ 'checkout.houseNumber' | t }}</label>
       <input [field]="userForm.houseNumber" type="text" id="house-number" class="form-input" placeholder="90" />
       @if (userForm.houseNumber().touched()) {
       <ul class="error-list">
         @for (error of userForm.houseNumber().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message }}</li>
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
@@ -102,10 +102,10 @@
 
   <div class="form-group">
     <label for="address-details" class="form-label">
-      Address details
-      <span class="label-optional">(Optional)</span>
+      {{ 'checkout.addressDetails' | t }}
+      <span class="label-optional">{{ 'checkout.optional' | t }}</span>
     </label>
     <input [field]="userForm.addressDetails" type="text" id="address-details" class="form-input"
-      placeholder="Apartment, suite, floor, etc." />
+      [placeholder]="'checkout.addressPlaceholder' | t" />
   </div>
 </div>

@@ -3,11 +3,11 @@
     <!-- Header -->
     <header class="cart-header">
       <div class="header-content">
-        <h1 class="cart-title">Shopping Bag</h1>
-        <span class="item-count">{{ cartItems().length }} {{ cartItems().length === 1 ? 'item' : 'items' }}</span>
+        <h1 class="cart-title">{{ 'cart.title' | t }}</h1>
+        <span class="item-count">{{ (cartItems().length === 1 ? 'cart.oneItem' : 'cart.items') | t: { count: cartItems().length } }}</span>
       </div>
       <a routerLink="/" class="continue-link">
-        <span>Continue shopping</span>
+        <span>{{ 'cart.continueShoppingLower' | t }}</span>
         <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
       </a>
     </header>
@@ -17,9 +17,9 @@
       <div class="empty-icon">
         <app-icon iconName="empty-bag" class="w-16 h-16"></app-icon>
       </div>
-      <h2 class="empty-title">Your bag is empty</h2>
-      <p class="empty-text">Looks like you haven't added any art to your collection yet.</p>
-      <a routerLink="/products" class="browse-btn">Browse Collection</a>
+      <h2 class="empty-title">{{ 'cart.empty' | t }}</h2>
+      <p class="empty-text">{{ 'cart.emptyText' | t }}</p>
+      <a routerLink="/products" class="browse-btn">{{ 'cart.browse' | t }}</a>
     </div>
     } @else {
     <div class="cart-content">
@@ -35,7 +35,7 @@
         <app-order-summary [cartItems]="cartItems()">
           <order-button>
             <button class="checkout-btn" (click)="navigateToCheckout()">
-              <span>Proceed to Checkout</span>
+              <span>{{ 'cart.proceed' | t }}</span>
               <app-icon iconName="arrow-right" class="w-[18px] h-[18px]"></app-icon>
             </button>
           </order-button>

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +13,7 @@ import { DESIGN_WIDTH_PX, DesignLayout, FitMode, composeDesign, designToFile, lo
 
 @Component({
   selector: 'app-product-preview',
-  imports: [CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent],
+  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent],
   templateUrl: './product-preview.component.html',
   styleUrl: './product-preview.component.scss',
 })

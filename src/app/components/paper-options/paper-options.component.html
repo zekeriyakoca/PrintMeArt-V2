@@ -8,7 +8,7 @@
               <img [src]="paper.thumbnail" [alt]="paper.name" class="h-12 w-12 rounded-lg object-cover" loading="lazy" />
               <div class="min-w-0">
                 <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ paper.name }}</div>
-                <div class="text-xs text-slate-500 truncate">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+                <div class="text-xs text-slate-500 truncate">{{ paper.weightGsm }} g/m² · {{ 'name.' + paper.surface | t }}</div>
               </div>
             }
           </div>
@@ -25,24 +25,24 @@
           <div class="p-5">
             <div class="flex items-center justify-between mb-2">
               <div class="text-base font-bold text-slate-900">{{ paper.name }}</div>
-              <span [class]="'text-[0.65rem] font-semibold px-2 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text"> {{ paper.grade }} grade </span>
+              <span [class]="'text-[0.65rem] font-semibold px-2 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text"> {{ 'name.' + paper.grade + ' grade' | t }} </span>
             </div>
-            <div class="text-sm text-slate-500 mb-3">{{ paper.weightGsm }} g/m² · {{ paper.surface }} · {{ paper.printType }}</div>
+            <div class="text-sm text-slate-500 mb-3">{{ paper.weightGsm }} g/m² · {{ 'name.' + paper.surface | t }} · {{ 'name.' + paper.printType | t }}</div>
             @if (paper.lookFeel.length > 0) {
               <div class="flex flex-wrap gap-1.5 mb-3">
                 @for (trait of paper.lookFeel; track trait) {
-                  <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded-md">{{ trait }}</span>
+                  <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded-md">{{ 'name.' + trait | t }}</span>
                 }
               </div>
             }
             @if (paper.bestFor.length > 0) {
               <div class="mb-3">
-                <div class="text-xs font-semibold text-slate-700 mb-1">Best for</div>
+                <div class="text-xs font-semibold text-slate-700 mb-1">{{ 'papers.bestFor' | t }}</div>
                 <ul class="list-none space-y-0.5">
                   @for (use of paper.bestFor; track use) {
                     <li class="text-sm text-slate-500 flex items-start gap-1.5">
                       <span class="mt-1.5 h-1 w-1 rounded-full bg-slate-400 flex-shrink-0"></span>
-                      {{ use }}
+                      {{ 'name.' + use | t }}
                     </li>
                   }
                 </ul>
@@ -52,7 +52,7 @@
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Archival quality · Fade-resistant pigment ink</span>
+              <span>{{ 'papers.archival' | t }}</span>
             </div>
           </div>
         }
@@ -68,22 +68,22 @@
                 <img [src]="paper.thumbnail" [alt]="paper.name" class="h-14 w-14 rounded-lg object-cover flex-shrink-0" loading="lazy" />
                 <div class="min-w-0 flex-1 flex flex-col">
                   <div class="text-[0.95rem] font-semibold text-slate-900 truncate mb-0.5">{{ paper.name }}</div>
-                  <div class="text-xs text-slate-500 mb-1.5">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</div>
+                  <div class="text-xs text-slate-500 mb-1.5">{{ paper.weightGsm }} g/m² · {{ 'name.' + paper.surface | t }}</div>
                   @if (paper.uxLabels.length > 0) {
                     <div class="flex flex-wrap gap-1 mb-1.5">
                       @for (label of paper.uxLabels.slice(0, 3); track label) {
-                        <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{{ label }}</span>
+                        <span class="text-[0.65rem] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{{ 'name.' + label | t }}</span>
                       }
                     </div>
                   }
                   <div class="flex items-end justify-between mt-auto">
                     @if (paper.bestFor.length > 0) {
-                      <div class="text-[0.7rem] text-slate-600 flex-1 mr-2"><span class="font-semibold">Best for:</span> {{ paper.bestFor[0] }}</div>
+                      <div class="text-[0.7rem] text-slate-600 flex-1 mr-2"><span class="font-semibold">{{ 'papers.bestFor' | t }}:</span> {{ 'name.' + paper.bestFor[0] | t }}</div>
                     }
                     <div class="flex items-center gap-1.5 flex-shrink-0">
                       <span [class]="'text-xs font-bold ' + priceTierColors[paper.priceTier]">{{ paper.priceTier }}</span>
                       <span [class]="'text-[0.6rem] font-semibold px-1.5 py-0.5 rounded-full ' + gradeBadgeColors[paper.grade].bg + ' ' + gradeBadgeColors[paper.grade].text"
-                        >{{ paper.grade }} grade</span
+                        >{{ 'name.' + paper.grade + ' grade' | t }}</span
                       >
                     </div>
                   </div>
@@ -100,6 +100,6 @@
   </div>
   <a routerLink="/how-we-work" fragment="paper-options" class="papers-link">
     <app-icon iconName="paper" class="w-3.5 h-3.5" />
-    <span>View all papers</span>
+    <span>{{ 'papers.viewAll' | t }}</span>
   </a>
 </div>

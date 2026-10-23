@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -11,7 +12,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 @Component({
   selector: 'app-payment-success',
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent],
   templateUrl: './payment-success.component.html',
   styleUrl: './payment-success.component.scss',
 })

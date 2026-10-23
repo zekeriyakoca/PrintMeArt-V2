@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs/operators';
@@ -18,7 +19,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CheckoutUserInfoComponent, OrderSummaryComponent, RouterLink, IconComponent],
+  imports: [TranslatePipe, CheckoutUserInfoComponent, OrderSummaryComponent, RouterLink, IconComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -75,7 +76,7 @@ export class CheckoutComponent extends BasePageComponent {
       },
       error: (err) => {
         console.error('Failed to create draft order:', err);
-        this.toastService.error('Failed to initialize checkout. Please try again.');
+        this.toastService.error('errors.checkoutInit');
       },
     });
   }
@@ -131,14 +132,14 @@ export class CheckoutComponent extends BasePageComponent {
                 window.location.href = checkoutResponse.checkoutUrl;
               } else {
                 this.isProcessing.set(false);
-                this.toastService.error('Failed to create checkout session.');
+                this.toastService.error('errors.checkoutSession');
               }
             },
             error: (err) => {
               console.error('Checkout initiation failed:', err);
               this.analytics.trackPaymentFailed('checkout_initiation_failed', orderResponse.orderId);
               this.isProcessing.set(false);
-              this.toastService.error('Failed to initiate payment. Please try again.');
+              this.toastService.error('errors.payment');
             },
           });
       },
@@ -146,7 +147,7 @@ export class CheckoutComponent extends BasePageComponent {
         console.error('Order creation failed:', err);
         this.analytics.trackPaymentFailed('order_creation_failed');
         this.isProcessing.set(false);
-        this.toastService.error('Failed to create order. Please try again.');
+        this.toastService.error('errors.order');
       },
     });
   }

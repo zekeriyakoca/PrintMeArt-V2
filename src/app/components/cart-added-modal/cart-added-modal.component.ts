@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -14,7 +15,7 @@ import { getDisplayableOptions } from '../../models/cart-item';
 @Component({
   selector: 'app-cart-added-modal',
   standalone: true,
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './cart-added-modal.component.html',
   styleUrl: './cart-added-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

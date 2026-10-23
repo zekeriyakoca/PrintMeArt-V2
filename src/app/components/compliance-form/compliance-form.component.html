@@ -7,10 +7,9 @@
       </svg>
     </div>
     <div>
-      <h3 class="text-xl font-bold text-slate-900 mb-1">Report a Compliance Issue</h3>
+      <h3 class="text-xl font-bold text-slate-900 mb-1">{{ 'report.title' | t }}</h3>
       <p class="text-sm text-slate-500">
-        Use this form to report copyright infringement, trademark violations, or other legal concerns about
-        content on our platform.
+        {{ 'report.intro' | t }}
       </p>
     </div>
   </div>
@@ -23,12 +22,12 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
       </svg>
     </div>
-    <h4 class="text-lg font-semibold text-green-800 mb-2">Report Submitted</h4>
+    <h4 class="text-lg font-semibold text-green-800 mb-2">{{ 'report.submitted' | t }}</h4>
     <p class="text-green-700 text-sm mb-4">
-      Thank you for your report. Our legal team will review it and respond within 5 business days.
+      {{ 'report.thanks' | t }}
     </p>
     <button type="button" (click)="resetSubmitted()" class="text-sm text-green-600 hover:text-green-800 underline">
-      Submit another report
+      {{ 'report.another' | t }}
     </button>
   </div>
   } @else {
@@ -38,9 +37,9 @@
       <!-- Name Field -->
       <div class="field">
         <label for="compliance-name" class="block text-sm font-medium text-slate-700 mb-1.5">
-          Your Name <span class="text-red-500">*</span>
+          {{ 'report.name' | t }} <span class="text-red-500">*</span>
         </label>
-        <input id="compliance-name" type="text" autocomplete="name" placeholder="Full name" [value]="formData().name"
+        <input id="compliance-name" type="text" autocomplete="name" [placeholder]="'profile.fullName' | t" [value]="formData().name"
           (input)="updateField('name', $any($event.target).value)"
           class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
           [class.border-red-300]="errors().name" [class.border-slate-200]="!errors().name" />
@@ -51,7 +50,7 @@
               d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
               clip-rule="evenodd" />
           </svg>
-          {{ errors().name }}
+          {{ errors().name | t }}
         </p>
         }
       </div>
@@ -59,9 +58,9 @@
       <!-- Email Field -->
       <div class="field">
         <label for="compliance-email" class="block text-sm font-medium text-slate-700 mb-1.5">
-          Email <span class="text-red-500">*</span>
+          {{ 'profile.email' | t }} <span class="text-red-500">*</span>
         </label>
-        <input id="compliance-email" type="email" autocomplete="email" placeholder="your@email.com"
+        <input id="compliance-email" type="email" autocomplete="email" [placeholder]="'forms.emailPlaceholder' | t"
           [value]="formData().email" (input)="updateField('email', $any($event.target).value)"
           class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
           [class.border-red-300]="errors().email" [class.border-slate-200]="!errors().email" />
@@ -72,7 +71,7 @@
               d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
               clip-rule="evenodd" />
           </svg>
-          {{ errors().email }}
+          {{ errors().email | t }}
         </p>
         }
       </div>
@@ -81,7 +80,7 @@
     <!-- Issue Type -->
     <div class="field">
       <label class="block text-sm font-medium text-slate-700 mb-2">
-        Issue Type <span class="text-red-500">*</span>
+        {{ 'report.type' | t }} <span class="text-red-500">*</span>
       </label>
       <div class="grid sm:grid-cols-2 gap-3">
         @for (option of issueTypeOptions; track option.value) {
@@ -93,8 +92,8 @@
             (change)="updateField('issueType', option.value)"
             class="mt-0.5 h-4 w-4 text-orange-600 border-slate-300 focus:ring-orange-500" />
           <div class="ml-3">
-            <span class="block text-sm font-medium text-slate-800">{{ option.label }}</span>
-            <span class="block text-xs text-slate-500">{{ option.description }}</span>
+            <span class="block text-sm font-medium text-slate-800">{{ option.label | t }}</span>
+            <span class="block text-xs text-slate-500">{{ option.description | t }}</span>
           </div>
         </label>
         }
@@ -106,7 +105,7 @@
             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
             clip-rule="evenodd" />
         </svg>
-        {{ errors().issueType }}
+        {{ errors().issueType | t }}
       </p>
       }
     </div>
@@ -114,20 +113,20 @@
     <!-- Reported URL (Optional) -->
     <div class="field">
       <label for="compliance-url" class="block text-sm font-medium text-slate-700 mb-1.5">
-        URL of Content <span class="text-slate-400 font-normal">(optional)</span>
+        {{ 'report.url' | t }} <span class="text-slate-400 font-normal">{{ 'forms.optional' | t }}</span>
       </label>
       <input id="compliance-url" type="url" placeholder="https://printmeart.nl/product/..."
         [value]="formData().reportedUrl" (input)="updateField('reportedUrl', $any($event.target).value)"
         class="block w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
-      <p class="mt-1 text-xs text-slate-500">Link to the specific page or product you're reporting</p>
+      <p class="mt-1 text-xs text-slate-500">{{ 'report.urlHint' | t }}</p>
     </div>
 
     <!-- Product ID (Optional) -->
     <div class="field">
       <label for="compliance-product" class="block text-sm font-medium text-slate-700 mb-1.5">
-        Product ID <span class="text-slate-400 font-normal">(optional)</span>
+        {{ 'report.productId' | t }} <span class="text-slate-400 font-normal">{{ 'forms.optional' | t }}</span>
       </label>
-      <input id="compliance-product" type="text" placeholder="e.g., 12345" [value]="formData().productId"
+      <input id="compliance-product" type="text" [placeholder]="'report.productIdPlaceholder' | t" [value]="formData().productId"
         (input)="updateField('productId', $any($event.target).value)"
         class="block w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
     </div>
@@ -135,10 +134,10 @@
     <!-- Details -->
     <div class="field">
       <label for="compliance-details" class="block text-sm font-medium text-slate-700 mb-1.5">
-        Describe the Issue <span class="text-red-500">*</span>
+        {{ 'report.describe' | t }} <span class="text-red-500">*</span>
       </label>
       <textarea id="compliance-details" rows="4"
-        placeholder="Please provide as much detail as possible about the issue, including any evidence or documentation that supports your claim..."
+        [placeholder]="'report.describePlaceholder' | t"
         [value]="formData().details" (input)="updateField('details', $any($event.target).value)"
         class="block w-full border rounded-lg px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
         [class.border-red-300]="errors().details" [class.border-slate-200]="!errors().details"></textarea>
@@ -149,7 +148,7 @@
             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
             clip-rule="evenodd" />
         </svg>
-        {{ errors().details }}
+        {{ errors().details | t }}
       </p>
       }
     </div>
@@ -157,11 +156,7 @@
     <!-- Legal Notice -->
     <div class="p-4 rounded-lg bg-amber-50 border border-amber-100">
       <p class="text-xs text-amber-800">
-        <strong>Important:</strong> By submitting this report, you confirm that the information provided is
-        accurate
-        to the best of your knowledge. False reports may have legal consequences. We take all reports seriously
-        and
-        will investigate each submission promptly.
+        <strong>{{ 'report.important' | t }}</strong> {{ 'report.disclaimer' | t }}
       </p>
     </div>
 
@@ -176,12 +171,12 @@
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
           </path>
         </svg>
-        <span>Submitting...</span>
+        <span>{{ 'report.submitting' | t }}</span>
         } @else {
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
         </svg>
-        <span>Submit Report</span>
+        <span>{{ 'report.submit' | t }}</span>
         }
       </button>
     </div>

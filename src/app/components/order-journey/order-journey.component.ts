@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject } from '@angular/core';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
@@ -12,12 +13,14 @@ interface OrderJourneyStep {
 
 @Component({
   selector: 'app-order-journey',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './order-journey.component.html',
   styleUrl: './order-journey.component.scss',
 })
 export class OrderJourneyComponent {
   private readonly bootstrap = inject(Bootstrap);
+
+  deliveryDays = computed(() => this.bootstrap.shippingInfo()?.deliveryDays ?? 0);
 
   steps = computed<OrderJourneyStep[]>(() => {
     const info = this.bootstrap.shippingInfo();
@@ -25,31 +28,26 @@ export class OrderJourneyComponent {
       {
         label: 'Step 1',
         icon: 'browse',
-        title: 'Browse & Select',
-        description:
-          'Easily explore our wide range of art prints and find your perfect piece',
+        title: 'journey.browseTitle',
+        description: 'journey.browseText',
       },
       {
         label: 'Step 2',
         icon: 'cart',
-        title: 'Add to Cart',
-        description:
-          'Choose your print, frame, and paper options, then add to your cart with a click',
+        title: 'journey.cartTitle',
+        description: 'journey.cartText',
       },
       {
         label: 'Step 3',
         icon: 'shipping',
-        title: 'Fast Shipping',
-        description: info
-          ? `We carefully pack and ship your order, delivered within ${info.deliveryDays} days, quickly and safely`
-          : '',
+        title: 'journey.shippingTitle',
+        description: info ? 'journey.shippingText' : '',
       },
       {
         label: 'Step 4',
         icon: 'enjoy',
-        title: 'Enjoy Your Art',
-        description:
-          'Hang your new artwork and enjoy a beautifully styled space every day',
+        title: 'journey.enjoyTitle',
+        description: 'journey.enjoyText',
       },
     ];
   });

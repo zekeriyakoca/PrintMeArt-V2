@@ -1,9 +1,10 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, effect, input, Input, model, OnInit, output } from '@angular/core';
 import { isDesktopViewport } from '../../shared/device';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })

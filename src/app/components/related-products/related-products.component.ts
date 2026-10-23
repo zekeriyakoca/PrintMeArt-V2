@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   input,
@@ -17,7 +18,7 @@ import { ApiService } from '../../services/api/api.service';
 @Component({
   selector: 'app-related-products',
   standalone: true,
-  imports: [ProductCardComponent],
+  imports: [TranslatePipe, ProductCardComponent],
   templateUrl: './related-products.component.html',
   styleUrls: ['./related-products.component.scss'],
 })

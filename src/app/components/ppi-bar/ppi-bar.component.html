@@ -24,7 +24,7 @@
     <span class="opacity-40" aria-hidden="true">·</span>
     <span class="tabular-nums font-medium">{{ ppiText() }}</span>
     } @else {
-    <span class="opacity-60">Select size</span>
+    <span class="opacity-60">{{ 'ppi.selectSize' | t }}</span>
     }
   </div>
 
@@ -36,15 +36,15 @@
 
     <div class="px-4 py-3 space-y-2">
       <div class="flex items-center justify-between text-xs">
-        <span class="text-slate-500">Image basis</span>
+        <span class="text-slate-500">{{ 'ppi.imageBasis' | t }}</span>
         <span class="font-medium text-slate-900">{{ imagePxText() }}</span>
       </div>
       <div class="flex items-center justify-between text-xs">
-        <span class="text-slate-500">Print size</span>
+        <span class="text-slate-500">{{ 'ppi.printSize' | t }}</span>
         <span class="font-medium text-slate-900">{{ sizeText() }}</span>
       </div>
       <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
-        <span class="text-slate-500">Print quality</span>
+        <span class="text-slate-500">{{ 'ppi.printQuality' | t }}</span>
         <span class="font-bold text-slate-900">{{ ppiText() }}</span>
       </div>
     </div>
@@ -52,7 +52,7 @@
     @if (quality() === 'borderline' || quality() === 'low') {
     <div
       class="px-4 py-2.5 bg-[rgb(252,247,240)] border-t border-[rgba(165,100,45,0.2)] text-xs text-[rgb(165,100,45)] text-center">
-      💡 Try a smaller size for sharper prints
+      {{ 'ppi.trySmaller' | t }}
     </div>
     }
   </div>

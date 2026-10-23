@@ -5,22 +5,22 @@
       <!-- The price is worked out in the browser; until then the row keeps its place without showing €0.00 -->
       <div class="price-row" [style.visibility]="calculatedPrice() > 0 ? null : 'hidden'">
         <span class="price">{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-        <span class="tax-note">Tax included</span>
+        <span class="tax-note">{{ 'product.taxIncluded' | t }}</span>
       </div>
     } @else {
-      <span class="price-hint">From</span>
+      <span class="price-hint">{{ 'product.from' | t }}</span>
       <div class="price-row">
         <span class="price">{{ product().cheapestPrice | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-        <span class="tax-note">Tax included</span>
+        <span class="tax-note">{{ 'product.taxIncluded' | t }}</span>
       </div>
     }
-    <p class="text-xs text-slate-400 mt-1">Made in <span style="color: #167a92">Den Bosch</span> by a small family studio</p>
+    <p class="text-xs text-slate-400 mt-1">{{ 'product.madeIn' | t }} <span style="color: #167a92">Den Bosch</span> {{ 'product.byFamily' | t }}</p>
   </div>
 
   <!-- Size first -->
   <div class="option-group">
     <div class="flex items-center justify-between gap-2">
-      <label class="option-label">Size</label>
+      <label class="option-label">{{ 'product.size' | t }}</label>
       @if (product().metadata) {
         <app-ppi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-ppi-bar>
       }
@@ -55,16 +55,16 @@
   <ul class="trust-list">
     <li class="trust-item">
       <span class="trust-check">✓</span>
-      <span><strong>Colour-tuned to your paper</strong> and cropped by hand. <em style="color: #167a92">Included.</em></span>
+      <span><strong>{{ 'product.colourTuned' | t }}</strong> {{ 'product.croppedByHand' | t }} <em style="color: #167a92">{{ 'product.included' | t }}</em></span>
     </li>
     <li class="trust-item">
       <span class="trust-check">✓</span>
-      <span>Fair value, premium quality</span>
+      <span>{{ 'product.fairValue' | t }}</span>
     </li>
     @if (shippingInfo(); as info) {
     <li class="trust-item">
       <span class="trust-check">✓</span>
-      <span>{{ info.returnDays }}-day returns</span>
+      <span>{{ 'product.returns' | t: { days: info.returnDays } }}</span>
     </li>
     }
   </ul>
@@ -76,7 +76,7 @@
         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
         <circle cx="12" cy="12" r="3"></circle>
       </svg>
-      <span>Preview & Design</span>
+      <span>{{ 'product.previewDesign' | t }}</span>
     </button>
     <button
       type="button"
@@ -86,13 +86,13 @@
       class="add-to-cart-btn"
     >
       <app-icon iconName="cart"></app-icon>
-      <span>Add to cart</span>
+      <span>{{ 'product.addToCart' | t }}</span>
     </button>
   </div>
 
   <!-- Payment Methods -->
   <div class="flex items-center justify-center gap-1 py-2">
-    <span class="text-sm text-slate-400 mr-2">Secure payment with</span>
+    <span class="text-sm text-slate-400 mr-2">{{ 'product.securePayment' | t }}</span>
     <app-icon iconName="stripe" class="w-10 h-7" title="Stripe"></app-icon>
     <app-icon iconName="klarna" class="w-10 h-7" title="Klarna"></app-icon>
     <app-icon iconName="ideal" class="w-10 h-7" title="ideal"></app-icon>
@@ -106,13 +106,13 @@
       <div class="badge-icon">
         <img src="https://genstorageaccount3116.blob.core.windows.net/print-me-custom-product-images/palette_1.svg" alt="" loading="lazy" />
       </div>
-      <span class="badge-text">Museum-quality Giclée prints</span>
+      <span class="badge-text">{{ 'product.badgeGiclee' | t }}</span>
     </div>
     <div class="badge">
       <div class="badge-icon">
         <app-icon iconName="document" class="w-6 h-6"></app-icon>
       </div>
-      <span class="badge-text">Premium 310 g/m² 100% cotton paper</span>
+      <span class="badge-text">{{ 'product.badgeCotton' | t }}</span>
     </div>
   </div>
 </section>
@@ -129,12 +129,12 @@
           <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
       </div>
-      <h3 class="mobile-popup-title">Desktop Experience Only</h3>
+      <h3 class="mobile-popup-title">{{ 'product.desktopOnly' | t }}</h3>
       <p class="mobile-popup-text">
-        Our fabulous <strong>Preview & Design</strong> page is only available on tablet and desktop screens for the best creative experience.
+        {{ 'product.ourFabulous' | t }} <strong>{{ 'product.previewDesign' | t }}</strong> {{ 'product.desktopOnlyText' | t }}
       </p>
-      <p class="mobile-popup-hint">Please switch to a larger screen to unlock this feature.</p>
-      <button class="mobile-popup-btn" (click)="showMobileMessage.set(false)">Got it</button>
+      <p class="mobile-popup-hint">{{ 'product.switchScreen' | t }}</p>
+      <button class="mobile-popup-btn" (click)="showMobileMessage.set(false)">{{ 'product.gotIt' | t }}</button>
     </div>
   </div>
 }

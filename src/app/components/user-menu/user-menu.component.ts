@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   ElementRef,
@@ -15,7 +16,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-user-menu',
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent],
   templateUrl: './user-menu.component.html',
 })
 export class UserMenuComponent {

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 import { ContactFormComponent } from '../../components/contact-form/contact-form.component';
 import { SectionTitleComponent } from '../../components/section-title/section-title.component';
@@ -5,7 +6,7 @@ import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-about',
-  imports: [ContactFormComponent, SectionTitleComponent, IconComponent],
+  imports: [TranslatePipe, ContactFormComponent, SectionTitleComponent, IconComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
@@ -13,23 +14,20 @@ export class AboutComponent {
   values = [
     {
       icon: 'photo',
-      title: 'Museum-Quality Prints',
-      description:
-        "Archival inks on premium paper. Made to last decades, not months. The kind of quality you'd expect in a gallery.",
+      title: 'about.v1Title',
+      description: 'about.v1Text',
       color: 'cyan',
     },
     {
       icon: 'frame',
-      title: 'Custom Framing Options',
-      description:
-        'Pick your size, choose your frame, add a mat. Your art, your way—without the custom framing markup.',
+      title: 'about.v2Title',
+      description: 'about.v2Text',
       color: 'violet',
     },
     {
       icon: 'lightning',
-      title: 'Easy Experience',
-      description:
-        'Simple ordering, fast shipping, real humans if you need help. No hoops, no surprises, just smooth.',
+      title: 'about.v3Title',
+      description: 'about.v3Text',
       color: 'amber',
     },
   ];
@@ -37,18 +35,18 @@ export class AboutComponent {
   fastFacts = [
     {
       icon: 'photo',
-      title: 'High-Quality Prints',
-      description: 'Crafted with care and top-notch Giclée technology',
+      title: 'about.f1Title',
+      description: 'about.f1Text',
     },
     {
       icon: 'users',
-      title: 'Engineers Turned Artists',
-      description: 'Family-owned business led by two passionate engineers',
+      title: 'about.f2Title',
+      description: 'about.f2Text',
     },
     {
       icon: 'sliders',
-      title: 'Custom Options',
-      description: 'Choose from a variety of sizes, frames, and finishes',
+      title: 'about.f3Title',
+      description: 'about.f3Text',
     },
   ];
 }

@@ -1,5 +1,5 @@
 @if (imageUrl()) {
   <div class="w-full max-w-xl mx-auto mt-6">
-    <img [src]="imageUrl()!" class="w-full h-auto object-contain rounded-lg" alt="Your uploaded image" />
+    <img [src]="imageUrl()!" class="w-full h-auto object-contain rounded-lg" [alt]="'upload.imageAlt' | t" />
   </div>
 }

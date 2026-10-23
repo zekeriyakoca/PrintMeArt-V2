@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoryDto } from '../../models/category';
@@ -5,7 +6,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-collection-card',
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './collection-card.component.html',
   styleUrl: './collection-card.component.scss',
 })

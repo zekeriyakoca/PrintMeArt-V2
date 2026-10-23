@@ -3,10 +3,13 @@ import {
   ApplicationConfig,
   provideZoneChangeDetection,
   APP_INITIALIZER,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 import { provideLanguageBase } from './services/i18n/language.service';
+import { TranslationService } from './services/i18n/translation.service';
 
 import { routes } from './app.routes';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
@@ -32,6 +35,7 @@ export const appConfig: ApplicationConfig = {
     // Product searches are POSTs, so they are cached too
     provideClientHydration(withEventReplay(), withHttpTransferCacheOptions({ includePostRequests: true })),
     provideLanguageBase(),
+    provideAppInitializer(() => inject(TranslationService).load()),
     provideRouter(
       routes,
       withInMemoryScrolling({

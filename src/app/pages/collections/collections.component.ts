@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -19,7 +20,7 @@ interface Collection {
 
 @Component({
   selector: 'app-collections',
-  imports: [RouterLink],
+  imports: [TranslatePipe, RouterLink],
   templateUrl: './collections.component.html',
   styleUrl: './collections.component.scss',
 })

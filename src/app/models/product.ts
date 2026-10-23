@@ -58,6 +58,7 @@ export class ProductMetadata {
   Museum: string = '';
   Dimensions: string = '';
   Story?: string;
+  Story_nl?: string;
   CreditLine?: string;
   ObjectNumber?: string;
 }

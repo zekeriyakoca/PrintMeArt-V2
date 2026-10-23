@@ -5,21 +5,21 @@
       <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="Logo"
         class="max-h-12 sm:max-h-14 w-auto" />
       <div class="mt-4 sm:mt-5 border-l-2 border-[#a7bae9] pl-3">
-        <p class="text-xs uppercase tracking-wider text-slate-400">Family-Owned Studio</p>
-        <p class="text-sm font-medium text-slate-700">Den Bosch, Netherlands</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400">{{ 'footer.familyStudio' | t }}</p>
+        <p class="text-sm font-medium text-slate-700">{{ 'footer.location' | t }}</p>
       </div>
     </div>
     @for (menu of widgetMenus; track menu.id) {
     <div class="text-sm">
       <h2 class="text-sm font-semibold text-neutral-700">
-        {{ menu.title }}
+        {{ menu.title | t }}
       </h2>
       <ul class="mt-4 sm:mt-5 space-y-3">
         @for (item of menu.menus; track item.label) {
         <li>
           <a class="inline-flex items-center text-neutral-6000 hover:text-black" [href]="item.href"
             rel="noopener noreferrer">
-            {{ item.label }}
+            {{ item.label | t }}
           </a>
         </li>
         }
@@ -33,12 +33,12 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">
       <!-- Copyright -->
       <p class="text-sm text-neutral-500">
-        ©{{ currentYear }} PrintMe Art. All rights reserved.
+        ©{{ currentYear }} PrintMe Art. {{ 'footer.rights' | t }}
       </p>
 
       <!-- Payment Methods -->
       <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
-        <span class="mr-2 text-sm text-neutral-400 ">We accept</span>
+        <span class="mr-2 text-sm text-neutral-400 ">{{ 'footer.weAccept' | t }}</span>
         <app-icon iconName="stripe" class="w-10 h-7" title="Stripe"></app-icon>
         <app-icon iconName="klarna" class="w-10 h-7" title="Klarna"></app-icon>
         <app-icon iconName="ideal" class="w-10 h-7" title="ideal"></app-icon>

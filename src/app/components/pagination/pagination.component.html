@@ -5,7 +5,7 @@
     [disabled]="isFirstButtonDisabled()"
     (click)="goToFirstPage()"
   >
-    First
+    {{ 'pagination.first' | t }}
   </button>
 
   <!-- Page Numbers -->
@@ -32,7 +32,7 @@
     [disabled]="isLastButtonDisabled()"
     (click)="goToLastPage()"
   >
-    Last
+    {{ 'pagination.last' | t }}
     <span class="absolute top-0 right-0 text-md text-[#a8bae9] z-10 shadow-none">{{ totalPages() }}</span>
   </button>
 </nav>

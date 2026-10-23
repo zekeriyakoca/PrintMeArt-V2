@@ -3,21 +3,21 @@
     <!-- Header -->
     <div class="checkout-header">
       <div class="header-content">
-        <h1 class="checkout-title">Checkout</h1>
+        <h1 class="checkout-title">{{ 'cart.checkout' | t }}</h1>
         <div class="checkout-steps">
           <span class="step completed">
             <app-icon iconName="check" class="w-4 h-4"></app-icon>
-            Cart
+            {{ 'header.cart' | t }}
           </span>
           <span class="step-divider"></span>
-          <span class="step active">Shipping</span>
+          <span class="step active">{{ 'checkout.shipping' | t }}</span>
           <span class="step-divider"></span>
-          <span class="step">Payment</span>
+          <span class="step">{{ 'checkout.payment' | t }}</span>
         </div>
       </div>
       <a routerLink="/" class="back-link mt-1 md:mt-0">
         <app-icon iconName="arrow-left" class="w-[18px] h-[18px]"></app-icon>
-        Back to shop
+        {{ 'checkout.backToShop' | t }}
       </a>
     </div>
 
@@ -31,8 +31,8 @@
               <app-icon iconName="user-profile" class="w-[22px] h-[22px]"></app-icon>
             </div>
             <div>
-              <h2 class="section-title">Contact Information</h2>
-              <p class="section-subtitle">We'll use this to send your order confirmation</p>
+              <h2 class="section-title">{{ 'checkout.contact' | t }}</h2>
+              <p class="section-subtitle">{{ 'checkout.contactHint' | t }}</p>
             </div>
           </div>
           <app-checkout-user-info [(userDetails)]="userDetails" [(isFormValid)]="isFormValid" />
@@ -55,7 +55,7 @@
                 Processing...
                 } @else {
                 <app-icon iconName="credit-card" class="w-5 h-5"></app-icon>
-                Proceed to Payment
+                {{ 'checkout.proceed' | t }}
                 <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
                 }
               </button>

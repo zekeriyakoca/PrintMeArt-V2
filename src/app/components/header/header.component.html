@@ -17,7 +17,7 @@
               <!-- Prints Mega Menu -->
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
                 <a href="/search" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
-                  Our Catalog
+                  {{ 'header.catalog' | t }}
                 </a>
                 <!-- Prints Mega Menu -->
                 <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'prints'">
@@ -27,11 +27,11 @@
                         <div class="flex-1 grid grid-cols-3 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (category of printCategories(); track category.id) {
                             <div>
-                              <a class="font-medium text-[#384f8c] uppercase" [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ category.name }}</a>
+                              <a class="font-medium text-[#384f8c] uppercase" [href]="'/products?categoryName=' + encodeURIComponent(category.name)">{{ 'name.' + category.name | t }}</a>
                               <ul class="grid space-y-4 mt-4">
                                 @for (child of category.childCategories; track child.id) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black" [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ child.name }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black" [href]="'/products?categoryName=' + encodeURIComponent(child.name)">{{ 'name.' + child.name | t }}</a>
                                   </li>
                                 }
                               </ul>
@@ -45,18 +45,18 @@
                               <img
                                 src="https://genstorageaccount3116.blob.core.windows.net/printme-images/coffee-invitation.webp"
                                 class="absolute end-0 w-1/2 max-w-[260px] h-full object-contain drop-shadow-xl"
-                                alt="Visit Our Space"
+                                [alt]="'header.visitUs' | t"
                               />
                               <div class="max-w-xs">
-                                <span class="block mb-2 text-sm text-slate-700"> Visit Our Space </span>
-                                <h2 class="text-md md:text-lg lg:text-2xl text-slate-900 font-semibold">Pick up prints,<br />enjoy coffee.</h2>
+                                <span class="block mb-2 text-sm text-slate-700"> {{ 'header.visitUs' | t }} </span>
+                                <h2 class="text-md md:text-lg lg:text-2xl text-slate-900 font-semibold">{{ 'header.pickUp' | t }}<br />{{ 'header.coffee' | t }}</h2>
                               </div>
                               <div class="mt-auto">
                                 <button
                                   class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 cursor-pointer drop-shadow-xl"
                                   (click)="navigateToProductListPage()"
                                 >
-                                  Show me all
+                                  {{ 'header.showAll' | t }}
                                 </button>
                               </div>
                             </div>
@@ -73,7 +73,7 @@
               <!-- Collections Mega Menu -->
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('collections')" (mouseleave)="hideDropdown('collections')">
                 <a href="/collections" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
-                  Collections
+                  {{ 'header.collections' | t }}
                 </a>
                 <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'collections'">
                   <div class="bg-white shadow-lg">
@@ -82,11 +82,11 @@
                         <div class="flex-1 grid grid-cols-4 gap-6 xl:gap-8 pr-6 xl:pr-8">
                           @for (group of collectionGroups; track group.name) {
                             <div>
-                              <a class="font-medium text-[#384f8c] uppercase" [href]="group.href">{{ group.name }}</a>
+                              <a class="font-medium text-[#384f8c] uppercase" [href]="group.href">{{ group.name | t }}</a>
                               <ul class="grid space-y-4 mt-4">
                                 @for (item of group.items; track item.name) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black" [href]="item.href">{{ item.name }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black" [href]="item.href">{{ item.name | t }}</a>
                                   </li>
                                 }
                               </ul>
@@ -99,19 +99,19 @@
                             <img
                               src="https://genstorageaccount3116.blob.core.windows.net/printme-images/menu-collections-1.webp"
                               class="absolute inset-0 w-full h-full object-cover"
-                              alt="Collections"
+                              [alt]="'header.collections' | t"
                             />
                             <div class="absolute inset-0 bg-black/40"></div>
                             <div class="absolute flex flex-col h-full w-full p-8 z-10">
                               <div class="max-w-xs">
-                                <span class="block mb-2 text-sm text-white/70">Browse Collections</span>
-                                <h2 class="text-md md:text-lg lg:text-2xl text-white font-semibold">30 curated<br />collections.</h2>
+                                <span class="block mb-2 text-sm text-white/70">{{ 'header.browseCollections' | t }}</span>
+                                <h2 class="text-md md:text-lg lg:text-2xl text-white font-semibold">{{ 'header.curated' | t }}<br />{{ 'header.collectionsDot' | t }}</h2>
                               </div>
                               <div class="mt-auto">
                                 <span
                                   class="py-3 px-4 sm:py-3.5 sm:px-6 text-sm font-medium bg-white border border-neutral-200 text-neutral-700 rounded-full hover:bg-neutral-50 transition-colors drop-shadow-xl inline-block"
                                 >
-                                  Shop by Collection
+                                  {{ 'header.shopByCollection' | t }}
                                 </span>
                               </div>
                             </div>
@@ -131,21 +131,21 @@
                   class="inline-flex items-center text-sm lg:text-[1.1rem] font-medium py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100"
                   style="color: #db2877; font-family: 'Dancing Script', cursive; font-weight: 600"
                 >
-                  Your Design
+                  {{ 'header.yourDesign' | t }}
                 </a>
               </li>
 
               <!-- Frames -->
               <li class="menu-item flex-shrink-0">
                 <a href="/how-we-work" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
-                  How We Work
+                  {{ 'header.howWeWork' | t }}
                 </a>
               </li>
 
               <!-- About -->
               <li class="menu-item flex-shrink-0">
                 <a href="/about" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
-                  About
+                  {{ 'header.about' | t }}
                 </a>
               </li>
             </ul>
@@ -195,7 +195,7 @@
             class="focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
             (click)="toggleMobileMenu()"
           >
-            <span class="sr-only">Open main menu</span>
+            <span class="sr-only">{{ 'header.openMenu' | t }}</span>
             @if (!isMobileMenuOpen()) {
               <app-icon iconName="menu" class="block h-6 w-6"></app-icon>
             } @else if (isMobileMenuOpen()) {
@@ -224,7 +224,7 @@
     [class.translate-x-0]="isMobileMenuOpen()"
     role="dialog"
     aria-modal="true"
-    aria-label="Mobile navigation"
+    [aria-label]="'header.mobileNav' | t"
   >
     <div class="flex flex-col h-full">
       <!-- Mobile menu header -->
@@ -233,7 +233,7 @@
           <img class="h-10 w-auto" src="https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg" alt="PrintMeArt Logo" width="108" height="40" />
         </a>
         <button type="button" class="p-2 -mr-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" (click)="closeMobileMenu()">
-          <span class="sr-only">Close menu</span>
+          <span class="sr-only">{{ 'header.closeMenu' | t }}</span>
           <app-icon iconName="close" class="h-6 w-6"></app-icon>
         </button>
       </div>
@@ -244,37 +244,37 @@
           <li>
             <a href="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">Our Catalog</span>
+              <span class="font-medium">{{ 'header.catalog' | t }}</span>
             </a>
           </li>
           <li>
             <a href="/collections" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">Collections</span>
+              <span class="font-medium">{{ 'header.collections' | t }}</span>
             </a>
           </li>
           <li>
             <a href="/your-design" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors" style="color: #db2877" (click)="closeMobileMenu()">
               <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
-              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem">Your Design</span>
+              <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem">{{ 'header.yourDesign' | t }}</span>
             </a>
           </li>
           <li>
             <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rectangle-group" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">How We Work</span>
+              <span class="font-medium">{{ 'header.howWeWork' | t }}</span>
             </a>
           </li>
           <li>
             <a href="/about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="users" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">About</span>
+              <span class="font-medium">{{ 'header.about' | t }}</span>
             </a>
           </li>
           <li>
             <a href="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="rocket" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">How We Work</span>
+              <span class="font-medium">{{ 'header.howWeWork' | t }}</span>
             </a>
           </li>
         </ul>
@@ -288,7 +288,7 @@
                 (click)="navigateToCart(); closeMobileMenu()"
               >
                 <app-icon iconName="shopping-cart" class="w-5 h-5 text-slate-400"></app-icon>
-                <span class="font-medium">Cart</span>
+                <span class="font-medium">{{ 'header.cart' | t }}</span>
                 @if (totalItemCountInCart() > 0) {
                   <span class="ml-auto bg-slate-900 text-white text-xs font-medium px-2 py-0.5 rounded-full">
                     {{ totalItemCountInCart() }}
@@ -299,7 +299,7 @@
             <li>
               <a href="/profile" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
                 <app-icon iconName="user" class="w-5 h-5 text-slate-400"></app-icon>
-                <span class="font-medium">Profile</span>
+                <span class="font-medium">{{ 'header.profile' | t }}</span>
               </a>
             </li>
           </ul>
@@ -308,7 +308,7 @@
 
       <!-- Mobile menu footer -->
       <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
-        <p class="text-xs text-slate-500 text-center">Museum-Quality Art Prints — Priced Fairly</p>
+        <p class="text-xs text-slate-500 text-center">{{ 'header.tagline' | t }}</p>
       </div>
     </div>
   </div>

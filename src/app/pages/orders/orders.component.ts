@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject, signal, OnInit, computed, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +23,7 @@ interface TabConfig {
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [RouterLink, IconComponent, FormsModule],
+  imports: [TranslatePipe, RouterLink, IconComponent, FormsModule],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
 })
@@ -59,12 +60,12 @@ export class OrdersComponent implements OnInit {
   private searchSubject = new Subject<string>();
 
   readonly tabs: TabConfig[] = [
-    { key: 'all', label: 'All Orders', icon: 'order' },
-    { key: 'pending', label: 'Pending', icon: 'clock' },
-    { key: 'processing', label: 'Processing', icon: 'refresh' },
-    { key: 'shipped', label: 'Shipped', icon: 'truck' },
-    { key: 'delivered', label: 'Delivered', icon: 'check' },
-    { key: 'cancelled', label: 'Cancelled', icon: 'close' },
+    { key: 'all', label: 'orders.tabAll', icon: 'order' },
+    { key: 'pending', label: 'orders.tabPending', icon: 'clock' },
+    { key: 'processing', label: 'orders.tabProcessing', icon: 'refresh' },
+    { key: 'shipped', label: 'orders.tabShipped', icon: 'truck' },
+    { key: 'delivered', label: 'orders.tabDelivered', icon: 'check' },
+    { key: 'cancelled', label: 'orders.tabCancelled', icon: 'close' },
   ];
 
   // Computed
@@ -131,7 +132,7 @@ export class OrdersComponent implements OnInit {
         },
         error: (err) => {
           console.error('Failed to load orders:', err);
-          this.toastService.error('Failed to load orders. Please try again.');
+          this.toastService.error('errors.ordersLoad');
           this.isLoading.set(false);
         },
       });
@@ -214,7 +215,7 @@ export class OrdersComponent implements OnInit {
       },
       error: () => {
         this.isLoadingDetail.set(false);
-        this.toastService.error('Failed to load order details.');
+        this.toastService.error('errors.orderDetails');
       },
     });
   }
@@ -242,7 +243,7 @@ export class OrdersComponent implements OnInit {
 
     this.ordersService.cancelOrder(order.orderId, this.cancelReason() || undefined).subscribe({
       next: () => {
-        this.toastService.success('Order cancelled successfully.');
+        this.toastService.success('orders.cancelledToast');
         this.isCancelling.set(false);
         this.closeCancelModal();
         this.closeOrderDetail();
@@ -250,7 +251,7 @@ export class OrdersComponent implements OnInit {
       },
       error: (err) => {
         console.error('Cancel failed:', err);
-        this.toastService.error('Failed to cancel order. Please try again.');
+        this.toastService.error('errors.cancel');
         this.isCancelling.set(false);
       },
     });

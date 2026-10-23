@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -9,7 +10,7 @@ import { ToastService } from '../../services/toast/toast.service';
 @Component({
   selector: 'app-compliance-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [TranslatePipe, FormsModule],
   templateUrl: './compliance-form.component.html',
   styleUrl: './compliance-form.component.scss',
 })
@@ -42,23 +43,23 @@ export class ComplianceFormComponent {
   }[] = [
     {
       value: 'Copyright',
-      label: 'Copyright Infringement',
-      description: 'Unauthorized use of copyrighted content',
+      label: 'report.copyright',
+      description: 'report.copyrightText',
     },
     {
       value: 'Trademark',
-      label: 'Trademark Violation',
-      description: 'Unauthorized use of trademarks or logos',
+      label: 'report.trademark',
+      description: 'report.trademarkText',
     },
     {
       value: 'Privacy',
-      label: 'Privacy Concern',
-      description: 'Personal information or privacy issues',
+      label: 'report.privacy',
+      description: 'report.privacyText',
     },
     {
       value: 'Other',
-      label: 'Other Legal Issue',
-      description: 'Other compliance or legal matters',
+      label: 'report.other',
+      description: 'report.otherText',
     },
   ];
 
@@ -75,23 +76,23 @@ export class ComplianceFormComponent {
     const newErrors: Partial<Record<keyof ComplianceFormData, string>> = {};
 
     if (!data.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = 'forms.nameRequired';
     }
 
     if (!data.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'forms.emailRequired';
     } else if (!this.isValidEmail(data.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'forms.emailInvalid';
     }
 
     if (!data.issueType) {
-      newErrors.issueType = 'Please select an issue type';
+      newErrors.issueType = 'forms.issueRequired';
     }
 
     if (!data.details.trim()) {
-      newErrors.details = 'Please describe the issue';
+      newErrors.details = 'forms.detailsRequired';
     } else if (data.details.trim().length < 20) {
-      newErrors.details = 'Please provide more detail (at least 20 characters)';
+      newErrors.details = 'forms.detailsShort';
     }
 
     this.errors.set(newErrors);
@@ -106,7 +107,7 @@ export class ComplianceFormComponent {
   onSubmit(): void {
     if (!this.validate()) {
       this.toastService.warning(
-        'Please fill in all required fields correctly.',
+        'forms.fillRequired',
       );
       return;
     }
@@ -118,7 +119,7 @@ export class ComplianceFormComponent {
         this.submitted.set(true);
         this.isSubmitting.set(false);
         this.toastService.success(
-          "Your report has been submitted. We'll review it promptly.",
+          'report.sentToast',
         );
         this.resetForm();
       },
@@ -126,7 +127,7 @@ export class ComplianceFormComponent {
         this.isSubmitting.set(false);
         console.error('Compliance form submission error:', err);
         this.toastService.error(
-          'Something went wrong. Please try again or email us at legal@printmeart.nl',
+          'report.errorToast',
         );
       },
     });

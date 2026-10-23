@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../../services/i18n/translate.pipe';
 import { Component, computed, input } from '@angular/core';
 import { CartItemDto } from '../../../models/cart-item';
 import { CurrencyPipe } from '@angular/common';
@@ -6,7 +7,7 @@ import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-order-summary',
-  imports: [CurrencyPipe, IconComponent],
+  imports: [TranslatePipe, CurrencyPipe, IconComponent],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.scss',
 })

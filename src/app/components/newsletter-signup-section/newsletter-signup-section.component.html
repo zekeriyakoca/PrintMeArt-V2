@@ -4,30 +4,29 @@
     <div class="absolute inset-0">
     </div>
     <div class="lg:w-[50%] max-w-lg relative">
-      <h2 class="font-semibold text-4xl md:text-5xl">Stay in the loop & save</h2>
-      <span class="block mt-5 text-neutral-500">Join our newsletter for updates on fresh arrivals, limited-time deals,
-        and subscriber-only perks. No spam, just the good stuff.</span>
+      <h2 class="font-semibold text-4xl md:text-5xl">{{ 'newsletter.title' | t }}</h2>
+      <span class="block mt-5 text-neutral-500">{{ 'newsletter.text' | t }}</span>
       <ul class="space-y-4 mt-10">
         <li class="flex items-center space-x-4">
           <span
             class="nc-Badge inline-flex px-2.5 py-1 rounded-full font-medium text-xs relative text-purple-800 bg-purple-100 relative">01</span>
-          <span class="font-medium text-neutral-700">Early access to new drops</span>
+          <span class="font-medium text-neutral-700">{{ 'newsletter.early' | t }}</span>
         </li>
         <li class="flex items-center space-x-4">
           <span
             class="nc-Badge inline-flex px-2.5 py-1 rounded-full font-medium text-xs relative text-blue-800 bg-blue-100 relative">02</span>
-          <span class="font-medium text-neutral-700">Free shipping alerts</span>
+          <span class="font-medium text-neutral-700">{{ 'newsletter.shipping' | t }}</span>
         </li>
         <li class="flex items-center space-x-4">
           <span
             class="nc-Badge inline-flex px-2.5 py-1 rounded-full font-medium text-xs relative text-red-800 bg-red-100 relative">03</span>
-          <span class="font-medium text-neutral-700">Only good vibes in your inbox</span>
+          <span class="font-medium text-neutral-700">{{ 'newsletter.vibes' | t }}</span>
         </li>
 
       </ul>
       <form class="mt-10 relative max-w-sm"><input type="email"
           class="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white disabled:bg-neutral-200 rounded-full text-sm font-normal h-11 px-4 py-3 "
-          required="" aria-required="true" placeholder="Enter your email"><button
+          required="" aria-required="true" [placeholder]="'newsletter.placeholder' | t"><button
           class="flex items-center justify-center rounded-full disabled:bg-opacity-70 bg-slate-900 hover:bg-slate-800
       text-slate-50 absolute transform top-1/2 -translate-y-1/2 right-1  w-9 h-9  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600" type="submit"><app-icon
             iconName="arrow-right-filled" class="w-6 h-6" /></button></form>

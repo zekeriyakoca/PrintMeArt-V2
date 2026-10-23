@@ -5,7 +5,7 @@
     <!-- Top-right buttons -->
     <div class="top-right-actions">
       <!-- Close button -->
-      <button class="close-btn" (click)="close()" aria-label="Close preview">
+      <button class="close-btn" (click)="close()" [aria-label]="'design.close' | t">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -18,13 +18,13 @@
       <div class="preview-area">
         <!-- Toolbar (compact, centered) -->
         <div class="toolbar">
-          <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">Contain</button>
-          <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">Cover</button>
+          <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">{{ 'design.contain' | t }}</button>
+          <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">{{ 'design.cover' | t }}</button>
 
           <div class="toolbar-divider"></div>
 
           <!-- Rotate 90° -->
-          <button class="tool-btn" [class.active]="isLandscape()" (click)="toggleLandscape()" title="Rotate 90° (R)">
+          <button class="tool-btn" [class.active]="isLandscape()" (click)="toggleLandscape()" [title]="'design.rotate' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="1 4 1 10 7 10"></polyline>
               <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
@@ -33,7 +33,7 @@
           </button>
 
           <!-- Center -->
-          <button class="tool-btn" (click)="centerImage()" title="Center (C)">
+          <button class="tool-btn" (click)="centerImage()" [title]="'design.centerKey' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
               <line x1="12" y1="1" x2="12" y2="4"></line>
@@ -41,27 +41,27 @@
               <line x1="1" y1="12" x2="4" y2="12"></line>
               <line x1="20" y1="12" x2="23" y2="12"></line>
             </svg>
-            <span>Center</span>
+            <span>{{ 'design.center' | t }}</span>
           </button>
 
           <!-- Reset -->
-          <button class="tool-btn" (click)="resetZoom()" title="Reset view (0)">
+          <button class="tool-btn" (click)="resetZoom()" [title]="'design.resetKey' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
               <path d="M3 3v5h5"></path>
             </svg>
-            <span>Reset</span>
+            <span>{{ 'design.reset' | t }}</span>
           </button>
 
           <div class="toolbar-divider"></div>
 
           <!-- Guides toggle -->
-          <button class="guides-btn" [class.active]="showGuides()" (click)="showGuides.set(!showGuides())" title="Show dimensions">
+          <button class="guides-btn" [class.active]="showGuides()" (click)="showGuides.set(!showGuides())" [title]="'design.dimensions' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 2v20h20"></path>
               <path d="M6 16l4-8 4 4 4-12"></path>
             </svg>
-            <span>Guides</span>
+            <span>{{ 'design.guides' | t }}</span>
           </button>
         </div>
 
@@ -93,11 +93,11 @@
             >
               @if (showGuides() && hasFrame()) {
                 @if (isMatIncluded()) {
-                  <span class="matt-label"> Matt Area</span>
+                  <span class="matt-label"> {{ 'design.matArea' | t }}</span>
                 }
-                <span class="paper-area-label">Printed Paper area</span>
+                <span class="paper-area-label">{{ 'design.paperArea' | t }}</span>
               }
-              <img [src]="imageUrl()" class="preview-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" alt="Print preview" draggable="false" />
+              <img [src]="imageUrl()" class="preview-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" [alt]="'design.previewAlt' | t" draggable="false" />
             </div>
 
             <!-- Dimension guides -->
@@ -116,7 +116,7 @@
           <!-- Guide info boxes (left of artboard) -->
           @if (showGuides() && showGuideInfo()) {
             <div class="guide-info-stack">
-              <button class="guide-info-dismiss" (click)="showGuideInfo.set(false)" aria-label="Dismiss">
+              <button class="guide-info-dismiss" (click)="showGuideInfo.set(false)" [aria-label]="'design.dismiss' | t">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -131,8 +131,8 @@
                     </svg>
                   </div>
                   <div class="guide-info-body">
-                    <strong>Museum-grade Mat</strong>
-                    <span>The white border around your image is the mat area. It creates a visual gap between the print and the frame.</span>
+                    <strong>{{ 'design.museumMat' | t }}</strong>
+                    <span>{{ 'design.matText' | t }}</span>
                   </div>
                 </div>
               }
@@ -144,8 +144,8 @@
                   </svg>
                 </div>
                 <div class="guide-info-body">
-                  <strong>We handle the rest</strong>
-                  <span>Use this to show us what you have in mind. Our team will fine-tune positioning, margins and colour before printing.</span>
+                  <strong>{{ 'design.weHandle' | t }}</strong>
+                  <span>{{ 'design.weHandleText' | t }}</span>
                 </div>
               </div>
             </div>
@@ -154,13 +154,13 @@
 
         <!-- Zoom bar (bottom) -->
         <div class="zoom-bar">
-          <span class="zoom-label">Zoom</span>
+          <span class="zoom-label">{{ 'design.zoom' | t }}</span>
           <div class="zoom-divider"></div>
-          <button class="zoom-btn" (click)="zoomOut()" aria-label="Zoom out">
+          <button class="zoom-btn" (click)="zoomOut()" [aria-label]="'design.zoomOut' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </button>
           <input type="range" class="zoom-slider" min="0.7" max="2" step="0.01" [ngModel]="clampedScale()" (ngModelChange)="scale.set($event)" />
-          <button class="zoom-btn" (click)="zoomIn()" aria-label="Zoom in">
+          <button class="zoom-btn" (click)="zoomIn()" [aria-label]="'design.zoomIn' | t">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -172,17 +172,17 @@
 
       <!-- RIGHT: Side panel -->
       <div class="side-panel">
-        <h3 class="panel-title">Print details</h3>
+        <h3 class="panel-title">{{ 'design.printDetails' | t }}</h3>
 
         <!-- Size selector -->
         <div class="panel-section">
-          <label class="panel-label">Size</label>
+          <label class="panel-label">{{ 'product.size' | t }}</label>
           <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize" [moreSizes]="hasFrame() ? [] : moreSizes"></app-size-options>
         </div>
 
         <!-- Divider: Your selections -->
         <div class="selections-divider">
-          <span>Your selections</span>
+          <span>{{ 'design.selections' | t }}</span>
         </div>
 
         <!-- Paper showcase -->
@@ -194,7 +194,7 @@
                 <span class="showcase-grade">{{ paper.grade }}</span>
                 <span class="showcase-name">{{ paper.name }}</span>
               </div>
-              <span class="showcase-meta">{{ paper.weightGsm }} g/m² · {{ paper.surface }}</span>
+              <span class="showcase-meta">{{ paper.weightGsm }} g/m² · {{ 'name.' + paper.surface | t }}</span>
               <span class="showcase-meta">{{ paper.printType }}</span>
               <div class="showcase-tags">
                 @for (label of paper.uxLabels; track label; let i = $index) {
@@ -215,8 +215,8 @@
         @if (hasFrame()) {
           <div class="showcase-card showcase-mat" [class.showcase-active]="isMatIncluded()">
             <div class="showcase-body">
-              <span class="showcase-name">{{ isMatIncluded() ? 'High quality Mat included' : 'No mat' }}</span>
-              <span class="showcase-meta">{{ isMatIncluded() ? 'Acid-free, museum-grade white mat board' : 'Print sits directly in frame' }}</span>
+              <span class="showcase-name">{{ (isMatIncluded() ? 'design.matIncluded' : 'design.noMat') | t }}</span>
+              <span class="showcase-meta">{{ (isMatIncluded() ? 'design.matBoard' : 'design.directInFrame') | t }}</span>
             </div>
           </div>
         }
@@ -226,13 +226,13 @@
           @if (frameInfo(); as frame) {
             <img [src]="frame.thumbnail" class="showcase-img" alt="" />
             <div class="showcase-body">
-              <span class="showcase-name">{{ frame.name }}</span>
+              <span class="showcase-name">{{ 'name.' + frame.name | t }}</span>
               <span class="showcase-meta">{{ frame.description }}</span>
             </div>
           } @else {
             <div class="showcase-body">
-              <span class="showcase-name">No frame</span>
-              <span class="showcase-meta">Rolled up in a protective tube</span>
+              <span class="showcase-name">{{ 'design.noFrame' | t }}</span>
+              <span class="showcase-meta">{{ 'design.rolledUp' | t }}</span>
             </div>
           }
         </div>
@@ -242,21 +242,21 @@
           <button type="button" class="save-design-btn" [disabled]="isSaving()" (click)="saveDesign()">
             @if (isSaving()) {
               <span class="saving-spinner"></span>
-              Saving...
+              {{ 'design.saving' | t }}
             } @else {
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
                 <polyline points="17 21 17 13 7 13 7 21"></polyline>
                 <polyline points="7 3 7 8 15 8"></polyline>
               </svg>
-              Save my design
+              {{ 'design.save' | t }}
             }
           </button>
           <button type="button" class="room-design-btn" (click)="viewInRoom()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <rect x="7" y="4" width="10" height="8" rx="0.5" /><path d="M3 20h18M5 20v-3h14v3" />
             </svg>
-            In a room
+            {{ 'design.inRoom' | t }}
           </button>
         </div>
 
@@ -268,8 +268,8 @@
             </svg>
           </div>
           <div class="reassurance-text">
-            <strong>Preview only</strong>
-            <span>Our team will professionally optimize your artwork for the perfect print.</span>
+            <strong>{{ 'design.previewOnly' | t }}</strong>
+            <span>{{ 'design.optimize' | t }}</span>
           </div>
         </div>
       </div>

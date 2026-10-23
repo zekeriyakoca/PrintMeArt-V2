@@ -2,7 +2,7 @@ import { AngularNodeAppEngine, createNodeRequestHandler, isMainModule, writeResp
 import express from 'express';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { languageOfPath } from './app/services/i18n/languages';
+import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i18n/languages';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
 
@@ -31,11 +31,14 @@ app.use(
   }),
 );
 
-// Every page lives under /en or /nl. Old links and plain hrefs without one keep the language of the page they came from.
+// Every page lives under /en or /nl. A link without one keeps the language of the page it came from,
+// otherwise the language the visitor chose before, otherwise Dutch.
 app.use((req, res, next) => {
   if (/^\/(en|nl)(\/|$)/.test(req.path)) return next();
   const referrer = req.get('referer');
-  const language = languageOfPath(referrer ? new URL(referrer).pathname : '/');
+  const fromPage = referrer ? new URL(referrer).pathname.split('/')[1] : undefined;
+  const chosen = req.get('cookie')?.match(new RegExp(`(?:^|; )${LANGUAGE_COOKIE}=(\\w+)`))?.[1];
+  const language = [fromPage, chosen].find(isLanguage) ?? DEFAULT_LANGUAGE;
   res.redirect(req.path === '/' ? 302 : 301, `/${language}${req.originalUrl === '/' ? '' : req.originalUrl}`);
 });
 

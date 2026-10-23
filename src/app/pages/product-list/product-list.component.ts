@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { afterNextRender, AfterViewInit, Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
@@ -16,7 +17,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductCardComponent, ProductGalleryCardComponent, FormsModule, IconComponent, PaginationComponent],
+  imports: [TranslatePipe, ProductCardComponent, ProductGalleryCardComponent, FormsModule, IconComponent, PaginationComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { ApiService } from './../../services/api/api.service';
 import { Component, computed, signal } from '@angular/core';
 import { BaseAppComponent } from '../baseAppComponent';
@@ -12,7 +13,7 @@ import { LanguageDropdownComponent } from '../language-dropdown/language-dropdow
 
 @Component({
   selector: 'app-header',
-  imports: [UserMenuComponent, IconComponent, LanguageDropdownComponent],
+  imports: [TranslatePipe, UserMenuComponent, IconComponent, LanguageDropdownComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -31,18 +32,18 @@ export class HeaderComponent extends BaseAppComponent {
 
   readonly collectionGroups = [
     {
-      name: "Picks & Featured",
+      name: 'nav.picks',
       href: '/collections#picks',
       items: [
-        { name: "Editor's Picks", href: '/products?tags=8' },
-        { name: 'In the Spotlight', href: '/products?tags=2' },
-        { name: 'Timeless Classics', href: '/products?attributeName=Classics' },
-        { name: 'Dutch Masters', href: '/products?categoryName=Dutch%20Masters' },
-        { name: 'Van Gogh Collection', href: '/products?attributeName=Vincent%20van%20Gogh' },
+        { name: 'nav.editorsPicks', href: '/products?tags=8' },
+        { name: 'nav.spotlight', href: '/products?tags=2' },
+        { name: 'nav.classics', href: '/products?attributeName=Classics' },
+        { name: 'nav.dutchMasters', href: '/products?categoryName=Dutch%20Masters' },
+        { name: 'nav.vanGogh', href: '/products?attributeName=Vincent%20van%20Gogh' },
       ],
     },
     {
-      name: 'Museums',
+      name: 'nav.museums',
       href: '/collections#museums',
       items: [
         { name: 'Rijksmuseum', href: '/products?attributeName=Rijksmuseum' },
@@ -55,7 +56,7 @@ export class HeaderComponent extends BaseAppComponent {
       ],
     },
     {
-      name: 'The Masters',
+      name: 'nav.masters',
       href: '/collections#painters',
       items: [
         { name: 'Claude Monet', href: '/products?attributeName=Claude%20Monet' },
@@ -68,14 +69,14 @@ export class HeaderComponent extends BaseAppComponent {
       ],
     },
     {
-      name: 'Styles & Periods',
+      name: 'nav.styles',
       href: '/collections#styles',
       items: [
         { name: 'Renaissance', href: '/products?attributeName=Renaissance' },
-        { name: 'Romanticism', href: '/products?attributeName=Romanticism' },
-        { name: 'Impressionism', href: '/products?attributeName=Impressionism' },
-        { name: 'Post-Impressionism', href: '/products?attributeName=Post-Impressionism' },
-        { name: 'Realism', href: '/products?attributeName=Realism' },
+        { name: 'nav.romanticism', href: '/products?attributeName=Romanticism' },
+        { name: 'nav.impressionism', href: '/products?attributeName=Impressionism' },
+        { name: 'nav.postImpressionism', href: '/products?attributeName=Post-Impressionism' },
+        { name: 'nav.realism', href: '/products?attributeName=Realism' },
         { name: 'Art Nouveau', href: '/products?attributeName=Art%20Nouveau' },
       ],
     },

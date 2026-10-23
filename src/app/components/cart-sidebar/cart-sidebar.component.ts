@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -12,7 +13,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-cart-sidebar',
   standalone: true,
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './cart-sidebar.component.html',
   styleUrl: './cart-sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

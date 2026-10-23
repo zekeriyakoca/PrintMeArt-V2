@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, input } from '@angular/core';
 import { ProductSimpleDto } from '../../models/product';
 import { Router } from '@angular/router';
@@ -5,7 +6,7 @@ import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-product-gallery-card',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './product-gallery-card.component.html',
   styleUrl: './product-gallery-card.component.scss',
 })

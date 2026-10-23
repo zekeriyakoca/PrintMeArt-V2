@@ -5,19 +5,17 @@
       <div
         class="hero-content flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20 max-w-7xl mx-auto px-4 sm:px-0">
         <div class="hero-text flex-1 text-left">
-          <span class="hero-badge inline-block font-semibold px-4 rounded-full tracking-wide">Our
-            Frames</span>
-          <h1 class="hero-title text-3xl md:text-5xl font-bold mb-4 text-indigo-900">Choose Your Perfect Frame</h1>
+          <span class="hero-badge inline-block font-semibold px-4 rounded-full tracking-wide">{{ 'framesPage.eyebrow' | t }}</span>
+          <h1 class="hero-title text-3xl md:text-5xl font-bold mb-4 text-indigo-900">{{ 'framesPage.title' | t }}</h1>
           <p class="hero-description text-base sm:text-lg text-gray-600 mb-6">
-            Explore our wide range of frames to find the perfect match for your paintings and photos.<br>
-            Our high-quality framing options ensure durability and style, enhancing the presentation of your
-            artwork.<br>
-            Select from various styles and finishes to suit your preferences and decor.
+            {{ 'framesPage.intro1' | t }}<br>
+            {{ 'framesPage.intro2' | t }}<br>
+            {{ 'framesPage.intro3' | t }}
           </p>
         </div>
         <div class="hero-image flex-1 flex justify-center md:ml-16">
           <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/frames-main-picture2.jpg"
-            alt="Colorful frames collection" class="w-full max-w-xs md:max-w-md h-auto rounded-xl shadow-xl" />
+            [alt]="'framesPage.imageAlt' | t" class="w-full max-w-xs md:max-w-md h-auto rounded-xl shadow-xl" />
         </div>
       </div>
     </section>
@@ -39,32 +37,30 @@
     <section class="specs-section border-b border-t border-slate-200 ">
       <div class="specs-container">
         <div class="specs-content">
-          <h2 class="specs-title">Technical Specifications</h2>
+          <h2 class="specs-title">{{ 'framesPage.specs' | t }}</h2>
           <p class="specs-intro">
-            The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards.
-            The powder coated steel divider separates active cards from new ones, or can be used to archive important
-            task lists.
+            {{ 'framesPage.specsText' | t }}
           </p>
           <dl class="specs-list">
             <div class="spec-item">
-              <dt class="spec-label">Material</dt>
-              <dd class="spec-value">Premium wood base with a smooth matte finish.</dd>
+              <dt class="spec-label">{{ 'framesPage.material' | t }}</dt>
+              <dd class="spec-value">{{ 'framesPage.materialText' | t }}</dd>
             </div>
             <div class="spec-item">
-              <dt class="spec-label">Dimensions</dt>
-              <dd class="spec-value">Available in multiple sizes to fit your artwork perfectly.</dd>
+              <dt class="spec-label">{{ 'framesPage.dimensions' | t }}</dt>
+              <dd class="spec-value">{{ 'framesPage.dimensionsText' | t }}</dd>
             </div>
             <div class="spec-item">
-              <dt class="spec-label">Finish</dt>
-              <dd class="spec-value">Hand-finished with a durable, scratch-resistant coating.</dd>
+              <dt class="spec-label">{{ 'framesPage.finish' | t }}</dt>
+              <dd class="spec-value">{{ 'framesPage.finishText' | t }}</dd>
             </div>
             <div class="spec-item">
-              <dt class="spec-label">Includes</dt>
-              <dd class="spec-value">Frame, hanging hardware, and protective glass cover.</dd>
+              <dt class="spec-label">{{ 'framesPage.includes' | t }}</dt>
+              <dd class="spec-value">{{ 'framesPage.includesText' | t }}</dd>
             </div>
             <div class="spec-item">
-              <dt class="spec-label">Considerations</dt>
-              <dd class="spec-value">Made from natural materials. Grain and color may vary with each frame.</dd>
+              <dt class="spec-label">{{ 'framesPage.considerations' | t }}</dt>
+              <dd class="spec-value">{{ 'framesPage.considerationsText' | t }}</dd>
             </div>
           </dl>
         </div>
@@ -87,9 +83,9 @@
         <div
           class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg overflow-hidden">
           <div class="flex flex-col justify-center lg:w-1/2 p-6 pt-10 sm:pt-12 lg:pt-36">
-            <h2 class="text-3xl md:text-6xl font-semibold mb-0">Final Stock.</h2>
-            <h2 class="text-3xl md:text-6xl font-semibold mb-4">Up to 50% off.</h2>
-            <a routerLink="/products" class="text-md mb-6 mt-4 hover:underline">Go to sales →</a>
+            <h2 class="text-3xl md:text-6xl font-semibold mb-0">{{ 'framesPage.finalStock' | t }}</h2>
+            <h2 class="text-3xl md:text-6xl font-semibold mb-4">{{ 'framesPage.discount' | t }}</h2>
+            <a routerLink="/products" class="text-md mb-6 mt-4 hover:underline">{{ 'framesPage.toSales' | t }}</a>
           </div>
           <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:absolute lg:grid-cols-2 lg:gap-4 lg:w-1/2 p-6 lg:right-0">
             <div class="rounded-lg overflow-hidden bg-white -translate-y-2 lg:-translate-y-4">

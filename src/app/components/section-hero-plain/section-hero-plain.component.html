@@ -7,15 +7,15 @@
       <!-- Left: Text & Button -->
       <div class="w-full lg:w-2/5 space-y-5 md:space-y-6 text-center lg:text-left lg:mr-2">
         <span class="block text-base md:text-[1.20rem] font-medium" style="color: #db2877;">
-          Giclée print on fine-art paper — fast delivery in NL
+          {{ 'home.heroEyebrow' | t }}
         </span>
         <h2
           class="font-semibold mt-12 mb-10 md:mt-0 md:mb-6 text-[1.85rem] sm:text-[2.15rem] md:text-3xl xl:text-[2.4rem] !leading-[115%] text-slate-900">
-          Museum-Quality Art Prints — Priced Fairly
+          {{ 'header.tagline' | t }}
         </h2>
         <a href="/search"
           class="inline-flex mb-6 md:mb-0 w-full sm:w-auto justify-center items-center bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl py-3 px-5 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base font-medium">
-          <span>Explore Collection</span>
+          <span>{{ 'home.explore' | t }}</span>
           <app-icon iconName="search" class="w-5 h-5 ms-2.5"></app-icon>
         </a>
       </div>
@@ -28,7 +28,7 @@
             <img [src]="cat.image" [alt]="cat.title" />
           </div>
           <div class="card-label">
-            <span>{{ cat.title }}</span>
+            <span>{{ cat.title | t }}</span>
             <app-icon iconName="arrow-right" class="w-3.5 h-3.5"></app-icon>
           </div>
         </a>

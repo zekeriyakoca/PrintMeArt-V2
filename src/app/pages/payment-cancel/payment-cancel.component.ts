@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BasePageComponent } from '../basePageComponent';
@@ -7,7 +8,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 @Component({
   selector: 'app-payment-cancel',
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent],
   templateUrl: './payment-cancel.component.html',
   styleUrl: './payment-cancel.component.scss',
 })

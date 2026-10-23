@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, input, output, EventEmitter } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
@@ -14,7 +15,7 @@ export interface Frame {
 @Component({
   selector: 'app-frame-card',
   standalone: true,
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './frame-card.component.html',
   styleUrl: './frame-card.component.scss',
 })

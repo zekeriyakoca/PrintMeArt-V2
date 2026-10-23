@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,7 +11,7 @@ import { CartService } from '../../services/cart/cart.service';
  */
 @Component({
   selector: 'app-login',
-  imports: [CommonModule],
+  imports: [TranslatePipe, CommonModule],
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

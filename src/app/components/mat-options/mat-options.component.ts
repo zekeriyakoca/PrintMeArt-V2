@@ -1,6 +1,8 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, model } from '@angular/core';
 
 @Component({
+  imports: [TranslatePipe],
   selector: 'app-mat-options',
   templateUrl: './mat-options.component.html',
   styleUrl: './mat-options.component.scss',

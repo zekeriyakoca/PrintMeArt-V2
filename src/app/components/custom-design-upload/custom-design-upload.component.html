@@ -4,7 +4,7 @@
     <label for="cover-photo"
       class="inline-flex items-center gap-3 text-lg sm:text-xl font-semibold tracking-tight text-slate-900 mb-3">
       <span class="relative">
-        Upload Your Image
+        {{ 'upload.title' | t }}
         <span class="absolute -bottom-1 left-0 h-0.5 w-full bg-[#384f8cd9] rounded-full"></span>
       </span>
     </label>
@@ -17,17 +17,17 @@
             class="relative cursor-pointer rounded-lg bg-[#384f8c] px-4 py-2 font-medium text-white shadow-sm hover:bg-[#384f8cd9] transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2">
             <span class="flex items-center gap-2">
               <app-icon iconName="photo" class="w-4 h-4"></app-icon>
-              Choose file
+              {{ 'upload.choose' | t }}
             </span>
             <input #fileInput id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*"
               (change)="handleFileChange($event)" />
           </label>
-          <p class="text-slate-500">or drag and drop</p>
+          <p class="text-slate-500">{{ 'upload.drag' | t }}</p>
         </div>
-        <p class="text-xs text-slate-400 mt-3">PNG, JPG, GIF up to 50MB</p>
+        <p class="text-xs text-slate-400 mt-3">{{ 'upload.formats' | t }}</p>
         @if (selectedFile()) {
         <p class="text-sm leading-5 text-gray-900 mt-2">
-          Selected: {{ selectedFile()!.name }} ({{ (selectedFile()!.size / (1024 * 1024)).toFixed(2) }} MB)
+          {{ 'upload.selected' | t }}: {{ selectedFile()!.name }} ({{ (selectedFile()!.size / (1024 * 1024)).toFixed(2) }} MB)
         </p>
         @if (isUploading()) {
         <p class="text-sm text-[#384f8cd9] mt-1 flex items-center justify-center gap-2">
@@ -37,7 +37,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
             </path>
           </svg>
-          Uploading image...
+          {{ 'upload.uploading' | t }}
         </p>
         }
         }
@@ -54,11 +54,10 @@
     <div class="mb-4 mx-auto max-w-2xl lg:text-center">
       <p class="text-base font-semibold leading-7 text-pink-600 flex items-center justify-center">
         <app-icon iconName="warning" class="hidden sm:inline-block w-5 h-5 mb-0.5 mr-1"></app-icon>
-        Perfect Fit Guarantee
+        {{ 'upload.guarantee' | t }}
       </p>
       <p class="text-sm leading-6 text-gray-600">
-        Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame.
-        We'll send you the final design for your approval, giving you the last say.
+        {{ 'upload.guaranteeText' | t }}
       </p>
     </div>
   </div>

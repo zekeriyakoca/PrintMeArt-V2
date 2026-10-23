@@ -1,8 +1,11 @@
+import { TranslationService } from '../../services/i18n/translation.service';
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
   input,
   computed,
+  inject,
 } from '@angular/core';
 import { ProductMetadata } from '../../models/product';
 import { SizeOption } from '../../models/size-option';
@@ -18,12 +21,13 @@ type PpiQuality = 'unknown' | 'fineart' | 'good' | 'borderline' | 'low';
 @Component({
   selector: 'app-ppi-bar',
   standalone: true,
-  imports: [IconComponent, TooltipComponent],
+  imports: [TranslatePipe, IconComponent, TooltipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './ppi-bar.component.html',
   styleUrls: ['./ppi-bar.component.scss'],
 })
 export class PpiBarComponent {
+  private readonly i18n = inject(TranslationService);
   readonly metadata = input.required<ProductMetadata>();
   readonly size = input<SizeOption | null>(null);
 
@@ -87,13 +91,13 @@ export class PpiBarComponent {
   readonly qualityText = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'Excellent';
+        return this.i18n.t('ppi.excellent');
       case 'good':
-        return 'Very Good';
+        return this.i18n.t('ppi.veryGood');
       case 'borderline':
-        return 'Borderline';
+        return this.i18n.t('ppi.borderline');
       case 'low':
-        return 'Low';
+        return this.i18n.t('ppi.low');
       default:
         return '—';
     }
@@ -206,15 +210,15 @@ export class PpiBarComponent {
   readonly tooltipHeadline = computed(() => {
     switch (this.quality()) {
       case 'fineart':
-        return 'Perfect for FineArt';
+        return this.i18n.t('ppi.perfect');
       case 'good':
-        return 'Good quality';
+        return this.i18n.t('ppi.good');
       case 'borderline':
-        return 'May look soft';
+        return this.i18n.t('ppi.soft');
       case 'low':
-        return 'Will look pixelated';
+        return this.i18n.t('ppi.pixelated');
       default:
-        return 'Select a size';
+        return this.i18n.t('ppi.selectASize');
     }
   });
 
@@ -236,9 +240,8 @@ export class PpiBarComponent {
   readonly ariaLabel = computed(() => {
     const value = this.ppi();
     if (value === null) {
-      return 'Print quality unknown. Select a size to estimate PPI.';
+      return this.i18n.t('ppi.unknownLabel');
     }
-    const prefix = this.isEstimated() ? 'Estimated ' : '';
-    return `Print quality ${this.qualityText()}. ${prefix}${value} PPI.`;
+    return this.i18n.t(this.isEstimated() ? 'ppi.estimatedLabel' : 'ppi.label', { quality: this.qualityText(), ppi: value });
   });
 }

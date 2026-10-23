@@ -3,36 +3,29 @@
     class="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12 py-10 sm:py-14 md:py-24 px-0 md:px-0 max-w-6xl mx-auto">
     <div class="w-full md:w-1/2 flex justify-center">
       <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/about.jpeg"
-        alt="Fashion designers collaborating in a bright studio"
+        [alt]="'about.imageAlt' | t"
         class="w-full max-w-md sm:max-w-lg md:max-w-xl h-auto rounded-2xl shadow-xl object-cover">
     </div>
     <div class="w-full md:w-1/2 flex flex-col items-start">
-      <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 tracking-tight">Welcome to PrintMe</h2>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 tracking-tight">{{ 'about.welcome' | t }}</h2>
       <div class="text-sm sm:text-base text-neutral-600 leading-7 mb-2">
-        <p class="mb-4">We're a family business in the Netherlands, run by a husband and wife team.</p>
-        <p class="mb-4">We've always loved camping trips, travelling, and spontaneous road trips—the kind where you stop
-          for a view, take a photo, and later wish you could keep that feeling around. That's a big part of why PrintMe
-          exists.</p>
-        <p class="mb-4">Our prints and frames are made to bring that "good moment" onto your walls: clean, beautiful,
-          and easy to live with. Whether it's calm nature vibes, bold photography, or something that just feels like
-          you, we hope it turns your house into a home.</p>
-        <p>Thanks for being here.</p>
+        <p class="mb-4">{{ 'about.family' | t }}</p>
+        <p class="mb-4">{{ 'about.story1' | t }}</p>
+        <p class="mb-4">{{ 'about.story2' | t }}</p>
+        <p>{{ 'about.thanks' | t }}</p>
       </div>
     </div>
   </section>
   <section class="max-w-4xl mx-auto mb-12 sm:mb-16">
     <div class="text-sm sm:text-base text-neutral-700 leading-7 space-y-5">
-      <p>We create museum-quality giclée prints made to look stunning up close and stay beautiful for years.</p>
-      <p>Our collection is inspired by the places we love most—camping mornings, long road trips, quiet nature spots,
-        and the simple calm you feel when you step outside for a bit. We try to capture that mood and bring it into your
-        home.</p>
-      <p>Every print is produced with care, using premium materials and sharp, true-to-life color. Clean, timeless, and
-        made to live with—so your walls feel more like you.</p>
+      <p>{{ 'about.intro1' | t }}</p>
+      <p>{{ 'about.intro2' | t }}</p>
+      <p>{{ 'about.intro3' | t }}</p>
     </div>
   </section>
   <section class="max-w-6xl mx-auto my-14 sm:my-20 md:my-24">
     <div class="mb-10">
-      <app-section-title label="What We Do" title="Our Values"></app-section-title>
+      <app-section-title label="What We Do" [title]="'about.values' | t"></app-section-title>
     </div>
 
     <div class="flex flex-col md:flex-row md:items-stretch md:justify-between gap-8">
@@ -45,10 +38,10 @@
                'bg-cyan-100 text-cyan-600')">
             <app-icon [iconName]="item.icon" class="w-5 h-5" />
           </div>
-          <h3 class="font-semibold text-slate-900">{{ item.title }}</h3>
+          <h3 class="font-semibold text-slate-900">{{ item.title | t }}</h3>
         </div>
         <p class="text-sm text-slate-500 leading-relaxed mt-3">
-          {{ item.description }}
+          {{ item.description | t }}
         </p>
       </div>
       @if (!last) {
@@ -64,10 +57,10 @@
     <div class="mb-10">
       <h2 class="inline-flex items-center gap-3 text-2xl md:text-3xl font-bold text-slate-900 mb-3">
         <app-icon iconName="rocket" class="w-6 h-6 text-cyan-600" />
-        Fast Facts
+        {{ 'about.facts' | t }}
       </h2>
       <p class="text-slate-500 text-sm max-w-xl">
-        We're impartial and independent, and every day we create distinctive, world-class programmes and content
+        {{ 'about.factsText' | t }}
       </p>
     </div>
 
@@ -76,10 +69,10 @@
       <div class="relative pl-5 border-l-2 border-slate-200 hover:border-cyan-400 transition-colors">
         <div class="flex items-center gap-2 mb-2">
           <span class="text-cyan-600 font-bold text-lg">0{{ i + 1 }}</span>
-          <h4 class="font-semibold text-slate-800">{{ fact.title }}</h4>
+          <h4 class="font-semibold text-slate-800">{{ fact.title | t }}</h4>
         </div>
         <p class="text-sm text-slate-500 leading-relaxed">
-          {{ fact.description }}
+          {{ fact.description | t }}
         </p>
       </div>
       }

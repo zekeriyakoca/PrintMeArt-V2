@@ -1,4 +1,5 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { ProductDto } from '../../models/product';
@@ -14,17 +15,21 @@ import { PolicyComponent } from '../../components/policy/policy.component';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
 import { MUSEUMS, Museum } from '../../data/museums';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
+import { LanguageService } from '../../services/i18n/language.service';
+import { TranslationService } from '../../services/i18n/translation.service';
 
 const ARTIST_GROUP = 'Artist';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterLink, ImageGallery1Component, ImageGallery2Component, ProductPurchaseSidebarComponent, AccordionInfoComponent, PolicyComponent, RelatedProductsComponent],
+  imports: [TranslatePipe, RouterLink, ImageGallery1Component, ImageGallery2Component, ProductPurchaseSidebarComponent, AccordionInfoComponent, PolicyComponent, RelatedProductsComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
 export class ProductDetailComponent extends BasePageComponent implements OnInit {
+  private readonly dutch = inject(LanguageService).currentLanguageCode() === 'nl';
+  private readonly i18n = inject(TranslationService);
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
@@ -51,10 +56,16 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
       this.fetchProduct();
     });
   }
-  // The museum-based story where we have one, otherwise the short product description
-  storyParagraphs = computed(() => (this.product().metadata?.Story ?? this.product().description ?? '').split('\n\n'));
+  // The museum-based story where we have one (in Dutch on /nl when written), otherwise the short product description
+  storyParagraphs = computed(() => {
+    const metadata = this.product().metadata;
+    return ((this.dutch && metadata?.Story_nl) || metadata?.Story || this.product().description || '').split('\n\n');
+  });
 
-  artistBio = computed(() => this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP)?.description);
+  artistBio = computed(() => {
+    const artist = this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP);
+    return (this.dutch && artist?.metadata?.['Description_nl']) || artist?.description;
+  });
 
   // Story starts collapsed to two lines; the artist bio is only shown when expanded
   storyExpanded = signal(false);
@@ -84,35 +95,35 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     const rightsContent = `
       <div class="space-y-4">
         <div>
-          <span class="font-medium text-slate-700">License</span>
-          <p class="text-slate-600">Public Domain / CC0 (when available)</p>
+          <span class="font-medium text-slate-700">${this.i18n.t('rights.license')}</span>
+          <p class="text-slate-600">${this.i18n.t('rights.licenseText')}</p>
         </div>
         <div>
-          <span class="font-medium text-slate-700">Source</span>
-          <p class="text-slate-600">We always link the original museum/collection page for full transparency.</p>
-          ${sourceUrl ? `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-cyan-600 hover:text-cyan-700 underline text-sm">View original source →</a>` : '<span class="text-slate-400 text-sm">Source link not available</span>'}
+          <span class="font-medium text-slate-700">${this.i18n.t('rights.source')}</span>
+          <p class="text-slate-600">${this.i18n.t('rights.sourceText')}</p>
+          ${sourceUrl ? `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-cyan-600 hover:text-cyan-700 underline text-sm">${this.i18n.t('rights.viewSource')}</a>` : `<span class="text-slate-400 text-sm">${this.i18n.t('rights.noSource')}</span>`}
         </div>
         <div>
-          <span class="font-medium text-slate-700">Credit</span>
+          <span class="font-medium text-slate-700">${this.i18n.t('rights.credit')}</span>
           <p class="text-slate-600">${creditLine}</p>
         </div>
         <div class="pt-2 border-t border-slate-100">
-          <p class="text-slate-500 text-sm italic">Just to be clear: museums and collections don't sponsor us — we simply love great art and carefully curate public-domain pieces for printing.</p>
+          <p class="text-slate-500 text-sm italic">${this.i18n.t('rights.notSponsored')}</p>
         </div>
         <div>
-          <span class="font-medium text-slate-700">Spotted something wrong?</span>
-          <p class="text-slate-600 text-sm">Tell us at <a href="mailto:support@printmeart.nl" class="text-cyan-600 hover:text-cyan-700">support@printmeart.nl</a> and we'll check it fast.</p>
+          <span class="font-medium text-slate-700">${this.i18n.t('rights.spotted')}</span>
+          <p class="text-slate-600 text-sm">${this.i18n.t('rights.tellUs', { email: '<a href="mailto:support@printmeart.nl" class="text-cyan-600 hover:text-cyan-700">support@printmeart.nl</a>' })}</p>
         </div>
       </div>
     `;
 
     return [
       {
-        name: 'Description',
-        content: this.product().description || 'No description available.',
+        name: this.i18n.t('rights.description'),
+        content: this.product().description || this.i18n.t('rights.noDescription'),
       },
       {
-        name: 'Rights & Source',
+        name: this.i18n.t('rights.title'),
         content: rightsContent,
       },
     ] as AccordionItem[];

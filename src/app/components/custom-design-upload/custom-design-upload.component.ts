@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, ElementRef, output, ViewChild, signal, inject } from '@angular/core';
 import { IconComponent } from '../shared/icon/icon.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
@@ -6,7 +7,7 @@ import { CommonApiService } from '../../services/api/common-api.service';
 @Component({
   selector: 'app-custom-design-upload',
   standalone: true,
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './custom-design-upload.component.html',
   styleUrl: './custom-design-upload.component.scss',
 })
@@ -113,7 +114,7 @@ export class CustomDesignUploadComponent {
           reason: 'upload_failed',
           sizeMb,
         });
-        this.uploadError.emit('Failed to upload image. Please try again.');
+        this.uploadError.emit('errors.upload');
       },
     });
   }

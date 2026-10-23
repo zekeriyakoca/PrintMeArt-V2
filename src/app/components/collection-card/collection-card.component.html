@@ -6,12 +6,12 @@
       alt="category image" />
   </a>
   <div class="px-3 pt-6 pb-0">
-    <p class="text-sm text-gray-700 text-[#241b6a]">Category</p>
+    <p class="text-sm text-gray-700 text-[#241b6a]">{{ 'collectionCard.category' | t }}</p>
     <a>
-      <h5 class="my-2 text-3xl font-normal tracking-tight text-gray-800 ">{{category().name}}</h5>
+      <h5 class="my-2 text-3xl font-normal tracking-tight text-gray-800 ">{{ 'name.' + category().name | t }}</h5>
     </a>
     <a class="inline-flex items-center py-2 mt-4 text-md font-medium text-center rounded-lg text-indigo-800">
-      See more
+      {{ 'collectionCard.seeMore' | t }}
       <app-icon iconName="arrow-right-small" class="rtl:rotate-180 w-3.5 h-3.5 ms-2" />
     </a>
   </div>

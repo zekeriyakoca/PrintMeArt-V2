@@ -17,7 +17,7 @@
         {{ product().name }}
       </p>
       <p class="text-white/80 text-sm sm:text-base tracking-tight">
-        <span class="text-xs font-light">FROM </span>
+        <span class="text-xs font-light">{{ 'product.fromUpper' | t }} </span>
         <span class="font-medium">&euro;{{ fromPrice().toFixed(2) }}</span>
       </p>
     </div>

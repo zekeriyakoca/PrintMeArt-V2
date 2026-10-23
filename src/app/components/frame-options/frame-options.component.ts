@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   computed,
@@ -27,7 +28,7 @@ interface FrameItem {
 
 @Component({
   selector: 'app-frame-options',
-  imports: [RouterLink, IconComponent, InfoPopupComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent, InfoPopupComponent],
   templateUrl: './frame-options.component.html',
   styleUrl: './frame-options.component.scss',
 })

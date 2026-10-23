@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
@@ -5,7 +6,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [IconComponent],
+  imports: [TranslatePipe, IconComponent],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
@@ -15,39 +16,39 @@ export class FooterComponent {
   widgetMenus = [
     {
       id: '1',
-      title: 'Company',
+      title: 'footer.company',
       menus: [
-        { href: '/about', label: 'About us' },
-        { href: '/about', label: 'Contact' },
-        { href: '/how-we-work', label: 'How we work' },
+        { href: '/about', label: 'footer.aboutUs' },
+        { href: '/about', label: 'footer.contact' },
+        { href: '/how-we-work', label: 'footer.howWeWork' },
       ],
     },
     {
       id: '2',
-      title: 'Legal',
+      title: 'footer.legal',
       menus: [
-        { href: '/legal#shipping', label: 'Shipping' },
-        { href: '/legal#returns', label: 'Returns' },
-        { href: '/legal#terms', label: 'Terms' },
-        { href: '/legal#complaints', label: 'Complaints' },
-        { href: '/legal#privacy', label: 'Privacy' },
+        { href: '/legal#shipping', label: 'footer.shipping' },
+        { href: '/legal#returns', label: 'footer.returns' },
+        { href: '/legal#terms', label: 'footer.terms' },
+        { href: '/legal#complaints', label: 'footer.complaints' },
+        { href: '/legal#privacy', label: 'footer.privacy' },
       ],
     },
     {
       id: '3',
-      title: 'Licensing',
+      title: 'footer.licensing',
       menus: [
-        { href: '/licensing#credits', label: 'Licensing & credits' },
-        { href: '/licensing#report', label: 'Report an issue' },
+        { href: '/licensing#credits', label: 'footer.credits' },
+        { href: '/licensing#report', label: 'footer.report' },
       ],
     },
     {
       id: '4',
-      title: 'Shop',
+      title: 'footer.shop',
       menus: [
-        { href: '/search', label: 'All prints' },
-        { href: '/frames', label: 'Frames' },
-        { href: '/your-design', label: 'Your design' },
+        { href: '/search', label: 'footer.allPrints' },
+        { href: '/frames', label: 'footer.frames' },
+        { href: '/your-design', label: 'footer.yourDesign' },
       ],
     },
   ];

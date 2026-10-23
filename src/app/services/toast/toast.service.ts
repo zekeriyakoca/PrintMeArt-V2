@@ -6,6 +6,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslationService } from '../i18n/translation.service';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -21,15 +22,17 @@ export interface Toast {
 })
 export class ToastService {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly i18n = inject(TranslationService);
   private nextId = 0;
   private readonly _toasts = signal<Toast[]>([]);
 
   readonly toasts = computed(() => this._toasts());
 
+  /** `message` is a translation key (e.g. 'errors.generic'); a message from the server shows as is. */
   show(message: string, type: ToastType = 'info', duration = 5000): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    const normalizedMessage = message.trim();
+    const normalizedMessage = this.i18n.t(message.trim());
     if (!normalizedMessage) return;
 
     const isDuplicate = this._toasts().some(

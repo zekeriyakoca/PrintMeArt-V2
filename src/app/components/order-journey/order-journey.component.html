@@ -58,8 +58,8 @@
 
       <!-- Content -->
       <div>
-        <h3 class="font-semibold text-slate-900 mb-2">{{ step.title }}</h3>
-        <p class="text-sm text-slate-500 leading-[1.8rem] max-w-[220px] mx-auto">{{ step.description }}</p>
+        <h3 class="font-semibold text-slate-900 mb-2">{{ step.title | t }}</h3>
+        <p class="text-sm text-slate-500 leading-[1.8rem] max-w-[220px] mx-auto">{{ step.description | t: { days: deliveryDays() } }}</p>
       </div>
     </div>
     }

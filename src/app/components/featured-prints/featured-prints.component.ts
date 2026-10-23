@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, signal } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { PaginatedListDto, ProductSimpleDto } from '../../models/product';
@@ -7,7 +8,7 @@ import { SectionTitleComponent } from '../section-title/section-title.component'
 
 @Component({
   selector: 'app-featured-prints',
-  imports: [ProductCardComponent, SectionTitleComponent],
+  imports: [TranslatePipe, ProductCardComponent, SectionTitleComponent],
   templateUrl: './featured-prints.component.html',
   styleUrls: ['./featured-prints.component.scss'],
 })

@@ -13,11 +13,11 @@
         class="show-photos-btn absolute bottom-3 right-3 flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur text-indigo-700 rounded-full text-xs font-medium hover:bg-indigo-100 transition-colors duration-150 z-10"
         (click)="onShowPhotos($event)">
         <app-icon iconName="grid" class="w-4 h-4" />
-        <span>Show all photos</span>
+        <span>{{ 'frames.showAllPhotos' | t }}</span>
       </button>
     </div>
   </div>
   <h3 class="frame-name text-4xl font-bold text-indigo-900 mb-4 text-center tracking-tight drop-shadow-sm">{{
-    frame().name }}</h3>
-  <p class="frame-description text-gray-700 text-4xl text-center leading-relaxed mb-2">{{ frame().description }}</p>
+    'name.' + frame().name | t }}</h3>
+  <p class="frame-description text-gray-700 text-4xl text-center leading-relaxed mb-2">{{ 'name.' + frame().description | t }}</p>
 </div>

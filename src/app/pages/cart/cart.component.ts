@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, HostBinding, Input, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs/operators';
@@ -12,7 +13,7 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent, OrderSummaryComponent, RouterLink, IconComponent],
+  imports: [TranslatePipe, CartItemComponent, OrderSummaryComponent, RouterLink, IconComponent],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',

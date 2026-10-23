@@ -4,7 +4,7 @@
   <header class="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7 w-full px-4 sm:px-0">
     <div class="relative w-full">
       <label for="search-input" class="text-neutral-500">
-        <span class="sr-only">Search all products</span>
+        <span class="sr-only">{{ 'list.searchAll' | t }}</span>
         <input
           #searchInput
           id="search-input"
@@ -12,7 +12,7 @@
           class="w-full shadow-lg border border-neutral-200 text-sm rounded-full pl-12 sm:pl-14 pr-14 py-4 sm:py-5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200"
           [(ngModel)]="selectedFilterOptions().searchTerm"
           (keyup.enter)="search()"
-          placeholder="Type your keywords"
+          [placeholder]="'list.keywords' | t"
         />
         <button
           type="button"
@@ -40,20 +40,20 @@
       (click)="hideFilters.set(!hideFilters())"
     >
       <app-icon iconName="filter" class="w-4 h-4"></app-icon>
-      <span> {{ hideFilters() ? 'Show' : 'Hide' }} filters </span>
+      <span> {{ (hideFilters() ? 'list.showFilters' : 'list.hideFilters') | t }} </span>
     </button>
 
     <!-- Results for chips + gallery toggle on right -->
     <div class="flex flex-wrap items-center gap-2 justify-end">
       @if (activeFilters().length) {
-        <span class="text-sm text-neutral-500">Results for</span>
+        <span class="text-sm text-neutral-500">{{ 'list.resultsFor' | t }}</span>
         @for (chip of activeFilters(); track chip.type) {
           <span
             class="group/pin inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors"
             [class]="chip.colorClass"
             (click)="selectOption(chip.type, chip.name)"
           >
-            {{ chip.name }}
+            {{ 'name.' + chip.name | t }}
             <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/pin:opacity-100 transition-opacity duration-200"></app-icon>
           </span>
         }
@@ -125,7 +125,7 @@
             class="mb-0 pl-1 pr-2 py-1.5 text-[1.05rem] -translate-x-5 font-light uppercase text-[#384f8c] cursor-pointer transition-colors flex items-center justify-between select-none"
             (click)="toggleGroup(group.name)"
           >
-            <span>{{ getFilterGroupName(group.name) }}</span>
+            <span>{{ 'name.' + getFilterGroupName(group.name) | t }}</span>
             <app-icon iconName="chevron-down" class="w-3.5 h-3.5 text-[#384f8c] opacity-40 transition-transform duration-300" [class.rotate-180]="isGroupExpanded(group.name)"></app-icon>
           </h3>
 
@@ -136,7 +136,7 @@
                 <div class="relative mt-1.5 mb-0.5">
                   <input
                     type="text"
-                    placeholder="Search {{ group.name.toLowerCase() }}..."
+                    [placeholder]="'list.searchIn' | t: { group: ('name.' + getFilterGroupName(group.name) | t).toLowerCase() }"
                     class="w-full text-xs border-b border-neutral-200 bg-transparent pl-2 pr-6 py-1 focus:outline-none focus:border-[#384f8c] transition-colors"
                     [ngModel]="filterSearchTerms()[group.name] || ''"
                     (ngModelChange)="updateFilterSearch(group.name, $event)"
@@ -151,13 +151,13 @@
                       [class.text-[#384f8c]]="isOptionSelected(option.name)"
                       (click)="selectOption(group.groupType, option.name)"
                     >
-                      <span>{{ option.name }}</span>
+                      <span>{{ 'name.' + option.name | t }}</span>
                       @if (isOptionSelected(option.name)) {
                         <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
                       }
                     </p>
                   } @empty {
-                    <p class="text-xs text-neutral-400 px-2 py-1">No matches</p>
+                    <p class="text-xs text-neutral-400 px-2 py-1">{{ 'list.noMatches' | t }}</p>
                   }
                 </div>
               } @else {
@@ -168,7 +168,7 @@
                     [class.bg-indigo-50]="isOptionSelected(group.name)"
                     (click)="selectOption(group.groupType, group.name)"
                   >
-                    <span>View all</span>
+                    <span>{{ 'list.viewAll' | t }}</span>
                     @if (isOptionSelected(group.name)) {
                       <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
                     }
@@ -180,7 +180,7 @@
                       [class.text-[#384f8c]]="isOptionSelected(option.name)"
                       (click)="selectOption(group.groupType, option.name)"
                     >
-                      <span>{{ option.name }}</span>
+                      <span>{{ 'name.' + option.name | t }}</span>
                       @if (isOptionSelected(option.name)) {
                         <app-icon iconName="close" class="w-3.5 h-3.5 opacity-0 group-hover/filter:opacity-100 transition-opacity duration-200"></app-icon>
                       }
@@ -235,8 +235,8 @@
       } @else {
         <div class="flex flex-col items-center justify-center py-20">
           <app-icon iconName="search" class="w-16 h-16 text-neutral-300 mb-4"></app-icon>
-          <p class="text-neutral-500 text-lg mb-1">No products found</p>
-          <p class="text-neutral-400 text-sm">Try adjusting your filters or search term</p>
+          <p class="text-neutral-500 text-lg mb-1">{{ 'list.noProducts' | t }}</p>
+          <p class="text-neutral-400 text-sm">{{ 'list.tryAdjusting' | t }}</p>
         </div>
       }
       <div class="flex justify-center mt-12">

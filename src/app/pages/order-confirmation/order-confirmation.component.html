@@ -2,9 +2,9 @@
   <div class="confirmation-container">
     <!-- Header -->
     <header class="confirmation-header">
-      <h1 class="page-title">Order Confirmed</h1>
+      <h1 class="page-title">{{ 'confirm.title' | t }}</h1>
       <a routerLink="/" class="continue-link">
-        <span>Back to shop</span>
+        <span>{{ 'checkout.backToShop' | t }}</span>
         <app-icon iconName="arrow-right" class="w-4 h-4"></app-icon>
       </a>
     </header>
@@ -14,8 +14,8 @@
       <div class="success-icon">
         <app-icon iconName="check" class="w-8 h-8"></app-icon>
       </div>
-      <h2 class="success-title">Thank you for your order!</h2>
-      <p class="order-number">Order #{{orderNumber}}</p>
+      <h2 class="success-title">{{ 'confirm.thanks' | t }}</h2>
+      <p class="order-number">{{ 'orders.orderNo' | t: { number: orderNumber } }}</p>
     </div>
 
     <!-- Info Cards -->
@@ -25,8 +25,8 @@
           <app-icon iconName="email" class="w-5 h-5"></app-icon>
         </div>
         <div class="info-content">
-          <h3>Confirmation Sent</h3>
-          <p>Check your email for order details</p>
+          <h3>{{ 'confirm.sent' | t }}</h3>
+          <p>{{ 'confirm.checkEmail' | t }}</p>
         </div>
       </div>
       <div class="info-card">
@@ -34,8 +34,8 @@
           <app-icon iconName="truck" class="w-5 h-5"></app-icon>
         </div>
         <div class="info-content">
-          <h3>Shipping Updates</h3>
-          <p>We'll notify you when it ships</p>
+          <h3>{{ 'confirm.shippingUpdates' | t }}</h3>
+          <p>{{ 'confirm.notify' | t }}</p>
         </div>
       </div>
     </div>
@@ -43,11 +43,11 @@
     <!-- Actions -->
     <div class="actions">
       <a routerLink="/products" class="primary-btn">
-        <span>Continue Shopping</span>
+        <span>{{ 'cart.continueShopping' | t }}</span>
         <app-icon iconName="arrow-right" class="w-[18px] h-[18px]"></app-icon>
       </a>
       <a routerLink="/orders" class="secondary-link">
-        View Order History
+        {{ 'confirm.history' | t }}
       </a>
     </div>
   </div>

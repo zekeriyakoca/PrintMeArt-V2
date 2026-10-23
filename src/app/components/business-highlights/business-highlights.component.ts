@@ -1,10 +1,11 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-business-highlights',
-  imports: [RouterLink, IconComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent],
   templateUrl: './business-highlights.component.html',
   styleUrl: './business-highlights.component.scss',
 })
@@ -12,26 +13,25 @@ export class BusinessHighlightsComponent {
   highlights = [
     {
       icon: 'settings',
-      title: 'How We Print',
-      description: 'Fine-art paper & our print process—see the details.',
-      cta: 'See our process',
+      title: 'highlights.printTitle',
+      description: 'highlights.printText',
+      cta: 'highlights.printCta',
       link: '/how-we-work',
       color: 'cyan',
     },
     {
       icon: 'rocket',
-      title: 'Custom Print',
-      description:
-        'Upload your image, preview it, then we print it museum-quality.',
-      cta: 'Create your print',
+      title: 'highlights.customTitle',
+      description: 'highlights.customText',
+      cta: 'highlights.customCta',
       link: '/your-design',
       color: 'violet',
     },
     {
       icon: 'users',
-      title: 'Made in Den Bosch',
-      description: 'Family-run studio. Personal support. No mystery sellers.',
-      cta: 'Meet the family',
+      title: 'highlights.familyTitle',
+      description: 'highlights.familyText',
+      cta: 'highlights.familyCta',
       link: '/about',
       color: 'cyan',
       image:

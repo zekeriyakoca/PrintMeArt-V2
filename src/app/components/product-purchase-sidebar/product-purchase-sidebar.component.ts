@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { SizeOption } from './../../models/size-option';
 import { Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
 import { ProductDto } from '../../models/product';
@@ -24,7 +25,7 @@ import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent],
+  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -192,7 +193,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       // Check if it's specifically missing the custom image
       const hasCustomProductDetails = this.product().optionGroups.some((g) => g.name === 'CustomProductDetails');
       if (hasCustomProductDetails && !this.customImageUrl()) {
-        this.toastService.error('Please wait for your image to finish uploading before adding to cart.');
+        this.toastService.error('product.uploadPending');
       }
       this.analytics.trackAddToCartBlocked(this.product().id, 'missing_options');
       return;

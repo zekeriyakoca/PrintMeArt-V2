@@ -1,9 +1,8 @@
 <div class="contained-page margin-header md:py-16 mx-auto px-4">
   <!-- Hero -->
   <section class="max-w-6xl mx-auto mb-16">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Legal</h1>
-    <p class="text-lg text-slate-500 max-w-2xl">Everything you need to know about shipping, returns, and how we handle
-      your data. We keep it simple and fair.</p>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">{{ 'footer.legal' | t }}</h1>
+    <p class="text-lg text-slate-500 max-w-2xl">{{ 'legal.intro' | t }}</p>
   </section>
 
   <!-- Quick Nav Cards -->
@@ -17,7 +16,7 @@
               d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-cyan-700 text-sm">Shipping</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-cyan-700 text-sm">{{ 'footer.shipping' | t }}</h3>
       </a>
       <a href="/legal#returns"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 transition-all">
@@ -27,9 +26,9 @@
               d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-amber-700 text-sm">Returns</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-amber-700 text-sm">{{ 'footer.returns' | t }}</h3>
         @if (shippingInfo(); as info) {
-        <p class="text-xs text-slate-500 mt-1">{{ info.returnDays }}-day returns</p>
+        <p class="text-xs text-slate-500 mt-1">{{ 'product.returns' | t: { days: info.returnDays } }}</p>
         }
       </a>
       <a href="/legal#terms"
@@ -40,7 +39,7 @@
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-violet-700 text-sm">Terms</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-violet-700 text-sm">{{ 'footer.terms' | t }}</h3>
       </a>
       <a href="/legal#complaints"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-rose-50 border border-slate-100 hover:border-rose-200 transition-all">
@@ -50,7 +49,7 @@
               d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-rose-700 text-sm">Complaints</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-rose-700 text-sm">{{ 'footer.complaints' | t }}</h3>
       </a>
       <a href="/legal#compliance"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-all">
@@ -60,7 +59,7 @@
               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-orange-700 text-sm">Compliance</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-orange-700 text-sm">{{ 'legal.compliance' | t }}</h3>
       </a>
       <a href="/legal#privacy"
         class="group p-5 rounded-xl bg-slate-50 hover:bg-green-50 border border-slate-100 hover:border-green-200 transition-all">
@@ -70,7 +69,7 @@
               d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
         </div>
-        <h3 class="font-semibold text-slate-800 group-hover:text-green-700 text-sm">Privacy</h3>
+        <h3 class="font-semibold text-slate-800 group-hover:text-green-700 text-sm">{{ 'footer.privacy' | t }}</h3>
       </a>
     </div>
   </section>
@@ -86,30 +85,29 @@
                 d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Shipping</h2>
-          <p class="text-slate-500">We ship from Den Bosch, Netherlands with care.</p>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'footer.shipping' | t }}</h2>
+          <p class="text-slate-500">{{ 'legal.shipFrom' | t }}</p>
         </div>
       </div>
       <div class="md:w-2/3 space-y-8">
         @if (shippingInfo(); as info) {
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-4">Delivery Times</h3>
-          <p class="text-slate-600">Delivery within {{ info.deliveryDays }} days</p>
+          <h3 class="font-semibold text-slate-800 mb-4">{{ 'legal.deliveryTimes' | t }}</h3>
+          <p class="text-slate-600">{{ 'legal.deliveryWithin' | t: { days: info.deliveryDays } }}</p>
         </div>
         }
         <div class="p-5 rounded-xl bg-cyan-50 border border-cyan-100 mb-6">
-          <p class="text-cyan-800 text-sm"><span class="font-semibold">Delivery Guarantee:</span> All orders are
-            delivered within 30 days. If we can't meet this, you may cancel for a full refund.</p>
+          <p class="text-cyan-800 text-sm"><span class="font-semibold">{{ 'legal.guarantee' | t }}</span> {{ 'legal.guaranteeText' | t }}</p>
         </div>
         @if (shippingInfo(); as info) {
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-4">Shipping Costs</h3>
+          <h3 class="font-semibold text-slate-800 mb-4">{{ 'legal.costs' | t }}</h3>
           <div class="grid gap-3">
             @for (zone of info.zones; track zone.name) {
             <div class="flex justify-between items-center py-2 border-b border-slate-200 last:border-0">
-              <span class="text-slate-600">{{ zone.name }}</span>
+              <span class="text-slate-600">{{ 'name.' + zone.name | t }}</span>
               <span class="font-medium text-slate-800">{{ zone.rate | currency:'EUR' }}@if (zone.freeShippingFrom != null) {
-                - Free above {{ zone.freeShippingFrom | currency:'EUR' }}}</span>
+                - {{ 'legal.freeAbove' | t: { amount: (zone.freeShippingFrom | currency:'EUR') ?? '' } }}}</span>
             </div>
             }
           </div>
@@ -130,51 +128,49 @@
                 d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Returns & Refunds</h2>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'legal.returnsTitle' | t }}</h2>
           @if (shippingInfo(); as info) {
-          <p class="text-slate-500">{{ info.returnDays }} days to decide. No questions asked.</p>
+          <p class="text-slate-500">{{ 'legal.daysToDecide' | t: { days: info.returnDays } }}</p>
           }
         </div>
       </div>
       <div class="md:w-2/3">
         <div class="p-6 rounded-xl bg-slate-50 mb-6">
-          <h3 class="font-semibold text-slate-800 mb-4">How It Works</h3>
+          <h3 class="font-semibold text-slate-800 mb-4">{{ 'legal.howItWorks' | t }}</h3>
           <div class="space-y-4">
             <div class="flex gap-4">
               <div
                 class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
                 1</div>
-              <p class="text-slate-600">Email us at support&#64;printme.art with your order number</p>
+              <p class="text-slate-600">{{ 'legal.step1' | t }}</p>
             </div>
             <div class="flex gap-4">
               <div
                 class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
                 2</div>
-              <p class="text-slate-600">We'll send you a return shipping label</p>
+              <p class="text-slate-600">{{ 'legal.step2' | t }}</p>
             </div>
             <div class="flex gap-4">
               <div
                 class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
                 3</div>
-              <p class="text-slate-600">Pack the item securely and drop it off</p>
+              <p class="text-slate-600">{{ 'legal.step3' | t }}</p>
             </div>
             <div class="flex gap-4">
               <div
                 class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
                 4</div>
-              <p class="text-slate-600">Refund processed within 5-7 business days</p>
+              <p class="text-slate-600">{{ 'legal.step4' | t }}</p>
             </div>
           </div>
         </div>
         @if (shippingInfo(); as info) {
         <div class="p-5 rounded-xl bg-amber-50 border border-amber-100 mb-6">
-          <h3 class="font-semibold text-amber-800 mb-2">Extended Return Period</h3>
-          <p class="text-amber-700 text-sm">We offer {{ info.returnDays }} days to return your order — longer than the
-            14-day legal minimum (bedenktijd). Simply email us at support&#64;printmeart.nl to start a return.</p>
+          <h3 class="font-semibold text-amber-800 mb-2">{{ 'legal.extended' | t }}</h3>
+          <p class="text-amber-700 text-sm">{{ 'legal.extendedText' | t: { days: info.returnDays } }}</p>
         </div>
         }
-        <p class="text-sm text-slate-500">Items must be in original, undamaged condition. Custom prints (your own
-          uploaded designs) are excluded from the right of withdrawal, unless there's a quality issue.</p>
+        <p class="text-sm text-slate-500">{{ 'legal.condition' | t }}</p>
       </div>
     </div>
   </section>
@@ -190,42 +186,32 @@
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Terms of Service</h2>
-          <p class="text-slate-500">The legal stuff, kept simple.</p>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'legal.termsTitle' | t }}</h2>
+          <p class="text-slate-500">{{ 'legal.termsTagline' | t }}</p>
         </div>
       </div>
       <div class="md:w-2/3 space-y-6">
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">General</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">By using our website and services, you agree to these terms.
-            We sell museum-quality giclée prints and frames. All product images are representative; slight color
-            variations may occur due to monitor settings.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.general' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">{{ 'legal.generalText' | t }}</p>
         </div>
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">Pricing</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">All prices shown include BTW (Dutch VAT). Shipping costs are
-            displayed separately before checkout.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.pricing' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">{{ 'legal.pricingText' | t }}</p>
         </div>
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">Orders & Payment</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">Payment is processed securely through iDEAL, credit card,
-            and Klarna. By placing an order, you're making an offer to purchase which we'll confirm via email. The
-            purchase agreement is formed when we send this confirmation.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.orders' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">{{ 'legal.ordersText' | t }}</p>
         </div>
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">Intellectual Property</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">Our curated collection features public domain artworks.
-            Original content, website design, and branding are © PrintMe Art. You may not reproduce our website content
-            without permission.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.ip' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">{{ 'legal.ipText' | t }}</p>
         </div>
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">Warranty</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">You have legal warranty rights (wettelijke garantie). If
-            your product doesn't match what you ordered or is defective, contact us and we'll resolve it — repair,
-            replacement, or refund.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.warranty' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">{{ 'legal.warrantyText' | t }}</p>
         </div>
-        <p class="text-sm text-slate-500">These terms are governed by Dutch law. Any disputes will be handled by the
-          courts of 's-Hertogenbosch.</p>
+        <p class="text-sm text-slate-500">{{ 'legal.law' | t }}</p>
       </div>
     </div>
   </section>
@@ -241,41 +227,39 @@
                 d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Complaints</h2>
-          <p class="text-slate-500">We want to make it right.</p>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'footer.complaints' | t }}</h2>
+          <p class="text-slate-500">{{ 'legal.complaintsTagline' | t }}</p>
         </div>
       </div>
       <div class="md:w-2/3 space-y-6">
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">How to Submit a Complaint</h3>
-          <p class="text-slate-600 text-sm leading-relaxed mb-4">If you're not satisfied with our products or service,
-            please let us know. We take all complaints seriously and aim to resolve them fairly and quickly.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.howComplain' | t }}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">{{ 'legal.complainText' | t }}</p>
           <div class="space-y-3">
             <div class="flex items-start gap-3">
               <div
                 class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
                 1</div>
-              <p class="text-slate-600 text-sm">Email us at <span class="font-medium">support&#64;printmeart.nl</span>
-                with your order number and a clear description of the issue</p>
+              <p class="text-slate-600 text-sm">{{ 'legal.emailUs' | t }} <span class="font-medium">support&#64;printmeart.nl</span>
+                {{ 'legal.withOrder' | t }}</p>
             </div>
             <div class="flex items-start gap-3">
               <div
                 class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
                 2</div>
-              <p class="text-slate-600 text-sm">We'll acknowledge your complaint within 2 business days</p>
+              <p class="text-slate-600 text-sm">{{ 'legal.acknowledge' | t }}</p>
             </div>
             <div class="flex items-start gap-3">
               <div
                 class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
                 3</div>
-              <p class="text-slate-600 text-sm">We aim to resolve complaints within 14 days</p>
+              <p class="text-slate-600 text-sm">{{ 'legal.resolve' | t }}</p>
             </div>
           </div>
         </div>
         <div class="p-6 rounded-xl bg-rose-50 border border-rose-100">
-          <h3 class="font-semibold text-rose-800 mb-2">Not Satisfied with Our Response?</h3>
-          <p class="text-rose-700 text-sm">If we can't reach a solution together, you can submit your complaint to the
-            European Online Dispute Resolution platform: <a href="https://ec.europa.eu/odr" target="_blank"
+          <h3 class="font-semibold text-rose-800 mb-2">{{ 'legal.notSatisfied' | t }}</h3>
+          <p class="text-rose-700 text-sm">{{ 'legal.odr' | t }} <a href="https://ec.europa.eu/odr" target="_blank"
               rel="noopener" class="underline font-medium">ec.europa.eu/odr</a></p>
         </div>
       </div>
@@ -293,8 +277,8 @@
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Compliance</h2>
-          <p class="text-slate-500">Report copyright or legal issues.</p>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'legal.compliance' | t }}</h2>
+          <p class="text-slate-500">{{ 'legal.complianceTagline' | t }}</p>
         </div>
       </div>
       <div class="md:w-2/3">
@@ -314,88 +298,78 @@
                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">Privacy Policy</h2>
-          <p class="text-slate-500">Your data belongs to you.</p>
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">{{ 'legal.privacyTitle' | t }}</h2>
+          <p class="text-slate-500">{{ 'legal.privacyTagline' | t }}</p>
         </div>
       </div>
       <div class="md:w-2/3 space-y-6">
         <div class="grid md:grid-cols-2 gap-6">
           <div class="p-6 rounded-xl bg-slate-50">
-            <h3 class="font-semibold text-slate-800 mb-3">What We Collect</h3>
+            <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.collect' | t }}</h3>
             <ul class="space-y-2 text-slate-600 text-sm">
-              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Name and email (to process
-                orders)</li>
-              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Shipping address (to deliver)
+              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> {{ 'legal.collectName' | t }}</li>
+              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> {{ 'legal.collectAddress' | t }}
               </li>
-              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Order history (for your account)
+              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> {{ 'legal.collectHistory' | t }}
               </li>
-              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Payment info (processed by
-                payment provider)</li>
+              <li class="flex items-center gap-2"><span class="text-green-500">✓</span> {{ 'legal.collectPayment' | t }}</li>
             </ul>
           </div>
           <div class="p-6 rounded-xl bg-slate-50">
-            <h3 class="font-semibold text-slate-800 mb-3">What We Don't Do</h3>
+            <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.dont' | t }}</h3>
             <ul class="space-y-2 text-slate-600 text-sm">
-              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> Sell your data to third parties
+              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> {{ 'legal.dontSell' | t }}
               </li>
-              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> Send marketing without consent
+              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> {{ 'legal.dontMarketing' | t }}
               </li>
-              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> Track you across websites without
-                your consent</li>
-              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> Keep data longer than needed</li>
+              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> {{ 'legal.dontTrack' | t }}</li>
+              <li class="flex items-center gap-2"><span class="text-red-500">✗</span> {{ 'legal.dontKeep' | t }}</li>
             </ul>
           </div>
         </div>
 
         <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
-          <h3 class="font-semibold text-slate-800 mb-3">Cookies & Tracking</h3>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.cookies' | t }}</h3>
           <p class="text-slate-600 text-sm mb-4">
-            We use cookies and similar technologies to understand how our website is used and to measure advertising
-            performance.
-            We only enable non-essential tracking after you give consent in the cookie banner.
+            {{ 'legal.cookiesText' | t }}
           </p>
 
           <div class="grid md:grid-cols-2 gap-4">
             <div class="p-4 rounded-xl bg-white border border-slate-200">
               <h4 class="font-medium text-slate-900 mb-1">Google Analytics & Google Ads</h4>
               <p class="text-slate-600 text-sm">
-                Used for analytics and ad conversion measurement. When enabled, Google may set cookies/identifiers to
-                help measure visits and campaign performance.
+                {{ 'legal.googleText' | t }}
               </p>
             </div>
             <div class="p-4 rounded-xl bg-white border border-slate-200">
               <h4 class="font-medium text-slate-900 mb-1">Azure Application Insights</h4>
               <p class="text-slate-600 text-sm">
-                Used to monitor site performance and errors (telemetry). When enabled, it may use browser
-                storage/cookies to help understand sessions and diagnose issues.
+                {{ 'legal.insightsText' | t }}
               </p>
             </div>
           </div>
 
           <p class="text-slate-600 text-sm mt-4">
-            You can withdraw consent at any time by clearing your browser storage. If you have questions, contact us at
-            support&#64;printmeart.nl.
+            {{ 'legal.withdraw' | t }}
           </p>
         </div>
 
         <div class="p-6 rounded-xl bg-green-50 border border-green-100">
-          <h3 class="font-semibold text-green-800 mb-3">Your Rights (AVG/GDPR)</h3>
-          <p class="text-green-700 text-sm mb-3">Under European privacy law, you have the right to:</p>
+          <h3 class="font-semibold text-green-800 mb-3">{{ 'legal.rights' | t }}</h3>
+          <p class="text-green-700 text-sm mb-3">{{ 'legal.rightsText' | t }}</p>
           <ul class="space-y-1 text-green-700 text-sm">
-            <li>• Access your personal data</li>
-            <li>• Correct inaccurate data</li>
-            <li>• Request deletion of your data</li>
-            <li>• Object to data processing</li>
-            <li>• Data portability</li>
+            <li>{{ 'legal.rightAccess' | t }}</li>
+            <li>{{ 'legal.rightCorrect' | t }}</li>
+            <li>{{ 'legal.rightDelete' | t }}</li>
+            <li>{{ 'legal.rightObject' | t }}</li>
+            <li>{{ 'legal.rightPortability' | t }}</li>
           </ul>
         </div>
         <div class="p-6 rounded-xl bg-slate-50">
-          <h3 class="font-semibold text-slate-800 mb-3">Data Retention</h3>
-          <p class="text-slate-600 text-sm">We keep order data for 7 years (legal requirement for tax purposes). Account
-            data is kept until you delete your account. Custom uploaded images are deleted after order completion.</p>
+          <h3 class="font-semibold text-slate-800 mb-3">{{ 'legal.retention' | t }}</h3>
+          <p class="text-slate-600 text-sm">{{ 'legal.retentionText' | t }}</p>
         </div>
-        <p class="text-sm text-slate-500">To exercise your rights or ask questions, email support&#64;printmeart.nl —
-          we'll respond within 30 days.</p>
+        <p class="text-sm text-slate-500">{{ 'legal.exercise' | t }}</p>
       </div>
     </div>
   </section>

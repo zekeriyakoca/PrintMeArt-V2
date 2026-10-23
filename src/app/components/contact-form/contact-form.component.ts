@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -9,7 +10,7 @@ import { ToastService } from '../../services/toast/toast.service';
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [TranslatePipe, FormsModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
 })
@@ -35,13 +36,13 @@ export class ContactFormComponent {
 
   // Subject options
   readonly subjectOptions = [
-    { value: '', label: 'Select a topic' },
-    { value: 'Order Question', label: 'Question about my order' },
-    { value: 'Product Inquiry', label: 'Product inquiry' },
-    { value: 'Custom Design', label: 'Custom design request' },
-    { value: 'Returns', label: 'Returns & refunds' },
-    { value: 'Shipping', label: 'Shipping question' },
-    { value: 'Other', label: 'Other' },
+    { value: '', label: 'contact.topicSelect' },
+    { value: 'Order Question', label: 'contact.topicOrder' },
+    { value: 'Product Inquiry', label: 'contact.topicProduct' },
+    { value: 'Custom Design', label: 'contact.topicCustom' },
+    { value: 'Returns', label: 'contact.topicReturns' },
+    { value: 'Shipping', label: 'contact.topicShipping' },
+    { value: 'Other', label: 'contact.topicOther' },
   ];
 
   updateField<K extends keyof ContactFormData>(
@@ -58,23 +59,23 @@ export class ContactFormComponent {
     const newErrors: Partial<Record<keyof ContactFormData, string>> = {};
 
     if (!data.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = 'forms.nameRequired';
     }
 
     if (!data.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'forms.emailRequired';
     } else if (!this.isValidEmail(data.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'forms.emailInvalid';
     }
 
     if (!data.subject) {
-      newErrors.subject = 'Please select a topic';
+      newErrors.subject = 'forms.topicRequired';
     }
 
     if (!data.message.trim()) {
-      newErrors.message = 'Message is required';
+      newErrors.message = 'forms.messageRequired';
     } else if (data.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+      newErrors.message = 'forms.messageShort';
     }
 
     this.errors.set(newErrors);
@@ -89,7 +90,7 @@ export class ContactFormComponent {
   onSubmit(): void {
     if (!this.validate()) {
       this.toastService.warning(
-        'Please fill in all required fields correctly.',
+        'forms.fillRequired',
       );
       return;
     }
@@ -101,7 +102,7 @@ export class ContactFormComponent {
         this.submitted.set(true);
         this.isSubmitting.set(false);
         this.toastService.success(
-          "Your message has been sent! We'll get back to you soon.",
+          'contact.sentToast',
         );
         this.resetForm();
       },
@@ -109,7 +110,7 @@ export class ContactFormComponent {
         this.isSubmitting.set(false);
         console.error('Contact form submission error:', err);
         this.toastService.error(
-          'Something went wrong. Please try again or email us directly.',
+          'contact.errorToast',
         );
       },
     });

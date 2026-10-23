@@ -1,33 +1,33 @@
 <div class="order-summary">
-  <h2 class="summary-title">Order Summary</h2>
+  <h2 class="summary-title">{{ 'summary.title' | t }}</h2>
 
   <div class="summary-rows">
     <div class="summary-row">
-      <span class="row-label">Subtotal (incl. VAT)</span>
+      <span class="row-label">{{ 'summary.subtotal' | t }}</span>
       <span class="row-value">{{ itemsTotal() | currency:'EUR' }}</span>
     </div>
     <div class="summary-row">
-      <span class="row-label">Shipping</span>
+      <span class="row-label">{{ 'checkout.shipping' | t }}</span>
       @if (shippingFee() !== null) {
       <span class="row-value">{{ shippingFee() | currency:'EUR' }}</span>
       } @else {
-      <span class="row-value">Calculated at checkout</span>
+      <span class="row-value">{{ 'summary.calculated' | t }}</span>
       }
     </div>
   </div>
 
   <div class="summary-total">
-    <span class="total-label">Total</span>
+    <span class="total-label">{{ 'summary.total' | t }}</span>
     <div class="text-right">
       <span class="total-value">{{ total() | currency:'EUR' }}</span>
-      <p class="text-xs text-slate-400 m-0">incl. {{ vatAmount() | currency:'EUR' }} VAT</p>
+      <p class="text-xs text-slate-400 m-0">{{ 'summary.inclVat' | t: { amount: (vatAmount() | currency:'EUR') ?? '' } }}</p>
     </div>
   </div>
 
   <div class="summary-actions">
     <ng-content select="order-button"></ng-content>
     <div class="flex items-center justify-center gap-1 py-2 mt-4">
-      <span class="text-sm text-slate-400 mr-2">Secure payment with</span>
+      <span class="text-sm text-slate-400 mr-2">{{ 'product.securePayment' | t }}</span>
       <app-icon iconName="stripe" class="w-10 h-7" title="Stripe"></app-icon>
       <app-icon iconName="klarna" class="w-10 h-7" title="Klarna"></app-icon>
       <app-icon iconName="ideal" class="w-10 h-7" title="ideal"></app-icon>
@@ -38,15 +38,15 @@
       <div class="order-assurance">
         <div class="assurance-item">
           <app-icon iconName="lock" class="w-4 h-4"></app-icon>
-          <span>Secure checkout</span>
+          <span>{{ 'summary.secure' | t }}</span>
         </div>
         <div class="assurance-item">
           <app-icon iconName="shield" class="w-4 h-4"></app-icon>
-          <span>Buyer protection</span>
+          <span>{{ 'summary.protection' | t }}</span>
         </div>
       </div>
-      <p class="legal-text">By placing your order, you agree to our <a href="/legal">Terms of Service</a> and <a
-          href="/legal">Privacy Policy</a>.</p>
+      <p class="legal-text">{{ 'summary.agree' | t }} <a href="/legal">{{ 'summary.terms' | t }}</a> {{ 'summary.and' | t }} <a
+          href="/legal">{{ 'summary.privacy' | t }}</a>.</p>
     </div>
   </div>
 </div>

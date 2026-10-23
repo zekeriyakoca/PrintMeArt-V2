@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
@@ -8,6 +9,7 @@ import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomRenderer } from './room-renderer';
 
 @Component({
+  imports: [TranslatePipe],
   selector: 'app-room-view',
   standalone: true,
   templateUrl: './room-view.component.html',

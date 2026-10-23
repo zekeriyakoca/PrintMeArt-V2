@@ -16,10 +16,10 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
           const messageToShow = messages[0] ?? defaultMessageForStatus(error);
           toastService.error(messageToShow);
         } else {
-          toastService.error('Unauthorized access. Please log in again.');
+          toastService.error('errors.unauthorized');
         }
       } else {
-        toastService.error('Something went wrong. Please try again.');
+        toastService.error('errors.generic');
       }
 
       return throwError(() => error);
@@ -29,19 +29,19 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
 function defaultMessageForStatus(error: HttpErrorResponse): string {
   if (error.status === 0) {
-    return 'Network error. Please check your connection and try again.';
+    return 'errors.network';
   }
 
   if (error.status >= 500) {
-    return 'Server error. Please try again in a moment.';
+    return 'errors.server';
   }
 
   if (error.status === 403) {
-    return 'You do not have permission to perform this action.';
+    return 'errors.forbidden';
   }
 
   if (error.status === 404) {
-    return 'Requested resource was not found.';
+    return 'errors.notFound';
   }
 
   return 'Request failed. Please try again.';

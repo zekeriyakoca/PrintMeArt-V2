@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, signal, OnInit } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
@@ -13,7 +14,7 @@ const EMPTY_ADDRESS = { name: '', street1: '', zip: '', city: '', country: 'NL',
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [Field, RouterLink, IconComponent],
+  imports: [TranslatePipe, Field, RouterLink, IconComponent],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {

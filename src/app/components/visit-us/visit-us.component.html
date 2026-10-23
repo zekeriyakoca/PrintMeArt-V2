@@ -7,27 +7,26 @@
         height="112" style="margin-right: auto; margin-left: auto;">
     </a>
     <h1 class="font-semibold text-3xl sm:text-3xl xl:text-5xl 2xl:text-6xl mt-4 sm:mt-10 leading-tight tracking-tight">
-      Visit Us <span class="text-primary">in Den Bosch</span>
+      {{ 'visit.title' | t }} <span class="text-primary">{{ 'visit.city' | t }}</span>
     </h1>
     <span class="block mt-4 sm:mt-6 text-slate-500 text-base sm:text-xl">
-      <span dir="auto" style="vertical-align: inherit;">Experience our craftsmanship firsthand. Pick up your prints,
-        enjoy a coffee, and see where the magic happens.</span>
+      <span dir="auto" style="vertical-align: inherit;">{{ 'visit.text' | t }}</span>
     </span>
     <div class="flex flex-col sm:flex-row gap-3 sm:gap-5 mt-6 sm:mt-12">
       <a class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  ttnc-ButtonPrimary disabled:bg-opacity-90 bg-slate-900 hover:bg-slate-800 text-slate-50 shadow-xl  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 "
         title="" href="/about#contact-us">
-        <span dir="auto" style="vertical-align: inherit;">Plan Your Visit</span>
+        <span dir="auto" style="vertical-align: inherit;">{{ 'visit.plan' | t }}</span>
       </a>
       <a class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  ttnc-ButtonSecondary bg-white text-slate-700 hover:bg-gray-100 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 "
         title="" href="/search">
-        <span dir="auto" style="vertical-align: inherit;">Browse prints</span>
+        <span dir="auto" style="vertical-align: inherit;">{{ 'visit.browse' | t }}</span>
       </a>
     </div>
   </div>
   <div class="relative flex-1 text-center">
     <div class="block">
       <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/alone-painter.webp"
-        sizes="(max-width: 767px) 100vw, 50vw" alt="Promo Painter working in studio"
+        sizes="(max-width: 767px) 100vw, 50vw" [alt]="'visit.imageAlt' | t"
         class="w-full max-w-[330px] sm:max-w-xl md:max-w-2xl h-auto mx-auto rounded-tl-[22%] sm:rounded-tl-[30%] shadow-lg">
     </div>
   </div>

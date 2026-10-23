@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieConsentService } from '../../services/consent/cookie-consent.service';
@@ -6,7 +7,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-cookie-consent',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [TranslatePipe, CommonModule, RouterModule],
   templateUrl: './cookie-consent.component.html',
   styleUrls: ['./cookie-consent.component.scss'],
 })

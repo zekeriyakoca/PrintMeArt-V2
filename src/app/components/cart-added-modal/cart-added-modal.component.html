@@ -11,7 +11,7 @@
         <div class="w-6 h-6 rounded-full bg-[#384f8c] flex items-center justify-center">
           <app-icon iconName="check" class="w-4 h-4 text-white"></app-icon>
         </div>
-        <span class="font-medium text-[#384f8c] text-sm">Added to cart</span>
+        <span class="font-medium text-[#384f8c] text-sm">{{ 'cart.added' | t }}</span>
       </div>
       <button type="button"
         class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors cursor-pointer"
@@ -39,13 +39,13 @@
           @if (getDisplayOptions(addedItem()!.selectedOptions).length) {
           <div class="mt-1 text-xs text-slate-500 truncate">
             @for (option of getDisplayOptions(addedItem()!.selectedOptions); track option.optionId; let last = $last) {
-            <span>{{ option.optionName || option.name }}{{ last ? '' : ', ' }}</span>
+            <span>{{ 'name.' + (option.optionName || option.name) | t }}{{ last ? '' : ', ' }}</span>
             }
           </div>
           }
 
           <div class="mt-1.5 flex items-center justify-between">
-            <span class="text-xs text-slate-500">Qty: {{ addedItem()!.quantity }}</span>
+            <span class="text-xs text-slate-500">{{ 'cart.qty' | t }}: {{ addedItem()!.quantity }}</span>
             <span class="font-semibold text-slate-900 text-sm">€{{ addedItem()!.unitPrice.toFixed(2) }}</span>
           </div>
         </div>
@@ -57,13 +57,13 @@
       <button type="button"
         class="flex-1 py-2.5 px-3 rounded-full border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
         (click)="continueShopping()">
-        Continue
+        {{ 'cart.continue' | t }}
       </button>
       <button type="button"
         class="flex-1 py-2.5 px-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
         (click)="viewCart()">
         <app-icon iconName="shopping-cart" class="w-4 h-4"></app-icon>
-        View Cart ({{ cartItemCount() }})
+        {{ 'cart.view' | t }} ({{ cartItemCount() }})
       </button>
     </div>
     }

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   computed,
@@ -21,7 +22,7 @@ import { InfoPopupComponent } from '../shared/info-popup/info-popup.component';
 
 @Component({
   selector: 'app-paper-options',
-  imports: [RouterLink, IconComponent, InfoPopupComponent],
+  imports: [TranslatePipe, RouterLink, IconComponent, InfoPopupComponent],
   templateUrl: './paper-options.component.html',
   styleUrl: './paper-options.component.scss',
 })
