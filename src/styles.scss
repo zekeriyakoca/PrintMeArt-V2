@@ -55,19 +55,41 @@ html {
 }
 
 
-// A system font stretched to Poppins' size, shown until Poppins has loaded, so the text
-// keeps its line breaks when the font swaps and nothing below it moves
+// Served with the site and preloaded in index.html. 'optional': a page shows Poppins if it is there
+// in time and otherwise keeps the system font, so text never changes font while the page is open
 @font-face {
-  font-family: 'Poppins Fallback';
-  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica'), local('Roboto');
-  size-adjust: 112.16%;
-  ascent-override: 93.62%;
-  descent-override: 31.21%;
-  line-gap-override: 8.92%;
+  font-family: 'Poppins';
+  font-weight: 300;
+  font-display: optional;
+  src: url('/fonts/poppins-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/poppins-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dancing Script';
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/dancing-script-600.woff2') format('woff2');
 }
 
 body {
-  font-family: 'Poppins', 'Poppins Fallback', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 html,

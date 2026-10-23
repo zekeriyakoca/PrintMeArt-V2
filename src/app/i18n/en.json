@@ -1,4 +1,16 @@
 {
+  "a11y": {
+    "close": "Close",
+    "search": "Search",
+    "previous": "Previous image",
+    "next": "Next image",
+    "scrollRight": "Scroll right",
+    "viewGrid": "Grid view",
+    "viewLarge": "Large images",
+    "viewTwo": "Two columns",
+    "viewThree": "Three columns",
+    "subscribe": "Subscribe"
+  },
   "header": {
     "catalog": "Our Catalog",
     "visitUs": "Visit Our Space",

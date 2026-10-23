@@ -14,7 +14,7 @@
           (keyup.enter)="search()"
           [placeholder]="'list.keywords' | t"
         />
-        <button
+        <button [attr.aria-label]="'a11y.search' | t"
           type="button"
           class="absolute right-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black hover:bg-black text-white flex items-center justify-center hover:cursor-pointer"
           (click)="search()"
@@ -63,7 +63,7 @@
       <!-- View toggle buttons -->
       <div class="inline-flex items-center gap-1 shrink-0">
         <!-- grid: mobile + desktop -->
-        <button
+        <button [attr.aria-label]="'a11y.viewGrid' | t"
           type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'grid'"
@@ -75,7 +75,7 @@
           <app-icon iconName="grid" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-1: mobile + desktop -->
-        <button
+        <button [attr.aria-label]="'a11y.viewLarge' | t"
           type="button"
           class="inline-flex md:hidden items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-1'"
@@ -87,7 +87,7 @@
           <app-icon iconName="gallery-1" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-3: tablet + desktop -->
-        <button
+        <button [attr.aria-label]="'a11y.viewThree' | t"
           type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'"
@@ -99,7 +99,7 @@
           <app-icon iconName="gallery-3" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-2: tablet + desktop -->
-        <button
+        <button [attr.aria-label]="'a11y.viewTwo' | t"
           type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'"

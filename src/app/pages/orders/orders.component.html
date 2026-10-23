@@ -15,7 +15,7 @@
         <app-icon iconName="search"
           class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"></app-icon>
         @if (searchTerm()) {
-        <button type="button" (click)="clearSearch()"
+        <button [attr.aria-label]="'a11y.close' | t" type="button" (click)="clearSearch()"
           class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
           <app-icon iconName="close" class="h-4 w-4"></app-icon>
         </button>
@@ -201,7 +201,7 @@
         <h2 class="text-lg font-bold text-slate-900">{{ 'orders.orderNo' | t: { number: order.orderNumber } }}</h2>
         <p class="text-sm text-slate-500">{{ formatDateTime(order.date) }}</p>
       </div>
-      <button type="button" class="rounded-full p-2 hover:bg-slate-100 transition-colors" (click)="closeOrderDetail()">
+      <button [attr.aria-label]="'a11y.close' | t" type="button" class="rounded-full p-2 hover:bg-slate-100 transition-colors" (click)="closeOrderDetail()">
         <app-icon iconName="close" class="h-5 w-5 text-slate-500"></app-icon>
       </button>
     </div>

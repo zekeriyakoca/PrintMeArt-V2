@@ -154,7 +154,7 @@
           <!-- Right side icons -->
           <div class="flex items-center space-x-1">
             <!-- Search Icon -->
-            <button
+            <button [attr.aria-label]="'a11y.search' | t"
               type="button"
               (click)="navigateToSearch()"
               class="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 hover:bg-slate-100 focus:outline-none items-center justify-center cursor-pointer"

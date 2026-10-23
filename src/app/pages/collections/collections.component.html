@@ -141,7 +141,7 @@
         </div>
       </div>
       <div class="absolute right-0 top-0 bottom-12 pointer-events-none flex items-center justify-end pr-5" style="width: 80px; background: linear-gradient(to right, transparent 0%, white 85%)">
-        <button class="pointer-events-auto w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shadow-md cursor-pointer" (click)="museumsScroll.scrollBy({left: 400, behavior: 'smooth'})">
+        <button [attr.aria-label]="'a11y.scrollRight' | t" class="pointer-events-auto w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shadow-md cursor-pointer" (click)="museumsScroll.scrollBy({left: 400, behavior: 'smooth'})">
           <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div class="absolute right-0 top-0 bottom-14 pointer-events-none flex items-center justify-end pr-5" style="width: 80px; background: linear-gradient(to right, transparent 0%, white 85%)">
-        <button class="pointer-events-auto w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shadow-md cursor-pointer" (click)="paintersScroll.scrollBy({left: 400, behavior: 'smooth'})">
+        <button [attr.aria-label]="'a11y.scrollRight' | t" class="pointer-events-auto w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shadow-md cursor-pointer" (click)="paintersScroll.scrollBy({left: 400, behavior: 'smooth'})">
           <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>

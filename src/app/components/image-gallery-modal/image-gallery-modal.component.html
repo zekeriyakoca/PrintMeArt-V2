@@ -5,19 +5,19 @@
     <div class="relative z-10 flex h-full flex-col" (keydown)="onSelectedImageKeyDown($event)" tabindex="0">
 
       <!-- Close button -->
-      <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+      <button [attr.aria-label]="'a11y.close' | t" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
         (click)="closeModal(); $event.stopPropagation()">
         <app-icon iconName="close" class="w-8 h-8"></app-icon>
       </button>
 
       <!-- Previous button -->
-      <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
+      <button [attr.aria-label]="'a11y.previous' | t" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
         (click)="prevSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
         <app-icon iconName="chevron-left" class="w-10 h-10"></app-icon>
       </button>
 
       <!-- Next button -->
-      <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
+      <button [attr.aria-label]="'a11y.next' | t" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
         (click)="nextSelectedImage(); $event.stopPropagation()" [disabled]="images().length <= 1">
         <app-icon iconName="chevron-right" class="w-10 h-10"></app-icon>
       </button>

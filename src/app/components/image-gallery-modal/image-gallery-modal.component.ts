@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, input, output, signal } from '@angular/core';
 import { IconComponent } from '../shared/icon/icon.component';
 
@@ -9,7 +10,7 @@ export interface GalleryImage {
 @Component({
   selector: 'app-image-gallery-modal',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, TranslatePipe],
   templateUrl: './image-gallery-modal.component.html',
   styleUrls: ['./image-gallery-modal.component.scss'],
 })

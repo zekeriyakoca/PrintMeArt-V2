@@ -1,9 +1,10 @@
+import { TranslatePipe } from '../../../services/i18n/translate.pipe';
 import { Component, input, model } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-input-number',
-  imports: [IconComponent],
+  imports: [IconComponent, TranslatePipe],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
 })

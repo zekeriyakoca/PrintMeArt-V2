@@ -15,7 +15,7 @@
       </div>
       <button type="button"
         class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors cursor-pointer"
-        (click)="close()">
+        [attr.aria-label]="'a11y.close' | t" (click)="close()">
         <app-icon iconName="close" class="w-4 h-4"></app-icon>
       </button>
     </div>

@@ -1,4 +1,16 @@
 {
+  "a11y": {
+    "close": "Sluiten",
+    "search": "Zoeken",
+    "previous": "Vorige afbeelding",
+    "next": "Volgende afbeelding",
+    "scrollRight": "Naar rechts scrollen",
+    "viewGrid": "Rasterweergave",
+    "viewLarge": "Grote afbeeldingen",
+    "viewTwo": "Twee kolommen",
+    "viewThree": "Drie kolommen",
+    "subscribe": "Aanmelden"
+  },
   "header": {
     "catalog": "Onze catalogus",
     "visitUs": "Bezoek onze studio",
