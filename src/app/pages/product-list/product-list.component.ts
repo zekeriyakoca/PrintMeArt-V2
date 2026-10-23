@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { afterNextRender, AfterViewInit, Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
@@ -31,7 +31,12 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
-  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>((localStorage.getItem('viewMode') as 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3') || 'grid');
+  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>('grid');
+  // The saved view lives in the browser; it is applied once the server-rendered page is taken over
+  private readonly restoreViewMode = afterNextRender(() => {
+    const saved = localStorage.getItem('viewMode') as 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3' | null;
+    if (saved) this.viewMode.set(saved);
+  });
 
   setViewMode(mode: 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3') {
     this.viewMode.set(mode);
