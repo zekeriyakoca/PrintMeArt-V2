@@ -1,105 +1,62 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-export interface UserProfile {
-  id: string;
-  email: string;
-  name: string;
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  profilePictureUrl?: string;
-  createdAt?: string;
-}
-
 export interface Address {
-  id: string;
-  label?: string;
-  fullName: string;
-  street: string;
+  id: number;
+  type: string;
+  name: string;
+  street1: string;
+  street2?: string | null;
   city: string;
-  state?: string;
-  postalCode: string;
+  state: string;
+  zip: string;
   country: string;
-  phone?: string;
+  phone?: string | null;
   isDefault: boolean;
 }
 
+export type AddressRequest = Omit<Address, 'id'>;
+
+export interface UserProfile {
+  fullName: string;
+  phone?: string | null;
+  addresses: Address[];
+}
+
 export interface UpdateProfileRequest {
-  firstName?: string;
-  lastName?: string;
+  fullName: string;
   phone?: string;
 }
 
+/**
+ * Profile and saved addresses of the signed-in user. Every call returns the updated profile.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.serviceUrls['ordering-api'];
+  private readonly baseUrl = `${environment.serviceUrls['bff']}/bff/v1/ordering/profile`;
 
-  /**
-   * Get user profile
-   */
   getProfile(): Observable<UserProfile> {
-    // TODO: Implement API call
-    // return this.http.get<UserProfile>(`${this.baseUrl}/user/profile`);
-    return of({} as UserProfile);
+    return this.http.get<UserProfile>(this.baseUrl);
   }
 
-  /**
-   * Update user profile
-   */
   updateProfile(data: UpdateProfileRequest): Observable<UserProfile> {
-    // TODO: Implement API call
-    // return this.http.put<UserProfile>(`${this.baseUrl}/user/profile`, data);
-    return of({} as UserProfile);
+    return this.http.put<UserProfile>(this.baseUrl, data);
   }
 
-  /**
-   * Get user addresses
-   */
-  getAddresses(): Observable<Address[]> {
-    // TODO: Implement API call
-    // return this.http.get<Address[]>(`${this.baseUrl}/user/addresses`);
-    return of([]);
+  addAddress(address: AddressRequest): Observable<UserProfile> {
+    return this.http.post<UserProfile>(`${this.baseUrl}/addresses`, address);
   }
 
-  /**
-   * Add new address
-   */
-  addAddress(address: Omit<Address, 'id'>): Observable<Address> {
-    // TODO: Implement API call
-    // return this.http.post<Address>(`${this.baseUrl}/user/addresses`, address);
-    return of({} as Address);
+  updateAddress(id: number, address: AddressRequest): Observable<UserProfile> {
+    return this.http.put<UserProfile>(`${this.baseUrl}/addresses/${id}`, address);
   }
 
-  /**
-   * Update address
-   */
-  updateAddress(id: string, address: Partial<Address>): Observable<Address> {
-    // TODO: Implement API call
-    // return this.http.put<Address>(`${this.baseUrl}/user/addresses/${id}`, address);
-    return of({} as Address);
-  }
-
-  /**
-   * Delete address
-   */
-  deleteAddress(id: string): Observable<void> {
-    // TODO: Implement API call
-    // return this.http.delete<void>(`${this.baseUrl}/user/addresses/${id}`);
-    return of(undefined);
-  }
-
-  /**
-   * Set default address
-   */
-  setDefaultAddress(id: string): Observable<void> {
-    // TODO: Implement API call
-    // return this.http.post<void>(`${this.baseUrl}/user/addresses/${id}/default`, {});
-    return of(undefined);
+  deleteAddress(id: number): Observable<UserProfile> {
+    return this.http.delete<UserProfile>(`${this.baseUrl}/addresses/${id}`);
   }
 }
