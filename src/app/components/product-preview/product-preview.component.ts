@@ -126,10 +126,7 @@ export class ProductPreviewComponent {
     return this.isMatIncluded() ? 10 : 3;
   });
 
-  // Cover never zooms out below the print, so no paper shows around the artwork
-  minScale = computed(() => (this.fitMode() === 'cover' ? 1 : 0.7));
-
-  clampedScale = computed(() => Math.max(this.minScale(), Math.min(2, this.scale())));
+  clampedScale = computed(() => Math.max(0.7, Math.min(2, this.scale())));
 
   zoomPercent = computed(() => Math.round(this.clampedScale() * 100));
 
@@ -197,9 +194,8 @@ export class ProductPreviewComponent {
     const meta = this.metadata();
     const size = this.selectedSize();
 
-    // A framed print fills its frame (or the mat's window); a rolled-up print keeps the whole artwork
+    // Cover by default when framed, contain otherwise; overflow visible
     this.fitMode.set(this.hasFrame() ? 'cover' : 'contain');
-    this.scale.set(1);
     this.showGhost.set(true);
     this.translateX.set(0);
     this.translateY.set(0);
@@ -214,6 +210,13 @@ export class ProductPreviewComponent {
       this.isLandscape.set(imageIsLandscape !== sizeIsLandscape);
     } else {
       this.isLandscape.set(false);
+    }
+
+    // Set zoom: if mat, zoom out slightly to show mat border; otherwise fit
+    if (this.isMatIncluded() && this.hasFrame()) {
+      this.scale.set(0.92);
+    } else {
+      this.scale.set(1);
     }
   }
 
@@ -295,7 +298,7 @@ export class ProductPreviewComponent {
   }
 
   zoomOut() {
-    this.scale.update((s) => Math.max(this.minScale(), s - 0.03));
+    this.scale.update((s) => Math.max(0.7, s - 0.03));
   }
 
   resetZoom() {
@@ -307,7 +310,7 @@ export class ProductPreviewComponent {
   onWheel(event: WheelEvent) {
     event.preventDefault();
     const delta = event.deltaY > 0 ? -0.05 : 0.05;
-    this.scale.update((s) => Math.max(this.minScale(), Math.min(2, s + delta)));
+    this.scale.update((s) => Math.max(0.7, Math.min(2, s + delta)));
   }
 
   // Drag / Pan
@@ -360,7 +363,7 @@ export class ProductPreviewComponent {
     if (this.activeTouches.length === 2) {
       const dist = this.getTouchDist();
       const newScale = this.pinchStartScale * (dist / this.pinchStartDist);
-      this.scale.set(Math.max(this.minScale(), Math.min(2, newScale)));
+      this.scale.set(Math.max(0.7, Math.min(2, newScale)));
     }
   }
 
