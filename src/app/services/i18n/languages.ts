@@ -11,7 +11,7 @@ export const AVAILABLE_LANGUAGES: Language[] = [
 
 export const DEFAULT_LANGUAGE = 'nl';
 
-/** Cookie that remembers the language a visitor chose */
+/** Cookie with the language of the last page the visitor opened (set by server.ts) */
 export const LANGUAGE_COOKIE = 'lang';
 
 export function isLanguage(code: string | undefined): code is string {

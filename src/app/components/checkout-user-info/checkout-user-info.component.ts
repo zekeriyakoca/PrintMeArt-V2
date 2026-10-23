@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, effect, inject, model, output } from '@angular/core';
+import { Component, computed, effect, inject, model } from '@angular/core';
 import { Field, form, required, email } from '@angular/forms/signals';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';

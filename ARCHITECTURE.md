@@ -4,7 +4,7 @@ Goal: Show what the app does, how it is built, and the rules for adding code.
 
 ## What This App Is
 
-Angular 20 standalone app (SSR optional).
+Angular 21 standalone app, rendered on the server (SSR) and hydrated in the browser.
 
 Domain: art prints (products, options, cart, checkout).
 Styling: Tailwind utilities + small SCSS where needed.
@@ -13,6 +13,14 @@ HTTP: HttpClient (typed models).
 Interceptors: auth header + error mapping(planned):.
 Guard (planned): block private routes.
 Auth (planned): proper authentication for production
+
+## Rendering, Languages, SEO, Deploy
+
+- **SSR:** `src/server.ts` (Express) renders every page with real data. Cart, checkout, profile, orders and login are served as the browser-only shell. On the server, API calls go to the internal gateway (`INTERNAL_API_URL`); `HTTP_TRANSFER_CACHE_ORIGIN_MAP` hands those responses to the browser under the public address.
+- **Languages:** every page lives under `/nl` (default) or `/en`. The language is the app's base href, so routes and links stay language-free: use `routerLink`, or `[routerLink]="'/products?tags=8' | link"` when the address has a query or fragment, never a plain `href="/..."`. The server sets the `lang` cookie to the language of the page opened and sends addresses without a language there. Texts are in `src/app/i18n/{en,nl}.json`, used with the `t` pipe; catalog names go under `name.` keyed by their English text and fall back to it.
+- **SEO:** `SeoService` sets title, description, canonical, hreflang, social tags and JSON-LD. Static pages declare `data: { seo: 'key' }` in their route (texts under `seo.key`); product, list and how-we-work pages call `setPage`. `/sitemap.xml` is built by `src/sitemap.ts`; `public/robots.txt` and `public/llms.txt` are static.
+- **Fonts:** self-hosted in `public/fonts`, preloaded in `index.html`.
+- **Deploy:** every push to `main` builds the image and rolls it out on k3s (`.github/workflows/deploy.yml` → `DevOps/deploy-to-vm.sh`, manifests in `DevOps/k3s/storefront.yaml`).
 
 ## Core Pieces
 
