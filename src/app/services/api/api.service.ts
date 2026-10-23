@@ -126,11 +126,9 @@ export class ApiService {
     } as ProductFilterRequestDto);
   }
 
-  /** `fresh` skips the copy embedded in a prerendered page and always asks the API. */
-  getProductById(productId: string, fresh = false): Observable<ProductDto> {
+  getProductById(productId: string): Observable<ProductDto> {
     return this._httpClient.get<ProductDto>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`,
-      { transferCache: !fresh },
     );
   }
 
@@ -138,7 +136,7 @@ export class ApiService {
     productId: string,
     selectedOptions: SelectedOptionDto[],
   ): Observable<any> {
-    // Prices are always worked out live in the browser, never baked into a prerendered page
+    // Prices are worked out in the browser only
     if (this.isSSR) {
       return EMPTY;
     }

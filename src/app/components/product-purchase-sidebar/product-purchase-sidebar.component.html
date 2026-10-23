@@ -2,7 +2,8 @@
   <!-- Price -->
   <div class="price-block">
     @if (hasAllOptionsSelected()) {
-      <div class="price-row">
+      <!-- The price is worked out in the browser; until then the row keeps its place without showing €0.00 -->
+      <div class="price-row" [style.visibility]="calculatedPrice() > 0 ? null : 'hidden'">
         <span class="price">{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
         <span class="tax-note">Tax included</span>
       </div>

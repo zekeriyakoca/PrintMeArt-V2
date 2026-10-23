@@ -1,0 +1,67 @@
+# Storefront on the k3s cluster, in its own namespace next to eCommBone.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: printmeart
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storefront
+  namespace: printmeart
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: storefront }
+  template:
+    metadata:
+      labels: { app: storefront }
+    spec:
+      containers:
+        - name: storefront
+          image: docker.io/zekeriyakoca/printmeart-storefront:current
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4000
+          env:
+            # Server-side API calls stay inside the cluster
+            - name: INTERNAL_API_URL
+              value: http://gateway.ecommbone.svc.cluster.local:8080
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+          readinessProbe:
+            httpGet: { path: /robots.txt, port: 4000 }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /robots.txt, port: 4000 }
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: storefront
+  namespace: printmeart
+spec:
+  selector: { app: storefront }
+  ports:
+    - port: 80
+      targetPort: 4000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: storefront
+  namespace: printmeart
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`printmeart.nl`) || Host(`www.printmeart.nl`)
+      kind: Rule
+      services:
+        - name: storefront
+          port: 80
+  tls:
+    certResolver: letsencrypt

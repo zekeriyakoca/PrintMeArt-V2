@@ -21,7 +21,10 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "server": "src/main.server.ts",
-            "outputMode": "static",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            },
             "polyfills": [
               "zone.js"
             ],
@@ -30,7 +33,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/staticwebapp.config.json",
               {
                 "glob": "**/*",
                 "input": "public"

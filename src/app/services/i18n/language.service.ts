@@ -1,62 +1,33 @@
-import {
-  Injectable,
-  PLATFORM_ID,
-  Inject,
-  signal,
-  computed,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, PlatformLocation } from '@angular/common';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AVAILABLE_LANGUAGES, languageOfPath } from './languages';
 
-export interface Language {
-  code: string;
-  name: string;
-  description: string;
-}
+export { AVAILABLE_LANGUAGES, type Language } from './languages';
 
-export const AVAILABLE_LANGUAGES: Language[] = [
-  { code: 'en', name: 'English', description: 'United States' },
-  { code: 'nl', name: 'Nederlands', description: 'Netherlands' },
-];
-
+/** The language comes from the URL; the app runs with /en or /nl as its base. */
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
-  private readonly STORAGE_KEY = 'lang';
-  private readonly DEFAULT_LANG = 'nl';
+  private readonly router = inject(Router);
+  private readonly document = inject(DOCUMENT);
 
-  private _currentLanguage = signal<Language>(AVAILABLE_LANGUAGES[1]); // Default to Dutch
-
-  readonly currentLanguage = this._currentLanguage.asReadonly();
-  readonly currentLanguageCode = computed(() => this._currentLanguage().code);
+  readonly currentLanguage = AVAILABLE_LANGUAGES.find((l) => l.code === languageOfPath(inject(PlatformLocation).pathname))!;
   readonly availableLanguages = AVAILABLE_LANGUAGES;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
-    this.initLanguage();
+  currentLanguageCode(): string {
+    return this.currentLanguage.code;
   }
 
-  private initLanguage(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const storedLang =
-        localStorage.getItem(this.STORAGE_KEY) ?? this.DEFAULT_LANG;
-      const language = AVAILABLE_LANGUAGES.find((l) => l.code === storedLang);
-      if (language) {
-        this._currentLanguage.set(language);
-      }
-    }
-  }
-
+  /** Opens the same page in the other language. */
   setLanguage(languageCode: string): void {
-    const language = AVAILABLE_LANGUAGES.find((l) => l.code === languageCode);
-    if (language) {
-      this._currentLanguage.set(language);
-      if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem(this.STORAGE_KEY, languageCode);
-      }
+    if (languageCode !== this.currentLanguage.code) {
+      this.document.location.assign(`/${languageCode}${this.router.url}`);
     }
   }
 
   isCurrentLanguage(languageCode: string): boolean {
-    return this._currentLanguage().code === languageCode;
+    return this.currentLanguage.code === languageCode;
   }
 }
