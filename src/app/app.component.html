@@ -6,7 +6,9 @@
     <router-outlet />
   </div>
   <div class="">
-    <app-footer />
+    @defer (hydrate on viewport) {
+      <app-footer />
+    }
   </div>
 </main>
 

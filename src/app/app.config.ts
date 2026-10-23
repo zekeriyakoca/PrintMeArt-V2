@@ -7,7 +7,7 @@ import {
   provideAppInitializer,
 } from '@angular/core';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions, withIncrementalHydration } from '@angular/platform-browser';
 import { provideLanguageBase } from './services/i18n/language.service';
 import { TranslationService } from './services/i18n/translation.service';
 import { SeoService } from './services/seo/seo.service';
@@ -34,7 +34,8 @@ export const appConfig: ApplicationConfig = {
     ),
     // Server-rendered pages are taken over in place; data fetched on the server is reused for that first render
     // Product searches are POSTs, so they are cached too
-    provideClientHydration(withEventReplay(), withHttpTransferCacheOptions({ includePostRequests: true })),
+    // Sections inside `@defer (hydrate on viewport)` are taken over only once they scroll into view
+    provideClientHydration(withEventReplay(), withIncrementalHydration(), withHttpTransferCacheOptions({ includePostRequests: true })),
     provideLanguageBase(),
     provideAppInitializer(() => inject(TranslationService).load()),
     provideAppInitializer(() => inject(SeoService).init()),
