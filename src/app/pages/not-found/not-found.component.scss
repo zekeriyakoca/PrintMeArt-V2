@@ -1,0 +1,21 @@
+.frame-swing {
+  transform-origin: 120px 16px;
+  animation: swing 4s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-swing {
+    animation: none;
+    transform: rotate(-3deg);
+  }
+}

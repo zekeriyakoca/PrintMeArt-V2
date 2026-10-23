@@ -17,6 +17,7 @@ import { LicensingComponent } from './pages/licensing/licensing.component';
 import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthenticationGuard } from './services/authentication/authentication.guard';
 
 export const routes: Routes = [
@@ -87,5 +88,9 @@ export const routes: Routes = [
   {
     path: 'checkout/cancel',
     component: PaymentCancelComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
