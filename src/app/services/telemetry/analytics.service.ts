@@ -501,7 +501,13 @@ export class AnalyticsService {
     return isPlatformBrowser(this.platformId) && this.config.enabled === true;
   }
 
+  // Third-party tags start only after the page has loaded, so they never compete with it
   private afterIdle(callback: () => void): void {
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', () => this.afterIdle(callback), { once: true });
+      return;
+    }
+
     const idleCallback = (
       window as Window & {
         requestIdleCallback?: (cb: () => void, options?: { timeout: number }) => number;

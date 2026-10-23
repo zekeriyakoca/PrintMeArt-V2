@@ -1,14 +1,14 @@
 <div class="gallery-card cursor-pointer group" (click)="goToProduct()">
   <div class="gallery-card-inner relative overflow-hidden rounded-sm">
-    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" [src]="firstImage()" [alt]="product().name" />
+    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" [src]="firstImage()" [alt]="product().name" loading="lazy" decoding="async" />
 
     @if (isHorizontal()) {
       @if (product().thirdImage?.small) {
-        <img class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" [src]="secondImage()" [alt]="product().name" />
+        <img class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" [src]="secondImage()" [alt]="product().name" loading="lazy" decoding="async" />
       }
     } @else {
       @if (product().secondImage?.small) {
-        <img class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" [src]="thirdImage()" [alt]="product().name" />
+        <img class="w-full h-full object-cover absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" [src]="thirdImage()" [alt]="product().name" loading="lazy" decoding="async" />
       }
     }
 

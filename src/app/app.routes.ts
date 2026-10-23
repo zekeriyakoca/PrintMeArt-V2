@@ -1,32 +1,15 @@
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { CollectionsComponent } from './pages/collections/collections.component';
-import { LoginComponent } from './pages/login/login.component';
-import { ProductListComponent } from './pages/product-list/product-list.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { CheckoutComponent } from './pages/checkout/checkout.component';
-import { AboutComponent } from './pages/about/about.component';
-import { FramesCatalogComponent } from './pages/frames-catalog/frames-catalog.component';
-import { CustomDesignComponent } from './pages/custom-design/custom-design.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { OrdersComponent } from './pages/orders/orders.component';
-import { HowWeWorkComponent } from './pages/how-we-work/how-we-work.component';
-import { LegalComponent } from './pages/legal/legal.component';
-import { LicensingComponent } from './pages/licensing/licensing.component';
-import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
-import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
-import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthenticationGuard } from './services/authentication/authentication.guard';
 
+// The home page is in the main bundle; every other page loads the first time it is visited
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'collections', component: CollectionsComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'collections', loadComponent: () => import('./pages/collections/collections.component').then((m) => m.CollectionsComponent) },
+  { path: 'login', loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent) },
   {
     path: 'products',
-    component: ProductListComponent,
+    loadComponent: () => import('./pages/product-list/product-list.component').then((m) => m.ProductListComponent),
   },
   {
     path: 'search',
@@ -34,63 +17,63 @@ export const routes: Routes = [
   },
   {
     path: 'products/:productId',
-    component: ProductDetailComponent,
+    loadComponent: () => import('./pages/product-detail/product-detail.component').then((m) => m.ProductDetailComponent),
   },
   {
     path: 'cart',
-    component: CartComponent,
+    loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),
   },
   {
     path: 'checkout',
-    component: CheckoutComponent,
+    loadComponent: () => import('./pages/checkout/checkout.component').then((m) => m.CheckoutComponent),
   },
   {
     path: 'about',
-    component: AboutComponent,
+    loadComponent: () => import('./pages/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: 'frames',
-    component: FramesCatalogComponent,
+    loadComponent: () => import('./pages/frames-catalog/frames-catalog.component').then((m) => m.FramesCatalogComponent),
   },
   {
     path: 'your-design',
-    component: CustomDesignComponent,
+    loadComponent: () => import('./pages/custom-design/custom-design.component').then((m) => m.CustomDesignComponent),
   },
   {
     path: 'profile',
-    component: ProfileComponent,
+    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
     path: 'orders',
-    component: OrdersComponent,
+    loadComponent: () => import('./pages/orders/orders.component').then((m) => m.OrdersComponent),
     canActivate: [AuthenticationGuard],
   },
   {
     path: 'how-we-work',
-    component: HowWeWorkComponent,
+    loadComponent: () => import('./pages/how-we-work/how-we-work.component').then((m) => m.HowWeWorkComponent),
   },
   {
     path: 'legal',
-    component: LegalComponent,
+    loadComponent: () => import('./pages/legal/legal.component').then((m) => m.LegalComponent),
   },
   {
     path: 'licensing',
-    component: LicensingComponent,
+    loadComponent: () => import('./pages/licensing/licensing.component').then((m) => m.LicensingComponent),
   },
   {
     path: 'order-confirmation',
-    component: OrderConfirmationComponent,
+    loadComponent: () => import('./pages/order-confirmation/order-confirmation.component').then((m) => m.OrderConfirmationComponent),
   },
   {
     path: 'checkout/success',
-    component: PaymentSuccessComponent,
+    loadComponent: () => import('./pages/payment-success/payment-success.component').then((m) => m.PaymentSuccessComponent),
   },
   {
     path: 'checkout/cancel',
-    component: PaymentCancelComponent,
+    loadComponent: () => import('./pages/payment-cancel/payment-cancel.component').then((m) => m.PaymentCancelComponent),
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    loadComponent: () => import('./pages/not-found/not-found.component').then((m) => m.NotFoundComponent),
   },
 ];
