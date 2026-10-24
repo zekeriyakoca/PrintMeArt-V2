@@ -14,7 +14,8 @@
           (keyup.enter)="search()"
           [placeholder]="'list.keywords' | t"
         />
-        <button [attr.aria-label]="'a11y.search' | t"
+        <button
+          [attr.aria-label]="'a11y.search' | t"
           type="button"
           class="absolute right-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black hover:bg-black text-white flex items-center justify-center hover:cursor-pointer"
           (click)="search()"
@@ -32,17 +33,47 @@
 <!-- Page Content -->
 <div class="contained-page">
   @if (named(); as name) {
-    <section class="mt-2 mb-8">
-      @if (namedGroup(); as group) {
-        <p class="text-[10px] font-bold tracking-[0.28em] uppercase text-slate-400 mb-2">{{ 'name.' + group | t }}</p>
-      }
-      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">{{ 'name.' + name | t }}</h1>
-      @if (products().count) {
-        <p class="mt-3 text-sm text-neutral-500">{{ (products().count === 1 ? 'list.onePrint' : 'list.prints') | t: { count: products().count } }}</p>
-      }
-      @if (namedText()) {
-        <p class="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-600">{{ namedText() }}</p>
-      }
+    <section class="mb-4">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">{{ 'name.' + name | t }}</h1>
+        @if (namedGroup(); as group) {
+          <span class="text-[11px] font-medium tracking-[0.2em] uppercase text-[#384f8c]">{{ 'name.' + group | t }}</span>
+        }
+      </div>
+      <!-- The text sits beside the image and, once read in full, wraps around it -->
+      <div class="mt-3 flow-root">
+        @if (namedImage(); as image) {
+          <img [src]="image" alt="" class="float-left mr-4 mb-2 h-16 w-16 md:h-20 md:w-20 rounded-lg object-cover" />
+        }
+        @if (namedText()) {
+          <div class="relative">
+            <p #intro class="text-sm leading-relaxed text-slate-500" [class.line-clamp-3]="!introExpanded()">
+              {{ namedText() }}
+              @if (introExpanded()) {
+                <button
+                  type="button"
+                  class="ml-1 inline-flex items-center gap-0.5 font-medium text-[#384f8c] hover:text-[#2c3e70] cursor-pointer"
+                  (click)="introExpanded.set(false)"
+                >
+                  {{ 'list.readLess' | t }}
+                </button>
+              }
+            </p>
+            @if (introOverflows() && !introExpanded()) {
+              <button
+                type="button"
+                class="absolute bottom-0 right-0 bg-white pl-1 text-sm leading-[29px] tracking-[0.6px] cursor-pointer group"
+                (click)="introExpanded.set(true)"
+              >
+                <!-- Same line height as the global p rule, so it sits on the last line's baseline -->
+                <span class="text-slate-500">…</span>
+                <span class="ml-4 font-medium text-[#384f8c] group-hover:text-[#2c3e70]">{{ 'list.readMore' | t }}</span>
+                <app-icon iconName="chevron-right" class="inline-block h-3.5 w-3.5 align-[-2px] text-[#384f8c]"></app-icon>
+              </button>
+            }
+          </div>
+        }
+      </div>
     </section>
   }
   <!-- Filter Titles  -->
@@ -77,7 +108,8 @@
       <!-- View toggle buttons -->
       <div class="inline-flex items-center gap-1 shrink-0">
         <!-- grid: mobile + desktop -->
-        <button [attr.aria-label]="'a11y.viewGrid' | t"
+        <button
+          [attr.aria-label]="'a11y.viewGrid' | t"
           type="button"
           class="inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'grid'"
@@ -89,7 +121,8 @@
           <app-icon iconName="grid" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-1: mobile + desktop -->
-        <button [attr.aria-label]="'a11y.viewLarge' | t"
+        <button
+          [attr.aria-label]="'a11y.viewLarge' | t"
           type="button"
           class="inline-flex md:hidden items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-1'"
@@ -101,7 +134,8 @@
           <app-icon iconName="gallery-1" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-3: tablet + desktop -->
-        <button [attr.aria-label]="'a11y.viewThree' | t"
+        <button
+          [attr.aria-label]="'a11y.viewThree' | t"
           type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-3'"
@@ -113,7 +147,8 @@
           <app-icon iconName="gallery-3" class="w-5 h-5"></app-icon>
         </button>
         <!-- gallery-2: tablet + desktop -->
-        <button [attr.aria-label]="'a11y.viewTwo' | t"
+        <button
+          [attr.aria-label]="'a11y.viewTwo' | t"
           type="button"
           class="hidden md:inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 cursor-pointer"
           [class.bg-[#384f8cd9]]="viewMode() === 'gallery-2'"

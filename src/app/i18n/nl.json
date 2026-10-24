@@ -500,6 +500,8 @@
     "noProducts": "Geen producten gevonden",
     "prints": "{{count}} prints",
     "onePrint": "1 print",
+    "readMore": "Lees meer",
+    "readLess": "Lees minder",
     "tryAdjusting": "Pas je filters of zoekterm aan",
     "keywords": "Typ je zoekwoorden",
     "searchIn": "Zoek in {{group}}..."

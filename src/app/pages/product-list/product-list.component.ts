@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { afterNextRender, AfterViewInit, Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { afterNextRender, afterRenderEffect, AfterViewInit, Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
 import { isDesktopViewport } from '../../shared/device';
+import { INTRO_IMAGES } from '../../shared/intro-images';
 
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
@@ -74,6 +75,17 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   });
   /** The introduction of the category, artist, museum or collection, where there is one */
   namedText = signal<string | undefined>(undefined);
+  namedImage = computed(() => INTRO_IMAGES[this.named() ?? '']);
+  @ViewChild('intro') intro?: ElementRef<HTMLElement>;
+  introExpanded = signal(false);
+  /** Whether the clamped introduction hides text, so it needs a read more button */
+  introOverflows = signal(false);
+  private readonly measureIntro = afterRenderEffect(() => {
+    this.namedText();
+    if (this.introExpanded()) return;
+    const el = this.intro?.nativeElement;
+    this.introOverflows.set(!!el && el.scrollHeight > el.clientHeight + 1);
+  });
 
   isOptionSelected(optionName: string): boolean {
     const f = this.selectedFilterOptions();
@@ -259,6 +271,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
    */
   private describeNamed(firstProductId: number | undefined) {
     const { categoryName, attributeName: attribute } = this.selectedFilterOptions();
+    this.introExpanded.set(false);
     this.namedText.set(categoryName ? this.i18n.find('intro.' + categoryName) : undefined);
     if (categoryName || !attribute || !firstProductId) return this.describeForSearch();
     this.apiService.getProductById(String(firstProductId)).subscribe((product) => {

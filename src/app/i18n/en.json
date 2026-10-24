@@ -313,6 +313,8 @@
     "noProducts": "No products found",
     "prints": "{{count}} prints",
     "onePrint": "1 print",
+    "readMore": "Read more",
+    "readLess": "Read less",
     "tryAdjusting": "Try adjusting your filters or search term",
     "keywords": "Type your keywords",
     "searchIn": "Search {{group}}..."
