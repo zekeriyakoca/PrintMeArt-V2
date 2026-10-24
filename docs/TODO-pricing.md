@@ -56,12 +56,14 @@ Kargo sipariş başına €5,78 (ekspres €16,53).
 - **Öneri:** Photo Rag 50×70 yaklaşık €69–75, 60×90 yaklaşık €95–99. Karar bekliyor.
 
 **Kâğıt kararları:**
-1. **German Etching kalıyor** (Saal'da var).
-   - "100% katoen" ifadesi yanlış: kâğıt %100 alfa selüloz.
-   - Gramajı Saal'ın verdiği değere göre kontrol et (Hahnemühle: 310 g/m²).
-2. **Canson Rag Photographique "Binnenkort / Coming soon"** olacak: seçilemez görünecek, kendi yazıcıyla açılacak.
+1. **German Etching → Hahnemühle Museum Etching.** Saal'da German Etching yok.
+   - Saal'daki fine art kâğıtları: Bamboo Natural Line, Baryta, Hemp Natural Line, Museum Etching, Photo Rag.
+   - Museum Etching: 350 g/m², %100 pamuk, ince dokulu, ISO 9706. Aynı rol ("dokulu, yağlı boya hissi").
+   - Sitedeki "310 g/m² · 100% katoen" metni "350 g/m² · 100% katoen" olacak.
+   - Saal'daki maliyeti henüz bilinmiyor.
+2. **Canson Rag Photographique sitede kalıyor**, "Binnenkort / Coming soon" olarak: seçilemez görünecek, kendi yazıcıyla açılacak.
 3. **Poster (Home) metni Saal mat posterine göre değişecek:**
-   - Yeni içerik: Fujifilm Crystal Archive fotoğraf kâğıdı, 234 g/m², fijn mat.
+   - Yeni içerik: Fujifilm Crystal Archive DP II fotoğraf kâğıdı, mat, 234 g/m², fijn structuur, geen reflecties, ongevoelig voor vingerafdrukken (Saal'ın kendi açıklaması).
    - Çıkacaklar: "Fine Art", "200 g/m²", "FSC" ve "giclée 12 kleuren".
    - Önerilen NL metin: "Premium Poster · 234 g/m² · Fujifilm-fotopapier · fijn mat".
 4. **Aynı yanlışı içeren başka metinler:**
