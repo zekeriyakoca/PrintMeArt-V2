@@ -27,6 +27,12 @@ export class TranslationService {
     return params ? text.replace(/{{(\w+)}}/g, (_, name: string) => String(params[name] ?? '')) : text;
   }
 
+  /** The text for a key, or undefined when the dictionary has none (no fallback) */
+  find(key: string): string | undefined {
+    const found = key.split('.').reduce<string | Dictionary | undefined>((node, part) => (typeof node === 'object' ? node[part] : undefined), this.dictionary);
+    return typeof found === 'string' ? found : undefined;
+  }
+
   /**
    * Catalog names and fixed terms are keyed by their English text, which may contain dots
    * ('name.Classic black frame with a clean, timeless look.'); without a translation they show as themselves,

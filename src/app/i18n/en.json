@@ -900,6 +900,27 @@
     "retentionText": "We keep order data for 7 years (legal requirement for tax purposes). Account data is kept until you delete your account. Custom uploaded images are deleted after order completion.",
     "exercise": "To exercise your rights or ask questions, email support@printmeart.nl — we'll respond within 30 days."
   },
+  "intro": {
+    "Art Prints": "Museum-quality giclée prints of great paintings from the public domain, from Dutch masters to the Impressionists. Each one is printed on fine-art paper in our studio in Den Bosch and can be framed to order.",
+    "Famous Painters": "The great names of art history, from the Renaissance to the first modernists. Explore the masters by period and bring a famous painting home, printed with care on fine-art paper.",
+    "Posters": "Vintage posters, classic designs and photography, printed with the same giclée process and fine-art paper as our art prints. Graphic, colourful and easy to frame.",
+    "Still Life": "Flowers, fruit, books and tableware arranged with care: the still life lets painters show off light, texture and detail. A classic choice for a kitchen, dining room or hallway.",
+    "Animal art": "Horses, birds, cattle and pets, painted with affection and a sharp eye for detail. Animal paintings bring warmth and character to any room, including a child's room.",
+    "Botanical art": "Flowers, plants and gardens, from detailed scientific studies to loose, colourful paintings. Botanical art adds a fresh, natural touch to living rooms, kitchens and bedrooms.",
+    "Landscape": "Fields, rivers, mountains and wide skies: landscapes are the heart of our collection. Painted from the 17th to the early 20th century, they bring calm and space to any wall.",
+    "Abstract Art": "Colour, line and shape for their own sake, without the need to depict anything. Abstract art suits modern interiors and sets the mood of a room at a glance.",
+    "Portraits": "Faces from the past, painted by masters who could capture a personality in a look. A portrait gives a wall a story and a presence of its own.",
+    "Seascapes": "Stormy seas, calm harbours, sailing ships and beaches. From Dutch marine painters to the Impressionists, seascapes bring light and space into a room.",
+    "Cityscapes & Architecture": "Streets, canals, bridges and buildings, from Dutch towns to Venice and Paris. Cityscapes show how places looked centuries ago and are full of everyday details.",
+    "Renaissance Masters": "From the 15th and 16th centuries: the age of perspective, lifelike detail and the rediscovery of antiquity, with masters such as Pieter Bruegel the Elder and Lucas Cranach the Elder.",
+    "Dutch masters": "Painters from the Low Countries, from the Golden Age of the 17th century to the Hague School: winter scenes, seascapes, still lifes and quiet landscapes, many from the Rijksmuseum.",
+    "Modern masters": "Artists who changed painting between the late 19th and the mid-20th century, from Van Gogh and the Post-Impressionists to the pioneers of abstraction.",
+    "Romantic & Realist Masters": "The 19th century in two moods: the drama and emotion of Romanticism and the honest, everyday view of Realism, from stormy skies to working life.",
+    "General Posters": "A mix of graphic posters, prints and illustrations from the past, printed on fine-art paper. Easy to combine and perfect for a gallery wall.",
+    "Photography": "Historic photographs and photographic prints, from early landscapes to everyday scenes, printed with deep blacks and fine detail.",
+    "Classic posters": "Timeless poster designs with strong lines and bold colour. A classic poster brings character to a hallway, office or living room.",
+    "Retro & vintage": "Old advertisements, trade cards and travel posters with the charm of times gone by. Retro and vintage prints give a room a playful, nostalgic touch."
+  },
   "seo": {
     "home": {
       "title": "Museum-quality art prints — priced fairly",

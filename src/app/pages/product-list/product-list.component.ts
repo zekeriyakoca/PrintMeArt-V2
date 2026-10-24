@@ -72,7 +72,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     const group = this.filterOptions().find((g) => g.options.some((o) => o.name === this.named()));
     return group ? this.getFilterGroupName(group.name) : undefined;
   });
-  /** The artist's or museum's description from the catalog, where it has one */
+  /** The introduction of the category, artist, museum or collection, where there is one */
   namedText = signal<string | undefined>(undefined);
 
   isOptionSelected(optionName: string): boolean {
@@ -253,11 +253,14 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   }
 
   /** A category, museum or artist page gets its own title; the plain catalog the general one. */
-  /** An attribute's description comes with the products that carry it, so it is read from the first one */
+  /**
+   * A category's introduction is in the dictionary (intro.<name>); an attribute's description comes
+   * with the products that carry it, so it is read from the first one
+   */
   private describeNamed(firstProductId: number | undefined) {
-    const attribute = this.selectedFilterOptions().attributeName;
-    this.namedText.set(undefined);
-    if (!attribute || !firstProductId) return this.describeForSearch();
+    const { categoryName, attributeName: attribute } = this.selectedFilterOptions();
+    this.namedText.set(categoryName ? this.i18n.find('intro.' + categoryName) : undefined);
+    if (categoryName || !attribute || !firstProductId) return this.describeForSearch();
     this.apiService.getProductById(String(firstProductId)).subscribe((product) => {
       const details = product.attributeDetails?.find((a) => a.name === attribute);
       this.namedText.set((this.i18n.language === 'nl' && details?.metadata?.['Description_nl']) || details?.description || undefined);

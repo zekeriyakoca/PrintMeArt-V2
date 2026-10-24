@@ -31,6 +31,20 @@
 
 <!-- Page Content -->
 <div class="contained-page">
+  @if (named(); as name) {
+    <section class="mt-2 mb-8">
+      @if (namedGroup(); as group) {
+        <p class="text-[10px] font-bold tracking-[0.28em] uppercase text-slate-400 mb-2">{{ 'name.' + group | t }}</p>
+      }
+      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">{{ 'name.' + name | t }}</h1>
+      @if (products().count) {
+        <p class="mt-3 text-sm text-neutral-500">{{ (products().count === 1 ? 'list.onePrint' : 'list.prints') | t: { count: products().count } }}</p>
+      }
+      @if (namedText()) {
+        <p class="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-600">{{ namedText() }}</p>
+      }
+    </section>
+  }
   <!-- Filter Titles  -->
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-4 pb-4 border-b border-neutral-200">
     <!-- Hide/Show Filters on left -->
