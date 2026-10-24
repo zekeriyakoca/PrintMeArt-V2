@@ -12,7 +12,7 @@ Teknik SEO hazır: SSR, sitemap, yapısal veri, hreflang, `llms.txt`, robots'ta 
 - [ ] **Instagram ve Pinterest business hesapları**: Kullanıcı adlarını al.
   - Hesap linkleri → organizasyon verisine `sameAs` olarak eklenecek (`src/app/services/seo/seo.service.ts`).
   - Pinterest alan adı doğrulama kodu → `src/index.html`'e meta etiketi olarak eklenecek.
-- [ ] **PR #7'yi merge et**: Ana sayfadaki üç görselin daha küçük WebP kopyaları. https://github.com/zekeriyakoca/PrintMeArt-V2/pull/7
+- [x] **PR #7 merge edildi**: Ana sayfadaki üç görselin daha küçük WebP kopyaları. https://github.com/zekeriyakoca/PrintMeArt-V2/pull/7
 
 ## Lansmandan önce
 
