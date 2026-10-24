@@ -25,7 +25,7 @@
         @for (cat of categories; track cat.title; let i = $index) {
         <a [routerLink]="cat.link | link" class="hero-card" [attr.data-index]="i">
           <div class="card-image">
-            <img [src]="cat.image" [alt]="cat.title" />
+            <img [src]="cat.image" [alt]="cat.title | t" fetchpriority="high" />
           </div>
           <div class="card-label">
             <span>{{ cat.title | t }}</span>

@@ -26,14 +26,14 @@ app.use((_req, res, next) => {
   next();
 });
 
-// Built files; the hashed bundles never change, everything else is re-checked daily
+// Built files; the hashed bundles and the fonts never change, everything else is re-checked daily
 app.use(
   express.static(browserDistFolder, {
     index: false,
     redirect: false,
     maxAge: '1d',
     setHeaders: (res, path) => {
-      if (/-[A-Z0-9]{8}\.(js|css)$/.test(path)) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      if (/-[A-Z0-9]{8}\.(js|css)$|\/fonts\//.test(path)) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     },
   }),
 );
