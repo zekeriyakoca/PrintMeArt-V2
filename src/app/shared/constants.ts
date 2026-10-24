@@ -113,6 +113,8 @@ export interface Paper {
   thumbnail: string;
   grade: PaperGrade;
   priceTier: PriceTier;
+  /** Shown, but not orderable yet */
+  comingSoon?: boolean;
 }
 
 // Museum grade papers
@@ -134,10 +136,10 @@ export const MuseumPapers: Paper[] = [
     priceTier: '$$$',
   },
   {
-    id: 'art_german_etching_310',
+    id: 'art_museum_etching_350',
     category: 'Art Print',
-    name: 'Hahnemühle German Etching',
-    weightGsm: 310,
+    name: 'Hahnemühle Museum Etching',
+    weightGsm: 350,
     surface: 'Textured, Matte',
     printType: 'Fine art pigment (giclée class)',
     lookFeel: ['Painterly texture', 'Rich, tactile paper feel', 'No glare'],
@@ -168,6 +170,7 @@ export const GalleryPapers: Paper[] = [
     thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp',
     grade: 'Gallery',
     priceTier: '$$',
+    comingSoon: true,
   },
 ];
 
@@ -177,16 +180,16 @@ const StudioPapers: Paper[] = [];
 // Home grade paper
 const HomePapers: Paper[] = [
   {
-    id: 'home_fineart_poster',
+    id: 'home_photo_poster',
     category: 'Home',
-    name: 'Fine Art Poster',
-    weightGsm: 200,
-    surface: 'Smooth, Matte',
-    printType: 'Giclée 12-color fine art printing',
-    lookFeel: ['Vivid, accurate colors', 'Stunning depth', 'Smooth matte finish', 'Glare-free display'],
-    bestFor: ['Best value art prints', 'Designers', 'Everyday art display', 'Budget-conscious buyers'],
+    name: 'Premium Poster',
+    weightGsm: 234,
+    surface: 'Fine-textured, Matte',
+    printType: 'Photo print on Fujifilm Crystal Archive paper',
+    lookFeel: ['Vivid, accurate colors', 'Deep blacks', 'Glare-free display', 'Fingerprint-resistant'],
+    bestFor: ['Best value art prints', 'Everyday art display', 'Budget-conscious buyers'],
     notIdealFor: ['Archival/museum-grade requirements'],
-    uxLabels: ['Home grade', 'FSC-certified', 'Mat & Smooth'],
+    uxLabels: ['Home grade', 'Photo paper', 'Mat'],
     badgeTitle: 'Home',
     thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp',
     grade: 'Home',

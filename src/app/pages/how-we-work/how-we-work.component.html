@@ -112,13 +112,13 @@
         </div>
       </div>
 
-      <!-- German Etching -->
-      <div id="art_german_etching_310"
+      <!-- Museum Etching -->
+      <div id="art_museum_etching_350"
         class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp"
           [alt]="'how.etchingAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> German Etching</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> Museum Etching</h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.etchingSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.etchingText' | t }}
@@ -137,7 +137,7 @@
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp"
           [alt]="'how.canonAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Canson</strong> Rag Photographique II</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2 flex flex-wrap items-center gap-2"><span><strong>Canson</strong> Rag Photographique II</span><span class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{{ 'papers.comingSoon' | t }}</span></h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.canonSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.canonText' | t }}
@@ -150,19 +150,19 @@
         </div>
       </div>
 
-      <!-- Fine Art Poster -->
-      <div id="home_fineart_poster"
+      <!-- Premium Poster -->
+      <div id="home_photo_poster"
         class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp"
           [alt]="'how.posterAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2">Fine Art Poster</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">Premium Poster</h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.posterSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.posterText' | t }}
           </p>
           <ul class="text-slate-600 space-y-2 leading-relaxed">
-            <li><span class="font-semibold">{{ 'how.printing' | t }}</span> {{ 'how.inks' | t }}</li>
+            <li><span class="font-semibold">{{ 'how.printing' | t }}</span> {{ 'how.posterPrint' | t }}</li>
             <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.posterBest' | t }}</li>
             <li><span class="font-semibold">{{ 'how.note' | t }}</span> {{ 'how.notArchival' | t }}</li>
           </ul>
@@ -202,8 +202,8 @@
             <div class="font-semibold text-slate-900 mb-1">{{ 'how.choose2' | t }}</div>
             <div class="text-sm text-slate-500 leading-relaxed">{{ 'how.choose2Text' | t }}</div>
           </div>
-          <a routerLink="." fragment="art_german_etching_310"
-            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">German Etching →</a>
+          <a routerLink="." fragment="art_museum_etching_350"
+            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">Museum Etching →</a>
         </div>
 
         <div class="grid grid-cols-[2.5rem_1fr] items-start gap-x-4 gap-y-3 sm:flex sm:items-center bg-white rounded-xl p-4 sm:p-5 border border-slate-200">
@@ -220,7 +220,7 @@
             <div class="text-sm text-slate-500 leading-relaxed">{{ 'how.choose3Text' | t }}</div>
           </div>
           <a routerLink="." fragment="art_canson_rag_photographique_310"
-            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">Rag Photographique →</a>
+            class="text-sm font-semibold text-[#384f8c] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">Rag Photographique · {{ 'papers.comingSoon' | t }}</a>
         </div>
 
         <div class="grid grid-cols-[2.5rem_1fr] items-start gap-x-4 gap-y-3 sm:flex sm:items-center bg-white rounded-xl p-4 sm:p-5 border border-slate-200">
@@ -234,8 +234,8 @@
             <div class="font-semibold text-slate-900 mb-1">{{ 'how.choose4' | t }}</div>
             <div class="text-sm text-slate-500 leading-relaxed">{{ 'how.choose4Text' | t }}</div>
           </div>
-          <a routerLink="." fragment="home_fineart_poster"
-            class="text-sm font-semibold text-[#167a92] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">Fine Art Poster →</a>
+          <a routerLink="." fragment="home_photo_poster"
+            class="text-sm font-semibold text-[#167a92] whitespace-nowrap col-start-2 justify-self-start sm:ml-4 hover:underline">Premium Poster →</a>
         </div>
       </div>
 
