@@ -457,8 +457,7 @@
     "start": "Begin met ontdekken.",
     "none": "Geen subcategorieën.",
     "seePrints": "Bekijk prints",
-    "show": "Toon categorie",
-    "products": "{{count}} producten"
+    "show": "Toon categorie"
   },
   "journey": {
     "browseTitle": "Bekijk & kies",

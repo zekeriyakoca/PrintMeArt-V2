@@ -30,18 +30,16 @@
         <div class="flex justify-between items-center">
           <div
             class="w-14 h-14 md:w-32 md:h-32 rounded-full overflow-hidden z-0 {{'bg-rose-50' }} flex items-center justify-center">
-            <img class="w-full h-full object-cover" [src]="item.imageUrl" [alt]="item.name" loading="lazy" />
-
+            <img class="w-full h-full object-cover" [src]="item.imageUrl" alt="" loading="lazy" />
           </div>
-          <span class="text-xs text-slate-700 font-medium pl-1 md:ml-0">
-            {{ 'categories.products' | t: { count: productCount(item) || 0 } }}
-          </span>
         </div>
 
         <div>
+          @if (item.description && item.description !== item.name) {
           <span class="block mb-2 text-xs md:text-sm text-slate-500 hidden md:block">
             {{ 'name.' + item.description | t }}
           </span>
+          }
           <h2 class="text-md md:text-3xl font-semibold">
             {{ 'name.' + item.name | t }}
           </h2>

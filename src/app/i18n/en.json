@@ -273,8 +273,7 @@
     "start": "Start Exploring.",
     "none": "No child categories.",
     "seePrints": "See Prints",
-    "show": "Show Category",
-    "products": "{{count}} products"
+    "show": "Show Category"
   },
   "journey": {
     "browseTitle": "Browse & Select",

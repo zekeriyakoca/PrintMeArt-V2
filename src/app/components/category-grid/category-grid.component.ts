@@ -62,11 +62,6 @@ export class CategoryGridComponent {
     this.tabActive.set(name);
   }
 
-  productCount(cat: CategoryDto): number {
-    // Placeholder logic; adapt if product counts exist separately
-    return cat.childCategories?.length || 0;
-  }
-
   encodeURIComponent(value: string): string {
     return encodeURIComponent(value);
   }
