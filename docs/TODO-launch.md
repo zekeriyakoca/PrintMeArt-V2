@@ -4,9 +4,7 @@ Teknik SEO hazır: SSR, sitemap, yapısal veri, hreflang, `llms.txt`, robots'ta 
 
 ## Şimdi yapılabilir (ücretsiz, fiyattan bağımsız)
 
-- [ ] **Google Search Console**: Sitede ve DNS'te doğrulama izi yok (meta etiketi, dosya ya da TXT kaydı bulunamadı). Google Analytics üzerinden doğrulanmış olabilir; önce search.google.com/search-console'da kontrol et.
-  - Yoksa: "Domain" property olarak `printmeart.nl` ekle, verilen TXT kaydını Hostinger DNS'e koy.
-  - Sonra `https://printmeart.nl/sitemap.xml` adresini gönder.
+- [x] **Google Search Console**: Eklendi ve sitemap gönderildi (2026-10-24).
 - [ ] **Bing Webmaster Tools**: Search Console'dan içe aktarılabilir; sitemap'i orada da gönder. Bing, ChatGPT aramasını da besliyor.
 - [ ] **Google Business Profile**: Den Bosch stüdyosu için aç. Doğrulama (posta kartı veya video) zaman alıyor.
 - [ ] **Instagram ve Pinterest business hesapları**: Kullanıcı adlarını al.
