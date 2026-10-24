@@ -49,6 +49,7 @@ export class PaperOptionsComponent {
 
   // Seçim yapıldığında: paper'ın grade'ine göre backend option'ı bul ve emit et
   select(paper: Paper, index: number): void {
+    if (paper.comingSoon) return;
     this.selectedIndex.set(index);
 
     // Backend option'ını bul (grade'e göre: Museum, Gallery, Studio, Home)
