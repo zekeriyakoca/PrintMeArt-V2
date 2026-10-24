@@ -11,6 +11,7 @@ export const routes: Routes = [
     path: 'products',
     loadComponent: () => import('./pages/product-list/product-list.component').then((m) => m.ProductListComponent),
   },
+  // Old address of the catalog, kept so earlier links and bookmarks still work
   {
     path: 'search',
     redirectTo: 'products',

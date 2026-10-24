@@ -16,7 +16,7 @@
             <ul class="nc-Navigation flex items-center">
               <!-- Prints Mega Menu -->
               <li class="menu-item flex-shrink-0 menu-megamenu menu-megamenu--large" (mouseenter)="showDropdown('prints')" (mouseleave)="hideDropdown('prints')">
-                <a routerLink="/search" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                <a routerLink="/products" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
                   {{ 'header.catalog' | t }}
                 </a>
                 <!-- Prints Mega Menu -->
@@ -243,7 +243,7 @@
       <nav class="flex-1 overflow-y-auto px-6 py-6">
         <ul class="space-y-1">
           <li>
-            <a routerLink="/search" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+            <a routerLink="/products" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="search" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.catalog' | t }}</span>
             </a>
@@ -270,12 +270,6 @@
             <a routerLink="/about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
               <app-icon iconName="users" class="w-5 h-5 text-slate-400"></app-icon>
               <span class="font-medium">{{ 'header.about' | t }}</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/how-we-work" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
-              <app-icon iconName="rocket" class="w-5 h-5 text-slate-400"></app-icon>
-              <span class="font-medium">{{ 'header.howWeWork' | t }}</span>
             </a>
           </li>
         </ul>

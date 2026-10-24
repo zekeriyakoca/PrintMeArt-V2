@@ -25,7 +25,7 @@ export class SectionHeroPlainComponent {
       title: 'home.cardMuseum',
       image:
         'https://ecombone.blob.core.windows.net/ecomm-processed-images/localhost/1764/1764-small.jpeg',
-      link: '/search?categoryName=Art Prints',
+      link: '/products?categoryName=Art Prints',
     },
     {
       title: 'home.cardCustom',

@@ -494,6 +494,8 @@
     "noMatches": "Geen resultaten",
     "viewAll": "Alles bekijken",
     "noProducts": "Geen producten gevonden",
+    "prints": "{{count}} prints",
+    "onePrint": "1 print",
     "tryAdjusting": "Pas je filters of zoekterm aan",
     "keywords": "Typ je zoekwoorden",
     "searchIn": "Zoek in {{group}}..."

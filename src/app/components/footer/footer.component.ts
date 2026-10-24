@@ -23,7 +23,7 @@ export class FooterComponent {
       title: 'footer.company',
       menus: [
         { href: '/about', label: 'footer.aboutUs' },
-        { href: '/about', label: 'footer.contact' },
+        { href: '/about#contact-us', label: 'footer.contact' },
         { href: '/how-we-work', label: 'footer.howWeWork' },
       ],
     },
@@ -50,7 +50,7 @@ export class FooterComponent {
       id: '4',
       title: 'footer.shop',
       menus: [
-        { href: '/search', label: 'footer.allPrints' },
+        { href: '/products', label: 'footer.allPrints' },
         { href: '/frames', label: 'footer.frames' },
         { href: '/your-design', label: 'footer.yourDesign' },
       ],

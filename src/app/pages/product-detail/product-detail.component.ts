@@ -17,7 +17,7 @@ import { MUSEUMS, Museum } from '../../data/museums';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { LanguageService } from '../../services/i18n/language.service';
 import { TranslationService } from '../../services/i18n/translation.service';
-import { SeoService } from '../../services/seo/seo.service';
+import { SeoService, summary } from '../../services/seo/seo.service';
 import { productPath } from '../../shared/product-path';
 
 const ARTIST_GROUP = 'Artist';
@@ -155,9 +155,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     const path = `/products/${productPath(product)}`;
     const url = this.seo.absoluteUrl(this.i18n.language, path);
     const firstParagraph = this.storyParagraphs()[0] ?? '';
-    const description = firstParagraph
-      ? firstParagraph.length > 160 ? `${firstParagraph.slice(0, firstParagraph.lastIndexOf(' ', 157))}…` : firstParagraph
-      : this.i18n.t('seo.product.description', { name: product.name });
+    const description = firstParagraph ? summary(firstParagraph) : this.i18n.t('seo.product.description', { name: product.name });
     const images = (product.images ?? []).map((image) => image.large);
 
     this.seo.setPage({

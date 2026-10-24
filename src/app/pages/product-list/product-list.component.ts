@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
-import { SeoService } from '../../services/seo/seo.service';
+import { SeoService, summary } from '../../services/seo/seo.service';
 import { TranslationService } from '../../services/i18n/translation.service';
 
 @Component({
@@ -66,6 +66,15 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     return chips;
   });
 
+  /** The category, artist, museum or collection the list is narrowed to; it gets a heading of its own */
+  named = computed(() => this.selectedFilterOptions().categoryName ?? this.selectedFilterOptions().attributeName);
+  namedGroup = computed(() => {
+    const group = this.filterOptions().find((g) => g.options.some((o) => o.name === this.named()));
+    return group ? this.getFilterGroupName(group.name) : undefined;
+  });
+  /** The artist's or museum's description from the catalog, where it has one */
+  namedText = signal<string | undefined>(undefined);
+
   isOptionSelected(optionName: string): boolean {
     const f = this.selectedFilterOptions();
     return f.categoryName === optionName || f.attributeName === optionName || f.optionName === optionName;
@@ -100,7 +109,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
         searchTerm: params.get('searchTerm') || undefined,
         tags,
       });
-      this.describeForSearch(categoryName ?? attributeName ?? params.get('searchTerm') ?? undefined);
       if (!isDesktopViewport()) {
         this.hideFilters.set(true);
       } else if (categoryName || attributeName || optionName) {
@@ -176,6 +184,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
       if (products?.data) {
         products.data.sort((a, b) => b.imageRatio - a.imageRatio);
         this.products.set(products);
+        this.describeNamed(products.data[0]?.id);
         const filters = this.selectedFilterOptions();
         this.analytics.trackProductListViewed(
           {
@@ -244,11 +253,27 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   }
 
   /** A category, museum or artist page gets its own title; the plain catalog the general one. */
-  private describeForSearch(name: string | undefined) {
-    const shown = name ? this.i18n.t('name.' + name) : undefined;
-    this.seo.setPage({
-      title: shown ? this.i18n.t('seo.catalog.namedTitle', { name: shown }) : this.i18n.t('seo.catalog.title'),
-      description: shown ? this.i18n.t('seo.catalog.namedDescription', { name: shown }) : this.i18n.t('seo.catalog.description'),
+  /** An attribute's description comes with the products that carry it, so it is read from the first one */
+  private describeNamed(firstProductId: number | undefined) {
+    const attribute = this.selectedFilterOptions().attributeName;
+    this.namedText.set(undefined);
+    if (!attribute || !firstProductId) return this.describeForSearch();
+    this.apiService.getProductById(String(firstProductId)).subscribe((product) => {
+      const details = product.attributeDetails?.find((a) => a.name === attribute);
+      this.namedText.set((this.i18n.language === 'nl' && details?.metadata?.['Description_nl']) || details?.description || undefined);
+      this.describeForSearch();
     });
   }
+
+  private describeForSearch() {
+    const name = this.named() ?? this.selectedFilterOptions().searchTerm;
+    const shown = name ? this.i18n.t('name.' + name) : undefined;
+    const description = this.namedText() ?? (shown ? this.i18n.t('seo.catalog.namedDescription', { name: shown }) : this.i18n.t('seo.catalog.description'));
+    this.seo.setPage({
+      title: shown ? this.i18n.t('seo.catalog.namedTitle', { name: shown }) : this.i18n.t('seo.catalog.title'),
+      description: summary(description),
+      structuredData: this.named() ? [{ '@type': 'CollectionPage', name: shown, description, numberOfItems: this.products().count }] : [],
+    });
+  }
+
 }

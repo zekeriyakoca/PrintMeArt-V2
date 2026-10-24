@@ -101,7 +101,7 @@ export class HeaderComponent extends BaseAppComponent {
   }
 
   navigateToSearch() {
-    this.router.navigate(['/search'], { fragment: 'search' });
+    this.router.navigate(['/products'], { fragment: 'search' });
   }
 
   navigateToCart() {

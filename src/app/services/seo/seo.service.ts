@@ -29,6 +29,11 @@ export interface PageSeo {
   noindex?: boolean;
 }
 
+/** A description cut to what search results show, at a word boundary */
+export function summary(text: string, max = 160): string {
+  return text.length > max ? `${text.slice(0, text.lastIndexOf(' ', max - 3))}…` : text;
+}
+
 /**
  * Title, description, canonical and language links, social sharing tags and structured data of
  * the current page. Static pages describe themselves in their route (`data: { seo: 'about' }`, with

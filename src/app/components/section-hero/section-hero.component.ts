@@ -19,7 +19,7 @@ export class SectionHeroComponent {
   );
   heading = input<string>('Affordable High-Quality Art Prints');
   btnText = input<string>('Buy Now');
-  btnLink = input<string>('/search');
+  btnLink = input<string>('/products');
   image = input<string>(
     'https://genstorageaccount3116.blob.core.windows.net/printme-images/main-slider-6.webp',
   );
