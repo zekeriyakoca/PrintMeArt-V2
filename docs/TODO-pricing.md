@@ -35,3 +35,37 @@ Kâğıt ve çerçeve varsayılanları için karar bekleniyor. Karar verilene ka
 
 - Ürün yapısal verisindeki `Offer` ve Pinterest `product:price` etiketleri şu an sayfada gösterilen fiyatı kullanıyor ve sadece tarayıcıda ekleniyor. Fiyat sunucuda da hesaplanırsa Google ilk okumada görür.
 - Google Merchant Center ve Pinterest ürün feed'i (`/feeds/products.xml`): feed'deki fiyat sayfadakiyle birebir aynı olmalı, yoksa Google ürünleri reddeder. Bu yüzden 1–3 bitmeden yapılmamalı.
+
+## 5. Saal Digital ile baskı (deneme süresi, 2026-10-24)
+
+20–30 sağlıklı satıştan sonra kendi Canon yazıcımızla (60×90'a kadar) basmaya geçilecek. Maliyetler %35 bayi indirimi sonrası, BTW hariç:
+
+| Ürün | Maliyet |
+|---|---|
+| Photo Rag 50×70 | €27,93 |
+| Photo Rag 60×90 | €40,29 |
+| Poster mat 50×70 | €11,28 |
+| Poster silk 50×70 | €12,89 |
+| Poster mat 60×90 | €17,19 |
+
+Kargo sipariş başına €5,78 (ekspres €16,53).
+
+**Fiyat dengesi:**
+- **Photo Rag:** Site fiyatı (50×70'te €53,50) Saal'ın kendi liste fiyatıyla (≈ €52) neredeyse aynı. Marj yaklaşık %24 ve tamamen bayi indirimine bağlı.
+- **Poster:** 50×70'te marj yaklaşık %59.
+- **Öneri:** Photo Rag 50×70 yaklaşık €69–75, 60×90 yaklaşık €95–99. Karar bekliyor.
+
+**Kâğıt kararları:**
+1. **German Etching kalıyor** (Saal'da var).
+   - "100% katoen" ifadesi yanlış: kâğıt %100 alfa selüloz.
+   - Gramajı Saal'ın verdiği değere göre kontrol et (Hahnemühle: 310 g/m²).
+2. **Canson Rag Photographique "Binnenkort / Coming soon"** olacak: seçilemez görünecek, kendi yazıcıyla açılacak.
+3. **Poster (Home) metni Saal mat posterine göre değişecek:**
+   - Yeni içerik: Fujifilm Crystal Archive fotoğraf kâğıdı, 234 g/m², fijn mat.
+   - Çıkacaklar: "Fine Art", "200 g/m²", "FSC" ve "giclée 12 kleuren".
+   - Önerilen NL metin: "Premium Poster · 234 g/m² · Fujifilm-fotopapier · fijn mat".
+4. **Aynı yanlışı içeren başka metinler:**
+   - Ürün sayfasındaki genel satır: "Giclée-gedrukt op fine-art papier van 200 g/m² (mat)".
+   - "Twijfel je nog?" metni: "hetzelfde giclée-proces in 12 kleuren".
+   - Seçenek grubunun adı: "Paper (100% cotton)".
+5. **Canon'a geçerken:** Poster kâğıdı tekrar değişecek. Inkjet yazıcı Fujifilm fotoğraf kâğıdına basamaz; metni o zaman güncelle.
