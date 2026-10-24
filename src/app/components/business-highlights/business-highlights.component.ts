@@ -35,7 +35,7 @@ export class BusinessHighlightsComponent {
       link: '/about',
       color: 'cyan',
       image:
-        'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/1ca52204-114f-4786-b011-b020c9b61365',
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/home-made-in-den-bosch.webp',
     },
   ];
 }

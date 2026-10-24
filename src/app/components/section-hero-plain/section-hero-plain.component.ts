@@ -30,13 +30,13 @@ export class SectionHeroPlainComponent {
     {
       title: 'home.cardCustom',
       image:
-        'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/df5279ac-e160-45b2-939a-dfc86cb757a7',
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/home-card-custom.webp',
       link: '/your-design',
     },
     {
       title: 'home.cardBestSellers',
       image:
-        'https://ecombone.blob.core.windows.net/ecommbone-catalog-product-image-uploads/df54a144-71f9-47ea-b8f0-a3136d6301db',
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/home-card-bestsellers.webp',
       link: '/products',
     },
   ];
