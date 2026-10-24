@@ -4,6 +4,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
+import { COMPANY } from '../../shared/company';
 
 @Component({
   selector: 'app-footer',
@@ -14,6 +15,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();
+  readonly company = COMPANY;
 
   widgetMenus = [
     {

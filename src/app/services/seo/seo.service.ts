@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { LanguageService } from '../i18n/language.service';
 import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '../i18n/languages';
 import { TranslationService } from '../i18n/translation.service';
+import { COMPANY } from '../../shared/company';
 
 const SITE_NAME = 'PrintMeArt';
 /** Shared look of the home page and collections: logo, tagline and three framed artworks (1200×630) */
@@ -122,6 +123,9 @@ export class SeoService {
       '@type': 'OnlineStore',
       '@id': `${environment.siteUrl}/#organization`,
       name: SITE_NAME,
+      legalName: COMPANY.legalName,
+      vatID: COMPANY.vatId,
+      identifier: { '@type': 'PropertyValue', propertyID: 'KvK', value: COMPANY.kvk },
       url: environment.siteUrl,
       logo: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/logo.svg',
       image: DEFAULT_IMAGE,
