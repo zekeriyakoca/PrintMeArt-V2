@@ -55,30 +55,29 @@ html {
 }
 
 
-// Served with the site and preloaded in index.html. 'optional': a page shows Poppins if it is there
-// in time and otherwise keeps the system font, so text never changes font while the page is open
+// Served with the site and preloaded in index.html, so they usually arrive with the page
 @font-face {
   font-family: 'Poppins';
   font-weight: 300;
-  font-display: optional;
+  font-display: swap;
   src: url('/fonts/poppins-300.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Poppins';
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: url('/fonts/poppins-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Poppins';
   font-weight: 500;
-  font-display: optional;
+  font-display: swap;
   src: url('/fonts/poppins-500.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Poppins';
   font-weight: 600;
-  font-display: optional;
+  font-display: swap;
   src: url('/fonts/poppins-600.woff2') format('woff2');
 }
 @font-face {
