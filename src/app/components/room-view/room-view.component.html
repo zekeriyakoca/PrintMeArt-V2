@@ -22,7 +22,7 @@
           <div class="rooms">
             @for (scene of rooms; track scene.id) {
             <button type="button" class="room-thumb" [class.active]="scene.id === room().id" (click)="room.set(scene)" [title]="scene.name">
-              <img [src]="scene.image" [alt]="scene.name" />
+              <img [src]="scene.image" [alt]="scene.name" crossorigin="anonymous" />
             </button>
             }
           </div>

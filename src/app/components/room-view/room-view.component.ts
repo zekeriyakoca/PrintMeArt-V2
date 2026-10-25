@@ -79,6 +79,8 @@ export class RoomViewComponent {
       const room = this.room();
       if (this.roomImages.has(room.id)) return;
       const image = new Image();
+      // Served from blob storage: CORS keeps the canvas readable for the light map and Save my design
+      image.crossOrigin = 'anonymous';
       image.onload = () => {
         this.roomImages.set(room.id, image);
         this.loadedRoom.set(room.id);
