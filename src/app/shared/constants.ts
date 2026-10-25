@@ -18,6 +18,8 @@ export interface DesignFrame {
   thumbnail: string;
   mask: string;
   maskWithoutMat: string;
+  /** Not offered on the storefront for now; set to false (or remove) to offer it again */
+  hidden?: boolean;
 }
 
 export const FrameOptions: DesignFrame[] = [
@@ -28,6 +30,7 @@ export const FrameOptions: DesignFrame[] = [
     thumbnail: 'https://www.ikea.com/nl/en/images/products/edsbruk-frame-black-stained__0723741_pe734158_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame8-edsbruk-mat.png',
     maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame8-edsbruk.png',
+    hidden: true,
   },
   {
     id: 2,
@@ -36,6 +39,7 @@ export const FrameOptions: DesignFrame[] = [
     thumbnail: 'https://www.ikea.com/nl/en/images/products/plommontrad-frame-white-stained-pine-effect__1202413_pe905936_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame6-plommon-mat.png',
     maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame6-plommon.png',
+    hidden: true,
   },
   {
     id: 3,
@@ -44,6 +48,7 @@ export const FrameOptions: DesignFrame[] = [
     thumbnail: 'https://www.ikea.com/nl/en/images/products/edsbruk-frame-white__0706506_pe725889_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame5-edsbruk-mat.png',
     maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame5-edsbruk.png',
+    hidden: true,
   },
   {
     id: 4,
@@ -84,6 +89,14 @@ export const FrameOptions: DesignFrame[] = [
     thumbnail: 'https://www.ikea.com/nl/en/images/products/lomviken-frame-black__0386296_pe558681_s5.jpg?f=xxs',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame3-lomviken-mat.png',
     maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame3-lomviken.png',
+  },
+  {
+    id: 9,
+    name: 'Natural Oak',
+    description: 'Natural oak frame with a warm, visible wood grain.',
+    thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-thumb.webp',
+    mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame9-oak-mat.png',
+    maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame9-oak.png',
   },
 ];
 

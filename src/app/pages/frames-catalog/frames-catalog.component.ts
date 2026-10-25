@@ -16,6 +16,8 @@ export interface Frame {
   image: string;
   hoverImage: string;
   allImages: string[];
+  /** Not shown for now; set to false (or remove) to show it again */
+  hidden?: boolean;
 }
 
 @Component({
@@ -31,7 +33,7 @@ export interface Frame {
   styleUrl: './frames-catalog.component.scss',
 })
 export class FramesCatalogComponent {
-  frames: Frame[] = [
+  private allFrames: Frame[] = [
     {
       id: 1,
       name: 'Black | EDSBRUK',
@@ -45,6 +47,7 @@ export class FramesCatalogComponent {
         'https://www.ikea.com/nl/en/images/products/edsbruk-frame-black-stained__0723741_pe734158_s5.jpg?f=s',
         'https://www.ikea.com/nl/en/images/products/edsbruk-frame-black-stained__0723740_pe734159_s5.jpg?f=s',
       ],
+      hidden: true,
     },
     {
       id: 3,
@@ -59,6 +62,7 @@ export class FramesCatalogComponent {
         'https://www.ikea.com/nl/en/images/products/edsbruk-frame-white__0706506_pe725889_s5.jpg?f=s',
         'https://www.ikea.com/nl/en/images/products/edsbruk-frame-white__0706504_pe725890_s5.jpg?f=s',
       ],
+      hidden: true,
     },
     {
       id: 4,
@@ -73,6 +77,7 @@ export class FramesCatalogComponent {
         'https://www.ikea.com/nl/en/images/products/ramsborg-frame-brown__0726700_pe735389_s5.jpg?f=s',
         'https://www.ikea.com/nl/en/images/products/ramsborg-frame-brown__0726699_pe735390_s5.jpg?f=xl',
       ],
+      hidden: true,
     },
     {
       id: 5,
@@ -87,8 +92,24 @@ export class FramesCatalogComponent {
         'https://www.ikea.com/nl/en/images/products/rodalm-frame-black__1251233_pe924195_s5.jpg?f=s',
         'https://www.ikea.com/nl/en/images/products/rodalm-frame-black__1251232_pe924196_s5.jpg?f=s',
       ],
+      hidden: true,
+    },
+    {
+      id: 9,
+      name: 'Natural Oak',
+      description: 'Natural oak frame with a warm, visible wood grain.',
+      image:
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-600.webp',
+      hoverImage:
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-detail-600.webp',
+      allImages: [
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak.webp',
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-detail.webp',
+      ],
     },
   ];
+
+  frames = this.allFrames.filter((frame) => !frame.hidden);
 
   isGalleryOpen = signal(false);
   selectedFrameIndex = signal(0);

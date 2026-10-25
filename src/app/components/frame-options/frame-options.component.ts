@@ -40,16 +40,18 @@ export class FrameOptionsComponent {
   private el = inject(ElementRef<HTMLElement>);
 
   items = computed<FrameItem[]>(() =>
-    this.group().options.map((opt) => {
-      const frame = FrameOptionsByValue[opt.value];
-      return {
-        id: opt.id,
-        name: opt.value,
-        thumbnail:
-          frame?.thumbnail || opt.imageUrl || RolledUpDefaultThumbnailUrl,
-        description: frame?.description || '',
-      };
-    }),
+    this.group()
+      .options.filter((opt) => !FrameOptionsByValue[opt.value]?.hidden)
+      .map((opt) => {
+        const frame = FrameOptionsByValue[opt.value];
+        return {
+          id: opt.id,
+          name: opt.value,
+          thumbnail:
+            frame?.thumbnail || opt.imageUrl || RolledUpDefaultThumbnailUrl,
+          description: frame?.description || '',
+        };
+      }),
   );
 
   selectedId = linkedSignal(() => {
