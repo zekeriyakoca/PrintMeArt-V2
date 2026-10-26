@@ -10,7 +10,8 @@ metadata:
   name: storefront
   namespace: printmeart
 spec:
-  replicas: 1
+  # Two pods: rendering is single-threaded, so while one renders a burst of pages the other still answers
+  replicas: 2
   selector:
     matchLabels: { app: storefront }
   template:
