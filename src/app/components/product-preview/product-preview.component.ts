@@ -4,7 +4,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
-import { AllPapers, FrameOptionsByValue, Paper, PreviewFrame, frameMasksFor } from '../../shared/constants';
+import { AllPapers, FrameOptionsByValue, Paper, frameMaskFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { CommonApiService } from '../../services/api/common-api.service';
@@ -113,11 +113,14 @@ export class ProductPreviewComponent {
     return FrameOptionsByValue[name] ?? null;
   });
 
-  /** On screen the print always sits in a frame: the chosen one, or the preview frame for a rolled-up print */
+  /** The print always shows framed (a rolled-up print in the frame we sell); the saved design is what is shown */
   frameMaskUrl = computed(() => {
     const size = this.effectiveSize();
-    return frameMasksFor(this.frameInfo() ?? PreviewFrame, size.val1, size.val2).maskWithoutMat;
+    return frameMaskFor(this.frameName(), size.val1, size.val2);
   });
+
+  /** A mat comes with a chosen frame only */
+  showsMat = computed(() => this.hasFrame() && this.isMatIncluded());
 
   paperInfo = computed<Paper | null>(() => {
     const name = this.paperName();
@@ -126,7 +129,7 @@ export class ProductPreviewComponent {
   });
 
   // Mat padding: when frame + mat → extra space for the matt texture to show; without a mat the print sits directly in the frame
-  imagePaddingPercent = computed(() => (this.hasFrame() && this.isMatIncluded() ? 10 : 0));
+  imagePaddingPercent = computed(() => (this.showsMat() ? 10 : 0));
 
   clampedScale = computed(() => Math.max(0.7, Math.min(2, this.scale())));
 
@@ -193,8 +196,8 @@ export class ProductPreviewComponent {
     const meta = this.metadata();
     const size = this.selectedSize();
 
-    // Cover by default when framed, contain otherwise; overflow visible
-    this.fitMode.set(this.hasFrame() ? 'cover' : 'contain');
+    // Cover by default: the print always shows in a frame
+    this.fitMode.set('cover');
     this.showGhost.set(true);
     this.translateX.set(0);
     this.translateY.set(0);
@@ -212,7 +215,7 @@ export class ProductPreviewComponent {
     }
 
     // Set zoom: if mat, zoom out slightly to show mat border; otherwise fit
-    if (this.isMatIncluded() && this.hasFrame()) {
+    if (this.showsMat()) {
       this.scale.set(0.92);
     } else {
       this.scale.set(1);
@@ -246,12 +249,11 @@ export class ProductPreviewComponent {
     if (!layout) return;
 
     this.isSaving.set(true);
-    // A rolled-up print is saved without the preview frame
-    const frameMaskUrl = this.hasFrame() ? this.frameMaskUrl() : null;
-    const matIncluded = this.isMatIncluded();
+    const frameMaskUrl = this.frameMaskUrl();
+    const matIncluded = this.showsMat();
     const size = this.effectiveSize();
 
-    Promise.all([loadCorsImage(this.imageUrl()), frameMaskUrl ? loadCorsImage(frameMaskUrl) : Promise.resolve(null)])
+    Promise.all([loadCorsImage(this.imageUrl()), loadCorsImage(frameMaskUrl)])
       .then(([image, frame]) => designToFile(composeDesign(DESIGN_WIDTH_PX, { image, frame, width: size.val1, height: size.val2, matIncluded }, layout)))
       .then((file) =>
         this.commonApi.uploadImage(file).subscribe({
