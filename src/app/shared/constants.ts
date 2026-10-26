@@ -153,8 +153,8 @@ export const FrameOptions: DesignFrame[] = [
   },
 ];
 
-/** Shown around the print in Preview & Design when no frame is chosen, so the preview is never bare paper */
-export const PreviewFrame: DesignFrame = FrameOptions.find((frame) => !frame.hidden)!;
+/** Shown around the print in Preview & Design when no frame is chosen, so the preview is never bare paper: the oak frame we sell */
+export const PreviewFrame: DesignFrame = FrameOptions.find((frame) => frame.name === 'Natural Oak')!;
 
 export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.reduce(
   (acc, frame) => {
