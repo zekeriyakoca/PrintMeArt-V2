@@ -83,7 +83,7 @@
               [class.matt]="isMatIncluded()"
               [style.padding]="imagePaddingPercent() > 0 ? imagePaddingPercent() + '%' : null"
               [class.cover-mode]="fitMode() === 'cover'"
-              [class.paper-behind-frame]="hasFrame()"
+              [class.paper-behind-frame]="!!frameMaskUrl()"
               [class.paper-border]="showGuides()"
               (wheel)="onWheel($event)"
               (pointerdown)="onPointerDown($event); onMultiPointerDown($event)"
