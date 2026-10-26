@@ -7,6 +7,9 @@ export const SizeOptions = [
   { id: 6, name: '60x90', val1: 60, val2: 90 },
 ];
 
+/** Sizes a frame is offered in; the other sizes are sold rolled up only */
+export const FramedSizeNames = ['21x30', '30x40', '40x60', '50x70'];
+
 export const RolledUpDefaultThumbnailUrl = 'https://ecombone.blob.core.windows.net/ecomm-processed-images/victorious-rock-0d8f88603.2.azurestaticapps.net/12/12-small.jpeg';
 
 export const HahnemühleLogoUrl = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/hahnemuehle.jpg';
@@ -149,6 +152,9 @@ export const FrameOptions: DesignFrame[] = [
     ],
   },
 ];
+
+/** Shown around the print in Preview & Design when no frame is chosen, so the preview is never bare paper */
+export const PreviewFrame: DesignFrame = FrameOptions.find((frame) => !frame.hidden)!;
 
 export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.reduce(
   (acc, frame) => {

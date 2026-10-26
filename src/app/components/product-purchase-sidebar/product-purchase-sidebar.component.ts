@@ -13,7 +13,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
-import { SizeOptions } from '../../shared/constants';
+import { FramedSizeNames, SizeOptions } from '../../shared/constants';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
@@ -50,7 +50,13 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   /** Selected paper name for display and spec3 */
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
 
-  availableSizes = computed<SizeOption[]>(() => DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions);
+  availableSizes = computed<SizeOption[]>(() => {
+    const sizes = DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions;
+    if (!this.isFrameSelected()) return sizes;
+    // Frames come in a few sizes only
+    const framed = sizes.filter((size) => FramedSizeNames.includes(size.name));
+    return framed.length ? framed : sizes;
+  });
 
   private syncSelectedSize = effect(
     () => {

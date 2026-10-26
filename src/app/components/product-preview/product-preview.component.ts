@@ -4,7 +4,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
-import { AllPapers, FrameOptionsByValue, Paper, frameMasksFor } from '../../shared/constants';
+import { AllPapers, FrameOptionsByValue, Paper, PreviewFrame, frameMasksFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { CommonApiService } from '../../services/api/common-api.service';
@@ -113,10 +113,10 @@ export class ProductPreviewComponent {
     return FrameOptionsByValue[name] ?? null;
   });
 
+  /** On screen the print always sits in a frame: the chosen one, or the preview frame for a rolled-up print */
   frameMaskUrl = computed(() => {
-    const frame = this.frameInfo();
     const size = this.effectiveSize();
-    return frame ? frameMasksFor(frame, size.val1, size.val2).maskWithoutMat : null;
+    return frameMasksFor(this.frameInfo() ?? PreviewFrame, size.val1, size.val2).maskWithoutMat;
   });
 
   paperInfo = computed<Paper | null>(() => {
@@ -246,7 +246,8 @@ export class ProductPreviewComponent {
     if (!layout) return;
 
     this.isSaving.set(true);
-    const frameMaskUrl = this.frameMaskUrl();
+    // A rolled-up print is saved without the preview frame
+    const frameMaskUrl = this.hasFrame() ? this.frameMaskUrl() : null;
     const matIncluded = this.isMatIncluded();
     const size = this.effectiveSize();
 

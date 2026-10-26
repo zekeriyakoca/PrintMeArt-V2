@@ -62,18 +62,40 @@ app.get(/^\/(en|nl)\/(cart|checkout|profile|orders|login|order-confirmation)(\/|
   res.set('Cache-Control', 'no-cache').sendFile(join(browserDistFolder, 'index.csr.html'));
 });
 
+// Rendered pages are kept for 30 minutes: every visitor gets the same page (prices are worked out in the browser),
+// so a burst of visits or a crawler does not render the same page again and again
+const PAGE_CACHE_MS = 30 * 60 * 1000;
+const PAGE_CACHE_MAX = 2000;
+const pageCache = new Map<string, { expires: number; headers: [string, string][]; body: Buffer }>();
+
 // Angular renders the page without its language prefix and is told the language alongside
 app.use((req, res, next) => {
+  const key = req.originalUrl;
+  const cached = req.method === 'GET' ? pageCache.get(key) : undefined;
+  if (cached && cached.expires > Date.now()) {
+    cached.headers.forEach(([name, value]) => res.setHeader(name, value));
+    res.status(200).send(cached.body);
+    return;
+  }
+
   const language = req.originalUrl.slice(1, 3);
   const page = req.originalUrl.slice(3);
   req.url = req.originalUrl = page.startsWith('/') ? page : `/${page}`;
   angularApp
     .handle(req, { language })
-    .then((response) => {
+    .then(async (response) => {
       if (!response) return next();
       const location = response.headers.get('location');
       if (location?.startsWith('/')) return res.redirect(response.status, `/${language}${location}`);
-      return writeResponseToNodeResponse(response, res);
+      if (req.method !== 'GET' || response.status !== 200) return writeResponseToNodeResponse(response, res);
+
+      const headers = [...response.headers.entries()];
+      const body = Buffer.from(await response.arrayBuffer());
+      pageCache.delete(key);
+      if (pageCache.size >= PAGE_CACHE_MAX) pageCache.delete(pageCache.keys().next().value!);
+      pageCache.set(key, { expires: Date.now() + PAGE_CACHE_MS, headers, body });
+      headers.forEach(([name, value]) => res.setHeader(name, value));
+      return res.status(200).send(body);
     })
     .catch(next);
 });
