@@ -46,7 +46,7 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
     vpW = canvasW,
     vpH = canvasH;
   if (frame) {
-    const marginX = 0.04 * canvasW;
+    const marginX = 0.02 * canvasW;
     const marginY = 0.02 * canvasW;
     vpX = marginX;
     vpY = marginY;
