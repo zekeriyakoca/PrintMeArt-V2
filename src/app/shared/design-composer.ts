@@ -15,8 +15,8 @@ export const DESIGN_WIDTH_PX = 1200;
 
 export interface DesignParts {
   image: HTMLImageElement;
-  /** Frame mask drawn over the whole artboard; null for an unframed print */
-  frame: HTMLImageElement | null;
+  /** Frame mask drawn over the whole artboard */
+  frame: HTMLImageElement;
   /** Print size in cm, oriented as printed (width × height) */
   width: number;
   height: number;
@@ -40,22 +40,15 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvasW, canvasH);
 
-  // 1. Paper area: inset behind the frame (CSS % margins resolve against the artboard width)
-  let vpX = 0,
-    vpY = 0,
-    vpW = canvasW,
-    vpH = canvasH;
-  if (frame) {
-    const marginX = 0.02 * canvasW;
-    const marginY = 0.02 * canvasW;
-    vpX = marginX;
-    vpY = marginY;
-    vpW = canvasW - 2 * marginX;
-    vpH = canvasH - 2 * marginY;
-  }
+  // 1. Paper area: inset 2% of the width behind the frame on every side (CSS % margins resolve against the artboard width)
+  const margin = 0.02 * canvasW;
+  const vpX = margin;
+  const vpY = margin;
+  const vpW = canvasW - 2 * margin;
+  const vpH = canvasH - 2 * margin;
 
   // 2. Content box: padding inside the paper area when a mat is included; without a mat the print sits directly in the frame
-  const padPercent = frame && parts.matIncluded ? 10 : 0;
+  const padPercent = parts.matIncluded ? 10 : 0;
   const pad = (padPercent / 100) * canvasW;
   const cntX = vpX + pad;
   const cntY = vpY + pad;
@@ -84,9 +77,7 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   ctx.restore();
 
   // 6. Frame on top of everything
-  if (frame) {
-    ctx.drawImage(frame, 0, 0, canvasW, canvasH);
-  }
+  ctx.drawImage(frame, 0, 0, canvasW, canvasH);
 
   return canvas;
 }

@@ -147,7 +147,7 @@
       [title]="product().name"
       [imageUrl]="customImageUrl() || product().images[0].large"
       [frameName]="selectedFrameName()"
-      [matIncluded]="isMatIncluded()"
+      [matIncluded]="isFrameSelected() && isMatIncluded()"
       [layout]="layout"
       [sizes]="availableSizes()"
       [(selectedSize)]="selectedSize"

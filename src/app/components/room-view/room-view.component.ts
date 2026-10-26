@@ -2,7 +2,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
-import { FrameOptionsByValue, frameMasksFor } from '../../shared/constants';
+import { frameMaskFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
 import { CommonApiService } from '../../services/api/common-api.service';
 import { ROOM_SCENES, RoomScene } from './rooms';
@@ -18,7 +18,7 @@ import { RoomRenderer } from './room-renderer';
 export class RoomViewComponent {
   title = input('');
   imageUrl = input.required<string>();
-  /** Frame option name as chosen on the product page; null for an unframed print */
+  /** Frame option name as chosen on the product page; null for a rolled-up print, which shows in the frame we sell */
   frameName = input<string | null>(null);
   matIncluded = input(false);
   /** Crop / zoom / pan from Preview & Design */
@@ -43,12 +43,6 @@ export class RoomViewComponent {
   private design: HTMLCanvasElement | null = null;
   isSaving = signal(false);
 
-  frameMaskUrl = computed(() => {
-    const frame = FrameOptionsByValue[this.frameName() ?? ''];
-    const size = this.selectedSize();
-    return frame ? frameMasksFor(frame, size?.val1 ?? 0, size?.val2 ?? 0).maskWithoutMat : null;
-  });
-
   /** Print size in cm, turned to match the artwork's orientation */
   printSize = computed(() => {
     const size = this.selectedSize();
@@ -56,6 +50,12 @@ export class RoomViewComponent {
     if (!size || !art) return null;
     const landscape = art.naturalWidth > art.naturalHeight;
     return landscape ? { width: size.val2, height: size.val1 } : { width: size.val1, height: size.val2 };
+  });
+
+  /** Same frame as Preview & Design, for the print as it hangs (portrait or landscape) */
+  frameMaskUrl = computed(() => {
+    const size = this.printSize();
+    return size ? frameMaskFor(this.frameName(), size.width, size.height) : null;
   });
 
   constructor() {
@@ -72,8 +72,8 @@ export class RoomViewComponent {
 
     effect(() => {
       const url = this.frameMaskUrl();
-      if (!url) this.frameMask.set(null);
-      else loadCorsImage(url).then((image) => this.frameMask.set(image));
+      this.frameMask.set(null);
+      if (url) loadCorsImage(url).then((image) => this.frameMask.set(image));
     });
 
     effect(() => {
@@ -94,10 +94,10 @@ export class RoomViewComponent {
       const room = this.room();
       const art = this.art();
       const size = this.printSize();
-      const frame = this.frameMaskUrl() ? this.frameMask() : null;
+      const frame = this.frameMask();
       this.loadedRoom();
       const roomImage = this.roomImages.get(room.id);
-      if (!canvas || !art || !size || !roomImage || (this.frameMaskUrl() && !frame)) return;
+      if (!canvas || !art || !size || !roomImage || !frame) return;
 
       const design = composeDesign(
         DESIGN_WIDTH_PX,
@@ -105,7 +105,7 @@ export class RoomViewComponent {
         this.layout(),
       );
       this.design = design;
-      this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height, framed: !!frame });
+      this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height });
     });
   }
 

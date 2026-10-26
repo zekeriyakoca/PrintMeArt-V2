@@ -36,15 +36,6 @@ export interface FrameMask {
   maskWithoutMatLandscape: string;
 }
 
-/** The frame's masks for a print of this size: the closest ratio variant in the print's orientation, else the frame's own masks. */
-export function frameMasksFor(frame: DesignFrame, width: number, height: number): Pick<DesignFrame, 'mask' | 'maskWithoutMat'> {
-  const variants = frame.masksByRatio;
-  if (!variants?.length || !width || !height) return frame;
-  const ratio = Math.min(width, height) / Math.max(width, height);
-  const best = variants.reduce((a, v) => (Math.abs(v.ratio - ratio) < Math.abs(a.ratio - ratio) ? v : a));
-  return width > height ? { mask: best.maskLandscape, maskWithoutMat: best.maskWithoutMatLandscape } : best;
-}
-
 export const FrameOptions: DesignFrame[] = [
   {
     id: 1,
@@ -153,9 +144,6 @@ export const FrameOptions: DesignFrame[] = [
   },
 ];
 
-/** Shown around the print in Preview & Design when no frame is chosen, so the preview is never bare paper: the oak frame we sell */
-export const PreviewFrame: DesignFrame = FrameOptions.find((frame) => frame.name === 'Natural Oak')!;
-
 export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.reduce(
   (acc, frame) => {
     acc[frame.name] = frame;
@@ -163,6 +151,23 @@ export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.red
   },
   {} as Record<string, DesignFrame>,
 );
+
+/** The frame we sell; a rolled-up print is shown in it too */
+const SoldFrame = FrameOptionsByValue['Natural Oak'];
+
+/**
+ * The frame mask drawn around a print of this size (cm, as printed) in Preview & Design, the room view
+ * and the saved design: the chosen frame, or the sold frame when none is chosen, so a print always shows
+ * framed and what is shown is what is saved. Takes the frame's mask for the closest ratio and orientation.
+ */
+export function frameMaskFor(frameName: string | null, width: number, height: number): string {
+  const frame = (frameName && FrameOptionsByValue[frameName]) || SoldFrame;
+  const variants = frame.masksByRatio;
+  if (!variants?.length || !width || !height) return frame.maskWithoutMat;
+  const ratio = Math.min(width, height) / Math.max(width, height);
+  const best = variants.reduce((a, v) => (Math.abs(v.ratio - ratio) < Math.abs(a.ratio - ratio) ? v : a));
+  return width > height ? best.maskWithoutMatLandscape : best.maskWithoutMat;
+}
 
 export type PaperGrade = 'Museum' | 'Gallery' | 'Studio' | 'Home';
 export type PriceTier = '$' | '$$' | '$$$';

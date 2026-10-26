@@ -5,7 +5,6 @@ export interface PrintOnWall {
   design: CanvasImageSource;
   widthCm: number;
   heightCm: number;
-  framed: boolean;
 }
 
 // Coarse on purpose: the light map should carry the room's light, not the wall's texture
@@ -40,7 +39,7 @@ export class RoomRenderer {
     this.drawShadow(ctx, outer, room, pxPerCm);
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(print.design, outer.x, outer.y, outer.w, outer.h);
-    if (print.framed) this.drawGlass(ctx, outer);
+    this.drawGlass(ctx, outer);
 
     this.applyRoomLight(ctx, wall, outer, room);
   }

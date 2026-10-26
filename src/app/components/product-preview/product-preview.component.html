@@ -70,20 +70,17 @@
           <!-- Artboard -->
           <div class="artboard" [style.aspect-ratio]="artboardRatio()" [style.--ratio]="artboardRatioNum()">
             <!-- Frame mask overlay -->
-            @if (frameMaskUrl()) {
-              <div class="frame-overlay" [class.ghost-active]="showGuides()">
-                <img [src]="frameMaskUrl()" alt="frame overlay" />
-              </div>
-            }
+            <div class="frame-overlay" [class.ghost-active]="showGuides()">
+              <img [src]="frameMaskUrl()" alt="frame overlay" />
+            </div>
 
             <!-- Image viewport -->
             <div
               #viewport
-              class="image-viewport"
-              [class.matt]="isMatIncluded()"
+              class="image-viewport paper-behind-frame"
+              [class.matt]="showsMat()"
               [style.padding]="imagePaddingPercent() > 0 ? imagePaddingPercent() + '%' : null"
               [class.cover-mode]="fitMode() === 'cover'"
-              [class.paper-behind-frame]="!!frameMaskUrl()"
               [class.paper-border]="showGuides()"
               (wheel)="onWheel($event)"
               (pointerdown)="onPointerDown($event); onMultiPointerDown($event)"
@@ -91,8 +88,8 @@
               (pointerup)="onPointerUp($event); onMultiPointerUp($event)"
               (pointercancel)="onPointerUp($event); onMultiPointerUp($event)"
             >
-              @if (showGuides() && hasFrame()) {
-                @if (isMatIncluded()) {
+              @if (showGuides()) {
+                @if (showsMat()) {
                   <span class="matt-label"> {{ 'design.matArea' | t }}</span>
                 }
                 <span class="paper-area-label">{{ 'design.paperArea' | t }}</span>
@@ -102,7 +99,7 @@
 
             <!-- Dimension guides -->
             @if (showGuides()) {
-              <div class="guides-overlay" [class.has-frame]="hasFrame()">
+              <div class="guides-overlay has-frame">
                 <div class="paper-overlay">
                   <div class="dim-v"></div>
                   <span class="dim-label dim-label-v">{{ effectiveSize().val2 }} cm</span>
@@ -122,7 +119,7 @@
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
-              @if (isMatIncluded() && hasFrame()) {
+              @if (showsMat()) {
                 <div class="guide-info-box guide-info-mat">
                   <div class="guide-info-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
