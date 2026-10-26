@@ -20,6 +20,22 @@ export interface DesignFrame {
   maskWithoutMat: string;
   /** Not offered on the storefront for now; set to false (or remove) to offer it again */
   hidden?: boolean;
+  /** Masks made for specific print ratios (short side / long side); the closest one is used */
+  masksByRatio?: FrameMask[];
+}
+
+export interface FrameMask {
+  ratio: number;
+  mask: string;
+  maskWithoutMat: string;
+}
+
+/** The frame's masks for a print of this size: the closest ratio variant, else the frame's own masks. */
+export function frameMasksFor(frame: DesignFrame, width: number, height: number): Omit<FrameMask, 'ratio'> {
+  const variants = frame.masksByRatio;
+  if (!variants?.length || !width || !height) return frame;
+  const ratio = Math.min(width, height) / Math.max(width, height);
+  return variants.reduce((best, v) => (Math.abs(v.ratio - ratio) < Math.abs(best.ratio - ratio) ? v : best));
 }
 
 export const FrameOptions: DesignFrame[] = [
@@ -95,8 +111,30 @@ export const FrameOptions: DesignFrame[] = [
     name: 'Natural Oak',
     description: 'Natural oak frame with a warm, visible wood grain.',
     thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-thumb.webp',
-    mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame9-oak-mat.png',
-    maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame9-oak.png',
+    mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-3x4-mat.png',
+    maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-3x4.png',
+    masksByRatio: [
+      {
+        ratio: 2 / 3,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-2x3-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-2x3.png',
+      },
+      {
+        ratio: 0.7,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-7x10-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-7x10.png',
+      },
+      {
+        ratio: 13 / 18,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-13x18-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-13x18.png',
+      },
+      {
+        ratio: 3 / 4,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-3x4-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame10-oak-3x4.png',
+      },
+    ],
   },
 ];
 

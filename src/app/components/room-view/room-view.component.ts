@@ -2,7 +2,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
-import { FrameOptionsByValue } from '../../shared/constants';
+import { FrameOptionsByValue, frameMasksFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
 import { CommonApiService } from '../../services/api/common-api.service';
 import { ROOM_SCENES, RoomScene } from './rooms';
@@ -44,8 +44,9 @@ export class RoomViewComponent {
   isSaving = signal(false);
 
   frameMaskUrl = computed(() => {
-    const name = this.frameName();
-    return name ? FrameOptionsByValue[name]?.maskWithoutMat ?? null : null;
+    const frame = FrameOptionsByValue[this.frameName() ?? ''];
+    const size = this.selectedSize();
+    return frame ? frameMasksFor(frame, size?.val1 ?? 0, size?.val2 ?? 0).maskWithoutMat : null;
   });
 
   /** Print size in cm, turned to match the artwork's orientation */

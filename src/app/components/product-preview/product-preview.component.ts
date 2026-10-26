@@ -4,7 +4,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
-import { AllPapers, FrameOptionsByValue, Paper } from '../../shared/constants';
+import { AllPapers, FrameOptionsByValue, Paper, frameMasksFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { CommonApiService } from '../../services/api/common-api.service';
@@ -113,7 +113,11 @@ export class ProductPreviewComponent {
     return FrameOptionsByValue[name] ?? null;
   });
 
-  frameMaskUrl = computed(() => this.frameInfo()?.maskWithoutMat ?? null);
+  frameMaskUrl = computed(() => {
+    const frame = this.frameInfo();
+    const size = this.effectiveSize();
+    return frame ? frameMasksFor(frame, size.val1, size.val2).maskWithoutMat : null;
+  });
 
   paperInfo = computed<Paper | null>(() => {
     const name = this.paperName();
@@ -121,11 +125,8 @@ export class ProductPreviewComponent {
     return AllPapers.find((p) => p.name === name) ?? null;
   });
 
-  // Mat padding: when frame + mat → extra space for the matt texture to show
-  imagePaddingPercent = computed(() => {
-    if (!this.hasFrame()) return 0;
-    return this.isMatIncluded() ? 10 : 3;
-  });
+  // Mat padding: when frame + mat → extra space for the matt texture to show; without a mat the print sits directly in the frame
+  imagePaddingPercent = computed(() => (this.hasFrame() && this.isMatIncluded() ? 10 : 0));
 
   clampedScale = computed(() => Math.max(0.7, Math.min(2, this.scale())));
 

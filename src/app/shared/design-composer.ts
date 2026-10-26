@@ -54,8 +54,8 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
     vpH = canvasH - 2 * marginY;
   }
 
-  // 2. Content box: padding inside the paper area, wider when a mat is included
-  const padPercent = frame ? (parts.matIncluded ? 10 : 3) : 0;
+  // 2. Content box: padding inside the paper area when a mat is included; without a mat the print sits directly in the frame
+  const padPercent = frame && parts.matIncluded ? 10 : 0;
   const pad = (padPercent / 100) * canvasW;
   const cntX = vpX + pad;
   const cntY = vpY + pad;
