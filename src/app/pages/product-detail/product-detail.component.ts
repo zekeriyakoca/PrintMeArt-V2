@@ -19,6 +19,7 @@ import { LanguageService } from '../../services/i18n/language.service';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService, summary } from '../../services/seo/seo.service';
 import { productPath } from '../../shared/product-path';
+import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
 const ARTIST_GROUP = 'Artist';
 
@@ -33,6 +34,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   private readonly dutch = inject(LanguageService).currentLanguageCode() === 'nl';
   private readonly i18n = inject(TranslationService);
   private readonly seo = inject(SeoService);
+  private readonly bootstrap = inject(Bootstrap);
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
   calculatedPrice = signal<number>(0);
@@ -148,6 +150,32 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     });
   }
 
+  /** Shipping cost per zone and the return policy, as Google's merchant listings ask for */
+  private shippingAndReturns(price: number): object {
+    const info = this.bootstrap.shippingInfo();
+    if (!info) return {};
+    return {
+      shippingDetails: info.zones.map((zone) => ({
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: (zone.freeShippingFrom != null && price >= zone.freeShippingFrom ? 0 : zone.rate).toFixed(2),
+          currency: 'EUR',
+        },
+        shippingDestination: zone.countries.map((country) => ({ '@type': 'DefinedRegion', addressCountry: country })),
+      })),
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: info.countries,
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: info.returnDays,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        // We send the customer a return shipping label
+        returnFees: 'https://schema.org/FreeReturn',
+      },
+    };
+  }
+
   /** Called again with the price once the purchase panel has worked it out */
   describeForSearch(product: ProductDto, price?: number) {
     const facts = (product.metadata ?? {}) as unknown as Record<string, string | undefined>;
@@ -176,7 +204,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
           brand: { '@type': 'Brand', name: 'PrintMeArt' },
           category: product.categoryName,
           ...(price
-            ? { offers: { '@type': 'Offer', price: price.toFixed(2), priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url } }
+            ? { offers: { '@type': 'Offer', price: price.toFixed(2), priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url, ...this.shippingAndReturns(price) } }
             : {}),
         },
         {
