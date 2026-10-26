@@ -9,6 +9,8 @@ export interface PrintOnWall {
 
 // Coarse on purpose: the light map should carry the room's light, not the wall's texture
 const LIGHT_MAP_CELLS = 8;
+// Wide-angle rooms are shown at most this much wall wide around the print, so the print keeps a readable size
+const MAX_VIEW_WIDTH_CM = 220;
 
 interface Rect {
   x: number;
@@ -24,17 +26,20 @@ interface Rect {
  */
 export class RoomRenderer {
   private readonly roomCache = new Map<string, ImageData>();
+  /** The whole room photo with the print on it; the visible part is copied to the stage */
+  private readonly full = document.createElement('canvas');
 
   render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall) {
-    canvas.width = roomImage.naturalWidth;
-    canvas.height = roomImage.naturalHeight;
-    const ctx = canvas.getContext('2d')!;
+    const full = this.full;
+    full.width = roomImage.naturalWidth;
+    full.height = roomImage.naturalHeight;
+    const ctx = full.getContext('2d')!;
 
     const wall = this.wallPixels(room, roomImage);
     ctx.putImageData(wall, 0, 0);
 
-    const pxPerCm = canvas.width / room.widthCm;
-    const outer = this.place(room, canvas, print, pxPerCm);
+    const pxPerCm = full.width / room.widthCm;
+    const outer = this.place(room, full, print, pxPerCm);
 
     this.drawShadow(ctx, outer, room, pxPerCm);
     ctx.imageSmoothingQuality = 'high';
@@ -42,6 +47,22 @@ export class RoomRenderer {
     this.drawGlass(ctx, outer);
 
     this.applyRoomLight(ctx, wall, outer, room);
+
+    const view = this.view(room, full, pxPerCm);
+    canvas.width = Math.round(view.w);
+    canvas.height = Math.round(view.h);
+    const stage = canvas.getContext('2d')!;
+    stage.imageSmoothingQuality = 'high';
+    stage.drawImage(full, view.x, view.y, view.w, view.h, 0, 0, canvas.width, canvas.height);
+  }
+
+  /** The part of the photo shown: all of it, or for a wide room a window around the print with the same composition. */
+  private view(room: RoomScene, full: HTMLCanvasElement, pxPerCm: number): Rect {
+    const w = Math.min(full.width, MAX_VIEW_WIDTH_CM * pxPerCm);
+    const h = (w * full.height) / full.width;
+    const x = clamp(room.anchor.x * (full.width - w), 0, full.width - w);
+    const y = clamp(room.anchor.y * (full.height - h), 0, full.height - h);
+    return { x, y, w, h };
   }
 
   /** Room photo pixels, cached per room; the light map reads the wall from them. */
@@ -64,7 +85,8 @@ export class RoomRenderer {
     const h = print.heightCm * pxPerCm;
     const x = room.anchor.x * canvas.width - w / 2;
     const anchorY = room.anchor.y * canvas.height;
-    const y = room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h;
+    // A tall print in a tight photo is kept inside it rather than cut off at the top
+    const y = Math.max(0.03 * canvas.height, room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h);
     return { x, y, w, h };
   }
 
@@ -145,4 +167,8 @@ function medianLuminance(image: ImageData, rect: Rect): number {
   if (!values.length) return 255;
   values.sort((a, b) => a - b);
   return values[Math.floor(values.length / 2)];
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
 }
