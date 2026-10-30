@@ -163,6 +163,12 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
           currency: 'EUR',
         },
         shippingDestination: zone.countries.map((country) => ({ '@type': 'DefinedRegion', addressCountry: country })),
+        // The backend gives one delivery figure, covering both printing and transit
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: Math.max(1, info.deliveryDays), unitCode: 'DAY' },
+        },
       })),
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
@@ -185,6 +191,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     const firstParagraph = this.storyParagraphs()[0] ?? '';
     const description = firstParagraph ? summary(firstParagraph) : this.i18n.t('seo.product.description', { name: product.name });
     const images = (product.images ?? []).map((image) => image.large);
+    // The panel's price arrives later; until then (and for crawlers) offer the cheapest option
+    const offerPrice = price || product.cheapestPrice;
 
     this.seo.setPage({
       title: `${product.name}${painter ? ` – ${painter}` : ''} | ${this.i18n.t('seo.product.kind')}`,
@@ -203,8 +211,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
           url,
           brand: { '@type': 'Brand', name: 'PrintMeArt' },
           category: product.categoryName,
-          ...(price
-            ? { offers: { '@type': 'Offer', price: price.toFixed(2), priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url, ...this.shippingAndReturns(price) } }
+          ...(offerPrice
+            ? { offers: { '@type': 'Offer', price: offerPrice.toFixed(2), priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url, ...this.shippingAndReturns(offerPrice) } }
             : {}),
         },
         {
