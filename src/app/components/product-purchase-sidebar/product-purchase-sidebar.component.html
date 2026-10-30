@@ -145,7 +145,7 @@
     @if (roomLayout(); as layout) {
     <app-room-view
       [title]="product().name"
-      [imageUrl]="customImageUrl() || product().images[0].large"
+      [imageUrl]="designImageUrl()"
       [frameName]="selectedFrameName()"
       [matIncluded]="isFrameSelected() && isMatIncluded()"
       [layout]="layout"
@@ -158,7 +158,7 @@
     }
     <app-product-preview
       [isOpen]="showPreview()"
-      [imageUrl]="customImageUrl() || product().images[0].large"
+      [imageUrl]="designImageUrl()"
       [sizes]="availableSizes()"
       [selectedSize]="size"
       (selectedSizeChange)="selectedSize.set($event)"

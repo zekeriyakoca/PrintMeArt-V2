@@ -51,6 +51,8 @@ export interface ProductAttributeDetailDto {
 }
 
 export class ProductMetadata {
+  /** The artwork at full resolution; Preview & Design and the room view use it so the print stays sharp */
+  OriginalImage?: string;
   OriginalImageWidth: string = '0';
   OriginalImageHeight: string = '0';
   UpscaledImageWidth?: string;
