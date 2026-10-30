@@ -1,8 +1,8 @@
 import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { Observable, of, shareReplay, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, of, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -12,7 +12,6 @@ import {
   FilterGroupDto,
 } from '../../models/product';
 import { SelectedOptionDto } from '../../models/cart-item';
-import { SizeOptions } from '../../shared/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +22,6 @@ export class ApiService {
   private readonly BFF_URL = environment.serviceUrls['bff'];
   private categoriesCache$?: Observable<CategoryDto[] | undefined>;
 
-  public readonly FromPrice = signal(0);
 
   constructor(
     private _httpClient: HttpClient,
@@ -32,81 +30,6 @@ export class ApiService {
 
   get isSSR(): boolean {
     return this.platformId == 'server' ? true : false;
-  }
-
-  fetchFromPrice(): void {
-    if (this.isSSR) {
-      return;
-    }
-
-    const size = SizeOptions[0];
-
-    this.getFilteredProducts({
-      pageSize: 1,
-      pageIndex: 0,
-    } as ProductFilterRequestDto)
-      .pipe(
-        switchMap((result) => {
-          if (!result.data?.length) {
-            return of(null);
-          }
-          return this.getProductById(result.data[0].id.toString());
-        }),
-        switchMap((product) => {
-          if (!product?.optionGroups) {
-            return of(null);
-          }
-
-          const selectedOptions: SelectedOptionDto[] = product.optionGroups
-            .filter(
-              (group) =>
-                group.name.toLowerCase() !== 'including mat' &&
-                group.name.toLowerCase() !== 'size' &&
-                group.options.length > 0,
-            )
-            .map((group) => ({
-              optionId: group.options[0].id,
-              optionName: group.options[0].value,
-              spec1: size.val1.toString(),
-              spec2: size.val2.toString(),
-              optionValue: undefined,
-            }));
-
-          const matGroup = product.optionGroups.find(
-            (group) => group.name.toLowerCase() === 'including mat',
-          );
-          if (matGroup?.options.length) {
-            selectedOptions.push({
-              optionId: matGroup.options[0].id,
-              optionName: 'No Mat',
-              spec1: 'false',
-              optionValue: undefined,
-            });
-          }
-
-          const sizeGroup = product.optionGroups.find(
-            (group) => group.name.toLowerCase() === 'size',
-          );
-          if (sizeGroup?.options.length) {
-            selectedOptions.push({
-              optionId: sizeGroup.options[0].id,
-              optionName: size.name,
-              spec1: size.val1.toString(),
-              spec2: size.val2.toString(),
-              optionValue: undefined,
-            });
-          }
-
-          return this.calculatePrice(product.id.toString(), selectedOptions);
-        }),
-        tap((priceResult) => {
-          if (priceResult?.price) {
-            const fromPrice = Math.floor(priceResult.price) + 0.99;
-            this.FromPrice.set(fromPrice);
-          }
-        }),
-      )
-      .subscribe();
   }
 
   getCategories(): Observable<CategoryDto[] | undefined> {
@@ -136,7 +59,10 @@ export class ApiService {
     productId: string,
     selectedOptions: SelectedOptionDto[],
   ): Observable<any> {
-    // Also on the server, so the rendered page carries the price in its product data for search engines
+    // Prices are worked out in the browser only
+    if (this.isSSR) {
+      return EMPTY;
+    }
     const requestBody = {
       productId: productId,
       selectedOptions: selectedOptions,
