@@ -70,7 +70,7 @@ export interface ProductImageDto {
   medium: string;
   large: string;
   /** 2400 px copy, used by Preview & Design and the room view only */
-  xlarge?: string;
+  xLarge?: string;
   original: string;
   order: number;
 }
