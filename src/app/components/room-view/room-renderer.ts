@@ -11,6 +11,9 @@ export interface PrintOnWall {
 const LIGHT_MAP_CELLS = 8;
 // Wide-angle rooms are shown at most this much wall wide around the print, so the print keeps a readable size
 const MAX_VIEW_WIDTH_CM = 220;
+// The stage is drawn this wide and the print is drawn straight onto it, so the print stays sharp on
+// high-density screens even where only part of a room photo is shown
+const STAGE_WIDTH_PX = 2400;
 
 interface Rect {
   x: number;
@@ -26,42 +29,36 @@ interface Rect {
  */
 export class RoomRenderer {
   private readonly roomCache = new Map<string, ImageData>();
-  /** The whole room photo with the print on it; the visible part is copied to the stage */
-  private readonly full = document.createElement('canvas');
 
   render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall) {
-    const full = this.full;
-    full.width = roomImage.naturalWidth;
-    full.height = roomImage.naturalHeight;
-    const ctx = full.getContext('2d')!;
+    const photoW = roomImage.naturalWidth;
+    const photoH = roomImage.naturalHeight;
+    const photoPxPerCm = photoW / room.widthCm;
+    // Where the print hangs and which part of the photo is shown, in photo pixels
+    const outer = this.place(room, photoW, photoH, print, photoPxPerCm);
+    const view = this.view(room, photoW, photoH, photoPxPerCm);
 
-    const wall = this.wallPixels(room, roomImage);
-    ctx.putImageData(wall, 0, 0);
-
-    const pxPerCm = full.width / room.widthCm;
-    const outer = this.place(room, full, print, pxPerCm);
-
-    this.drawShadow(ctx, outer, room, pxPerCm);
+    const scale = STAGE_WIDTH_PX / view.w;
+    canvas.width = STAGE_WIDTH_PX;
+    canvas.height = Math.round(view.h * scale);
+    const ctx = canvas.getContext('2d')!;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(print.design, outer.x, outer.y, outer.w, outer.h);
-    this.drawGlass(ctx, outer);
+    ctx.drawImage(roomImage, view.x, view.y, view.w, view.h, 0, 0, canvas.width, canvas.height);
 
-    this.applyRoomLight(ctx, wall, outer, room);
+    const onStage: Rect = { x: (outer.x - view.x) * scale, y: (outer.y - view.y) * scale, w: outer.w * scale, h: outer.h * scale };
+    this.drawShadow(ctx, onStage, room, photoPxPerCm * scale);
+    ctx.drawImage(print.design, onStage.x, onStage.y, onStage.w, onStage.h);
+    this.drawGlass(ctx, onStage);
 
-    const view = this.view(room, full, pxPerCm);
-    canvas.width = Math.round(view.w);
-    canvas.height = Math.round(view.h);
-    const stage = canvas.getContext('2d')!;
-    stage.imageSmoothingQuality = 'high';
-    stage.drawImage(full, view.x, view.y, view.w, view.h, 0, 0, canvas.width, canvas.height);
+    this.applyRoomLight(ctx, this.wallPixels(room, roomImage), outer, onStage, room);
   }
 
   /** The part of the photo shown: all of it, or for a wide room a window around the print with the same composition. */
-  private view(room: RoomScene, full: HTMLCanvasElement, pxPerCm: number): Rect {
-    const w = Math.min(full.width, MAX_VIEW_WIDTH_CM * pxPerCm);
-    const h = (w * full.height) / full.width;
-    const x = clamp(room.anchor.x * (full.width - w), 0, full.width - w);
-    const y = clamp(room.anchor.y * (full.height - h), 0, full.height - h);
+  private view(room: RoomScene, photoW: number, photoH: number, pxPerCm: number): Rect {
+    const w = Math.min(photoW, MAX_VIEW_WIDTH_CM * pxPerCm);
+    const h = (w * photoH) / photoW;
+    const x = clamp(room.anchor.x * (photoW - w), 0, photoW - w);
+    const y = clamp(room.anchor.y * (photoH - h), 0, photoH - h);
     return { x, y, w, h };
   }
 
@@ -80,13 +77,13 @@ export class RoomRenderer {
     return data;
   }
 
-  private place(room: RoomScene, canvas: HTMLCanvasElement, print: PrintOnWall, pxPerCm: number): Rect {
+  private place(room: RoomScene, photoW: number, photoH: number, print: PrintOnWall, pxPerCm: number): Rect {
     const w = print.widthCm * pxPerCm;
     const h = print.heightCm * pxPerCm;
-    const x = room.anchor.x * canvas.width - w / 2;
-    const anchorY = room.anchor.y * canvas.height;
+    const x = room.anchor.x * photoW - w / 2;
+    const anchorY = room.anchor.y * photoH;
     // A tall print in a tight photo is kept inside it rather than cut off at the top
-    const y = Math.max(0.03 * canvas.height, room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h);
+    const y = Math.max(0.03 * photoH, room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h);
     return { x, y, w, h };
   }
 
@@ -115,8 +112,8 @@ export class RoomRenderer {
     ctx.restore();
   }
 
-  /** Multiplies the light that falls on the wall behind the piece over the piece itself. */
-  private applyRoomLight(ctx: CanvasRenderingContext2D, wall: ImageData, outer: Rect, room: RoomScene) {
+  /** Multiplies the light that falls on the wall behind the piece (read at `outer` in the photo) over the piece (`target` on the stage). */
+  private applyRoomLight(ctx: CanvasRenderingContext2D, wall: ImageData, outer: Rect, target: Rect, room: RoomScene) {
     const cells = document.createElement('canvas');
     cells.width = LIGHT_MAP_CELLS;
     cells.height = LIGHT_MAP_CELLS;
@@ -146,7 +143,7 @@ export class RoomRenderer {
     ctx.globalCompositeOperation = 'multiply';
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(cells, outer.x, outer.y, outer.w, outer.h);
+    ctx.drawImage(cells, target.x, target.y, target.w, target.h);
     ctx.restore();
   }
 }
