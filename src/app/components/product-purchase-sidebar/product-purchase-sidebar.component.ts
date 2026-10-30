@@ -51,7 +51,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
 
   /** The artwork Preview & Design and the room view show and save: the uploaded image, or the product's 2400 px copy */
-  designImageUrl = computed(() => this.customImageUrl() || this.product().images[0].xlarge || this.product().images[0].large);
+  designImageUrl = computed(() => this.customImageUrl() || this.product().images[0].xLarge || this.product().images[0].large);
 
   availableSizes = computed<SizeOption[]>(() => {
     const sizes = DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions;
