@@ -2,6 +2,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
   computed,
+  OnInit,
   ElementRef,
   HostListener,
   inject,
@@ -26,7 +27,7 @@ import { InfoPopupComponent } from '../shared/info-popup/info-popup.component';
   templateUrl: './paper-options.component.html',
   styleUrl: './paper-options.component.scss',
 })
-export class PaperOptionsComponent {
+export class PaperOptionsComponent implements OnInit {
   group = input.required<OptionGroupDto>();
   optionSelected = output<number>();
   /** Emits the paper name for display and spec3 */
@@ -46,6 +47,13 @@ export class PaperOptionsComponent {
 
   // Seçili paper
   selectedPaper = computed(() => this.papers[this.selectedIndex()]);
+
+  // Like the frame, the paper shown first is the chosen one, so the price includes it
+  ngOnInit(): void {
+    if (!this.group().selectedOptionId) {
+      this.select(this.selectedPaper(), this.selectedIndex());
+    }
+  }
 
   // Seçim yapıldığında: paper'ın grade'ine göre backend option'ı bul ve emit et
   select(paper: Paper, index: number): void {
