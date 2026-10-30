@@ -2,7 +2,7 @@ import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { EMPTY, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
+import { Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -136,10 +136,7 @@ export class ApiService {
     productId: string,
     selectedOptions: SelectedOptionDto[],
   ): Observable<any> {
-    // Prices are worked out in the browser only
-    if (this.isSSR) {
-      return EMPTY;
-    }
+    // Also on the server, so the rendered page carries the price in its product data for search engines
     const requestBody = {
       productId: productId,
       selectedOptions: selectedOptions,
