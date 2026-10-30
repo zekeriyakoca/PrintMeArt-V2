@@ -9,7 +9,6 @@ import { AnalyticsService } from './services/telemetry/analytics.service';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 import { Bootstrap } from './services/bootstrap/bootstrap';
-import { ApiService } from './services/api/api.service';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +23,11 @@ export class AppComponent {
     private cartService: CartService,
     private analytics: AnalyticsService,
     private bootstrap: Bootstrap,
-    private apiService: ApiService,
   ) {}
 
   ngOnInit() {
     this.analytics.init();
     this.cartService.fetchCartItems();
     this.bootstrap.fetchShippingInfo();
-    this.apiService.fetchFromPrice();
   }
 }
