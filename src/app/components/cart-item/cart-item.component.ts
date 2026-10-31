@@ -7,6 +7,7 @@ import {
   getDisplayableOptions,
 } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CurrencyPipe } from '@angular/common';
 
@@ -22,6 +23,7 @@ export class CartItemComponent {
   cartItemChanged = output();
 
   private readonly router = inject(Router);
+  private readonly analytics = inject(AnalyticsService);
 
   constructor(private cartService: CartService) {}
 
@@ -47,6 +49,9 @@ export class CartItemComponent {
       }
       return item;
     });
+
+    const item = this.cartItem();
+    if (item) this.analytics.trackCartQuantityChanged(item, change);
 
     this.cartService.updateCartOnBackend(updatedCart).subscribe();
     this.cartItemChanged.emit();
