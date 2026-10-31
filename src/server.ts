@@ -3,6 +3,7 @@ import express from 'express';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i18n/languages';
+import { productFeedXml, refreshProductFeed } from './feed';
 import { sitemapXml } from './sitemap';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
@@ -42,6 +43,14 @@ app.get('/sitemap.xml', (_req, res, next) => {
   sitemapXml()
     .then((xml) => res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml))
     .catch(next);
+});
+
+// Product feeds for Google Merchant Center, Pinterest and Meta; Dutch is the main one
+app.get(['/feeds/products.xml', '/feeds/products-en.xml'], (req, res) => {
+  const xml = productFeedXml(req.path.endsWith('-en.xml') ? 'en' : 'nl');
+  // Right after a start the catalog is still being read
+  if (!xml) return res.status(503).set({ 'Retry-After': '600', 'Cache-Control': 'no-store' }).send('The product feed is being prepared');
+  return res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml);
 });
 
 // Every page lives under /en or /nl, and the language of the last page opened is remembered.
@@ -103,6 +112,7 @@ app.use((req, res, next) => {
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => console.log(`Storefront listening on http://localhost:${port}`));
+  refreshProductFeed();
 }
 
 export const reqHandler = createNodeRequestHandler(app);
