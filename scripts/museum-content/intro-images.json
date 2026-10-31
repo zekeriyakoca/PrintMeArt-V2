@@ -1,0 +1,42 @@
+[
+  {
+    "key": "Claude Monet",
+    "group": "artist",
+    "file": "intros/artist/claude-monet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Claude_Monet_1899_Nadar_crop.jpg",
+    "note": "Nadar's 1899 photo, Wikipedia lead image"
+  },
+  {
+    "key": "Hendrick Avercamp",
+    "group": "artist",
+    "file": "intros/artist/hendrick-avercamp.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Hendrick_Avercamp.jpg",
+    "note": "Portrait drawing, Wikipedia lead image; the source is only 250x201"
+  },
+  {
+    "key": "Rijksmuseum",
+    "group": "museum",
+    "file": "intros/museum/rijksmuseum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:South_facade_of_the_Rijksmuseum_Amsterdam_(DSCF0528).jpg",
+    "note": "South facade, Wikipedia lead image"
+  },
+  {
+    "key": "Impressionism",
+    "group": "collection",
+    "file": "intros/collection/impressionism.webp",
+    "type": "gravur",
+    "source": "catalog product 1176 (Paris Street, Rainy Day, Gustave Caillebotte)",
+    "note": "Crop on the couple under the umbrella; line period 16 at 800px"
+  },
+  {
+    "key": "Landscape",
+    "group": "category",
+    "file": "intros/category/landscape.webp",
+    "type": "gravur",
+    "source": "catalog product 804 (Hunters in the Snow, Pieter Bruegel the Elder)",
+    "note": "Crop on the trees and hunters; line period 16 at 800px"
+  }
+]
