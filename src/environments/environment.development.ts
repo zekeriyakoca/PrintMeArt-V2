@@ -3,7 +3,7 @@ export const environment = {
   apiUrl: 'BACKEND BASE URL COMES HERE',
   siteUrl: 'https://printmeart.nl',
   analytics: {
-    enabled: true,
+    enabled: false,
     tenant: 'localhost',
     ga4MeasurementId: 'G-1LMLTH4RW1',
     posthogKey: 'phc_uEijbYsS6ZLP5X5KkZXz6EU3exibBL6wm7Z4FtNLTziU',
