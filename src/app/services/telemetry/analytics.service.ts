@@ -67,6 +67,8 @@ const FIRST_PARTY_BATCH_SIZE = 20;
 const FIRST_PARTY_MAX_QUEUE_SIZE = 200;
 const FIRST_PARTY_FLUSH_INTERVAL_MS = 5000;
 const KEEPALIVE_MAX_BYTES = 60 * 1024;
+const PAGE_TITLE_WAIT_MS = 3000;
+const TRACKED_ORDERS_KEY = 'pma_tracked_orders';
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +78,7 @@ export class AnalyticsService {
   private ga4Initialized = false;
   private posthogInitialized = false;
   private pageViewsStarted = false;
+  private pendingPageView?: () => void;
   private currentUserId?: string;
   private posthog?: {
     capture: (name: string, props?: AnalyticsProperties) => void;
@@ -146,7 +149,7 @@ export class AnalyticsService {
   trackProductViewed(product: ProductDto): void {
     this.track('view_item', {
       currency: 'EUR',
-      value: product.cheapestPrice,
+      value: this.money(product.cheapestPrice),
       item_id: String(product.id),
       item_name: product.name,
       item_category: product.categoryName,
@@ -175,7 +178,7 @@ export class AnalyticsService {
   trackAddToCart(data: { productId: number; variantId: number; productName: string; quantity: number; unitPrice: number; mergedIntoExisting: boolean; selectedOptionsCount: number }): void {
     this.track('add_to_cart', {
       currency: 'EUR',
-      value: data.unitPrice * data.quantity,
+      value: this.money(data.unitPrice * data.quantity),
       item_id: String(data.productId),
       item_name: data.productName,
       variant_id: String(data.variantId),
@@ -187,24 +190,33 @@ export class AnalyticsService {
           item_id: String(data.productId),
           item_name: data.productName,
           item_variant: String(data.variantId),
-          price: data.unitPrice,
+          price: this.money(data.unitPrice),
           quantity: data.quantity,
         },
       ],
     });
   }
 
-  trackRemoveFromCart(item?: CartItemDto): void {
+  trackRemoveFromCart(item?: CartItemDto, quantity = item?.quantity ?? 0): void {
     if (!item) return;
+    this.trackCartChange('remove_from_cart', item, quantity);
+  }
 
-    this.track('remove_from_cart', {
+  /** A quantity changed with the + and - buttons in the cart */
+  trackCartQuantityChanged(item: CartItemDto, delta: number): void {
+    if (delta === 0) return;
+    this.trackCartChange(delta > 0 ? 'add_to_cart' : 'remove_from_cart', item, Math.abs(delta));
+  }
+
+  private trackCartChange(name: 'add_to_cart' | 'remove_from_cart', item: CartItemDto, quantity: number): void {
+    this.track(name, {
       currency: 'EUR',
-      value: item.unitPrice * item.quantity,
+      value: this.money(item.unitPrice * quantity),
       item_id: String(item.productId),
       item_name: item.productName,
       variant_id: String(item.variantId),
-      quantity: item.quantity,
-      items: [this.toCartGa4Item(item)],
+      quantity,
+      items: [{ ...this.toCartGa4Item(item), quantity }],
     });
   }
 
@@ -230,10 +242,12 @@ export class AnalyticsService {
     });
   }
 
-  trackPaymentStarted(orderId: number, currency: string): void {
+  trackPaymentStarted(orderId: number, currency: string, items: CartItemDto[]): void {
     this.track('add_payment_info', {
       order_id: String(orderId),
       currency,
+      value: this.cartValue(items),
+      items: items.map((item) => this.toCartGa4Item(item)),
     });
   }
 
@@ -249,11 +263,27 @@ export class AnalyticsService {
   }
 
   trackOrderCompleted(data: { orderId?: number; orderNumber?: string; amountTotal?: number; currency?: string }): void {
+    const transactionId = data.orderNumber || (data.orderId ? String(data.orderId) : undefined);
+    // The success page can be opened again (reload, back button); an order counts once
+    if (transactionId && !this.markOrderTracked(transactionId)) return;
+
     this.track('purchase', {
-      transaction_id: data.orderNumber || (data.orderId ? String(data.orderId) : undefined),
+      transaction_id: transactionId,
       value: data.amountTotal ? data.amountTotal / 100 : undefined,
       currency: (data.currency || 'EUR').toUpperCase(),
     });
+  }
+
+  /** False when this order was already tracked in this browser */
+  private markOrderTracked(transactionId: string): boolean {
+    try {
+      const tracked: string[] = JSON.parse(localStorage.getItem(TRACKED_ORDERS_KEY) || '[]');
+      if (tracked.includes(transactionId)) return false;
+      localStorage.setItem(TRACKED_ORDERS_KEY, JSON.stringify([...tracked, transactionId].slice(-20)));
+    } catch {
+      // Storage unavailable: track it anyway
+    }
+    return true;
   }
 
   trackAddToCartBlocked(productId: number, reason: string): void {
@@ -438,12 +468,44 @@ export class AnalyticsService {
     if (this.pageViewsStarted) return;
     this.pageViewsStarted = true;
 
-    this.trackPageView(this.router.url);
+    this.trackPageView(this.currentPageUrl());
     this.maybeStartSessionRecording(this.router.url);
     this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe((event) => {
-      this.trackPageView(event.urlAfterRedirects);
+      this.flushPendingPageView();
+      if (this.hasRouteTitle()) {
+        this.trackPageView(this.currentPageUrl());
+      } else {
+        this.trackPageViewOnceTitled(this.currentPageUrl());
+      }
       this.maybeStartSessionRecording(event.urlAfterRedirects);
     });
+    fromEvent(window, 'pagehide').subscribe(() => this.flushPendingPageView());
+  }
+
+  // Pages with seo route data get their title on navigation; product and catalog pages set it once their data arrives
+  private hasRouteTitle(): boolean {
+    let route = this.router.routerState.snapshot.root;
+    while (route.firstChild) route = route.firstChild;
+    return !!route.data['seo'];
+  }
+
+  private trackPageViewOnceTitled(pageUrl: URL): void {
+    const titleElement = document.querySelector('title');
+    const observer = titleElement ? new MutationObserver(() => this.flushPendingPageView()) : undefined;
+    observer?.observe(titleElement!, { childList: true, characterData: true, subtree: true });
+    const timeout = window.setTimeout(() => this.flushPendingPageView(), PAGE_TITLE_WAIT_MS);
+
+    this.pendingPageView = () => {
+      observer?.disconnect();
+      window.clearTimeout(timeout);
+      this.trackPageView(pageUrl);
+    };
+  }
+
+  private flushPendingPageView(): void {
+    const pending = this.pendingPageView;
+    this.pendingPageView = undefined;
+    pending?.();
   }
 
   private maybeStartSessionRecording(url: string): void {
@@ -455,17 +517,25 @@ export class AnalyticsService {
     this.sessionRecordingStarted = true;
   }
 
-  private trackPageView(url: string): void {
+  // The address as the visitor sees it: language prefix, filters and campaign tags (utm, gclid) kept, Stripe's session_id left out
+  private currentPageUrl(): URL {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('session_id');
+    url.hash = '';
+    return url;
+  }
+
+  private trackPageView(pageUrl: URL): void {
     const properties = this.enrich({
-      page_path: this.sanitizePath(url),
-      page_location: window.location.origin + this.sanitizePath(url),
+      page_path: pageUrl.pathname,
+      page_location: pageUrl.href,
       page_title: document.title,
     });
 
     this.track('page_view', properties, { ga4: true, posthog: false });
 
-    // PostHog Web analytics only reads $pageview; the browser address keeps the /nl or /en prefix, and the query is dropped (e.g. Stripe session_id)
-    this.track('$pageview', { ...properties, $current_url: window.location.origin + window.location.pathname }, { ga4: false, posthog: true });
+    // PostHog Web analytics only reads $pageview
+    this.track('$pageview', { ...properties, $current_url: pageUrl.href }, { ga4: false, posthog: true });
   }
 
   private enqueue(event: QueuedEvent): void {
@@ -569,7 +639,11 @@ export class AnalyticsService {
   }
 
   private cartValue(items: CartItemDto[]): number {
-    return items.reduce((total, item) => total + item.unitPrice * item.quantity, 0);
+    return this.money(items.reduce((total, item) => total + item.unitPrice * item.quantity, 0));
+  }
+
+  private money(amount: number): number {
+    return Math.round(amount * 100) / 100;
   }
 
   private sanitizePath(url: string): string {
@@ -585,7 +659,7 @@ export class AnalyticsService {
       item_id: String(item.productId),
       item_name: item.productName,
       item_variant: String(item.variantId),
-      price: item.unitPrice,
+      price: this.money(item.unitPrice),
       quantity: item.quantity,
     };
   }
@@ -595,7 +669,7 @@ export class AnalyticsService {
       item_id: String(product.id),
       item_name: product.name,
       item_category: 'categoryName' in product ? product.categoryName : undefined,
-      price: product.cheapestPrice,
+      price: this.money(product.cheapestPrice),
       index,
     };
   }

@@ -118,7 +118,7 @@ export class CheckoutComponent extends BasePageComponent {
           .subscribe({
             next: (checkoutResponse) => {
               console.log('Checkout initiated:', checkoutResponse);
-              this.analytics.trackPaymentStarted(orderResponse.orderId, 'EUR');
+              this.analytics.trackPaymentStarted(orderResponse.orderId, 'EUR', this.cartItems());
 
               // Store session ID for verification after redirect
               if (isPlatformBrowser(this.platformId)) {
