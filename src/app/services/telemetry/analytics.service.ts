@@ -499,7 +499,19 @@ export class AnalyticsService {
   }
 
   private isEnabled(): boolean {
-    return isPlatformBrowser(this.platformId) && this.config.enabled === true;
+    return isPlatformBrowser(this.platformId) && this.config.enabled === true && this.isLiveHost();
+  }
+
+  // Only the live site sends analytics, so local runs of a production build stay out of the data
+  private isLiveHost(): boolean {
+    const siteUrl = (environment as { siteUrl?: string }).siteUrl;
+    if (!siteUrl) return false;
+
+    try {
+      return window.location.hostname === new URL(siteUrl).hostname;
+    } catch {
+      return false;
+    }
   }
 
   // Third-party tags start only after the page has loaded, so they never compete with it
