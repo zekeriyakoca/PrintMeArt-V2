@@ -7,59 +7,126 @@
 .nc-CategoryGrid { /* Tailwind utility driven; add overrides here if needed */ }
 
 
-// Hover: the round thumbnail grows to fill the whole card and the text turns white.
-// Moving to another card reverses the first one while the next one expands.
+// Hover: a circular ripple grows out of the round thumbnail until the artwork fills the card,
+// with a slow zoom, a pulse from the ring and the text turning white. Leaving runs it in reverse,
+// so moving between cards collapses one while the next one opens.
 .cat-card {
   --pad: 1.25rem; // p-5
   --d: 3.5rem;    // w-14
-  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --cx: calc(var(--pad) + var(--d) / 2);
+  --cy: calc(var(--pad) + var(--d) / 2);
+  --in-out: cubic-bezier(0.7, 0, 0.3, 1);
+  --out: cubic-bezier(0.2, 0.9, 0.3, 1);
 
   @media (min-width: 640px) { --pad: 2rem; }  // sm:p-8
   @media (min-width: 768px) { --d: 8rem; }    // md:w-32
 
+  transition: transform 0.5s var(--out), box-shadow 0.5s var(--out);
+
+  // Clip circle is the visible shape; the image box underneath always stays larger than it.
   &__media {
+    position: absolute;
+    inset: 0;
+    clip-path: circle(calc(var(--d) / 2) at var(--cx) var(--cy));
+    transition: clip-path 0.5s var(--in-out);
+  }
+
+  &__img {
     position: absolute;
     top: var(--pad);
     left: var(--pad);
     width: var(--d);
     height: var(--d);
-    border-radius: calc(var(--d) / 2);
-    overflow: hidden;
-    transition: top 0.6s var(--ease), left 0.6s var(--ease), width 0.6s var(--ease),
-      height 0.6s var(--ease), border-radius 0.6s var(--ease);
+    max-width: none;
+    object-fit: cover;
+    transition: top 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, left 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+      width 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, height 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+      transform 0.6s var(--out);
   }
 
   &__shade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.15) 55%, rgb(0 0 0 / 0.3));
+    background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0.1) 55%, rgb(0 0 0 / 0.35));
     opacity: 0;
-    transition: opacity 0.6s var(--ease);
+    transition: opacity 0.4s var(--out) 0.15s;
   }
 
-  &__body,
-  &__sub {
-    transition: color 0.4s var(--ease);
+  &__ring {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    width: var(--d);
+    height: var(--d);
+    border-radius: 9999px;
+    border: 2px solid rgb(255 255 255 / 0.9);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // On leave the text turns dark only once the artwork has shrunk back behind it
+  &__body {
+    transition: color 0.3s var(--out) 0.2s;
+  }
+
+  &__sub,
+  &__title,
+  &__cta {
+    transition: color 0.3s var(--out) 0.2s, transform 0.5s var(--out);
+  }
+
+  &__arrow {
+    transition: transform 0.4s var(--out);
   }
 
   @media (hover: hover) {
     &:hover,
     &:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px -16px rgb(15 23 42 / 0.45);
+
       .cat-card__media {
+        clip-path: circle(150% at var(--cx) var(--cy));
+        transition: clip-path 0.8s var(--in-out) 0.08s;
+      }
+      .cat-card__img {
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border-radius: 0;
+        transform: scale(1.08);
+        transition: top 0.45s var(--out), left 0.45s var(--out), width 0.45s var(--out),
+          height 0.45s var(--out), transform 6s cubic-bezier(0.2, 0.6, 0.3, 1);
       }
-      .cat-card__shade { opacity: 1; }
+      .cat-card__shade {
+        opacity: 1;
+        transition: opacity 0.6s var(--out) 0.25s;
+      }
+      .cat-card__ring { animation: cat-ring 0.9s var(--out); }
+
       .cat-card__body,
       .cat-card__sub { color: #fff; }
+      .cat-card__body { transition-delay: 0.1s; }
+      .cat-card__sub { transform: translateY(-4px); transition-delay: 0.1s; }
+      .cat-card__title { transform: translateY(-4px); transition-delay: 0.15s; }
+      .cat-card__cta { transform: translateY(-4px); transition-delay: 0.2s; }
+      .cat-card__arrow { transform: translateX(6px); }
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    &,
     &__media,
-    &__shade { transition: none; }
+    &__img,
+    &__shade,
+    &__sub,
+    &__title,
+    &__cta { transition: none !important; }
+    &__ring { display: none; }
   }
+}
+
+@keyframes cat-ring {
+  0% { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.2); }
 }

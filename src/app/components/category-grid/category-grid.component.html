@@ -22,10 +22,11 @@
     @for (item of childCategories(); track item.id) {
     <div class="nc-CardCategory4 cat-card relative w-full aspect-[12/11] rounded-3xl overflow-hidden bg-white">
       <div class="cat-card__media bg-rose-50">
-        <img class="w-full h-full object-cover" [src]="item.images?.[0]?.medium || item.imageUrl"
-          [attr.srcset]="imageSrcset(item)" [attr.sizes]="imageSizes" alt="" loading="lazy" />
+        <img class="cat-card__img" [src]="imageSrc(item)" [attr.srcset]="imageSrcset(item)"
+          [attr.sizes]="imageSizes" alt="" loading="lazy" />
         <div class="cat-card__shade"></div>
       </div>
+      <span class="cat-card__ring"></span>
 
       <div class="cat-card__body absolute inset-0 p-5 sm:p-8 flex flex-col justify-between">
         <div class="w-14 h-14 md:w-32 md:h-32"></div>
@@ -36,15 +37,15 @@
             {{ 'name.' + item.description | t }}
           </span>
           }
-          <h2 class="text-md md:text-3xl font-semibold">
+          <h2 class="cat-card__title text-md md:text-3xl font-semibold">
             {{ 'name.' + item.name | t }}
           </h2>
         </div>
 
         <a [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
-          class="flex items-center text-xs md:text-sm">
+          class="cat-card__cta flex items-center text-xs md:text-sm">
           <span>{{ 'categories.seePrints' | t }}</span>
-          <app-icon iconName="see-prints" class="w-4 h-4 ml-2.5" />
+          <app-icon iconName="see-prints" class="cat-card__arrow w-4 h-4 ml-2.5" />
         </a>
       </div>
 
