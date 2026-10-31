@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, input, output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
 

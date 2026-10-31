@@ -1,4 +1,3 @@
-import { Museum } from './../data/museums';
 export interface PaginatedListDto<T> {
   pageIndex: number;
   pageSize: number;

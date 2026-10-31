@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, effect, input, Input, model, OnInit, output } from '@angular/core';
+import { Component, effect, input, model, OnInit, output } from '@angular/core';
 import { isDesktopViewport } from '../../shared/device';
 
 @Component({

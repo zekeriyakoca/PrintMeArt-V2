@@ -1,7 +1,7 @@
 import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
 

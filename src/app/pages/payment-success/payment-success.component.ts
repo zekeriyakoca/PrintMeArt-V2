@@ -1,7 +1,7 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BasePageComponent } from '../basePageComponent';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { CheckoutService, CheckoutSessionStatus } from '../../services/checkout/checkout.service';
@@ -18,7 +18,6 @@ import { AnalyticsService } from '../../services/telemetry/analytics.service';
 })
 export class PaymentSuccessComponent extends BasePageComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly checkoutService = inject(CheckoutService);
   private readonly cartService = inject(CartService);
   private readonly platformId = inject(PLATFORM_ID);

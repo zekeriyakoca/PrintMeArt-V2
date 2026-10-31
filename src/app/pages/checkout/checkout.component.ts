@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { CheckoutUserInfoComponent } from '../../components/checkout-user-info/checkout-user-info.component';
 import { OrderSummaryComponent } from '../../components/shared/order-summary/order-summary.component';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CartItemDto } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
@@ -29,7 +29,6 @@ export class CheckoutComponent extends BasePageComponent {
 
   private readonly checkoutService = inject(CheckoutService);
   private readonly cartService = inject(CartService);
-  private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly authService = inject(AuthenticationService);
