@@ -1,0 +1,3200 @@
+[
+  {
+    "key": "Abraham Beerstraaten",
+    "group": "artist",
+    "file": "intros/artist/abraham-beerstraaten.webp",
+    "type": "catalog",
+    "source": "catalog product 743 (The Blauwpoort in Leiden in Winter)",
+    "wikidata": "Q3595061"
+  },
+  {
+    "key": "Adam Pynacker",
+    "group": "artist",
+    "file": "intros/artist/adam-pynacker.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Wybrand_de_Geest_-_Adam_Joseph_Pynacker.jpg",
+    "wikidata": "Q979137"
+  },
+  {
+    "key": "Adolphe Joseph Thomas Monticelli",
+    "group": "artist",
+    "file": "intros/artist/adolphe-joseph-thomas-monticelli.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Monticelli_-_Portrait_de_l%27artiste%2C_96-005026.jpg",
+    "wikidata": "Q1152965"
+  },
+  {
+    "key": "Adriaen van de Velde",
+    "group": "artist",
+    "file": "intros/artist/adriaen-van-de-velde.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:After_Adriaen_van_de_Velde_-_Portrait_of_Adriaen_van_de_Velde.jpg",
+    "wikidata": "Q367741"
+  },
+  {
+    "key": "Adriaen van de Venne",
+    "group": "artist",
+    "file": "intros/artist/adriaen-van-de-venne.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Wenceslas_Hollar_-_Adrienne_van_Venne_%28State_1%29_-_cropped.jpg",
+    "wikidata": "Q367865"
+  },
+  {
+    "key": "Adrianus Eversen",
+    "group": "artist",
+    "file": "intros/artist/adrianus-eversen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Adrianus_Eversen.jpg",
+    "wikidata": "Q1840555"
+  },
+  {
+    "key": "Aelbert Cuyp",
+    "group": "artist",
+    "file": "intros/artist/aelbert-cuyp.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:10_Albert_Cuyp%2C_Schilder%2C_1620-1691.jpg",
+    "wikidata": "Q313194"
+  },
+  {
+    "key": "Aert Schouman",
+    "group": "artist",
+    "file": "intros/artist/aert-schouman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Aert_Schouman_-_Portret_van_een_schilder%2C_misschien_de_schilder_zelf_-_SK-A-4157_-_Rijksmuseum.jpg",
+    "wikidata": "Q2175572"
+  },
+  {
+    "key": "Aert van der Neer",
+    "group": "artist",
+    "file": "intros/artist/aert-van-der-neer.webp",
+    "type": "catalog",
+    "source": "catalog product 931 (Winter in Holland: Skating Scene)",
+    "wikidata": "Q381801"
+  },
+  {
+    "key": "After François Louis Thomas Francia",
+    "group": "artist",
+    "file": "intros/artist/after-francois-louis-thomas-francia.webp",
+    "type": "catalog",
+    "source": "catalog product 1271 (West India Hurricane)"
+  },
+  {
+    "key": "Albert Bierstadt",
+    "group": "artist",
+    "file": "intros/artist/albert-bierstadt.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Bierstadt.jpg",
+    "wikidata": "Q77132"
+  },
+  {
+    "key": "Albertus van Beest",
+    "group": "artist",
+    "file": "intros/artist/albertus-van-beest.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Albertus_van_Beest%2C_portret.jpg",
+    "wikidata": "Q20006819"
+  },
+  {
+    "key": "Alessandro Magnasco",
+    "group": "artist",
+    "file": "intros/artist/alessandro-magnasco.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Self-Portrait%2C_by_Alessandro_Magnasco%2C_called_il_Lissandrino_%28Genoa_1667-1749%29.jpg",
+    "wikidata": "Q516941"
+  },
+  {
+    "key": "Alexej von Jawlensky",
+    "group": "artist",
+    "file": "intros/artist/alexej-von-jawlensky.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Alexej_von_Jawlensky_Selbstbildnis_1905.jpg",
+    "wikidata": "Q156426"
+  },
+  {
+    "key": "Alfred Sharpe",
+    "group": "artist",
+    "file": "intros/artist/alfred-sharpe.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:The_National_Archives_UK_-_CO_1069-111-1.jpg",
+    "wikidata": "Q459640"
+  },
+  {
+    "key": "Alfred Sisley",
+    "group": "artist",
+    "file": "intros/artist/alfred-sisley.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pierre-Auguste_Renoir_110.jpg",
+    "wikidata": "Q175130"
+  },
+  {
+    "key": "Alfred Stevens",
+    "group": "artist",
+    "file": "intros/artist/alfred-stevens.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Stevens%2C_Alfred%2C_Erwin_Hanfstaengl_phot.%2C_album_Manet%2C_BNF_Gallica.jpg",
+    "wikidata": "Q773855"
+  },
+  {
+    "key": "Alfred Walsh",
+    "group": "artist",
+    "file": "intros/artist/alfred-walsh.webp",
+    "type": "catalog",
+    "source": "catalog product 1437 (Kaikoura Coast)",
+    "wikidata": "Q27924150"
+  },
+  {
+    "key": "Alida Withoos",
+    "group": "artist",
+    "file": "intros/artist/alida-withoos.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Study_of_a_Hanekam_%28Celosia_argentea%29_Alida_Withoos_%281662-1730%29.jpg",
+    "wikidata": "Q441625"
+  },
+  {
+    "key": "Allen Edward Everitt",
+    "group": "artist",
+    "file": "intros/artist/allen-edward-everitt.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jonathan_Pratt_%281835-1911%29_-_Allen_E._Everitt_%28panel_in_the_Everitt_Cabinet%29_-_1892P41.2_-_Birmingham_Museums_Trust.jpg",
+    "wikidata": "Q4731629"
+  },
+  {
+    "key": "Alphonse de Neuville",
+    "group": "artist",
+    "file": "intros/artist/alphonse-de-neuville.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Adolphe_de_Neuville_by_Ferdinand_Mulnier.png",
+    "wikidata": "Q1494309"
+  },
+  {
+    "key": "Amedeo Modigliani",
+    "group": "artist",
+    "file": "intros/artist/amedeo-modigliani.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Amedeo_Modigliani_1918_restored.jpg",
+    "wikidata": "Q120993"
+  },
+  {
+    "key": "Andreas Schelfhout",
+    "group": "artist",
+    "file": "intros/artist/andreas-schelfhout.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Andreas_Schelfhout%2C_after_Eug%C3%A8ne_Joseph_Verboeckhoeven.jpg",
+    "wikidata": "Q500379"
+  },
+  {
+    "key": "Anthonie Beerstraaten",
+    "group": "artist",
+    "file": "intros/artist/anthonie-beerstraaten.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Beerstraaten_zugefrorener-fluss.jpg",
+    "wikidata": "Q4771917"
+  },
+  {
+    "key": "Anthony Vandyke Copley Fielding",
+    "group": "artist",
+    "file": "intros/artist/anthony-vandyke-copley-fielding.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Antony_Vandyke_Copley_Fielding_by_Sir_William_Boxall.jpg",
+    "wikidata": "Q323623"
+  },
+  {
+    "key": "Anton Mauve",
+    "group": "artist",
+    "file": "intros/artist/anton-mauve.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:AntonMauve.jpg",
+    "wikidata": "Q591907"
+  },
+  {
+    "key": "Anton Schiffer",
+    "group": "artist",
+    "file": "intros/artist/anton-schiffer.webp",
+    "type": "catalog",
+    "source": "catalog product 768 (View from the New Schmolnau to the Kreuzstein on the Traun)",
+    "wikidata": "Q124286764"
+  },
+  {
+    "key": "August Von Siegen",
+    "group": "artist",
+    "file": "intros/artist/august-von-siegen.webp",
+    "type": "catalog",
+    "source": "catalog product 767 (Partie aus Amsterdam)",
+    "wikidata": "Q26202756"
+  },
+  {
+    "key": "Augustus Kelham",
+    "group": "artist",
+    "file": "intros/artist/augustus-kelham.webp",
+    "type": "catalog",
+    "source": "catalog product 1447 (Bridge Street, Chester)"
+  },
+  {
+    "key": "B. Studer",
+    "group": "artist",
+    "file": "intros/artist/b-studer.webp",
+    "type": "catalog",
+    "source": "catalog product 1519 (Mountain Valley Landscape)"
+  },
+  {
+    "key": "Balthasar van der Ast",
+    "group": "artist",
+    "file": "intros/artist/balthasar-van-der-ast.webp",
+    "type": "catalog",
+    "source": "catalog product 919 (Still Life with Flowers)",
+    "wikidata": "Q472522"
+  },
+  {
+    "key": "Barend Cornelis Koekkoek",
+    "group": "artist",
+    "file": "intros/artist/barend-cornelis-koekkoek.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Zelfportret_met_baret%2C_RP-T-1907-15.jpg",
+    "wikidata": "Q808081"
+  },
+  {
+    "key": "Barent Avercamp",
+    "group": "artist",
+    "file": "intros/artist/barent-avercamp.webp",
+    "type": "catalog",
+    "source": "catalog product 932 (Amusement on the Ice)",
+    "wikidata": "Q678319"
+  },
+  {
+    "key": "Berthe Morisot",
+    "group": "artist",
+    "file": "intros/artist/berthe-morisot.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Morisot_berthe_photo.jpg",
+    "wikidata": "Q105320"
+  },
+  {
+    "key": "C. Whitwell",
+    "group": "artist",
+    "file": "intros/artist/c-whitwell.webp",
+    "type": "catalog",
+    "source": "catalog product 1350 (View of Birmingham Museum and Art Gallery and Council House)"
+  },
+  {
+    "key": "Camille Pissarro",
+    "group": "artist",
+    "file": "intros/artist/camille-pissarro.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pissarro-portrait-c1900.jpg",
+    "wikidata": "Q134741"
+  },
+  {
+    "key": "Canaletto (Giovanni Antonio Canal)",
+    "group": "artist",
+    "file": "intros/artist/canaletto-giovanni-antonio-canal.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Giovanni_Antonio_Canal.jpg",
+    "wikidata": "Q182664"
+  },
+  {
+    "key": "Carl Haag",
+    "group": "artist",
+    "file": "intros/artist/carl-haag.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Carl_Haag_Selbstbildnis_1900_001.JPG",
+    "wikidata": "Q321919"
+  },
+  {
+    "key": "Carl Kaiser-Herbst",
+    "group": "artist",
+    "file": "intros/artist/carl-kaiser-herbst.webp",
+    "type": "catalog",
+    "source": "catalog product 777 (Hallstättersee with View of the Dachstein)",
+    "wikidata": "Q27972710"
+  },
+  {
+    "key": "Charles Cottet",
+    "group": "artist",
+    "file": "intros/artist/charles-cottet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:CharlesCottet.jpg",
+    "wikidata": "Q1574250"
+  },
+  {
+    "key": "Charles Decimus Barraud",
+    "group": "artist",
+    "file": "intros/artist/charles-decimus-barraud.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_the_painter%2C_Charles_Decimus_Barraud%2C_ca_1860s._Reference_Number_PA1-q-036-30-3.jpg",
+    "wikidata": "Q5076806"
+  },
+  {
+    "key": "Charles Gifford Dyer",
+    "group": "artist",
+    "file": "intros/artist/charles-gifford-dyer.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Dyer%2C_Charles_Gifford_%28Healy%29.jpg",
+    "wikidata": "Q21288630"
+  },
+  {
+    "key": "Charles Spencer Humphreys",
+    "group": "artist",
+    "file": "intros/artist/charles-spencer-humphreys.webp",
+    "type": "catalog",
+    "source": "catalog product 1286 (George Franklin Archer and the Archer Residence)",
+    "wikidata": "Q21408649"
+  },
+  {
+    "key": "Charles Thomas Burt",
+    "group": "artist",
+    "file": "intros/artist/charles-thomas-burt.webp",
+    "type": "catalog",
+    "source": "catalog product 1403 (Snowdon From Pensarn)",
+    "wikidata": "Q19948863"
+  },
+  {
+    "key": "Childe Hassam",
+    "group": "artist",
+    "file": "intros/artist/childe-hassam.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Childe_Hassam_1903.png",
+    "wikidata": "Q737635"
+  },
+  {
+    "key": "Christian Georg Schütz",
+    "group": "artist",
+    "file": "intros/artist/christian-georg-schutz.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Johann_Ulrich_Schnetzler_-_Bildnis_des_Malers_Christian_Georg_Sch%C3%BCtz_%28ca.1761%29.jpg",
+    "wikidata": "Q1079809"
+  },
+  {
+    "key": "Christian Rohlfs",
+    "group": "artist",
+    "file": "intros/artist/christian-rohlfs.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Rohlfs_-_Selbstbildnis%2C_1918.jpeg",
+    "wikidata": "Q62992"
+  },
+  {
+    "key": "Claude Joseph Vernet",
+    "group": "artist",
+    "file": "intros/artist/claude-joseph-vernet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Calvet_Van_Loo_Louis-Michel_Joseph_Vernet_1768.jpg",
+    "wikidata": "Q315819"
+  },
+  {
+    "key": "Claude Lorrain",
+    "group": "artist",
+    "file": "intros/artist/claude-lorrain.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Claude_Lorrain.jpg",
+    "wikidata": "Q214074"
+  },
+  {
+    "key": "Claude Monet",
+    "group": "artist",
+    "file": "intros/artist/claude-monet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Claude_Monet_1899_Nadar_crop.jpg",
+    "note": "Nadar's 1899 photo, Wikipedia lead image"
+  },
+  {
+    "key": "Constant Permeke",
+    "group": "artist",
+    "file": "intros/artist/constant-permeke.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Borstbeeld-Permeke.jpg",
+    "wikidata": "Q381911"
+  },
+  {
+    "key": "Cornelia van der Mijn",
+    "group": "artist",
+    "file": "intros/artist/cornelia-van-der-mijn.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Cornelia_van_der_Mijn_-_flower_still_life.jpg",
+    "wikidata": "Q5171188"
+  },
+  {
+    "key": "Cornelis Droochsloot",
+    "group": "artist",
+    "file": "intros/artist/cornelis-droochsloot.webp",
+    "type": "catalog",
+    "source": "catalog product 762 (A River Landscape with Figures Resting Near an Inn)",
+    "wikidata": "Q684987"
+  },
+  {
+    "key": "Daniel Havell",
+    "group": "artist",
+    "file": "intros/artist/daniel-havell.webp",
+    "type": "catalog",
+    "source": "catalog product 1282 (Interior of Christ Church)",
+    "wikidata": "Q18325155"
+  },
+  {
+    "key": "David Cox",
+    "group": "artist",
+    "file": "intros/artist/david-cox.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Watson_Gordon_%281788-1864%29_-_David_Cox_%281783%E2%80%931859%29_-_1978P185_-_Birmingham_Museums_Trust.jpg",
+    "wikidata": "Q1174087"
+  },
+  {
+    "key": "David Cox Jr.",
+    "group": "artist",
+    "file": "intros/artist/david-cox-jr.webp",
+    "type": "catalog",
+    "source": "catalog product 665 (The Shrimpers)",
+    "wikidata": "Q17101440"
+  },
+  {
+    "key": "David Roberts",
+    "group": "artist",
+    "file": "intros/artist/david-roberts.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:David_Roberts_%281844%29.jpg",
+    "wikidata": "Q369776"
+  },
+  {
+    "key": "Dennis Miller Bunker",
+    "group": "artist",
+    "file": "intros/artist/dennis-miller-bunker.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Dennis_Miller_Bunker.jpg",
+    "wikidata": "Q325568"
+  },
+  {
+    "key": "Eastman Johnson",
+    "group": "artist",
+    "file": "intros/artist/eastman-johnson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Eastman_Johnson_self-portrait%2C_1863.jpg",
+    "wikidata": "Q1278282"
+  },
+  {
+    "key": "Edgar Degas",
+    "group": "artist",
+    "file": "intros/artist/edgar-degas.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Edgar_Degas_self_portrait_1855FXD.jpg",
+    "wikidata": "Q46373"
+  },
+  {
+    "key": "Edmund Charles Tarbell",
+    "group": "artist",
+    "file": "intros/artist/edmund-charles-tarbell.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Edmund_C._Tarbell.jpg",
+    "wikidata": "Q2460318"
+  },
+  {
+    "key": "Edward Duncan",
+    "group": "artist",
+    "file": "intros/artist/edward-duncan.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Edward_Duncan.jpg",
+    "wikidata": "Q5342665"
+  },
+  {
+    "key": "Edward Henry Potthast",
+    "group": "artist",
+    "file": "intros/artist/edward-henry-potthast.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Edward_Potthast_Selfportrait.jpg",
+    "wikidata": "Q1252045"
+  },
+  {
+    "key": "Edward Lamson Henry",
+    "group": "artist",
+    "file": "intros/artist/edward-lamson-henry.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Image_from_page_630_of_%22Empire_state_notables%2C_1914%22_%281914%29.jpg",
+    "wikidata": "Q2605527"
+  },
+  {
+    "key": "Edward Moore",
+    "group": "artist",
+    "file": "intros/artist/edward-moore.webp",
+    "type": "catalog",
+    "source": "catalog product 1377 (Coastal Scene)"
+  },
+  {
+    "key": "Edwin Deakin",
+    "group": "artist",
+    "file": "intros/artist/edwin-deakin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Edwin_Deakin.jpg",
+    "wikidata": "Q5346352"
+  },
+  {
+    "key": "Elijah Walton",
+    "group": "artist",
+    "file": "intros/artist/elijah-walton.webp",
+    "type": "catalog",
+    "source": "catalog product 1396 (Rednal Wood, Winter)",
+    "wikidata": "Q16063414"
+  },
+  {
+    "key": "Eliot Thomas Yorke",
+    "group": "artist",
+    "file": "intros/artist/eliot-thomas-yorke.webp",
+    "type": "catalog",
+    "source": "catalog product 1272 (Birkenhead from Herculaneum Potteries)",
+    "wikidata": "Q5361267"
+  },
+  {
+    "key": "Elizabeth Murray",
+    "group": "artist",
+    "file": "intros/artist/elizabeth-murray.webp",
+    "type": "catalog",
+    "source": "catalog product 1190 (Victoria Castle and the Val of Shanganagh, Dún Laoghaire)",
+    "wikidata": "Q1331276"
+  },
+  {
+    "key": "Emile Aubert Lessoire",
+    "group": "artist",
+    "file": "intros/artist/emile-aubert-lessoire.webp",
+    "type": "catalog",
+    "source": "catalog product 1454 (Boy's School)",
+    "wikidata": "Q3588277"
+  },
+  {
+    "key": "Ernest Lawson",
+    "group": "artist",
+    "file": "intros/artist/ernest-lawson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Ernest_Lawson%2C_N.A._%28I0007917%29.jpg",
+    "wikidata": "Q1185478"
+  },
+  {
+    "key": "Ernst Ludwig Kirchner",
+    "group": "artist",
+    "file": "intros/artist/ernst-ludwig-kirchner.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Ernst_Ludwig_Kirchner_-_Selbstportr%C3%A4t_in_der_Atelierwohnung_in_Berlin-Friedenau_%281913-15%29.jpg",
+    "wikidata": "Q229272"
+  },
+  {
+    "key": "Esaias van de Velde",
+    "group": "artist",
+    "file": "intros/artist/esaias-van-de-velde.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Die_Viehfaehre.jpg",
+    "wikidata": "Q467361"
+  },
+  {
+    "key": "Eugène Boudin",
+    "group": "artist",
+    "file": "intros/artist/eugene-boudin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Boudin-eugene-c-face-half.jpg",
+    "wikidata": "Q212600"
+  },
+  {
+    "key": "Eugène Delacroix",
+    "group": "artist",
+    "file": "intros/artist/eugene-delacroix.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Autoportrait_-_Eug%C3%A8ne_Delacroix_-_Mus%C3%A9e_du_Louvre_Peintures_RF_25.jpg",
+    "wikidata": "Q33477"
+  },
+  {
+    "key": "Eugène Isabey",
+    "group": "artist",
+    "file": "intros/artist/eugene-isabey.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Isabey%2C_Eug%C3%A8ne%2C_Nadar%2C_Gallica.jpg",
+    "wikidata": "Q714341"
+  },
+  {
+    "key": "Eustache Le Sueur",
+    "group": "artist",
+    "file": "intros/artist/eustache-le-sueur.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Eustache_Le_Sueur_%28portrait%29.jpg",
+    "wikidata": "Q1378723"
+  },
+  {
+    "key": "Eva Auld Watson",
+    "group": "artist",
+    "file": "intros/artist/eva-auld-watson.webp",
+    "type": "catalog",
+    "source": "catalog product 1443 (Gulls)",
+    "wikidata": "Q56798501"
+  },
+  {
+    "key": "Evert Pieters",
+    "group": "artist",
+    "file": "intros/artist/evert-pieters.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Evert_Pieters.jpg",
+    "wikidata": "Q2137843"
+  },
+  {
+    "key": "Ferdinand Carl Sierich",
+    "group": "artist",
+    "file": "intros/artist/ferdinand-carl-sierich.webp",
+    "type": "catalog",
+    "source": "catalog product 1509 (City View)",
+    "wikidata": "Q18604523"
+  },
+  {
+    "key": "Ferdinand Lepie",
+    "group": "artist",
+    "file": "intros/artist/ferdinand-lepie.webp",
+    "type": "catalog",
+    "source": "catalog product 780 (Blick auf Weissenbach am Attersee)",
+    "wikidata": "Q1405555"
+  },
+  {
+    "key": "Follower of Canaletto",
+    "group": "artist",
+    "file": "intros/artist/follower-of-canaletto.webp",
+    "type": "catalog",
+    "source": "catalog product 1283 (Portico with a Lantern)"
+  },
+  {
+    "key": "Francesco Guardi",
+    "group": "artist",
+    "file": "intros/artist/francesco-guardi.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Ca%27_Rezzonico_-_Ritratto_di_Francesco_Guardi_1764_-_Pietro_Longhi.jpg",
+    "wikidata": "Q318769"
+  },
+  {
+    "key": "Francis Jukes",
+    "group": "artist",
+    "file": "intros/artist/francis-jukes.webp",
+    "type": "catalog",
+    "source": "catalog product 1360 (Perspective View of The Crescent)",
+    "wikidata": "Q5481584"
+  },
+  {
+    "key": "Francis Towne",
+    "group": "artist",
+    "file": "intros/artist/francis-towne.webp",
+    "type": "catalog",
+    "source": "catalog product 1390 (River Scene With Mountains)",
+    "wikidata": "Q5482614"
+  },
+  {
+    "key": "Francisco José de Goya y Lucientes",
+    "group": "artist",
+    "file": "intros/artist/francisco-jose-de-goya-y-lucientes.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Vicente_L%C3%B3pez_Porta%C3%B1a_-_el_pintor_Francisco_de_Goya.jpg",
+    "wikidata": "Q5432"
+  },
+  {
+    "key": "Francisco de Zurbarán",
+    "group": "artist",
+    "file": "intros/artist/francisco-de-zurbaran.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Francisco_de_Zurbar%C3%A1n_autoportrait.jpg",
+    "wikidata": "Q209615"
+  },
+  {
+    "key": "Frederic Remington",
+    "group": "artist",
+    "file": "intros/artist/frederic-remington.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Frederic_Remington.jpg",
+    "wikidata": "Q560787"
+  },
+  {
+    "key": "Frederick R. Spencer",
+    "group": "artist",
+    "file": "intros/artist/frederick-r-spencer.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Self-Portrait_LACMA_M.74.71.jpg",
+    "wikidata": "Q20859506"
+  },
+  {
+    "key": "Friedrich Carl von Scheidlin",
+    "group": "artist",
+    "file": "intros/artist/friedrich-carl-von-scheidlin.webp",
+    "type": "catalog",
+    "source": "catalog product 756 (Mountain Creek)",
+    "wikidata": "Q50747158"
+  },
+  {
+    "key": "Fritz Lach",
+    "group": "artist",
+    "file": "intros/artist/fritz-lach.webp",
+    "type": "catalog",
+    "source": "catalog product 752 (Torbole, Studie)",
+    "wikidata": "Q1467230"
+  },
+  {
+    "key": "Félix Hilaire Buhot",
+    "group": "artist",
+    "file": "intros/artist/felix-hilaire-buhot.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Felix_Buhot01.jpg",
+    "wikidata": "Q1479447"
+  },
+  {
+    "key": "Félix Vallotton",
+    "group": "artist",
+    "file": "intros/artist/felix-vallotton.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Vallotton-Autoportrait.jpg",
+    "wikidata": "Q123740"
+  },
+  {
+    "key": "Gari Melchers",
+    "group": "artist",
+    "file": "intros/artist/gari-melchers.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Julius_Garibaldi_Melchers_Frank_Scott_Clark.jpg",
+    "wikidata": "Q1387035"
+  },
+  {
+    "key": "Gaston La Touche",
+    "group": "artist",
+    "file": "intros/artist/gaston-la-touche.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gastonlatouche.jpg",
+    "wikidata": "Q1824249"
+  },
+  {
+    "key": "Georg Heinrich Crola",
+    "group": "artist",
+    "file": "intros/artist/georg-heinrich-crola.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Crola-Father.jpg",
+    "wikidata": "Q1140806"
+  },
+  {
+    "key": "George Bellows",
+    "group": "artist",
+    "file": "intros/artist/george-bellows.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:George_bellows.jpg",
+    "wikidata": "Q167132"
+  },
+  {
+    "key": "George Chinnery",
+    "group": "artist",
+    "file": "intros/artist/george-chinnery.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Chinnery_c._1804.jpg",
+    "wikidata": "Q3089402"
+  },
+  {
+    "key": "George Edwards",
+    "group": "artist",
+    "file": "intros/artist/george-edwards.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Edwards_George_1693_1773.jpg",
+    "wikidata": "Q257668"
+  },
+  {
+    "key": "George Henry Durrie",
+    "group": "artist",
+    "file": "intros/artist/george-henry-durrie.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:George_Henry_Durrie_self-portrait.jpg",
+    "wikidata": "Q5540446"
+  },
+  {
+    "key": "George Hitchcock",
+    "group": "artist",
+    "file": "intros/artist/george-hitchcock.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Sargent_Portrait_of_George_Hitchcock.jpg",
+    "wikidata": "Q3720237"
+  },
+  {
+    "key": "George Inness",
+    "group": "artist",
+    "file": "intros/artist/george-inness.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Daniel_Huntington_-_Portrait_of_George_Inness_%28National_Academy_of_Design%29.jpg",
+    "wikidata": "Q704868"
+  },
+  {
+    "key": "George Luks",
+    "group": "artist",
+    "file": "intros/artist/george-luks.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:George_Luks_I.jpg",
+    "wikidata": "Q337733"
+  },
+  {
+    "key": "George Taylor Nicholson",
+    "group": "artist",
+    "file": "intros/artist/george-taylor-nicholson.webp",
+    "type": "catalog",
+    "source": "catalog product 1442 (Mentone)"
+  },
+  {
+    "key": "Georges Seurat",
+    "group": "artist",
+    "file": "intros/artist/georges-seurat.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Georges_Seurat_1888_%28cropped%29.jpg",
+    "wikidata": "Q34013"
+  },
+  {
+    "key": "Gerard Bilders",
+    "group": "artist",
+    "file": "intros/artist/gerard-bilders.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gerard_Bilders.jpg",
+    "wikidata": "Q1403997"
+  },
+  {
+    "key": "Gerard van Nijmegen",
+    "group": "artist",
+    "file": "intros/artist/gerard-van-nijmegen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gerard_van_Nijmegen%2C_zelfportret.jpg",
+    "wikidata": "Q18600459"
+  },
+  {
+    "key": "Gerrit Berckheyde",
+    "group": "artist",
+    "file": "intros/artist/gerrit-berckheyde.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Gerrit_Berckheyde_by_Job_Berckheyde_Frans_Hals_Museum_os_I-12.jpg",
+    "wikidata": "Q576025"
+  },
+  {
+    "key": "Giacomo Cavenezia",
+    "group": "artist",
+    "file": "intros/artist/giacomo-cavenezia.webp",
+    "type": "catalog",
+    "source": "catalog product 1451 (Floral Designs with a Blue Bird)",
+    "wikidata": "Q98674057"
+  },
+  {
+    "key": "Gilbert Stuart",
+    "group": "artist",
+    "file": "intros/artist/gilbert-stuart.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gilbert_Stuart_Selfportrait.jpg",
+    "wikidata": "Q41402"
+  },
+  {
+    "key": "Gillis Claesz. de Hondecoeter",
+    "group": "artist",
+    "file": "intros/artist/gillis-claesz-de-hondecoeter.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gillis_d_%27Hondecoeter%2C_schilder_PK-T-824%2C_PK-T-923.tiff",
+    "wikidata": "Q1922045"
+  },
+  {
+    "key": "Giovanni Battista Piazzetta",
+    "group": "artist",
+    "file": "intros/artist/giovanni-battista-piazzetta.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Giambattista_Piazzetta%2C_Giambattista_Piazzetta.jpg",
+    "wikidata": "Q282670"
+  },
+  {
+    "key": "Giovanni Grubacs",
+    "group": "artist",
+    "file": "intros/artist/giovanni-grubacs.webp",
+    "type": "catalog",
+    "source": "catalog product 809 (The Punta della Dogana and Santa Maria della Salute)",
+    "wikidata": "Q59202822"
+  },
+  {
+    "key": "Gustave Caillebotte",
+    "group": "artist",
+    "file": "intros/artist/gustave-caillebotte.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Caillebotteautoportrait.jpg",
+    "wikidata": "Q295144"
+  },
+  {
+    "key": "Gustave Courbet",
+    "group": "artist",
+    "file": "intros/artist/gustave-courbet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gustave_Courbet%2C_photograph_Atelier_Nadar%2C_c._1860s.jpg",
+    "wikidata": "Q34618"
+  },
+  {
+    "key": "Helen Allingham",
+    "group": "artist",
+    "file": "intros/artist/helen-allingham.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Helen_Allingham%2C_photograph.jpg",
+    "wikidata": "Q444581"
+  },
+  {
+    "key": "Hendrick Avercamp",
+    "group": "artist",
+    "file": "intros/artist/hendrick-avercamp.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Hendrick_Avercamp.jpg",
+    "note": "Portrait drawing, Wikipedia lead image; the source is only 250x201"
+  },
+  {
+    "key": "Hendrick Cornelisz. Vroom",
+    "group": "artist",
+    "file": "intros/artist/hendrick-cornelisz-vroom.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Hendrik_Cornelisz._Vroom_Henricus_Vroom%2C_Harlemensis._Pictor._%28titel_op_object%29_Pictorum_Aliquot_Celebrium_Praecipuae_Germaniae_Inferioris_Effigies_%28serietitel%29%2C_RP-P-OB-33.331.jpg",
+    "wikidata": "Q578067"
+  },
+  {
+    "key": "Hendrik Keun",
+    "group": "artist",
+    "file": "intros/artist/hendrik-keun.webp",
+    "type": "catalog",
+    "source": "catalog product 921 (View of the Herengracht near the Leidsestraat, Amsterdam)",
+    "wikidata": "Q2124298"
+  },
+  {
+    "key": "Hendrik Willem Mesdag",
+    "group": "artist",
+    "file": "intros/artist/hendrik-willem-mesdag.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Mesdag-Haverman.jpg",
+    "wikidata": "Q474238"
+  },
+  {
+    "key": "Hendrik Willem Schweickhardt",
+    "group": "artist",
+    "file": "intros/artist/hendrik-willem-schweickhardt.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:HW_Schweickhardt_-_Selbstbildnis_%28%C3%96aL%29.png",
+    "wikidata": "Q12061492"
+  },
+  {
+    "key": "Henri Fantin-Latour",
+    "group": "artist",
+    "file": "intros/artist/henri-fantin-latour.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Bemberg_Fondation_Toulouse_-_Self-portrait_paintings_by_Henri_Fantin-Latour.jpg",
+    "wikidata": "Q310715"
+  },
+  {
+    "key": "Henri Mauperche",
+    "group": "artist",
+    "file": "intros/artist/henri-mauperche.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Henri_de_Mauperch%C3%A9.jpg",
+    "wikidata": "Q3131613"
+  },
+  {
+    "key": "Henri Rivière",
+    "group": "artist",
+    "file": "intros/artist/henri-riviere.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Henri.riviere.jpg",
+    "wikidata": "Q2731112"
+  },
+  {
+    "key": "Henri Rousseau",
+    "group": "artist",
+    "file": "intros/artist/henri-rousseau.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Rousseau_Joyeux_Farceurs_Dornac_crop.jpg",
+    "wikidata": "Q156386"
+  },
+  {
+    "key": "Henri de Toulouse-Lautrec",
+    "group": "artist",
+    "file": "intros/artist/henri-de-toulouse-lautrec.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Photolautrec.jpg",
+    "wikidata": "Q82445"
+  },
+  {
+    "key": "Henri van Assche",
+    "group": "artist",
+    "file": "intros/artist/henri-van-assche.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_du_peintre_Henri_Van_Assche.jpg",
+    "wikidata": "Q3132121"
+  },
+  {
+    "key": "Henry Dawson",
+    "group": "artist",
+    "file": "intros/artist/henry-dawson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Henry_Dawson%2C_by_Henry_Dawson.jpg",
+    "wikidata": "Q5720232"
+  },
+  {
+    "key": "Henry Gastineau",
+    "group": "artist",
+    "file": "intros/artist/henry-gastineau.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Henry-gastineau-1791-1876-illustrated-london-news-5th-feb-1876.png",
+    "wikidata": "Q5721823"
+  },
+  {
+    "key": "Henry Harris",
+    "group": "artist",
+    "file": "intros/artist/henry-harris.webp",
+    "type": "catalog",
+    "source": "catalog product 1332 (Storm at the Lighthouse)",
+    "wikidata": "Q1606831"
+  },
+  {
+    "key": "Henry Keller",
+    "group": "artist",
+    "file": "intros/artist/henry-keller.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Artist_Henry_Keller.jpg",
+    "wikidata": "Q5724263"
+  },
+  {
+    "key": "Henry Ossawa Tanner",
+    "group": "artist",
+    "file": "intros/artist/henry-ossawa-tanner.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Henry_Ossawa_Tanner.jpg",
+    "wikidata": "Q1374436"
+  },
+  {
+    "key": "Henry Raeburn",
+    "group": "artist",
+    "file": "intros/artist/henry-raeburn.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Sir_Henry_Raeburn_%28self-portrait%29.jpg",
+    "wikidata": "Q561916"
+  },
+  {
+    "key": "Henry Roderick Newman",
+    "group": "artist",
+    "file": "intros/artist/henry-roderick-newman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Henry_Roderick_Newman.jpg",
+    "wikidata": "Q22002686"
+  },
+  {
+    "key": "Henry Ward Ranger",
+    "group": "artist",
+    "file": "intros/artist/henry-ward-ranger.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Ward_ranger.jpg",
+    "wikidata": "Q5729856"
+  },
+  {
+    "key": "Hopkins Horsley Hobday",
+    "group": "artist",
+    "file": "intros/artist/hopkins-horsley-hobday.webp",
+    "type": "catalog",
+    "source": "catalog product 1378 (On The Sands At Rhyl, North Wales)",
+    "wikidata": "Q19922088"
+  },
+  {
+    "key": "Hubert Landa",
+    "group": "artist",
+    "file": "intros/artist/hubert-landa.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Hubert_Landa_-_Selbstbildnis_-_6259_-_%C3%96sterreichische_Galerie_Belvedere.jpg",
+    "wikidata": "Q4253822"
+  },
+  {
+    "key": "Imitator of Vincent van Gogh",
+    "group": "artist",
+    "file": "intros/artist/imitator-of-vincent-van-gogh.webp",
+    "type": "catalog",
+    "source": "catalog product 1248 (Still Life: Melon, Fish Jar)"
+  },
+  {
+    "key": "Isaac Israels",
+    "group": "artist",
+    "file": "intros/artist/isaac-israels.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Isaac_Isra%C3%ABls.jpg",
+    "wikidata": "Q979534"
+  },
+  {
+    "key": "Isaac Ouwater",
+    "group": "artist",
+    "file": "intros/artist/isaac-ouwater.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Isaak_Ouwater_%2C_RP-T-1940-259.jpg",
+    "wikidata": "Q2296354"
+  },
+  {
+    "key": "Isaac van Ostade",
+    "group": "artist",
+    "file": "intros/artist/isaac-van-ostade.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Isaac_van_Ostade%2C_by_Cornelis_Dusart.jpg",
+    "wikidata": "Q217648"
+  },
+  {
+    "key": "Isidore Meyers",
+    "group": "artist",
+    "file": "intros/artist/isidore-meyers.webp",
+    "type": "catalog",
+    "source": "catalog product 735 (The Scheldt in Mariekerke)",
+    "wikidata": "Q21396011"
+  },
+  {
+    "key": "J. M. W. Turner",
+    "group": "artist",
+    "file": "intros/artist/j-m-w-turner.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Joseph_Mallord_William_Turner_auto-retrato.jpg",
+    "wikidata": "Q159758"
+  },
+  {
+    "key": "Jabes Heenck",
+    "group": "artist",
+    "file": "intros/artist/jabes-heenck.webp",
+    "type": "catalog",
+    "source": "catalog product 1505 (Blauwe Reiger)",
+    "wikidata": "Q29377239"
+  },
+  {
+    "key": "Jacob Maris",
+    "group": "artist",
+    "file": "intros/artist/jacob-maris.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jacob_Maris_by_Matthijs_Maris.jpg",
+    "wikidata": "Q978158"
+  },
+  {
+    "key": "Jacob Marrel",
+    "group": "artist",
+    "file": "intros/artist/jacob-marrel.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jacob_Marrel_Selbstportrait.jpg",
+    "wikidata": "Q472562"
+  },
+  {
+    "key": "Jacob Vosmaer",
+    "group": "artist",
+    "file": "intros/artist/jacob-vosmaer.webp",
+    "type": "catalog",
+    "source": "catalog product 950 (Flower piece with fritillaria in a niche)",
+    "wikidata": "Q1478130"
+  },
+  {
+    "key": "Jacob Vrel",
+    "group": "artist",
+    "file": "intros/artist/jacob-vrel.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Vrel_-_Frau_am_Fenster_-_KHM.jpg",
+    "wikidata": "Q1367776"
+  },
+  {
+    "key": "Jacob van Ruisdael",
+    "group": "artist",
+    "file": "intros/artist/jacob-van-ruisdael.webp",
+    "type": "catalog",
+    "source": "catalog product 962 (The Windmill at Wijk bij Duurstede)",
+    "wikidata": "Q213612"
+  },
+  {
+    "key": "Jacob van Strij",
+    "group": "artist",
+    "file": "intros/artist/jacob-van-strij.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jacob_van_Strij%2C_by_Pieter_Christoffel_Wonder.jpg",
+    "wikidata": "Q597322"
+  },
+  {
+    "key": "Jacob van Walscapelle",
+    "group": "artist",
+    "file": "intros/artist/jacob-van-walscapelle.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Still_Life_with_Fruit_A16418.jpg",
+    "wikidata": "Q6119594"
+  },
+  {
+    "key": "Jacques Baseilhac",
+    "group": "artist",
+    "file": "intros/artist/jacques-baseilhac.webp",
+    "type": "catalog",
+    "source": "catalog product 1470 (La Soupe à la Chambrée)",
+    "wikidata": "Q16039512"
+  },
+  {
+    "key": "James A McNeill Whistler",
+    "group": "artist",
+    "file": "intros/artist/james-a-mcneill-whistler.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:James_A._McNeill_Whistler%2C_half-length_portrait_LCCN2002736830_%28detail%29.jpg",
+    "wikidata": "Q203643"
+  },
+  {
+    "key": "James Alfred Aitken",
+    "group": "artist",
+    "file": "intros/artist/james-alfred-aitken.webp",
+    "type": "catalog",
+    "source": "catalog product 1434 (Street Scene)",
+    "wikidata": "Q19653635"
+  },
+  {
+    "key": "James Crowe Richmond",
+    "group": "artist",
+    "file": "intros/artist/james-crowe-richmond.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:James_Crowe_Richmond.jpg",
+    "wikidata": "Q6131984"
+  },
+  {
+    "key": "James Holland",
+    "group": "artist",
+    "file": "intros/artist/james-holland.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_the_painter_James_Holland%2C_RP-T-1990-9_%28cropped%29.jpg",
+    "wikidata": "Q5809954"
+  },
+  {
+    "key": "James Jebusa Shannon",
+    "group": "artist",
+    "file": "intros/artist/james-jebusa-shannon.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Sir_James_Jebusa_Shannon_by_Sir_James_Jebusa_Shannon.jpg",
+    "wikidata": "Q731056"
+  },
+  {
+    "key": "James Miller",
+    "group": "artist",
+    "file": "intros/artist/james-miller.webp",
+    "type": "catalog",
+    "source": "catalog product 1354 (London, Old Tothull St. Leading to Westminster Abbey)",
+    "wikidata": "Q98687662"
+  },
+  {
+    "key": "Jan Abrahamsz Beerstraaten",
+    "group": "artist",
+    "file": "intros/artist/jan-abrahamsz-beerstraaten.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Beerstraaten_%28cropped%29.tif",
+    "wikidata": "Q2604246"
+  },
+  {
+    "key": "Jan Asselijn",
+    "group": "artist",
+    "file": "intros/artist/jan-asselijn.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:JanAsselyn.jpg",
+    "wikidata": "Q541976"
+  },
+  {
+    "key": "Jan Augustini",
+    "group": "artist",
+    "file": "intros/artist/jan-augustini.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:De_rozewitte_hyacint_Kroon_van_Groot_Brittanien_%281751%29_van_Jan_Augustini.jpg",
+    "wikidata": "Q6148504"
+  },
+  {
+    "key": "Jan Both",
+    "group": "artist",
+    "file": "intros/artist/jan-both.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:HUA-104142-Portret_van_Jan_Both_geboren_Utrecht_1610_kunstschilder_te_Utrecht_overleden_1652_Te_halve_lijve_links_steunend_op_een_console.jpg",
+    "wikidata": "Q981631"
+  },
+  {
+    "key": "Jan Brueghel de Oude",
+    "group": "artist",
+    "file": "intros/artist/jan-brueghel-de-oude.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Anthony_van_Dyck_%28possibly%29_-_Portrait_of_Jan_Brueghel_the_Elder.jpg",
+    "wikidata": "Q209050"
+  },
+  {
+    "key": "Jan Davidsz. de Heem",
+    "group": "artist",
+    "file": "intros/artist/jan-davidsz-de-heem.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jan_Lievens_-_Portrait_of_Jan_Davidsz._de_Heem.jpg",
+    "wikidata": "Q454656"
+  },
+  {
+    "key": "Jan Jacob Goteling Vinnis",
+    "group": "artist",
+    "file": "intros/artist/jan-jacob-goteling-vinnis.webp",
+    "type": "catalog",
+    "source": "catalog product 1503 (Trillium)",
+    "wikidata": "Q41320782"
+  },
+  {
+    "key": "Jan Wijnants",
+    "group": "artist",
+    "file": "intros/artist/jan-wijnants.webp",
+    "type": "catalog",
+    "source": "catalog product 947 (The Farmhouse)",
+    "wikidata": "Q514074"
+  },
+  {
+    "key": "Jan van Goyen",
+    "group": "artist",
+    "file": "intros/artist/jan-van-goyen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Terborch_Goyenuv_portret.jpg",
+    "wikidata": "Q315996"
+  },
+  {
+    "key": "Jan van Huysum",
+    "group": "artist",
+    "file": "intros/artist/jan-van-huysum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Jan_van_Huysum_Rijksmuseum_SK-A-5008.jpeg",
+    "wikidata": "Q527869"
+  },
+  {
+    "key": "Jan van Os",
+    "group": "artist",
+    "file": "intros/artist/jan-van-os.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pierre_Frederic_de_la_Croix_-_Portrait_of_his_son_in_law%2C_Jan_van_Os.jpg",
+    "wikidata": "Q2242467"
+  },
+  {
+    "key": "Jan van de Cappelle",
+    "group": "artist",
+    "file": "intros/artist/jan-van-de-cappelle.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gerbrand_van_den_Eeckhout_-_Jan_van_de_Capelle_%281624-%2725-1679%29_%5E_-_SA_40424_-_Amsterdam_Museum.jpg",
+    "wikidata": "Q759804"
+  },
+  {
+    "key": "Jean Charles Contel",
+    "group": "artist",
+    "file": "intros/artist/jean-charles-contel.webp",
+    "type": "catalog",
+    "source": "catalog product 783 (Rue Saint-Médard)",
+    "wikidata": "Q3164635"
+  },
+  {
+    "key": "Jean François Raffaëlli",
+    "group": "artist",
+    "file": "intros/artist/jean-francois-raffaelli.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean_Francois_Raffaelli_portrait.png",
+    "wikidata": "Q658862"
+  },
+  {
+    "key": "Jean Léon Gérôme",
+    "group": "artist",
+    "file": "intros/artist/jean-leon-gerome.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean-Leon_Gerome.jpg",
+    "wikidata": "Q212499"
+  },
+  {
+    "key": "Jean Siméon Chardin",
+    "group": "artist",
+    "file": "intros/artist/jean-simeon-chardin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Chardin_pastel_selfportrait.jpg",
+    "wikidata": "Q207447"
+  },
+  {
+    "key": "Jean-Baptiste Oudry",
+    "group": "artist",
+    "file": "intros/artist/jean-baptiste-oudry.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean-Baptiste_Perronneau_-_J-B._Oudry.jpg",
+    "wikidata": "Q737137"
+  },
+  {
+    "key": "Jean-Baptiste-Camille Corot",
+    "group": "artist",
+    "file": "intros/artist/jean-baptiste-camille-corot.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean-Baptiste_Camille_Corot_-_autoportrait.jpg",
+    "wikidata": "Q148475"
+  },
+  {
+    "key": "Jean-Baptiste-François Désoria",
+    "group": "artist",
+    "file": "intros/artist/jean-baptiste-francois-desoria.webp",
+    "type": "catalog",
+    "source": "catalog product 1259 (Portrait of Constance Pipelet)",
+    "wikidata": "Q3164093"
+  },
+  {
+    "key": "Jean-Charles Cazin",
+    "group": "artist",
+    "file": "intros/artist/jean-charles-cazin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Art_and_criticism_-_monographs_and_studies_%281892%29_%2814781489061%29.jpg",
+    "wikidata": "Q2778951"
+  },
+  {
+    "key": "Jean-François Millet",
+    "group": "artist",
+    "file": "intros/artist/jean-francois-millet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean-FrancoisMillet%28Nadar%29.jpg",
+    "wikidata": "Q148458"
+  },
+  {
+    "key": "Jean-Jacques Henner",
+    "group": "artist",
+    "file": "intros/artist/jean-jacques-henner.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jean-Jacques_Henner_photo.jpg",
+    "wikidata": "Q665818"
+  },
+  {
+    "key": "Johan Barthold Jongkind",
+    "group": "artist",
+    "file": "intros/artist/johan-barthold-jongkind.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Johan_Barthold_Jongkind_01.jpg",
+    "wikidata": "Q704585"
+  },
+  {
+    "key": "Johan Hendrik Weissenbruch",
+    "group": "artist",
+    "file": "intros/artist/johan-hendrik-weissenbruch.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jan_Hendrik_Weissenbruch%2C_by_Jozef_Israels.jpg",
+    "wikidata": "Q1691988"
+  },
+  {
+    "key": "Johan van der Hagen",
+    "group": "artist",
+    "file": "intros/artist/johan-van-der-hagen.webp",
+    "type": "catalog",
+    "source": "catalog product 1185 (View of Village and Distant Hills)",
+    "wikidata": "Q21459958"
+  },
+  {
+    "key": "Johann Carl Loth",
+    "group": "artist",
+    "file": "intros/artist/johann-carl-loth.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Franck_Deutsche_K%C3%BCnstler-Gallerie_1818_Bild_39.jpg",
+    "wikidata": "Q670135"
+  },
+  {
+    "key": "Johann Jakob Aschmann",
+    "group": "artist",
+    "file": "intros/artist/johann-jakob-aschmann.webp",
+    "type": "catalog",
+    "source": "catalog product 785 (Perspective View of the City, Lake, and Surroundings of Zurich)",
+    "wikidata": "Q30311687"
+  },
+  {
+    "key": "Johann Jakob Wetzel",
+    "group": "artist",
+    "file": "intros/artist/johann-jakob-wetzel.webp",
+    "type": "catalog",
+    "source": "catalog product 782 (Guttannen)",
+    "wikidata": "Q30311702"
+  },
+  {
+    "key": "Johann Ludwig Bleuler",
+    "group": "artist",
+    "file": "intros/artist/johann-ludwig-bleuler.webp",
+    "type": "catalog",
+    "source": "catalog product 808 (Vue de Scheweningen vers les Bains de Mer)",
+    "wikidata": "Q1695331"
+  },
+  {
+    "key": "Johannes Vermeer",
+    "group": "artist",
+    "file": "intros/artist/johannes-vermeer.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Cropped_version_of_Jan_Vermeer_van_Delft_002.jpg",
+    "wikidata": "Q41264"
+  },
+  {
+    "key": "Johannes Warnardus Bilders",
+    "group": "artist",
+    "file": "intros/artist/johannes-warnardus-bilders.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Johannes_Warnardus_Bilders_%281811-1890%29.jpg",
+    "wikidata": "Q2244948"
+  },
+  {
+    "key": "John Blair",
+    "group": "artist",
+    "file": "intros/artist/john-blair.webp",
+    "type": "catalog",
+    "source": "catalog product 1438 (Edinburgh from Samson's Ribbs)",
+    "wikidata": "Q3181070"
+  },
+  {
+    "key": "John Brett",
+    "group": "artist",
+    "file": "intros/artist/john-brett.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Brett%2C_by_John_Brett.jpg",
+    "wikidata": "Q528274"
+  },
+  {
+    "key": "John Cotman",
+    "group": "artist",
+    "file": "intros/artist/john-cotman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Cotman%2C_Selfportrait.jpg",
+    "wikidata": "Q1288248"
+  },
+  {
+    "key": "John F. Francis",
+    "group": "artist",
+    "file": "intros/artist/john-f-francis.webp",
+    "type": "catalog",
+    "source": "catalog product 1243 (Wine, Cheese, and Fruit)",
+    "wikidata": "Q6232278"
+  },
+  {
+    "key": "John Frederick Kensett",
+    "group": "artist",
+    "file": "intros/artist/john-frederick-kensett.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Frederick_Kensett%2C_by_David_Johnson.jpg",
+    "wikidata": "Q982284"
+  },
+  {
+    "key": "John Frederick Lewis",
+    "group": "artist",
+    "file": "intros/artist/john-frederick-lewis.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Frederick_Lewis_by_Sir_William_Boxall.jpg",
+    "wikidata": "Q1391078"
+  },
+  {
+    "key": "John Frederick Peto",
+    "group": "artist",
+    "file": "intros/artist/john-frederick-peto.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Peto_-_Fish_House_Door.JPG",
+    "wikidata": "Q978526"
+  },
+  {
+    "key": "John Gendall",
+    "group": "artist",
+    "file": "intros/artist/john-gendall.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Gendall_by_John_Prescott_Knight_at_RAMM.jpg",
+    "wikidata": "Q15429123"
+  },
+  {
+    "key": "John Gully",
+    "group": "artist",
+    "file": "intros/artist/john-gully.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Gully.jpg",
+    "wikidata": "Q3181650"
+  },
+  {
+    "key": "John Henry Twachtman",
+    "group": "artist",
+    "file": "intros/artist/john-henry-twachtman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Henry_Twachtman.jpg",
+    "wikidata": "Q1342683"
+  },
+  {
+    "key": "John Ritto Penniman",
+    "group": "artist",
+    "file": "intros/artist/john-ritto-penniman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:1796_JRPenniman_SelfPortrait.png",
+    "wikidata": "Q3488972"
+  },
+  {
+    "key": "John Robert Cozens",
+    "group": "artist",
+    "file": "intros/artist/john-robert-cozens.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Robert_Cozens_002.jpg",
+    "wikidata": "Q613852"
+  },
+  {
+    "key": "John Sell Cotman",
+    "group": "artist",
+    "file": "intros/artist/john-sell-cotman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Cotman%2C_Selfportrait.jpg",
+    "wikidata": "Q1288248"
+  },
+  {
+    "key": "John Singer Sargent",
+    "group": "artist",
+    "file": "intros/artist/john-singer-sargent.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Singer_Sargent_1903.jpg",
+    "wikidata": "Q155626"
+  },
+  {
+    "key": "John Sloan",
+    "group": "artist",
+    "file": "intros/artist/john-sloan.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_French_Sloan.jpg",
+    "wikidata": "Q861756"
+  },
+  {
+    "key": "John Varley",
+    "group": "artist",
+    "file": "intros/artist/john-varley.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Varley_by_William_Mulready.jpg",
+    "wikidata": "Q2057288"
+  },
+  {
+    "key": "John Warwick Smith",
+    "group": "artist",
+    "file": "intros/artist/john-warwick-smith.webp",
+    "type": "catalog",
+    "source": "catalog product 1410 (The Town and Castle of Warwick)",
+    "wikidata": "Q11728002"
+  },
+  {
+    "key": "Jonkheer Johannes Ludovicus Paulus Bosch van Drakestein",
+    "group": "artist",
+    "file": "intros/artist/jonkheer-johannes-ludovicus-paulus-bosch-van-drakestein.webp",
+    "type": "catalog",
+    "source": "catalog product 1498 (Bomen in Bloei)"
+  },
+  {
+    "key": "Joos de Momper (II)",
+    "group": "artist",
+    "file": "intros/artist/joos-de-momper-ii.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Dyck_Anthonis_van_-_Etching_of_Joost_de_Momper_the_Younger%2C_fifth_state_-_circa_1632_to_1641.jpg",
+    "wikidata": "Q560548"
+  },
+  {
+    "key": "Joseph Decker",
+    "group": "artist",
+    "file": "intros/artist/joseph-decker.webp",
+    "type": "catalog",
+    "source": "catalog product 1043 (Grapes)",
+    "wikidata": "Q20859324"
+  },
+  {
+    "key": "Joshua Reynolds",
+    "group": "artist",
+    "file": "intros/artist/joshua-reynolds.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Sir_Joshua_Reynolds_-_Self-Portrait_-_Google_Art_Project_%282315517%29FXD.jpg",
+    "wikidata": "Q194402"
+  },
+  {
+    "key": "Jozef Israëls",
+    "group": "artist",
+    "file": "intros/artist/jozef-israels.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:JozefIsraels.jpg",
+    "wikidata": "Q528460"
+  },
+  {
+    "key": "Jurgan Frederick Huge",
+    "group": "artist",
+    "file": "intros/artist/jurgan-frederick-huge.webp",
+    "type": "catalog",
+    "source": "catalog product 1077 (Composite Harbor Scene with Castle)",
+    "wikidata": "Q21403134"
+  },
+  {
+    "key": "Jurriaan Andriessen",
+    "group": "artist",
+    "file": "intros/artist/jurriaan-andriessen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Jurriaan_Andriessen%2C_RP-T-1940-34.jpg",
+    "wikidata": "Q2216010"
+  },
+  {
+    "key": "Kano Hideyori",
+    "group": "artist",
+    "file": "intros/artist/kano-hideyori.webp",
+    "type": "catalog",
+    "source": "catalog product 1456 (Chinese Literatus Viewing a Valley)",
+    "wikidata": "Q11571481"
+  },
+  {
+    "key": "Katsukawa Shunsen",
+    "group": "artist",
+    "file": "intros/artist/katsukawa-shunsen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Aalscholver_vissen_bij_nacht-Rijksmuseum_RP-P-1971-45.jpeg",
+    "wikidata": "Q3074344"
+  },
+  {
+    "key": "Katsushika Hokusai",
+    "group": "artist",
+    "file": "intros/artist/katsushika-hokusai.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Hokusai_as_an_old_man.jpg",
+    "wikidata": "Q5586"
+  },
+  {
+    "key": "Kawase Hasui",
+    "group": "artist",
+    "file": "intros/artist/kawase-hasui.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawase_Hasui_May_1939.jpg",
+    "wikidata": "Q344166"
+  },
+  {
+    "key": "Laurens Vincentsz. van der Vinne",
+    "group": "artist",
+    "file": "intros/artist/laurens-vincentsz-van-der-vinne.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_de_schilder_Laurens_Vincentsz._van_der_Vinne%2C_RP-T-00-2734X.jpg",
+    "wikidata": "Q2440566"
+  },
+  {
+    "key": "Louis Aston Knight",
+    "group": "artist",
+    "file": "intros/artist/louis-aston-knight.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Louis_Aston_Knight.jpg",
+    "wikidata": "Q3261116"
+  },
+  {
+    "key": "Louis Charles Ruotte",
+    "group": "artist",
+    "file": "intros/artist/louis-charles-ruotte.webp",
+    "type": "catalog",
+    "source": "catalog product 1450 (Bouquet of Flowers)",
+    "wikidata": "Q30014719"
+  },
+  {
+    "key": "Louis Haghe",
+    "group": "artist",
+    "file": "intros/artist/louis-haghe.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Louis_Haghe.jpg",
+    "wikidata": "Q1656919"
+  },
+  {
+    "key": "Louis Léopold Boilly",
+    "group": "artist",
+    "file": "intros/artist/louis-leopold-boilly.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Versailles_Boilly_autoportrait.jpg",
+    "wikidata": "Q715909"
+  },
+  {
+    "key": "Louis Marcoussis",
+    "group": "artist",
+    "file": "intros/artist/louis-marcoussis.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Lous_Marcoussis%2C_Selbstportr%C3%A4t%2C_1936.jpg",
+    "wikidata": "Q1346343"
+  },
+  {
+    "key": "Louis Patru",
+    "group": "artist",
+    "file": "intros/artist/louis-patru.webp",
+    "type": "catalog",
+    "source": "catalog product 1516 (Landscape)",
+    "wikidata": "Q18579569"
+  },
+  {
+    "key": "Louwrens Hanedoes",
+    "group": "artist",
+    "file": "intros/artist/louwrens-hanedoes.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Louwrens_Hanedoes2.jpg",
+    "wikidata": "Q6689899"
+  },
+  {
+    "key": "Lucas Cranach the Elder",
+    "group": "artist",
+    "file": "intros/artist/lucas-cranach-the-elder.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Lucas_Cranach_d._%C3%84._063.jpg",
+    "wikidata": "Q191748"
+  },
+  {
+    "key": "Ludolf Bakhuizen",
+    "group": "artist",
+    "file": "intros/artist/ludolf-bakhuizen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Zelfportret_Bakhuizen.jpg",
+    "wikidata": "Q468214"
+  },
+  {
+    "key": "Luigi Ferrazzi",
+    "group": "artist",
+    "file": "intros/artist/luigi-ferrazzi.webp",
+    "type": "catalog",
+    "source": "catalog product 771 (Venice, the Grand Canal with the Rialto Market in the Morning)",
+    "wikidata": "Q66020025"
+  },
+  {
+    "key": "M. de Gijselaar",
+    "group": "artist",
+    "file": "intros/artist/m-de-gijselaar.webp",
+    "type": "catalog",
+    "source": "catalog product 1501 (Branch With Three Yellow Lilies)"
+  },
+  {
+    "key": "Manuel García y Rodríguez",
+    "group": "artist",
+    "file": "intros/artist/manuel-garcia-y-rodriguez.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:1894-09-15%2C_Blanco_y_Negro%2C_Manuel_Garc%C3%ADa_y_Rodr%C3%ADguez%2C_Susillo.jpg",
+    "wikidata": "Q2428659"
+  },
+  {
+    "key": "Maria Klass-Kazanowska",
+    "group": "artist",
+    "file": "intros/artist/maria-klass-kazanowska.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Marya_Klass-Kazanowska_1857-1898_%2855007%29.jpg",
+    "wikidata": "Q28025915"
+  },
+  {
+    "key": "Martin Johnson Heade",
+    "group": "artist",
+    "file": "intros/artist/martin-johnson-heade.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Martin-johnson-heade.jpg",
+    "wikidata": "Q3123472"
+  },
+  {
+    "key": "Martin Rico y Ortega",
+    "group": "artist",
+    "file": "intros/artist/martin-rico-y-ortega.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Autorretrato_-_Mart%C3%ADn_Rico.JPG",
+    "wikidata": "Q427999"
+  },
+  {
+    "key": "Master of the St. Elizabeth Panels",
+    "group": "artist",
+    "file": "intros/artist/master-of-the-st-elizabeth-panels.webp",
+    "type": "catalog",
+    "source": "catalog product 927 (The Saint Elizabeth’s Day Flood)",
+    "wikidata": "Q18516719"
+  },
+  {
+    "key": "Matthijs Maris",
+    "group": "artist",
+    "file": "intros/artist/matthijs-maris.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Maris_matthijs_zelfportret.jpg",
+    "wikidata": "Q1375830"
+  },
+  {
+    "key": "Meindert Hobbema",
+    "group": "artist",
+    "file": "intros/artist/meindert-hobbema.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_Meindert_Hobbema%2C_RP-T-1940-528.jpg",
+    "wikidata": "Q336908"
+  },
+  {
+    "key": "Melchior d'Hondecoeter",
+    "group": "artist",
+    "file": "intros/artist/melchior-d-hondecoeter.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Melchior_d%27Hondecoeter_2.jpg",
+    "wikidata": "Q304411"
+  },
+  {
+    "key": "Michele Giovanni Marieschi",
+    "group": "artist",
+    "file": "intros/artist/michele-giovanni-marieschi.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Titelprent_met_portret_van_Michele_Marieschi_in_ornamenteel_cartouche_Gezichten_op_Veneti%C3%AB_%28serietitel%29_Magnificentiores_selectioresque_urbis_Venetiarum_prospectus_%28serietitel_op_object%29%2C_RP-P-OB-39.106_%28crop1%29.jpg",
+    "wikidata": "Q2501578"
+  },
+  {
+    "key": "Narcisse Virgile Diaz de la Peña",
+    "group": "artist",
+    "file": "intros/artist/narcisse-virgile-diaz-de-la-pena.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Narcisse_Virgilio_D%C3%ADaz.jpg",
+    "wikidata": "Q724140"
+  },
+  {
+    "key": "Nicholas Chevalier",
+    "group": "artist",
+    "file": "intros/artist/nicholas-chevalier.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Nicholas_Chevalier_oval_photograph%2C_c._1870.jpg",
+    "wikidata": "Q7025198"
+  },
+  {
+    "key": "Nicolaas Baur",
+    "group": "artist",
+    "file": "intros/artist/nicolaas-baur.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Nicolaas_Baur.jpg",
+    "wikidata": "Q7029152"
+  },
+  {
+    "key": "Nicolaas Verkolje",
+    "group": "artist",
+    "file": "intros/artist/nicolaas-verkolje.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Nicolaas_Verkolje%2C_by_Jacob_Houbraken.jpg",
+    "wikidata": "Q1702971"
+  },
+  {
+    "key": "Odilon Redon",
+    "group": "artist",
+    "file": "intros/artist/odilon-redon.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Odilon_Redon_vers_1880.jpg",
+    "wikidata": "Q154349"
+  },
+  {
+    "key": "Okabe Ko",
+    "group": "artist",
+    "file": "intros/artist/okabe-ko.webp",
+    "type": "catalog",
+    "source": "catalog product 1426 (Vase of Flowers with Grasshopper, Marine Life, and Garden Rock)",
+    "wikidata": "Q11473827"
+  },
+  {
+    "key": "Paolo Antonio Barbieri",
+    "group": "artist",
+    "file": "intros/artist/paolo-antonio-barbieri.webp",
+    "type": "catalog",
+    "source": "catalog product 1245 (Kitchen Still Life)",
+    "wikidata": "Q3362594"
+  },
+  {
+    "key": "Paul Cezanne",
+    "group": "artist",
+    "file": "intros/artist/paul-cezanne.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Paul-Cezanne.jpg",
+    "wikidata": "Q35548"
+  },
+  {
+    "key": "Paul Gauguin",
+    "group": "artist",
+    "file": "intros/artist/paul-gauguin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Paul_Gauguin_1891.png",
+    "wikidata": "Q37693"
+  },
+  {
+    "key": "Paul Guigou",
+    "group": "artist",
+    "file": "intros/artist/paul-guigou.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Self_Portrait_1869_Paul_Guigou.jpg",
+    "wikidata": "Q2348377"
+  },
+  {
+    "key": "Paul Joseph Constantin Gabriël",
+    "group": "artist",
+    "file": "intros/artist/paul-joseph-constantin-gabriel.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Therese_Schwartze_-_Paul_Joseph_Constantin_Gabri%C3%ABl.jpg",
+    "wikidata": "Q2303402"
+  },
+  {
+    "key": "Paul Müller-Kaempff",
+    "group": "artist",
+    "file": "intros/artist/paul-muller-kaempff.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portr%C3%A4t_Paul_M%C3%BCller-Kaempff_%2801%29.jpg",
+    "wikidata": "Q1541852"
+  },
+  {
+    "key": "Paul Nash",
+    "group": "artist",
+    "file": "intros/artist/paul-nash.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Paul_Nash_in_1922.jpg",
+    "wikidata": "Q727643"
+  },
+  {
+    "key": "Paul Sandby",
+    "group": "artist",
+    "file": "intros/artist/paul-sandby.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Paul_Sandby_by_Francis_Cotes_N01943_9.jpg",
+    "wikidata": "Q266637"
+  },
+  {
+    "key": "Paul Signac",
+    "group": "artist",
+    "file": "intros/artist/paul-signac.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Paul_Signac_1923.jpg",
+    "wikidata": "Q151573"
+  },
+  {
+    "key": "Peter De Wint",
+    "group": "artist",
+    "file": "intros/artist/peter-de-wint.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Bust_of_Peter_de_Wint%2C_Piccadilly_%28cropped%29.jpg",
+    "wikidata": "Q3595589"
+  },
+  {
+    "key": "Peter McCallion",
+    "group": "artist",
+    "file": "intros/artist/peter-mccallion.webp",
+    "type": "catalog",
+    "source": "catalog product 1034 (Slate, Pipe, Tobacco, and Box of Matches)",
+    "wikidata": "Q77444299"
+  },
+  {
+    "key": "Peter Vilhelm Ilsted",
+    "group": "artist",
+    "file": "intros/artist/peter-vilhelm-ilsted.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Peter_ilsted.jpg",
+    "wikidata": "Q1840505"
+  },
+  {
+    "key": "Philips Wouwerman",
+    "group": "artist",
+    "file": "intros/artist/philips-wouwerman.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portret_van_kunstenaar_Philips_Wouwermans_Portretten_van_kunstenaars_%28serietitel%29%2C_RP-P-1907-210.jpg",
+    "wikidata": "Q454671"
+  },
+  {
+    "key": "Pierre-Auguste Renoir",
+    "group": "artist",
+    "file": "intros/artist/pierre-auguste-renoir.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pierre_Auguste_Renoir%2C_uncropped_image.jpg",
+    "wikidata": "Q39931"
+  },
+  {
+    "key": "Pieter Bruegel The Elder",
+    "group": "artist",
+    "file": "intros/artist/pieter-bruegel-the-elder.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_The_Painter_and_the_Buyer%2C_ca._1566_-_Google_Art_Project.jpg",
+    "wikidata": "Q43270"
+  },
+  {
+    "key": "Pieter Gerardus van Os",
+    "group": "artist",
+    "file": "intros/artist/pieter-gerardus-van-os.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pieter_van_Os_zelfportret.jpg",
+    "wikidata": "Q2017560"
+  },
+  {
+    "key": "Pieter Jansz. Saenredam",
+    "group": "artist",
+    "file": "intros/artist/pieter-jansz-saenredam.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pieter_Saenredam_by_Jacob_van_Campen.jpg",
+    "wikidata": "Q433804"
+  },
+  {
+    "key": "Pieter Rudolph Kleijn",
+    "group": "artist",
+    "file": "intros/artist/pieter-rudolph-kleijn.webp",
+    "type": "catalog",
+    "source": "catalog product 951 (St. Cloud)",
+    "wikidata": "Q17335018"
+  },
+  {
+    "key": "Pieter Withoos",
+    "group": "artist",
+    "file": "intros/artist/pieter-withoos.webp",
+    "type": "catalog",
+    "source": "catalog product 1504 (French Rose)",
+    "wikidata": "Q2358263"
+  },
+  {
+    "key": "Pieter de Bloot",
+    "group": "artist",
+    "file": "intros/artist/pieter-de-bloot.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Pieter_de_bloot.jpg",
+    "wikidata": "Q2094279"
+  },
+  {
+    "key": "R. Gigli",
+    "group": "artist",
+    "file": "intros/artist/r-gigli.webp",
+    "type": "catalog",
+    "source": "catalog product 1453 (Peasant Girl on a Stony Road)"
+  },
+  {
+    "key": "Raymond McIntyre",
+    "group": "artist",
+    "file": "intros/artist/raymond-mcintyre.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Raymond_McIntyre1912.jpg",
+    "wikidata": "Q7298782"
+  },
+  {
+    "key": "Reinier Nooms",
+    "group": "artist",
+    "file": "intros/artist/reinier-nooms.webp",
+    "type": "catalog",
+    "source": "catalog product 1169 (Coast Scene)",
+    "wikidata": "Q1936604"
+  },
+  {
+    "key": "Richard Nicolaüs Roland Holst",
+    "group": "artist",
+    "file": "intros/artist/richard-nicolaus-roland-holst.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:RRolandHolst.jpg",
+    "wikidata": "Q2221664"
+  },
+  {
+    "key": "Richard Parkes Bonington",
+    "group": "artist",
+    "file": "intros/artist/richard-parkes-bonington.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Richard_Parkes_Bonington_by_Margaret_Sarah_Carpenter_%28n%C3%A9e_Geddes%29.jpg",
+    "wikidata": "Q380395"
+  },
+  {
+    "key": "Richard Wilson",
+    "group": "artist",
+    "file": "intros/artist/richard-wilson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Mengs_-_Richard_Wilson.jpg",
+    "wikidata": "Q471387"
+  },
+  {
+    "key": "Robert Henri",
+    "group": "artist",
+    "file": "intros/artist/robert-henri.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Robert_Henri_1897.jpg",
+    "wikidata": "Q724860"
+  },
+  {
+    "key": "Robert Hills",
+    "group": "artist",
+    "file": "intros/artist/robert-hills.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Robert_Hills_Fry.jpg",
+    "wikidata": "Q16239927"
+  },
+  {
+    "key": "Robert Russ",
+    "group": "artist",
+    "file": "intros/artist/robert-russ.webp",
+    "type": "catalog",
+    "source": "catalog product 740 (Bei San Trovaso in Venedig)",
+    "wikidata": "Q1169604"
+  },
+  {
+    "key": "Robert William Vonnoh",
+    "group": "artist",
+    "file": "intros/artist/robert-william-vonnoh.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Bessie_Potter_Vonnoh%26Robert_Vonnoh%2Cca._1930.jpg",
+    "wikidata": "Q1856567"
+  },
+  {
+    "key": "Rockwell Kent",
+    "group": "artist",
+    "file": "intros/artist/rockwell-kent.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Rockwell_Kent.jpg",
+    "wikidata": "Q114405"
+  },
+  {
+    "key": "Roman Kazimierz Kochanowski",
+    "group": "artist",
+    "file": "intros/artist/roman-kazimierz-kochanowski.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Roman_Kochanowski_-_Autoportret_1900.jpg",
+    "wikidata": "Q2164656"
+  },
+  {
+    "key": "Rosa Brett",
+    "group": "artist",
+    "file": "intros/artist/rosa-brett.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Rosabrett.jpg",
+    "wikidata": "Q18324756"
+  },
+  {
+    "key": "Rudolf Weber",
+    "group": "artist",
+    "file": "intros/artist/rudolf-weber.webp",
+    "type": "catalog",
+    "source": "catalog product 763 (Motif from the Wachau with Ruin Dürnstein)",
+    "wikidata": "Q105137625"
+  },
+  {
+    "key": "Salomon van Ruysdael",
+    "group": "artist",
+    "file": "intros/artist/salomon-van-ruysdael.webp",
+    "type": "catalog",
+    "source": "catalog product 936 (Dune Landscape with Travelers at Egmond aan Zee)",
+    "wikidata": "Q247005"
+  },
+  {
+    "key": "Samuel Palmer",
+    "group": "artist",
+    "file": "intros/artist/samuel-palmer.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Samuel_Palmer_-_Self-Portrait_-_WGA16951.jpg",
+    "wikidata": "Q982251"
+  },
+  {
+    "key": "Siebe Johannes ten Cate",
+    "group": "artist",
+    "file": "intros/artist/siebe-johannes-ten-cate.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Ten_Cate_zelfportret.jpg",
+    "wikidata": "Q13137792"
+  },
+  {
+    "key": "Stanislas Lépine",
+    "group": "artist",
+    "file": "intros/artist/stanislas-lepine.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Stanislas_L%C3%A9pine.jpeg",
+    "wikidata": "Q1373489"
+  },
+  {
+    "key": "Tatebayashi Kagei",
+    "group": "artist",
+    "file": "intros/artist/tatebayashi-kagei.webp",
+    "type": "catalog",
+    "source": "catalog product 1459 (Peonies)",
+    "wikidata": "Q68853260"
+  },
+  {
+    "key": "Theodore Robinson",
+    "group": "artist",
+    "file": "intros/artist/theodore-robinson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Theodore_Robinson.jpg",
+    "wikidata": "Q1384543"
+  },
+  {
+    "key": "Thomas Cole",
+    "group": "artist",
+    "file": "intros/artist/thomas-cole.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomascole2.jpg",
+    "wikidata": "Q334001"
+  },
+  {
+    "key": "Thomas Collier",
+    "group": "artist",
+    "file": "intros/artist/thomas-collier.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomas_Collier.jpg",
+    "wikidata": "Q7788541"
+  },
+  {
+    "key": "Thomas Colman Dibdin",
+    "group": "artist",
+    "file": "intros/artist/thomas-colman-dibdin.webp",
+    "type": "catalog",
+    "source": "catalog product 1335 (Scene in India)",
+    "wikidata": "Q7788550"
+  },
+  {
+    "key": "Thomas Eakins",
+    "group": "artist",
+    "file": "intros/artist/thomas-eakins.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Eakins_selfportrait.jpg",
+    "wikidata": "Q214905"
+  },
+  {
+    "key": "Thomas Girtin",
+    "group": "artist",
+    "file": "intros/artist/thomas-girtin.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomas_Girtin_%281775-1802%29_by_Henry_Edridge.jpg",
+    "wikidata": "Q714243"
+  },
+  {
+    "key": "Thomas Malton Jnr.",
+    "group": "artist",
+    "file": "intros/artist/thomas-malton-jnr.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomas_Malton_the_younger_by_William_Whiston_Barney%2C_after_Gilbert_Stuart.jpg",
+    "wikidata": "Q4301086"
+  },
+  {
+    "key": "Thomas Matthews Rooke",
+    "group": "artist",
+    "file": "intros/artist/thomas-matthews-rooke.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomas_Matthews_Rooke.jpg",
+    "wikidata": "Q20966407"
+  },
+  {
+    "key": "Thomas Miles Richardson, the younger",
+    "group": "artist",
+    "file": "intros/artist/thomas-miles-richardson-the-younger.webp",
+    "type": "catalog",
+    "source": "catalog product 1188 (Conway Castle)",
+    "wikidata": "Q7792455"
+  },
+  {
+    "key": "Thomas Moran",
+    "group": "artist",
+    "file": "intros/artist/thomas-moran.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Thomas_Moran-photographic_portrait.jpeg",
+    "wikidata": "Q983441"
+  },
+  {
+    "key": "Thomas Shotter Boys",
+    "group": "artist",
+    "file": "intros/artist/thomas-shotter-boys.webp",
+    "type": "catalog",
+    "source": "catalog product 1205 (Picturesque Architecture in Paris, Ghent, Antwerp, Touen, etc.)",
+    "wikidata": "Q7793956"
+  },
+  {
+    "key": "Thomas Sidney Cooper, R.A. and Thomas Creswick, R.A.",
+    "group": "artist",
+    "file": "intros/artist/thomas-sidney-cooper-r-a-and-thomas-creswick-r-a.webp",
+    "type": "catalog",
+    "source": "catalog product 741 (Cattle and Sheep at the River's Edge)"
+  },
+  {
+    "key": "Théodore Rousseau",
+    "group": "artist",
+    "file": "intros/artist/theodore-rousseau.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Theodore_Rousseau.jpg",
+    "wikidata": "Q310025"
+  },
+  {
+    "key": "Théophile de Bock",
+    "group": "artist",
+    "file": "intros/artist/theophile-de-bock.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Theophile_de_Bock.jpg",
+    "wikidata": "Q3066624"
+  },
+  {
+    "key": "Théophile-Alexandre Steinlen",
+    "group": "artist",
+    "file": "intros/artist/theophile-alexandre-steinlen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Steinlen_by_Pieter_Dupont.jpg",
+    "wikidata": "Q706041"
+  },
+  {
+    "key": "Toyohara Chikanobu",
+    "group": "artist",
+    "file": "intros/artist/toyohara-chikanobu.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicanobu_In_Keian_Time.jpg",
+    "wikidata": "Q3087294"
+  },
+  {
+    "key": "Tsubaki Chinzan",
+    "group": "artist",
+    "file": "intros/artist/tsubaki-chinzan.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:A_self_portrait_of_Tsubaki_Chinzan_%E6%A4%BF%E6%A4%BF%E5%B1%B1%E8%87%AA%E7%94%BB%E5%83%8F.jpg",
+    "wikidata": "Q3541614"
+  },
+  {
+    "key": "Unknown Artist",
+    "group": "artist",
+    "file": "intros/artist/unknown-artist.webp",
+    "type": "catalog",
+    "source": "catalog product 1118 (Moonlight)"
+  },
+  {
+    "key": "Victor Charreton",
+    "group": "artist",
+    "file": "intros/artist/victor-charreton.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Buste_de_Victor_Charreton_par_le_sculpteur_Alix_Marquet.jpg",
+    "wikidata": "Q3557216"
+  },
+  {
+    "key": "Vincent van Gogh",
+    "group": "artist",
+    "file": "intros/artist/vincent-van-gogh.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Self-portrait_-_Vincent_van_Gogh.jpg",
+    "wikidata": "Q5582"
+  },
+  {
+    "key": "Walter Greaves",
+    "group": "artist",
+    "file": "intros/artist/walter-greaves.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Walter-greaves.jpg",
+    "wikidata": "Q15440363"
+  },
+  {
+    "key": "Walter Langley",
+    "group": "artist",
+    "file": "intros/artist/walter-langley.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Walter_Langley00.jpg",
+    "wikidata": "Q1377833"
+  },
+  {
+    "key": "Wassily Kandinsky",
+    "group": "artist",
+    "file": "intros/artist/wassily-kandinsky.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Wassily_kandinsky.jpg",
+    "wikidata": "Q61064"
+  },
+  {
+    "key": "Willard Leroy Metcalf",
+    "group": "artist",
+    "file": "intros/artist/willard-leroy-metcalf.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Willard_L._Metcalf.jpg",
+    "wikidata": "Q736843"
+  },
+  {
+    "key": "Willem Maris",
+    "group": "artist",
+    "file": "intros/artist/willem-maris.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Willem_Maris_by_Floris_Arntzenius.jpg",
+    "wikidata": "Q1970072"
+  },
+  {
+    "key": "Willem van Leen",
+    "group": "artist",
+    "file": "intros/artist/willem-van-leen.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Willem_van_Leen%2C_schilder_PK-T-730%2C_PK-T-8981.tiff",
+    "wikidata": "Q18608046"
+  },
+  {
+    "key": "Willem van de Velde the Younger",
+    "group": "artist",
+    "file": "intros/artist/willem-van-de-velde-the-younger.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Willem_van_de_Velde_II_%281633-1707%29_-_%28by_Lodewijk_van_der_Helst%2C_1672%29.jpg",
+    "wikidata": "Q432266"
+  },
+  {
+    "key": "William Alexander",
+    "group": "artist",
+    "file": "intros/artist/william-alexander.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:WilliamAlexander1793.JPG",
+    "wikidata": "Q961465"
+  },
+  {
+    "key": "William Callow",
+    "group": "artist",
+    "file": "intros/artist/william-callow.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:-William_Callow-_MET_DP349860.jpg",
+    "wikidata": "Q2536852"
+  },
+  {
+    "key": "William Gilbert Gaul",
+    "group": "artist",
+    "file": "intros/artist/william-gilbert-gaul.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Gilbert_Gaul_%28cropped%29.jpg",
+    "wikidata": "Q5560919"
+  },
+  {
+    "key": "William Guy Wall",
+    "group": "artist",
+    "file": "intros/artist/william-guy-wall.webp",
+    "type": "catalog",
+    "source": "catalog product 766 (View near Sandy Hill)",
+    "wikidata": "Q280662"
+  },
+  {
+    "key": "William Joseph King",
+    "group": "artist",
+    "file": "intros/artist/william-joseph-king.webp",
+    "type": "catalog",
+    "source": "catalog product 1376 (Coastal Scene With Criccieth Castle)",
+    "wikidata": "Q21465749"
+  },
+  {
+    "key": "William Leighton Leitch",
+    "group": "artist",
+    "file": "intros/artist/william-leighton-leitch.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:William_Leighton_Leitch03.jpg",
+    "wikidata": "Q2579723"
+  },
+  {
+    "key": "William Merritt Chase",
+    "group": "artist",
+    "file": "intros/artist/william-merritt-chase.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:William_Merritt_Chase.jpg",
+    "wikidata": "Q265820"
+  },
+  {
+    "key": "William Pars",
+    "group": "artist",
+    "file": "intros/artist/william-pars.webp",
+    "type": "catalog",
+    "source": "catalog product 1418 (The Grotto at Posillipo)",
+    "wikidata": "Q8016608"
+  },
+  {
+    "key": "William Sidney Mount",
+    "group": "artist",
+    "file": "intros/artist/william-sidney-mount.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:William_Sidney_Mount.jpg",
+    "wikidata": "Q45431"
+  },
+  {
+    "key": "William Stanley Haseltine",
+    "group": "artist",
+    "file": "intros/artist/william-stanley-haseltine.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Haseltine%2C_William_Stanley.jpg",
+    "wikidata": "Q2762575"
+  },
+  {
+    "key": "William Trost Richards",
+    "group": "artist",
+    "file": "intros/artist/william-trost-richards.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:William_Trost_Richards_cropped.png",
+    "wikidata": "Q1985982"
+  },
+  {
+    "key": "Willis Pryce",
+    "group": "artist",
+    "file": "intros/artist/willis-pryce.webp",
+    "type": "catalog",
+    "source": "catalog product 1413 (Country Homestead with Horse)"
+  },
+  {
+    "key": "Winslow Homer",
+    "group": "artist",
+    "file": "intros/artist/winslow-homer.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Winslow_Homer_by_Sarony.jpeg",
+    "wikidata": "Q344838"
+  },
+  {
+    "key": "Wouter Johannes van Troostwijk",
+    "group": "artist",
+    "file": "intros/artist/wouter-johannes-van-troostwijk.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Wouter_Johannes_van_Troostwijk_-_Zelfportret.jpg",
+    "wikidata": "Q2241213"
+  },
+  {
+    "key": "Wynant Haelwegh",
+    "group": "artist",
+    "file": "intros/artist/wynant-haelwegh.webp",
+    "type": "catalog",
+    "source": "catalog product 894 (Embroidered Tableau with Vase of Flowers)"
+  },
+  {
+    "key": "Yosa Buson",
+    "group": "artist",
+    "file": "intros/artist/yosa-buson.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Yosa_Buson.jpg",
+    "wikidata": "Q31523"
+  },
+  {
+    "key": "Édouard Jean Vuillard",
+    "group": "artist",
+    "file": "intros/artist/edouard-jean-vuillard.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Self-Portrait%2C_Aged_21_A21192.jpg",
+    "wikidata": "Q239394"
+  },
+  {
+    "key": "Édouard Manet",
+    "group": "artist",
+    "file": "intros/artist/edouard-manet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:%C3%89douard_Manet%2C_en_buste%2C_de_face_-_Nadar.jpg",
+    "wikidata": "Q40599"
+  },
+  {
+    "key": "계산진경도",
+    "group": "artist",
+    "file": "intros/artist/x.webp",
+    "type": "catalog",
+    "source": "catalog product 1446 (Landscape with Streams and Mountains)"
+  },
+  {
+    "key": "Abstract Art",
+    "group": "category",
+    "file": "intros/category/abstract-art.webp",
+    "type": "catalog",
+    "source": "catalog product 1010 (The Musician)"
+  },
+  {
+    "key": "Animal art",
+    "group": "category",
+    "file": "intros/category/animal-art.webp",
+    "type": "catalog",
+    "source": "catalog product 939 (The Threatened Swan)"
+  },
+  {
+    "key": "Art Prints",
+    "group": "category",
+    "file": "intros/category/art-prints.webp",
+    "type": "catalog",
+    "source": "catalog product 426 (Beach Scene, Cullercoats)"
+  },
+  {
+    "key": "Botanical art",
+    "group": "category",
+    "file": "intros/category/botanical-art.webp",
+    "type": "catalog",
+    "source": "catalog product 547 (Bouquet of Garden Flowers)"
+  },
+  {
+    "key": "Cityscapes & Architecture",
+    "group": "category",
+    "file": "intros/category/cityscapes-architecture.webp",
+    "type": "catalog",
+    "source": "catalog product 693 (The Raamgate at Amsterdam)"
+  },
+  {
+    "key": "Classic posters",
+    "group": "category",
+    "file": "intros/category/classic-posters.webp",
+    "type": "catalog",
+    "source": "catalog product 431 (Vintage Car Front View)"
+  },
+  {
+    "key": "Dutch masters",
+    "group": "category",
+    "file": "intros/category/dutch-masters.webp",
+    "type": "catalog",
+    "source": "catalog product 658 (Vase of Flowers)"
+  },
+  {
+    "key": "Entertainment posters",
+    "group": "category",
+    "file": "intros/category/entertainment-posters.webp",
+    "type": "catalog",
+    "source": "catalog product 489 (Girl with Guitar Outdoors)"
+  },
+  {
+    "key": "Famous Painters",
+    "group": "category",
+    "file": "intros/category/famous-painters.webp",
+    "type": "catalog",
+    "source": "catalog product 428 (Ile Malin)"
+  },
+  {
+    "key": "General Posters",
+    "group": "category",
+    "file": "intros/category/general-posters.webp",
+    "type": "catalog",
+    "source": "catalog product 662 (Surf Van by the Sea)"
+  },
+  {
+    "key": "Landscape",
+    "group": "category",
+    "file": "intros/category/landscape.webp",
+    "type": "gravur",
+    "source": "catalog product 804 (Hunters in the Snow, Pieter Bruegel the Elder)",
+    "note": "Crop on the trees and hunters; line period 16 at 800px"
+  },
+  {
+    "key": "Modern masters",
+    "group": "category",
+    "file": "intros/category/modern-masters.webp",
+    "type": "catalog",
+    "source": "catalog product 1150 (Terrace of a Cafe on Montmartre)"
+  },
+  {
+    "key": "Photography",
+    "group": "category",
+    "file": "intros/category/photography.webp",
+    "type": "catalog",
+    "source": "catalog product 392 (Santorini Blue Gate)"
+  },
+  {
+    "key": "Portraits",
+    "group": "category",
+    "file": "intros/category/portraits.webp",
+    "type": "catalog",
+    "source": "catalog product 969 (Portrait of Miss Dora Wheeler)"
+  },
+  {
+    "key": "Posters",
+    "group": "category",
+    "file": "intros/category/posters.webp",
+    "type": "catalog",
+    "source": "catalog product 385 (Autumn Forest Path)"
+  },
+  {
+    "key": "Renaissance Masters",
+    "group": "category",
+    "file": "intros/category/renaissance-masters.webp",
+    "type": "catalog",
+    "source": "catalog product 927 (The Saint Elizabeth’s Day Flood)"
+  },
+  {
+    "key": "Retro & vintage",
+    "group": "category",
+    "file": "intros/category/retro-vintage.webp",
+    "type": "catalog",
+    "source": "catalog product 409 (Cowgirl Ride)"
+  },
+  {
+    "key": "Romantic & Realist Masters",
+    "group": "category",
+    "file": "intros/category/romantic-realist-masters.webp",
+    "type": "catalog",
+    "source": "catalog product 780 (Blick auf Weissenbach am Attersee)"
+  },
+  {
+    "key": "Seascapes",
+    "group": "category",
+    "file": "intros/category/seascapes.webp",
+    "type": "catalog",
+    "source": "catalog product 665 (The Shrimpers)"
+  },
+  {
+    "key": "Sport posters",
+    "group": "category",
+    "file": "intros/category/sport-posters.webp",
+    "type": "catalog",
+    "source": "catalog product 386 (Montreal Winter Sports 1924 Poster)"
+  },
+  {
+    "key": "Still Life",
+    "group": "category",
+    "file": "intros/category/still-life.webp",
+    "type": "catalog",
+    "source": "catalog product 441 (Irises)"
+  },
+  {
+    "key": "Alps",
+    "group": "collection",
+    "file": "intros/collection/alps.webp",
+    "type": "catalog",
+    "source": "catalog product 777 (Hallstättersee with View of the Dachstein)"
+  },
+  {
+    "key": "Art Nouveau",
+    "group": "collection",
+    "file": "intros/collection/art-nouveau.webp",
+    "type": "catalog",
+    "source": "catalog product 1241 (Winter: Cat on a Cushion)"
+  },
+  {
+    "key": "Baroque & Rococo",
+    "group": "collection",
+    "file": "intros/collection/baroque-rococo.webp",
+    "type": "catalog",
+    "source": "catalog product 916 (A Pelican and Other Birds Near a Pool)"
+  },
+  {
+    "key": "Classics",
+    "group": "collection",
+    "file": "intros/collection/classics.webp",
+    "type": "catalog",
+    "source": "catalog product 490 (Een molen aan een poldervaart (In de maand juli))"
+  },
+  {
+    "key": "Dutch Golden Age",
+    "group": "collection",
+    "file": "intros/collection/dutch-golden-age.webp",
+    "type": "catalog",
+    "source": "catalog product 737 (Ice Scene)"
+  },
+  {
+    "key": "Forest&Countryside",
+    "group": "collection",
+    "file": "intros/collection/forest-countryside.webp",
+    "type": "catalog",
+    "source": "catalog product 1396 (Rednal Wood, Winter)"
+  },
+  {
+    "key": "Impressionism",
+    "group": "collection",
+    "file": "intros/collection/impressionism.webp",
+    "type": "gravur",
+    "source": "catalog product 1176 (Paris Street, Rainy Day, Gustave Caillebotte)",
+    "note": "Crop on the couple under the umbrella; line period 16 at 800px"
+  },
+  {
+    "key": "Japanese Art",
+    "group": "collection",
+    "file": "intros/collection/japanese-art.webp",
+    "type": "catalog",
+    "source": "catalog product 1182 (The Great Wave)"
+  },
+  {
+    "key": "Modern Art",
+    "group": "collection",
+    "file": "intros/collection/modern-art.webp",
+    "type": "catalog",
+    "source": "catalog product 1009 (Frosty Day)"
+  },
+  {
+    "key": "Post-Impressionism",
+    "group": "collection",
+    "file": "intros/collection/post-impressionism.webp",
+    "type": "catalog",
+    "source": "catalog product 1052 (Self-Portrait)"
+  },
+  {
+    "key": "Realism",
+    "group": "collection",
+    "file": "intros/collection/realism.webp",
+    "type": "catalog",
+    "source": "catalog product 735 (The Scheldt in Mariekerke)"
+  },
+  {
+    "key": "Renaissance",
+    "group": "collection",
+    "file": "intros/collection/renaissance.webp",
+    "type": "catalog",
+    "source": "catalog product 804 (Hunters in the Snow)"
+  },
+  {
+    "key": "Romanticism",
+    "group": "collection",
+    "file": "intros/collection/romanticism.webp",
+    "type": "catalog",
+    "source": "catalog product 768 (View from the New Schmolnau to the Kreuzstein on the Traun)"
+  },
+  {
+    "key": "Winter",
+    "group": "collection",
+    "file": "intros/collection/winter.webp",
+    "type": "catalog",
+    "source": "catalog product 608 (Winter Landscape with Skaters)"
+  },
+  {
+    "key": "Amsterdam Museum",
+    "group": "museum",
+    "file": "intros/museum/amsterdam-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Amsterdams_Historisch_Museum.jpg",
+    "wikidata": "Q1820897"
+  },
+  {
+    "key": "Art Institute of Chicago",
+    "group": "museum",
+    "file": "intros/museum/art-institute-of-chicago.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Art_Institute_of_Chicago_%2851575570710%29.jpg",
+    "wikidata": "Q239303"
+  },
+  {
+    "key": "Barnes Foundation",
+    "group": "museum",
+    "file": "intros/museum/barnes-foundation.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Barnes-foundation.png",
+    "wikidata": "Q808462"
+  },
+  {
+    "key": "Birmingham Museums Trust",
+    "group": "museum",
+    "file": "intros/museum/birmingham-museums-trust.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Chamberlain_Square_-_geograph.org.uk_-_556412.jpg",
+    "wikidata": "Q1799857"
+  },
+  {
+    "key": "Brooklyn Museum",
+    "group": "museum",
+    "file": "intros/museum/brooklyn-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Brooklyn_Museum_June_2008_sunset_jeh.JPG",
+    "wikidata": "Q632682"
+  },
+  {
+    "key": "Carmen Thyssen Museum",
+    "group": "museum",
+    "file": "intros/museum/carmen-thyssen-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Museo_Carmen_Thyssen_-_Palacio_de_Villal%C3%B3n.jpg",
+    "wikidata": "Q5043601"
+  },
+  {
+    "key": "Clark Art Institute",
+    "group": "museum",
+    "file": "intros/museum/clark-art-institute.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Clark_Art_Institute%2C_Williamstown%2C_MA_-_main_entrance.JPG",
+    "wikidata": "Q1465805"
+  },
+  {
+    "key": "Cleveland Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/cleveland-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Springtime_art_museum.jpg",
+    "wikidata": "Q657415"
+  },
+  {
+    "key": "Columbus Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/columbus-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Columbus_Museum_of_Art.jpg",
+    "wikidata": "Q5935366"
+  },
+  {
+    "key": "Corcoran Collection",
+    "group": "museum",
+    "file": "intros/museum/corcoran-collection.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Corcoran_Gallery_of_Art_-_Washington_DC_-_DSC01051.JPG",
+    "wikidata": "Q768446"
+  },
+  {
+    "key": "Crystal Bridges Museum of American Art",
+    "group": "museum",
+    "file": "intros/museum/crystal-bridges-museum-of-american-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Crystal_Bridges_Museum_of_American_Art--2012-04-12.jpg",
+    "wikidata": "Q1142334"
+  },
+  {
+    "key": "Foundation E.G. Buehrle",
+    "group": "museum",
+    "file": "intros/museum/foundation-e-g-buehrle.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Sammlung_B%C3%BChrle.jpg",
+    "wikidata": "Q666331"
+  },
+  {
+    "key": "Frans Hals Museum",
+    "group": "museum",
+    "file": "intros/museum/frans-hals-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Oudemannenhuis_toegangspoort_%28Haarlem%29.JPG",
+    "wikidata": "Q574961"
+  },
+  {
+    "key": "Hermitage Museum",
+    "group": "museum",
+    "file": "intros/museum/hermitage-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Winter_Palace_Panorama_4.jpg",
+    "wikidata": "Q132783"
+  },
+  {
+    "key": "Kröller-Müller Museum",
+    "group": "museum",
+    "file": "intros/museum/kroller-muller-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG",
+    "wikidata": "Q1051928"
+  },
+  {
+    "key": "Kunsthistorisches Museum",
+    "group": "museum",
+    "file": "intros/museum/kunsthistorisches-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Wien_Kunsthistorisches_Museum.jpg",
+    "wikidata": "Q95569"
+  },
+  {
+    "key": "Künstlerhaus Wien",
+    "group": "museum",
+    "file": "intros/museum/kunstlerhaus-wien.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:WienKuenstlerhaus.jpg",
+    "wikidata": "Q284902"
+  },
+  {
+    "key": "Mauritshuis",
+    "group": "museum",
+    "file": "intros/museum/mauritshuis.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Mauritshuis_Museum_%2814346890947%29.jpg",
+    "wikidata": "Q221092"
+  },
+  {
+    "key": "Metropolitan Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/metropolitan-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Metropolitan_Museum_of_Art_%28The_Met%29_-_Central_Park%2C_NYC.jpg",
+    "wikidata": "Q160236"
+  },
+  {
+    "key": "Museum Mayer van den Bergh",
+    "group": "museum",
+    "file": "intros/museum/museum-mayer-van-den-bergh.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:LangeGasthuisstraat19front.jpg",
+    "wikidata": "Q1699233"
+  },
+  {
+    "key": "Museum of Fine Arts",
+    "group": "museum",
+    "file": "intros/museum/museum-of-fine-arts.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_des_beaux_arts_024.JPG",
+    "wikidata": "Q3330225"
+  },
+  {
+    "key": "Museum of New Zealand Te Papa Tongarewa",
+    "group": "museum",
+    "file": "intros/museum/museum-of-new-zealand-te-papa-tongarewa.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Te_Papa_%28National_Museum%29%2C_Wellington.jpg",
+    "wikidata": "Q915603"
+  },
+  {
+    "key": "Musée Carnavalet",
+    "group": "museum",
+    "file": "intros/museum/musee-carnavalet.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Carnavalet_Par%C3%ADs_10.JPG",
+    "wikidata": "Q640447"
+  },
+  {
+    "key": "Musée d'Orsay",
+    "group": "museum",
+    "file": "intros/museum/musee-d-orsay.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:MuseeDOrsay.jpg",
+    "wikidata": "Q23402"
+  },
+  {
+    "key": "Musée des Beaux-Arts de la ville de Paris",
+    "group": "museum",
+    "file": "intros/museum/musee-des-beaux-arts-de-la-ville-de-paris.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Petit_Palais_%40_Paris_%2834081651763%29.jpg",
+    "wikidata": "Q59546080"
+  },
+  {
+    "key": "National Gallery of Art",
+    "group": "museum",
+    "file": "intros/museum/national-gallery-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building.JPG",
+    "wikidata": "Q214867"
+  },
+  {
+    "key": "National Museum in Warsaw",
+    "group": "museum",
+    "file": "intros/museum/national-museum-in-warsaw.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Muzeum_Narodowe_w_Warszawie.jpg",
+    "wikidata": "Q153306"
+  },
+  {
+    "key": "National Postal Museum",
+    "group": "museum",
+    "file": "intros/museum/national-postal-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:National_postal_museum.jpg",
+    "wikidata": "Q144900"
+  },
+  {
+    "key": "Nelson-Atkins Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/nelson-atkins-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Nelson-Atkins_X9.jpg",
+    "wikidata": "Q1976985"
+  },
+  {
+    "key": "Noordbrabants Museum",
+    "group": "museum",
+    "file": "intros/museum/noordbrabants-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Voorgevel_Noordbrabants_Museum.jpg",
+    "wikidata": "Q12013217"
+  },
+  {
+    "key": "Permekemuseum",
+    "group": "museum",
+    "file": "intros/museum/permekemuseum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Jabbeke_-_Huis_Permeke.jpg",
+    "wikidata": "Q2515275"
+  },
+  {
+    "key": "Private collection",
+    "group": "museum",
+    "file": "intros/museum/private-collection.webp",
+    "type": "catalog",
+    "source": "catalog product 1445 (Traunstein River on the Road to Empfig, Bavaria)"
+  },
+  {
+    "key": "Rijksmuseum",
+    "group": "museum",
+    "file": "intros/museum/rijksmuseum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:South_facade_of_the_Rijksmuseum_Amsterdam_(DSCF0528).jpg",
+    "note": "South facade, Wikipedia lead image"
+  },
+  {
+    "key": "Royal Museum of Fine Arts Antwerp (KMSKA)",
+    "group": "museum",
+    "file": "intros/museum/royal-museum-of-fine-arts-antwerp-kmska.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Koninklijk_Museum_voor_Schone_Kunsten_Antwerpen_mit_Ank%C3%BCndigung_der_Wiederer%C3%B6ffnung.jpg",
+    "wikidata": "Q1471477"
+  },
+  {
+    "key": "Slovak National Gallery",
+    "group": "museum",
+    "file": "intros/museum/slovak-national-gallery.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:SNG20250403_092013.jpg",
+    "wikidata": "Q1744024"
+  },
+  {
+    "key": "Smithsonian American Art Museum",
+    "group": "museum",
+    "file": "intros/museum/smithsonian-american-art-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:2008-0601-DC-NatlPortGall.jpg",
+    "wikidata": "Q1192305"
+  },
+  {
+    "key": "Spencer Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/spencer-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:SpencerMuseumofArt_Entrance_2016.jpg",
+    "wikidata": "Q1601838"
+  },
+  {
+    "key": "Tate",
+    "group": "museum",
+    "file": "intros/museum/tate.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Tate_Britain_%285822081512%29_%282%29.jpg",
+    "wikidata": "Q430682"
+  },
+  {
+    "key": "Toledo Museum of Art",
+    "group": "museum",
+    "file": "intros/museum/toledo-museum-of-art.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Toledo_Museum_of_Art_exterior_02.jpg",
+    "wikidata": "Q1743116"
+  },
+  {
+    "key": "Van Gogh Museum",
+    "group": "museum",
+    "file": "intros/museum/van-gogh-museum.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Van_Gogh_Museum.jpg",
+    "wikidata": "Q224124"
+  },
+  {
+    "key": "Yale University Art Gallery",
+    "group": "museum",
+    "file": "intros/museum/yale-university-art-gallery.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg",
+    "wikidata": "Q1568434"
+  },
+  {
+    "key": "Zentralbibliothek Zürich",
+    "group": "museum",
+    "file": "intros/museum/zentralbibliothek-zurich.webp",
+    "type": "real",
+    "source": "https://commons.wikimedia.org/wiki/File:Zentralbibliothek_Z%C3%BCrich_%26_Predigernturm_-_M%C3%BChlegasse_2011-08-01_15-22-44_ShiftN2.jpg",
+    "wikidata": "Q190260"
+  }
+]
