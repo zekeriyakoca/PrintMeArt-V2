@@ -456,15 +456,16 @@ export class AnalyticsService {
   }
 
   private trackPageView(url: string): void {
-    this.track(
-      'page_view',
-      this.enrich({
-        page_path: this.sanitizePath(url),
-        page_location: window.location.origin + this.sanitizePath(url),
-        page_title: document.title,
-      }),
-      { ga4: true, posthog: true },
-    );
+    const properties = this.enrich({
+      page_path: this.sanitizePath(url),
+      page_location: window.location.origin + this.sanitizePath(url),
+      page_title: document.title,
+    });
+
+    this.track('page_view', properties, { ga4: true, posthog: false });
+
+    // PostHog Web analytics only reads $pageview; the browser address keeps the /nl or /en prefix, and the query is dropped (e.g. Stripe session_id)
+    this.track('$pageview', { ...properties, $current_url: window.location.origin + window.location.pathname }, { ga4: false, posthog: true });
   }
 
   private enqueue(event: QueuedEvent): void {
