@@ -3,7 +3,8 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, fromEvent, interval, map, merge, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CartItemDto } from '../../models/cart-item';
+import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
+import { OrderItemDto } from '../../models/orders';
 import { ProductDto, ProductSimpleDto } from '../../models/product';
 import { AuthenticationService } from '../authentication/authentication.service';
 
@@ -69,6 +70,12 @@ const FIRST_PARTY_FLUSH_INTERVAL_MS = 5000;
 const KEEPALIVE_MAX_BYTES = 60 * 1024;
 const PAGE_TITLE_WAIT_MS = 3000;
 const TRACKED_ORDERS_KEY = 'pma_tracked_orders';
+const CHECKOUT_ITEMS_KEY = 'pma_checkout_items';
+/** Options kept out of the variant name: internal links of custom designs and previews */
+const UNTRACKED_OPTIONS = ['CustomProductUrl', 'PreviewSnapshotUrl'];
+
+/** The choices made on the product page, sent with add_to_cart */
+export type ProductChoices = { size?: string; paper?: string; frame?: string; mat?: string };
 
 @Injectable({
   providedIn: 'root',
@@ -175,7 +182,16 @@ export class AnalyticsService {
     });
   }
 
-  trackAddToCart(data: { productId: number; variantId: number; productName: string; quantity: number; unitPrice: number; mergedIntoExisting: boolean; selectedOptionsCount: number }): void {
+  trackAddToCart(data: {
+    productId: number;
+    variantId: number;
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+    mergedIntoExisting: boolean;
+    selectedOptions: SelectedOptionDto[];
+    choices?: ProductChoices;
+  }): void {
     this.track('add_to_cart', {
       currency: 'EUR',
       value: this.money(data.unitPrice * data.quantity),
@@ -184,12 +200,13 @@ export class AnalyticsService {
       variant_id: String(data.variantId),
       quantity: data.quantity,
       merged_into_existing: data.mergedIntoExisting,
-      selected_options_count: data.selectedOptionsCount,
+      selected_options_count: data.selectedOptions?.length ?? 0,
+      ...data.choices,
       items: [
         {
           item_id: String(data.productId),
           item_name: data.productName,
-          item_variant: String(data.variantId),
+          item_variant: this.variantName(data.selectedOptions),
           price: this.money(data.unitPrice),
           quantity: data.quantity,
         },
@@ -249,6 +266,36 @@ export class AnalyticsService {
       value: this.cartValue(items),
       items: items.map((item) => this.toCartGa4Item(item)),
     });
+    this.rememberCheckoutItems(orderId, items);
+  }
+
+  // Kept for the success page after Stripe, where the cart is already gone
+  private rememberCheckoutItems(orderId: number, items: CartItemDto[]): void {
+    try {
+      sessionStorage.setItem(CHECKOUT_ITEMS_KEY, JSON.stringify({ orderId, items: items.map((item) => this.toCartGa4Item(item)) }));
+    } catch {
+      // Storage unavailable: the purchase goes without items
+    }
+  }
+
+  /** The items of an order paid in this tab, as sent with add_payment_info */
+  checkoutItems(orderId?: number): AnalyticsProperties[] | undefined {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(CHECKOUT_ITEMS_KEY) || 'null') as { orderId: number; items: AnalyticsProperties[] } | null;
+      return saved && saved.orderId === orderId ? saved.items : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  orderItems(items: OrderItemDto[]): AnalyticsProperties[] {
+    return items.map((item) => ({
+      item_id: String(item.productId),
+      item_name: item.productName,
+      item_variant: this.variantName(item.selectedOptions),
+      price: this.money(item.unitPrice),
+      quantity: item.units,
+    }));
   }
 
   trackPaymentFailed(reason: string, orderId?: number): void {
@@ -262,7 +309,7 @@ export class AnalyticsService {
     );
   }
 
-  trackOrderCompleted(data: { orderId?: number; orderNumber?: string; amountTotal?: number; currency?: string }): void {
+  trackOrderCompleted(data: { orderId?: number; orderNumber?: string; amountTotal?: number; currency?: string; items?: AnalyticsProperties[]; shipping?: number }): void {
     const transactionId = data.orderNumber || (data.orderId ? String(data.orderId) : undefined);
     // The success page can be opened again (reload, back button); an order counts once
     if (transactionId && !this.markOrderTracked(transactionId)) return;
@@ -271,7 +318,14 @@ export class AnalyticsService {
       transaction_id: transactionId,
       value: data.amountTotal ? data.amountTotal / 100 : undefined,
       currency: (data.currency || 'EUR').toUpperCase(),
+      shipping: data.shipping,
+      items: data.items,
     });
+    try {
+      sessionStorage.removeItem(CHECKOUT_ITEMS_KEY);
+    } catch {
+      // Nothing to clean up
+    }
   }
 
   /** False when this order was already tracked in this browser */
@@ -520,7 +574,8 @@ export class AnalyticsService {
   // The address as the visitor sees it: language prefix, filters and campaign tags (utm, gclid) kept, Stripe's session_id left out
   private currentPageUrl(): URL {
     const url = new URL(window.location.href);
-    url.searchParams.delete('session_id');
+    // Only rewrite the query when needed, so it keeps the browser's own encoding (%20, not +)
+    if (url.searchParams.has('session_id')) url.searchParams.delete('session_id');
     url.hash = '';
     return url;
   }
@@ -658,10 +713,16 @@ export class AnalyticsService {
     return {
       item_id: String(item.productId),
       item_name: item.productName,
-      item_variant: String(item.variantId),
+      item_variant: this.variantName(item.selectedOptions),
       price: this.money(item.unitPrice),
       quantity: item.quantity,
     };
+  }
+
+  /** The chosen options as the cart shows them, e.g. "Natural Oak / Museum / No Mat / 30x40" */
+  private variantName(options: SelectedOptionDto[] | undefined): string | undefined {
+    const names = (options ?? []).map((option) => option.optionName).filter((name): name is string => !!name && !UNTRACKED_OPTIONS.includes(name));
+    return names.length ? names.join(' / ') : undefined;
   }
 
   private toGa4Item(product: ProductDto | ProductSimpleDto, index?: number): AnalyticsProperties {

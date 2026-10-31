@@ -8,6 +8,7 @@ import { CheckoutService, CheckoutSessionStatus } from '../../services/checkout/
 import { CartService } from '../../services/cart/cart.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
+import { OrdersService } from '../../services/orders/orders.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -23,6 +24,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
   private readonly platformId = inject(PLATFORM_ID);
   private readonly auth = inject(AuthenticationService);
   private readonly analytics = inject(AnalyticsService);
+  private readonly ordersService = inject(OrdersService);
 
   isLoading = signal(true);
 
@@ -53,12 +55,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
 
         if (session.status === 'complete' && session.paymentStatus === 'paid') {
           this.isSuccess.set(true);
-          this.analytics.trackOrderCompleted({
-            orderId: session.orderId,
-            orderNumber: session.orderNumber,
-            amountTotal: session.amountTotal,
-            currency: session.currency,
-          });
+          this.trackPurchase(session);
           // Clear the cart after successful payment
           this.cartService.clearCart();
           // Clean up session storage
@@ -77,6 +74,29 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
         this.errorMessage.set('Failed to verify payment. Please contact support.');
         this.isLoading.set(false);
       },
+    });
+  }
+
+  // Items come from the cart saved before Stripe; without it (another tab or device) a signed-in buyer's order is read back
+  private trackPurchase(session: CheckoutSessionStatus): void {
+    const purchase = { orderId: session.orderId, orderNumber: session.orderNumber, amountTotal: session.amountTotal, currency: session.currency };
+    const items = this.analytics.checkoutItems(session.orderId);
+
+    if (items) {
+      const itemsValue = items.reduce((total, item) => total + Number(item['price']) * Number(item['quantity']), 0);
+      const shipping = session.amountTotal ? Math.max(0, Math.round(session.amountTotal - itemsValue * 100) / 100) : undefined;
+      this.analytics.trackOrderCompleted({ ...purchase, items, shipping });
+      return;
+    }
+
+    if (!session.orderId || !this.auth.isAuthenticated()) {
+      this.analytics.trackOrderCompleted(purchase);
+      return;
+    }
+
+    this.ordersService.getOrder(session.orderId).subscribe({
+      next: (order) => this.analytics.trackOrderCompleted({ ...purchase, items: this.analytics.orderItems(order.orderItems ?? []), shipping: order.shippingCost }),
+      error: () => this.analytics.trackOrderCompleted(purchase),
     });
   }
 

@@ -15,7 +15,7 @@ import { PaperOptionsComponent } from '../paper-options/paper-options.component'
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { FramedSizeNames, SizeOptions } from '../../shared/constants';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
-import { AnalyticsService } from '../../services/telemetry/analytics.service';
+import { AnalyticsService, ProductChoices } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
 import { RoomViewComponent } from '../room-view/room-view.component';
@@ -216,7 +216,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     const productImages = this.product().images;
     const pictureUrl = customUrl || (productImages && productImages.length > 0 ? productImages[0].thumb : '');
 
-    this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions());
+    this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions(), this.choices());
   }
 
   getSelectedOptionName(optionId?: number): string {
@@ -225,6 +225,18 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       .optionGroups.flatMap((group) => group.options)
       .find((opt) => opt.id === optionId);
     return option ? option.value : '';
+  }
+
+  /** The size, paper, frame and mat chosen, by name, for analytics */
+  private choices(): ProductChoices {
+    const frameGroup = this.product().optionGroups.find((group) => group.name.toLowerCase() === 'frame');
+    const hasPaper = this.product().optionGroups.some((group) => group.name.toLowerCase().startsWith('paper') && group.selectedOptionId);
+    return {
+      size: (this.selectedSize() ?? SizeOptions[0]).name,
+      paper: hasPaper ? this.selectedPaperName() : undefined,
+      frame: frameGroup?.options.find((option) => option.id === frameGroup.selectedOptionId)?.value,
+      mat: this.isMatIncluded() ? 'Include Mat' : 'No Mat',
+    };
   }
 
   private getSelectedOptions() {
