@@ -62,6 +62,35 @@ export class CategoryGridComponent {
     this.tabActive.set(name);
   }
 
+  // Local, card-cropped (12:11) and compressed images per category slug. The catalog's own
+  // category images are tiny uploads, so they turn blurry once a thumbnail fills the card.
+  private readonly LOCAL_IMAGES = new Set([
+    'landscape',
+    'botanical-art',
+    'animal-art',
+    'still-life',
+    'cityscapes-architecture',
+    'seascapes',
+    'portraits',
+    'abstract-art',
+  ]);
+
+  // Full card width at each breakpoint (2 columns, 3 from xl inside a 1280px container),
+  // so the image is already sharp when the thumbnail expands to the whole card.
+  readonly imageSizes = '(min-width: 1280px) 420px, 50vw';
+
+  imageSrc(item: CategoryDto): string {
+    return this.LOCAL_IMAGES.has(item.slug)
+      ? `/assets/images/categories/${item.slug}-600.webp`
+      : item.imageUrl;
+  }
+
+  imageSrcset(item: CategoryDto): string | null {
+    if (!this.LOCAL_IMAGES.has(item.slug)) return null;
+    const base = `/assets/images/categories/${item.slug}`;
+    return `${base}-600.webp 600w, ${base}-1200.webp 1200w`;
+  }
+
   encodeURIComponent(value: string): string {
     return encodeURIComponent(value);
   }

@@ -20,35 +20,32 @@
   } @else {
   <div class="grid gap-4 md:gap-7 grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
     @for (item of childCategories(); track item.id) {
-    <div
-      class="nc-CardCategory4 relative w-full aspect-[12/11] rounded-3xl overflow-hidden bg-white group hover:nc-shadow-lg transition-shadow">
-      <div class="absolute bottom-0 right-0 max-w-[280px] opacity-80 hidden md:block">
-        <!-- <img width="200" height="200" [src]="'/assets/placeholder.svg'" alt="" /> -->
+    <div class="nc-CardCategory4 cat-card relative w-full aspect-[12/11] rounded-3xl overflow-hidden bg-white">
+      <div class="cat-card__media bg-rose-50">
+        <img class="cat-card__img" [src]="imageSrc(item)" [attr.srcset]="imageSrcset(item)"
+          [attr.sizes]="imageSizes" alt="" loading="lazy" />
+        <div class="cat-card__shade"></div>
       </div>
+      <span class="cat-card__ring"></span>
 
-      <div class="absolute inset-0 p-5 sm:p-8 flex flex-col justify-between">
-        <div class="flex justify-between items-center">
-          <div
-            class="w-14 h-14 md:w-32 md:h-32 rounded-full overflow-hidden z-0 {{'bg-rose-50' }} flex items-center justify-center">
-            <img class="w-full h-full object-cover" [src]="item.imageUrl" alt="" loading="lazy" />
-          </div>
-        </div>
+      <div class="cat-card__body absolute inset-0 p-5 sm:p-8 flex flex-col justify-between">
+        <div class="w-14 h-14 md:w-32 md:h-32"></div>
 
         <div>
           @if (item.description && item.description !== item.name) {
-          <span class="block mb-2 text-xs md:text-sm text-slate-500 hidden md:block">
+          <span class="cat-card__sub block mb-2 text-xs md:text-sm text-slate-500 hidden md:block">
             {{ 'name.' + item.description | t }}
           </span>
           }
-          <h2 class="text-md md:text-3xl font-semibold">
+          <h2 class="cat-card__title text-md md:text-3xl font-semibold">
             {{ 'name.' + item.name | t }}
           </h2>
         </div>
 
         <a [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
-          class="flex items-center text-xs md:text-sm group-hover:text-primary-500 transition-colors">
+          class="cat-card__cta flex items-center text-xs md:text-sm">
           <span>{{ 'categories.seePrints' | t }}</span>
-          <app-icon iconName="see-prints" class="w-4 h-4 ml-2.5" />
+          <app-icon iconName="see-prints" class="cat-card__arrow w-4 h-4 ml-2.5" />
         </a>
       </div>
 
