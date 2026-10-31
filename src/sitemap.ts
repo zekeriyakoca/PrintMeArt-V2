@@ -56,19 +56,24 @@ async function fetchListings(): Promise<string[]> {
   return [...enough(stats.categories).map((n) => listing('categoryName', n)), ...enough(stats.attributes).map((n) => listing('attributeName', n))];
 }
 
-async function catalog(path: string, body?: object) {
-  // Inside the cluster the catalog is reached through the gateway, as server-rendered pages do
-  const base = environment.serviceUrls['catalog-api'];
+export function catalog(path: string, body?: object) {
+  return backend('catalog-api', `/catalog/v1${path}`, body);
+}
+
+/** A storefront backend call made by the server itself */
+export async function backend(service: keyof typeof environment.serviceUrls, path: string, body?: object) {
+  // Inside the cluster the backend is reached through the gateway, as server-rendered pages do
+  const base = environment.serviceUrls[service];
   const origin = process.env['INTERNAL_API_URL'] ? base.replace(new URL(base).origin, process.env['INTERNAL_API_URL']) : base;
-  const response = await fetch(`${origin}/catalog/v1${path}`, {
+  const response = await fetch(`${origin}${path}`, {
     method: body ? 'POST' : 'GET',
     headers: { 'content-type': 'application/json', Origin: environment.siteUrl },
     body: body ? JSON.stringify(body) : undefined,
   });
-  if (!response.ok) throw new Error(`Catalog answered ${response.status} for ${path}`);
+  if (!response.ok) throw new Error(`${service} answered ${response.status} for ${path}`);
   return response.json();
 }
 
-function escapeXml(text: string): string {
+export function escapeXml(text: string): string {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
