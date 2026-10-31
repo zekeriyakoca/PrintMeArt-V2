@@ -32,10 +32,10 @@ Teknik SEO hazır: SSR, sitemap, yapısal veri, hreflang, `llms.txt`, robots'ta 
   1. merchants.google.com'da hesap aç (MeetTheMoose, ülke Hollanda, para birimi EUR). printmeart.nl'yi doğrula ve sahiplen; Search Console ile aynı Google hesabıyla en kolayı.
   2. İşletme bilgileri: adres, iletişim e-postası, telefon. Ürünler → Ürün kaynakları → "Ürün kaynağı ekle" → "URL'den dosya" → `https://printmeart.nl/feeds/products.xml`, dil Hollandaca, ülke Hollanda, günlük getirme.
   3. Kargo: Gönderim ve iadeler → kargo hizmeti. NL €5,99 (€50 üstü ücretsiz), BE/DE €7,95, AB'nin geri kalanı €12,95; teslimat 1–5 iş günü. Feed NL/BE/DE'yi zaten taşıyor; diğer AB ülkelerinde satılacaksa ülkeleri hesapta da ekle.
-  4. İade politikası: 30 gün, iade etiketi ücretsiz, posta ile; iade sayfası linki `https://printmeart.nl/nl/legal#returns`.
+  4. İade politikası: 30 gün, iade kargosu müşteriye ait, posta ile; iade sayfası linki `https://printmeart.nl/nl/legal#returns`.
   5. "Ücretsiz listeleme" programını aç. İlk incelemede reddedilen ürün varsa "Teşhis" sekmesine bak (en sık sebep: sayfa fiyatı ≠ feed fiyatı).
 - [ ] **Pinterest katalog**: Business hesap gerekli (yukarıdaki madde). Önce alan adını doğrula (meta etiketi `src/index.html`'e eklenecek, kodu bana ver). Sonra Ads → Kataloglar → Veri kaynağı oluştur → feed URL'si `https://printmeart.nl/feeds/products.xml`, format XML, para birimi EUR, ülke NL, dil NL. Pinterest günlük çeker; onaylanınca ürün pinleri oluşur.
-- [ ] **Instagram / Facebook Shop**: business.facebook.com'da Meta Business hesabı + Commerce Manager. Katalog oluştur (E-ticaret) → Veri kaynakları → Veri feed'i → planlı feed → `https://printmeart.nl/feeds/products.xml`, günlük, EUR. Mağazayı (Shop) aç, Instagram business hesabını bağla, alan adını Business Ayarları → Markalı İçerik → Alan Adları'ndan doğrula. Kargo ve iade bilgilerini Commerce Manager → Ayarlar'a gir (yukarıdaki ücretler, 30 gün iade). Ürün etiketleme, Instagram'ın mağaza incelemesinden sonra açılır.
+- [ ] **Instagram / Facebook Shop**: business.facebook.com'da Meta Business hesabı + Commerce Manager. Katalog oluştur (E-ticaret) → Veri kaynakları → Veri feed'i → planlı feed → `https://printmeart.nl/feeds/products.xml`, günlük, EUR. Mağazayı (Shop) aç, Instagram business hesabını bağla, alan adını Business Ayarları → Markalı İçerik → Alan Adları'ndan doğrula. Kargo ve iade bilgilerini Commerce Manager → Ayarlar'a gir (yukarıdaki ücretler, 30 gün iade (kargo müşteriye ait)). Ürün etiketleme, Instagram'ın mağaza incelemesinden sonra açılır.
 
 ## Sonra
 

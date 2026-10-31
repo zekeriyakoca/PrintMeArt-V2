@@ -176,8 +176,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
         returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
         merchantReturnDays: info.returnDays,
         returnMethod: 'https://schema.org/ReturnByMail',
-        // We send the customer a return shipping label
-        returnFees: 'https://schema.org/FreeReturn',
+        // The customer pays return shipping
+        returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
       },
     };
   }
