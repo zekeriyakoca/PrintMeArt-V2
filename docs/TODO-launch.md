@@ -33,5 +33,5 @@ Teknik SEO hazır: SSR, sitemap, yapısal veri, hreflang, `llms.txt`, robots'ta 
 
 - [ ] Sanatçı ve müze sayfaları (`/artists/claude-monet` gibi): "Van Gogh print" tarzı aramalardan uzun vadeli trafik. Önce mockup.
 - [ ] Reklam: önce az bütçeyle Instagram, sonra Google Shopping (Performance Max). AI asistanlarda reklam pratikte yok; orada görünmenin yolu Merchant Center feed'i ve yorumlar.
-- [ ] Küçük temizlikler: kullanılmayan eski bileşenler (ImageGallery 1/2, SectionHero, NewsletterSignupSection, InputNumber), eski kullanılmayan import'lar.
+- [x] Küçük temizlikler: kullanılmayan bileşenler ve import'lar kaldırıldı (2026-10-31).
 - [ ] Ürün listesi ve ürün sayfasındaki büyük görseller (mobil skor 73–80): ilk satır görsellerinin lazy olmaması, ürün sayfasında mobil için daha küçük görsel.
