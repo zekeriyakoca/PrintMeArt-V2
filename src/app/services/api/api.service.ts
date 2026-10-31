@@ -2,7 +2,7 @@ import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { EMPTY, Observable, of, shareReplay } from 'rxjs';
+import { EMPTY, Observable, map, of, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -12,6 +12,8 @@ import {
   FilterGroupDto,
 } from '../../models/product';
 import { SelectedOptionDto } from '../../models/cart-item';
+
+const HIDDEN_CATEGORY_SLUGS = ['posters'];
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +38,23 @@ export class ApiService {
     if (!this.categoriesCache$) {
       this.categoriesCache$ = this._httpClient
         .get<CategoryDto[]>(`${this.CATALOG_API_URL}/catalog/v1/categories`)
-        .pipe(shareReplay(1));
+        .pipe(
+          map((cats) => cats && this.withoutHiddenCategories(cats)),
+          shareReplay(1),
+        );
     }
     return this.categoriesCache$;
+  }
+
+  // The shop sells art prints only; poster and photography categories stay in the DB but are
+  // dropped from the tree here, together with their subtrees.
+  private withoutHiddenCategories(cats: CategoryDto[]): CategoryDto[] {
+    return cats
+      .filter((c) => !HIDDEN_CATEGORY_SLUGS.includes(c.slug))
+      .map((c) => ({
+        ...c,
+        childCategories: this.withoutHiddenCategories(c.childCategories ?? []),
+      }));
   }
 
   getProductsByCategory(
@@ -95,9 +111,21 @@ export class ApiService {
   }
 
   getFilterOptions(): Observable<FilterGroupDto[]> {
-    return this._httpClient.get<any>(
-      `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`,
-    );
+    return this._httpClient
+      .get<FilterGroupDto[]>(
+        `${this.CATALOG_API_URL}/catalog/v1/storefront/filter-options`,
+      )
+      .pipe(
+        map((groups) =>
+          groups.filter(
+            (g) =>
+              !(
+                g.groupType.toLowerCase().includes('categories') &&
+                HIDDEN_CATEGORY_SLUGS.includes(g.name.trim().toLowerCase())
+              ),
+          ),
+        ),
+      );
   }
 
   getFeaturedProducts(
