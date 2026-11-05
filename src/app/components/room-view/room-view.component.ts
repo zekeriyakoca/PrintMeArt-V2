@@ -25,6 +25,7 @@ export class RoomViewComponent {
   /** Size chosen in Preview & Design */
   selectedSize = input<SizeOption | null>(null);
   close = output<void>();
+  editDesign = output<void>();
 
   readonly rooms = ROOM_SCENES;
   room = signal<RoomScene>(ROOM_SCENES[0]);
