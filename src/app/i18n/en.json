@@ -159,8 +159,8 @@
     "showAllPhotos": "Show all photos"
   },
   "mat": {
-    "with": "With white mat",
-    "without": "Without white mat",
+    "with": "With white passe-partout",
+    "without": "Without passe-partout",
     "hint": "Adds elegant border around your print"
   },
   "papers": {
@@ -248,7 +248,13 @@
     "refunds": "Refunds policy",
     "refundsText": "{{days}} days return for any reason"
   },
-  "name": {},
+  "name": {
+    "Including Mat": "Passe-partout",
+    "Include Mat": "With passe-partout",
+    "No Mat": "Without passe-partout",
+    "Mat": "Matte",
+    "Mat & Smooth": "Matte & Smooth"
+  },
   "home": {
     "heroEyebrow": "Giclée print on fine-art paper — fast delivery in NL",
     "explore": "Explore Collection",
@@ -357,18 +363,18 @@
     "center": "Center",
     "reset": "Reset",
     "guides": "Guides",
-    "matArea": "Matt Area",
+    "matArea": "Passe-partout",
     "paperArea": "Printed Paper area",
-    "museumMat": "Museum-grade Mat",
-    "matText": "The white border around your image is the mat area. It creates a visual gap between the print and the frame.",
+    "museumMat": "Museum-grade passe-partout",
+    "matText": "The white border around your image is the passe-partout. It creates a visual gap between the print and the frame.",
     "weHandle": "We handle the rest",
     "weHandleText": "Use this to show us what you have in mind. Our team will fine-tune positioning, margins and colour before printing.",
     "zoom": "Zoom",
     "printDetails": "Print details",
     "selections": "Your selections",
-    "matIncluded": "High quality Mat included",
-    "noMat": "No mat",
-    "matBoard": "Acid-free, museum-grade white mat board",
+    "matIncluded": "High quality passe-partout included",
+    "noMat": "No passe-partout",
+    "matBoard": "Acid-free, museum-grade white passe-partout",
     "directInFrame": "Print sits directly in frame",
     "noFrame": "No frame",
     "rolledUp": "Rolled up in a protective tube",
@@ -391,8 +397,6 @@
     "toScale": "{{width}} × {{height}} cm · shown to scale",
     "eyebrow": "View on a wall",
     "room": "Room",
-    "design": "Design",
-    "edit": "Edit design",
     "footnote": "Rooms are shown at their real scale, so sizes compare as they would on your own wall.",
     "close": "Close"
   },
@@ -403,7 +407,7 @@
     "qualityTitle": "Premium Quality Custom Art Prints",
     "qualityText": "From personal photos to unique artwork, our prints are crafted with care — vibrant colors and long-lasting quality.",
     "framedTitle": "Personalized Framed Prints",
-    "framedText": "Choose from elegant frames, sizes, and mats. Each print is delivered ready to hang.",
+    "framedText": "Choose from elegant frames, sizes, and passe-partouts. Each print is delivered ready to hang.",
     "shippingTitle": "Fast & Reliable European Shipping",
     "shippingText": "Fast delivery across Europe, including the Netherlands. Your artwork arrives quickly and in perfect condition.",
     "uploadTitle": "Upload and Print Your Own Designs",
@@ -427,7 +431,7 @@
     "uploadTitle": "Upload your image",
     "uploadText": "Drop your photo or artwork. PNG, JPG, GIF up to 50MB.",
     "customizeTitle": "Customize your print",
-    "customizeText": "Choose frame, size & mat. Preview your design instantly.",
+    "customizeText": "Choose frame, size & passe-partout. Preview your design instantly.",
     "approveTitle": "Approve & receive",
     "approveText": "We review your design, you approve, then we print & ship."
   },
@@ -698,7 +702,7 @@
     "v1Title": "Museum-Quality Prints",
     "v1Text": "Archival inks on premium paper. Made to last decades, not months. The kind of quality you'd expect in a gallery.",
     "v2Title": "Custom Framing Options",
-    "v2Text": "Pick your size, choose your frame, add a mat. Your art, your way—without the custom framing markup.",
+    "v2Text": "Pick your size, choose your frame, add a passe-partout. Your art, your way—without the custom framing markup.",
     "v3Title": "Easy Experience",
     "v3Text": "Simple ordering, fast shipping, real humans if you need help. No hoops, no surprises, just smooth.",
     "f1Title": "High-Quality Prints",
@@ -954,7 +958,7 @@
     },
     "frames": {
       "title": "Frames for your art prints",
-      "description": "Choose a black, white, wood or gold frame for your print, with or without a white mat. Delivered ready to hang."
+      "description": "Choose a black, white, wood or gold frame for your print, with or without a white passe-partout. Delivered ready to hang."
     },
     "yourDesign": {
       "title": "Print your own photo or artwork",

@@ -32,6 +32,10 @@ export class HeaderComponent extends BaseAppComponent {
     return prints?.childCategories ?? [];
   });
 
+  isWideCategory(category: CategoryDto): boolean {
+    return (category.childCategories?.length ?? 0) > 5;
+  }
+
   readonly collectionGroups = [
     {
       name: 'nav.picks',

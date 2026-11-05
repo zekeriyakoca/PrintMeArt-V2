@@ -1,10 +1,9 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
 import { frameMaskFor } from '../../shared/constants';
-import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
-import { CommonApiService } from '../../services/api/common-api.service';
+import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../../shared/design-composer';
 import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomRenderer } from './room-renderer';
 
@@ -23,11 +22,9 @@ export class RoomViewComponent {
   matIncluded = input(false);
   /** Crop / zoom / pan from Preview & Design */
   layout = input.required<DesignLayout>();
-  sizes = input<SizeOption[]>([]);
-  selectedSize = model<SizeOption | null>(null);
+  /** Size chosen in Preview & Design */
+  selectedSize = input<SizeOption | null>(null);
   close = output<void>();
-  editDesign = output<void>();
-  designSaved = output<string>();
 
   readonly rooms = ROOM_SCENES;
   room = signal<RoomScene>(ROOM_SCENES[0]);
@@ -38,10 +35,6 @@ export class RoomViewComponent {
   private loadedRoom = signal<string | null>(null);
   private art = signal<HTMLImageElement | null>(null);
   private frameMask = signal<HTMLImageElement | null>(null);
-  private readonly commonApi = inject(CommonApiService);
-  /** The print as last composed for the room; this is what Save my design uploads */
-  private design: HTMLCanvasElement | null = null;
-  isSaving = signal(false);
 
   /** Print size in cm, turned to match the artwork's orientation */
   printSize = computed(() => {
@@ -104,25 +97,7 @@ export class RoomViewComponent {
         { image: art, frame, width: size.width, height: size.height, matIncluded: this.matIncluded() },
         this.layout(),
       );
-      this.design = design;
       this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height });
     });
-  }
-
-  saveDesign() {
-    if (!this.design || this.isSaving()) return;
-    this.isSaving.set(true);
-    designToFile(this.design)
-      .then((file) =>
-        this.commonApi.uploadImage(file).subscribe({
-          next: (url) => {
-            this.isSaving.set(false);
-            this.designSaved.emit(url);
-            this.close.emit();
-          },
-          error: () => this.isSaving.set(false),
-        }),
-      )
-      .catch(() => this.isSaving.set(false));
   }
 }
