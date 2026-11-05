@@ -35,7 +35,7 @@
               <p class="section-subtitle">{{ 'checkout.contactHint' | t }}</p>
             </div>
           </div>
-          <app-checkout-user-info [(userDetails)]="userDetails" [(isFormValid)]="isFormValid" />
+          <app-checkout-user-info [(userDetails)]="userDetails" [(isFormValid)]="isFormValid" [(serverErrors)]="serverErrors" />
         </div>
       </div>
 

@@ -59,6 +59,9 @@ export class OrdersComponent implements OnInit {
   // Search debounce
   private searchSubject = new Subject<string>();
 
+  /** Refetches left for an order still waiting for its payment; right after paying, the payment can take a few seconds to land */
+  private pendingRefetches = 2;
+
   readonly tabs: TabConfig[] = [
     { key: 'all', label: 'orders.tabAll', icon: 'order' },
     { key: 'pending', label: 'orders.tabPending', icon: 'clock' },
@@ -129,6 +132,10 @@ export class OrdersComponent implements OnInit {
           this.totalCount.set(response.totalCount);
           this.totalPages.set(response.totalPages);
           this.isLoading.set(false);
+          if (this.pendingRefetches > 0 && response.data.some((order) => order.status === 'PendingForPayment')) {
+            this.pendingRefetches--;
+            setTimeout(() => this.loadOrders(), 3000);
+          }
         },
         error: (err) => {
           console.error('Failed to load orders:', err);

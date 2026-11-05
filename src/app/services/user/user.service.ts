@@ -17,12 +17,15 @@ export interface Address {
   isDefault: boolean;
 }
 
-export type AddressRequest = Omit<Address, 'id'>;
+export type AddressRequest = Pick<Address, 'name' | 'street1' | 'street2' | 'city' | 'state' | 'zip' | 'country' | 'phone'>;
 
 export interface UserProfile {
   fullName: string;
+  /** The account email; it cannot be changed here */
+  email: string;
   phone?: string | null;
-  addresses: Address[];
+  /** The one saved address, which checkout starts from; null until saved */
+  defaultAddress: Address | null;
 }
 
 export interface UpdateProfileRequest {
@@ -31,7 +34,7 @@ export interface UpdateProfileRequest {
 }
 
 /**
- * Profile and saved addresses of the signed-in user. Every call returns the updated profile.
+ * Profile and saved address of the signed-in user. Every call returns the updated profile.
  */
 @Injectable({
   providedIn: 'root',
@@ -48,15 +51,8 @@ export class UserService {
     return this.http.put<UserProfile>(this.baseUrl, data);
   }
 
-  addAddress(address: AddressRequest): Observable<UserProfile> {
-    return this.http.post<UserProfile>(`${this.baseUrl}/addresses`, address);
-  }
-
-  updateAddress(id: number, address: AddressRequest): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.baseUrl}/addresses/${id}`, address);
-  }
-
-  deleteAddress(id: number): Observable<UserProfile> {
-    return this.http.delete<UserProfile>(`${this.baseUrl}/addresses/${id}`);
+  /** Creates or replaces the saved address */
+  saveAddress(address: AddressRequest): Observable<UserProfile> {
+    return this.http.put<UserProfile>(`${this.baseUrl}/address`, address);
   }
 }

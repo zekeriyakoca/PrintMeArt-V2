@@ -2,14 +2,16 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, signal, OnInit } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
-import { Field, form, required } from '@angular/forms/signals';
+import { Field, form, required, minLength, validate, customError } from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { UserService, Address, UserProfile } from '../../services/user/user.service';
+import { UserService, UserProfile } from '../../services/user/user.service';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { IconComponent } from '../../components/shared/icon/icon.component';
+import { validationErrors } from '../../utils/validation-errors';
 
-const EMPTY_ADDRESS = { name: '', street1: '', zip: '', city: '', country: 'NL', isDefault: false };
+const EMPTY_ADDRESS = { name: '', street1: '', zip: '', city: '', country: 'NL' };
+type AddressFields = typeof EMPTY_ADDRESS;
 
 @Component({
   selector: 'app-profile',
@@ -22,14 +24,13 @@ export class ProfileComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly bootstrap = inject(Bootstrap);
   private readonly router = inject(Router);
-  private readonly regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
 
   user = this.auth.currentUser;
   profile = signal<UserProfile | null>(null);
   isLoading = signal(false);
   activeTab = signal<'profile' | 'addresses'>('profile');
 
-  countries = computed(() => (this.bootstrap.shippingInfo()?.countries ?? []).map((code) => ({ code, name: this.countryName(code) })).sort((a, b) => a.name.localeCompare(b.name)));
+  countries = this.bootstrap.shippingCountries;
 
   // Profile form
   editMode = signal(false);
@@ -38,16 +39,24 @@ export class ProfileComponent implements OnInit {
     required(path.fullName, { message: 'Full name is required' });
   });
 
-  // Address form: undefined when closed, null when adding a new address
-  editingAddress = signal<Address | null | undefined>(undefined);
-  addressModel = signal({ ...EMPTY_ADDRESS });
+  // The one saved address
+  editingAddress = signal(false);
+  addressModel = signal<AddressFields>({ ...EMPTY_ADDRESS });
   addressForm = form(this.addressModel, (path) => {
-    required(path.name, { message: 'Name is required' });
-    required(path.street1, { message: 'Street is required' });
-    required(path.zip, { message: 'Postal code is required' });
-    required(path.city, { message: 'City is required' });
-    required(path.country, { message: 'Country is required' });
+    required(path.name, { message: 'forms.nameRequired' });
+    required(path.street1, { message: 'forms.streetRequired' });
+    minLength(path.street1, 3, { message: 'forms.streetShort' });
+    required(path.zip, { message: 'forms.postalRequired' });
+    validate(path.zip, ({ value, valueOf }) =>
+      !value().trim() || this.bootstrap.isPostcodeValid(valueOf(path.country), value()) ? undefined : customError({ kind: 'postcode', message: 'forms.postalFormat' }),
+    );
+    required(path.city, { message: 'forms.cityRequired' });
+    minLength(path.city, 2, { message: 'forms.cityShort' });
+    required(path.country, { message: 'forms.countryRequired' });
   });
+  postcodeExample = computed(() => this.bootstrap.postcodeExample(this.addressModel().country));
+  /** Messages the backend gave per field when it refused the address */
+  addressErrors = signal<Partial<Record<keyof AddressFields, string[]>>>({});
 
   ngOnInit(): void {
     if (!this.auth.isAuthenticated()) {
@@ -63,11 +72,7 @@ export class ProfileComponent implements OnInit {
   }
 
   countryName(code: string): string {
-    try {
-      return this.regionNames.of(code) ?? code;
-    } catch {
-      return code;
-    }
+    return this.countries().find((c) => c.code === code)?.name ?? code;
   }
 
   toggleEditMode(): void {
@@ -85,35 +90,30 @@ export class ProfileComponent implements OnInit {
     this.save(this.userService.updateProfile({ fullName, phone }), () => this.editMode.set(false));
   }
 
-  openAddressForm(address?: Address): void {
-    this.editingAddress.set(address ?? null);
+  openAddressForm(): void {
+    const address = this.profile()?.defaultAddress;
+    this.addressErrors.set({});
+    this.editingAddress.set(true);
     this.addressModel.set(
       address
-        ? { name: address.name, street1: address.street1, zip: address.zip, city: address.city, country: address.country, isDefault: address.isDefault }
+        ? { name: address.name, street1: address.street1, zip: address.zip, city: address.city, country: address.country }
         : { ...EMPTY_ADDRESS, name: this.profile()?.fullName || this.user()?.name || '' },
     );
   }
 
   closeAddressForm(): void {
-    this.editingAddress.set(undefined);
+    this.editingAddress.set(false);
   }
 
   saveAddress(): void {
-    const editing = this.editingAddress();
-    // Keep the fields the form does not show (street2, phone, ...) when editing
-    const request = { type: 'Shipping', state: '', ...editing, ...this.addressModel() };
-    this.save(editing ? this.userService.updateAddress(editing.id, request) : this.userService.addAddress(request), () => this.closeAddressForm());
+    const saved = this.profile()?.defaultAddress;
+    // Keep the fields the form does not show (street2, state, phone)
+    const request = { street2: saved?.street2 ?? null, state: saved?.state ?? '', phone: saved?.phone ?? null, ...this.addressModel() };
+    this.addressErrors.set({});
+    this.save(this.userService.saveAddress(request), () => this.closeAddressForm(), (errors) => this.addressErrors.set(errors));
   }
 
-  deleteAddress(id: number): void {
-    this.save(this.userService.deleteAddress(id));
-  }
-
-  setDefaultAddress(address: Address): void {
-    this.save(this.userService.updateAddress(address.id, { ...address, isDefault: true }));
-  }
-
-  private save(request: Observable<UserProfile>, onSuccess?: () => void): void {
+  private save(request: Observable<UserProfile>, onSuccess?: () => void, onInvalid?: (errors: Record<string, string[]>) => void): void {
     this.isLoading.set(true);
     request.subscribe({
       next: (profile) => {
@@ -121,7 +121,11 @@ export class ProfileComponent implements OnInit {
         this.isLoading.set(false);
         onSuccess?.();
       },
-      error: () => this.isLoading.set(false),
+      error: (err) => {
+        this.isLoading.set(false);
+        const errors = validationErrors(err);
+        if (errors) onInvalid?.(errors);
+      },
     });
   }
 }

@@ -449,13 +449,13 @@
     "city": "City",
     "country": "Country",
     "postalCode": "Postal code",
-    "houseNumber": "House number",
     "addressDetails": "Address details",
     "optional": "(Optional)",
     "firstNamePlaceholder": "John",
     "lastNamePlaceholder": "Doe",
     "emailPlaceholder": "john.doe@company.com",
-    "addressPlaceholder": "Apartment, suite, floor, etc."
+    "addressPlaceholder": "Apartment, suite, floor, etc.",
+    "street": "Street and house number"
   },
   "summary": {
     "title": "Order Summary",
@@ -547,7 +547,7 @@
   },
   "profile": {
     "account": "Your Account",
-    "addresses": "Addresses",
+    "addresses": "Address",
     "personal": "Personal Information",
     "manage": "Manage your account details",
     "edit": "Edit",
@@ -559,16 +559,13 @@
     "notSet": "Not set",
     "myOrders": "My orders",
     "trackOrders": "Track and review your orders",
-    "shippingAddresses": "Shipping Addresses",
-    "manageLocations": "Manage delivery locations",
-    "addNew": "Add new",
+    "shippingAddresses": "Shipping address",
+    "manageLocations": "Checkout starts from this address",
+    "addNew": "Add address",
     "street": "Street and house number",
-    "useDefault": "Use as default address",
     "saveAddress": "Save address",
-    "noAddresses": "No addresses yet",
-    "addAddressHint": "Add an address for faster checkout",
-    "default": "Default",
-    "setDefault": "Set default"
+    "noAddresses": "No address yet",
+    "addAddressHint": "Add an address for faster checkout"
   },
   "forms": {
     "optional": "(optional)",
@@ -590,7 +587,10 @@
     "cityRequired": "City is required",
     "countryRequired": "Country is required",
     "postalRequired": "Postal code is required",
-    "houseNumberRequired": "House number is required"
+    "streetRequired": "Street and house number are required",
+    "streetShort": "Enter the street and house number",
+    "cityShort": "Enter the full city name",
+    "postalFormat": "Enter a postcode like {{example}}"
   },
   "login": {
     "quote": "\"Transform your space with art that speaks to you. From canvas to frame, delivered to your door.\"",

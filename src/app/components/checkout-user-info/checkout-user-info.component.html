@@ -10,6 +10,9 @@
         }
       </ul>
       }
+      @for (message of serverErrors().firstName; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
+      }
     </div>
     <div class="form-group">
       <label for="last_name" class="form-label">{{ 'checkout.lastName' | t }}</label>
@@ -20,6 +23,9 @@
         <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
+      }
+      @for (message of serverErrors().lastName; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
       }
     </div>
   </div>
@@ -39,6 +45,9 @@
       }
     </ul>
     }
+    @for (message of serverErrors().email; track message) {
+    <p class="text-xs text-red-500 mt-1">{{ message }}</p>
+    }
   </div>
 
   <div class="form-divider">
@@ -56,6 +65,9 @@
         }
       </ul>
       }
+      @for (message of serverErrors().city; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
+      }
     </div>
 
     <div class="form-group">
@@ -72,30 +84,39 @@
         }
       </ul>
       }
+      @for (message of serverErrors().country; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
+      }
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group small">
       <label for="postal-code" class="form-label">{{ 'checkout.postalCode' | t }}</label>
-      <input [field]="userForm.postalCode" type="text" id="postal-code" class="form-input" placeholder="5689 HH" />
+      <input [field]="userForm.postalCode" type="text" id="postal-code" class="form-input" [placeholder]="postcodeExample() || '5689 HH'" />
       @if (userForm.postalCode().touched()) {
       <ul class="error-list">
         @for (error of userForm.postalCode().errors(); track error) {
+        <li class="text-xs text-red-500 mt-1">{{ error.message | t: { example: postcodeExample() } }}</li>
+        }
+      </ul>
+      }
+      @for (message of serverErrors().postalCode; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
+      }
+    </div>
+    <div class="form-group">
+      <label for="street" class="form-label">{{ 'checkout.street' | t }}</label>
+      <input [field]="userForm.street" type="text" id="street" class="form-input" placeholder="Keizersgracht 90" />
+      @if (userForm.street().touched()) {
+      <ul class="error-list">
+        @for (error of userForm.street().errors(); track error) {
         <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
         }
       </ul>
       }
-    </div>
-    <div class="form-group small">
-      <label for="house-number" class="form-label">{{ 'checkout.houseNumber' | t }}</label>
-      <input [field]="userForm.houseNumber" type="text" id="house-number" class="form-input" placeholder="90" />
-      @if (userForm.houseNumber().touched()) {
-      <ul class="error-list">
-        @for (error of userForm.houseNumber().errors(); track error) {
-        <li class="text-xs text-red-500 mt-1">{{ error.message | t }}</li>
-        }
-      </ul>
+      @for (message of serverErrors().street; track message) {
+      <p class="text-xs text-red-500 mt-1">{{ message }}</p>
       }
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, effect, inject, model } from '@angular/core';
-import { Field, form, required, email } from '@angular/forms/signals';
+import { Component, effect, inject, model, untracked } from '@angular/core';
+import { Field, form, required, email, minLength, validate, customError } from '@angular/forms/signals';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
@@ -15,19 +15,22 @@ import { Bootstrap } from '../../services/bootstrap/bootstrap';
 export class CheckoutUserInfoComponent {
   readonly isFormValid = model<boolean>();
 
-  private readonly bootstrap = inject(Bootstrap);
-  private readonly regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+  /** Messages the backend gave per field when it refused the order; cleared once the details change */
+  readonly serverErrors = model<Partial<Record<keyof CheckoutUserInfo, string[]>>>({});
 
-  countries = computed(() =>
-    (this.bootstrap.shippingInfo()?.countries ?? [])
-      .map((code) => ({ code, name: this.regionNames.of(code) ?? code }))
-      .sort((a, b) => a.name.localeCompare(b.name)),
-  );
+  private readonly bootstrap = inject(Bootstrap);
+
+  countries = this.bootstrap.shippingCountries;
 
   constructor() {
     effect(() => {
       const isValid = this.userForm().valid();
       this.isFormValid.set(isValid);
+    });
+
+    effect(() => {
+      this.userDetails();
+      untracked(() => this.serverErrors.set({}));
     });
 
     // Fall back to NL when the prefilled country is not one we ship to.
@@ -46,7 +49,7 @@ export class CheckoutUserInfoComponent {
     city: '',
     country: 'NL',
     postalCode: '',
-    houseNumber: '',
+    street: '',
     addressDetails: '',
   });
 
@@ -56,8 +59,15 @@ export class CheckoutUserInfoComponent {
     required(schemaPath.email, { message: 'forms.emailAddressRequired' });
     email(schemaPath.email, { message: 'forms.emailValid' });
     required(schemaPath.city, { message: 'forms.cityRequired' });
+    minLength(schemaPath.city, 2, { message: 'forms.cityShort' });
     required(schemaPath.country, { message: 'forms.countryRequired' });
     required(schemaPath.postalCode, { message: 'forms.postalRequired' });
-    required(schemaPath.houseNumber, { message: 'forms.houseNumberRequired' });
+    validate(schemaPath.postalCode, ({ value, valueOf }) =>
+      !value().trim() || this.bootstrap.isPostcodeValid(valueOf(schemaPath.country), value()) ? undefined : customError({ kind: 'postcode', message: 'forms.postalFormat' }),
+    );
+    required(schemaPath.street, { message: 'forms.streetRequired' });
+    minLength(schemaPath.street, 3, { message: 'forms.streetShort' });
   });
+
+  postcodeExample = () => this.bootstrap.postcodeExample(this.userDetails().country);
 }
