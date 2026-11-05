@@ -1,7 +1,7 @@
 import { Component, signal, computed, OnDestroy, inject } from '@angular/core';
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
-import { ProductDto } from '../../models/product';
+import { ProductDto, ProductMetadata } from '../../models/product';
 import { CustomDesignUploadComponent } from '../../components/custom-design-upload/custom-design-upload.component';
 import { CustomDesignPreviewComponent } from '../../components/custom-design-preview/custom-design-preview.component';
 import { FrameOptions } from '../../shared/constants';
@@ -38,6 +38,7 @@ export class CustomDesignComponent
   savedDesignImageUrl = signal<string | null>(null);
   previewOpenTrigger = signal(0);
   customProduct = signal<ProductDto>({} as ProductDto);
+  imageMetadata = signal<ProductMetadata | null>(null);
   selectedFrameName = signal('Rolled-up');
 
   // Computed
@@ -65,6 +66,7 @@ export class CustomDesignComponent
     this.imageUrl.set(url);
     this.uploadedImageUrl.set(null);
     this.savedDesignImageUrl.set(null);
+    this.imageMetadata.set(null);
     if (url) this.setMetadataFromImage(url);
   }
 
@@ -91,14 +93,10 @@ export class CustomDesignComponent
       const w = img.naturalWidth;
       const h = img.naturalHeight;
       if (w > 0 && h > 0) {
-        this.customProduct.update((p) => ({
-          ...p,
-          metadata: {
-            ...p.metadata,
-            OriginalImageWidth: String(w),
-            OriginalImageHeight: String(h),
-          },
-        }));
+        this.imageMetadata.set({
+          OriginalImageWidth: String(w),
+          OriginalImageHeight: String(h),
+        } as ProductMetadata);
       }
     };
     img.src = url;
