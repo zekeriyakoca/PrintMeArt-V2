@@ -631,13 +631,13 @@
     "city": "Plaats",
     "country": "Land",
     "postalCode": "Postcode",
-    "houseNumber": "Huisnummer",
     "addressDetails": "Adresgegevens",
     "optional": "(optioneel)",
     "firstNamePlaceholder": "Jan",
     "lastNamePlaceholder": "Jansen",
     "emailPlaceholder": "jan.jansen@voorbeeld.nl",
-    "addressPlaceholder": "Straat, appartement, verdieping, enz."
+    "addressPlaceholder": "Appartement, verdieping, enz.",
+    "street": "Straat en huisnummer"
   },
   "summary": {
     "title": "Overzicht",
@@ -729,7 +729,7 @@
   },
   "profile": {
     "account": "Je account",
-    "addresses": "Adressen",
+    "addresses": "Adres",
     "personal": "Persoonlijke gegevens",
     "manage": "Beheer je accountgegevens",
     "edit": "Bewerken",
@@ -741,16 +741,13 @@
     "notSet": "Niet ingevuld",
     "myOrders": "Mijn bestellingen",
     "trackOrders": "Volg en bekijk je bestellingen",
-    "shippingAddresses": "Bezorgadressen",
-    "manageLocations": "Beheer je bezorgadressen",
-    "addNew": "Nieuw toevoegen",
+    "shippingAddresses": "Bezorgadres",
+    "manageLocations": "Afrekenen begint met dit adres",
+    "addNew": "Adres toevoegen",
     "street": "Straat en huisnummer",
-    "useDefault": "Gebruik als standaardadres",
     "saveAddress": "Adres opslaan",
-    "noAddresses": "Nog geen adressen",
-    "addAddressHint": "Voeg een adres toe om sneller af te rekenen",
-    "default": "Standaard",
-    "setDefault": "Als standaard instellen"
+    "noAddresses": "Nog geen adres",
+    "addAddressHint": "Voeg een adres toe om sneller af te rekenen"
   },
   "forms": {
     "optional": "(optioneel)",
@@ -772,7 +769,10 @@
     "cityRequired": "Plaats is verplicht",
     "countryRequired": "Land is verplicht",
     "postalRequired": "Postcode is verplicht",
-    "houseNumberRequired": "Huisnummer is verplicht"
+    "streetRequired": "Straat en huisnummer zijn verplicht",
+    "streetShort": "Vul de straat en het huisnummer in",
+    "cityShort": "Vul de volledige plaatsnaam in",
+    "postalFormat": "Vul een postcode in zoals {{example}}"
   },
   "login": {
     "quote": "\"Geef je ruimte een nieuwe uitstraling met kunst die je raakt. Van doek tot lijst, tot aan je deur bezorgd.\"",

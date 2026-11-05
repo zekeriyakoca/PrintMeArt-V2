@@ -21,8 +21,8 @@
   <div class="option-group">
     <div class="flex items-center justify-between gap-2">
       <label class="option-label">{{ 'product.size' | t }}</label>
-      @if (product().metadata) {
-        <app-ppi-bar [metadata]="product().metadata" [size]="selectedSize()"></app-ppi-bar>
+      @if (imageMetadata(); as metadata) {
+        <app-ppi-bar [metadata]="metadata" [size]="selectedSize()"></app-ppi-bar>
       }
     </div>
     <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize" [moreSizes]="isFrameSelected() ? [] : moreSizes"></app-size-options>
@@ -162,7 +162,7 @@
       [frameName]="selectedFrameName()"
       [(isMatIncluded)]="isMatIncluded"
       [paperName]="selectedPaperName()"
-      [metadata]="product().metadata"
+      [metadata]="imageMetadata()"
       (onClose)="showPreview.set(false)"
       (onDesignSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
       (onViewInRoom)="roomLayout.set($event); showPreview.set(false)"

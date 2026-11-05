@@ -15,6 +15,18 @@ import { CheckoutService, CreateOrderFromDraftDto } from '../../services/checkou
 import { ToastService } from '../../services/toast/toast.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
+import { UserService } from '../../services/user/user.service';
+import { validationErrors } from '../../utils/validation-errors';
+
+/** Order request fields the backend validates, and the form field each one is shown under */
+const ORDER_FIELDS: Record<string, keyof CheckoutUserInfo> = {
+  customerFullName: 'firstName',
+  customerEmail: 'email',
+  'shipmentAddress.street': 'street',
+  'shipmentAddress.city': 'city',
+  'shipmentAddress.country': 'country',
+  'shipmentAddress.zipCode': 'postalCode',
+};
 
 @Component({
   selector: 'app-checkout',
@@ -33,11 +45,13 @@ export class CheckoutComponent extends BasePageComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly authService = inject(AuthenticationService);
   private readonly analytics = inject(AnalyticsService);
+  private readonly userService = inject(UserService);
 
   cartItems = signal<CartItemDto[]>([]);
   isFormValid = signal<boolean>(false);
   isProcessing = signal<boolean>(false);
   currentOrderId = signal<number | null>(null);
+  serverErrors = signal<Partial<Record<keyof CheckoutUserInfo, string[]>>>({});
 
   userDetails: CheckoutUserInfo = {
     firstName: '',
@@ -46,7 +60,7 @@ export class CheckoutComponent extends BasePageComponent {
     city: '',
     country: 'NL',
     postalCode: '',
-    houseNumber: '',
+    street: '',
     addressDetails: '',
   };
 
@@ -61,12 +75,22 @@ export class CheckoutComponent extends BasePageComponent {
 
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
-      this.userDetails = {
-        ...this.userDetails,
-        email: this.authService.currentUser()?.email || '',
-        firstName: this.authService.currentUser()?.name.split(' ')[0] || '',
-        lastName: this.authService.currentUser()?.name.split(' ')[1] || '',
-      };
+      this.prefill(this.authService.currentUser()?.name || '', this.authService.currentUser()?.email || '');
+      // The saved address fills in the rest; the order itself never changes it
+      this.userService.getProfile().subscribe((profile) => {
+        const address = profile.defaultAddress;
+        this.prefill(address?.name || profile.fullName || '', profile.email || '');
+        if (address) {
+          this.userDetails = {
+            ...this.userDetails,
+            street: this.userDetails.street || address.street1,
+            addressDetails: this.userDetails.addressDetails || address.street2 || '',
+            city: this.userDetails.city || address.city,
+            postalCode: this.userDetails.postalCode || address.zip,
+            country: this.userDetails.postalCode ? this.userDetails.country : address.country,
+          };
+        }
+      });
     }
     // Create draft order when entering checkout
     this.checkoutService.createDraftOrder().subscribe({
@@ -80,13 +104,24 @@ export class CheckoutComponent extends BasePageComponent {
     });
   }
 
+  /** Fills the name and email the customer has not typed yet */
+  private prefill(fullName: string, email: string) {
+    const [first = '', ...rest] = fullName.trim().split(/\s+/);
+    this.userDetails = {
+      ...this.userDetails,
+      email: this.userDetails.email || email,
+      firstName: this.userDetails.firstName || first,
+      lastName: this.userDetails.lastName || rest.join(' '),
+    };
+  }
+
   private prepareOrderData(): CreateOrderFromDraftDto {
     return {
       customerFullName: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
       customerEmail: this.userDetails.email,
       shipmentAddress: {
         city: this.userDetails.city,
-        street: `${this.userDetails.houseNumber} ${this.userDetails.addressDetails}`.trim(),
+        street: `${this.userDetails.street} ${this.userDetails.addressDetails}`.trim(),
         state: '',
         country: this.userDetails.country,
         zipCode: this.userDetails.postalCode,
@@ -146,7 +181,18 @@ export class CheckoutComponent extends BasePageComponent {
         console.error('Order creation failed:', err);
         this.analytics.trackPaymentFailed('order_creation_failed');
         this.isProcessing.set(false);
-        this.toastService.error('errors.order');
+        const errors = validationErrors(err);
+        if (errors) {
+          // The messages go under their fields; the error toast already shows the first one
+          const byField: Partial<Record<keyof CheckoutUserInfo, string[]>> = {};
+          for (const [key, messages] of Object.entries(errors)) {
+            const field = ORDER_FIELDS[key];
+            if (field) byField[field] = [...(byField[field] ?? []), ...messages];
+          }
+          this.serverErrors.set(byField);
+        } else {
+          this.toastService.error('errors.order');
+        }
       },
     });
   }

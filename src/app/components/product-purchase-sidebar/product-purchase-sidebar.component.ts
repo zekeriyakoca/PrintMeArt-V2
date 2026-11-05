@@ -1,7 +1,7 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { SizeOption } from './../../models/size-option';
 import { Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
-import { ProductDto } from '../../models/product';
+import { ProductDto, ProductMetadata } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../../pages/basePageComponent';
@@ -38,6 +38,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   isMatIncluded = model<boolean>(false);
   /** Custom image URL for custom design products (uploaded to backend) */
   customImageUrl = input<string | null>(null);
+  /** Pixel size of the uploaded image for custom design products; kept apart from the product so a new photo keeps the chosen options */
+  customImageMetadata = input<ProductMetadata | null>(null);
   /** Increment to programmatically open the preview popup */
   openPreviewTrigger = input<number>(0);
 
@@ -52,6 +54,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   /** The artwork Preview & Design and the room view show and save: the uploaded image, or the product's 2400 px copy */
   designImageUrl = computed(() => this.customImageUrl() || this.product().images[0].xLarge || this.product().images[0].large);
+
+  /** What print quality and the preview are judged on: the uploaded image, or the product's own image */
+  imageMetadata = computed(() => this.customImageMetadata() ?? this.product().metadata);
 
   availableSizes = computed<SizeOption[]>(() => {
     const sizes = DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions;

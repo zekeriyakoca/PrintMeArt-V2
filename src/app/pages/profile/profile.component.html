@@ -19,7 +19,7 @@
           }
           <div>
             <h1 class="text-2xl font-bold text-white">{{ profile()?.fullName || user()?.name || ('profile.account' | t) }}</h1>
-            <p class="mt-1 text-sm text-slate-300">{{ user()?.email }}</p>
+            <p class="mt-1 text-sm text-slate-300">{{ profile()?.email || user()?.email }}</p>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="flex items-center justify-between px-5 py-4">
               <span class="text-sm text-slate-500">{{ 'profile.email' | t }}</span>
-              <span class="text-sm font-medium text-slate-900">{{ user()?.email || '—' }}</span>
+              <span class="text-sm font-medium text-slate-900">{{ profile()?.email || user()?.email || '—' }}</span>
             </div>
             <div class="flex items-center justify-between px-5 py-4">
               <span class="text-sm text-slate-500">{{ 'profile.phone' | t }}</span>
@@ -113,7 +113,7 @@
         </div>
         }
 
-        <!-- Addresses Tab -->
+        <!-- Address Tab -->
         @if (activeTab() === 'addresses') {
         <div class="space-y-6">
           <div class="flex items-center justify-between">
@@ -121,38 +121,70 @@
               <h2 class="text-lg font-semibold text-slate-900">{{ 'profile.shippingAddresses' | t }}</h2>
               <p class="text-sm text-slate-500">{{ 'profile.manageLocations' | t }}</p>
             </div>
-            @if (editingAddress() === undefined) {
+            @if (!editingAddress()) {
             <button type="button"
-              class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              class="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
               (click)="openAddressForm()">
-              {{ 'profile.addNew' | t }}
+              {{ (profile()?.defaultAddress ? 'profile.edit' : 'profile.addNew') | t }}
             </button>
             }
           </div>
 
-          @if (editingAddress() !== undefined) {
+          @if (editingAddress()) {
           <form (submit)="$event.preventDefault(); saveAddress()"
             class="space-y-5 rounded-2xl border border-slate-200 p-5">
             <div>
               <label for="address-name" class="mb-2 block text-sm font-medium text-slate-700">{{ 'profile.fullName' | t }}</label>
               <input id="address-name" type="text" [field]="addressForm.name"
-                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
+              @if (addressForm.name().touched()) {
+              @for (error of addressForm.name().errors(); track error) {
+              <p class="mt-1 text-xs text-red-500">{{ error.message | t }}</p>
+              }
+              }
+              @for (message of addressErrors().name; track message) {
+              <p class="mt-1 text-xs text-red-500">{{ message }}</p>
+              }
             </div>
             <div>
               <label for="address-street" class="mb-2 block text-sm font-medium text-slate-700">{{ 'profile.street' | t }}</label>
               <input id="address-street" type="text" [field]="addressForm.street1" placeholder="Keizersgracht 90"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
+              @if (addressForm.street1().touched()) {
+              @for (error of addressForm.street1().errors(); track error) {
+              <p class="mt-1 text-xs text-red-500">{{ error.message | t }}</p>
+              }
+              }
+              @for (message of addressErrors().street1; track message) {
+              <p class="mt-1 text-xs text-red-500">{{ message }}</p>
+              }
             </div>
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label for="address-zip" class="mb-2 block text-sm font-medium text-slate-700">{{ 'checkout.postalCode' | t }}</label>
-                <input id="address-zip" type="text" [field]="addressForm.zip" placeholder="1015 CJ"
+                <input id="address-zip" type="text" [field]="addressForm.zip" [placeholder]="postcodeExample() || '1015 CJ'"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
+              @if (addressForm.zip().touched()) {
+              @for (error of addressForm.zip().errors(); track error) {
+              <p class="mt-1 text-xs text-red-500">{{ error.message | t: { example: postcodeExample() } }}</p>
+              }
+              }
+              @for (message of addressErrors().zip; track message) {
+              <p class="mt-1 text-xs text-red-500">{{ message }}</p>
+              }
               </div>
               <div>
                 <label for="address-city" class="mb-2 block text-sm font-medium text-slate-700">{{ 'checkout.city' | t }}</label>
                 <input id="address-city" type="text" [field]="addressForm.city" placeholder="Amsterdam"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
+              @if (addressForm.city().touched()) {
+              @for (error of addressForm.city().errors(); track error) {
+              <p class="mt-1 text-xs text-red-500">{{ error.message | t }}</p>
+              }
+              }
+              @for (message of addressErrors().city; track message) {
+              <p class="mt-1 text-xs text-red-500">{{ message }}</p>
+              }
               </div>
             </div>
             <div>
@@ -163,11 +195,15 @@
                 <option [value]="country.code">{{ country.name }}</option>
                 }
               </select>
+              @if (addressForm.country().touched()) {
+              @for (error of addressForm.country().errors(); track error) {
+              <p class="mt-1 text-xs text-red-500">{{ error.message | t }}</p>
+              }
+              }
+              @for (message of addressErrors().country; track message) {
+              <p class="mt-1 text-xs text-red-500">{{ message }}</p>
+              }
             </div>
-            <label class="flex items-center gap-3 text-sm text-slate-700">
-              <input type="checkbox" [field]="addressForm.isDefault" class="h-4 w-4 rounded border-slate-300" />
-              {{ 'profile.useDefault' | t }}
-            </label>
             <div class="flex gap-3 pt-2">
               <button type="submit" [disabled]="isLoading() || addressForm().invalid()"
                 class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-50">
@@ -179,49 +215,28 @@
               </button>
             </div>
           </form>
-          }
-
-          @if (!profile()?.addresses?.length) {
-          @if (editingAddress() === undefined) {
+          } @else if (profile()?.defaultAddress; as address) {
+          <div class="flex items-start gap-4 rounded-2xl border border-slate-200 p-5">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100">
+              <app-icon iconName="location" class="h-5 w-5 text-slate-600" />
+            </div>
+            <div class="flex-1">
+              <p class="font-medium text-slate-900">{{ address.name }}</p>
+              <p class="mt-1 text-sm text-slate-600">{{ address.street1 }}</p>
+              @if (address.street2) {
+              <p class="text-sm text-slate-600">{{ address.street2 }}</p>
+              }
+              <p class="text-sm text-slate-600">{{ address.zip }} {{ address.city }}</p>
+              <p class="text-sm text-slate-600">{{ countryName(address.country) }}</p>
+            </div>
+          </div>
+          } @else {
           <div class="rounded-2xl border-2 border-dashed border-slate-200 py-16 text-center">
             <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
               <app-icon iconName="location" class="h-6 w-6 text-slate-400" />
             </div>
             <p class="font-medium text-slate-900">{{ 'profile.noAddresses' | t }}</p>
             <p class="mt-1 text-sm text-slate-500">{{ 'profile.addAddressHint' | t }}</p>
-          </div>
-          }
-          } @else {
-          <div class="space-y-4">
-            @for (address of profile()!.addresses; track address.id) {
-            <div class="flex items-start gap-4 rounded-2xl border border-slate-200 p-5">
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                <app-icon iconName="location" class="h-5 w-5 text-slate-600" />
-              </div>
-              <div class="flex-1">
-                <div class="flex items-center gap-2">
-                  <p class="font-medium text-slate-900">{{ address.name }}</p>
-                  @if (address.isDefault) {
-                  <span
-                    class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">{{ 'profile.default' | t }}</span>
-                  }
-                </div>
-                <p class="mt-1 text-sm text-slate-600">{{ address.street1 }}</p>
-                <p class="text-sm text-slate-600">{{ address.zip }} {{ address.city }}</p>
-                <p class="text-sm text-slate-600">{{ countryName(address.country) }}</p>
-                <div class="mt-3 flex gap-4">
-                  <button type="button" class="text-sm font-medium text-slate-600 hover:text-slate-900"
-                    (click)="openAddressForm(address)">{{ 'profile.edit' | t }}</button>
-                  @if (!address.isDefault) {
-                  <button type="button" class="text-sm font-medium text-slate-600 hover:text-slate-900"
-                    [disabled]="isLoading()" (click)="setDefaultAddress(address)">{{ 'profile.setDefault' | t }}</button>
-                  }
-                  <button type="button" class="text-sm font-medium text-red-600 hover:text-red-700"
-                    [disabled]="isLoading()" (click)="deleteAddress(address.id)">{{ 'cart.remove' | t }}</button>
-                </div>
-              </div>
-            </div>
-            }
           </div>
           }
         </div>

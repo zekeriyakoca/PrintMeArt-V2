@@ -5,6 +5,6 @@ export interface CheckoutUserInfo {
   city: string;
   country: string;
   postalCode: string;
-  houseNumber: string;
+  street: string;
   addressDetails: string;
 }

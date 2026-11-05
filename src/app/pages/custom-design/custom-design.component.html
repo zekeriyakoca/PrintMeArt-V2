@@ -19,6 +19,7 @@
         <!-- Purchase Sidebar (mobile only, after preview) -->
         <div class="md:hidden mt-8">
           <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+            [customImageMetadata]="imageMetadata()"
             [customImageUrl]="uploadedImageUrl()"
             [openPreviewTrigger]="previewOpenTrigger()"
             (designSaved)="onSavedDesign($event)"
@@ -29,6 +30,7 @@
       <!-- Purchase Sidebar (md+ only, right column) -->
       <div class="hidden md:block w-full md:w-4/12">
         <app-product-purchase-sidebar [(isMatIncluded)]="isMatIncluded" [product]="customProduct()"
+          [customImageMetadata]="imageMetadata()"
           [customImageUrl]="uploadedImageUrl()"
           [openPreviewTrigger]="previewOpenTrigger()"
           (designSaved)="onSavedDesign($event)"
