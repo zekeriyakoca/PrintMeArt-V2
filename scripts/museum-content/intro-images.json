@@ -215,7 +215,7 @@
     "wikidata": "Q124286764"
   },
   {
-    "key": "August Von Siegen",
+    "key": "August von Siegen",
     "group": "artist",
     "file": "intros/artist/august-von-siegen.webp",
     "type": "catalog",
@@ -284,7 +284,7 @@
     "wikidata": "Q134741"
   },
   {
-    "key": "Canaletto (Giovanni Antonio Canal)",
+    "key": "Canaletto",
     "group": "artist",
     "file": "intros/artist/canaletto-giovanni-antonio-canal.webp",
     "type": "real",
@@ -1208,7 +1208,7 @@
     "wikidata": "Q16039512"
   },
   {
-    "key": "James A McNeill Whistler",
+    "key": "James McNeill Whistler",
     "group": "artist",
     "file": "intros/artist/james-a-mcneill-whistler.webp",
     "type": "real",
@@ -1288,7 +1288,7 @@
     "wikidata": "Q981631"
   },
   {
-    "key": "Jan Brueghel de Oude",
+    "key": "Jan Brueghel the Elder",
     "group": "artist",
     "file": "intros/artist/jan-brueghel-de-oude.webp",
     "type": "real",
@@ -1950,7 +1950,7 @@
     "wikidata": "Q3362594"
   },
   {
-    "key": "Paul Cezanne",
+    "key": "Paul Cézanne",
     "group": "artist",
     "file": "intros/artist/paul-cezanne.webp",
     "type": "real",
@@ -2054,7 +2054,7 @@
     "wikidata": "Q39931"
   },
   {
-    "key": "Pieter Bruegel The Elder",
+    "key": "Pieter Bruegel the Elder",
     "group": "artist",
     "file": "intros/artist/pieter-bruegel-the-elder.webp",
     "type": "real",
@@ -2623,7 +2623,7 @@
     "source": "catalog product 1010 (The Musician)"
   },
   {
-    "key": "Animal art",
+    "key": "Animal Art",
     "group": "category",
     "file": "intros/category/animal-art.webp",
     "type": "catalog",
@@ -2637,7 +2637,7 @@
     "source": "catalog product 426 (Beach Scene, Cullercoats)"
   },
   {
-    "key": "Botanical art",
+    "key": "Botanical Art",
     "group": "category",
     "file": "intros/category/botanical-art.webp",
     "type": "catalog",
@@ -2658,7 +2658,7 @@
     "source": "catalog product 431 (Vintage Car Front View)"
   },
   {
-    "key": "Dutch masters",
+    "key": "Dutch Masters",
     "group": "category",
     "file": "intros/category/dutch-masters.webp",
     "type": "catalog",
@@ -2694,7 +2694,7 @@
     "note": "Crop on the trees and hunters; line period 16 at 800px"
   },
   {
-    "key": "Modern masters",
+    "key": "Modern Masters",
     "group": "category",
     "file": "intros/category/modern-masters.webp",
     "type": "catalog",
@@ -2799,7 +2799,7 @@
     "source": "catalog product 737 (Ice Scene)"
   },
   {
-    "key": "Forest&Countryside",
+    "key": "Forest & Countryside",
     "group": "collection",
     "file": "intros/collection/forest-countryside.webp",
     "type": "catalog",
