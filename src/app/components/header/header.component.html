@@ -23,15 +23,16 @@
                 <div class="invisible sub-menu absolute top-full inset-x-0 transform z-50" [class.visible]="activeDropdown === 'prints'">
                   <div class="bg-white shadow-lg">
                     <div class="container">
-                      <div class="flex text-sm border-t border-slate-200 py-14">
-                        <div class="flex-1 grid grid-cols-3 gap-6 xl:gap-8 pr-6 xl:pr-8">
-                          @for (category of printCategories(); track category.id) {
-                            <div>
-                              <a class="font-medium text-[#384f8c] uppercase" [routerLink]="'/products?categoryName=' + encodeURIComponent(category.name) | link">{{ 'name.' + category.name | t }}</a>
-                              <ul class="grid space-y-4 mt-4">
+                      <div class="flex gap-10 xl:gap-14 text-sm border-t border-slate-200 py-12">
+                        <!-- Columns sit side by side at their natural width; the card on the right takes the rest -->
+                        <div class="flex gap-10 xl:gap-14 shrink-0">
+                          @for (category of printCategories(); track category.id; let first = $first) {
+                            <div [class]="first ? '' : 'border-l border-slate-100 pl-10 xl:pl-14'">
+                              <a class="font-medium text-[#384f8c] uppercase tracking-wide" [routerLink]="'/products?categoryName=' + encodeURIComponent(category.name) | link">{{ 'name.' + category.name | t }}</a>
+                              <ul class="grid gap-y-3.5 gap-x-10 mt-5" [class.grid-cols-2]="isWideCategory(category)">
                                 @for (child of category.childCategories; track child.id) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black" [routerLink]="'/products?categoryName=' + encodeURIComponent(child.name) | link">{{ 'name.' + child.name | t }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black whitespace-nowrap" [routerLink]="'/products?categoryName=' + encodeURIComponent(child.name) | link">{{ 'name.' + child.name | t }}</a>
                                   </li>
                                 }
                               </ul>
@@ -39,7 +40,7 @@
                           }
                         </div>
                         <!-- Right side card -->
-                        <div class="w-[40%] xl:w-[35%] max-w-[450px]">
+                        <div class="flex-1 min-w-0 max-w-[520px] ml-auto">
                           <div class="relative w-full h-48 sm:h-52 md:h-56 rounded-2xl overflow-hidden group">
                             <div class="absolute flex flex-col h-full w-full p-8 z-40">
                               <img

@@ -32,6 +32,10 @@ export class HeaderComponent extends BaseAppComponent {
     return prints?.childCategories ?? [];
   });
 
+  isWideCategory(category: CategoryDto): boolean {
+    return (category.childCategories?.length ?? 0) > 5;
+  }
+
   readonly collectionGroups = [
     {
       name: 'nav.picks',
@@ -50,11 +54,11 @@ export class HeaderComponent extends BaseAppComponent {
       items: [
         { name: 'Rijksmuseum', href: '/products?attributeName=Rijksmuseum' },
         { name: 'The Met', href: '/products?attributeName=Metropolitan%20Museum%20of%20Art' },
-        { name: 'National Gallery', href: '/products?attributeName=National%20Gallery%2C%20London' },
+        { name: 'Art Institute of Chicago', href: '/products?attributeName=Art%20Institute%20of%20Chicago' },
+        { name: 'National Gallery of Art', href: '/products?attributeName=National%20Gallery%20of%20Art' },
+        { name: 'Birmingham Museums', href: '/products?attributeName=Birmingham%20Museums%20Trust' },
         { name: 'Cleveland Museum of Art', href: '/products?attributeName=Cleveland%20Museum%20of%20Art' },
-        { name: 'Clark Art Institute', href: '/products?attributeName=Clark%20Art%20Institute' },
-        { name: "Musée d'Orsay", href: "/products?attributeName=Mus%C3%A9e%20d'Orsay" },
-        { name: 'Yale Art Gallery', href: '/products?attributeName=Yale%20University%20Art%20Gallery' },
+        { name: 'Te Papa', href: '/products?attributeName=Museum%20of%20New%20Zealand%20Te%20Papa%20Tongarewa' },
       ],
     },
     {

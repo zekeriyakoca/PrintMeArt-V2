@@ -149,11 +149,8 @@
       [frameName]="selectedFrameName()"
       [matIncluded]="isFrameSelected() && isMatIncluded()"
       [layout]="layout"
-      [sizes]="availableSizes()"
-      [(selectedSize)]="selectedSize"
+      [selectedSize]="size"
       (close)="roomLayout.set(null)"
-      (editDesign)="roomLayout.set(null); showPreview.set(true)"
-      (designSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
     ></app-room-view>
     }
     <app-product-preview

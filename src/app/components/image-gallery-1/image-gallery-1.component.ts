@@ -19,10 +19,6 @@ export class ImageGallery1Component {
 
   frameGuideImage = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-guide.avif';
   paperImage = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp';
-  genericImages = [
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-1 2.png',
-    'https://genstorageaccount3116.blob.core.windows.net/printme-images/generic-image-2 2.png',
-  ];
 
   galleryImages = computed(() => {
     return [
@@ -32,10 +28,6 @@ export class ImageGallery1Component {
       })),
       { id: -1, url: this.paperImage },
       { id: -2, url: this.frameGuideImage },
-      ...this.genericImages.map((url, index) => ({
-        id: -3 - index,
-        url: url,
-      })),
     ];
   });
 
