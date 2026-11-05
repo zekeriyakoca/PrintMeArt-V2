@@ -166,3 +166,26 @@
     opacity: 0;
   }
 }
+
+.edit-design-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #384f8c;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    border-color: #384f8c;
+    background: #f8fafc;
+  }
+}

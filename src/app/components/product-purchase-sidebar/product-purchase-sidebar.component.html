@@ -151,6 +151,7 @@
       [layout]="layout"
       [selectedSize]="size"
       (close)="roomLayout.set(null)"
+      (editDesign)="roomLayout.set(null); showPreview.set(true)"
     ></app-room-view>
     }
     <app-product-preview
