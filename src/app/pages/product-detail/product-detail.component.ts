@@ -67,6 +67,15 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     return ((this.dutch && metadata?.Story_nl) || metadata?.Story || this.product().description || '').split('\n\n');
   });
 
+  /** Product images with the detail crop as the last gallery tile, when the main image has one */
+  galleryImages = computed(() => {
+    const images = this.product().images ?? [];
+    const detail = images[0]?.detail;
+    if (!detail) return images;
+    const tile = { ...images[0], thumb: detail, small: detail, medium: detail, large: detail, xLarge: detail, original: detail };
+    return [...images.slice(0, 3), tile, ...images.slice(3)];
+  });
+
   imageAlt = computed(() => {
     const painter = (this.product().metadata as unknown as Record<string, string | undefined> | undefined)?.['Painter'];
     return [this.product().name, painter].filter(Boolean).join(' – ');
