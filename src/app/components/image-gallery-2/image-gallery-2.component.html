@@ -35,7 +35,6 @@
         @if (images()[0].detail) {
           <div class="closeup__media">
             <img class="closeup__img" [src]="images()[0].detail" [alt]="alt()" loading="lazy" decoding="async" />
-            <div class="closeup__shade"></div>
           </div>
           <span class="closeup__ring"></span>
           <ng-container [ngTemplateOutlet]="closeUpBanner" />
@@ -94,12 +93,12 @@
 </ng-template>
 
 <ng-template #closeUpBanner>
-  <div class="closeup__banner absolute inset-x-0 bottom-0 px-6 pb-16 pointer-events-none">
-    <span class="closeup__tag inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#384f8c]">
+  <div class="closeup__banner absolute left-4 bottom-16 max-w-sm rounded-xl bg-white/90 backdrop-blur-sm shadow-lg px-4 py-3 pointer-events-none">
+    <span class="closeup__tag inline-flex items-center gap-1.5 rounded-full bg-[#384f8c]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#384f8c]">
       <app-icon iconName="search" class="h-3.5 w-3.5" />
       {{ 'gallery.detailTitle' | t }}
     </span>
-    <p class="closeup__title mt-2 text-lg sm:text-xl font-semibold text-white">{{ 'gallery.hoverTitle' | t }}</p>
-    <p class="closeup__sub mt-0.5 text-sm text-white/85 max-w-md">{{ 'gallery.hoverSubtitle' | t }}</p>
+    <p class="closeup__title mt-2 text-base sm:text-lg font-semibold text-gray-900">{{ 'gallery.hoverTitle' | t }}</p>
+    <p class="closeup__sub mt-0.5 text-sm text-gray-600">{{ 'gallery.hoverSubtitle' | t }}</p>
   </div>
 </ng-template>

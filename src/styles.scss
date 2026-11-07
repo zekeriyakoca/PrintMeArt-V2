@@ -119,14 +119,14 @@ p {
 // fills the image, with a slow zoom, a pulse from the ring and the banner text sliding in.
 // Only on devices that can hover; touch screens keep the plain image and the Close-up gallery tile.
 .closeup {
-  --pad: 1.25rem;
+  --pad: 0.75rem;
   --d: 4.5rem;
   --cx: calc(100% - var(--pad) - var(--d) / 2);
   --cy: calc(100% - var(--pad) - var(--d) / 2);
   --in-out: cubic-bezier(0.7, 0, 0.3, 1);
   --out: cubic-bezier(0.2, 0.9, 0.3, 1);
 
-  @media (min-width: 768px) { --pad: 1.75rem; --d: 6rem; }
+  @media (min-width: 768px) { --pad: 1rem; --d: 6rem; }
 
   &__media,
   &__ring,
@@ -154,13 +154,6 @@ p {
         transform 0.6s var(--out);
     }
 
-    &__shade {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0.1) 55%, transparent);
-      opacity: 0;
-      transition: opacity 0.4s var(--out) 0.15s;
-    }
 
     // The resting loupe gets a white ring and a soft shadow so it reads as "look closer"
     &__ring {
@@ -201,10 +194,6 @@ p {
         transition: right 0.45s var(--out), bottom 0.45s var(--out), width 0.45s var(--out),
           height 0.45s var(--out), transform 6s cubic-bezier(0.2, 0.6, 0.3, 1);
       }
-      .closeup__shade {
-        opacity: 1;
-        transition: opacity 0.6s var(--out) 0.25s;
-      }
       .closeup__ring {
         opacity: 0;
         transition: opacity 0.2s;
@@ -222,7 +211,6 @@ p {
   @media (prefers-reduced-motion: reduce) {
     &__media,
     &__img,
-    &__shade,
     &__tag,
     &__title,
     &__sub { transition: none !important; }
