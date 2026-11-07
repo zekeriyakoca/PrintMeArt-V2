@@ -114,3 +114,123 @@ p {
 
   @media (min-width: 768px) {}
 }
+// Product page close-up, same motion as the home page category cards: a round loupe of the detail crop
+// sits in the corner of the main image; on hover a circular ripple grows out of it until the close-up
+// fills the image, with a slow zoom, a pulse from the ring and the banner text sliding in.
+// Only on devices that can hover; touch screens keep the plain image and the Close-up gallery tile.
+.closeup {
+  --pad: 1.25rem;
+  --d: 4.5rem;
+  --cx: calc(100% - var(--pad) - var(--d) / 2);
+  --cy: calc(100% - var(--pad) - var(--d) / 2);
+  --in-out: cubic-bezier(0.7, 0, 0.3, 1);
+  --out: cubic-bezier(0.2, 0.9, 0.3, 1);
+
+  @media (min-width: 768px) { --pad: 1.75rem; --d: 6rem; }
+
+  &__media,
+  &__ring,
+  &__banner { display: none; }
+
+  @media (hover: hover) {
+    &__media {
+      display: block;
+      position: absolute;
+      inset: 0;
+      clip-path: circle(calc(var(--d) / 2) at var(--cx) var(--cy));
+      transition: clip-path 0.5s var(--in-out);
+    }
+
+    &__img {
+      position: absolute;
+      right: var(--pad);
+      bottom: var(--pad);
+      width: var(--d);
+      height: var(--d);
+      max-width: none;
+      object-fit: cover;
+      transition: right 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, bottom 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+        width 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, height 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+        transform 0.6s var(--out);
+    }
+
+    &__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0.1) 55%, transparent);
+      opacity: 0;
+      transition: opacity 0.4s var(--out) 0.15s;
+    }
+
+    // The resting loupe gets a white ring and a soft shadow so it reads as "look closer"
+    &__ring {
+      display: block;
+      position: absolute;
+      right: var(--pad);
+      bottom: var(--pad);
+      width: var(--d);
+      height: var(--d);
+      border-radius: 9999px;
+      border: 2px solid rgb(255 255 255 / 0.95);
+      box-shadow: 0 8px 24px -6px rgb(15 23 42 / 0.5);
+      pointer-events: none;
+      transition: opacity 0.3s var(--out) 0.3s;
+    }
+
+    &__banner { display: block; }
+
+    &__tag,
+    &__title,
+    &__sub {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s var(--out), transform 0.5s var(--out);
+    }
+
+    &:hover {
+      .closeup__media {
+        clip-path: circle(150% at var(--cx) var(--cy));
+        transition: clip-path 0.8s var(--in-out) 0.08s;
+      }
+      .closeup__img {
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        transform: scale(1.08);
+        transition: right 0.45s var(--out), bottom 0.45s var(--out), width 0.45s var(--out),
+          height 0.45s var(--out), transform 6s cubic-bezier(0.2, 0.6, 0.3, 1);
+      }
+      .closeup__shade {
+        opacity: 1;
+        transition: opacity 0.6s var(--out) 0.25s;
+      }
+      .closeup__ring {
+        opacity: 0;
+        transition: opacity 0.2s;
+        animation: closeup-ring 0.9s var(--out);
+      }
+      .closeup__tag,
+      .closeup__title,
+      .closeup__sub { opacity: 1; transform: none; }
+      .closeup__tag { transition-delay: 0.3s; }
+      .closeup__title { transition-delay: 0.38s; }
+      .closeup__sub { transition-delay: 0.46s; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__media,
+    &__img,
+    &__shade,
+    &__tag,
+    &__title,
+    &__sub { transition: none !important; }
+    &__ring { animation: none !important; }
+  }
+}
+
+@keyframes closeup-ring {
+  0% { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.2); }
+}
