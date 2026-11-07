@@ -93,12 +93,14 @@
 </ng-template>
 
 <ng-template #closeUpBanner>
-  <div class="closeup__banner absolute left-4 bottom-16 max-w-sm rounded-xl bg-white/90 backdrop-blur-sm shadow-lg px-4 py-3 pointer-events-none">
-    <span class="closeup__tag inline-flex items-center gap-1.5 rounded-full bg-[#384f8c]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#384f8c]">
-      <app-icon iconName="search" class="h-3.5 w-3.5" />
+  <div
+    class="closeup__banner absolute top-4 left-4 max-w-[19rem] rounded-2xl bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-[0_12px_32px_-12px_rgba(15,23,42,0.35)] px-4 py-3.5 pointer-events-none"
+  >
+    <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#384f8c]">
+      <span class="h-px w-5 bg-[#384f8c]"></span>
       {{ 'gallery.detailTitle' | t }}
-    </span>
-    <p class="closeup__title mt-2 text-base sm:text-lg font-semibold text-gray-900">{{ 'gallery.hoverTitle' | t }}</p>
-    <p class="closeup__sub mt-0.5 text-sm text-gray-600">{{ 'gallery.hoverSubtitle' | t }}</p>
+    </div>
+    <p class="mt-1.5 text-[15px] font-semibold leading-snug text-gray-900">{{ 'gallery.hoverTitle' | t }}</p>
+    <p class="mt-1 text-xs !leading-snug text-gray-600">{{ 'gallery.hoverSubtitle' | t }}</p>
   </div>
 </ng-template>

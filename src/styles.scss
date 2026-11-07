@@ -170,14 +170,12 @@ p {
       transition: opacity 0.3s var(--out) 0.3s;
     }
 
-    &__banner { display: block; }
-
-    &__tag,
-    &__title,
-    &__sub {
+    // Hidden as a whole until hover, so no empty card shows on the resting image
+    &__banner {
+      display: block;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s var(--out), transform 0.5s var(--out);
+      transform: translateY(-8px);
+      transition: opacity 0.25s var(--out), transform 0.4s var(--out);
     }
 
     &:hover {
@@ -199,21 +197,18 @@ p {
         transition: opacity 0.2s;
         animation: closeup-ring 0.9s var(--out);
       }
-      .closeup__tag,
-      .closeup__title,
-      .closeup__sub { opacity: 1; transform: none; }
-      .closeup__tag { transition-delay: 0.3s; }
-      .closeup__title { transition-delay: 0.38s; }
-      .closeup__sub { transition-delay: 0.46s; }
+      .closeup__banner {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.4s var(--out) 0.35s, transform 0.6s var(--out) 0.35s;
+      }
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     &__media,
     &__img,
-    &__tag,
-    &__title,
-    &__sub { transition: none !important; }
+    &__banner { transition: none !important; }
     &__ring { animation: none !important; }
   }
 }
