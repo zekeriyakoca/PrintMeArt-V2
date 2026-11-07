@@ -14,6 +14,9 @@
         <span class="tax-note">{{ 'product.taxIncluded' | t }}</span>
       </div>
     }
+    @if (selectedPaper(); as paper) {
+      <p class="paper-spec">{{ paper.name }} · {{ paper.weightGsm }} g/m²@if (paper.grade !== 'Home') { · {{ 'product.cotton' | t }}}</p>
+    }
     <p class="text-xs text-slate-400 mt-1">{{ 'product.madeIn' | t }} <span style="color: #167a92">Den Bosch</span> {{ 'product.byFamily' | t }}</p>
   </div>
 

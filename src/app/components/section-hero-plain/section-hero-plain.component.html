@@ -28,7 +28,7 @@
             <img [src]="cat.image" alt="" fetchpriority="high" />
           </div>
           <div class="card-label">
-            <span>{{ cat.title | t }}</span>
+            <span>{{ cat.title | t: { count: museumCount } }}</span>
             <app-icon iconName="arrow-right" class="w-3.5 h-3.5"></app-icon>
           </div>
         </a>
