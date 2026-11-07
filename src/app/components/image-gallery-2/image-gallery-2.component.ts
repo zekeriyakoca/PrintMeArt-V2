@@ -1,4 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
 import { ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
@@ -6,7 +7,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-image-gallery-2',
-  imports: [TranslatePipe, ImageGalleryModalComponent, IconComponent],
+  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent],
   templateUrl: './image-gallery-2.component.html',
   styleUrl: './image-gallery-2.component.scss',
 })

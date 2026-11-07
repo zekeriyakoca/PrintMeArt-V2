@@ -193,7 +193,9 @@
     "title": "You may also like"
   },
   "gallery": {
-    "showAll": "Show all"
+    "showAll": "Show all",
+    "detailTitle": "Close-up",
+    "detailSubtitle": "See the texture up close"
   },
   "rights": {
     "title": "Rights & Source",

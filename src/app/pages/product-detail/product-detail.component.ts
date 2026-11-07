@@ -72,7 +72,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     const images = this.product().images ?? [];
     const detail = images[0]?.detail;
     if (!detail) return images;
-    const tile = { ...images[0], thumb: detail, small: detail, medium: detail, large: detail, xLarge: detail, original: detail };
+    const tile = { ...images[0], thumb: detail, small: detail, medium: detail, large: detail, xLarge: detail, original: detail, isDetail: true };
     return [...images.slice(0, 3), tile, ...images.slice(3)];
   });
 

@@ -72,6 +72,8 @@ export interface ProductImageDto {
   xLarge?: string;
   /** Full-resolution crop of the main image's most detailed area; empty when the original is under 5000 px */
   detail?: string;
+  /** Set on the gallery tile that shows the detail crop, so the gallery can label it */
+  isDetail?: boolean;
   original: string;
   order: number;
 }

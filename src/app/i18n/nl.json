@@ -193,7 +193,9 @@
     "title": "Misschien ook iets voor jou"
   },
   "gallery": {
-    "showAll": "Alles tonen"
+    "showAll": "Alles tonen",
+    "detailTitle": "Close-up",
+    "detailSubtitle": "Bekijk de textuur van dichtbij"
   },
   "rights": {
     "title": "Rechten & bron",
