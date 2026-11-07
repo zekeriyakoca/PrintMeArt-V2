@@ -12,11 +12,13 @@
         @if (images()[2]) {
           <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(2)">
             <img [src]="images()[2].large" [alt]="alt()" class="w-full h-auto" />
+            @if (images()[2].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           </div>
         }
         @if (images()[3]) {
           <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(3)">
             <img [src]="images()[3].large" [alt]="alt()" class="w-full h-auto" />
+            @if (images()[3].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           </div>
         }
       </div>
@@ -34,14 +36,26 @@
 
       @if (images()[2]) {
         <div class="relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center" (click)="openGallery(2)">
-          <img [src]="images()[2].large" [alt]="alt()" class="max-w-full max-h-full object-contain transition-all duration-300 group-hover:scale-105" />
+          <img
+            [src]="images()[2].large"
+            [alt]="alt()"
+            class="transition-all duration-300 group-hover:scale-105"
+            [class]="images()[2].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
+          />
+          @if (images()[2].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
         </div>
       }
 
       @if (images()[3]) {
         <div class="relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center" (click)="openGallery(3)">
-          <img [src]="images()[3].large" [alt]="alt()" class="max-w-full max-h-full object-contain transition-all duration-300 group-hover:scale-105" />
+          <img
+            [src]="images()[3].large"
+            [alt]="alt()"
+            class="transition-all duration-300 group-hover:scale-105"
+            [class]="images()[3].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
+          />
+          @if (images()[3].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
         </div>
       }
@@ -60,3 +74,13 @@
     <app-image-gallery-modal [isShowModal]="showGallery" [images]="galleryImages()" [startIndex]="galleryStartIndex()" (onClose)="closeGallery()"> </app-image-gallery-modal>
   }
 </div>
+
+<ng-template #detailBadge>
+  <div class="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 flex items-center gap-2 rounded-lg bg-white/90 backdrop-blur px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-md pointer-events-none">
+    <app-icon iconName="search" class="h-4 w-4 text-[#384f8c]" />
+    <div class="leading-tight">
+      <div class="text-xs sm:text-sm font-semibold text-gray-900">{{ 'gallery.detailTitle' | t }}</div>
+      <div class="hidden sm:block text-[11px] text-gray-600">{{ 'gallery.detailSubtitle' | t }}</div>
+    </div>
+  </div>
+</ng-template>
