@@ -13,7 +13,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
-import { FramedSizeNames, SizeOptions } from '../../shared/constants';
+import { AllPapers, FramedSizeNames, SizeOptions } from '../../shared/constants';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
@@ -51,6 +51,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   selectedSize = model<SizeOption | null>(null);
   /** Selected paper name for display and spec3 */
   selectedPaperName = signal<string>('Hahnemühle Photo Rag');
+  /** The chosen paper's specs, shown under the price */
+  selectedPaper = computed(() => AllPapers.find((paper) => paper.name === this.selectedPaperName()));
 
   /** The artwork Preview & Design and the room view show and save: the uploaded image, or the product's 2400 px copy */
   designImageUrl = computed(() => this.customImageUrl() || this.product().images[0].xLarge || this.product().images[0].large);

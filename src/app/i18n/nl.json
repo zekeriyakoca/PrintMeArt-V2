@@ -117,12 +117,13 @@
     "showMore": "Meer lezen",
     "details": "Productdetails",
     "detailsText": "Onze giclée-prints worden met pigmentinkt op fine-art papier gemaakt, voor uitzonderlijk detail en natuurgetrouwe kleuren. Je kiest zelf het papier: katoenpapier van museumkwaliteit, of onze Premium Poster, een echte fotoafdruk op mat Fujifilm-fotopapier.",
-    "detailPaper": "Katoenpapier van museumkwaliteit of mat fotopapier",
+    "detailPaper": "Zuurvrij Hahnemühle-papier van 100% katoen (308–350 g/m²) of mat fotopapier",
     "detailGiclee": "Giclée-druk voor levendige kleuren",
     "detailBorders": "Witte rand van 3,0 cm, makkelijk in te lijsten",
     "detailGuarantee": "Kleurgarantie van meer dan 50 jaar",
     "publicDomainTitle": "Dit kunstwerk is publiek domein (CC0)",
     "taxIncluded": "Incl. btw",
+    "cotton": "100% katoen",
     "from": "Vanaf",
     "madeIn": "Gemaakt in",
     "byFamily": "door een kleine familiestudio",
@@ -135,8 +136,8 @@
     "previewDesign": "Voorbeeld & ontwerp",
     "addToCart": "In winkelmand",
     "securePayment": "Veilig betalen met",
-    "badgeGiclee": "Giclée-prints van museumkwaliteit",
-    "badgeCotton": "Katoenpapier van museumkwaliteit, 308–350 g/m²",
+    "badgeGiclee": "Giclée met 12 pigmentinkten",
+    "badgeCotton": "Hahnemühle, 100% katoen, 308 g/m²",
     "desktopOnly": "Alleen op een groter scherm",
     "ourFabulous": "Onze",
     "desktopOnlyText": "pagina werkt alleen op tablet en desktop, voor de beste creatieve ervaring.",
@@ -197,7 +198,7 @@
     "detailTitle": "Close-up",
     "detailSubtitle": "Bekijk de textuur van dichtbij",
     "hoverTitle": "Elke penseelstreek, van dichtbij",
-    "hoverSubtitle": "Een uitsnede op volledige resolutie van dit kunstwerk. Precies dit detail hangt straks aan je muur."
+    "hoverSubtitle": "Een uitsnede op volledige resolutie van dit kunstwerk. Gedrukt op Hahnemühle Photo Rag: precies dit detail hangt straks aan je muur."
   },
   "rights": {
     "title": "Rechten & bron",
@@ -444,7 +445,7 @@
   "home": {
     "heroEyebrow": "Giclée-print op fine-art papier — snel geleverd in NL",
     "explore": "Ontdek de collectie",
-    "cardMuseum": "Museumprints",
+    "cardMuseum": "Kunst uit {{count}} musea",
     "cardCustom": "Jouw eigen ontwerp",
     "cardBestSellers": "Bestsellers",
     "popularNow": "Nu populair",

@@ -4,6 +4,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
+import { MUSEUMS } from '../../data/museums';
 
 export interface CategoryCard {
   title: string;
@@ -20,6 +21,8 @@ export interface CategoryCard {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionHeroPlainComponent {
+  readonly museumCount = MUSEUMS.length;
+
   categories: CategoryCard[] = [
     {
       title: 'home.cardMuseum',
