@@ -195,7 +195,9 @@
   "gallery": {
     "showAll": "Show all",
     "detailTitle": "Close-up",
-    "detailSubtitle": "See the texture up close"
+    "detailSubtitle": "See the texture up close",
+    "hoverTitle": "Every brushstroke, up close",
+    "hoverSubtitle": "A full-resolution crop of this artwork. This is the detail that ends up on your wall."
   },
   "rights": {
     "title": "Rights & Source",

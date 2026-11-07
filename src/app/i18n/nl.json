@@ -195,7 +195,9 @@
   "gallery": {
     "showAll": "Alles tonen",
     "detailTitle": "Close-up",
-    "detailSubtitle": "Bekijk de textuur van dichtbij"
+    "detailSubtitle": "Bekijk de textuur van dichtbij",
+    "hoverTitle": "Elke penseelstreek, van dichtbij",
+    "hoverSubtitle": "Een uitsnede op volledige resolutie van dit kunstwerk. Precies dit detail hangt straks aan je muur."
   },
   "rights": {
     "title": "Rechten & bron",
