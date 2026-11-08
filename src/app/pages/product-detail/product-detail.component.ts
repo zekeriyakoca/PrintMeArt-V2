@@ -2,7 +2,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
-import { ProductDto } from '../../models/product';
+import { detailUrls, ProductDto } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { BasePageComponent } from '../basePageComponent';
 
@@ -67,13 +67,13 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     return ((this.dutch && metadata?.Story_nl) || metadata?.Story || this.product().description || '').split('\n\n');
   });
 
-  /** Product images with the detail crop as the last gallery tile, when the main image has one */
+  /** Product images with the detail crops as gallery tiles after the first three, when the main image has them */
   galleryImages = computed(() => {
     const images = this.product().images ?? [];
-    const detail = images[0]?.detail;
-    if (!detail) return images;
-    const tile = { ...images[0], thumb: detail, small: detail, medium: detail, large: detail, xLarge: detail, original: detail, isDetail: true };
-    return [...images.slice(0, 3), tile, ...images.slice(3)];
+    const tiles = detailUrls(images[0]?.detail).map((url) => ({
+      ...images[0], thumb: url, small: url, medium: url, large: url, xLarge: url, original: url, isDetail: true,
+    }));
+    return [...images.slice(0, 3), ...tiles, ...images.slice(3)];
   });
 
   imageAlt = computed(() => {

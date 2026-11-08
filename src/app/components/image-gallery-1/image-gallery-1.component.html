@@ -3,15 +3,15 @@
   <div class=" grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6">
     <!-- Main large image -->
     <div class="md:h-full col-span-2 md:col-span-1 row-span-2 relative rounded-md sm:rounded-xl overflow-hidden cursor-pointer group closeup"
-      (click)="openGallery()">
+      [appCloseupCycle]="crops()" (click)="openGallery()">
       <img [src]="images()[0].large" [alt]="alt()"
         class="object-cover rounded-md sm:rounded-xl w-full h-full aspect-[3/4] md:aspect-auto">
       <div
         class="absolute inset-0 bg-neutral-900/20 opacity-0 hover:opacity-40 transition-opacity rounded-md sm:rounded-xl">
       </div>
-      @if (images()[0].detail) {
+      @if (crops().length) {
         <div class="closeup__media">
-        <img class="closeup__img" [src]="images()[0].detail" [alt]="alt()" loading="lazy" decoding="async" />
+        <img class="closeup__img" [src]="crops()[0]" [alt]="alt()" loading="lazy" decoding="async" />
         </div>
         <span class="closeup__ring"></span>
         <ng-container [ngTemplateOutlet]="closeUpBanner" />
