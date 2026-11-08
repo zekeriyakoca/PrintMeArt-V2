@@ -129,6 +129,7 @@ p {
   @media (min-width: 768px) { --pad: 1rem; --d: 6rem; }
 
   &__media,
+  &__layer,
   &__ring,
   &__banner { display: none; }
 
@@ -154,6 +155,21 @@ p {
         transform 0.6s var(--out);
     }
 
+    // Next crop while hovered (added by CloseupCycleDirective): the same ripple grows over the current one
+    &__layer {
+      display: block;
+      position: absolute;
+      inset: 0;
+      animation: closeup-reveal 0.8s var(--in-out) both;
+
+      img {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        object-fit: cover;
+        animation: closeup-zoom 6s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+      }
+    }
 
     // The resting loupe gets a white ring and a soft shadow so it reads as "look closer"
     &__ring {
@@ -209,8 +225,20 @@ p {
     &__media,
     &__img,
     &__banner { transition: none !important; }
-    &__ring { animation: none !important; }
+    &__ring,
+    &__layer,
+    &__layer img { animation: none !important; }
   }
+}
+
+@keyframes closeup-reveal {
+  from { clip-path: circle(calc(var(--d) / 2) at var(--cx) var(--cy)); }
+  to { clip-path: circle(150% at var(--cx) var(--cy)); }
+}
+
+@keyframes closeup-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
 }
 
 @keyframes closeup-ring {

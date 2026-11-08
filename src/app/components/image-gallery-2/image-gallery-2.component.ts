@@ -1,13 +1,14 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
-import { ProductImageDto } from '../../models/product';
+import { detailUrls, ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
 import { IconComponent } from '../shared/icon/icon.component';
+import { CloseupCycleDirective } from '../shared/closeup/closeup-cycle.directive';
 
 @Component({
   selector: 'app-image-gallery-2',
-  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent],
+  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent, CloseupCycleDirective],
   templateUrl: './image-gallery-2.component.html',
   styleUrl: './image-gallery-2.component.scss',
 })
@@ -15,6 +16,8 @@ export class ImageGallery2Component {
   images = input<ProductImageDto[]>([]);
   /** What the pictures show, for screen readers and image search */
   alt = input('');
+  /** Close-up crops of the main image for the hover loupe */
+  crops = computed(() => detailUrls(this.images()[0]?.detail));
   showGallery = false;
   mainImageIndex = signal(0);
   galleryStartIndex = signal(0);

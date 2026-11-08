@@ -28,13 +28,14 @@
     <div class="hidden md:grid grid-cols-3 grid-rows-2 gap-3 aspect-[5/2]">
       <div
         class="closeup col-span-2 row-span-2 relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
+        [appCloseupCycle]="crops()"
         (click)="openGallery()"
       >
         <img [src]="images()[0].large" [alt]="alt()" class="max-w-[95%] max-h-[90%] object-contain shadow-md transition-all duration-300 group-hover:scale-105" />
         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-        @if (images()[0].detail) {
+        @if (crops().length) {
           <div class="closeup__media">
-            <img class="closeup__img" [src]="images()[0].detail" [alt]="alt()" loading="lazy" decoding="async" />
+            <img class="closeup__img" [src]="crops()[0]" [alt]="alt()" loading="lazy" decoding="async" />
           </div>
           <span class="closeup__ring"></span>
           <ng-container [ngTemplateOutlet]="closeUpBanner" />

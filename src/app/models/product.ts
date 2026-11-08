@@ -70,13 +70,17 @@ export interface ProductImageDto {
   large: string;
   /** 2400 px copy, used by Preview & Design and the room view only */
   xLarge?: string;
-  /** Full-resolution crop of the main image's most detailed area; empty when the original is under 5000 px */
+  /** Full-resolution crops of the main image's most detailed areas, as "url|url|…" (older products have one url);
+   * empty when the original is under 4000 px. Read it with detailUrls(). */
   detail?: string;
   /** Set on the gallery tile that shows the detail crop, so the gallery can label it */
   isDetail?: boolean;
   original: string;
   order: number;
 }
+
+/** The detail crop urls stored in ProductImageDto.detail */
+export const detailUrls = (detail?: string): string[] => (detail ? detail.split('|').filter(Boolean) : []);
 
 export interface OptionGroupDto {
   name: string;
