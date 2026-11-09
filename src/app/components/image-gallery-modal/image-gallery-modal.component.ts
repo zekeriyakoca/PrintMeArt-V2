@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, effect, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { IconComponent } from '../shared/icon/icon.component';
 
 export interface GalleryImage {
@@ -21,6 +21,16 @@ export class ImageGalleryModalComponent {
   onClose = output<void>();
 
   currentIndex = signal(0);
+  private thumbs = viewChild<ElementRef<HTMLElement>>('thumbs');
+  private touchStart?: { x: number; y: number };
+
+  constructor() {
+    // Keep the current thumbnail in view when the strip is wider than the screen
+    effect(() => {
+      const index = this.currentIndex();
+      this.thumbs()?.nativeElement.querySelector(`[data-thumb="${index}"]`)?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    });
+  }
 
   // Zoom state
   isZoomed = signal(false);
@@ -49,8 +59,29 @@ export class ImageGalleryModalComponent {
     this.updateMousePosition(event);
   }
 
-  private updateMousePosition(event: MouseEvent) {
-    const target = event.currentTarget as HTMLElement;
+  // On touch screens a horizontal swipe changes the image; while zoomed, dragging moves around the image
+  onTouchStart(event: TouchEvent) {
+    const touch = event.touches[0];
+    this.touchStart = event.touches.length === 1 ? { x: touch.clientX, y: touch.clientY } : undefined;
+  }
+
+  onTouchMove(event: TouchEvent) {
+    if (!this.isZoomed() || event.touches.length !== 1) return;
+    this.updateMousePosition(event.touches[0], event.currentTarget as HTMLElement);
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    const start = this.touchStart;
+    this.touchStart = undefined;
+    if (!start || this.isZoomed()) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(touch.clientY - start.y)) return;
+    if (dx < 0) this.nextSelectedImage();
+    else this.prevSelectedImage();
+  }
+
+  private updateMousePosition(event: MouseEvent | Touch, target = (event as MouseEvent).currentTarget as HTMLElement) {
     const rect = target.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;

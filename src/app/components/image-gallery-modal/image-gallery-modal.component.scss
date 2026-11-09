@@ -64,3 +64,21 @@
     box-shadow: 0 0 0 2px white;
   }
 }
+
+// Clear of the notch and the home indicator on phones
+.safe-top {
+  top: max(0.5rem, env(safe-area-inset-top));
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.thumbs {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -117,7 +117,50 @@ p {
 // Product page close-up, same motion as the home page category cards: a round loupe of the detail crop
 // sits in the corner of the main image; on hover a circular ripple grows out of it until the close-up
 // fills the image, with a slow zoom, a pulse from the ring and the banner text sliding in.
-// Only on devices that can hover; touch screens keep the plain image and the Close-up gallery tile.
+// The ripple needs hover; the resting loupe also shows on the mobile carousel (`.closeup--touch`).
+// The small round loupe in the corner of the main image, with the next crop wiping in (CloseupCycleDirective)
+@mixin closeup-rest {
+  .closeup__media {
+    display: block;
+    position: absolute;
+    inset: 0;
+    clip-path: circle(calc(var(--d) / 2) at var(--cx) var(--cy));
+    transition: clip-path 0.5s var(--in-out);
+  }
+
+  .closeup__img {
+    position: absolute;
+    right: var(--pad);
+    bottom: var(--pad);
+    width: var(--d);
+    height: var(--d);
+    max-width: none;
+    object-fit: cover;
+    transition: right 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, bottom 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+      width 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, height 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
+      transform 0.6s var(--out);
+  }
+
+  .closeup__img--next {
+    animation: closeup-wipe 0.9s var(--in-out) both;
+  }
+
+  // The resting loupe gets a white ring and a soft shadow so it reads as "look closer"
+  .closeup__ring {
+    display: block;
+    position: absolute;
+    right: var(--pad);
+    bottom: var(--pad);
+    width: var(--d);
+    height: var(--d);
+    border-radius: 9999px;
+    border: 2px solid rgb(255 255 255 / 0.95);
+    box-shadow: 0 8px 24px -6px rgb(15 23 42 / 0.5);
+    pointer-events: none;
+    transition: opacity 0.3s var(--out) 0.3s;
+  }
+}
+
 .closeup {
   --pad: 0.75rem;
   --d: 4.5rem;
@@ -133,27 +176,11 @@ p {
   &__ring,
   &__banner { display: none; }
 
-  @media (hover: hover) {
-    &__media {
-      display: block;
-      position: absolute;
-      inset: 0;
-      clip-path: circle(calc(var(--d) / 2) at var(--cx) var(--cy));
-      transition: clip-path 0.5s var(--in-out);
-    }
+  // The resting loupe: on devices that hover, and on the touch carousel (`.closeup--touch`)
+  @media (hover: hover) { @include closeup-rest; }
+  &--touch { @include closeup-rest; }
 
-    &__img {
-      position: absolute;
-      right: var(--pad);
-      bottom: var(--pad);
-      width: var(--d);
-      height: var(--d);
-      max-width: none;
-      object-fit: cover;
-      transition: right 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, bottom 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
-        width 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s, height 0.4s cubic-bezier(0.7, 0, 0.8, 0.1) 0.35s,
-        transform 0.6s var(--out);
-    }
+  @media (hover: hover) {
 
     // Next crop while hovered (added by CloseupCycleDirective): the same ripple grows over the current one
     &__layer {
@@ -169,21 +196,6 @@ p {
         object-fit: cover;
         animation: closeup-zoom 6s cubic-bezier(0.2, 0.6, 0.3, 1) both;
       }
-    }
-
-    // The resting loupe gets a white ring and a soft shadow so it reads as "look closer"
-    &__ring {
-      display: block;
-      position: absolute;
-      right: var(--pad);
-      bottom: var(--pad);
-      width: var(--d);
-      height: var(--d);
-      border-radius: 9999px;
-      border: 2px solid rgb(255 255 255 / 0.95);
-      box-shadow: 0 8px 24px -6px rgb(15 23 42 / 0.5);
-      pointer-events: none;
-      transition: opacity 0.3s var(--out) 0.3s;
     }
 
     // Hidden as a whole until hover, so no empty card shows on the resting image
@@ -227,7 +239,8 @@ p {
     &__banner { transition: none !important; }
     &__ring,
     &__layer,
-    &__layer img { animation: none !important; }
+    &__layer img,
+    &__img--next { animation: none !important; }
   }
 }
 
@@ -244,4 +257,10 @@ p {
 @keyframes closeup-ring {
   0% { opacity: 0.9; transform: scale(1); }
   100% { opacity: 0; transform: scale(2.2); }
+}
+
+// The next crop opens from the middle of the loupe with a brief soft glow
+@keyframes closeup-wipe {
+  from { clip-path: circle(0% at 50% 50%); filter: brightness(1.15); }
+  to { clip-path: circle(75% at 50% 50%); filter: none; }
 }

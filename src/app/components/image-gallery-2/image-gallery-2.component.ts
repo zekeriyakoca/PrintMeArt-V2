@@ -5,10 +5,11 @@ import { detailUrls, ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CloseupCycleDirective } from '../shared/closeup/closeup-cycle.directive';
+import { ImageGalleryMobileComponent } from '../image-gallery-mobile/image-gallery-mobile.component';
 
 @Component({
   selector: 'app-image-gallery-2',
-  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent, CloseupCycleDirective],
+  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent, CloseupCycleDirective, ImageGalleryMobileComponent],
   templateUrl: './image-gallery-2.component.html',
   styleUrl: './image-gallery-2.component.scss',
 })
