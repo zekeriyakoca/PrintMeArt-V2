@@ -195,6 +195,7 @@
   },
   "gallery": {
     "showAll": "Show all",
+    "seeCloseups": "See the close-ups",
     "detailTitle": "Close-up",
     "detailSubtitle": "See the texture up close",
     "hoverTitle": "Every brushstroke, up close",

@@ -1,28 +1,7 @@
 <div class="image-container">
   @if (images() && images().length > 0) {
     <!-- Mobile -->
-    <div class="flex flex-col gap-2 md:hidden">
-      <div
-        class="w-full aspect-[4/3] relative rounded-lg overflow-hidden cursor-pointer group flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
-        (click)="openGallery()"
-      >
-        <img [src]="images()[0].large" [alt]="alt()" class="max-w-[95%] max-h-[90%] object-contain shadow-md" />
-      </div>
-      <div class="flex gap-2">
-        @if (images()[2]) {
-          <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(2)">
-            <img [src]="images()[2].large" [alt]="alt()" class="w-full h-auto" />
-            @if (images()[2].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
-          </div>
-        }
-        @if (images()[3]) {
-          <div class="flex-1 relative rounded-lg overflow-hidden cursor-pointer" (click)="openGallery(3)">
-            <img [src]="images()[3].large" [alt]="alt()" class="w-full h-auto" />
-            @if (images()[3].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
-          </div>
-        }
-      </div>
-    </div>
+    <app-image-gallery-mobile class="block md:hidden" [images]="images()" [alt]="alt()" [crops]="crops()" [landscape]="true" (open)="openGallery($event)" />
 
     <!-- Desktop -->
     <div class="hidden md:grid grid-cols-3 grid-rows-2 gap-3 aspect-[5/2]">
