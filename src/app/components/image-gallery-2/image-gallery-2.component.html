@@ -63,13 +63,7 @@
 </div>
 
 <ng-template #detailBadge>
-  <div class="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 flex items-center gap-2 rounded-lg bg-white/90 backdrop-blur px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-md pointer-events-none">
-    <app-icon iconName="search" class="h-4 w-4 text-[#384f8c]" />
-    <div class="leading-tight">
-      <div class="text-xs sm:text-sm font-semibold text-gray-900">{{ 'gallery.detailTitle' | t }}</div>
-      <div class="hidden sm:block text-[11px] text-gray-600">{{ 'gallery.detailSubtitle' | t }}</div>
-    </div>
-  </div>
+  <span class="closeup-tag absolute left-3 top-3">{{ 'gallery.detailTitle' | t }}</span>
 </ng-template>
 
 <ng-template #closeUpBanner>

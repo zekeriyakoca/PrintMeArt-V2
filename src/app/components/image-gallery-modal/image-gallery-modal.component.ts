@@ -5,6 +5,8 @@ import { IconComponent } from '../shared/icon/icon.component';
 export interface GalleryImage {
   id: number;
   url: string;
+  /** A close-up crop of the artwork, labelled as such */
+  isDetail?: boolean;
 }
 
 @Component({

@@ -30,10 +30,7 @@
         } @else {
           <img [src]="item.large" [alt]="alt()" class="h-full w-full object-cover" loading="lazy" decoding="async" />
           @if (item.isDetail) {
-            <div class="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur pointer-events-none">
-              <app-icon iconName="search" class="h-3.5 w-3.5 text-[#384f8c]" />
-              <span class="text-xs font-semibold text-gray-900">{{ 'gallery.detailTitle' | t }}</span>
-            </div>
+            <span class="closeup-tag absolute left-3 top-3">{{ 'gallery.detailTitle' | t }}</span>
           }
         }
       </div>

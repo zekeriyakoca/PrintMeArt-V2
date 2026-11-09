@@ -7,6 +7,9 @@
       <!-- Counter -->
       <div class="safe-top absolute left-4 md:left-6 flex h-11 items-center text-sm font-medium tabular-nums text-white/80 z-10">
         {{ currentIndex() + 1 }} / {{ images().length }}
+        @if (images()[currentIndex()].isDetail) {
+          <span class="closeup-tag closeup-tag--dark ml-3">{{ 'gallery.detailTitle' | t }}</span>
+        }
       </div>
 
       <!-- Close button -->
