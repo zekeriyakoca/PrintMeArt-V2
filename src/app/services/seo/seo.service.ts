@@ -13,6 +13,8 @@ const SITE_NAME = 'PrintMeArt';
 /** Shared look of the home page and collections: logo, tagline and three framed artworks (1200×630) */
 const DEFAULT_IMAGE = `${environment.siteUrl}/share.jpg`;
 const OG_LOCALES: Record<string, string> = { nl: 'nl_NL', en: 'en_GB' };
+/** Query parameters that change which artworks the catalog lists; all others are left out of the canonical link */
+const INDEXED_PARAMS = ['categoryName', 'attributeName', 'optionName', 'tags', 'pageIndex'];
 
 export interface PageSeo {
   title: string;
@@ -64,7 +66,7 @@ export class SeoService {
   }
 
   setPage(page: PageSeo): void {
-    const path = page.path ?? this.router.url;
+    const path = page.path ?? this.indexablePath(this.router.url);
     const url = this.absoluteUrl(this.language, path);
     const fullTitle = page.title.includes(SITE_NAME) ? page.title : `${page.title} | ${SITE_NAME}`;
     const image = page.image ?? DEFAULT_IMAGE;
@@ -111,6 +113,14 @@ export class SeoService {
 
   absoluteUrl(language: string, path: string): string {
     return `${environment.siteUrl}/${language}${path === '/' ? '' : path}`;
+  }
+
+  /** The URL without tracking tags (utm, gclid, srsltid) or view settings, so those visits don't count as duplicate pages */
+  private indexablePath(url: string): string {
+    const tree = this.router.parseUrl(url);
+    tree.queryParams = Object.fromEntries(Object.entries(tree.queryParams).filter(([name]) => INDEXED_PARAMS.includes(name)));
+    tree.fragment = null;
+    return this.router.serializeUrl(tree);
   }
 
   private replaceHead(selector: string, links: Record<string, string>[]): void {
