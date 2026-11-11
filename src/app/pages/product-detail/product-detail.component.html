@@ -7,17 +7,17 @@
   }
 
   <!-- PRODUCT INFO AND PURCHASE SIDEBAR -->
-  <div class="relative z-10 mt-9 sm:mt-11 flex flex-col lg:flex-row gap-10 lg:gap-0">
+  <div class="relative z-10 mt-6 sm:mt-11 flex flex-col lg:flex-row gap-10 lg:gap-0">
     <!-- PRODUCT DETAILS -->
     <div class="w-full lg:w-3/5 xl:w-2/3">
-      <div class="space-y-10 max-w-4xl lg:pr-12">
+      <div class="space-y-8 md:space-y-10 max-w-4xl lg:pr-12">
         <div>
-          <div class="flex items-start justify-between gap-3">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
             <div>
-              <h2 class="text-xl md:text-2xl font-semibold text-slate-800 mb-1">{{ product().name }}</h2>
-              <p class="!leading-6 md:!leading-8 font-extralight md:font-light text-sm md:text-base text-[#9097bb]">{{ product().title }}</p>
+              <h2 class="text-[1.6rem] leading-tight md:text-2xl font-semibold text-slate-800 mb-1.5 md:mb-1 text-balance">{{ product().name }}</h2>
+              <p class="!leading-6 md:!leading-8 font-light md:font-light text-sm md:text-base text-[#9097bb]">{{ product().title }}</p>
             </div>
-            <div class="flex flex-col items-end gap-2">
+            <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-2">
               <!-- Public Domain Badge -->
               <a routerLink="/licensing" class="flex-shrink-0 group cursor-pointer" [title]="'product.publicDomainTitle' | t">
                 <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors">
@@ -26,13 +26,13 @@
                       d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
                     />
                   </svg>
-                  <span class="text-[9px] md:text-xs font-medium text-slate-600 group-hover:text-slate-700">{{ 'product.publicDomain' | t }}</span>
+                  <span class="text-[11px] md:text-xs font-medium text-slate-600 group-hover:text-slate-700">{{ 'product.publicDomain' | t }}</span>
                 </div>
               </a>
               <!-- Museum Badge -->
               @if (museum() && museum()!.badgeUrl) {
                 <a [href]="museum()!.websiteUrl" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 transition-opacity hover:opacity-80" [title]="'Visit ' + museum()!.name">
-                  <img [src]="museum()!.badgeUrl" [alt]="museum()!.name + ' logo'" class="h-8 max-w-32 object-contain" />
+                  <img [src]="museum()!.badgeUrl" [alt]="museum()!.name + ' logo'" class="h-7 sm:h-8 max-w-32 object-contain" />
                 </a>
               }
             </div>
@@ -74,12 +74,12 @@
         </div>
         <!-- PURCHASE SIDEBAR (mobile/tablet) -->
         <div class="lg:hidden">
-          <app-product-purchase-sidebar [product]="product()" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
+          <app-product-purchase-sidebar [product]="product()" [stickyBar]="true" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
         </div>
 
         <section class="product-details">
           <h3 class="text-lg font-semibold text-slate-800 mb-3">{{ 'product.details' | t }}</h3>
-          <p class="text-sm text-slate-600 leading-relaxed mb-4">
+          <p class="text-sm text-slate-600 !leading-6 md:!leading-relaxed mb-4">
             {{ 'product.detailsText' | t }}
           </p>
           <ul class="details-list">
@@ -89,7 +89,7 @@
             <li><span class="list-marker"></span>{{ 'product.detailGuarantee' | t }}</li>
           </ul>
         </section>
-        <section class="mb-12">
+        <section class="mb-6 md:mb-12">
           <app-accordion-info [data]="productAccordionData()" [panelClassName]="'p-4 text-slate-700 text-sm leading-relaxed'"></app-accordion-info>
         </section>
 

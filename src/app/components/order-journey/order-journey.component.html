@@ -4,14 +4,18 @@
     class="hidden lg:block absolute top-6 left-[calc(12.5%+24px)] right-[calc(12.5%+24px)] h-0.5 bg-gradient-to-r from-[#384f8c]/20 via-[#384f8c]/40 to-[#384f8c]/20">
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-    @for (step of steps(); track $index) {
-    <div class="group text-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-8 lg:gap-6">
+    @for (step of steps(); track $index; let last = $last) {
+    <div class="group relative flex items-start gap-4 sm:block text-left sm:text-center">
+      <!-- Phone connector line down to the next step -->
+      @if (!last) {
+      <span class="sm:hidden absolute left-6 top-14 -bottom-6 w-px bg-gradient-to-b from-[#384f8c]/30 to-[#384f8c]/5" aria-hidden="true"></span>
+      }
       <!-- Step number badge + Icon -->
-      <div class="relative inline-flex flex-col items-center mb-6 px-4 bg-white">
+      <div class="relative shrink-0 inline-flex flex-col items-center sm:mb-6 sm:px-4 bg-white">
         <!-- Step number -->
         <span
-          class="absolute -top-2 right-1 w-6 h-6 rounded-full bg-[#384f8c] text-white text-xs font-bold flex items-center justify-center shadow-md z-10">
+          class="absolute -top-2 -right-2 sm:right-1 w-6 h-6 rounded-full bg-[#384f8c] text-white text-xs font-bold flex items-center justify-center shadow-md z-10">
           {{ $index + 1 }}
         </span>
 
@@ -57,9 +61,9 @@
       </div>
 
       <!-- Content -->
-      <div>
-        <h3 class="font-semibold text-slate-900 mb-2">{{ step.title | t }}</h3>
-        <p class="text-sm text-slate-500 leading-[1.8rem] max-w-[220px] mx-auto">{{ step.description | t: { days: deliveryDays() } }}</p>
+      <div class="pt-0.5 sm:pt-0">
+        <h3 class="font-semibold text-slate-900 mb-1 sm:mb-2">{{ step.title | t }}</h3>
+        <p class="text-sm text-slate-500 !leading-6 sm:!leading-[1.8rem] sm:max-w-[220px] sm:mx-auto">{{ step.description | t: { days: deliveryDays() } }}</p>
       </div>
     </div>
     }
