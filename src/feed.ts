@@ -23,8 +23,6 @@ const MAX_DESCRIPTION = 5000;
 const MAX_ADDITIONAL_IMAGES = 10;
 /** Posters, Prints & Visual Artwork */
 const GOOGLE_CATEGORY = 500044;
-/** Zones listed per item; the rest of the EU is set up in Merchant Center itself */
-const FEED_SHIPPING_COUNTRIES = ['NL', 'BE', 'DE'];
 
 const DICTIONARIES = { nl, en } as const;
 export type FeedLanguage = keyof typeof DICTIONARIES;
@@ -119,10 +117,10 @@ ${items.join('\n')}
 `;
 }
 
-/** Shipping per country, worked out as the product page's Offer does it */
+/** Shipping to every country the shop delivers to, worked out as the product page's Offer does it */
 function shippingXml(info: ShippingInfo, price: number): string {
   return info.zones
-    .flatMap((zone) => zone.countries.filter((country) => FEED_SHIPPING_COUNTRIES.includes(country)).map((country) => ({ zone, country })))
+    .flatMap((zone) => zone.countries.map((country) => ({ zone, country })))
     .map(({ zone, country }) => {
       const rate = zone.freeShippingFrom != null && price >= zone.freeShippingFrom ? 0 : zone.rate;
       // The backend gives one delivery figure, covering both printing and transit
