@@ -1,6 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { SizeOption } from './../../models/size-option';
-import { Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { ProductDto, ProductMetadata } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -42,6 +42,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   customImageMetadata = input<ProductMetadata | null>(null);
   /** Increment to programmatically open the preview popup */
   openPreviewTrigger = input<number>(0);
+  /** Phones: a bar pinned to the bottom with the price and add to cart, once the buttons have scrolled away */
+  stickyBar = input<boolean>(false);
 
   onSelectedFrameChanged = output<string>();
   designSaved = output<string>();
@@ -88,6 +90,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     { allowSignalWrites: true },
   );
 
+  private readonly actionButtons = viewChild<ElementRef<HTMLElement>>('actionButtons');
+  showStickyBar = signal(false);
+
   constructor(
     private apiService: ApiService,
     private cartService: CartService,
@@ -95,6 +100,25 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     private toastService: ToastService,
   ) {
     super();
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      const buttons = this.actionButtons()?.nativeElement;
+      const footer = document.querySelector('app-footer');
+      if (!this.stickyBar() || !buttons) return;
+      // Shown once the buttons are above the screen, and out of the footer's way
+      let buttonsPassed = false;
+      let footerInView = false;
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.target === buttons) buttonsPassed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+          else footerInView = entry.isIntersecting;
+        }
+        this.showStickyBar.set(buttonsPassed && !footerInView);
+      });
+      observer.observe(buttons);
+      if (footer) observer.observe(footer);
+      destroyRef.onDestroy(() => observer.disconnect());
+    });
   }
 
   showPreview = signal(false);

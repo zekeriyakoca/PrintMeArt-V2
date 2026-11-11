@@ -73,7 +73,7 @@
   </ul>
 
   <!-- Action buttons (side by side) -->
-  <div class="action-buttons">
+  <div class="action-buttons" #actionButtons>
     <button type="button" class="preview-btn bg-rose-700 hover:bg-rose-600" [class.disabled]="!selectedSize()" [disabled]="!selectedSize()" (click)="onPreviewClick()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -119,6 +119,26 @@
     </div>
   </div>
 </section>
+
+<!-- Phones: price and add to cart pinned to the bottom -->
+@if (stickyBar()) {
+  <div class="sticky-buy lg:hidden" [class.sticky-buy--shown]="showStickyBar()" [attr.inert]="showStickyBar() ? null : ''">
+    @if (product().images?.[0]?.thumb; as thumb) {
+      <img class="sticky-buy__thumb" [src]="thumb" alt="" />
+    }
+    <div class="min-w-0 flex-1">
+      <p class="sticky-buy__name">{{ product().name }}</p>
+      <p class="sticky-buy__meta">
+        @if (selectedSize(); as size) {<span>{{ size.name }} cm</span> · }
+        <span class="sticky-buy__price">{{ (calculatedPrice() || product().cheapestPrice) | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+      </p>
+    </div>
+    <button type="button" class="sticky-buy__btn" [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0" (click)="addToCart()">
+      <app-icon iconName="cart"></app-icon>
+      <span>{{ 'product.addToCart' | t }}</span>
+    </button>
+  </div>
+}
 
 <!-- Mobile Preview Message -->
 @if (showMobileMessage()) {

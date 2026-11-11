@@ -5,16 +5,16 @@
   <div>
     <app-business-highlights />
   </div>
-  <div class="container mx-auto mt-0 border-b border-slate-200 px-4 sm:px-6 lg:px-0 pb-12 md:pb-16 pt-4">
+  <div class="container mx-auto mt-0 border-b border-slate-200 px-4 sm:px-6 lg:px-0 pb-10 md:pb-16 pt-6 md:pt-4">
     <app-featured-prints />
   </div>
   <div id="section-categories"
-    class="container mx-auto mt-10 md:mt-16 px-4 sm:px-6 lg:px-0 bg-slate-50 py-10 md:py-16 rounded-sm">
+    class="container mx-auto mt-0 md:mt-16 px-4 sm:px-6 lg:px-0 bg-slate-50 py-10 md:py-16 rounded-sm">
     @defer (hydrate on viewport) {
       <app-category-grid [categories]="childCategories()" />
     }
   </div>
-  <div class="container mx-auto border-t border-slate-200 px-4 sm:px-6 lg:px-0 pt-14 md:pt-32 mt-12 md:mt-16">
+  <div class="container mx-auto border-t border-slate-200 px-4 sm:px-6 lg:px-0 pt-12 md:pt-32 mt-8 md:mt-16">
     @defer (hydrate on viewport) {
       <app-order-journey />
     }
@@ -25,7 +25,7 @@
       <app-our-services />
     }
   </div>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-0 py-14 md:py-24 mb-10">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-0 pt-6 pb-12 md:py-24 md:mb-10">
     @defer (hydrate on viewport) {
       <app-visit-us />
     }
