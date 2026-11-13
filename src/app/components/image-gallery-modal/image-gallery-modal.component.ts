@@ -15,6 +15,7 @@ export interface GalleryImage {
   imports: [IconComponent, TranslatePipe],
   templateUrl: './image-gallery-modal.component.html',
   styleUrls: ['./image-gallery-modal.component.scss'],
+  host: { '(document:keydown)': 'onSelectedImageKeyDown($event)' },
 })
 export class ImageGalleryModalComponent {
   isShowModal = input<boolean>(false);
@@ -138,6 +139,7 @@ export class ImageGalleryModalComponent {
   }
 
   onSelectedImageKeyDown(event: KeyboardEvent) {
+    if (!this.isShowModal()) return;
     if (event.key === 'Escape') {
       if (this.isZoomed()) {
         this.resetZoom();

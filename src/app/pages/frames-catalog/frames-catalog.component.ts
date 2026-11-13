@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 import { FrameCardComponent } from '../../components/frame-card/frame-card.component';
@@ -114,10 +114,11 @@ export class FramesCatalogComponent {
   isGalleryOpen = signal(false);
   selectedFrameIndex = signal(0);
 
-  get galleryImages(): GalleryImage[] {
+  // computed, not a getter: a new array on every change detection made the modal jump back to the first image
+  galleryImages = computed<GalleryImage[]>(() => {
     const frame = this.frames[this.selectedFrameIndex()];
     return frame?.allImages.map((url, index) => ({ id: index, url })) || [];
-  }
+  });
 
   openGallery(index: number) {
     this.selectedFrameIndex.set(index);
