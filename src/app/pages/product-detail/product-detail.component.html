@@ -1,3 +1,6 @@
+@if (missing()) {
+<app-not-found />
+} @else {
 <div class="contained-page">
   <!-- IMAGE GALLER  -->
   @if (isProductHorizontal()) {
@@ -106,3 +109,4 @@
   <!-- RELATED PRODUCTS -->
   <app-related-products [categoryName]="product().categoryName" [excludeProductId]="productId"> </app-related-products>
 </div>
+}
