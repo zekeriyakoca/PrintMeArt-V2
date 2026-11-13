@@ -20,13 +20,14 @@ import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService, summary } from '../../services/seo/seo.service';
 import { productPath } from '../../shared/product-path';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 const ARTIST_GROUP = 'Artist';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [TranslatePipe, RouterLink, ImageGallery1Component, ImageGallery2Component, ProductPurchaseSidebarComponent, AccordionInfoComponent, PolicyComponent, RelatedProductsComponent],
+  imports: [TranslatePipe, RouterLink, ImageGallery1Component, ImageGallery2Component, ProductPurchaseSidebarComponent, AccordionInfoComponent, PolicyComponent, RelatedProductsComponent, NotFoundComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -37,6 +38,8 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   private readonly bootstrap = inject(Bootstrap);
   productId: string = '';
   product = signal<ProductDto>({} as ProductDto);
+  /** The product does not exist (any more); the not-found page answers 404 so search engines drop it */
+  missing = signal(false);
   calculatedPrice = signal<number>(0);
   quantity = signal<number>(1);
 
@@ -149,13 +152,17 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   });
 
   fetchProduct() {
-    this.apiService.getProductById(this.productId).subscribe((product) => {
-      if (product) {
-        this.product.set(product);
-        this.storyExpanded.set(false);
-        this.describeForSearch(product);
-        this.analytics.trackProductViewed(product);
-      }
+    this.missing.set(false);
+    this.apiService.getProductById(this.productId).subscribe({
+      next: (product) => {
+        if (product) {
+          this.product.set(product);
+          this.storyExpanded.set(false);
+          this.describeForSearch(product);
+          this.analytics.trackProductViewed(product);
+        }
+      },
+      error: (error) => this.missing.set(error?.status === 404),
     });
   }
 
