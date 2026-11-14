@@ -28,6 +28,9 @@
       [class]="i === 0 ? 'col-span-1 row-span-2' : ''" (click)="openGallery(i + 1)">
       <img [src]="item.large" [alt]="alt()" class="object-cover w-full h-full rounded-md sm:rounded-xl"
         [class]="i === 0 ? '' : 'aspect-[6/5] lg:aspect-[6/4]'">
+      @if (i + 1 === sliderIndex()) {
+        <app-closeup-slider [urls]="crops()" [alt]="alt()" />
+      }
       <div class="absolute inset-0 bg-slate-900/20 opacity-0 hover:opacity-60 transition-opacity"></div>
       @if (item.isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
     </div>

@@ -29,6 +29,9 @@
             class="transition-all duration-300 group-hover:scale-105"
             [class]="images()[2].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
           />
+          @if (sliderIndex() === 2) {
+            <app-closeup-slider [urls]="crops()" [alt]="alt()" />
+          }
           @if (images()[2].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
         </div>
@@ -42,6 +45,9 @@
             class="transition-all duration-300 group-hover:scale-105"
             [class]="images()[3].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
           />
+          @if (sliderIndex() === 3) {
+            <app-closeup-slider [urls]="crops()" [alt]="alt()" />
+          }
           @if (images()[3].isDetail) { <ng-container [ngTemplateOutlet]="detailBadge" /> }
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
         </div>
