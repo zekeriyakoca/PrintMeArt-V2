@@ -206,7 +206,8 @@ p {
       transition: opacity 0.25s var(--out), transform 0.4s var(--out);
     }
 
-    &:hover {
+    // Armed by CloseupCycleDirective a few seconds after the page shows, so the painting is seen first
+    &.closeup--armed:hover {
       .closeup__media {
         clip-path: circle(150% at var(--cx) var(--cy));
         transition: clip-path 0.8s var(--in-out) 0.08s;
