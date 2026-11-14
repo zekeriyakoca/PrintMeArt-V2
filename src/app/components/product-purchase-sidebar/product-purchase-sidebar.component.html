@@ -185,7 +185,7 @@
       (selectedSizeChange)="selectedSize.set($event)"
       [frameName]="selectedFrameName()"
       [(isMatIncluded)]="isMatIncluded"
-      [paperName]="selectedPaperName()"
+      [(whiteBorder)]="whiteBorder"
       [metadata]="imageMetadata()"
       (onClose)="showPreview.set(false)"
       (onDesignSaved)="savedDesignUrl.set($event); designSaved.emit($event)"

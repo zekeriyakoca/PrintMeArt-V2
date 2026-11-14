@@ -1,0 +1,47 @@
+<div class="white-border">
+  <div class="wb-head">
+    <span class="wb-title">{{ 'design.whiteBorder' | t }}</span>
+    <span class="wb-value" [class.is-none]="border().cm === 0">
+      @if (border().cm > 0) {
+        {{ valueText() }}<span class="wb-unit">cm</span>
+      } @else {
+        {{ 'design.border.none' | t }}
+      }
+    </span>
+  </div>
+
+  <div class="wb-tiles" role="radiogroup" [attr.aria-label]="'design.whiteBorder' | t">
+    @for (tile of tiles(); track tile.id) {
+      <button
+        type="button"
+        role="radio"
+        class="wb-tile"
+        [class.selected]="border().presetId === tile.id"
+        [attr.aria-checked]="border().presetId === tile.id"
+        (click)="selectPreset(tile.id)"
+      >
+        <span class="wb-mini" [style.aspect-ratio]="miniRatio()">
+          <span class="wb-mini-paper" [style.padding]="tile.padding"><span class="wb-mini-art"></span></span>
+        </span>
+        <span class="wb-tile-label">{{ 'design.border.' + tile.id | t }}</span>
+      </button>
+    }
+  </div>
+
+  <input
+    type="range"
+    class="wb-slider"
+    min="0"
+    [max]="maxCm()"
+    [step]="step"
+    [value]="border().cm"
+    [style.--fill]="fillPercent() + '%'"
+    [attr.aria-label]="'design.whiteBorder' | t"
+    [attr.aria-valuetext]="valueText() + ' cm'"
+    (input)="onSlide($event)"
+  />
+  <div class="wb-scale">
+    <span>0</span>
+    <span>{{ maxCm() }} cm</span>
+  </div>
+</div>
