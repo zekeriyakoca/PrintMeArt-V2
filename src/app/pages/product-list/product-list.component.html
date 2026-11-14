@@ -275,7 +275,7 @@
           @default {
             <!-- Default Grid View: 3 columns when filters open, 4 when closed -->
             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-0 md:gap-6 mb-2" [class.xl:grid-cols-4]="hideFilters()" [class.xl:grid-cols-3]="!hideFilters()">
-              @for (product of products().data; track product.id) {
+              @for (product of gridProducts(); track product.id) {
                 <app-product-card [product]="product" class=""></app-product-card>
               }
             </div>

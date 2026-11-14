@@ -33,6 +33,8 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     pageSize: this.defaultPageSize,
     pageIndex: 0,
   });
+  // Only the grid lines prints up by image ratio; the gallery views keep the catalog order
+  gridProducts = computed(() => [...(this.products().data ?? [])].sort((a, b) => b.imageRatio - a.imageRatio));
   filterOptions = signal<FilterGroupDto[]>([]);
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
@@ -196,7 +198,6 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   fetchProductsWithFilters() {
     this.apiService.getFilteredProducts(this.selectedFilterOptions()).subscribe((products) => {
       if (products?.data) {
-        products.data.sort((a, b) => b.imageRatio - a.imageRatio);
         this.products.set(products);
         this.describeNamed(products.data[0]?.id);
         const filters = this.selectedFilterOptions();
