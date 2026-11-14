@@ -28,3 +28,9 @@
   border-bottom: 1.5px solid #0f172a;
   transform: rotate(-45deg);
 }
+// Museum name written out where we have no logo, set like a museum wordmark
+.museum-wordmark {
+  font-family: Georgia, 'Times New Roman', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}

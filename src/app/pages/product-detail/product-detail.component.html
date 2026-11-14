@@ -33,10 +33,22 @@
                 </div>
               </a>
               <!-- Museum Badge -->
-              @if (museum() && museum()!.badgeUrl) {
-                <a [href]="museum()!.websiteUrl" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 transition-opacity hover:opacity-80" [title]="'Visit ' + museum()!.name">
-                  <img [src]="museum()!.badgeUrl" [alt]="museum()!.name + ' logo'" class="h-7 sm:h-8 max-w-32 object-contain" />
-                </a>
+              @if (museum(); as m) {
+                @if (m.badgeUrl) {
+                  <a [href]="m.websiteUrl" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 transition-opacity hover:opacity-80" [title]="'Visit ' + m.name">
+                    <img [src]="m.badgeUrl" [alt]="m.name + ' logo'" class="h-7 sm:h-8 max-w-32 object-contain" />
+                  </a>
+                } @else {
+                  <a
+                    [attr.href]="m.websiteUrl || null"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="museum-wordmark flex-shrink min-w-0 max-w-44 border-l border-slate-300 pl-2.5 text-[10px] sm:text-[11px] leading-tight text-slate-600 transition-colors hover:text-slate-900 line-clamp-2"
+                    [title]="museumLabel()"
+                  >
+                    {{ museumLabel() }}
+                  </a>
+                }
               }
             </div>
           </div>

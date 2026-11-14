@@ -22,7 +22,7 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Yale University',
-    badgeUrl: 'https://artgallery.yale.edu/themes/custom/yuag/assets/dist/images/logo--stacked.svg',
+    badgeUrl: '',
     websiteUrl: 'https://artgallery.yale.edu',
   },
   {
@@ -90,7 +90,7 @@ export const MUSEUMS: Museum[] = [
   },
   {
     name: 'Kröller-Müller',
-    badgeUrl: 'https://images.seeklogo.com/logo-png/38/2/kroller-muller-museum-logo-png_seeklogo-388711.png',
+    badgeUrl: '',
     websiteUrl: 'https://krollermuller.nl/en',
   },
   {
@@ -134,7 +134,7 @@ export const MUSEUMS: Museum[] = [
     badgeUrl: 'https://www.britishmuseum.org/themes/custom/numiko/dist/img/british-museum-logo.svg',
     websiteUrl: 'https://www.britishmuseum.org/',
   },
-  { name: 'Tate', badgeUrl: '', websiteUrl: 'https://www.tate.org.uk/' },
+  { name: 'Tate', badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/museum-logos/tate.png', websiteUrl: 'https://www.tate.org.uk/' },
   {
     name: 'National Museum of Art',
     badgeUrl: '',
@@ -171,5 +171,35 @@ export const MUSEUMS: Museum[] = [
     name: 'Art Institute of Chicago',
     badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/www.artic.edu_artworks_81561_street-in-moret.png',
     websiteUrl: 'https://www.artic.edu/',
+  },
+  {
+    name: 'Van Gogh Museum',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/museum-logos/van-gogh-museum.png',
+    websiteUrl: 'https://www.vangoghmuseum.nl/',
+  },
+  {
+    name: 'Frans Hals Museum',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/museum-logos/frans-hals-museum.png',
+    websiteUrl: 'https://www.franshalsmuseum.nl/',
+  },
+  {
+    name: 'Hermitage',
+    badgeUrl: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/museum-logos/hermitage.png',
+    websiteUrl: 'https://www.hermitagemuseum.org/',
+  },
+  {
+    name: 'Te Papa',
+    badgeUrl: '',
+    websiteUrl: 'https://www.tepapa.govt.nz/',
+  },
+  {
+    name: 'Boston Public Library',
+    badgeUrl: '',
+    websiteUrl: 'https://www.bpl.org/',
+  },
+  {
+    name: 'Swiss National Library',
+    badgeUrl: '',
+    websiteUrl: 'https://www.nb.admin.ch/',
   },
 ];

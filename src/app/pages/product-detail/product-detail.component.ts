@@ -93,21 +93,23 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   storyExpanded = signal(false);
   hasMoreStory = computed(() => this.storyParagraphs().length > 1 || !!this.artistBio() || this.storyParagraphs()[0].length > 160);
 
+  // The metadata museum decides; attributes are only a fallback. Whole-word matching, so a painter
+  // like "Tatebayashi Kagei" never picks up Tate. A museum we have no entry for still shows its name.
   museum = computed<Museum | null>(() => {
-    const attributes = this.product().attributes;
-    if (!attributes || attributes.length === 0) {
-      return null;
+    const matches = (text: string, museum: Museum) =>
+      new RegExp(`(^|[^\\p{L}])${museum.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[^\\p{L}])`, 'iu').test(text);
+
+    const museumName = this.product().metadata?.Museum?.trim();
+    if (museumName) {
+      return MUSEUMS.find((museum) => matches(museumName, museum)) ?? { name: museumName, badgeUrl: '', websiteUrl: '' };
     }
 
-    for (const museum of MUSEUMS) {
-      const foundAttribute = attributes.find((attr) => attr.toLowerCase().includes(museum.name.toLowerCase()));
-      if (foundAttribute) {
-        return museum;
-      }
-    }
-
-    return null;
+    const attributes = this.product().attributes ?? [];
+    return MUSEUMS.find((museum) => attributes.some((attr) => matches(attr, museum))) ?? null;
   });
+
+  // Written-out museum name for museums without a logo: the full name from the metadata where we have it
+  museumLabel = computed(() => this.product().metadata?.Museum?.trim() || this.museum()?.name || '');
 
   productAccordionData = computed(() => {
     const sourceUrl = this.product().sourceUrl;
