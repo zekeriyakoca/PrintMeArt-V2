@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
@@ -40,6 +40,7 @@ export class ProductPreviewComponent {
 
   // Refs
   viewportRef = viewChild<ElementRef<HTMLDivElement>>('viewport');
+  confirmSaveRef = viewChild<ElementRef<HTMLButtonElement>>('confirmSave');
 
   // State
   translateX = signal(0);
@@ -52,6 +53,8 @@ export class ProductPreviewComponent {
   showGuides = signal(false);
   showGuideInfo = signal(true);
   isSaving = signal(false);
+  /** Asks to save before closing when the design changed since it was opened or last saved */
+  showDiscardConfirm = signal(false);
 
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
@@ -182,6 +185,8 @@ export class ProductPreviewComponent {
           this.smartInit();
           this.needsSmartInit = false;
         }
+        // Kept across a trip to the room view, so changes made before it still count
+        if (!this.baseline) this.baseline = untracked(() => this.snapshot());
       }
       this.prevOpen = open;
     },
@@ -210,6 +215,38 @@ export class ProductPreviewComponent {
     },
     { allowSignalWrites: true },
   );
+
+  /** Everything a customer can change here, to tell whether the design was edited */
+  private baseline: DesignSnapshot | null = null;
+
+  private snapshot(): DesignSnapshot {
+    return {
+      size: this.selectedSize(),
+      matIncluded: this.isMatIncluded(),
+      whiteBorder: this.whiteBorder(),
+      fitMode: this.fitMode(),
+      landscape: this.isLandscape(),
+      scale: this.clampedScale(),
+      translateX: this.translateX(),
+      translateY: this.translateY(),
+    };
+  }
+
+  private hasUnsavedChanges(): boolean {
+    const before = this.baseline;
+    if (!before) return false;
+    const now = this.snapshot();
+    return (
+      before.size.id !== now.size.id ||
+      before.matIncluded !== now.matIncluded ||
+      !sameWhiteBorder(before.whiteBorder, now.whiteBorder) ||
+      before.fitMode !== now.fitMode ||
+      before.landscape !== now.landscape ||
+      Math.abs(before.scale - now.scale) > 0.001 ||
+      Math.abs(before.translateX - now.translateX) > 1 ||
+      Math.abs(before.translateY - now.translateY) > 1
+    );
+  }
 
   private smartInit() {
     const meta = this.metadata();
@@ -281,7 +318,7 @@ export class ProductPreviewComponent {
           next: (url) => {
             this.onDesignSaved.emit(url);
             this.isSaving.set(false);
-            this.close();
+            this.finishClose();
           },
           error: () => this.isSaving.set(false),
         }),
@@ -290,6 +327,38 @@ export class ProductPreviewComponent {
   }
 
   close() {
+    if (this.isSaving()) return;
+    if (this.hasUnsavedChanges()) {
+      this.showDiscardConfirm.set(true);
+      setTimeout(() => this.confirmSaveRef()?.nativeElement.focus());
+      return;
+    }
+    this.finishClose();
+  }
+
+  keepEditing() {
+    this.showDiscardConfirm.set(false);
+  }
+
+  /** Puts size, mat and border back as they were when the preview opened */
+  discardChanges() {
+    const before = this.baseline;
+    if (before) {
+      this.selectedSize.set(before.size);
+      this.isMatIncluded.set(before.matIncluded);
+      this.whiteBorder.set(before.whiteBorder);
+    }
+    this.needsSmartInit = true;
+    this.finishClose();
+  }
+
+  saveFromConfirm() {
+    this.saveDesign();
+  }
+
+  private finishClose() {
+    this.showDiscardConfirm.set(false);
+    this.baseline = null;
     this.document.body.style.overflow = '';
     this.onClose.emit();
   }
@@ -419,10 +488,12 @@ export class ProductPreviewComponent {
   onKeyDown(event: KeyboardEvent) {
     if (!this.isOpen()) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+    if (this.showDiscardConfirm() && event.key !== 'Escape') return;
 
     switch (event.key) {
       case 'Escape':
-        this.close();
+        if (this.showDiscardConfirm()) this.keepEditing();
+        else this.close();
         break;
       case '+':
       case '=':
@@ -462,4 +533,15 @@ export class ProductPreviewComponent {
         break;
     }
   }
+}
+
+interface DesignSnapshot {
+  size: SizeOption;
+  matIncluded: boolean;
+  whiteBorder: WhiteBorder;
+  fitMode: FitMode;
+  landscape: boolean;
+  scale: number;
+  translateX: number;
+  translateY: number;
 }

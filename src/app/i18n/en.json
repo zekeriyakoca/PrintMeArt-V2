@@ -378,6 +378,13 @@
     "zoom": "Zoom",
     "printDetails": "Print details",
     "selections": "Your selections",
+    "unsaved": {
+      "title": "Save your design?",
+      "text": "You've changed your design. Save it and we'll print it exactly like this.",
+      "save": "Save",
+      "keep": "Keep editing",
+      "discard": "Discard changes"
+    },
     "whiteBorder": "White border",
     "border": {
       "none": "None",
