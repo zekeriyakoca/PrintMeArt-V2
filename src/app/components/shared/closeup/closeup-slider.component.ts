@@ -1,8 +1,9 @@
 import { afterNextRender, Component, computed, effect, HostListener, input, OnDestroy, signal } from '@angular/core';
 
 /**
- * The close-up gallery tile: slides through the detail crops on its own every few seconds,
- * and straight to the next one when the pointer comes onto it. Holds still with reduced motion
+ * The close-up gallery tile: moves through the detail crops on its own every few seconds, and straight to
+ * the next one when the pointer comes onto it. Each crop opens with the same circular ripple and slow zoom
+ * as the main image's hover close-up. Holds still with reduced motion
  * and in a hidden tab.
  */
 @Component({
@@ -10,26 +11,33 @@ import { afterNextRender, Component, computed, effect, HostListener, input, OnDe
   template: `
     @for (s of [step()]; track s) {
       @if (s > 0) {
-        <img class="slide slide--out" [src]="urlAt(s - 1)" alt="" />
+        <img class="slide slide--zoomed" [src]="urlAt(s - 1)" alt="" />
       }
-      <img class="slide" [class.slide--in]="s > 0" [src]="urlAt(s)" [alt]="alt()" />
+      <div class="layer" [class.layer--in]="s > 0">
+        <img class="slide slide--zoom" [src]="urlAt(s)" [alt]="alt()" />
+      </div>
     }
   `,
   styles: `
     :host { position: absolute; inset: 0; overflow: hidden; display: block; }
     .slide { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-    .slide--in { animation: slide-in 0.9s cubic-bezier(0.7, 0, 0.3, 1) both; }
-    .slide--out { animation: slide-out 0.9s cubic-bezier(0.7, 0, 0.3, 1) both; }
-    @keyframes slide-in { from { transform: translateX(100%); } to { transform: none; } }
-    @keyframes slide-out { from { transform: none; } to { transform: translateX(-35%); } }
-    @media (prefers-reduced-motion: reduce) { .slide--in, .slide--out { animation: none; } }
+    .layer { position: absolute; inset: 0; }
+    .layer--in { animation: ripple 0.8s cubic-bezier(0.7, 0, 0.3, 1) both; }
+    .slide--zoom { animation: zoom 6s cubic-bezier(0.2, 0.6, 0.3, 1) both; }
+    .slide--zoomed { transform: scale(1.08); }
+    @keyframes ripple {
+      from { clip-path: circle(0% at 85% 85%); }
+      to { clip-path: circle(150% at 85% 85%); }
+    }
+    @keyframes zoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+    @media (prefers-reduced-motion: reduce) { .layer--in, .slide--zoom { animation: none; } .slide--zoomed { transform: none; } }
   `,
 })
 export class CloseupSliderComponent implements OnDestroy {
   urls = input<string[]>([]);
   alt = input('');
 
-  private static readonly intervalMs = 3500;
+  private static readonly intervalMs = 5000;
   step = signal(0);
   private timer?: ReturnType<typeof setInterval>;
   private busy = false;
