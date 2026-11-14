@@ -8,6 +8,7 @@ import { FrameOptionsByValue, frameMaskFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { WhiteBorderOptionsComponent } from '../white-border-options/white-border-options.component';
+import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 import { CommonApiService } from '../../services/api/common-api.service';
 import { DESIGN_WIDTH_PX, DesignLayout, FitMode, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
 import { NO_WHITE_BORDER, WhiteBorder, fitWhiteBorder, sameWhiteBorder } from '../../shared/white-border';
@@ -15,7 +16,7 @@ import { NO_WHITE_BORDER, WhiteBorder, fitWhiteBorder, sameWhiteBorder } from '.
 
 @Component({
   selector: 'app-product-preview',
-  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent],
+  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent, UnsavedChangesDialogComponent],
   templateUrl: './product-preview.component.html',
   styleUrl: './product-preview.component.scss',
 })
@@ -40,7 +41,6 @@ export class ProductPreviewComponent {
 
   // Refs
   viewportRef = viewChild<ElementRef<HTMLDivElement>>('viewport');
-  confirmSaveRef = viewChild<ElementRef<HTMLButtonElement>>('confirmSave');
 
   // State
   translateX = signal(0);
@@ -330,7 +330,6 @@ export class ProductPreviewComponent {
     if (this.isSaving()) return;
     if (this.hasUnsavedChanges()) {
       this.showDiscardConfirm.set(true);
-      setTimeout(() => this.confirmSaveRef()?.nativeElement.focus());
       return;
     }
     this.finishClose();
