@@ -551,6 +551,13 @@
     "zoom": "Zoom",
     "printDetails": "Printdetails",
     "selections": "Jouw keuzes",
+    "unsaved": {
+      "title": "Ontwerp opslaan?",
+      "text": "Je hebt je ontwerp aangepast. Sla het op, dan printen we het precies zo.",
+      "save": "Opslaan",
+      "keep": "Verder bewerken",
+      "discard": "Wijzigingen weggooien"
+    },
     "whiteBorder": "Witte rand",
     "border": {
       "none": "Geen",
