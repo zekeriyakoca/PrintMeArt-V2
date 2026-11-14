@@ -1,0 +1,21 @@
+<div class="confirm-layer" (click)="keepEditing.emit()">
+  <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text" (click)="$event.stopPropagation()">
+    <div class="confirm-mark" aria-hidden="true">
+      <span class="confirm-mark-paper"><span class="confirm-mark-art"></span></span>
+    </div>
+    <h4 id="confirm-title" class="confirm-title">{{ 'design.unsaved.title' | t }}</h4>
+    <p id="confirm-text" class="confirm-text">{{ 'design.unsaved.text' | t }}</p>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-save" #saveButton [disabled]="saving()" (click)="save.emit()">
+        @if (saving()) {
+          <span class="saving-spinner"></span>
+          {{ 'design.saving' | t }}
+        } @else {
+          {{ 'design.unsaved.save' | t }}
+        }
+      </button>
+      <button type="button" class="confirm-keep" [disabled]="saving()" (click)="keepEditing.emit()">{{ 'design.unsaved.keep' | t }}</button>
+    </div>
+    <button type="button" class="confirm-discard" [disabled]="saving()" (click)="discard.emit()">{{ 'design.unsaved.discard' | t }}</button>
+  </div>
+</div>
