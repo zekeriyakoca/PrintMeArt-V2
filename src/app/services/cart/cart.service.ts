@@ -4,7 +4,7 @@ import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { CartItemDto, SelectedOptionDto } from '../../models/cart-item';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AnalyticsService } from '../telemetry/analytics.service';
+import { AnalyticsService, ProductChoices } from '../telemetry/analytics.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +49,16 @@ export class CartService {
     this.isCartSidebarOpen.update((open) => !open);
   }
 
-  addItemToCart(productId: number, variantId: number, productName: string, calculatedPrice: number, quantity: number, pictureUrl: string, selectedOptions: SelectedOptionDto[]): void {
+  addItemToCart(
+    productId: number,
+    variantId: number,
+    productName: string,
+    calculatedPrice: number,
+    quantity: number,
+    pictureUrl: string,
+    selectedOptions: SelectedOptionDto[],
+    choices?: ProductChoices,
+  ): void {
     const newItem: CartItemDto = {
       id: crypto.randomUUID(),
       productId,
@@ -73,7 +82,8 @@ export class CartService {
       quantity,
       unitPrice: calculatedPrice,
       mergedIntoExisting: existingItemIndex >= 0,
-      selectedOptionsCount: selectedOptions?.length ?? 0,
+      selectedOptions,
+      choices,
     });
 
     if (existingItemIndex >= 0) {
