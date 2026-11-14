@@ -27,8 +27,10 @@ import { TranslationService } from '../../services/i18n/translation.service';
 export class ProductListComponent extends BasePageComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   products = signal<PaginatedListDto<ProductSimpleDto>>({} as PaginatedListDto<ProductSimpleDto>);
+  // 40 prints per page on desktop, 20 on phones and tablets
+  private readonly defaultPageSize = isDesktopViewport() ? 40 : 20;
   selectedFilterOptions = signal<ProductFilterRequestDto>({
-    pageSize: 20,
+    pageSize: this.defaultPageSize,
     pageIndex: 0,
   });
   filterOptions = signal<FilterGroupDto[]>([]);
@@ -113,7 +115,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
       const tags = tagsParam != null ? (+tagsParam as ProductTags) : undefined;
 
       this.selectedFilterOptions.set({
-        pageSize: +20,
+        pageSize: this.defaultPageSize,
         pageIndex: +(params.get('pageIndex') ?? 0),
         categoryName,
         attributeName,
@@ -182,7 +184,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   private navigateWithFilters(filters: ProductFilterRequestDto) {
     const queryParams: Record<string, string | number | undefined> = {};
     if (filters.pageIndex) queryParams['pageIndex'] = filters.pageIndex;
-    if (filters.pageSize !== 20) queryParams['pageSize'] = filters.pageSize;
+    if (filters.pageSize !== this.defaultPageSize) queryParams['pageSize'] = filters.pageSize;
     if (filters.categoryName) queryParams['categoryName'] = filters.categoryName;
     if (filters.attributeName) queryParams['attributeName'] = filters.attributeName;
     if (filters.optionName) queryParams['optionName'] = filters.optionName;
