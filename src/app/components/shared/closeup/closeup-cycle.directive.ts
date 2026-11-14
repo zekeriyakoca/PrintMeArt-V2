@@ -5,7 +5,8 @@ import { afterNextRender, Directive, effect, ElementRef, HostListener, inject, i
  * While hovered a new `.closeup__layer` with the next crop is added on top every few seconds, and its CSS
  * animation reveals it with the same circular ripple from the loupe. Mouse leave keeps the current crop.
  * The hover close-up only arms (`.closeup--armed`) a few seconds after a product shows, so the painting
- * itself is seen first; a pointer already resting on the image arms it once it leaves.
+ * itself is seen first; a pointer already resting on the image arms it once it leaves. Pointing at the
+ * loupe itself always opens the close-up, delay or not.
  */
 @Directive({ selector: '[appCloseupCycle]', host: { '[class.closeup--armed]': 'armed()' } })
 export class CloseupCycleDirective implements OnDestroy {
@@ -47,6 +48,16 @@ export class CloseupCycleDirective implements OnDestroy {
     this.hovered = true;
     crops.forEach((url) => (new Image().src = url));
     this.hoverTimer = setInterval(() => this.next(), CloseupCycleDirective.intervalMs);
+  }
+
+  /** The loupe is an invitation to look closer: hovering it opens the close-up right away */
+  @HostListener('mouseover', ['$event'])
+  onLoupe(event: MouseEvent) {
+    if (this.armed() || !(event.target as Element | null)?.closest?.('.closeup__media')) return;
+    clearTimeout(this.armTimer);
+    this.armOnLeave = false;
+    this.armed.set(true);
+    this.start();
   }
 
   @HostListener('mouseleave')
