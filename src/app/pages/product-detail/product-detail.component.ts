@@ -93,19 +93,19 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   storyExpanded = signal(false);
   hasMoreStory = computed(() => this.storyParagraphs().length > 1 || !!this.artistBio() || this.storyParagraphs()[0].length > 160);
 
-  // Matched on the attributes and the metadata museum; a museum we have no entry for still shows its name
+  // The metadata museum decides; attributes are only a fallback. Whole-word matching, so a painter
+  // like "Tatebayashi Kagei" never picks up Tate. A museum we have no entry for still shows its name.
   museum = computed<Museum | null>(() => {
-    const museumName = this.product().metadata?.Museum?.trim();
-    const candidates = [...(this.product().attributes ?? []), ...(museumName ? [museumName] : [])];
+    const matches = (text: string, museum: Museum) =>
+      new RegExp(`(^|[^\\p{L}])${museum.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[^\\p{L}])`, 'iu').test(text);
 
-    for (const museum of MUSEUMS) {
-      const found = candidates.find((candidate) => candidate.toLowerCase().includes(museum.name.toLowerCase()));
-      if (found) {
-        return museum;
-      }
+    const museumName = this.product().metadata?.Museum?.trim();
+    if (museumName) {
+      return MUSEUMS.find((museum) => matches(museumName, museum)) ?? { name: museumName, badgeUrl: '', websiteUrl: '' };
     }
 
-    return museumName ? { name: museumName, badgeUrl: '', websiteUrl: '' } : null;
+    const attributes = this.product().attributes ?? [];
+    return MUSEUMS.find((museum) => attributes.some((attr) => matches(attr, museum))) ?? null;
   });
 
   // Written-out museum name for museums without a logo: the full name from the metadata where we have it
