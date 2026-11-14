@@ -1,23 +1,23 @@
-<div class="size-rows">
+<ng-template #tile let-size>
+  <span class="size-label">{{ size.val1 }}<span class="times">×</span>{{ size.val2 }}<span class="unit">cm</span></span>
+</ng-template>
+
+<div class="size-options">
   @for (row of rows(); track $index) {
-    <div class="size-row" [style.grid-template-columns]="'repeat(' + row.length + ', 1fr)'">
+    <div class="size-row" [style.grid-template-columns]="'repeat(' + row.length + ', minmax(0, 1fr))'">
       @for (size of row; track size.id) {
         @if (size.id === 'original') {
           <app-tooltip ariaLabel="Original artwork size" class="original-tooltip-wrapper">
-            <button type="button" class="size-option original" [class.selected]="isActive(size)" (click)="selectSize(size)">
-              <span class="original-badge">®</span>
-              {{ size?.name }}
-              @if (isActive(size)) {
-                <span class="unit">cm</span>
-              }
+            <button type="button" class="size-tile original" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
+              <span class="original-tag">{{ 'sizes.originalShort' | t }}</span>
+              <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
             </button>
 
             <div tooltip>
-              <div class="px-4 py-3 text-center bg-gradient-to-b from-[rgb(242,248,245)] to-white text-[rgb(22,122,146)]">
-                <div class="text-2xl mb-0.5">🖼️</div>
+              <div class="px-4 pt-3 pb-2 text-center text-[rgb(22,122,146)]">
                 <div class="font-semibold text-sm">{{ 'sizes.original' | t }}</div>
               </div>
-              <div class="px-4 py-3 space-y-2">
+              <div class="px-4 pb-3 space-y-2">
                 <div class="flex items-center justify-between text-xs">
                   <span class="text-slate-500">{{ 'sizes.dimensions' | t }}</span>
                   <span class="font-medium text-slate-900">{{ size.val1 }}×{{ size.val2 }} cm</span>
@@ -30,68 +30,40 @@
             </div>
           </app-tooltip>
         } @else {
-          <button type="button" class="size-option" [class.selected]="isActive(size)" (click)="selectSize(size)">
-            {{ size?.name }}
-            @if (isActive(size)) {
-              <span class="unit">cm</span>
-            }
+          <button type="button" class="size-tile" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
+            <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
           </button>
         }
       }
     </div>
   }
+
   @if (moreSizes().length) {
-    <button type="button" class="size-option" [class.selected]="selectedMoreSize()" (click)="showMoreSizes.set(!showMoreSizes())">
+    <button type="button" class="more-toggle" [class.has-selection]="selectedMoreSize()" [attr.aria-expanded]="showMoreSizes()" (click)="showMoreSizes.set(!showMoreSizes())">
       @if (selectedMoreSize(); as ms) {
-        <span class="flex justify-between align-center w-full">
-          <span class="px-6">{{ ms.val1 }}×{{ ms.val2 }}<span class="unit">cm</span></span>
-          <app-icon iconName="check" />
-          <span class="more-toggle px-4">
-            {{ 'sizes.more' | t }}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              [class.rotated]="showMoreSizes()"
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </span>
-        </span>
-      } @else {
-        <span class="more-toggle">
-          {{ 'sizes.more' | t }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            [class.rotated]="showMoreSizes()"
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </span>
+        <span class="more-chosen">{{ ms.val1 }}×{{ ms.val2 }}<span class="unit">cm</span></span>
       }
+      <span class="more-label">{{ 'sizes.more' | t }}</span>
+      <svg class="chevron" [class.rotated]="showMoreSizes()" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
     </button>
-    @if (showMoreSizes()) {
-      <div class="more-sizes-grid">
-        @for (size of moreSizes(); track size.id) {
-          <button type="button" class="size-option more-size-btn" [class.selected]="sizeSelected()?.val1 === size.val1 && sizeSelected()?.val2 === size.val2" (click)="selectMoreSize(size)">
-            {{ size.val1 }}×{{ size.val2 }}
-          </button>
-        }
+    <div class="more-panel" [class.open]="showMoreSizes()">
+      <div class="more-panel-inner">
+        <div class="more-grid">
+          @for (size of moreSizes(); track size.id) {
+            <button
+              type="button"
+              class="more-chip"
+              [class.selected]="sizeSelected()?.val1 === size.val1 && sizeSelected()?.val2 === size.val2"
+              [attr.tabindex]="showMoreSizes() ? null : -1"
+              (click)="selectMoreSize(size)"
+            >
+              {{ size.val1 }}×{{ size.val2 }}
+            </button>
+          }
+        </div>
       </div>
-    }
+    </div>
   }
 </div>

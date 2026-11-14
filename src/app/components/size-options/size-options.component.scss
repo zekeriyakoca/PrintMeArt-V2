@@ -1,74 +1,163 @@
-.size-rows {
+// Site palette
+$ink: #384f8c;
+$line: #e2e8f0;
+$line-hover: #cbd5e1;
+$text: #334155;
+$muted: #94a3b8;
+$teal: rgb(22, 122, 146);
+
+.size-options {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .size-row {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
-.size-option {
+// Size tile
+.size-tile {
   position: relative;
-  height: 2.5rem;
+  width: 100%;
+  height: 2.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #e2e8f0;
-  border-radius: 5px;
+  padding: 0 0.25rem;
+  border: 1px solid $line;
+  border-radius: 8px;
   background: #ffffff;
-  color: #475569;
-  font-size: 0.85rem;
-  font-weight: 400;
+  color: $text;
   cursor: pointer;
-  transition: all 0.15s ease;
-  overflow: hidden;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover:not(.selected) {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    border-color: $line-hover;
+    background: #fafbfc;
   }
 
-  &.original {
-    font-weight: 500;
-    background: rgb(242, 248, 245);
-    border-color: rgb(206, 232, 218, 0);
-    color: rgb(22, 122, 146);
-
-    &:hover:not(.selected) {
-      background: rgb(232, 243, 237);
-      border-color: rgb(180, 216, 198, 0);
-    }
+  &:focus-visible {
+    outline: 2px solid rgba($ink, 0.35);
+    outline-offset: 2px;
   }
 
   &.selected {
-    background: #384f8c;
-    border-color: #384f8c;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 300;
+    border-color: $ink;
+    box-shadow: inset 0 0 0 1px $ink;
+    background: rgba($ink, 0.04);
 
-    .unit {
-      font-size: 0.7rem;
-      font-weight: 400;
-      margin-left: 0.125rem;
-      opacity: 0.7;
+    .size-label {
+      color: $ink;
+      font-weight: 500;
     }
 
-    .original-badge {
-      color: white;
+    .unit {
+      color: rgba($ink, 0.6);
     }
   }
 }
 
+.size-label {
+  font-size: 0.88rem;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.15s ease;
+}
+
+.times {
+  margin: 0 0.08em;
+  color: $muted;
+}
+
+.unit {
+  margin-left: 0.2em;
+  font-size: 0.68em;
+  color: $muted;
+}
+
+// Original artwork size: a quiet tag instead of a badge
+.size-tile.original {
+  .original-tag {
+    position: absolute;
+    top: 0.22rem;
+    right: 0.4rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $teal;
+  }
+
+  background: rgba($teal, 0.04);
+  border-color: rgba($teal, 0.25);
+
+  &.selected {
+    border-color: $ink;
+    background: rgba($ink, 0.04);
+  }
+}
+
+::ng-deep .original-tooltip-wrapper {
+  display: flex;
+  min-width: 0;
+
+  > span {
+    display: flex;
+    width: 100%;
+
+    > .size-tile {
+      width: 100%;
+    }
+  }
+}
+
+// More sizes: a quiet row that opens a chip grid
 .more-toggle {
-  gap: 0.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
+  height: 2.25rem;
+  border: 1px dashed $line-hover;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.78rem;
+  color: #64748b;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease;
 
-  svg {
+  &:hover {
+    border-color: $muted;
+    color: $text;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($ink, 0.35);
+    outline-offset: 2px;
+  }
+
+  &.has-selection {
+    border-style: solid;
+    border-color: $ink;
+    box-shadow: inset 0 0 0 1px $ink;
+    background: rgba($ink, 0.035);
+    justify-content: space-between;
+    padding: 0 0.85rem;
+
+    .more-label {
+      margin-left: auto;
+    }
+  }
+
+  .chevron {
     transition: transform 0.2s ease;
 
     &.rotated {
@@ -77,40 +166,58 @@
   }
 }
 
-.more-sizes-grid {
+.more-chosen {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: $ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.more-panel {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.35rem;
-  max-height: 10rem;
-  overflow-y: auto;
-}
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
 
-.more-size-btn {
-  height: 2rem;
-  font-size: 0.72rem;
-}
-
-::ng-deep .original-tooltip-wrapper {
-  display: flex;
-  min-width: 0;
-
-  >span {
-    display: flex;
-    width: 100%;
-
-    >.size-option {
-      width: 100%;
-    }
+  &.open {
+    grid-template-rows: 1fr;
   }
 }
 
-.original-badge {
-  font-size: 40px;
-  font-weight: 50;
-  position: absolute;
-  right: 5px;
-  top: 2px;
-  color: rgb(22, 122, 146);
-  pointer-events: none;
-  line-height: 1;
+.more-panel-inner {
+  overflow: hidden;
+}
+
+.more-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.3rem;
+  max-height: 10rem;
+  overflow-y: auto;
+  padding: 0.1rem 0.1rem 0.2rem;
+}
+
+.more-chip {
+  height: 2rem;
+  border: 1px solid $line;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.72rem;
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not(.selected) {
+    border-color: $line-hover;
+    background: #f8fafc;
+  }
+
+  &.selected {
+    border-color: $ink;
+    background: $ink;
+    color: #ffffff;
+  }
 }
