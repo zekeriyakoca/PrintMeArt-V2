@@ -261,9 +261,10 @@ p {
 }
 
 // The next crop opens from the middle of the loupe with a brief soft glow
+// The next crop slides into the resting loupe from the right
 @keyframes closeup-wipe {
-  from { clip-path: circle(0% at 50% 50%); filter: brightness(1.15); }
-  to { clip-path: circle(75% at 50% 50%); filter: none; }
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 // Marks a close-up crop in the gallery tiles, the mobile carousel and the full-screen gallery
