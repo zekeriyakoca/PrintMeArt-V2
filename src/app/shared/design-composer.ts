@@ -8,6 +8,9 @@ export interface DesignLayout {
   /** User pan as a fraction of the content box's width / height */
   offsetX: number;
   offsetY: number;
+  /** White border inside the print, in cm: top / left / right, and bottom */
+  borderCm?: number;
+  borderBottomCm?: number;
 }
 
 /** Width the saved design is rendered at */
@@ -50,15 +53,19 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   // 2. Content box: padding inside the paper area when a mat is included; without a mat the print sits directly in the frame
   const padPercent = parts.matIncluded ? 10 : 0;
   const pad = (padPercent / 100) * canvasW;
-  const cntX = vpX + pad;
-  const cntY = vpY + pad;
-  const cntW = vpW - 2 * pad;
-  const cntH = vpH - 2 * pad;
+  // White border: blank paper between the mat (or frame) and the artwork, in cm of the print width
+  const border = ((layout.borderCm ?? 0) / parts.width) * canvasW;
+  const borderBottom = ((layout.borderBottomCm ?? 0) / parts.width) * canvasW;
+  const cntX = vpX + pad + border;
+  const cntY = vpY + pad + border;
+  const cntW = vpW - 2 * pad - 2 * border;
+  const cntH = vpH - 2 * pad - border - borderBottom;
 
-  // 3. Clip to the paper area
+  // 3. Clip to the paper area; with a white border the artwork stops at its edge
   ctx.save();
   ctx.beginPath();
-  ctx.rect(vpX, vpY, vpW, vpH);
+  if (border > 0) ctx.rect(cntX, cntY, cntW, cntH);
+  else ctx.rect(vpX, vpY, vpW, vpH);
   ctx.clip();
 
   // 4. Base image size from object-fit within the content box

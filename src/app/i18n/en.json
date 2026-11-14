@@ -378,6 +378,13 @@
     "zoom": "Zoom",
     "printDetails": "Print details",
     "selections": "Your selections",
+    "whiteBorder": "White border",
+    "border": {
+      "none": "None",
+      "slim": "Slim",
+      "classic": "Classic",
+      "gallery": "Gallery"
+    },
     "matIncluded": "High quality passe-partout included",
     "noMat": "No passe-partout",
     "matBoard": "Acid-free, museum-grade white passe-partout",

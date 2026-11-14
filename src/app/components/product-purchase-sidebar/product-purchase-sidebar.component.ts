@@ -20,6 +20,7 @@ import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
 import { RoomViewComponent } from '../room-view/room-view.component';
 import { DesignLayout } from '../../shared/design-composer';
+import { NO_WHITE_BORDER, WhiteBorder } from '../../shared/white-border';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 
@@ -134,6 +135,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     }
   }
   savedDesignUrl = signal<string | null>(null);
+  /** White border chosen in Preview & Design */
+  whiteBorder = signal<WhiteBorder>(NO_WHITE_BORDER);
   selectedFrameName = signal<string | null>(null);
   readonly moreSizes: SizeOption[] = [
     { id: 'more-1', name: '10x15', val1: 10, val2: 15 },
@@ -311,10 +314,13 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       if (snapshotGroup) {
         const snapshotOption = snapshotGroup.options.find((opt) => opt.value === 'PreviewSnapshotUrl');
         if (snapshotOption) {
+          const border = this.whiteBorder();
           selectedOptions.push({
             optionId: snapshotOption.id,
             optionName: 'PreviewSnapshotUrl',
             spec1: designUrl,
+            // White border in cm (top / left / right, bottom), for print prep
+            ...(border.cm > 0 ? { spec2: `${border.cm}`, spec3: `${border.bottomCm}` } : {}),
           } as SelectedOptionDto);
         }
       }

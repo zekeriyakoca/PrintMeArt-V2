@@ -551,6 +551,13 @@
     "zoom": "Zoom",
     "printDetails": "Printdetails",
     "selections": "Jouw keuzes",
+    "whiteBorder": "Witte rand",
+    "border": {
+      "none": "Geen",
+      "slim": "Smal",
+      "classic": "Klassiek",
+      "gallery": "Galerie"
+    },
     "matIncluded": "Hoogwaardig passe-partout inbegrepen",
     "noMat": "Geen passe-partout",
     "matBoard": "Zuurvrij wit passe-partout van museumkwaliteit",

@@ -79,7 +79,7 @@
               #viewport
               class="image-viewport paper-behind-frame"
               [class.matt]="showsMat()"
-              [style.padding]="imagePaddingPercent() > 0 ? imagePaddingPercent() + '%' : null"
+              [style.padding]="viewportPadding()"
               [class.cover-mode]="fitMode() === 'cover'"
               [class.paper-border]="showGuides()"
               (wheel)="onWheel($event)"
@@ -94,7 +94,9 @@
                 }
                 <span class="paper-area-label">{{ 'design.paperArea' | t }}</span>
               }
-              <img [src]="imageUrl()" class="preview-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" [alt]="'design.previewAlt' | t" draggable="false" />
+              <div class="print-window" [class.has-border]="hasWhiteBorder()">
+                <img [src]="imageUrl()" class="preview-image" [style.transform]="imageTransform()" [style.object-fit]="objectFit()" [alt]="'design.previewAlt' | t" draggable="false" />
+              </div>
             </div>
 
             <!-- Dimension guides -->
@@ -182,31 +184,10 @@
           <span>{{ 'design.selections' | t }}</span>
         </div>
 
-        <!-- Paper showcase -->
-        @if (paperInfo(); as paper) {
-          <div class="showcase-card">
-            <img [src]="paper.thumbnail" class="showcase-img" alt="" />
-            <div class="showcase-body">
-              <div class="showcase-header">
-                <span class="showcase-grade">{{ paper.grade }}</span>
-                <span class="showcase-name">{{ paper.name }}</span>
-              </div>
-              <span class="showcase-meta">{{ paper.weightGsm }} g/m² · {{ 'name.' + paper.surface | t }}</span>
-              <span class="showcase-meta">{{ paper.printType }}</span>
-              <div class="showcase-tags">
-                @for (label of paper.uxLabels; track label; let i = $index) {
-                  @if (i < 3) {
-                    <span class="showcase-tag">{{ label }}</span>
-                  }
-                }
-              </div>
-            </div>
-          </div>
-        } @else if (paperName()) {
-          <div class="showcase-card showcase-card-minimal">
-            <span class="showcase-name">{{ paperName() }}</span>
-          </div>
-        }
+        <!-- White border -->
+        <div class="panel-section">
+          <app-white-border-options [widthCm]="effectiveSize().val1" [heightCm]="effectiveSize().val2" [(border)]="whiteBorder"></app-white-border-options>
+        </div>
 
         <!-- Mat showcase -->
         @if (hasFrame()) {

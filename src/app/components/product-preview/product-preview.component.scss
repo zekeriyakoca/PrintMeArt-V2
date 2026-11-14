@@ -412,6 +412,19 @@
   opacity: 0.55;
 }
 
+.print-window {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  // With a white border the artwork stops at the paper's edge, as printed
+  &.has-border {
+    overflow: hidden;
+  }
+}
+
 .preview-image {
   position: relative;
   z-index: 1;
@@ -569,23 +582,7 @@
   min-width: 0;
 }
 
-.showcase-header {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
 
-.showcase-grade {
-  font-size: 0.58rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #fff;
-  background: #384f8c;
-  padding: 0.1rem 0.35rem;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
 
 .showcase-name {
   font-size: 0.82rem;
@@ -601,21 +598,7 @@
   line-height: 1.35;
 }
 
-.showcase-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  margin-top: 0.2rem;
-}
 
-.showcase-tag {
-  font-size: 0.6rem;
-  padding: 0.1rem 0.35rem;
-  background: rgba(22, 122, 146, 0.1);
-  color: #167a92;
-  border-radius: 3px;
-  white-space: nowrap;
-}
 
 // Reassurance banner
 .reassurance-banner {
@@ -1110,10 +1093,6 @@ $line-color: oklch(52.5% 0.223 3.958);
   .showcase-img {
     width: 2.5rem;
     height: 2.5rem;
-  }
-
-  .showcase-tags {
-    display: none;
   }
 
   .showcase-meta:nth-child(n+3) {

@@ -4,16 +4,18 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
-import { AllPapers, FrameOptionsByValue, Paper, frameMaskFor } from '../../shared/constants';
+import { FrameOptionsByValue, frameMaskFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
+import { WhiteBorderOptionsComponent } from '../white-border-options/white-border-options.component';
 import { CommonApiService } from '../../services/api/common-api.service';
 import { DESIGN_WIDTH_PX, DesignLayout, FitMode, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
+import { NO_WHITE_BORDER, WhiteBorder, fitWhiteBorder, sameWhiteBorder } from '../../shared/white-border';
 
 
 @Component({
   selector: 'app-product-preview',
-  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent],
+  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent],
   templateUrl: './product-preview.component.html',
   styleUrl: './product-preview.component.scss',
 })
@@ -25,7 +27,7 @@ export class ProductPreviewComponent {
   selectedSize = model.required<SizeOption>();
   frameName = input<string | null>(null);
   isMatIncluded = model<boolean>(false);
-  paperName = input<string>('');
+  whiteBorder = model<WhiteBorder>(NO_WHITE_BORDER);
   metadata = input<ProductMetadata | null>(null);
 
   // Outputs
@@ -122,14 +124,20 @@ export class ProductPreviewComponent {
   /** A mat comes with a chosen frame only */
   showsMat = computed(() => this.hasFrame() && this.isMatIncluded());
 
-  paperInfo = computed<Paper | null>(() => {
-    const name = this.paperName();
-    if (!name) return null;
-    return AllPapers.find((p) => p.name === name) ?? null;
-  });
-
   // Mat padding: when frame + mat → extra space for the matt texture to show; without a mat the print sits directly in the frame
   imagePaddingPercent = computed(() => (this.showsMat() ? 10 : 0));
+
+  hasWhiteBorder = computed(() => this.whiteBorder().cm > 0);
+
+  /** Mat plus white border, as CSS % of the artboard width (what padding % resolves against) */
+  viewportPadding = computed(() => {
+    const mat = this.imagePaddingPercent();
+    const border = this.whiteBorder();
+    const width = this.effectiveSize().val1;
+    const side = mat + (border.cm / width) * 100;
+    const bottom = mat + (border.bottomCm / width) * 100;
+    return side > 0 || bottom > 0 ? `${side}% ${side}% ${bottom}%` : null;
+  });
 
   clampedScale = computed(() => Math.max(0.7, Math.min(2, this.scale())));
 
@@ -149,6 +157,17 @@ export class ProductPreviewComponent {
   private scrollLockEffect = effect(() => {
     this.document.body.style.overflow = this.isOpen() ? 'hidden' : '';
   });
+
+  // Presets follow the size; a custom width stays within the new size's limit
+  private readonly whiteBorderFitEffect = effect(
+    () => {
+      const size = this.effectiveSize();
+      const border = this.whiteBorder();
+      const fitted = fitWhiteBorder(border, size.val1, size.val2);
+      if (!sameWhiteBorder(border, fitted)) this.whiteBorder.set(fitted);
+    },
+    { allowSignalWrites: true },
+  );
 
   // Smart init: only on first open or after options change
   private needsSmartInit = true;
@@ -235,6 +254,8 @@ export class ProductPreviewComponent {
       scale: this.clampedScale(),
       offsetX: this.translateX() / contentW,
       offsetY: this.translateY() / contentH,
+      borderCm: this.whiteBorder().cm,
+      borderBottomCm: this.whiteBorder().bottomCm,
     };
   }
 
