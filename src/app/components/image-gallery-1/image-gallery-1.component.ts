@@ -5,11 +5,12 @@ import { detailUrls, ProductImageDto } from '../../models/product';
 import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CloseupCycleDirective } from '../shared/closeup/closeup-cycle.directive';
+import { CloseupSliderComponent } from '../shared/closeup/closeup-slider.component';
 import { ImageGalleryMobileComponent } from '../image-gallery-mobile/image-gallery-mobile.component';
 
 @Component({
   selector: 'app-image-gallery-1',
-  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent, CloseupCycleDirective, ImageGalleryMobileComponent],
+  imports: [NgTemplateOutlet, TranslatePipe, ImageGalleryModalComponent, IconComponent, CloseupCycleDirective, CloseupSliderComponent, ImageGalleryMobileComponent],
   templateUrl: './image-gallery-1.component.html',
   styleUrl: './image-gallery-1.component.scss',
 })
@@ -19,6 +20,8 @@ export class ImageGallery1Component {
   alt = input('');
   /** Close-up crops of the main image for the hover loupe */
   crops = computed(() => detailUrls(this.images()[0]?.detail));
+  /** The first close-up tile slides through all the crops */
+  sliderIndex = computed(() => this.images().findIndex((image) => image.isDetail));
   showGallery = false;
   galleryStartIndex = signal(0);
 
