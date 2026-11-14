@@ -1,12 +1,12 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, input, model, signal } from '@angular/core';
 import { SizeOption } from '../../models/size-option';
+import { NgTemplateOutlet } from '@angular/common';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
-import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-size-options',
-  imports: [TranslatePipe, TooltipComponent, IconComponent],
+  imports: [TranslatePipe, TooltipComponent, NgTemplateOutlet],
   templateUrl: './size-options.component.html',
   styleUrl: './size-options.component.scss',
 })
