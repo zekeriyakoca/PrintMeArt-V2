@@ -93,21 +93,23 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
   storyExpanded = signal(false);
   hasMoreStory = computed(() => this.storyParagraphs().length > 1 || !!this.artistBio() || this.storyParagraphs()[0].length > 160);
 
+  // Matched on the attributes and the metadata museum; a museum we have no entry for still shows its name
   museum = computed<Museum | null>(() => {
-    const attributes = this.product().attributes;
-    if (!attributes || attributes.length === 0) {
-      return null;
-    }
+    const museumName = this.product().metadata?.Museum?.trim();
+    const candidates = [...(this.product().attributes ?? []), ...(museumName ? [museumName] : [])];
 
     for (const museum of MUSEUMS) {
-      const foundAttribute = attributes.find((attr) => attr.toLowerCase().includes(museum.name.toLowerCase()));
-      if (foundAttribute) {
+      const found = candidates.find((candidate) => candidate.toLowerCase().includes(museum.name.toLowerCase()));
+      if (found) {
         return museum;
       }
     }
 
-    return null;
+    return museumName ? { name: museumName, badgeUrl: '', websiteUrl: '' } : null;
   });
+
+  // Written-out museum name for museums without a logo: the full name from the metadata where we have it
+  museumLabel = computed(() => this.product().metadata?.Museum?.trim() || this.museum()?.name || '');
 
   productAccordionData = computed(() => {
     const sourceUrl = this.product().sourceUrl;
