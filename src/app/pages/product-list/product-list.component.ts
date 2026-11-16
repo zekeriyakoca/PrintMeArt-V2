@@ -27,8 +27,9 @@ import { TranslationService } from '../../services/i18n/translation.service';
 export class ProductListComponent extends BasePageComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   products = signal<PaginatedListDto<ProductSimpleDto>>({} as PaginatedListDto<ProductSimpleDto>);
-  // 40 prints per page on desktop, 20 on phones and tablets
-  private readonly defaultPageSize = isDesktopViewport() ? 40 : 20;
+  // 40 prints per page everywhere: the server can't tell the screen size, and a different count in the
+  // browser would rebalance the gallery columns right after load
+  private readonly defaultPageSize = 40;
   selectedFilterOptions = signal<ProductFilterRequestDto>({
     pageSize: this.defaultPageSize,
     pageIndex: 0,
@@ -39,7 +40,8 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   filterSearchTerms = signal<Record<string, string>>({});
   expandedGroups = signal<Set<string>>(new Set());
   hideFilters = signal<boolean>(true);
-  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>('grid');
+  // Three-column gallery by default: it keeps the catalog order, so the server-rendered page and the browser agree
+  viewMode = signal<'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3'>('gallery-3');
   // The saved view lives in the browser; it is applied once the server-rendered page is taken over
   private readonly restoreViewMode = afterNextRender(() => {
     const saved = localStorage.getItem('viewMode') as 'grid' | 'gallery-1' | 'gallery-2' | 'gallery-3' | null;
