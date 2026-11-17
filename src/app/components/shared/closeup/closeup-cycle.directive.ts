@@ -29,7 +29,8 @@ export class CloseupCycleDirective implements OnDestroy {
     effect(() => {
       this.crops();
       this.index = 0;
-      this.el.querySelectorAll('.closeup__layer').forEach((node) => node.remove());
+      // Array.from: the server DOM's NodeList has no forEach, and a throw here broke the whole server render
+      Array.from(this.el.querySelectorAll('.closeup__layer')).forEach((node) => node.remove());
       if (this.rendered) this.armLater();
     });
 
