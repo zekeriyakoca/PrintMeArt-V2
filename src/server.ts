@@ -53,6 +53,40 @@ app.get(['/feeds/products.xml', '/feeds/products-en.xml'], (req, res) => {
   return res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml);
 });
 
+// PostHog through our own address, so ad blockers that block posthog.com don't drop the events
+const POSTHOG_HOST = 'https://us.i.posthog.com';
+const POSTHOG_ASSETS_HOST = 'https://us-assets.i.posthog.com';
+// The body is passed on byte for byte, still compressed the way posthog-js sent it
+app.use('/ph', (req, _res, next) => {
+  const chunks: Buffer[] = [];
+  req.on('data', (chunk: Buffer) => chunks.push(chunk));
+  req.on('end', () => {
+    req.body = Buffer.concat(chunks);
+    next();
+  });
+  req.on('error', next);
+});
+app.use('/ph', (req, res, next) => {
+  const target = (req.path.startsWith('/static/') ? POSTHOG_ASSETS_HOST : POSTHOG_HOST) + req.url;
+  const headers: Record<string, string> = { 'x-forwarded-for': req.ip ?? '' };
+  for (const name of ['content-type', 'content-encoding', 'user-agent', 'accept']) {
+    const value = req.get(name);
+    if (value) headers[name] = value;
+  }
+  const hasBody = req.method !== 'GET' && req.method !== 'HEAD' && Buffer.isBuffer(req.body) && req.body.length > 0;
+  fetch(target, { method: req.method, headers, body: hasBody ? req.body : undefined, redirect: 'manual' })
+    .then(async (upstream) => {
+      res.status(upstream.status);
+      // fetch has already unzipped the body, so content-encoding is not passed on
+      for (const name of ['content-type', 'cache-control', 'access-control-allow-origin', 'access-control-allow-credentials']) {
+        const value = upstream.headers.get(name);
+        if (value) res.set(name, value);
+      }
+      res.send(Buffer.from(await upstream.arrayBuffer()));
+    })
+    .catch(next);
+});
+
 // Every page lives under /en or /nl, and the language of the last page opened is remembered.
 // An address without one goes to that language, or Dutch the first time.
 app.use((req, res, next) => {
