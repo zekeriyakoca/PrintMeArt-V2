@@ -321,10 +321,12 @@ export class AnalyticsService {
       window.dataLayer.push(arguments);
     };
 
+    // TODO before launch: start these as 'denied' and let the cookie banner grant them (consent mode v2).
+    // Until then every signal is on, so Google Ads can count purchases imported from GA4.
     window.gtag('consent', 'default', {
-      ad_personalization: 'denied',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
+      ad_personalization: 'granted',
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
       analytics_storage: 'granted',
     });
     window.gtag('js', new Date());
