@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { catchError, throwError } from 'rxjs';
 import { serverRequest } from './server-request';
+import { currentPostHogSessionId } from '../services/telemetry/posthog-session';
 
 /**
  * BFF-style HTTP interceptor.
@@ -19,6 +20,8 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
 
   const requestId = createRequestId();
   const sessionId = isBrowser ? getSessionIdBrowser() : requestId;
+  // PostHog's session id lets the backend logs of this visit be found from its recording (Seq: PostHogSessionId)
+  const postHogSessionId = isBrowser ? currentPostHogSessionId() : undefined;
 
   // Build the full URL if not absolute
   const url =
@@ -33,6 +36,7 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
     setHeaders: {
       'x-sessionid': sessionId,
       'x-requestid': requestId,
+      ...(postHogSessionId ? { 'X-Correlation-ID': postHogSessionId } : {}),
     },
   });
 

@@ -105,6 +105,8 @@ export class CustomDesignUploadComponent {
         this.isUploading.set(false);
         this.analytics.trackCustomUpload('custom_upload_success', {
           sizeMb,
+          image_url: uploadedUrl,
+          file_type: file.type,
         });
         this.imageUploaded.emit(uploadedUrl);
       },
