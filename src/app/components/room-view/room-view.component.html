@@ -1,8 +1,11 @@
 <div class="room-view" (click)="close.emit()">
   <div class="room-view-body" (click)="$event.stopPropagation()">
     <div class="stage">
-      <canvas #stage class="stage-canvas"></canvas>
-      @if (printSize(); as size) {
+      <canvas #stage class="stage-canvas" [class.pending]="!ready()"></canvas>
+      @if (!ready()) {
+      <app-preparing-state class="preparing" />
+      }
+      @if (ready() && printSize(); as size) {
       <span class="scale-note">{{ 'room.toScale' | t: { width: size.width, height: size.height } }}</span>
       }
     </div>
