@@ -422,6 +422,11 @@
     "edit": "Edit design",
     "close": "Close"
   },
+  "preparing": {
+    "room": "Preparing your room…",
+    "hanging": "Hanging your print…",
+    "light": "Adjusting the light…"
+  },
   "customCta": {
     "eyebrow": "Custom Fine-Art Prints",
     "title": "Bring Your Vision to Life with High-Quality Custom Prints",

@@ -34,6 +34,15 @@
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
 
+.stage-canvas.pending {
+  display: none;
+}
+
+.preparing {
+  min-height: min(60vh, 480px);
+  justify-content: center;
+}
+
 .scale-note {
   position: absolute;
   left: 50%;

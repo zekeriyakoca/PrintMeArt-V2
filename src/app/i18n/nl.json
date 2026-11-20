@@ -595,6 +595,11 @@
     "edit": "Ontwerp aanpassen",
     "close": "Sluiten"
   },
+  "preparing": {
+    "room": "Je kamer wordt klaargezet…",
+    "hanging": "Je print wordt opgehangen…",
+    "light": "Het licht wordt afgesteld…"
+  },
   "customCta": {
     "eyebrow": "Fine-art prints op maat",
     "title": "Breng je ideeën tot leven met hoogwaardige prints op maat",

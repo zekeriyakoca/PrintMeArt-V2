@@ -6,9 +6,10 @@ import { frameMaskFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../../shared/design-composer';
 import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomRenderer } from './room-renderer';
+import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
 
 @Component({
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, PreparingStateComponent],
   selector: 'app-room-view',
   standalone: true,
   templateUrl: './room-view.component.html',
@@ -36,6 +37,9 @@ export class RoomViewComponent {
   private loadedRoom = signal<string | null>(null);
   private art = signal<HTMLImageElement | null>(null);
   private frameMask = signal<HTMLImageElement | null>(null);
+  /** Room the stage last finished drawing; until it matches, the preparing state shows */
+  private renderedRoom = signal<string | null>(null);
+  ready = computed(() => this.renderedRoom() === this.room().id);
 
   /** Print size in cm, turned to match the artwork's orientation */
   printSize = computed(() => {
@@ -99,6 +103,7 @@ export class RoomViewComponent {
         this.layout(),
       );
       this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height });
+      this.renderedRoom.set(room.id);
     });
   }
 }

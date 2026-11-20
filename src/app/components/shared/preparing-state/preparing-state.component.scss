@@ -1,0 +1,166 @@
+:host {
+  --ink: #f5f3ef;
+  --muted: rgba(245, 243, 239, 0.62);
+  --accent: #c9b48a;
+  --halo: rgba(201, 180, 138, 0.22);
+  --track: rgba(255, 255, 255, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--ink);
+  animation: enter 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+:host(.light) {
+  --ink: #1e293b;
+  --muted: #64748b;
+  --accent: #384f8c;
+  --halo: rgba(56, 79, 140, 0.12);
+  --track: #e2e8f0;
+}
+
+.emblem {
+  position: relative;
+  width: 6.5rem;
+  height: 6.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.halo {
+  position: absolute;
+  inset: -0.75rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--halo) 0%, transparent 70%);
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 60%, var(--accent) 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  animation: spin 2.6s linear infinite;
+}
+
+.icon {
+  grid-area: 1 / 1;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: var(--accent);
+  opacity: 0;
+  transform: scale(0.82) rotate(-6deg);
+  filter: blur(4px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1),
+    filter 0.6s ease;
+
+  &.active {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .fill {
+    fill: currentColor;
+    fill-opacity: 0.16;
+    stroke: none;
+  }
+}
+
+.message {
+  display: grid;
+  min-height: 1.5em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.message-text {
+  grid-area: 1 / 1;
+  animation: message-in 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.track {
+  position: relative;
+  width: 9rem;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--track);
+}
+
+.shimmer {
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: sweep 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes breathe {
+  50% {
+    transform: scale(1.08);
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes message-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+    filter: blur(3px);
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(225%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  .halo,
+  .ring,
+  .message-text {
+    animation: none;
+  }
+
+  .icon {
+    transition: opacity 0.2s linear;
+    transform: none;
+    filter: none;
+  }
+
+  .shimmer {
+    animation: none;
+    width: 100%;
+    opacity: 0.5;
+  }
+}

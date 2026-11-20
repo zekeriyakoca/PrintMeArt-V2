@@ -1,0 +1,46 @@
+<div class="emblem" aria-hidden="true">
+  <span class="halo"></span>
+  <span class="ring"></span>
+  @for (icon of icons(); track icon; let i = $index) {
+  <svg class="icon" [class.active]="i === iconIndex()" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    @switch (icon) {
+      @case ('frame') {
+      <rect class="fill" x="9" y="7" width="30" height="34" rx="1.5" />
+      <rect x="9" y="7" width="30" height="34" rx="1.5" />
+      <rect x="14" y="12" width="20" height="24" rx="0.5" />
+      <path d="M14 31l6-6.5 4.5 4.5 3-3L34 32" />
+      <circle cx="28.5" cy="18" r="2" />
+      }
+      @case ('room') {
+      <rect class="fill" x="15" y="5" width="18" height="15" rx="1" />
+      <rect x="15" y="5" width="18" height="15" rx="1" />
+      <path d="M18.5 16.5l4-4.5 3 3 2-2 2.5 3.5" />
+      <path d="M10 33v-4.5a3 3 0 013-3h22a3 3 0 013 3V33" />
+      <path class="fill" d="M6 34.5a2.5 2.5 0 015 0V37h26v-2.5a2.5 2.5 0 015 0V41H6z" />
+      <path d="M6 34.5a2.5 2.5 0 015 0V37h26v-2.5a2.5 2.5 0 015 0V41H6z" />
+      <path d="M10 41v2.5M38 41v2.5" />
+      }
+      @case ('light') {
+      <path class="fill" d="M14 22a10 10 0 0120 0c0 4-2.4 6.3-4 8.2-1 1.2-1.5 2.4-1.5 3.8h-9c0-1.4-.5-2.6-1.5-3.8-1.6-1.9-4-4.2-4-8.2z" />
+      <path d="M14 22a10 10 0 0120 0c0 4-2.4 6.3-4 8.2-1 1.2-1.5 2.4-1.5 3.8h-9c0-1.4-.5-2.6-1.5-3.8-1.6-1.9-4-4.2-4-8.2z" />
+      <path d="M20 38h8M21.5 42h5" />
+      <path d="M24 3.5v3M8.5 9.5l2.2 2.2M39.5 9.5l-2.2 2.2M4 22h3M41 22h3" />
+      }
+      @case ('sparkle') {
+      <path class="fill" d="M22 8c1 7.5 3.5 10 11 11-7.5 1-10 3.5-11 11-1-7.5-3.5-10-11-11 7.5-1 10-3.5 11-11z" />
+      <path d="M22 8c1 7.5 3.5 10 11 11-7.5 1-10 3.5-11 11-1-7.5-3.5-10-11-11 7.5-1 10-3.5 11-11z" />
+      <path d="M36 29c.5 3.5 1.5 4.5 5 5-3.5.5-4.5 1.5-5 5-.5-3.5-1.5-4.5-5-5 3.5-.5 4.5-1.5 5-5z" />
+      <path d="M12 33v4M10 35h4" />
+      }
+    }
+  </svg>
+  }
+</div>
+
+<p class="message">
+  @for (key of [message()]; track key) {
+  <span class="message-text">{{ key | t }}</span>
+  }
+</p>
+
+<span class="track" aria-hidden="true"><span class="shimmer"></span></span>
