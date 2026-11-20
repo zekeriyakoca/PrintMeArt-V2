@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { CartItemDto } from '../../models/cart-item';
 import { ProductDto, ProductSimpleDto } from '../../models/product';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { setPostHogSessionSource } from './posthog-session';
 
 declare global {
   interface Window {
@@ -90,6 +91,7 @@ export class AnalyticsService {
     reset: () => void;
     startSessionRecording: () => void;
     stopSessionRecording: () => void;
+    get_session_id: () => string;
   };
   private sessionRecordingStarted = false;
   private readonly queue: QueuedEvent[] = [];
@@ -390,6 +392,7 @@ export class AnalyticsService {
     });
 
     this.posthog = posthog;
+    setPostHogSessionSource(() => posthog.get_session_id());
     this.posthogInitialized = true;
     this.applyUserId();
     this.maybeStartSessionRecording(this.router.url);
