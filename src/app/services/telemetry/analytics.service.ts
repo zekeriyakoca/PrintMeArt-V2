@@ -80,6 +80,8 @@ export class AnalyticsService {
   private pageViewsStarted = false;
   private pendingPageView?: () => void;
   private currentUserId?: string;
+  // The user PostHog was told about in this tab; only a real sign-out from them resets the identity
+  private identifiedUserId?: string;
   private posthog?: {
     capture: (name: string, props?: AnalyticsProperties) => void;
     identify: (id: string, props?: AnalyticsProperties) => void;
@@ -347,13 +349,18 @@ export class AnalyticsService {
       app_user_id: this.currentUserId,
     });
 
-    if (this.currentUserId && this.posthogInitialized && this.posthog) {
+    if (!this.posthogInitialized || !this.posthog) return;
+    if (this.currentUserId) {
       this.posthog.identify(this.currentUserId, {
         app_user_id: this.currentUserId,
         tenant: this.config.tenant,
       });
-    } else if (this.posthogInitialized && this.posthog) {
+      this.identifiedUserId = this.currentUserId;
+    } else if (this.identifiedUserId) {
+      // Signed out: the next visitor on this device starts as someone new. An anonymous visitor
+      // keeps their id, so one person stays one person across page loads and visits.
       this.posthog.reset();
+      this.identifiedUserId = undefined;
     }
   }
 
