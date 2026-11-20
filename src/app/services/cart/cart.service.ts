@@ -96,7 +96,8 @@ export class CartService {
 
   private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
     return selectedOptionDto
-      .map((o) => `${o.optionName}:${o.name}`)
+      // A custom design's uploaded image is part of what it is: two different uploads are two different lines
+      .map((o) => (o.optionName === 'CustomProductUrl' ? `${o.optionName}:${o.spec1}` : `${o.optionName}:${o.name}`))
       .sort()
       .join('_');
   }
