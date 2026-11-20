@@ -17,6 +17,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { UserService } from '../../services/user/user.service';
 import { validationErrors } from '../../utils/validation-errors';
+import { isFrameOutOfStock } from '../../shared/constants';
 
 /** Order request fields the backend validates, and the form field each one is shown under */
 const ORDER_FIELDS: Record<string, keyof CheckoutUserInfo> = {
@@ -131,6 +132,12 @@ export class CheckoutComponent extends BasePageComponent {
 
   confirmOrder() {
     if (!this.isFormValid() || this.isProcessing()) {
+      return;
+    }
+
+    // A framed print that is out of stock for now can't be ordered; the bag shows which one
+    if (this.cartItems().some((item) => item.selectedOptions?.some((o) => isFrameOutOfStock(o.optionName)))) {
+      this.toastService.error('errors.frameOutOfStock');
       return;
     }
 

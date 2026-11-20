@@ -65,8 +65,8 @@
       <div class="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
         <div class="max-h-72 overflow-auto">
           @for (item of items(); track item.id) {
-            <button type="button" (click)="select(item.id)" class="w-full text-left">
-              <div [class]="'flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors ' + (selectedId() === item.id ? 'bg-slate-50' : '')">
+            <button type="button" (click)="select(item.id)" [disabled]="item.outOfStock" [attr.aria-disabled]="item.outOfStock" [class]="'w-full text-left ' + (item.outOfStock ? 'cursor-not-allowed' : '')">
+              <div [class]="'flex items-center gap-3 px-4 py-3 transition-colors ' + (item.outOfStock ? 'opacity-50 grayscale' : 'hover:bg-slate-50') + (selectedId() === item.id ? ' bg-slate-50' : '')">
                 <img [src]="item.thumbnail" [alt]="item.name" class="h-11 w-11 rounded-lg object-cover" loading="lazy" />
                 <div class="min-w-0 flex-1">
                   <div class="text-[0.95rem] font-semibold text-slate-900 truncate">{{ 'name.' + item.name | t }}</div>
@@ -74,7 +74,9 @@
                     <div class="text-xs text-slate-500 truncate">{{ 'name.' + item.description | t }}</div>
                   }
                 </div>
-                @if (selectedId() === item.id) {
+                @if (item.outOfStock) {
+                  <span class="shrink-0 rounded-full bg-slate-200 px-2 py-0.5 text-[0.7rem] font-semibold text-slate-600 whitespace-nowrap">{{ 'frames.outOfStock' | t }}</span>
+                } @else if (selectedId() === item.id) {
                   <span class="text-cyan-600 text-sm font-medium">✓</span>
                 }
               </div>

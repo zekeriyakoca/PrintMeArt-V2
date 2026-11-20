@@ -10,6 +10,7 @@ import { CartService } from '../../services/cart/cart.service';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CurrencyPipe } from '@angular/common';
+import { isFrameOutOfStock } from '../../shared/constants';
 
 @Component({
   selector: 'app-cart-item',
@@ -30,6 +31,11 @@ export class CartItemComponent {
   /** Get displayable options (filters out internal options like CustomProductUrl) */
   get displayOptions(): SelectedOptionDto[] {
     return getDisplayableOptions(this.cartItem()?.selectedOptions);
+  }
+
+  /** The item has a frame that is out of stock for now */
+  get frameOutOfStock(): boolean {
+    return !!this.cartItem()?.selectedOptions?.some((o) => isFrameOutOfStock(o.optionName));
   }
 
   removeItem() {

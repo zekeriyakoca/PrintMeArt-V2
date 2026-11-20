@@ -14,6 +14,9 @@
       @if (i < 3) { <span class="option-tag">{{ 'name.' + (option.optionName || option.name) | t }}</span>
         }
         }
+      @if (frameOutOfStock) {
+        <span class="option-tag out-of-stock">{{ 'frames.outOfStock' | t }}</span>
+      }
     </div>
 
     <div class="item-actions">

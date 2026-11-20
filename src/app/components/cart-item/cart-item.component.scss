@@ -90,6 +90,11 @@
   color: #475569;
   font-size: 0.75rem;
   border-radius: 50px;
+
+  &.out-of-stock {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
 }
 
 .item-actions {

@@ -24,6 +24,7 @@ interface FrameItem {
   name: string;
   thumbnail: string;
   description: string;
+  outOfStock: boolean;
 }
 
 @Component({
@@ -50,14 +51,17 @@ export class FrameOptionsComponent {
           thumbnail:
             frame?.thumbnail || opt.imageUrl || RolledUpDefaultThumbnailUrl,
           description: frame?.description || '',
+          outOfStock: !!frame?.outOfStock,
         };
       }),
   );
 
   selectedId = linkedSignal(() => {
     const selectedOptionId = this.group().selectedOptionId;
-    if (selectedOptionId) return selectedOptionId;
-    const firstId = this.items()[0]?.id;
+    const items = this.items();
+    if (selectedOptionId && !items.find((i) => i.id === selectedOptionId)?.outOfStock) return selectedOptionId;
+    // Default to the first choice in stock (rolled-up while the frame is out of stock)
+    const firstId = (items.find((i) => !i.outOfStock) ?? items[0])?.id;
     if (firstId) this.optionSelected.emit(firstId);
     return firstId;
   });
@@ -67,6 +71,7 @@ export class FrameOptionsComponent {
   );
 
   select(id: number): void {
+    if (this.items().find((i) => i.id === id)?.outOfStock) return;
     this.selectedId.set(id);
     this.optionSelected.emit(id);
     this.isOpen.set(false);

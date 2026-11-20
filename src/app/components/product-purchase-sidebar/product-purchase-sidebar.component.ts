@@ -13,7 +13,7 @@ import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
-import { AllPapers, FramedSizeNames, SizeOptions } from '../../shared/constants';
+import { AllPapers, FramedSizeNames, isFrameOutOfStock, SizeOptions } from '../../shared/constants';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
@@ -242,6 +242,12 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         this.toastService.error('product.uploadPending');
       }
       this.analytics.trackAddToCartBlocked(this.product().id, 'missing_options');
+      return;
+    }
+
+    // A frame that is out of stock for now is never sent to the cart
+    if (isFrameOutOfStock(this.selectedFrameName())) {
+      this.toastService.error('frames.outOfStock');
       return;
     }
 
