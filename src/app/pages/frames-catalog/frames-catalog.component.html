@@ -23,8 +23,7 @@
     <!-- Frames Collection Section -->
     <section id="frames" class="frames-section py-10">
       <div>
-        <app-section-title label="Explore Our Exquisite Frame
-            Collection" title="Frames." />
+        <app-section-title label="Our Natural Oak Frame" title="Frame." />
       </div>
       <div class="frames-grid">
         @for (frame of frames; track frame.id; let i = $index) {
@@ -73,38 +72,6 @@
             alt="Frame side view" class="spec-img" />
           <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-4.jpg"
             alt="Frame with cards" class="spec-img" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Sale Banner Section -->
-    <section class="relative py-12 sm:py-16">
-      <div class="p-0 pt-10 sm:pt-16 lg:pt-24 overflow-hidden">
-        <div
-          class="relative flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto p-6 bg-indigo-950 text-white rounded-lg overflow-hidden">
-          <div class="flex flex-col justify-center lg:w-1/2 p-6 pt-10 sm:pt-12 lg:pt-36">
-            <h2 class="text-3xl md:text-6xl font-semibold mb-0">{{ 'framesPage.finalStock' | t }}</h2>
-            <h2 class="text-3xl md:text-6xl font-semibold mb-4">{{ 'framesPage.discount' | t }}</h2>
-            <a routerLink="/products" class="text-md mb-6 mt-4 hover:underline">{{ 'framesPage.toSales' | t }}</a>
-          </div>
-          <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:absolute lg:grid-cols-2 lg:gap-4 lg:w-1/2 p-6 lg:right-0">
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-2 lg:-translate-y-4">
-              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-3.jpg"
-                alt="Sale item 1" class="w-full h-full object-cover max-h-72">
-            </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-8 sm:-translate-y-10 lg:-translate-y-32">
-              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-2.jpg"
-                alt="Sale item 2" class="w-full h-full object-cover">
-            </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-2 lg:-translate-y-4">
-              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-1.jpg"
-                alt="Sale item 3" class="w-full h-full object-cover">
-            </div>
-            <div class="rounded-lg overflow-hidden bg-white -translate-y-8 sm:-translate-y-10 lg:-translate-y-32">
-              <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/material-4.jpg"
-                alt="Sale item 4" class="w-full h-full object-cover">
-            </div>
-          </div>
         </div>
       </div>
     </section>

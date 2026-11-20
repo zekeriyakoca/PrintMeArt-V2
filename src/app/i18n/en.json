@@ -116,11 +116,11 @@
     "showLess": "Show less",
     "showMore": "Show more",
     "details": "Product details",
-    "detailsText": "Our giclée prints are made with pigment inks on fine-art paper, for exceptional detail and true-to-life colour. You choose the paper: museum-grade cotton paper, or our Premium Poster, a real photographic print on matte Fujifilm photo paper.",
+    "detailsText": "Our prints are made for exceptional detail and true-to-life colour. You choose the paper: museum-grade cotton paper, giclée printed with pigment inks, or our Premium Poster, a real photographic print on matte Fujifilm photo paper.",
     "detailPaper": "Hahnemühle 100% cotton paper, acid-free, 308–350 g/m², or matte photo paper",
-    "detailGiclee": "Giclée printing for vibrant colours",
+    "detailGiclee": "Giclée printing on cotton papers for vibrant colours",
     "detailBorders": "3.0 cm blank borders for easy framing",
-    "detailGuarantee": "50+ year colour guarantee",
+    "detailGuarantee": "100+ years fade-resistant on cotton papers",
     "publicDomainTitle": "This artwork is in the Public Domain (CC0)",
     "taxIncluded": "Tax included",
     "cotton": "100% cotton",
@@ -144,7 +144,8 @@
     "switchScreen": "Please switch to a larger screen to unlock this feature.",
     "gotIt": "Got it",
     "fromUpper": "FROM",
-    "uploadPending": "Please wait for your image to finish uploading before adding to cart."
+    "uploadPending": "Please wait for your image to finish uploading before adding to cart.",
+    "paper": "Paper"
   },
   "sizes": {
     "original": "Original Artwork Size",
@@ -232,7 +233,7 @@
     },
     "colours": {
       "title": "Vibrant Colors & Versatile Sizes",
-      "text": "Our printing process utilizes cutting-edge technology and the Giclée printmaking method for exceptional quality. Colors are independently verified to last over decades. Available in multiple sizes, our prints fit perfectly in any space. Personalize your artwork with various paper types to suit your style and decor needs. Each piece is crafted to meet your specifications, ensuring a unique addition to your home or office."
+      "text": "Our cotton papers are giclée printed and our Premium Poster is a real photographic print, both for exceptional quality. On cotton paper, colours stay fade-resistant for over 100 years. Available in multiple sizes, our prints fit perfectly in any space. Personalize your artwork with various paper types to suit your style and decor needs. Each piece is crafted to meet your specifications, ensuring a unique addition to your home or office."
     },
     "faq": {
       "title": "FAQ",
@@ -243,7 +244,7 @@
       "customQ": "Do you offer custom prints?",
       "customA": "Yes, we offer custom printing services. Contact us for more details.",
       "framesQ": "What kind of frames do you offer?",
-      "framesA": "We provide a wide selection of wood and polystyrene frames in various styles and finishes."
+      "framesA": "We offer one frame: Natural Oak, with protective glass, delivered ready to hang."
     }
   },
   "policy": {
@@ -264,7 +265,7 @@
     "Mat & Smooth": "Matte & Smooth"
   },
   "home": {
-    "heroEyebrow": "Giclée print on fine-art paper — fast delivery in NL",
+    "heroEyebrow": "Museum-quality art prints — fast delivery in NL",
     "explore": "Explore Collection",
     "cardMuseum": "Art from {{count}} museums",
     "cardCustom": "Your Custom Design",
@@ -302,10 +303,10 @@
   },
   "services": {
     "eyebrow": "We Print & Frame",
-    "title": "Gallery-Quality Art & Photography",
-    "text": "Transform your home with museum-quality art prints and striking photography. Our carefully curated collection showcases vivid colors and fine details. Explore beautiful fine-art prints and captivating photos, all with custom framing options to enhance any space at affordable prices.",
+    "title": "Gallery-Quality Art Prints",
+    "text": "Transform your home with museum-quality prints of public-domain masterpieces, or print your own photos. Our carefully curated collection showcases vivid colors and fine details. Explore beautiful fine-art prints, framed in natural oak if you like, to enhance any space at affordable prices.",
     "wePrint": "We Print",
-    "photographs": "Photographs",
+    "photographs": "Your Photos",
     "artwork": "Artwork",
     "yourDesigns": "Your Designs"
   },
@@ -435,7 +436,7 @@
     "qualityTitle": "Premium Quality Custom Art Prints",
     "qualityText": "From personal photos to unique artwork, our prints are crafted with care — vibrant colors and long-lasting quality.",
     "framedTitle": "Personalized Framed Prints",
-    "framedText": "Choose from elegant frames, sizes, and passe-partouts. Each print is delivered ready to hang.",
+    "framedText": "Choose your size and passe-partout, and add our Natural Oak frame if you like. Framed prints are delivered ready to hang.",
     "shippingTitle": "Fast & Reliable European Shipping",
     "shippingText": "Fast delivery across Europe, including the Netherlands. Your artwork arrives quickly and in perfect condition.",
     "uploadTitle": "Upload and Print Your Own Designs",
@@ -718,11 +719,11 @@
   "about": {
     "welcome": "Welcome to PrintMe",
     "family": "We're a family business in the Netherlands, run by a husband and wife team.",
-    "story1": "We've always loved camping trips, travelling, and spontaneous road trips—the kind where you stop for a view, take a photo, and later wish you could keep that feeling around. That's a big part of why PrintMe exists.",
-    "story2": "Our prints and frames are made to bring that \"good moment\" onto your walls: clean, beautiful, and easy to live with. Whether it's calm nature vibes, bold photography, or something that just feels like you, we hope it turns your house into a home.",
+    "story1": "We've always loved travelling and the moments that make you stop—a view along the road, or a painting in a museum you'd only seen in books—and later wish you could keep that feeling around. That's a big part of why PrintMe exists.",
+    "story2": "Our prints are made to bring that \"good moment\" onto your walls: clean, beautiful, and easy to live with. Whether it's a Dutch landscape, a Van Gogh, or your own photo, we hope it turns your house into a home.",
     "thanks": "Thanks for being here.",
-    "intro1": "We create museum-quality giclée prints made to look stunning up close and stay beautiful for years.",
-    "intro2": "Our collection is inspired by the places we love most—camping mornings, long road trips, quiet nature spots, and the simple calm you feel when you step outside for a bit. We try to capture that mood and bring it into your home.",
+    "intro1": "We create museum-quality prints made to look stunning up close and stay beautiful for years: giclée on fine-art cotton paper, or a real photographic print with our Premium Poster.",
+    "intro2": "Our collection brings together public-domain masterpieces from leading museums—Rembrandt, Vermeer, Van Gogh, Monet and many more—printed from the museums' own high-resolution files. We try to keep the feel of the original and bring it into your home.",
     "intro3": "Every print is produced with care, using premium materials and sharp, true-to-life color. Clean, timeless, and made to live with—so your walls feel more like you.",
     "facts": "Fast Facts",
     "factsText": "We're independent, and every day we carefully make prints that will bring you joy for years",
@@ -730,27 +731,27 @@
     "values": "Our Values",
     "v1Title": "Museum-Quality Prints",
     "v1Text": "Archival inks on premium paper. Made to last decades, not months. The kind of quality you'd expect in a gallery.",
-    "v2Title": "Custom Framing Options",
-    "v2Text": "Pick your size, choose your frame, add a passe-partout. Your art, your way—without the custom framing markup.",
+    "v2Title": "Your Print, Your Way",
+    "v2Text": "Pick your size and paper, add a passe-partout and our Natural Oak frame if you like. Your art, your way—without the custom framing markup.",
     "v3Title": "Easy Experience",
     "v3Text": "Simple ordering, fast shipping, real humans if you need help. No hoops, no surprises, just smooth.",
     "f1Title": "High-Quality Prints",
-    "f1Text": "Crafted with care and top-notch Giclée technology",
+    "f1Text": "Giclée on cotton paper, or a real photographic print",
     "f2Title": "Engineers Turned Artists",
     "f2Text": "Family-owned business led by two passionate engineers",
     "f3Title": "Custom Options",
-    "f3Text": "Choose from a variety of sizes, frames, and finishes"
+    "f3Text": "Choose from many sizes and papers, with an optional oak frame"
   },
   "framesPage": {
-    "eyebrow": "Our Frames",
-    "title": "Choose Your Perfect Frame",
-    "intro1": "Explore our wide range of frames to find the perfect match for your paintings and photos.",
-    "intro2": "Our high-quality framing options ensure durability and style, enhancing the presentation of your artwork.",
-    "intro3": "Select from various styles and finishes to suit your preferences and decor.",
+    "eyebrow": "Our Frame",
+    "title": "The Natural Oak Frame",
+    "intro1": "We keep it simple: one frame, in natural oak, that suits both classic paintings and your own photos.",
+    "intro2": "It is sturdy and well finished, and it lets your artwork take centre stage.",
+    "intro3": "Its warm, natural grain works with almost any interior.",
     "specs": "Technical Specifications",
     "specsText": "Our frames are carefully finished and arrive ready to hang. Below are the key specifications.",
     "material": "Material",
-    "materialText": "Premium wood base with a smooth matte finish.",
+    "materialText": "Natural oak with a smooth matte finish.",
     "dimensions": "Dimensions",
     "dimensionsText": "Available in multiple sizes to fit your artwork perfectly.",
     "finish": "Finish",
@@ -759,10 +760,7 @@
     "includesText": "Frame, hanging hardware, and protective glass cover.",
     "considerations": "Considerations",
     "considerationsText": "Made from natural materials. Grain and color may vary with each frame.",
-    "finalStock": "Final Stock.",
-    "discount": "Up to 50% off.",
-    "toSales": "Go to sales →",
-    "imageAlt": "Colorful frames collection"
+    "imageAlt": "Natural Oak frame"
   },
   "how": {
     "intro": "PrintMeArt is a family-run studio in Den Bosch. We make prints that are meant to look great in real homes: sharp up close, clean in the highlights, and rich in the shadows—without the \"cheap poster\" feel. This page explains what happens between your click and the moment it lands on your wall.",
@@ -776,7 +774,7 @@
     "step3": "Professional finishing",
     "step3Text": "We don't just \"hit print.\" We make sure the final result looks clean and premium: sensible cropping, neat alignment, and a finished presentation that works with your chosen frame and size.",
     "step4": "Print and quality check",
-    "step4Text": "Your print is produced with a fine-art giclée process for detail and smooth tone transitions. After printing, we check for the things you'd notice immediately: clean edges, consistent tones, and a tidy final result.",
+    "step4Text": "Your print is produced as a giclée on fine-art cotton paper, or as a photographic print on Premium Poster, for detail and smooth tone transitions. After printing, we check for the things you'd notice immediately: clean edges, consistent tones, and a tidy final result.",
     "papersTitle": "Premium paper options",
     "papersText": "Museum-grade cotton papers from 308 to 350 g/m², fade-resistant and built to last. For everyday art there is our Premium Poster on photo paper.",
     "photoRagSpec": "308 g/m² · 100% Cotton · Smooth Matte",
@@ -812,18 +810,16 @@
     "notSure": "Still not sure?",
     "notSureText": "Go with Photo Rag — it works beautifully for almost anything. All our cotton papers are museum-quality, fade-resistant and giclée printed with pigment inks.",
     "framing": "Framing",
-    "framingText": "Framing is optional, but it's the fastest way to make a print feel \"done.\" It also adds everyday protection during handling and display. If you're not sure which frame works best, think in simple terms:",
-    "black": "Black = modern and bold",
-    "white": "White = light and minimal",
-    "wood": "Wood = warm and cozy",
+    "framingText": "Framing is optional, but it's the fastest way to make a print feel \"done.\" It also adds everyday protection during handling and display. We offer one frame, chosen to suit almost any artwork:",
+    "wood": "Natural Oak = warm and timeless",
     "careTitle": "Caring for your print",
     "careText": "For the best longevity, avoid constant direct sunlight and keep prints away from high humidity spots. If you frame it, display behind glazing for extra protection and easier cleaning. Treat it like a good jacket: it'll last longer if you don't leave it in the rain.",
     "faqPoster": "Is this a poster?",
-    "faqPosterA": "Not in the \"thin paper, quick print\" sense. Our focus is fine-art printing and a finished look, whether you buy from our collection or upload your own image.",
+    "faqPosterA": "Only if you pick our Premium Poster, and even then not in the \"thin paper, quick print\" sense: it's a real photographic print on Fujifilm photo paper. Our cotton papers are fine-art giclée prints of museum quality.",
     "faqOwn": "Can I print my own photo or artwork?",
     "faqOwnA": "Yes. Upload your file, customize the size/paper/frame, preview it, and order. If you want it to feel truly premium, pick a size that matches your image well instead of forcing extreme cropping.",
-    "faqMatte": "Matte or semi-gloss for photography?",
-    "faqMatteA": "Both work. Matte is softer and more \"gallery,\" semi-gloss usually makes colors and contrast feel more lively. Your room lighting is the deciding factor.",
+    "faqMatte": "Which paper for photography?",
+    "faqMatteA": "All our papers are matte, so there's no glare. For colour-critical photos, choose Hahnemühle Photo Rag: smooth cotton with fine detail. Premium Poster is a real photographic print with vivid colours and deep blacks, at the best price.",
     "faqShippingA": "Orders are delivered within {{days}} days. We always use tracked shipping so you know when to expect it.",
     "ready": "Ready to start?",
     "readyText": "Shop our prints or upload your own design.",
@@ -906,8 +902,6 @@
     "withOrder": "with your order number and a clear description of the issue",
     "acknowledge": "We'll acknowledge your complaint within 2 business days",
     "resolve": "We aim to resolve complaints within 14 days",
-    "notSatisfied": "Not Satisfied with Our Response?",
-    "odr": "If we can't reach a solution together, you can submit your complaint to the European Online Dispute Resolution platform:",
     "complianceTagline": "Report copyright or legal issues.",
     "privacyTitle": "Privacy Policy",
     "privacyTagline": "Your data belongs to you.",
@@ -935,7 +929,12 @@
     "rightPortability": "• Data portability",
     "retention": "Data Retention",
     "retentionText": "We keep order data for 7 years (legal requirement for tax purposes). Account data is kept until you delete your account. Custom uploaded images are deleted after order completion.",
-    "exercise": "To exercise your rights or ask questions, email support@printmeart.nl — we'll respond within 30 days."
+    "exercise": "To exercise your rights or ask questions, email support@printmeart.nl — we'll respond within 30 days.",
+    "processors": "Services that process your data",
+    "posthogText": "analytics, session recordings and heatmaps",
+    "stripeText": "payments",
+    "resendText": "order and service emails",
+    "saalText": "printing and delivery; receives your name and shipping address"
   },
   "intro": {
     "Art Prints": "Paintings, watercolours, drawings and prints from five centuries, all old enough to be in the public domain and photographed by the museums that own them. We start from the museum's own high-resolution file, check colour and detail, and print each work as a giclée on the fine-art paper you choose, in our studio in Den Bosch. The collection is grouped by subject: landscapes, seascapes, cities, portraits, still lifes, flowers, animals and early abstract art. Most of it comes from the Rijksmuseum, the Art Institute of Chicago, the National Gallery of Art in Washington and Birmingham Museums, and every print can be framed to order.",
@@ -956,7 +955,7 @@
   "seo": {
     "home": {
       "title": "Museum-quality art prints — priced fairly",
-      "description": "Giclée prints of famous public-domain paintings on fine-art paper, with a frame of your choice. Printed by hand in our family studio in Den Bosch."
+      "description": "Museum-quality prints of famous public-domain paintings on fine-art or photo paper, optionally in a natural oak frame. Printed by hand in our family studio in Den Bosch."
     },
     "collections": {
       "title": "Art collections — Dutch masters, museums and more",
@@ -974,11 +973,11 @@
     },
     "about": {
       "title": "About us — a family studio in Den Bosch",
-      "description": "PrintMeArt is a family business in Den Bosch making museum-quality giclée prints and frames for real homes."
+      "description": "PrintMeArt is a family business in Den Bosch making museum-quality art prints for real homes."
     },
     "frames": {
-      "title": "Frames for your art prints",
-      "description": "Choose a black, white, wood or gold frame for your print, with or without a white passe-partout. Delivered ready to hang."
+      "title": "The Natural Oak frame for your art print",
+      "description": "Our Natural Oak frame for your print, with or without a white passe-partout. Delivered ready to hang."
     },
     "yourDesign": {
       "title": "Print your own photo or artwork",
