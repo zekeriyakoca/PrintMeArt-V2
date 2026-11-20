@@ -23,6 +23,8 @@ export interface DesignFrame {
   maskWithoutMat: string;
   /** Not offered on the storefront for now; set to false (or remove) to offer it again */
   hidden?: boolean;
+  /** Shown but can't be chosen or ordered ("Out of stock for now"); set to false (or remove) to sell it again */
+  outOfStock?: boolean;
   /** Masks made for specific print ratios (short side / long side); the closest one is used */
   masksByRatio?: FrameMask[];
 }
@@ -108,6 +110,7 @@ export const FrameOptions: DesignFrame[] = [
     id: 9,
     name: 'Natural Oak',
     description: 'Natural oak frame with a warm, visible wood grain.',
+    outOfStock: true,
     thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-thumb.webp',
     mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-3x4-mat.png',
     maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-3x4.png',
@@ -151,6 +154,11 @@ export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.red
   },
   {} as Record<string, DesignFrame>,
 );
+
+/** True when a frame of this name is out of stock for now */
+export function isFrameOutOfStock(frameName: string | null | undefined): boolean {
+  return !!frameName && !!FrameOptionsByValue[frameName]?.outOfStock;
+}
 
 /** The frame we sell; a rolled-up print is shown in it too */
 const SoldFrame = FrameOptionsByValue['Natural Oak'];

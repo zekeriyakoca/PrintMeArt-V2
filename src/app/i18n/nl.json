@@ -158,6 +158,7 @@
     "select": "Kies je lijst",
     "chooseStyle": "Kies een lijststijl",
     "viewAll": "Bekijk alle lijsten",
+    "outOfStock": "Tijdelijk uitverkocht",
     "showAllPhotos": "Alle foto's tonen"
   },
   "mat": {
@@ -873,6 +874,7 @@
   "errors": {
     "unauthorized": "Je sessie is verlopen. Log opnieuw in.",
     "generic": "Er ging iets mis. Probeer het opnieuw.",
+    "frameOutOfStock": "Een ingelijste print in je tas is tijdelijk uitverkocht. Verwijder hem om verder te gaan.",
     "network": "Netwerkfout. Controleer je verbinding en probeer het opnieuw.",
     "server": "Serverfout. Probeer het zo meteen opnieuw.",
     "forbidden": "Je hebt geen toestemming voor deze actie.",
