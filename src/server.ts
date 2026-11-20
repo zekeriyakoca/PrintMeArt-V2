@@ -68,7 +68,10 @@ app.use('/ph', (req, _res, next) => {
 });
 app.use('/ph', (req, res, next) => {
   const target = (req.path.startsWith('/static/') ? POSTHOG_ASSETS_HOST : POSTHOG_HOST) + req.url;
-  const headers: Record<string, string> = { 'x-forwarded-for': req.ip ?? '' };
+  // PostHog takes the visitor's IP (and so their city and country) from x-forwarded-for. Traefik has already put the
+  // real client address there; req.ip is only the ingress pod, so pass the chain on and add ours only when it's missing
+  const clientIps = req.get('x-forwarded-for') || req.socket.remoteAddress?.replace(/^::ffff:/, '') || '';
+  const headers: Record<string, string> = { 'x-forwarded-for': clientIps };
   for (const name of ['content-type', 'content-encoding', 'user-agent', 'accept']) {
     const value = req.get(name);
     if (value) headers[name] = value;
