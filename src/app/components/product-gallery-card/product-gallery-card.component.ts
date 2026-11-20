@@ -14,6 +14,11 @@ export class ProductGalleryCardComponent {
   product = input.required<ProductSimpleDto>();
   showLargeImage = input(false);
   fromPrice = computed(() => this.product().cheapestPrice);
+  // Reserves the card's height before its image loads, so the gallery columns don't reshuffle as images arrive
+  aspectRatio = computed(() => {
+    const ratio = this.product().imageRatio;
+    return ratio > 0 ? `${ratio}` : null;
+  });
   isHorizontal = computed(() => {
     return this.product().imageRatio >= 1;
   });
