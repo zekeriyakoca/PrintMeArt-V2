@@ -54,8 +54,8 @@ app.get(['/feeds/products.xml', '/feeds/products-en.xml'], (req, res) => {
 });
 
 // PostHog through our own address, so ad blockers that block posthog.com don't drop the events
-const POSTHOG_HOST = 'https://us.i.posthog.com';
-const POSTHOG_ASSETS_HOST = 'https://us-assets.i.posthog.com';
+const POSTHOG_HOST = 'https://eu.i.posthog.com';
+const POSTHOG_ASSETS_HOST = 'https://eu-assets.i.posthog.com';
 // The body is passed on byte for byte, still compressed the way posthog-js sent it
 app.use('/ph', (req, _res, next) => {
   const chunks: Buffer[] = [];

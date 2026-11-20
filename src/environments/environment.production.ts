@@ -6,7 +6,7 @@ export const environment = {
     enabled: true,
     tenant: 'printmeart.nl',
     ga4MeasurementId: 'G-1LMLTH4RW1',
-    posthogKey: 'phc_uEijbYsS6ZLP5X5KkZXz6EU3exibBL6wm7Z4FtNLTziU',
+    posthogKey: 'phc_oUeFBEcuPKuQ3j2JSygtXJiCW4LUvXytJjVJDCwLS2vC',
     posthogHost: '/ph',
   },
   serviceUrls: {

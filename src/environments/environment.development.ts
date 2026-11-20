@@ -6,8 +6,8 @@ export const environment = {
     enabled: false,
     tenant: 'localhost',
     ga4MeasurementId: 'G-1LMLTH4RW1',
-    posthogKey: 'phc_uEijbYsS6ZLP5X5KkZXz6EU3exibBL6wm7Z4FtNLTziU',
-    posthogHost: 'https://us.i.posthog.com',
+    posthogKey: 'phc_oUeFBEcuPKuQ3j2JSygtXJiCW4LUvXytJjVJDCwLS2vC',
+    posthogHost: 'https://eu.i.posthog.com',
   },
   // serviceUrls: {
   //   'catalog-api': 'http://localhost:5001',
