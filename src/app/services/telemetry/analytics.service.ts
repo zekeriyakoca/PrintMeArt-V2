@@ -377,7 +377,7 @@ export class AnalyticsService {
     const posthog = module.default;
     posthog.init(key, {
       api_host: this.config.posthogHost || 'https://eu.i.posthog.com',
-      ui_host: 'https://us.posthog.com',
+      ui_host: 'https://eu.posthog.com',
       autocapture: false,
       capture_pageview: false,
       disable_session_recording: true,
