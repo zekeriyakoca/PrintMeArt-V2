@@ -1067,7 +1067,7 @@
     "ipText": "Onze collectie bestaat uit kunstwerken uit het publieke domein. Eigen inhoud, het websiteontwerp en de huisstijl zijn © PrintMe Art. Je mag de inhoud van onze website niet zonder toestemming overnemen.",
     "warranty": "Garantie",
     "warrantyText": "Je hebt recht op de wettelijke garantie. Komt je product niet overeen met je bestelling of is het defect, neem dan contact met ons op en we lossen het op — met reparatie, vervanging of terugbetaling.",
-    "law": "Op deze voorwaarden is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank in 's-Hertogenbosch.",
+    "law": "Op deze voorwaarden is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank in 's-Hertogenbosch. PrintMe Art is een handelsnaam van MeetTheMoose, 5237 DD 's-Hertogenbosch (KvK 99383306).",
     "complaintsTagline": "We willen het graag goedmaken.",
     "howComplain": "Zo dien je een klacht in",
     "complainText": "Ben je niet tevreden over onze producten of service? Laat het ons weten. We nemen elke klacht serieus en willen hem eerlijk en snel oplossen.",
@@ -1104,10 +1104,7 @@
     "retentionText": "Bestelgegevens bewaren we 7 jaar (wettelijke fiscale bewaarplicht). Accountgegevens bewaren we tot je je account verwijdert. Eigen geüploade afbeeldingen verwijderen we nadat je bestelling is afgerond.",
     "exercise": "Wil je je rechten uitoefenen of heb je vragen? Mail naar support@printmeart.nl — we reageren binnen 30 dagen.",
     "processors": "Diensten die je gegevens verwerken",
-    "posthogText": "statistieken, sessie-opnames en heatmaps",
-    "stripeText": "betalingen",
-    "resendText": "order- en service-e-mails",
-    "saalText": "printen en bezorgen; ontvangt je naam en verzendadres"
+    "posthogText": "statistieken, sessie-opnames en heatmaps"
   },
   "intro": {
     "Art Prints": "Schilderijen, aquarellen, tekeningen en prenten uit vijf eeuwen, allemaal oud genoeg om in het publieke domein te vallen en gefotografeerd door de musea die ze bezitten. We beginnen bij het hoge-resolutiebestand van het museum zelf, controleren kleur en detail, en drukken elk werk als giclée op het fine-art papier van jouw keuze, in ons atelier in Den Bosch. De collectie is ingedeeld naar onderwerp: landschappen, zeegezichten, steden, portretten, stillevens, bloemen, dieren en vroege abstracte kunst. Het meeste komt uit het Rijksmuseum, het Art Institute of Chicago, de National Gallery of Art in Washington en Birmingham Museums, en elke print is ingelijst te bestellen.",
