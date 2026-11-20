@@ -1,6 +1,6 @@
 # PrintMeArt
 
-> PrintMeArt is a family-run print studio in 's-Hertogenbosch (Den Bosch), the Netherlands. We sell museum-quality giclée prints of public-domain masterpieces — Rembrandt, Vermeer, Van Gogh, Monet, the Dutch Golden Age and more — on fine-art paper, in many sizes, optionally framed and with a white passe-partout. Customers can also upload their own photo or artwork to have it printed.
+> PrintMeArt is a family-run print studio in 's-Hertogenbosch (Den Bosch), the Netherlands. We sell museum-quality prints of public-domain masterpieces — Rembrandt, Vermeer, Van Gogh, Monet, the Dutch Golden Age and more — as giclée prints on fine-art cotton paper or as a Premium Poster photographic print, in many sizes and with an optional white passe-partout. Customers can also upload their own photo or artwork to have it printed.
 
 The shop is available in Dutch (default) and English: every page exists under https://printmeart.nl/nl/ and https://printmeart.nl/en/. Prices include Dutch VAT (btw). We ship within the Netherlands and the EU.
 
@@ -9,13 +9,13 @@ The shop is available in Dutch (default) and English: every page exists under ht
 - [All art prints](https://printmeart.nl/en/products): the full catalog, filterable by category, artist and museum
 - [Collections](https://printmeart.nl/en/collections): curated collections — museum highlights (Rijksmuseum, The Met, Art Institute of Chicago, …), famous painters, styles and periods, scenes
 - [Your design](https://printmeart.nl/en/your-design): print your own photo or artwork
-- [Frames](https://printmeart.nl/en/frames): frame options
+- [Frames](https://printmeart.nl/en/frames): our Natural Oak frame (temporarily unavailable)
 
 Every product page tells the story of the artwork and its artist, and names the museum and credit line it comes from.
 
 ## How it works
 
-- [How we work](https://printmeart.nl/en/how-we-work): our papers (Hahnemühle Photo Rag, Hahnemühle German Etching, Canson Rag Photographique, Fine Art Poster), 12-colour giclée printing, quality checks, framing and care, FAQ
+- [How we work](https://printmeart.nl/en/how-we-work): our papers (Hahnemühle Photo Rag, Hahnemühle Museum Etching, Canson Rag Photographique (coming soon), Premium Poster), 12-colour giclée printing, quality checks, framing and care, FAQ
 
 ## Policies
 

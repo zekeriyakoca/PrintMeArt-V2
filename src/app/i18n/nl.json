@@ -116,11 +116,11 @@
     "showLess": "Minder tonen",
     "showMore": "Meer lezen",
     "details": "Productdetails",
-    "detailsText": "Onze giclée-prints worden met pigmentinkt op fine-art papier gemaakt, voor uitzonderlijk detail en natuurgetrouwe kleuren. Je kiest zelf het papier: katoenpapier van museumkwaliteit, of onze Premium Poster, een echte fotoafdruk op mat Fujifilm-fotopapier.",
+    "detailsText": "Onze prints worden gemaakt voor uitzonderlijk detail en natuurgetrouwe kleuren. Je kiest zelf het papier: katoenpapier van museumkwaliteit, als giclée geprint met pigmentinkt, of onze Premium Poster, een echte fotoafdruk op mat Fujifilm-fotopapier.",
     "detailPaper": "Zuurvrij Hahnemühle-papier van 100% katoen (308–350 g/m²) of mat fotopapier",
-    "detailGiclee": "Giclée-druk voor levendige kleuren",
+    "detailGiclee": "Giclée-druk op katoenpapier voor levendige kleuren",
     "detailBorders": "Witte rand van 3,0 cm, makkelijk in te lijsten",
-    "detailGuarantee": "Kleurgarantie van meer dan 50 jaar",
+    "detailGuarantee": "Meer dan 100 jaar lichtecht op katoenpapier",
     "publicDomainTitle": "Dit kunstwerk is publiek domein (CC0)",
     "taxIncluded": "Incl. btw",
     "cotton": "100% katoen",
@@ -144,7 +144,8 @@
     "switchScreen": "Open deze pagina op een groter scherm om deze functie te gebruiken.",
     "gotIt": "Begrepen",
     "fromUpper": "VANAF",
-    "uploadPending": "Wacht even tot je afbeelding is geüpload voordat je hem in je winkelmand legt."
+    "uploadPending": "Wacht even tot je afbeelding is geüpload voordat je hem in je winkelmand legt.",
+    "paper": "Papier"
   },
   "sizes": {
     "original": "Originele afmeting",
@@ -232,7 +233,7 @@
     },
     "colours": {
       "title": "Levendige kleuren & veel formaten",
-      "text": "Ons printproces combineert de nieuwste technologie met de giclée-techniek voor uitzonderlijke kwaliteit. De kleuren zijn onafhankelijk getest en blijven tientallen jaren mooi. In meerdere formaten verkrijgbaar, dus er is altijd een print die past. Kies het papier dat bij je stijl en interieur past. Elk werk wordt naar jouw wensen gemaakt: een unieke aanvulling op je huis of kantoor."
+      "text": "Onze katoenpapieren worden als giclée geprint en onze Premium Poster is een echte fotoafdruk, allebei van uitzonderlijke kwaliteit. Op katoenpapier blijven de kleuren meer dan 100 jaar lichtecht. In meerdere formaten verkrijgbaar, dus er is altijd een print die past. Kies het papier dat bij je stijl en interieur past. Elk werk wordt naar jouw wensen gemaakt: een unieke aanvulling op je huis of kantoor."
     },
     "faq": {
       "title": "Veelgestelde vragen",
@@ -243,7 +244,7 @@
       "customQ": "Kunnen jullie ook eigen ontwerpen printen?",
       "customA": "Ja, we printen ook je eigen ontwerp. Neem contact met ons op voor meer informatie.",
       "framesQ": "Welke lijsten bieden jullie aan?",
-      "framesA": "We hebben een ruime keuze aan houten en polystyreen lijsten in verschillende stijlen en afwerkingen."
+      "framesA": "We bieden één lijst: natuurlijk eiken, met beschermglas, klaar om op te hangen geleverd."
     }
   },
   "policy": {
@@ -437,7 +438,7 @@
     "Landscapes of Aotearoa New Zealand": "Landschappen van Aotearoa Nieuw-Zeeland"
   },
   "home": {
-    "heroEyebrow": "Giclée-print op fine-art papier — snel geleverd in NL",
+    "heroEyebrow": "Kunstprints van museumkwaliteit — snel geleverd in NL",
     "explore": "Ontdek de collectie",
     "cardMuseum": "Kunst uit {{count}} musea",
     "cardCustom": "Jouw eigen ontwerp",
@@ -475,10 +476,10 @@
   },
   "services": {
     "eyebrow": "Wij printen & lijsten in",
-    "title": "Kunst & fotografie in galeriekwaliteit",
-    "text": "Geef je huis een nieuwe uitstraling met kunstprints van museumkwaliteit en indrukwekkende fotografie. Onze zorgvuldig samengestelde collectie laat levendige kleuren en fijne details zien. Ontdek prachtige fine-art prints en sfeervolle foto’s, allemaal met lijsten naar keuze, voor elke ruimte en tegen een betaalbare prijs.",
+    "title": "Kunstprints in galeriekwaliteit",
+    "text": "Geef je huis een nieuwe uitstraling met prints van museumkwaliteit van meesterwerken uit het publieke domein, of print je eigen foto’s. Onze zorgvuldig samengestelde collectie laat levendige kleuren en fijne details zien. Ontdek prachtige fine-art prints, desgewenst in een lijst van natuurlijk eiken, voor elke ruimte en tegen een betaalbare prijs.",
     "wePrint": "Wij printen",
-    "photographs": "Foto’s",
+    "photographs": "Jouw foto’s",
     "artwork": "Kunst",
     "yourDesigns": "Jouw ontwerpen"
   },
@@ -608,7 +609,7 @@
     "qualityTitle": "Kunstprints op maat in topkwaliteit",
     "qualityText": "Van persoonlijke foto’s tot uniek kunstwerk: onze prints worden met zorg gemaakt — levendige kleuren en duurzame kwaliteit.",
     "framedTitle": "Persoonlijke ingelijste prints",
-    "framedText": "Kies uit elegante lijsten, formaten en passe-partouts. Elke print wordt klaar om op te hangen geleverd.",
+    "framedText": "Kies je formaat en passe-partout, en voeg desgewenst onze lijst van natuurlijk eiken toe. Ingelijste prints worden klaar om op te hangen geleverd.",
     "shippingTitle": "Snelle en betrouwbare verzending in Europa",
     "shippingText": "Snelle levering in heel Europa, ook in Nederland. Je kunstwerk komt snel en in perfecte staat aan.",
     "uploadTitle": "Upload en print je eigen ontwerpen",
@@ -891,11 +892,11 @@
   "about": {
     "welcome": "Welkom bij PrintMe",
     "family": "We zijn een familiebedrijf in Nederland, gerund door een man en vrouw.",
-    "story1": "We houden van kamperen, reizen en spontane roadtrips — van die momenten waarop je stopt voor een uitzicht, een foto maakt en later wenst dat je dat gevoel kon vasthouden. Daarom bestaat PrintMe.",
-    "story2": "Onze prints en lijsten brengen dat \"goede moment\" naar je muren: strak, mooi en makkelijk om mee te leven. Of het nu rustige natuur is, krachtige fotografie of iets dat gewoon bij je past: we hopen dat het van je huis een thuis maakt.",
+    "story1": "We houden van reizen en van de momenten waarop je even stilstaat — een uitzicht onderweg, of een schilderij in een museum dat je alleen uit boeken kende — en later wenst dat je dat gevoel kon vasthouden. Daarom bestaat PrintMe.",
+    "story2": "Onze prints brengen dat \"goede moment\" naar je muren: strak, mooi en makkelijk om mee te leven. Of het nu een Hollands landschap is, een Van Gogh of je eigen foto: we hopen dat het van je huis een thuis maakt.",
     "thanks": "Fijn dat je er bent.",
-    "intro1": "We maken giclée-prints van museumkwaliteit die er van dichtbij prachtig uitzien en jarenlang mooi blijven.",
-    "intro2": "Onze collectie is geïnspireerd door de plekken waar we het meest van houden — ochtenden op de camping, lange roadtrips, stille plekken in de natuur en de rust die je voelt als je even naar buiten stapt. We proberen die sfeer te vangen en naar je huis te brengen.",
+    "intro1": "We maken prints van museumkwaliteit die er van dichtbij prachtig uitzien en jarenlang mooi blijven: giclée op fine-art katoenpapier, of een echte fotoafdruk met onze Premium Poster.",
+    "intro2": "Onze collectie brengt meesterwerken uit het publieke domein van toonaangevende musea samen — Rembrandt, Vermeer, Van Gogh, Monet en nog veel meer — geprint vanaf de hoge-resolutiebestanden van de musea zelf. We proberen het gevoel van het origineel te bewaren en naar je huis te brengen.",
     "intro3": "Elke print wordt met zorg gemaakt, met hoogwaardige materialen en scherpe, natuurgetrouwe kleuren. Strak, tijdloos en gemaakt om mee te leven — zodat je muren meer bij je passen.",
     "facts": "Feiten op een rij",
     "factsText": "We zijn onafhankelijk en maken elke dag met zorg prints die je jarenlang blij maken",
@@ -903,27 +904,27 @@
     "values": "Onze waarden",
     "v1Title": "Prints van museumkwaliteit",
     "v1Text": "Archiefvaste inkt op hoogwaardig papier. Gemaakt om tientallen jaren mee te gaan, niet maanden. De kwaliteit die je in een galerie verwacht.",
-    "v2Title": "Lijsten naar keuze",
-    "v2Text": "Kies je formaat, je lijst en eventueel een passe-partout. Jouw kunst, op jouw manier — zonder de meerprijs van een lijstenmaker.",
+    "v2Title": "Jouw print, jouw keuze",
+    "v2Text": "Kies je formaat en papier, en voeg desgewenst een passe-partout en onze lijst van natuurlijk eiken toe. Jouw kunst, op jouw manier — zonder de meerprijs van een lijstenmaker.",
     "v3Title": "Gewoon makkelijk",
     "v3Text": "Eenvoudig bestellen, snelle verzending en echte mensen als je hulp nodig hebt. Geen gedoe, geen verrassingen.",
     "f1Title": "Hoogwaardige prints",
-    "f1Text": "Met zorg gemaakt met de beste giclée-techniek",
+    "f1Text": "Giclée op katoenpapier, of een echte fotoafdruk",
     "f2Title": "Van ingenieurs tot kunstliefhebbers",
     "f2Text": "Familiebedrijf, geleid door twee gepassioneerde ingenieurs",
     "f3Title": "Veel keuze",
-    "f3Text": "Kies uit veel formaten, lijsten en afwerkingen"
+    "f3Text": "Kies uit veel formaten en papiersoorten, met een optionele eiken lijst"
   },
   "framesPage": {
-    "eyebrow": "Onze lijsten",
-    "title": "Kies de perfecte lijst",
-    "intro1": "Ontdek ons ruime aanbod lijsten en vind de perfecte match voor je schilderijen en foto’s.",
-    "intro2": "Onze hoogwaardige lijsten zijn duurzaam en stijlvol en laten je kunstwerk nog beter uitkomen.",
-    "intro3": "Kies uit verschillende stijlen en afwerkingen die bij je smaak en interieur passen.",
+    "eyebrow": "Onze lijst",
+    "title": "De lijst van natuurlijk eiken",
+    "intro1": "We houden het simpel: één lijst, van natuurlijk eiken, die past bij klassieke schilderijen én je eigen foto’s.",
+    "intro2": "Hij is stevig en netjes afgewerkt, en laat je kunstwerk goed uitkomen.",
+    "intro3": "De warme, natuurlijke houtnerf past bij bijna elk interieur.",
     "specs": "Technische specificaties",
     "specsText": "Onze lijsten worden zorgvuldig afgewerkt en zijn klaar om op te hangen. Hieronder vind je de belangrijkste specificaties.",
     "material": "Materiaal",
-    "materialText": "Hoogwaardig hout met een gladde matte afwerking.",
+    "materialText": "Natuurlijk eiken met een gladde matte afwerking.",
     "dimensions": "Afmetingen",
     "dimensionsText": "Verkrijgbaar in meerdere formaten, passend bij je kunstwerk.",
     "finish": "Afwerking",
@@ -932,10 +933,7 @@
     "includesText": "Lijst, ophangsysteem en beschermend glas.",
     "considerations": "Goed om te weten",
     "considerationsText": "Gemaakt van natuurlijke materialen. Nerf en kleur kunnen per lijst verschillen.",
-    "finalStock": "Laatste voorraad.",
-    "discount": "Tot 50% korting.",
-    "toSales": "Naar de aanbiedingen →",
-    "imageAlt": "Collectie kleurrijke lijsten"
+    "imageAlt": "Lijst van natuurlijk eiken"
   },
   "how": {
     "intro": "PrintMeArt is een familiestudio in Den Bosch. We maken prints die mooi zijn in echte huizen: scherp van dichtbij, helder in de lichte delen en rijk in de schaduwen — zonder het gevoel van een \"goedkope poster\". Op deze pagina lees je wat er gebeurt tussen je klik en het moment dat de print aan je muur hangt.",
@@ -949,7 +947,7 @@
     "step3": "Professionele afwerking",
     "step3Text": "We drukken niet zomaar op \"print\". We zorgen dat het resultaat strak en hoogwaardig is: een doordachte uitsnede, nette uitlijning en een afwerking die past bij je lijst en formaat.",
     "step4": "Printen en kwaliteitscontrole",
-    "step4Text": "Je print wordt gemaakt met een fine-art giclée-proces, voor veel detail en vloeiende overgangen. Na het printen controleren we wat je meteen zou opvallen: strakke randen, gelijkmatige tinten en een net eindresultaat.",
+    "step4Text": "Je print wordt gemaakt als giclée op fine-art katoenpapier, of als fotoafdruk op Premium Poster, voor veel detail en vloeiende overgangen. Na het printen controleren we wat je meteen zou opvallen: strakke randen, gelijkmatige tinten en een net eindresultaat.",
     "papersTitle": "Hoogwaardige papiersoorten",
     "papersText": "Katoenpapier van museumkwaliteit van 308 tot 350 g/m², lichtecht en gemaakt om lang mee te gaan. Voor kunst voor elke dag is er onze Premium Poster op fotopapier.",
     "photoRagSpec": "308 g/m² · 100% katoen · glad mat",
@@ -985,18 +983,16 @@
     "notSure": "Twijfel je nog?",
     "notSureText": "Kies Photo Rag — dat is prachtig voor bijna alles. Al onze katoenpapieren zijn van museumkwaliteit, lichtecht en giclée-gedrukt met pigmentinkt.",
     "framing": "Inlijsten",
-    "framingText": "Een lijst is optioneel, maar de snelste manier om een print \"af\" te laten voelen. Hij beschermt je print ook bij het ophangen en daarna. Twijfel je welke lijst het beste werkt? Denk dan simpel:",
-    "black": "Zwart = modern en krachtig",
-    "white": "Wit = licht en minimalistisch",
-    "wood": "Hout = warm en gezellig",
+    "framingText": "Een lijst is optioneel, maar de snelste manier om een print \"af\" te laten voelen. Hij beschermt je print ook bij het ophangen en daarna. We bieden één lijst, gekozen omdat hij bij bijna elk kunstwerk past:",
+    "wood": "Natuurlijk eiken = warm en tijdloos",
     "careTitle": "Je print verzorgen",
     "careText": "Voor de langste levensduur vermijd je constant direct zonlicht en plekken met veel vocht. In een lijst achter glas is je print extra beschermd en makkelijker schoon te houden. Behandel hem als een goede jas: hij gaat langer mee als je hem niet in de regen laat hangen.",
     "faqPoster": "Is dit een poster?",
-    "faqPosterA": "Niet in de zin van \"dun papier, snel geprint\". We richten ons op fine-art printen en een afgewerkt resultaat, of je nu uit onze collectie koopt of je eigen afbeelding uploadt.",
+    "faqPosterA": "Alleen als je onze Premium Poster kiest, en ook dan niet in de zin van \"dun papier, snel geprint\": het is een echte fotoafdruk op Fujifilm-fotopapier. Onze katoenpapieren zijn fine-art giclée-prints van museumkwaliteit.",
     "faqOwn": "Kan ik mijn eigen foto of kunstwerk laten printen?",
     "faqOwnA": "Ja. Upload je bestand, kies formaat, papier en lijst, bekijk het voorbeeld en bestel. Voor een echt hoogwaardig resultaat kies je een formaat dat goed bij je afbeelding past, in plaats van hem sterk bij te snijden.",
-    "faqMatte": "Mat of zijdeglans voor fotografie?",
-    "faqMatteA": "Beide werken. Mat is zachter en meer \"galerie\", zijdeglans maakt kleuren en contrast meestal levendiger. Het licht in je kamer geeft de doorslag.",
+    "faqMatte": "Welk papier voor fotografie?",
+    "faqMatteA": "Al onze papieren zijn mat, dus zonder schittering. Voor foto’s waarbij kleur echt telt, kies je Hahnemühle Photo Rag: glad katoenpapier met fijn detail. Premium Poster is een echte fotoafdruk met levendige kleuren en diep zwart, voor de beste prijs.",
     "faqShippingA": "Bestellingen worden binnen {{days}} dagen bezorgd. We verzenden altijd met track-and-trace, zodat je weet wanneer je hem kunt verwachten.",
     "ready": "Klaar om te beginnen?",
     "readyText": "Shop onze prints of upload je eigen ontwerp.",
@@ -1079,8 +1075,6 @@
     "withOrder": "met je bestelnummer en een duidelijke omschrijving van het probleem",
     "acknowledge": "We bevestigen je klacht binnen 2 werkdagen",
     "resolve": "We streven ernaar klachten binnen 14 dagen op te lossen",
-    "notSatisfied": "Niet tevreden met onze reactie?",
-    "odr": "Komen we er samen niet uit, dan kun je je klacht voorleggen aan het Europese platform voor onlinegeschillenbeslechting (ODR):",
     "complianceTagline": "Meld problemen met auteursrecht of andere juridische zaken.",
     "privacyTitle": "Privacyverklaring",
     "privacyTagline": "Je gegevens zijn van jou.",
@@ -1108,7 +1102,12 @@
     "rightPortability": "• overdraagbaarheid van je gegevens",
     "retention": "Bewaartermijnen",
     "retentionText": "Bestelgegevens bewaren we 7 jaar (wettelijke fiscale bewaarplicht). Accountgegevens bewaren we tot je je account verwijdert. Eigen geüploade afbeeldingen verwijderen we nadat je bestelling is afgerond.",
-    "exercise": "Wil je je rechten uitoefenen of heb je vragen? Mail naar support@printmeart.nl — we reageren binnen 30 dagen."
+    "exercise": "Wil je je rechten uitoefenen of heb je vragen? Mail naar support@printmeart.nl — we reageren binnen 30 dagen.",
+    "processors": "Diensten die je gegevens verwerken",
+    "posthogText": "statistieken, sessie-opnames en heatmaps",
+    "stripeText": "betalingen",
+    "resendText": "order- en service-e-mails",
+    "saalText": "printen en bezorgen; ontvangt je naam en verzendadres"
   },
   "intro": {
     "Art Prints": "Schilderijen, aquarellen, tekeningen en prenten uit vijf eeuwen, allemaal oud genoeg om in het publieke domein te vallen en gefotografeerd door de musea die ze bezitten. We beginnen bij het hoge-resolutiebestand van het museum zelf, controleren kleur en detail, en drukken elk werk als giclée op het fine-art papier van jouw keuze, in ons atelier in Den Bosch. De collectie is ingedeeld naar onderwerp: landschappen, zeegezichten, steden, portretten, stillevens, bloemen, dieren en vroege abstracte kunst. Het meeste komt uit het Rijksmuseum, het Art Institute of Chicago, de National Gallery of Art in Washington en Birmingham Museums, en elke print is ingelijst te bestellen.",
@@ -1129,7 +1128,7 @@
   "seo": {
     "home": {
       "title": "Kunstprints van museumkwaliteit — eerlijk geprijsd",
-      "description": "Giclée-prints van beroemde schilderijen uit het publieke domein, op fine-art papier en met een lijst naar keuze. Met de hand gemaakt in onze familiestudio in Den Bosch."
+      "description": "Prints van museumkwaliteit van beroemde schilderijen uit het publieke domein, op fine-art of fotopapier, desgewenst in een eiken lijst. Met de hand gemaakt in onze familiestudio in Den Bosch."
     },
     "collections": {
       "title": "Kunstcollecties — Hollandse meesters, musea en meer",
@@ -1147,11 +1146,11 @@
     },
     "about": {
       "title": "Over ons — een familiestudio in Den Bosch",
-      "description": "PrintMeArt is een familiebedrijf in Den Bosch dat giclée-prints en lijsten van museumkwaliteit maakt voor echte huizen."
+      "description": "PrintMeArt is een familiebedrijf in Den Bosch dat kunstprints van museumkwaliteit maakt voor echte huizen."
     },
     "frames": {
-      "title": "Lijsten voor je kunstprints",
-      "description": "Kies een zwarte, witte, houten of gouden lijst voor je print, met of zonder wit passe-partout. Klaar om op te hangen geleverd."
+      "title": "De eiken lijst voor je kunstprint",
+      "description": "Onze lijst van natuurlijk eiken voor je print, met of zonder wit passe-partout. Klaar om op te hangen geleverd."
     },
     "yourDesign": {
       "title": "Je eigen foto of kunstwerk laten printen",

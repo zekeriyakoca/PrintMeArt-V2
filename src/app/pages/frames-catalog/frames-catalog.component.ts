@@ -1,7 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, computed, signal } from '@angular/core';
 
-import { RouterLink } from '@angular/router';
 import { FrameCardComponent } from '../../components/frame-card/frame-card.component';
 import {
   ImageGalleryModalComponent,
@@ -24,7 +23,7 @@ export interface Frame {
   selector: 'app-frames-catalog',
   standalone: true,
   imports: [
-    TranslatePipe, RouterLink,
+    TranslatePipe,
     FrameCardComponent,
     ImageGalleryModalComponent,
     SectionTitleComponent
