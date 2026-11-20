@@ -19,6 +19,8 @@ const DETAILS_CACHE_MS = 24 * 60 * 60 * 1000;
 const DETAILS_INTERVAL_MS = 600;
 /** Google's limits */
 const MAX_TITLE = 150;
+// Shopping ads match searches against the title, and people search for "poster" or "kunstprint", not just the name
+const TITLE_SUFFIX: Record<FeedLanguage, string> = { nl: ' – Kunstprint / Poster', en: ' – Art Print / Poster' };
 const MAX_DESCRIPTION = 5000;
 const MAX_ADDITIONAL_IMAGES = 10;
 /** Posters, Prints & Visual Artwork */
@@ -85,7 +87,7 @@ export function productFeedXml(language: FeedLanguage): string | undefined {
 
     const fields: [string, string | number][] = [
       ['g:id', product.id],
-      ['g:title', cut([product.name, painter].filter(Boolean).join(' – '), MAX_TITLE)],
+      ['g:title', `${cut([product.name, painter].filter(Boolean).join(' – '), MAX_TITLE - TITLE_SUFFIX[language].length)}${TITLE_SUFFIX[language]}`],
       ['g:description', cut(description, MAX_DESCRIPTION)],
       ['g:link', `${site}/products/${productPath(product)}`],
       ['g:image_link', images[0]],
