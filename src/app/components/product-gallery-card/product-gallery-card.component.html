@@ -1,5 +1,5 @@
 <a [routerLink]="['/products', productPath(product())]" class="gallery-card block cursor-pointer group">
-  <div class="gallery-card-inner relative overflow-hidden rounded-sm">
+  <div class="gallery-card-inner relative overflow-hidden rounded-sm" [style.aspect-ratio]="aspectRatio()">
     <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" [src]="firstImage()" [alt]="product().name" loading="lazy" decoding="async" />
 
     @if (isHorizontal()) {
