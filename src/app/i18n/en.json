@@ -453,7 +453,8 @@
     "uploading": "Uploading image...",
     "guarantee": "Perfect Fit Guarantee",
     "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. We'll send you the final design for your approval, giving you the last say.",
-    "imageAlt": "Your uploaded image"
+    "imageAlt": "Your uploaded image",
+    "retention": "Your images are deleted within 90 days, or once your order is completed."
   },
   "howCustom": {
     "eyebrow": "Print Your Design",
@@ -852,7 +853,7 @@
     "noInfringe": "The image doesn't infringe on anyone's copyright or trademark",
     "guidelines": "The content complies with our acceptable use guidelines",
     "noKeep": "We Don't Keep Your Images",
-    "noKeepText": "Custom uploads are processed for printing only. We don't keep, share, or reuse your personal images right after your order is complete.",
+    "noKeepText": "Custom uploads are used for printing only, never shared or reused. Images you upload are deleted automatically within 90 days. Images that are part of an order are kept until the order is completed, then deleted.",
     "report": "Report an Issue",
     "reportTagline": "Help us maintain accuracy.",
     "whatToReport": "What to Report",
@@ -917,7 +918,7 @@
     "dontTrack": "Track you across websites without your consent",
     "dontKeep": "Keep data longer than needed",
     "cookies": "Cookies & Tracking",
-    "cookiesText": "We use cookies and similar technologies to understand how our website is used and to measure advertising performance. We only enable non-essential tracking after you give consent in the cookie banner.",
+    "cookiesText": "We use cookies and similar technologies to understand how our website is used and to measure advertising performance. We only enable non-essential tracking after you give consent in the cookie banner. We keep a record of your choice (accepted or declined, with an anonymous session id) as proof of consent.",
     "googleText": "Used for analytics and ad conversion measurement. When enabled, Google may set cookies/identifiers to help measure visits and campaign performance.",
     "insightsText": "Used to monitor site performance and errors (telemetry). When enabled, it may use browser storage/cookies to help understand sessions and diagnose issues.",
     "withdraw": "You can withdraw consent at any time by clearing your browser storage. If you have questions, contact us at support@printmeart.nl.",
@@ -929,7 +930,7 @@
     "rightObject": "• Object to data processing",
     "rightPortability": "• Data portability",
     "retention": "Data Retention",
-    "retentionText": "We keep order data for 7 years (legal requirement for tax purposes). Account data is kept until you delete your account. Custom uploaded images are deleted after order completion.",
+    "retentionText": "We keep order data for 7 years (legal requirement for tax purposes). Account data is kept until you delete your account. Images you upload are deleted automatically within 90 days; images that are part of an order are kept until the order is completed and then deleted.",
     "exercise": "To exercise your rights or ask questions, email support@printmeart.nl — we'll respond within 30 days.",
     "processors": "Services that process your data",
     "posthogText": "analytics, session recordings and heatmaps"

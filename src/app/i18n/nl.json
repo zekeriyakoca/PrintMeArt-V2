@@ -626,7 +626,8 @@
     "uploading": "Afbeelding wordt geüpload...",
     "guarantee": "Garantie op een perfecte pasvorm",
     "guaranteeText": "Onze ontwerpers zorgen dat elke afbeelding, ook liggende, perfect in je lijst past. We sturen je het definitieve ontwerp ter goedkeuring, zodat jij het laatste woord hebt.",
-    "imageAlt": "Je geüploade afbeelding"
+    "imageAlt": "Je geüploade afbeelding",
+    "retention": "Je afbeeldingen worden binnen 90 dagen verwijderd, of zodra je bestelling is afgerond."
   },
   "howCustom": {
     "eyebrow": "Print je ontwerp",
@@ -1025,7 +1026,7 @@
     "noInfringe": "de afbeelding geen inbreuk maakt op het auteursrecht of merkrecht van anderen",
     "guidelines": "de inhoud voldoet aan onze gebruiksrichtlijnen",
     "noKeep": "We bewaren je afbeeldingen niet",
-    "noKeepText": "Eigen uploads gebruiken we alleen om te printen. Zodra je bestelling klaar is, bewaren, delen of hergebruiken we je persoonlijke afbeeldingen niet.",
+    "noKeepText": "Eigen uploads gebruiken we alleen om te printen, nooit om te delen of te hergebruiken. Afbeeldingen die je uploadt, verwijderen we automatisch binnen 90 dagen. Afbeeldingen die bij een bestelling horen, bewaren we tot de bestelling is afgerond en verwijderen we daarna.",
     "report": "Meld een probleem",
     "reportTagline": "Help ons om alles kloppend te houden.",
     "whatToReport": "Wat kun je melden?",
@@ -1090,7 +1091,7 @@
     "dontTrack": "Je zonder toestemming volgen op andere websites",
     "dontKeep": "Gegevens langer bewaren dan nodig",
     "cookies": "Cookies & tracking",
-    "cookiesText": "We gebruiken cookies en vergelijkbare technieken om te begrijpen hoe onze website wordt gebruikt en om de resultaten van advertenties te meten. Niet-noodzakelijke tracking zetten we pas aan nadat je toestemming geeft in de cookiebanner.",
+    "cookiesText": "We gebruiken cookies en vergelijkbare technieken om te begrijpen hoe onze website wordt gebruikt en om de resultaten van advertenties te meten. Niet-noodzakelijke tracking zetten we pas aan nadat je toestemming geeft in de cookiebanner. We bewaren een registratie van je keuze (geaccepteerd of geweigerd, met een anonieme sessie-id) als bewijs van toestemming.",
     "googleText": "Gebruikt voor statistieken en het meten van advertentieconversies. Als dit aanstaat, kan Google cookies of identificatoren plaatsen om bezoeken en campagneresultaten te meten.",
     "insightsText": "Gebruikt om de prestaties en fouten van de site te monitoren (telemetrie). Als dit aanstaat, kan het browseropslag of cookies gebruiken om sessies te begrijpen en problemen op te sporen.",
     "withdraw": "Je kunt je toestemming altijd intrekken door je browseropslag te wissen. Vragen? Neem contact op via support@printmeart.nl.",
@@ -1102,7 +1103,7 @@
     "rightObject": "• bezwaar tegen de verwerking van je gegevens",
     "rightPortability": "• overdraagbaarheid van je gegevens",
     "retention": "Bewaartermijnen",
-    "retentionText": "Bestelgegevens bewaren we 7 jaar (wettelijke fiscale bewaarplicht). Accountgegevens bewaren we tot je je account verwijdert. Eigen geüploade afbeeldingen verwijderen we nadat je bestelling is afgerond.",
+    "retentionText": "Bestelgegevens bewaren we 7 jaar (wettelijke fiscale bewaarplicht). Accountgegevens bewaren we tot je je account verwijdert. Afbeeldingen die je uploadt, verwijderen we automatisch binnen 90 dagen; afbeeldingen die bij een bestelling horen, bewaren we tot de bestelling is afgerond en verwijderen we daarna.",
     "exercise": "Wil je je rechten uitoefenen of heb je vragen? Mail naar support@printmeart.nl — we reageren binnen 30 dagen.",
     "processors": "Diensten die je gegevens verwerken",
     "posthogText": "statistieken, sessie-opnames en heatmaps"

@@ -63,6 +63,7 @@ const FIRST_PARTY_EVENTS = new Set([
   'custom_upload_rejected',
   'custom_upload_selected',
   'custom_upload_success',
+  'custom_design_saved',
 ]);
 const FIRST_PARTY_BATCH_SIZE = 20;
 const FIRST_PARTY_MAX_QUEUE_SIZE = 200;
@@ -103,6 +104,7 @@ export class AnalyticsService {
 
   private readonly config: AnalyticsConfig = (environment as { analytics?: AnalyticsConfig }).analytics ?? {};
   private readonly analyticsApiUrl = (environment as { serviceUrls?: Record<string, string> }).serviceUrls?.['analytics-api'];
+  private readonly prefsApiUrl = (environment as { serviceUrls?: Record<string, string> }).serviceUrls?.['prefs-api'];
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: object,
@@ -306,6 +308,43 @@ export class AnalyticsService {
 
   trackCustomUpload(name: 'custom_upload_rejected' | 'custom_upload_selected' | 'custom_upload_success', props: AnalyticsProperties): void {
     this.track(name, props, { ga4: false, posthog: true });
+  }
+
+  trackCustomDesignSaved(productId: number, props: AnalyticsProperties): void {
+    this.track('custom_design_saved', { product_id: productId, ...props }, { ga4: false, posthog: true });
+  }
+
+  /**
+   * Cookie banner shown / answered. Goes to PostHog, and on its own straight to our API
+   * (not batched), so the audit row exists even when PostHog is blocked or the tab closes.
+   */
+  trackCookieConsent(event: 'shown' | 'decided', decision?: 'granted' | 'denied'): void {
+    if (!this.isEnabled()) return;
+
+    const name = event === 'shown' ? 'cookie_consent_shown' : 'cookie_consent_decided';
+    const properties: AnalyticsProperties = decision ? { decision, path: this.router.url } : { path: this.router.url };
+    this.track(name, properties, { ga4: false, posthog: true });
+
+    if (!this.prefsApiUrl) return;
+    const body = JSON.stringify({
+      clientEventId: this.createId(),
+      userId: this.currentUserId,
+      anonymousId: this.anonymousId ?? this.getOrCreateBrowserId('pma_anonymous_id', localStorage),
+      sessionId: this.sessionId ?? this.getOrCreateBrowserId('pma_session_id', sessionStorage),
+      eventName: name,
+      occurredAt: new Date().toISOString(),
+      source: 'storefront',
+      propertiesJson: JSON.stringify(properties),
+    });
+    fetch(`${this.prefsApiUrl}/prefs/v1/consent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      credentials: 'include',
+      keepalive: true,
+    }).catch(() => {
+      // Nothing to retry with: the next visit is a new banner
+    });
   }
 
   private initAdapters(): void {
