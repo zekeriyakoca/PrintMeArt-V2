@@ -25,7 +25,23 @@
     <div class="flex items-center justify-between gap-2">
       <label class="option-label">{{ 'product.size' | t }}</label>
       @if (imageMetadata(); as metadata) {
-        <app-ppi-bar [metadata]="metadata" [size]="selectedSize()"></app-ppi-bar>
+        <div class="flex items-center gap-1.5">
+          <app-ppi-bar [metadata]="metadata" [size]="selectedSize()" [enhanced]="isEnhancementIncluded()"></app-ppi-bar>
+          @if (showEnhancement()) {
+            <app-tooltip [ariaLabel]="'enhancement.include' | t">
+              <button type="button" (click)="enhancementWanted.set(!enhancementWanted())"
+                [class]="'inline-flex h-7 w-7 items-center justify-center rounded-md border transition-colors ' +
+                  (isEnhancementIncluded() ? 'border-[#384f8c] bg-[#384f8c] text-white' : 'border-indigo-200 bg-[#faf6ff] text-[#384f8c] hover:border-[#384f8c]')">
+                <app-icon iconName="sparkles" class="h-4 w-4"></app-icon>
+              </button>
+              <div tooltip class="px-4 py-3 space-y-1 text-left">
+                <div class="font-semibold text-sm text-slate-900">{{ 'enhancement.include' | t }} +€5</div>
+                <div class="text-xs text-slate-500">{{ 'enhancement.hint' | t }}</div>
+                <div class="text-xs font-medium text-[#384f8c]">{{ (isEnhancementIncluded() ? 'enhancement.clickRemove' : 'enhancement.clickAdd') | t }}</div>
+              </div>
+            </app-tooltip>
+          }
+        </div>
       }
     </div>
     <app-size-options [sizes]="availableSizes()" [(sizeSelected)]="selectedSize" [moreSizes]="isFrameSelected() ? [] : moreSizes"></app-size-options>

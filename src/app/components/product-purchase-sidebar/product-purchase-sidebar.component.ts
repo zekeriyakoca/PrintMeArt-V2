@@ -24,11 +24,12 @@ import { NO_WHITE_BORDER, WhiteBorder } from '../../shared/white-border';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { EffectiveImagePixelsResolver } from '../../utils/effective-image-pixels';
+import { TooltipComponent } from '../shared/tooltip/tooltip.component';
 import { EnhancementOptionsComponent } from '../enhancement-options/enhancement-options.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent],
+  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })

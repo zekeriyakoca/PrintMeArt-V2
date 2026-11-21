@@ -22,8 +22,22 @@ export class EffectiveImagePixelsResolver {
    * gain is credited when reporting print quality.
    */
   static readonly UPSCALED_CREDIT_FACTOR = 0.7;
+  /** The paid image enhancement upscales the upload this many times */
+  static readonly ENHANCEMENT_SCALE = 3;
   static readonly TRUSTED_FALLBACK_LONG_EDGE_PX = 12_000;
   static readonly ASPECT_RATIO_TOLERANCE = 0.08;
+
+  /** Pixels the print is judged on after the paid enhancement, credited like any other upscale */
+  static enhance(pixels: EffectiveImagePixels): EffectiveImagePixels {
+    const factor =
+      EffectiveImagePixelsResolver.ENHANCEMENT_SCALE *
+      EffectiveImagePixelsResolver.UPSCALED_CREDIT_FACTOR;
+    return {
+      ...pixels,
+      widthPx: Math.round(pixels.widthPx * factor),
+      heightPx: Math.round(pixels.heightPx * factor),
+    };
+  }
 
   /** Pixels per inch at a print size, in the orientation that fits best; null when it cannot be worked out */
   static printPpi(
