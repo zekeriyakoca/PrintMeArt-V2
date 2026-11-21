@@ -158,7 +158,7 @@
   "frames": {
     "select": "Kies je lijst",
     "chooseStyle": "Kies een lijststijl",
-    "viewAll": "Bekijk alle lijsten",
+    "viewAll": "Bekijk lijsten van dichtbij",
     "outOfStock": "Tijdelijk uitverkocht",
     "showAllPhotos": "Alle foto's tonen"
   },
@@ -170,7 +170,7 @@
   "papers": {
     "bestFor": "Ideaal voor",
     "archival": "Archiefkwaliteit · lichtechte pigmentinkt",
-    "viewAll": "Bekijk alle papiersoorten",
+    "viewAll": "Vergelijk papiersoorten",
     "comingSoon": "Binnenkort"
   },
   "ppi": {
