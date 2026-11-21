@@ -217,10 +217,15 @@
 
         <!-- Design actions -->
         <div class="design-actions">
-          <button type="button" class="save-design-btn" [disabled]="isSaving()" (click)="saveDesign()">
+          <button type="button" class="save-design-btn" [disabled]="isSaving() || isAlreadySaved()" (click)="saveDesign()">
             @if (isSaving()) {
               <span class="saving-spinner"></span>
               {{ 'design.saving' | t }}
+            } @else if (isAlreadySaved()) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              {{ 'design.saved' | t }}
             } @else {
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>

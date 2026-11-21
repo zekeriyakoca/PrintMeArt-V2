@@ -232,20 +232,26 @@ export class ProductPreviewComponent {
     };
   }
 
+  /** The design as it was last saved; cleared when the artwork changes */
+  private savedSnapshot = signal<DesignSnapshot | null>(null);
+
+  private readonly artworkChangeEffect = effect(
+    () => {
+      this.imageUrl();
+      untracked(() => this.savedSnapshot.set(null));
+    },
+    { allowSignalWrites: true },
+  );
+
+  /** Save stays off until the saved design is edited */
+  isAlreadySaved = computed(() => {
+    const saved = this.savedSnapshot();
+    return !!saved && !differs(saved, this.snapshot());
+  });
+
   private hasUnsavedChanges(): boolean {
-    const before = this.baseline;
-    if (!before) return false;
-    const now = this.snapshot();
-    return (
-      before.size.id !== now.size.id ||
-      before.matIncluded !== now.matIncluded ||
-      !sameWhiteBorder(before.whiteBorder, now.whiteBorder) ||
-      before.fitMode !== now.fitMode ||
-      before.landscape !== now.landscape ||
-      Math.abs(before.scale - now.scale) > 0.001 ||
-      Math.abs(before.translateX - now.translateX) > 1 ||
-      Math.abs(before.translateY - now.translateY) > 1
-    );
+    if (this.isAlreadySaved()) return false;
+    return !!this.baseline && differs(this.baseline, this.snapshot());
   }
 
   private smartInit() {
@@ -302,7 +308,7 @@ export class ProductPreviewComponent {
   }
 
   saveDesign() {
-    if (this.isSaving()) return;
+    if (this.isSaving() || this.isAlreadySaved()) return;
     const layout = this.currentLayout();
     if (!layout) return;
 
@@ -310,12 +316,14 @@ export class ProductPreviewComponent {
     const frameMaskUrl = this.frameMaskUrl();
     const matIncluded = this.showsMat();
     const size = this.effectiveSize();
+    const saving = this.snapshot();
 
     Promise.all([loadCorsImage(this.imageUrl()), loadCorsImage(frameMaskUrl)])
       .then(([image, frame]) => designToFile(composeDesign(DESIGN_WIDTH_PX, { image, frame, width: size.val1, height: size.val2, matIncluded }, layout)))
       .then((file) =>
         this.commonApi.uploadImage(file).subscribe({
           next: (url) => {
+            this.savedSnapshot.set(saving);
             this.onDesignSaved.emit(url);
             this.isSaving.set(false);
             this.finishClose();
@@ -543,4 +551,17 @@ interface DesignSnapshot {
   scale: number;
   translateX: number;
   translateY: number;
+}
+
+function differs(before: DesignSnapshot, now: DesignSnapshot): boolean {
+  return (
+    before.size.id !== now.size.id ||
+    before.matIncluded !== now.matIncluded ||
+    !sameWhiteBorder(before.whiteBorder, now.whiteBorder) ||
+    before.fitMode !== now.fitMode ||
+    before.landscape !== now.landscape ||
+    Math.abs(before.scale - now.scale) > 0.001 ||
+    Math.abs(before.translateX - now.translateX) > 1 ||
+    Math.abs(before.translateY - now.translateY) > 1
+  );
 }
