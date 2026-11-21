@@ -214,13 +214,21 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
           },
           products.data,
         );
+        // Here rather than on submit, so the result count is known and a search from the header counts too
+        const term = filters.searchTerm?.trim() ?? '';
+        if (term && term !== this.lastTrackedSearch) {
+          this.analytics.trackSearch(term, products.count);
+        }
+        this.lastTrackedSearch = term;
       }
     });
   }
 
+  /** The search term last reported, so paging through its results doesn't count again */
+  private lastTrackedSearch = '';
+
   search(): void {
     const current = this.selectedFilterOptions();
-    this.analytics.trackSearch(current.searchTerm || '');
     this.navigateWithFilters({
       pageIndex: 0,
       pageSize: current.pageSize,

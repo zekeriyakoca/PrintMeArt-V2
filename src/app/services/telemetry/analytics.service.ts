@@ -64,6 +64,13 @@ const FIRST_PARTY_EVENTS = new Set([
   'custom_upload_selected',
   'custom_upload_success',
   'custom_design_saved',
+  'design_preview_opened',
+  'design_preview_blocked_mobile',
+  'room_view_opened',
+  'view_item_list',
+  'remove_from_cart',
+  'add_to_cart_blocked',
+  'checkout_failed',
 ]);
 const FIRST_PARTY_BATCH_SIZE = 20;
 const FIRST_PARTY_MAX_QUEUE_SIZE = 200;
@@ -197,6 +204,7 @@ export class AnalyticsService {
       quantity: data.quantity,
       merged_into_existing: data.mergedIntoExisting,
       selected_options_count: data.selectedOptionsCount,
+      source: 'product',
       items: [
         {
           item_id: String(data.productId),
@@ -222,6 +230,8 @@ export class AnalyticsService {
 
   private trackCartChange(name: 'add_to_cart' | 'remove_from_cart', item: CartItemDto, quantity: number): void {
     this.track(name, {
+      // A + or - in the cart, not a new item; the funnel counts only source 'product'
+      source: 'cart',
       currency: 'EUR',
       value: this.money(item.unitPrice * quantity),
       item_id: String(item.productId),
@@ -329,6 +339,11 @@ export class AnalyticsService {
 
   trackCustomUpload(name: 'custom_upload_rejected' | 'custom_upload_selected' | 'custom_upload_success', props: AnalyticsProperties): void {
     this.track(name, props, { ga4: false, posthog: true });
+  }
+
+  /** Preview & Design opened, or refused on a phone (it needs a larger screen) */
+  trackDesignPreview(name: 'design_preview_opened' | 'design_preview_blocked_mobile' | 'room_view_opened', productId: number, props: AnalyticsProperties = {}): void {
+    this.track(name, { product_id: productId, ...props }, { ga4: false, posthog: true });
   }
 
   trackCustomDesignSaved(productId: number, props: AnalyticsProperties): void {
