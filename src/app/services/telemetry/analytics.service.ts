@@ -89,12 +89,15 @@ export class AnalyticsService {
   private posthog?: {
     capture: (name: string, props?: AnalyticsProperties) => void;
     identify: (id: string, props?: AnalyticsProperties) => void;
+    setPersonProperties: (props: AnalyticsProperties) => void;
     reset: () => void;
     startSessionRecording: () => void;
     stopSessionRecording: () => void;
     get_session_id: () => string;
   };
   private sessionRecordingStarted = false;
+  // Name and email a guest typed at checkout, waiting for PostHog to load
+  private pendingCheckoutContact?: { email: string; name: string };
   private readonly queue: QueuedEvent[] = [];
   private readonly firstPartyQueue: FirstPartyEventRequest[] = [];
   private readonly firstPartyFlushRequests$ = new Subject<boolean>();
@@ -258,6 +261,24 @@ export class AnalyticsService {
       value: this.cartValue(items),
       items: items.map((item) => this.toCartGa4Item(item)),
     });
+  }
+
+  /** Any step of checkout failed: opening it (draft order), creating the order, or starting the payment */
+  trackCheckoutFailed(stage: 'draft_order' | 'create_order' | 'payment', reason: string): void {
+    this.track('checkout_failed', { stage, reason }, { ga4: false, posthog: true });
+  }
+
+  /** Puts the name and email typed at checkout on the PostHog person, so a failed checkout can be followed up */
+  setCheckoutContact(email: string, name: string): void {
+    if (!this.isEnabled()) return;
+    this.pendingCheckoutContact = { email, name };
+    this.applyCheckoutContact();
+  }
+
+  private applyCheckoutContact(): void {
+    if (!this.posthogInitialized || !this.posthog || !this.pendingCheckoutContact) return;
+    this.posthog.setPersonProperties(this.pendingCheckoutContact);
+    this.pendingCheckoutContact = undefined;
   }
 
   trackPaymentFailed(reason: string, orderId?: number): void {
@@ -434,6 +455,7 @@ export class AnalyticsService {
     setPostHogSessionSource(() => posthog.get_session_id());
     this.posthogInitialized = true;
     this.applyUserId();
+    this.applyCheckoutContact();
     this.maybeStartSessionRecording(this.router.url);
   }
 

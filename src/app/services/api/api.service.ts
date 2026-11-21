@@ -84,6 +84,13 @@ export class ApiService {
     );
   }
 
+  saveCheckoutContact(contact: { email: string; firstName: string; lastName: string }): Observable<unknown> {
+    if (this.isSSR) {
+      return of({});
+    }
+    return this._httpClient.post(`${this.BFF_URL}/bff/v1/ordering/checkout-contact`, contact);
+  }
+
   submitOrder(userInfo: any): Observable<any> {
     if (this.isSSR) {
       return of({});

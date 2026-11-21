@@ -2,7 +2,7 @@
   <div class="form-row">
     <div class="form-group">
       <label for="first_name" class="form-label">{{ 'checkout.firstName' | t }}</label>
-      <input [field]="userForm.firstName" type="text" id="first_name" class="form-input" [placeholder]="'checkout.firstNamePlaceholder' | t" />
+      <input [field]="userForm.firstName" type="text" id="first_name" (blur)="contactEntered.emit()" class="form-input" [placeholder]="'checkout.firstNamePlaceholder' | t" />
       @if (userForm.firstName().touched()) {
       <ul class="error-list">
         @for (error of userForm.firstName().errors(); track error) {
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label for="last_name" class="form-label">{{ 'checkout.lastName' | t }}</label>
-      <input [field]="userForm.lastName" type="text" id="last_name" class="form-input" [placeholder]="'checkout.lastNamePlaceholder' | t" />
+      <input [field]="userForm.lastName" type="text" id="last_name" (blur)="contactEntered.emit()" class="form-input" [placeholder]="'checkout.lastNamePlaceholder' | t" />
       @if (userForm.lastName().touched()) {
       <ul class="error-list">
         @for (error of userForm.lastName().errors(); track error) {
@@ -34,7 +34,7 @@
     <label for="email" class="form-label">{{ 'checkout.email' | t }}</label>
     <div class="input-with-icon">
       <app-icon iconName="email" class="input-icon w-[18px] h-[18px]" />
-      <input [field]="userForm.email" type="email" id="email" class="form-input with-icon"
+      <input [field]="userForm.email" type="email" id="email" (blur)="contactEntered.emit()" class="form-input with-icon"
         [placeholder]="'checkout.emailPlaceholder' | t" />
     </div>
 

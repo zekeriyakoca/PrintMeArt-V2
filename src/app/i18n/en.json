@@ -467,6 +467,7 @@
     "approveText": "We review your design, you approve, then we print & ship."
   },
   "checkout": {
+    "pricesUpdated": "Some prices in your cart were updated. Your order uses the prices shown now.",
     "shipping": "Shipping",
     "payment": "Payment",
     "backToShop": "Back to shop",

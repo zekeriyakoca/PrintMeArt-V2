@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, effect, inject, model, untracked } from '@angular/core';
+import { Component, effect, inject, model, output, untracked } from '@angular/core';
 import { Field, form, required, email, minLength, validate, customError } from '@angular/forms/signals';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
@@ -17,6 +17,9 @@ export class CheckoutUserInfoComponent {
 
   /** Messages the backend gave per field when it refused the order; cleared once the details change */
   readonly serverErrors = model<Partial<Record<keyof CheckoutUserInfo, string[]>>>({});
+
+  /** The customer left the name or email field; the parent saves them right away */
+  readonly contactEntered = output<void>();
 
   private readonly bootstrap = inject(Bootstrap);
 
