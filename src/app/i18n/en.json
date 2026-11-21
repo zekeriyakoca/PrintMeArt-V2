@@ -170,7 +170,9 @@
   "enhancement": {
     "label": "Image enhancement",
     "include": "Include image enhancement",
-    "hint": "Your image is low in resolution for this size. We upscale and sharpen it before printing"
+    "hint": "Your image is low in resolution for this size. We upscale and sharpen it before printing",
+    "clickAdd": "Click to add",
+    "clickRemove": "Click to remove"
   },
   "papers": {
     "bestFor": "Best for",

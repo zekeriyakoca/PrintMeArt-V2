@@ -30,10 +30,13 @@ export class PpiBarComponent {
   private readonly i18n = inject(TranslationService);
   readonly metadata = input.required<ProductMetadata>();
   readonly size = input<SizeOption | null>(null);
+  /** The paid image enhancement is chosen, so the print is judged on the upscaled image */
+  readonly enhanced = input(false);
 
-  readonly effectivePixels = computed<EffectiveImagePixels>(() =>
-    EffectiveImagePixelsResolver.resolve(this.metadata()),
-  );
+  readonly effectivePixels = computed<EffectiveImagePixels>(() => {
+    const pixels = EffectiveImagePixelsResolver.resolve(this.metadata());
+    return this.enhanced() ? EffectiveImagePixelsResolver.enhance(pixels) : pixels;
+  });
 
   readonly isEstimated = computed(() => {
     const mode = this.effectivePixels().mode;

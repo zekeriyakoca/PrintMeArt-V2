@@ -170,7 +170,9 @@
   "enhancement": {
     "label": "Beeldverbetering",
     "include": "Beeldverbetering toevoegen",
-    "hint": "Je afbeelding heeft een lage resolutie voor dit formaat. We vergroten en verscherpen hem vóór het printen"
+    "hint": "Je afbeelding heeft een lage resolutie voor dit formaat. We vergroten en verscherpen hem vóór het printen",
+    "clickAdd": "Klik om toe te voegen",
+    "clickRemove": "Klik om te verwijderen"
   },
   "papers": {
     "bestFor": "Ideaal voor",
