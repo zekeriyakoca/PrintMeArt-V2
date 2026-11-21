@@ -12,7 +12,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { SelectedOptionDto } from '../../models/cart-item';
 
 /** Options that should not be displayed in the orders UI (internal options) */
-const HIDDEN_OPTION_NAMES = ['CustomProductUrl'];
+const HIDDEN_OPTION_NAMES = ['CustomProductUrl', 'PreviewSnapshotUrl'];
 
 interface TabConfig {
   key: OrderStatusGroup;
