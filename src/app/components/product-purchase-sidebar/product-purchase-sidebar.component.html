@@ -61,7 +61,7 @@
     } @else if (group.name.toLowerCase().startsWith('paper')) {
       <div class="option-group">
         <label class="option-label">{{ 'product.paper' | t }}</label>
-        <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex, $event, false)" (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
+        <app-paper-options [group]="group" (optionSelected)="selectOption(groupIndex, $event)" (paperNameSelected)="selectedPaperName.set($event)"></app-paper-options>
       </div>
     } @else if (group.name.toLowerCase().startsWith('customproductdetails')) {
       <!-- Nothing to show -->

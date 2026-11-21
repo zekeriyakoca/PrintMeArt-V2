@@ -6,7 +6,6 @@ import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../../pages/basePageComponent';
 import { SelectedOptionDto } from '../../models/cart-item';
-import { OptionsComponent } from '../shared/options/options.component';
 import { CommonModule } from '@angular/common';
 import { FrameOptionsComponent } from '../frame-options/frame-options.component';
 import { IconComponent } from '../shared/icon/icon.component';
@@ -29,7 +28,7 @@ import { EnhancementOptionsComponent } from '../enhancement-options/enhancement-
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent],
+  imports: [TranslatePipe, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -251,9 +250,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.onSelectedFrameChanged.emit(selectedFrame);
   }
 
-  // Paper never toggles off: two papers share one grade option, so a second
-  // click would drop the paper and price the print without it
-  selectOption(groupIndex: number, optionId: number, toggle = true) {
+  // Always sets, never clears: a cleared paper or frame would be priced without it
+  selectOption(groupIndex: number, optionId: number) {
     this.product.update((currentProduct) => {
       const updatedGroups = currentProduct.optionGroups.map((group, index) => {
         if (index !== groupIndex) {
@@ -261,7 +259,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         }
         return {
           ...group,
-          selectedOptionId: toggle && group.selectedOptionId === optionId ? undefined : optionId,
+          selectedOptionId: optionId,
         };
       });
       return { ...currentProduct, optionGroups: updatedGroups };
