@@ -550,6 +550,7 @@
   "design": {
     "contain": "Passend",
     "cover": "Vullend",
+    "free": "Vrij",
     "center": "Centreren",
     "reset": "Herstellen",
     "guides": "Hulplijnen",

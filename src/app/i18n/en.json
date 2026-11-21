@@ -377,6 +377,7 @@
   "design": {
     "contain": "Contain",
     "cover": "Cover",
+    "free": "Free",
     "center": "Center",
     "reset": "Reset",
     "guides": "Guides",

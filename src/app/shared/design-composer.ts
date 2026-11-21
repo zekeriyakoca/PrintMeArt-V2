@@ -1,4 +1,5 @@
-export type FitMode = 'cover' | 'contain';
+/** free: sized like cover, but the artwork can be dragged past the edges */
+export type FitMode = 'cover' | 'contain' | 'free';
 
 /** How the artwork sits on the print, as set in Preview & Design. */
 export interface DesignLayout {
@@ -71,7 +72,7 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   // 4. Base image size from object-fit within the content box
   const imgRatio = image.naturalWidth / image.naturalHeight;
   const cntRatio = cntW / cntH;
-  const fillWidth = layout.fitMode === 'cover' ? imgRatio <= cntRatio : imgRatio > cntRatio;
+  const fillWidth = layout.fitMode === 'contain' ? imgRatio > cntRatio : imgRatio <= cntRatio;
   const baseW = fillWidth ? cntW : cntH * imgRatio;
   const baseH = fillWidth ? cntW / imgRatio : cntH;
 
