@@ -440,6 +440,8 @@ export class AnalyticsService {
     posthog.init(key, {
       api_host: this.config.posthogHost || 'https://eu.i.posthog.com',
       ui_host: 'https://eu.posthog.com',
+      // Default is identified_only, which leaves anonymous visitors out of the Persons list
+      person_profiles: 'always',
       autocapture: false,
       capture_pageview: false,
       // Off by default when capture_pageview is false; bounce rate and session duration need it
