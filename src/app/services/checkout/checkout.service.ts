@@ -52,6 +52,10 @@ export class CheckoutService {
     return this.apiService.createDraftOrder();
   }
 
+  saveCheckoutContact(contact: { email: string; firstName: string; lastName: string }) {
+    return this.apiService.saveCheckoutContact(contact);
+  }
+
   createOrderFromDraft(data: CreateOrderFromDraftDto) {
     return this.apiService.submitOrder(data);
   }

@@ -639,6 +639,7 @@
     "approveText": "Wij controleren je ontwerp, jij keurt het goed, daarna printen en verzenden we."
   },
   "checkout": {
+    "pricesUpdated": "Sommige prijzen in je winkelwagen zijn bijgewerkt. Je bestelling gebruikt de prijzen die nu getoond worden.",
     "shipping": "Verzending",
     "payment": "Betaling",
     "backToShop": "Terug naar de winkel",

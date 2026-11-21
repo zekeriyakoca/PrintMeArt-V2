@@ -53,6 +53,8 @@ export class CheckoutComponent extends BasePageComponent {
   isProcessing = signal<boolean>(false);
   currentOrderId = signal<number | null>(null);
   serverErrors = signal<Partial<Record<keyof CheckoutUserInfo, string[]>>>({});
+  // The name and email last sent to the backend, so each blur does not send them again
+  private savedContactKey = '';
 
   userDetails: CheckoutUserInfo = {
     firstName: '',
@@ -95,13 +97,34 @@ export class CheckoutComponent extends BasePageComponent {
     }
     // Create draft order when entering checkout
     this.checkoutService.createDraftOrder().subscribe({
-      next: () => {
-        console.log('Draft order created');
+      next: (result: { pricesUpdated?: boolean } | null) => {
+        // The backend found newer prices and saved them to the basket; show what will be charged
+        if (result?.pricesUpdated) {
+          this.cartService.fetchCartItems();
+          this.toastService.info('checkout.pricesUpdated');
+        }
       },
       error: (err) => {
         console.error('Failed to create draft order:', err);
+        this.analytics.trackCheckoutFailed('draft_order', `http_${err?.status ?? 'unknown'}`);
         this.toastService.error('errors.checkoutInit');
       },
+    });
+  }
+
+  /** Sends the name and email as soon as they are typed, so a checkout that fails later can still be followed up */
+  saveContact() {
+    const email = this.userDetails.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+    const contact = { email, firstName: this.userDetails.firstName.trim(), lastName: this.userDetails.lastName.trim() };
+    const key = `${contact.email}|${contact.firstName}|${contact.lastName}`;
+    if (key === this.savedContactKey) return;
+    this.savedContactKey = key;
+
+    this.analytics.setCheckoutContact(email, `${contact.firstName} ${contact.lastName}`.trim());
+    this.checkoutService.saveCheckoutContact(contact).subscribe({
+      error: () => (this.savedContactKey = ''),
     });
   }
 
@@ -179,6 +202,7 @@ export class CheckoutComponent extends BasePageComponent {
             error: (err) => {
               console.error('Checkout initiation failed:', err);
               this.analytics.trackPaymentFailed('checkout_initiation_failed', orderResponse.orderId);
+              this.analytics.trackCheckoutFailed('payment', `http_${err?.status ?? 'unknown'}`);
               this.isProcessing.set(false);
               this.toastService.error('errors.payment');
             },
@@ -187,6 +211,7 @@ export class CheckoutComponent extends BasePageComponent {
       error: (err) => {
         console.error('Order creation failed:', err);
         this.analytics.trackPaymentFailed('order_creation_failed');
+        this.analytics.trackCheckoutFailed('create_order', `http_${err?.status ?? 'unknown'}`);
         this.isProcessing.set(false);
         const errors = validationErrors(err);
         if (errors) {
