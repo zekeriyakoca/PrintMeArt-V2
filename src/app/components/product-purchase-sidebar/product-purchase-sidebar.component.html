@@ -54,6 +54,14 @@
     }
   }
 
+  <!-- Offered only for a low resolution upload -->
+  @if (showEnhancement()) {
+    <div class="option-group">
+      <label class="option-label">{{ 'enhancement.label' | t }}</label>
+      <app-enhancement-options [(isIncluded)]="enhancementWanted"></app-enhancement-options>
+    </div>
+  }
+
   <!-- Trust points -->
   <ul class="trust-list">
     <li class="trust-item">

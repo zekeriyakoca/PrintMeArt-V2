@@ -23,10 +23,12 @@ import { DesignLayout } from '../../shared/design-composer';
 import { NO_WHITE_BORDER, WhiteBorder } from '../../shared/white-border';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
+import { EffectiveImagePixelsResolver } from '../../utils/effective-image-pixels';
+import { EnhancementOptionsComponent } from '../enhancement-options/enhancement-options.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent],
+  imports: [TranslatePipe, OptionsComponent, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -62,6 +64,26 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   /** What print quality and the preview are judged on: the uploaded image, or the product's own image */
   imageMetadata = computed(() => this.customImageMetadata() ?? this.product().metadata);
+
+  /** Below this print quality the image enhancement is offered */
+  private readonly ENHANCEMENT_PPI_THRESHOLD = 200;
+
+  /** Image enhancement option; only the custom design product has it */
+  private enhancementOption = computed(() =>
+    this.product().optionGroups?.find((group) => group.name.toLowerCase() === 'image enhancement')?.options[0],
+  );
+
+  /** Offered only while the image is too low in resolution for the chosen size */
+  showEnhancement = computed(() => {
+    const metadata = this.imageMetadata();
+    if (!this.enhancementOption() || !metadata) return false;
+    const ppi = EffectiveImagePixelsResolver.printPpi(EffectiveImagePixelsResolver.resolve(metadata), this.selectedSize());
+    return ppi !== null && ppi < this.ENHANCEMENT_PPI_THRESHOLD;
+  });
+
+  /** The customer's tick; it only counts while the option is offered */
+  enhancementWanted = signal(false);
+  isEnhancementIncluded = computed(() => this.enhancementWanted() && this.showEnhancement());
 
   availableSizes = computed<SizeOption[]>(() => {
     const sizes = DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions;
@@ -315,6 +337,15 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       spec1: size.val1.toString(),
       spec2: size.val2.toString(),
     } as SelectedOptionDto);
+
+    const enhancement = this.enhancementOption();
+    if (enhancement && this.isEnhancementIncluded()) {
+      selectedOptions.push({
+        optionId: enhancement.id,
+        optionName: 'Image Enhancement',
+        spec1: 'true',
+      } as SelectedOptionDto);
+    }
 
     // Add CustomProductDetails option with uploaded image URL for custom products
     const customImageUrl = this.customImageUrl();

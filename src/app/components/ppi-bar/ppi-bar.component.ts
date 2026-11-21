@@ -40,44 +40,9 @@ export class PpiBarComponent {
     return mode === 'estimated' || mode === 'fallback';
   });
 
-  readonly ppi = computed<number | null>(() => {
-    const selectedSize = this.size();
-
-    if (!selectedSize) return null;
-
-    const { widthPx: pxW, heightPx: pxH } = this.effectivePixels();
-    if (
-      !Number.isFinite(pxW) ||
-      !Number.isFinite(pxH) ||
-      pxW <= 0 ||
-      pxH <= 0
-    ) {
-      return null;
-    }
-
-    const cmW = Number(selectedSize.val1);
-    const cmH = Number(selectedSize.val2);
-    if (
-      !Number.isFinite(cmW) ||
-      !Number.isFinite(cmH) ||
-      cmW <= 0 ||
-      cmH <= 0
-    ) {
-      return null;
-    }
-
-    const inW = cmW / 2.54;
-    const inH = cmH / 2.54;
-
-    // Allow rotating: pick the better-fit orientation.
-    const ppiFit1 = Math.min(pxW / inW, pxH / inH);
-    const ppiFit2 = Math.min(pxW / inH, pxH / inW);
-
-    const best = Math.max(ppiFit1, ppiFit2);
-    if (!Number.isFinite(best) || best <= 0) return null;
-
-    return Math.round(best);
-  });
+  readonly ppi = computed<number | null>(() =>
+    EffectiveImagePixelsResolver.printPpi(this.effectivePixels(), this.size()),
+  );
 
   readonly quality = computed<PpiQuality>(() => {
     const value = this.ppi();

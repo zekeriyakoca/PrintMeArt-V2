@@ -167,6 +167,11 @@
     "without": "Zonder passe-partout",
     "hint": "Geeft je print een elegante witte rand"
   },
+  "enhancement": {
+    "label": "Beeldverbetering",
+    "include": "Beeldverbetering toevoegen",
+    "hint": "Je afbeelding heeft een lage resolutie voor dit formaat. We vergroten en verscherpen hem vóór het printen"
+  },
   "papers": {
     "bestFor": "Ideaal voor",
     "archival": "Archiefkwaliteit · lichtechte pigmentinkt",
@@ -435,7 +440,8 @@
     "Birmingham Museums Picks": "Selectie Birmingham Museums",
     "English watercolours and Pre-Raphaelites": "Engelse aquarellen en prerafaëlieten",
     "Te Papa Collection": "Collectie Te Papa",
-    "Landscapes of Aotearoa New Zealand": "Landschappen van Aotearoa Nieuw-Zeeland"
+    "Landscapes of Aotearoa New Zealand": "Landschappen van Aotearoa Nieuw-Zeeland",
+    "Image Enhancement": "Beeldverbetering"
   },
   "home": {
     "heroEyebrow": "Kunstprints van museumkwaliteit — snel geleverd in NL",

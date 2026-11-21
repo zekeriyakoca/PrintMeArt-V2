@@ -167,6 +167,11 @@
     "without": "Without passe-partout",
     "hint": "Adds elegant border around your print"
   },
+  "enhancement": {
+    "label": "Image enhancement",
+    "include": "Include image enhancement",
+    "hint": "Your image is low in resolution for this size. We upscale and sharpen it before printing"
+  },
   "papers": {
     "bestFor": "Best for",
     "archival": "Archival quality · Fade-resistant pigment ink",
@@ -262,7 +267,8 @@
     "Include Mat": "With passe-partout",
     "No Mat": "Without passe-partout",
     "Mat": "Matte",
-    "Mat & Smooth": "Matte & Smooth"
+    "Mat & Smooth": "Matte & Smooth",
+    "Image Enhancement": "Image enhancement"
   },
   "home": {
     "heroEyebrow": "Museum-quality art prints — fast delivery in NL",

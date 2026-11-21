@@ -1,5 +1,6 @@
 import { MUSEUMS_SPECIAL } from '../data/museums';
 import { ProductMetadata } from '../models/product';
+import { SizeOption } from '../models/size-option';
 import { DimensionParser } from './dimension-parser';
 
 export type EffectivePixelsMode =
@@ -23,6 +24,47 @@ export class EffectiveImagePixelsResolver {
   static readonly UPSCALED_CREDIT_FACTOR = 0.7;
   static readonly TRUSTED_FALLBACK_LONG_EDGE_PX = 12_000;
   static readonly ASPECT_RATIO_TOLERANCE = 0.08;
+
+  /** Pixels per inch at a print size, in the orientation that fits best; null when it cannot be worked out */
+  static printPpi(
+    pixels: EffectiveImagePixels,
+    size: SizeOption | null | undefined,
+  ): number | null {
+    if (!size) return null;
+
+    const { widthPx: pxW, heightPx: pxH } = pixels;
+    if (
+      !Number.isFinite(pxW) ||
+      !Number.isFinite(pxH) ||
+      pxW <= 0 ||
+      pxH <= 0
+    ) {
+      return null;
+    }
+
+    const cmW = Number(size.val1);
+    const cmH = Number(size.val2);
+    if (
+      !Number.isFinite(cmW) ||
+      !Number.isFinite(cmH) ||
+      cmW <= 0 ||
+      cmH <= 0
+    ) {
+      return null;
+    }
+
+    const inW = cmW / 2.54;
+    const inH = cmH / 2.54;
+
+    // Allow rotating: pick the better-fit orientation.
+    const ppiFit1 = Math.min(pxW / inW, pxH / inH);
+    const ppiFit2 = Math.min(pxW / inH, pxH / inW);
+
+    const best = Math.max(ppiFit1, ppiFit2);
+    if (!Number.isFinite(best) || best <= 0) return null;
+
+    return Math.round(best);
+  }
 
   static resolve(
     meta: ProductMetadata | null | undefined,
