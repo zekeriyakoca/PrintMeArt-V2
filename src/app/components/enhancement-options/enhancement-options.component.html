@@ -1,0 +1,17 @@
+<div class="mt-2">
+  <button type="button" (click)="onToggle()" class="w-full cursor-pointer">
+    <div [class]="'flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition-all duration-200 ' +
+        (isIncluded() ? 'border-indigo-200 bg-[#faf6ff]' : 'border-gray-200 bg-white hover:border-gray-300')">
+      <div class="min-w-0">
+        <div [class]="'text-sm font-medium ' + (isIncluded() ? 'text-[#384f8c]' : 'text-gray-900')">
+          {{ 'enhancement.include' | t }} <span class="text-gray-500 font-normal">+€5</span>
+        </div>
+        <div class="text-xs text-gray-500">{{ 'enhancement.hint' | t }}</div>
+      </div>
+      <div [class]="'w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-sm font-medium transition-colors ' +
+        (isIncluded() ? 'bg-[#384f8c] text-white' : 'bg-gray-100 text-gray-500')">
+        {{ isIncluded() ? '✓' : '+' }}
+      </div>
+    </div>
+  </button>
+</div>
