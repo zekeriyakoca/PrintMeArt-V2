@@ -251,7 +251,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.onSelectedFrameChanged.emit(selectedFrame);
   }
 
-  selectOption(groupIndex: number, optionId: number) {
+  // Paper never toggles off: two papers share one grade option, so a second
+  // click would drop the paper and price the print without it
+  selectOption(groupIndex: number, optionId: number, toggle = true) {
     this.product.update((currentProduct) => {
       const updatedGroups = currentProduct.optionGroups.map((group, index) => {
         if (index !== groupIndex) {
@@ -259,7 +261,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         }
         return {
           ...group,
-          selectedOptionId: group.selectedOptionId === optionId ? undefined : optionId,
+          selectedOptionId: toggle && group.selectedOptionId === optionId ? undefined : optionId,
         };
       });
       return { ...currentProduct, optionGroups: updatedGroups };
