@@ -442,6 +442,8 @@ export class AnalyticsService {
       ui_host: 'https://eu.posthog.com',
       autocapture: false,
       capture_pageview: false,
+      // Off by default when capture_pageview is false; bounce rate and session duration need it
+      capture_pageleave: true,
       disable_session_recording: true,
       persistence: 'localStorage+cookie',
       loaded: (client) => {
