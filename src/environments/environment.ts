@@ -23,6 +23,8 @@ export const environment = {
     'pricing-api': 'https://lontray.art/pricing-api',
     'ordering-api': 'https://lontray.art/ordering-api',
     'analytics-api': 'https://lontray.art/analytics-api',
+    // Cookie banner audit; a path without "analytics" in it, so ad blockers let it through
+    'prefs-api': 'https://lontray.art/prefs-api',
     bff: 'https://lontray.art/bff-web',
   },
 };

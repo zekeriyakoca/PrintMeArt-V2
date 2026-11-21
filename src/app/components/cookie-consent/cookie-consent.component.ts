@@ -1,6 +1,7 @@
-import { afterNextRender, Component, signal } from '@angular/core';
+import { afterNextRender, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
+import { AnalyticsService } from '../../services/telemetry/analytics.service';
 
 /** localStorage key holding the visitor's choice: 'granted' or 'denied' */
 const CONSENT_KEY = 'cookie-consent-status';
@@ -19,9 +20,14 @@ type ConsentDecision = 'granted' | 'denied';
 })
 export class CookieConsentComponent {
   readonly visible = signal(false);
+  private readonly analytics = inject(AnalyticsService);
 
   constructor() {
-    afterNextRender(() => this.visible.set(readDecision() === null));
+    afterNextRender(() => {
+      const show = readDecision() === null;
+      this.visible.set(show);
+      if (show) this.analytics.trackCookieConsent('shown');
+    });
   }
 
   decide(decision: ConsentDecision): void {
@@ -31,6 +37,7 @@ export class CookieConsentComponent {
       // Storage blocked: hide for this visit anyway
     }
     this.visible.set(false);
+    this.analytics.trackCookieConsent('decided', decision);
   }
 }
 

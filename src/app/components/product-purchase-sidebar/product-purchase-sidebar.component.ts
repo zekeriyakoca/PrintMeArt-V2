@@ -127,6 +127,16 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   roomLayout = signal<DesignLayout | null>(null);
   showMobileMessage = signal(false);
 
+  onDesignSaved(url: string) {
+    this.savedDesignUrl.set(url);
+    this.designSaved.emit(url);
+    this.analytics.trackCustomDesignSaved(this.product().id, {
+      custom_image: !!this.customImageUrl(),
+      size: this.selectedSize()?.name,
+      mat: this.isMatIncluded(),
+    });
+  }
+
   onPreviewClick() {
     if (window.innerWidth < 768) {
       this.showMobileMessage.set(true);

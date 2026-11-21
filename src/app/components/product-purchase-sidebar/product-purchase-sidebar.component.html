@@ -188,7 +188,7 @@
       [(whiteBorder)]="whiteBorder"
       [metadata]="imageMetadata()"
       (onClose)="showPreview.set(false)"
-      (onDesignSaved)="savedDesignUrl.set($event); designSaved.emit($event)"
+      (onDesignSaved)="onDesignSaved($event)"
       (onViewInRoom)="roomLayout.set($event); showPreview.set(false)"
     ></app-product-preview>
   }
