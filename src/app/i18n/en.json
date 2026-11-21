@@ -158,7 +158,7 @@
   "frames": {
     "select": "Select your frame",
     "chooseStyle": "Choose a frame style",
-    "viewAll": "View all frames",
+    "viewAll": "See frames up close",
     "outOfStock": "Out of stock for now",
     "showAllPhotos": "Show all photos"
   },
@@ -170,7 +170,7 @@
   "papers": {
     "bestFor": "Best for",
     "archival": "Archival quality · Fade-resistant pigment ink",
-    "viewAll": "View all papers",
+    "viewAll": "Compare papers",
     "comingSoon": "Coming soon"
   },
   "ppi": {
