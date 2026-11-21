@@ -189,7 +189,7 @@
       [metadata]="imageMetadata()"
       (onClose)="showPreview.set(false)"
       (onDesignSaved)="onDesignSaved($event)"
-      (onViewInRoom)="roomLayout.set($event); showPreview.set(false)"
+      (onViewInRoom)="onViewInRoom($event)"
     ></app-product-preview>
   }
 }
