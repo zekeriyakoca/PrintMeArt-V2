@@ -11,7 +11,7 @@
 
     <div class="item-options">
       @for (option of displayOptions; track option.optionId; let i = $index) {
-      @if (i < 3) { <span class="option-tag">{{ 'name.' + (option.optionName || option.name) | t }}</span>
+      @if (i < 3 || option.optionName === 'Image Enhancement') { <span class="option-tag">{{ 'name.' + (option.optionName || option.name) | t }}</span>
         }
         }
       @if (frameOutOfStock) {

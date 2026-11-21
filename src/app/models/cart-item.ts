@@ -31,7 +31,7 @@ export interface SelectedOptionDto {
  * Options that should not be displayed in the cart UI
  * (internal options used for backend tracking)
  */
-const HIDDEN_OPTION_NAMES = ['CustomProductUrl'];
+const HIDDEN_OPTION_NAMES = ['CustomProductUrl', 'PreviewSnapshotUrl'];
 
 /**
  * Filters out internal options that shouldn't be displayed in the cart UI
