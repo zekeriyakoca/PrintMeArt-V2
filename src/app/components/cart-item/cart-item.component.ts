@@ -33,6 +33,11 @@ export class CartItemComponent {
     return getDisplayableOptions(this.cartItem()?.selectedOptions);
   }
 
+  /** A design made from the customer's own image */
+  get isCustom(): boolean {
+    return !!this.cartItem()?.selectedOptions?.some((o) => o.optionName === 'CustomProductUrl');
+  }
+
   /** The item has a frame that is out of stock for now */
   get frameOutOfStock(): boolean {
     return !!this.cartItem()?.selectedOptions?.some((o) => isFrameOutOfStock(o.optionName));
@@ -64,6 +69,8 @@ export class CartItemComponent {
   }
 
   goToProduct() {
+    // A custom design has no product page to go to
+    if (this.isCustom) return;
     this.router.navigate(['/products', this.cartItem()?.productId]);
   }
 }

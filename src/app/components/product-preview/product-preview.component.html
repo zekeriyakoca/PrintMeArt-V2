@@ -20,6 +20,7 @@
         <div class="toolbar">
           <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">{{ 'design.contain' | t }}</button>
           <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">{{ 'design.cover' | t }}</button>
+          <button class="tool-btn" [class.active]="fitMode() === 'free'" (click)="setFitMode('free')">{{ 'design.free' | t }}</button>
 
           <div class="toolbar-divider"></div>
 
@@ -80,7 +81,7 @@
               class="image-viewport paper-behind-frame"
               [class.matt]="showsMat()"
               [style.padding]="viewportPadding()"
-              [class.cover-mode]="fitMode() === 'cover'"
+              [class.cover-mode]="fitMode() !== 'contain'"
               [class.paper-border]="showGuides()"
               (wheel)="onWheel($event)"
               (pointerdown)="onPointerDown($event); onMultiPointerDown($event)"

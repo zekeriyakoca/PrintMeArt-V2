@@ -151,7 +151,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   showMobileMessage = signal(false);
 
   onDesignSaved(url: string) {
-    this.savedDesignUrl.set(url);
+    this.savedDesign.set({ url, imageUrl: this.designImageUrl() });
     this.designSaved.emit(url);
     this.analytics.trackCustomDesignSaved(this.product().id, {
       custom_image: !!this.customImageUrl(),
@@ -176,7 +176,12 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.showPreview.set(false);
     this.analytics.trackDesignPreview('room_view_opened', this.product().id, { custom_image: !!this.customImageUrl() });
   }
-  savedDesignUrl = signal<string | null>(null);
+  private savedDesign = signal<{ url: string; imageUrl: string } | null>(null);
+  /** The saved design, while it is still of the artwork shown now (a new upload drops it) */
+  savedDesignUrl = computed(() => {
+    const design = this.savedDesign();
+    return design && design.imageUrl === this.designImageUrl() ? design.url : null;
+  });
   /** White border chosen in Preview & Design */
   whiteBorder = signal<WhiteBorder>(NO_WHITE_BORDER);
   selectedFrameName = signal<string | null>(null);
@@ -293,10 +298,10 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return;
     }
 
-    // Determine picture URL: use custom image URL for custom products, otherwise use product image
+    // Picture: for custom products the saved design, else the upload; otherwise the product image
     const customUrl = this.customImageUrl();
     const productImages = this.product().images;
-    const pictureUrl = customUrl || (productImages && productImages.length > 0 ? productImages[0].thumb : '');
+    const pictureUrl = customUrl ? this.savedDesignUrl() || customUrl : productImages && productImages.length > 0 ? productImages[0].thumb : '';
 
     this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions());
   }

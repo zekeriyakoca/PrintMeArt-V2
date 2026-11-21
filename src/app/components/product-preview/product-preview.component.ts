@@ -153,7 +153,7 @@ export class ProductPreviewComponent {
     return `translate3d(${tx}px, ${ty}px, 0) scale(${s})`;
   });
 
-  objectFit = computed(() => (this.fitMode() === 'cover' ? 'cover' : 'contain'));
+  objectFit = computed(() => (this.fitMode() === 'contain' ? 'contain' : 'cover'));
 
   // Body scroll lock
   private readonly document = inject(DOCUMENT);
@@ -432,9 +432,14 @@ export class ProductPreviewComponent {
     let newTy = this.dragStartTy + dy;
 
     if (this.fitMode() === 'cover') {
-      const clamped = this.clampTranslation(newTx, newTy);
-      newTx = clamped.x;
-      newTy = clamped.y;
+      if (this.hasCoverSlack()) {
+        const clamped = this.clampTranslation(newTx, newTy);
+        newTx = clamped.x;
+        newTy = clamped.y;
+      } else {
+        // Nothing to pan inside the edges, so the drag switches to Free and moves the artwork as it is
+        this.fitMode.set('free');
+      }
     }
 
     this.translateX.set(newTx);
@@ -474,6 +479,11 @@ export class ProductPreviewComponent {
     if (this.activeTouches.length < 2) return 0;
     const [a, b] = this.activeTouches;
     return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+
+  /** Cover only pans when zoomed in past the edges */
+  private hasCoverSlack() {
+    return this.clampedScale() > 1;
   }
 
   private clampTranslation(tx: number, ty: number) {
