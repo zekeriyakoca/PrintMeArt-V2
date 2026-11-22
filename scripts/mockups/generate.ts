@@ -38,8 +38,8 @@ const RATIO_TOLERANCE = 0.04;
 const ROOM_VIEW_CM = 260;
 /** A room photo may be enlarged at most this much to fill an image; the earlier, smaller photos sit out close-ups */
 const MAX_UPSCALE = 1.6;
-/** Off-white of a real mat board; with a mat the artwork is fitted whole into the opening */
-const MAT_COLOR = '#f4f2ed';
+/** Photo of an off-white linen mat board, the artwork is cut to its opening */
+const MAT_BOARD = 'https://genstorageaccount3116.blob.core.windows.net/printme-images/mat-linen-v2.png';
 
 const WALNUT = 'Dark Walnut';
 const OAK = 'Natural Oak';
@@ -114,8 +114,8 @@ async function render(art: Image, room: RoomScene, sizeCm: [number, number], fra
   const frame = await image(frameMaskFor(frameName, widthCm, heightCm));
   const design = composeDesign(
     DESIGN_WIDTH_PX,
-    { image: art as unknown as HTMLImageElement, frame: frame as unknown as HTMLImageElement, width: widthCm, height: heightCm, matIncluded: mat, matColor: MAT_COLOR },
-    { fitMode: mat ? 'contain' : 'cover', scale: 1, offsetX: 0, offsetY: 0 },
+    { image: art as unknown as HTMLImageElement, frame: frame as unknown as HTMLImageElement, width: widthCm, height: heightCm, matIncluded: mat, matBoard: await image(MAT_BOARD) },
+    { fitMode: 'cover', scale: 1, offsetX: 0, offsetY: 0 },
   );
   const canvas = createCanvas(1, 1);
   renderer.render(canvas as unknown as HTMLCanvasElement, room, (await image(room.image)) as unknown as HTMLImageElement, { design, widthCm, heightCm }, framing);
