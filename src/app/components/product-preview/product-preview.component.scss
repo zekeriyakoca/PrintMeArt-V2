@@ -721,6 +721,11 @@
     border-color: #384f8c;
     background: #f8fafc;
   }
+
+  // The room view is not good enough on phones yet
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 
 .saving-spinner {
