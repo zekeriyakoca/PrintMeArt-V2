@@ -175,8 +175,13 @@
       [matIncluded]="isFrameSelected() && isMatIncluded()"
       [layout]="layout"
       [selectedSize]="size"
-      (close)="roomLayout.set(null)"
-      (editDesign)="roomLayout.set(null); showPreview.set(true)"
+      [showDiscardConfirm]="roomConfirm()"
+      [saving]="roomSaving()"
+      (close)="closeRoom()"
+      (editDesign)="roomConfirm.set(false); roomLayout.set(null); showPreview.set(true)"
+      (saveDesign)="saveFromRoom()"
+      (keepEditing)="roomConfirm.set(false)"
+      (discardDesign)="discardFromRoom()"
     ></app-room-view>
     }
     <app-product-preview
@@ -189,7 +194,7 @@
       [(isMatIncluded)]="isMatIncluded"
       [(whiteBorder)]="whiteBorder"
       [metadata]="imageMetadata()"
-      (onClose)="showPreview.set(false)"
+      (onClose)="onPreviewClosed()"
       (onDesignSaved)="onDesignSaved($event)"
       (onViewInRoom)="onViewInRoom($event)"
     ></app-product-preview>

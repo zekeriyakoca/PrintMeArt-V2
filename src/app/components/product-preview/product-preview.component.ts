@@ -251,7 +251,7 @@ export class ProductPreviewComponent {
     return !!saved && !differs(saved, this.snapshot());
   });
 
-  private hasUnsavedChanges(): boolean {
+  hasUnsavedChanges(): boolean {
     if (this.isAlreadySaved()) return false;
     return !!this.baseline && differs(this.baseline, this.snapshot());
   }
@@ -309,9 +309,9 @@ export class ProductPreviewComponent {
     if (layout) this.onViewInRoom.emit(layout);
   }
 
-  saveDesign() {
+  /** Saves the design; the room view passes the layout it shows, since the hidden editor cannot measure it */
+  saveDesign(layout: DesignLayout | null = this.currentLayout()) {
     if (this.isSaving() || this.isAlreadySaved()) return;
-    const layout = this.currentLayout();
     if (!layout) return;
 
     this.isSaving.set(true);
@@ -365,7 +365,7 @@ export class ProductPreviewComponent {
     this.saveDesign();
   }
 
-  private finishClose() {
+  finishClose() {
     this.showDiscardConfirm.set(false);
     this.baseline = null;
     this.document.body.style.overflow = '';

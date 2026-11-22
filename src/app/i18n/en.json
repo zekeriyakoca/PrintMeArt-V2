@@ -163,8 +163,8 @@
     "hint": "Adds elegant border around your print"
   },
   "enhancement": {
-    "label": "Image enhancement",
-    "include": "Include image enhancement",
+    "label": "Professional upscaling",
+    "include": "Professional upscaling",
     "hint": "Your image is low in resolution for this size. We upscale and sharpen it before printing",
     "clickAdd": "Click to add",
     "clickRemove": "Click to remove"
@@ -471,6 +471,8 @@
     "approveText": "We review your design, you approve, then we print & ship."
   },
   "checkout": {
+    "googleFill": "Continue with Google",
+    "googleFillHint": "Fill in your details in one click",
     "pricesUpdated": "Some prices in your cart were updated. Your order uses the prices shown now.",
     "shipping": "Shipping",
     "payment": "Payment",

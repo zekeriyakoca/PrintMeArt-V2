@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -48,6 +48,8 @@ export class CheckoutComponent extends BasePageComponent {
   private readonly analytics = inject(AnalyticsService);
   private readonly userService = inject(UserService);
 
+  /** Offered to signed-out customers only; not on the server, which does not know who is signed in */
+  readonly showGoogleFill = computed(() => isPlatformBrowser(this.platformId) && !this.authService.currentUser());
   cartItems = signal<CartItemDto[]>([]);
   isFormValid = signal<boolean>(false);
   isProcessing = signal<boolean>(false);
@@ -126,6 +128,11 @@ export class CheckoutComponent extends BasePageComponent {
     this.checkoutService.saveCheckoutContact(contact).subscribe({
       error: () => (this.savedContactKey = ''),
     });
+  }
+
+  /** Signs in with Google and comes back here, where the form is filled from the account */
+  signInWithGoogle() {
+    this.authService.login('/checkout');
   }
 
   /** Fills the name and email the customer has not typed yet */

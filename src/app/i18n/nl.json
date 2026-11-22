@@ -163,8 +163,8 @@
     "hint": "Geeft je print een elegante witte rand"
   },
   "enhancement": {
-    "label": "Beeldverbetering",
-    "include": "Beeldverbetering toevoegen",
+    "label": "Professionele vergroting",
+    "include": "Professionele vergroting",
     "hint": "Je afbeelding heeft een lage resolutie voor dit formaat. We vergroten en verscherpen hem vóór het printen",
     "clickAdd": "Klik om toe te voegen",
     "clickRemove": "Klik om te verwijderen"
@@ -644,6 +644,8 @@
     "approveText": "Wij controleren je ontwerp, jij keurt het goed, daarna printen en verzenden we."
   },
   "checkout": {
+    "googleFill": "Doorgaan met Google",
+    "googleFillHint": "Vul je gegevens in met één klik",
     "pricesUpdated": "Sommige prijzen in je winkelwagen zijn bijgewerkt. Je bestelling gebruikt de prijzen die nu getoond worden.",
     "shipping": "Verzending",
     "payment": "Betaling",

@@ -7,9 +7,10 @@ import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../
 import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomRenderer } from './room-renderer';
 import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
+import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 
 @Component({
-  imports: [TranslatePipe, PreparingStateComponent],
+  imports: [TranslatePipe, PreparingStateComponent, UnsavedChangesDialogComponent],
   selector: 'app-room-view',
   standalone: true,
   templateUrl: './room-view.component.html',
@@ -27,6 +28,12 @@ export class RoomViewComponent {
   selectedSize = input<SizeOption | null>(null);
   close = output<void>();
   editDesign = output<void>();
+  /** Asks to save the edited design before the room view closes */
+  showDiscardConfirm = input(false);
+  saving = input(false);
+  saveDesign = output<void>();
+  keepEditing = output<void>();
+  discardDesign = output<void>();
 
   readonly rooms = ROOM_SCENES;
   room = signal<RoomScene>(ROOM_SCENES[0]);
