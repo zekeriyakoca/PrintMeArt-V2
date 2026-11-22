@@ -2,7 +2,8 @@ import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { ApiService } from './../../services/api/api.service';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
+import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 import { LanguageService } from '../../services/i18n/language.service';
 import { BaseAppComponent } from '../baseAppComponent';
 import { Router } from '@angular/router';
@@ -91,6 +92,14 @@ export class HeaderComponent extends BaseAppComponent {
 
   readonly languageService = inject(LanguageService);
 
+  // The page behind stays still while the mobile menu is open
+  private readonly scrollLock = inject(ScrollLockService);
+  private readonly menuScrollLock = effect(() => {
+    if (this.isMobileMenuOpen()) this.scrollLock.lock(this);
+    else this.scrollLock.unlock(this);
+  });
+  private readonly releaseOnDestroy = inject(DestroyRef).onDestroy(() => this.scrollLock.unlock(this));
+
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -116,13 +125,10 @@ export class HeaderComponent extends BaseAppComponent {
   }
   toggleMobileMenu() {
     this.isMobileMenuOpen.update((v) => !v);
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = this.isMobileMenuOpen() ? 'hidden' : '';
   }
 
   closeMobileMenu() {
     this.isMobileMenuOpen.set(false);
-    document.body.style.overflow = '';
   }
   showDropdown(dropdown: string) {
     this.activeDropdown = this.activeDropdown === dropdown ? null : dropdown;
