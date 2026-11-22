@@ -106,6 +106,19 @@ export class FramesCatalogComponent {
         'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-oak-detail.webp',
       ],
     },
+    {
+      id: 10,
+      name: 'Dark Walnut',
+      description: 'Dark walnut frame with a fine, straight grain and a flat 1.5 cm deep profile.',
+      image:
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-walnut-600.webp',
+      hoverImage:
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-walnut-detail-600.webp',
+      allImages: [
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-walnut.webp',
+        'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame-walnut-detail.webp',
+      ],
+    },
   ];
 
   frames = this.allFrames.filter((frame) => !frame.hidden);

@@ -13,6 +13,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { OptionGroupDto } from '../../models/product';
 import {
+  FrameOptions,
   FrameOptionsByValue,
   RolledUpDefaultThumbnailUrl,
 } from '../../shared/constants';
@@ -42,6 +43,8 @@ export class FrameOptionsComponent {
   items = computed<FrameItem[]>(() =>
     this.group()
       .options.filter((opt) => !FrameOptionsByValue[opt.value]?.hidden)
+      // Rolled-up first, then the frames in the order of FrameOptions
+      .sort((a, b) => frameOrder(a.value) - frameOrder(b.value))
       .map((opt) => {
         const frame = FrameOptionsByValue[opt.value];
         return {
@@ -82,4 +85,8 @@ export class FrameOptionsComponent {
       this.isOpen.set(false);
     }
   }
+}
+
+function frameOrder(name: string): number {
+  return FrameOptions.findIndex((frame) => frame.name === name);
 }
