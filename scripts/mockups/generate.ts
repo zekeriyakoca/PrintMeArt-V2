@@ -25,15 +25,21 @@ import { createCanvas, loadImage, type Canvas, type Image } from '@napi-rs/canva
 const { ROOM_SCENES } = await import('../../src/app/components/room-view/rooms');
 const { RoomRenderer, printFits } = await import('../../src/app/components/room-view/room-renderer');
 const { composeDesign, DESIGN_WIDTH_PX } = await import('../../src/app/shared/design-composer');
-const { frameMaskFor, FramedSizeNames, SizeOptions } = await import('../../src/app/shared/constants');
+const { frameMaskFor } = await import('../../src/app/shared/constants');
 type RoomScene = (typeof ROOM_SCENES)[number];
 type Framing = NonNullable<Parameters<InstanceType<typeof RoomRenderer>['render']>[4]>;
 
 const CATALOG_API = 'https://lontray.art/catalog-api/catalog/v1';
 /** The catalog picks the shop from the Origin */
 const SITE = 'https://printmeart.nl';
-/** Sizes within this of the artwork's ratio count as a match; the largest match is hung */
-const RATIO_TOLERANCE = 0.04;
+/** Frame shapes for the mockups (cm), not tied to the sizes sold: the one nearest the artwork's ratio is hung */
+const SHAPES: [number, number][] = [
+  [50, 70],
+  [70, 50],
+  [50, 50],
+];
+/** A room too tight for a shape gets it this much smaller */
+const SMALLER = 0.8;
 /** Width of wall shown around the print in the room images */
 const ROOM_VIEW_CM = 260;
 /** A room photo may be enlarged at most this much to fill an image; the earlier, smaller photos sit out close-ups */
@@ -78,17 +84,14 @@ async function productArt(productId: number): Promise<Image> {
 }
 
 /**
- * Framed sizes to hang, oriented like the artwork, in order of preference: the largest that matches its ratio
- * (so the print is barely cropped), then the rest from large to small for rooms where it does not fit
+ * Sizes to hang, in order of preference: the shape nearest the artwork's ratio (the artwork is cut to it), then a
+ * smaller one of that shape, then the other shapes, for rooms where it doesn't fit
  */
 function sizesFor(art: Image): [number, number][] {
-  const ratio = (w: number, h: number) => Math.min(w, h) / Math.max(w, h);
-  const landscape = art.width > art.height;
-  const sizes = SizeOptions.filter((s) => FramedSizeNames.includes(s.name))
-    .map((s): [number, number] => (landscape ? [s.val2, s.val1] : [s.val1, s.val2]))
-    .sort((a, b) => b[0] * b[1] - a[0] * a[1]);
-  const match = sizes.find(([w, h]) => Math.abs(ratio(w, h) - ratio(art.width, art.height)) <= RATIO_TOLERANCE);
-  return match ? [match, ...sizes.filter((s) => s !== match && s[0] * s[1] < match[0] * match[1])] : sizes;
+  const off = ([w, h]: [number, number]) => Math.abs(Math.log(w / h / (art.width / art.height)));
+  return [...SHAPES]
+    .sort((a, b) => off(a) - off(b))
+    .flatMap(([w, h]): [number, number][] => [[w, h], [Math.round(w * SMALLER), Math.round(h * SMALLER)]]);
 }
 
 /** Rooms in a fixed order per product, so neighbouring cards differ and a re-run gives the same result */
@@ -115,7 +118,7 @@ async function render(art: Image, room: RoomScene, sizeCm: [number, number], fra
   const frame = await image(frameMaskFor(frameName, widthCm, heightCm));
   const design = composeDesign(
     DESIGN_WIDTH_PX,
-    { image: art as unknown as HTMLImageElement, frame: frame as unknown as HTMLImageElement, width: widthCm, height: heightCm, matIncluded: mat, matBoard: await image(MAT_BOARD) },
+    { image: art as unknown as HTMLImageElement, frame: frame as unknown as HTMLImageElement, width: widthCm, height: heightCm, matIncluded: mat, matBoard: (await image(MAT_BOARD)) as unknown as HTMLImageElement },
     { fitMode: 'cover', scale: 1, offsetX: 0, offsetY: 0 },
   );
   const canvas = createCanvas(1, 1);

@@ -143,6 +143,14 @@ export const FrameOptions: DesignFrame[] = [
         maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-3x4-landscape-mat.png',
         maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-3x4-landscape-v2.png',
       },
+      // Square, for room mockups only (no frame is sold square); there's no matted square mask
+      {
+        ratio: 1,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-1x1-v2.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-1x1-v2.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-1x1-v2.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame11-oak-1x1-v2.png',
+      },
     ],
   },
   {
@@ -181,6 +189,14 @@ export const FrameOptions: DesignFrame[] = [
         maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4.png',
         maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-landscape-mat.png',
         maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-landscape.png',
+      },
+      // Square, for room mockups only (no frame is sold square); there's no matted square mask
+      {
+        ratio: 1,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-1x1.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-1x1.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-1x1.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-1x1.png',
       },
     ],
   },
