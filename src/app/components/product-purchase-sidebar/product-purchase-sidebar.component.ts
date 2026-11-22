@@ -346,10 +346,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return;
     }
 
-    // Picture: for custom products the saved design, else the upload; otherwise the product image
-    const customUrl = this.customImageUrl();
-    const productImages = this.product().images;
-    const pictureUrl = customUrl ? this.savedDesignUrl() || customUrl : productImages && productImages.length > 0 ? productImages[0].thumb : '';
+    // Picture: the design saved in Preview & Design, else the upload, else the product image
+    const pictureUrl = this.savedDesignUrl() || this.customImageUrl() || this.product().images?.[0]?.thumb || '';
 
     this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions());
   }

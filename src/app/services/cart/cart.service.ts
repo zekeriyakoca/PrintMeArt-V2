@@ -6,6 +6,9 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from '../telemetry/analytics.service';
 
+/** Options whose value is an image that gets printed */
+const PRINTED_IMAGE_OPTIONS = ['CustomProductUrl', 'PreviewSnapshotUrl'];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -96,8 +99,8 @@ export class CartService {
 
   private summaryOptions(selectedOptionDto: SelectedOptionDto[]): string {
     return selectedOptionDto
-      // A custom design's uploaded image is part of what it is: two different uploads are two different lines
-      .map((o) => (o.optionName === 'CustomProductUrl' ? `${o.optionName}:${o.spec1}` : `${o.optionName}:${o.name}`))
+      // The uploaded image and the saved design are part of what gets printed: different ones are different lines
+      .map((o) => (PRINTED_IMAGE_OPTIONS.includes(o.optionName ?? '') ? `${o.optionName}:${o.spec1}` : `${o.optionName}:${o.name}`))
       .sort()
       .join('_');
   }

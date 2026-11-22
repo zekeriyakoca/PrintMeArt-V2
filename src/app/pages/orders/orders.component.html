@@ -237,7 +237,7 @@
           <div class="flex gap-4">
             <div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100">
               @if (item.pictureUrl) {
-              <img [src]="item.pictureUrl" [alt]="item.productName" class="h-full w-full object-cover" />
+              <img [src]="item.pictureUrl" [alt]="item.productName" class="h-full w-full object-contain" />
               } @else {
               <div class="flex h-full w-full items-center justify-center">
                 <app-icon iconName="image" class="h-6 w-6 text-slate-300"></app-icon>
