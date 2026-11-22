@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, model } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   imports: [TranslatePipe],
@@ -7,8 +7,6 @@ import { Component, model } from '@angular/core';
   templateUrl: './enhancement-options.component.html',
 })
 export class EnhancementOptionsComponent {
-  isIncluded = model<boolean>(false);
-  onToggle() {
-    this.isIncluded.update((current) => !current);
-  }
+  isIncluded = input(false);
+  toggle = output<void>();
 }

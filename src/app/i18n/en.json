@@ -166,7 +166,7 @@
   "enhancement": {
     "label": "Professional upscaling",
     "include": "Professional upscaling",
-    "hint": "Your image is low in resolution for this size. We upscale and sharpen it before printing",
+    "hint": "We upscale and sharpen your image before printing. Recommended when it is low in resolution for this size",
     "clickAdd": "Click to add",
     "clickRemove": "Click to remove"
   },

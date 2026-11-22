@@ -166,7 +166,7 @@
   "enhancement": {
     "label": "Professionele vergroting",
     "include": "Professionele vergroting",
-    "hint": "Je afbeelding heeft een lage resolutie voor dit formaat. We vergroten en verscherpen hem vóór het printen",
+    "hint": "We vergroten en verscherpen je afbeelding vóór het printen. Aanbevolen bij een lage resolutie voor dit formaat",
     "clickAdd": "Klik om toe te voegen",
     "clickRemove": "Klik om te verwijderen"
   },
