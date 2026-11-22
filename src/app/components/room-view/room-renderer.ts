@@ -15,6 +15,17 @@ const MAX_VIEW_WIDTH_CM = 220;
 // high-density screens even where only part of a room photo is shown
 const STAGE_WIDTH_PX = 2400;
 
+/** A fixed crop around the print, for saved mockups */
+export interface Framing {
+  widthPx: number;
+  /** Width / height of the output */
+  aspect: number;
+  /** Share of the output's width the print takes, where the photo is wide enough */
+  printShare: number;
+  /** Height of the print's centre in the output, from the top */
+  printY: number;
+}
+
 interface Rect {
   x: number;
   y: number;
@@ -30,16 +41,17 @@ interface Rect {
 export class RoomRenderer {
   private readonly roomCache = new Map<string, ImageData>();
 
-  render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall) {
+  render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall, framing?: Framing) {
     const photoW = roomImage.naturalWidth;
     const photoH = roomImage.naturalHeight;
     const photoPxPerCm = photoW / room.widthCm;
     // Where the print hangs and which part of the photo is shown, in photo pixels
     const outer = this.place(room, photoW, photoH, print, photoPxPerCm);
-    const view = this.view(room, photoW, photoH, photoPxPerCm);
+    const view = framing ? around(outer, photoW, photoH, framing) : this.view(room, photoW, photoH, photoPxPerCm);
 
-    const scale = STAGE_WIDTH_PX / view.w;
-    canvas.width = STAGE_WIDTH_PX;
+    const stageW = framing?.widthPx ?? STAGE_WIDTH_PX;
+    const scale = stageW / view.w;
+    canvas.width = stageW;
     canvas.height = Math.round(view.h * scale);
     const ctx = canvas.getContext('2d')!;
     ctx.imageSmoothingQuality = 'high';
@@ -81,9 +93,8 @@ export class RoomRenderer {
     const w = print.widthCm * pxPerCm;
     const h = print.heightCm * pxPerCm;
     const x = room.anchor.x * photoW - w / 2;
-    const anchorY = room.anchor.y * photoH;
     // A tall print in a tight photo is kept inside it rather than cut off at the top
-    const y = Math.max(0.03 * photoH, room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h);
+    const y = Math.max(0.03 * photoH, hangingTop(room, photoH, h));
     return { x, y, w, h };
   }
 
@@ -164,6 +175,30 @@ function medianLuminance(image: ImageData, rect: Rect): number {
   if (!values.length) return 255;
   values.sort((a, b) => a - b);
   return values[Math.floor(values.length / 2)];
+}
+
+/** Top edge of a print of this height (photo pixels) hung at the room's anchor */
+function hangingTop(room: RoomScene, photoH: number, h: number): number {
+  const anchorY = room.anchor.y * photoH;
+  return room.anchor.align === 'center' ? anchorY - h / 2 : anchorY - h;
+}
+
+/** Whether a print of this size hangs at the room's anchor without being pushed down onto the furniture */
+export function printFits(room: RoomScene, photoW: number, photoH: number, widthCm: number, heightCm: number): boolean {
+  return hangingTop(room, photoH, heightCm * (photoW / room.widthCm)) >= 0.03 * photoH;
+}
+
+/** The crop of the photo around the print, at the framing's aspect, as close to its print share and position as the photo allows */
+function around(outer: Rect, photoW: number, photoH: number, framing: Framing): Rect {
+  let w = Math.min(outer.w / framing.printShare, photoW);
+  let h = w / framing.aspect;
+  if (h > photoH) {
+    h = photoH;
+    w = h * framing.aspect;
+  }
+  const x = clamp(outer.x + outer.w / 2 - w / 2, 0, photoW - w);
+  const y = clamp(outer.y + outer.h / 2 - h * framing.printY, 0, photoH - h);
+  return { x, y, w, h };
 }
 
 function clamp(value: number, min: number, max: number): number {

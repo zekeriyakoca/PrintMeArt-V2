@@ -1,0 +1,35 @@
+# Room mockups for new products: every 30 minutes, products whose images aren't mockups yet get them
+# (scripts/mockups). The upload SAS lives in the mockup-blob secret, created by hand:
+#   kubectl -n printmeart create secret generic mockup-blob --from-literal=sas='https://...?sv=...'
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: room-mockups
+  namespace: printmeart
+spec:
+  schedule: '*/30 * * * *'
+  # Off until the trial product is approved; the first run then does the whole catalog
+  suspend: true
+  # A first run over the whole catalog takes hours; later runs wait for it
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: room-mockups
+              image: docker.io/zekeriyakoca/printmeart-mockups:current
+              imagePullPolicy: Always
+              env:
+                - name: CATALOG_INTERNAL_API
+                  value: http://catalog-api.ecommbone.svc.cluster.local:5001/catalog/v1
+                - name: MOCKUP_BLOB_SAS
+                  valueFrom:
+                    secretKeyRef: { name: mockup-blob, key: sas }
+              resources:
+                requests: { cpu: 200m, memory: 512Mi }
+                limits: { cpu: 1000m, memory: 1536Mi }

@@ -145,6 +145,45 @@ export const FrameOptions: DesignFrame[] = [
       },
     ],
   },
+  {
+    id: 10,
+    name: 'Dark Walnut',
+    description: 'Dark walnut frame with a fine, straight grain and a flat 1.5 cm deep profile.',
+    outOfStock: true,
+    thumbnail: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-thumb.webp',
+    mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-mat.png',
+    maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4.png',
+    masksByRatio: [
+      {
+        ratio: 2 / 3,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-2x3-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-2x3.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-2x3-landscape-mat.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-2x3-landscape.png',
+      },
+      {
+        ratio: 0.7,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-7x10-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-7x10.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-7x10-landscape-mat.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-7x10-landscape.png',
+      },
+      {
+        ratio: 13 / 18,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-13x18-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-13x18.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-13x18-landscape-mat.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-13x18-landscape.png',
+      },
+      {
+        ratio: 3 / 4,
+        mask: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-mat.png',
+        maskWithoutMat: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4.png',
+        maskLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-landscape-mat.png',
+        maskWithoutMatLandscape: 'https://genstorageaccount3116.blob.core.windows.net/printme-images/frame12-walnut-3x4-landscape.png',
+      },
+    ],
+  },
 ];
 
 export const FrameOptionsByValue: Record<string, DesignFrame> = FrameOptions.reduce(
