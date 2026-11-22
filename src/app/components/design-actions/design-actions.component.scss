@@ -1,0 +1,120 @@
+// Start over, save, and see the design in a room
+:host {
+  display: flex;
+  gap: 0.5rem;
+}
+
+// Wider screens: a round icon button, leaving room for Save and the room view
+.reset-design-btn {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 2.6rem;
+  padding: 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #fff;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: #384f8c;
+    color: #384f8c;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.reset-design-label {
+  display: none;
+}
+
+// Saving is the main action: twice the reset button
+.save-design-btn {
+  display: flex;
+  flex: 2;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: #384f8c;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #2d3f70;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.room-design-btn {
+  display: flex;
+  flex: 2;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #fff;
+  color: #384f8c;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #384f8c;
+    background: #f8fafc;
+  }
+
+  // The room view is not good enough on phones yet
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.saving-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Phones: labelled, half the width of Save
+@media (max-width: 768px) {
+  .reset-design-btn {
+    flex: 1;
+    width: auto;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .reset-design-label {
+    display: inline;
+  }
+}

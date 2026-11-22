@@ -377,7 +377,3 @@ p {
   }
 }
 
-// Preview & Design sits inside the product page's stacking context, below the sticky header
-body.preview-open .nc-Header {
-  visibility: hidden;
-}
