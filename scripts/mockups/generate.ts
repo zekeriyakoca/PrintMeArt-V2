@@ -73,7 +73,8 @@ async function productArt(productId: number): Promise<Image> {
   if (!response.ok) throw new Error(`Product ${productId}: ${response.status}`);
   const main = (await response.json()).images?.[0];
   if (!main) throw new Error(`Product ${productId} has no image`);
-  return image(main.xLarge || main.large);
+  // Not cached: only rooms, frames and the mat board are shared between products
+  return loadImage(await fetchBuffer(main.xLarge || main.large));
 }
 
 /**

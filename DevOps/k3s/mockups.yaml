@@ -8,8 +8,6 @@ metadata:
   namespace: printmeart
 spec:
   schedule: '*/30 * * * *'
-  # Off until the trial product is approved; the first run then does the whole catalog
-  suspend: true
   # A first run over the whole catalog takes hours; later runs wait for it
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
@@ -31,5 +29,5 @@ spec:
                   valueFrom:
                     secretKeyRef: { name: mockup-blob, key: sas }
               resources:
-                requests: { cpu: 200m, memory: 512Mi }
-                limits: { cpu: 1000m, memory: 1536Mi }
+                requests: { cpu: 200m, memory: 1Gi }
+                limits: { cpu: 1000m, memory: 3Gi }
