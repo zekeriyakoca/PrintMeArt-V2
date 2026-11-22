@@ -1,5 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
+import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 
 import { FrameCardComponent } from '../../components/frame-card/frame-card.component';
 import {
@@ -124,6 +125,14 @@ export class FramesCatalogComponent {
   frames = this.allFrames.filter((frame) => !frame.hidden);
 
   isGalleryOpen = signal(false);
+
+  // The page behind stays still while the gallery is open
+  private readonly scrollLock = inject(ScrollLockService);
+  private readonly galleryScrollLock = effect(() => {
+    if (this.isGalleryOpen()) this.scrollLock.lock(this);
+    else this.scrollLock.unlock(this);
+  });
+  private readonly releaseOnDestroy = inject(DestroyRef).onDestroy(() => this.scrollLock.unlock(this));
   selectedFrameIndex = signal(0);
 
   // computed, not a getter: a new array on every change detection made the modal jump back to the first image
@@ -135,11 +144,9 @@ export class FramesCatalogComponent {
   openGallery(index: number) {
     this.selectedFrameIndex.set(index);
     this.isGalleryOpen.set(true);
-    document.body.style.overflow = 'hidden';
   }
 
   closeGallery() {
     this.isGalleryOpen.set(false);
-    document.body.style.overflow = '';
   }
 }
