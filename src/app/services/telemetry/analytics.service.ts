@@ -475,7 +475,7 @@ export class AnalyticsService {
     this.posthogInitialized = true;
     this.applyUserId();
     this.applyCheckoutContact();
-    this.maybeStartSessionRecording(this.router.url);
+    this.maybeStartSessionRecording();
   }
 
   private trackGa4(name: string, properties: AnalyticsProperties): void {
@@ -567,15 +567,14 @@ export class AnalyticsService {
     this.pageViewsStarted = true;
 
     this.trackPageView(this.currentPageUrl());
-    this.maybeStartSessionRecording(this.router.url);
-    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe((event) => {
+    this.maybeStartSessionRecording();
+    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe(() => {
       this.flushPendingPageView();
       if (this.hasRouteTitle()) {
         this.trackPageView(this.currentPageUrl());
       } else {
         this.trackPageViewOnceTitled(this.currentPageUrl());
       }
-      this.maybeStartSessionRecording(event.urlAfterRedirects);
     });
     fromEvent(window, 'pagehide').subscribe(() => this.flushPendingPageView());
   }
@@ -606,11 +605,8 @@ export class AnalyticsService {
     pending?.();
   }
 
-  private maybeStartSessionRecording(url: string): void {
+  private maybeStartSessionRecording(): void {
     if (this.sessionRecordingStarted || !this.posthogInitialized || !this.posthog) return;
-    const path = this.sanitizePath(url);
-    if (path === '/' || path === '') return;
-
     this.posthog.startSessionRecording();
     this.sessionRecordingStarted = true;
   }
