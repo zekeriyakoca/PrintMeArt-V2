@@ -27,11 +27,9 @@ export class EffectiveImagePixelsResolver {
   static readonly TRUSTED_FALLBACK_LONG_EDGE_PX = 12_000;
   static readonly ASPECT_RATIO_TOLERANCE = 0.08;
 
-  /** Pixels the print is judged on after the paid enhancement, credited like any other upscale */
+  /** Pixels the print is judged on after the paid enhancement: the full 3x upscale */
   static enhance(pixels: EffectiveImagePixels): EffectiveImagePixels {
-    const factor =
-      EffectiveImagePixelsResolver.ENHANCEMENT_SCALE *
-      EffectiveImagePixelsResolver.UPSCALED_CREDIT_FACTOR;
+    const factor = EffectiveImagePixelsResolver.ENHANCEMENT_SCALE;
     return {
       ...pixels,
       widthPx: Math.round(pixels.widthPx * factor),

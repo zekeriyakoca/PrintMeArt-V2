@@ -51,6 +51,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   onSelectedFrameChanged = output<string>();
   designSaved = output<string>();
+  /** Preview & Design (or the room view after it) closed */
+  previewClosed = output<void>();
   /** The price of the options chosen now, for the page's search engine description */
   priceChange = output<number>();
 
@@ -82,8 +84,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     return ppi !== null && ppi < this.ENHANCEMENT_PPI_THRESHOLD;
   });
 
-  /** The customer's tick; it only counts while the option is offered */
-  enhancementWanted = signal(false);
+  /** The customer's tick, on by default; it only counts while the option is offered */
+  enhancementWanted = signal(true);
   isEnhancementIncluded = computed(() => this.enhancementWanted() && this.showEnhancement());
 
   availableSizes = computed<SizeOption[]>(() => {
@@ -150,6 +152,35 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   showPreview = signal(false);
   /** Design shown in the room view while it is open */
   roomLayout = signal<DesignLayout | null>(null);
+  private readonly preview = viewChild(ProductPreviewComponent);
+  /** Closing the room view with an unsaved design asks first */
+  roomConfirm = signal(false);
+  roomSaving = computed(() => this.preview()?.isSaving() ?? false);
+
+  closeRoom() {
+    const preview = this.preview();
+    if (preview?.hasUnsavedChanges()) {
+      this.roomConfirm.set(true);
+      return;
+    }
+    preview?.finishClose();
+  }
+
+  saveFromRoom() {
+    this.preview()?.saveDesign(this.roomLayout());
+  }
+
+  discardFromRoom() {
+    this.preview()?.discardChanges();
+  }
+
+  /** The editor closed (it also closes the room view it led to) */
+  onPreviewClosed() {
+    this.showPreview.set(false);
+    this.roomLayout.set(null);
+    this.roomConfirm.set(false);
+    this.previewClosed.emit();
+  }
 
   onDesignSaved(url: string) {
     this.savedDesign.set({ url, imageUrl: this.designImageUrl() });
@@ -167,6 +198,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   onViewInRoom(layout: DesignLayout) {
+    this.roomConfirm.set(false);
     this.roomLayout.set(layout);
     this.showPreview.set(false);
     this.analytics.trackDesignPreview('room_view_opened', this.product().id, { custom_image: !!this.customImageUrl() });

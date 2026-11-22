@@ -1,4 +1,4 @@
-import { Component, signal, computed, OnDestroy, inject } from '@angular/core';
+import { Component, signal, computed, OnDestroy, inject, viewChild, ElementRef } from '@angular/core';
 import { BasePageComponent } from '../basePageComponent';
 import { ProductPurchaseSidebarComponent } from '../../components/product-purchase-sidebar/product-purchase-sidebar.component';
 import { ProductDto, ProductMetadata } from '../../models/product';
@@ -77,6 +77,14 @@ export class CustomDesignComponent
 
   onSavedDesign(url: string): void {
     this.savedDesignImageUrl.set(url);
+  }
+
+  private readonly designPreview = viewChild<ElementRef<HTMLElement>>('designPreview');
+
+  /** After Preview & Design closes, brings the customer's own image back into view */
+  focusDesign(): void {
+    // Wait a frame: the closing editor gives the page its scrolling back first
+    requestAnimationFrame(() => this.designPreview()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
   }
 
   onUploadError(message: string): void {

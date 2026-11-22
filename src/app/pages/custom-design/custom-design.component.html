@@ -14,7 +14,9 @@
         </app-custom-design-upload>
 
         <!-- Preview Section -->
-        <app-custom-design-preview [imageUrl]="savedDesignImageUrl() ?? imageUrl()"></app-custom-design-preview>
+        <div #designPreview class="scroll-mt-24">
+          <app-custom-design-preview [imageUrl]="savedDesignImageUrl() ?? imageUrl()"></app-custom-design-preview>
+        </div>
 
         <!-- Purchase Sidebar (mobile only, after preview) -->
         <div class="md:hidden mt-8">
@@ -23,6 +25,7 @@
             [customImageUrl]="uploadedImageUrl()"
             [openPreviewTrigger]="previewOpenTrigger()"
             (designSaved)="onSavedDesign($event)"
+            (previewClosed)="focusDesign()"
             (onSelectedFrameChanged)="onSelectedFrameChanged($event)"></app-product-purchase-sidebar>
         </div>
       </div>
@@ -34,6 +37,7 @@
           [customImageUrl]="uploadedImageUrl()"
           [openPreviewTrigger]="previewOpenTrigger()"
           (designSaved)="onSavedDesign($event)"
+            (previewClosed)="focusDesign()"
           (onSelectedFrameChanged)="onSelectedFrameChanged($event)"></app-product-purchase-sidebar>
       </div>
     </div>
