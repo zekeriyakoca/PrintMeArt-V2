@@ -199,21 +199,19 @@
   }
 }
 
-// The stage copy shows on phones only, the panel copy elsewhere
-.edit-design-btn--stage {
-  display: none;
-}
-
+// Phones: Continue editing opens the white panel, right under the picture
 @media (max-width: 900px) {
-  .edit-design-btn--stage {
-    display: flex;
-    width: auto;
-    margin: 1rem auto 0.25rem;
-    padding: 0.7rem 1.5rem;
+  .panel {
+    gap: 1.25rem;
+    padding-top: 1rem;
   }
 
   .edit-design-btn--panel {
-    display: none;
+    order: -1;
+  }
+
+  .stage-canvas {
+    max-height: 66vh;
   }
 }
 

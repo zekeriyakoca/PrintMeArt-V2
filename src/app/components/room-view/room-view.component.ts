@@ -5,7 +5,7 @@ import { SizeOption } from '../../models/size-option';
 import { frameMaskFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../../shared/design-composer';
 import { ROOM_SCENES, RoomScene } from './rooms';
-import { RoomRenderer } from './room-renderer';
+import { Framing, RoomRenderer } from './room-renderer';
 import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
 import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 
@@ -35,8 +35,17 @@ export class RoomViewComponent {
   keepEditing = output<void>();
   discardDesign = output<void>();
 
-  readonly rooms = ROOM_SCENES;
+  /** Phones get a crop around the print in its own orientation, and half the rooms */
+  private readonly phone = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+  readonly rooms = this.phone ? ROOM_SCENES.slice(0, Math.ceil(ROOM_SCENES.length / 2)) : ROOM_SCENES;
   room = signal<RoomScene>(ROOM_SCENES[0]);
+  private readonly body = viewChild<ElementRef<HTMLElement>>('body');
+
+  /** Shows the new room from the top, where the picture is */
+  selectRoom(scene: RoomScene) {
+    this.room.set(scene);
+    this.body()?.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('stage');
   private readonly renderer = new RoomRenderer();
@@ -62,6 +71,14 @@ export class RoomViewComponent {
     const size = this.printSize();
     return size ? frameMaskFor(this.frameName(), size.width, size.height) : null;
   });
+
+  /** On phones a tall print gets a tall crop of the room and a wide one a square crop, so the print and the wall around it both fit */
+  private phoneFraming(widthCm: number, heightCm: number): Framing | undefined {
+    if (!this.phone) return undefined;
+    return heightCm > widthCm
+      ? { widthPx: 1600, aspect: 3 / 4, printShare: 0.5, printY: 0.45 }
+      : { widthPx: 1600, aspect: 1, printShare: 0.62, printY: 0.45 };
+  }
 
   constructor() {
     // Render at body level: the product page wraps the sidebar in its own stacking context,
@@ -109,7 +126,7 @@ export class RoomViewComponent {
         { image: art, frame, width: size.width, height: size.height, matIncluded: this.matIncluded() },
         this.layout(),
       );
-      this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height });
+      this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height }, this.phoneFraming(size.width, size.height));
       this.renderedRoom.set(room.id);
     });
   }
