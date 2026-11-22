@@ -65,7 +65,6 @@ const FIRST_PARTY_EVENTS = new Set([
   'custom_upload_success',
   'custom_design_saved',
   'design_preview_opened',
-  'design_preview_blocked_mobile',
   'room_view_opened',
   'view_item_list',
   'remove_from_cart',
@@ -342,7 +341,7 @@ export class AnalyticsService {
   }
 
   /** Preview & Design opened, or refused on a phone (it needs a larger screen) */
-  trackDesignPreview(name: 'design_preview_opened' | 'design_preview_blocked_mobile' | 'room_view_opened', productId: number, props: AnalyticsProperties = {}): void {
+  trackDesignPreview(name: 'design_preview_opened' | 'room_view_opened', productId: number, props: AnalyticsProperties = {}): void {
     this.track(name, { product_id: productId, ...props }, { ga4: false, posthog: true });
   }
 
