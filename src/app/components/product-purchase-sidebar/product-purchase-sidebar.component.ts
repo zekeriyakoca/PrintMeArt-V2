@@ -150,7 +150,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   showPreview = signal(false);
   /** Design shown in the room view while it is open */
   roomLayout = signal<DesignLayout | null>(null);
-  showMobileMessage = signal(false);
 
   onDesignSaved(url: string) {
     this.savedDesign.set({ url, imageUrl: this.designImageUrl() });
@@ -163,21 +162,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   onPreviewClick() {
-    const props = { custom_image: !!this.customImageUrl() };
-    if (window.innerWidth < 768) {
-      this.showMobileMessage.set(true);
-      this.analytics.trackDesignPreview('design_preview_blocked_mobile', this.product().id, props);
-    } else {
-      this.showPreview.set(true);
-      this.analytics.trackDesignPreview('design_preview_opened', this.product().id, props);
-    }
-  }
-
-  /** Phone customers who open Preview & Design despite the desktop-only popup */
-  continueOnMobile() {
-    this.showMobileMessage.set(false);
     this.showPreview.set(true);
-    this.analytics.trackDesignPreview('design_preview_opened', this.product().id, { custom_image: !!this.customImageUrl(), mobile_override: true });
+    this.analytics.trackDesignPreview('design_preview_opened', this.product().id, { custom_image: !!this.customImageUrl(), mobile: window.innerWidth < 768 });
   }
 
   onViewInRoom(layout: DesignLayout) {
