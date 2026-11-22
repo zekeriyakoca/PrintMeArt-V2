@@ -1,6 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { SizeOption } from './../../models/size-option';
-import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, inject, input, model, output, signal, viewChild } from '@angular/core';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { ProductDto, ProductMetadata } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -36,6 +36,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   private variantId: number = 1;
   SizeOptions = SizeOptions;
   readonly shippingInfo = inject(Bootstrap).shippingInfo;
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   product = model<ProductDto>({} as ProductDto);
   isMatIncluded = model<boolean>(false);
@@ -106,8 +107,10 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   private readonly autoOpenPreviewEffect = effect(
     () => {
-      if (this.openPreviewTrigger() > 0) {
-        this.showPreview.set(true);
+      // Custom Design renders two sidebars (phone / desktop); only the visible one reacts.
+      // Goes through onPreviewClick so phones get the desktop-only popup and the event.
+      if (this.openPreviewTrigger() > 0 && this.host.nativeElement.getClientRects().length > 0) {
+        untracked(() => this.onPreviewClick());
       }
     },
     { allowSignalWrites: true },
