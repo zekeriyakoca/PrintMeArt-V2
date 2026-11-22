@@ -7,9 +7,6 @@
       <!-- Counter -->
       <div class="safe-top absolute left-4 md:left-6 flex h-11 items-center text-sm font-medium tabular-nums text-white/80 z-10">
         {{ currentIndex() + 1 }} / {{ images().length }}
-        @if (images()[currentIndex()].isDetail) {
-          <span class="closeup-tag closeup-tag--dark ml-3">{{ 'gallery.detailTitle' | t }}</span>
-        }
       </div>
 
       <!-- Close button -->
@@ -35,10 +32,23 @@
         [style.touch-action]="isZoomed() ? 'none' : 'pan-y pinch-zoom'"
         (mousemove)="onZoomMouseMove($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)"
         (touchend)="onTouchEnd($event)">
-        <img [src]="images()[currentIndex()].url" [alt]="'Image ' + (currentIndex() + 1)"
-          class="max-w-[94vw] max-h-[78vh] object-contain transition-transform duration-150 ease-out"
-          [class.cursor-zoom-in]="!isZoomed()" [class.cursor-zoom-out]="isZoomed()" [style.transform]="zoomTransform()"
-          (click)="toggleZoom($event)">
+        <div class="relative inline-flex">
+          <img [src]="images()[currentIndex()].url" [alt]="'Image ' + (currentIndex() + 1)"
+            class="max-w-[94vw] max-h-[78vh] object-contain transition-transform duration-150 ease-out"
+            [class.cursor-zoom-in]="!isZoomed()" [class.cursor-zoom-out]="isZoomed()" [style.transform]="zoomTransform()"
+            (click)="toggleZoom($event)">
+          @for (i of [currentIndex()]; track i) {
+          @if (images()[i].isDetail) {
+            <div class="closeup-frame" [class.closeup-frame--hidden]="isZoomed()" aria-hidden="true">
+              <span class="closeup-frame__corner closeup-frame__corner--tl"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--tr"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--bl"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--br"></span>
+              <span class="closeup-frame__label">{{ 'gallery.detailTitle' | t }}</span>
+            </div>
+          }
+          }
+        </div>
       </div>
 
       <!-- Thumbnail navigation -->
