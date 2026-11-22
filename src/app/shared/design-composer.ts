@@ -25,9 +25,17 @@ export interface DesignParts {
   width: number;
   height: number;
   matIncluded: boolean;
-  /** Colour of the paper and mat around the artwork; white when not given */
-  matColor?: string;
+  /**
+   * Photo of a mat board's surface (tiles seamlessly, MAT_TEXTURE_PX_PER_CM): the mat is then drawn as real board,
+   * with its texture, a bevelled opening and the frame's shadow, and the artwork stays inside the opening
+   */
+  matBoard?: CanvasImageSource & { width: number; height: number };
 }
+
+/** Scale of the mat board photo */
+const MAT_TEXTURE_PX_PER_CM = 48;
+/** Width of the bevel cut around the mat's opening */
+const MAT_BEVEL_CM = 0.25;
 
 /**
  * Renders the print exactly as Preview & Design shows it: white artboard, the artwork
@@ -43,7 +51,9 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   canvas.height = canvasH;
   const ctx = canvas.getContext('2d')!;
 
-  ctx.fillStyle = parts.matColor ?? '#ffffff';
+  const pxPerCm = canvasW / parts.width;
+  const board = parts.matIncluded ? parts.matBoard : undefined;
+  ctx.fillStyle = board ? matBoardPattern(ctx, board, pxPerCm) : '#ffffff';
   ctx.fillRect(0, 0, canvasW, canvasH);
 
   // 1. Paper area: inset 2% of the width behind the frame on every side (CSS % margins resolve against the artboard width)
@@ -67,7 +77,7 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   // 3. Clip to the paper area; with a white border the artwork stops at its edge
   ctx.save();
   ctx.beginPath();
-  if (border > 0) ctx.rect(cntX, cntY, cntW, cntH);
+  if (border > 0 || board) ctx.rect(cntX, cntY, cntW, cntH);
   else ctx.rect(vpX, vpY, vpW, vpH);
   ctx.clip();
 
@@ -86,10 +96,75 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   ctx.drawImage(image, dx, dy, finalW, finalH);
   ctx.restore();
 
+  if (board) {
+    drawBevel(ctx, { x: cntX, y: cntY, w: cntW, h: cntH }, MAT_BEVEL_CM * pxPerCm);
+    drawFrameShadow(ctx, { x: vpX, y: vpY, w: vpW, h: vpH }, margin + 0.8 * pxPerCm);
+  }
+
   // 6. Frame on top of everything
   ctx.drawImage(frame, 0, 0, canvasW, canvasH);
 
   return canvas;
+}
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+/** The board's photo repeated at its real scale */
+function matBoardPattern(ctx: CanvasRenderingContext2D, board: CanvasImageSource & { width: number; height: number }, pxPerCm: number): CanvasPattern {
+  const scale = pxPerCm / MAT_TEXTURE_PX_PER_CM;
+  const tile = document.createElement('canvas');
+  tile.width = Math.max(1, Math.round(board.width * scale));
+  tile.height = Math.max(1, Math.round(board.height * scale));
+  const tileCtx = tile.getContext('2d')!;
+  tileCtx.imageSmoothingQuality = 'high';
+  tileCtx.drawImage(board, 0, 0, tile.width, tile.height);
+  return ctx.createPattern(tile, 'repeat')!;
+}
+
+/**
+ * The 45° cut around the opening shows the board's white core: lit where it faces up (bottom edge),
+ * in shade where it faces down (top edge), with a thin dark line where the print sits below the board
+ */
+function drawBevel(ctx: CanvasRenderingContext2D, opening: Box, bevel: number) {
+  const { x, y, w, h } = opening;
+  const side = (points: number[], fill: string) => {
+    ctx.beginPath();
+    ctx.moveTo(points[0], points[1]);
+    for (let i = 2; i < points.length; i += 2) ctx.lineTo(points[i], points[i + 1]);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  };
+  const [x0, y0, x1, y1] = [x - bevel, y - bevel, x + w + bevel, y + h + bevel];
+  side([x0, y0, x1, y0, x + w, y, x, y], '#e9e7e1');
+  side([x0, y0, x, y, x, y + h, x0, y1], '#f1efea');
+  side([x1, y0, x1, y1, x + w, y + h, x + w, y], '#f7f6f2');
+  side([x0, y1, x, y + h, x + w, y + h, x1, y1], '#fcfbf8');
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.28)';
+  ctx.lineWidth = Math.max(1, bevel * 0.15);
+  ctx.strokeRect(x, y, w, h);
+}
+
+/** The frame's moulding throws a soft shadow onto the mat, deeper at the top and left where the light comes from */
+function drawFrameShadow(ctx: CanvasRenderingContext2D, paper: Box, reach: number) {
+  const edges: [number, number, number, number, number][] = [
+    [paper.x, paper.y, paper.x, paper.y + reach, 0.2],
+    [paper.x, paper.y, paper.x + reach, paper.y, 0.14],
+    [paper.x + paper.w, paper.y, paper.x + paper.w - reach, paper.y, 0.07],
+    [paper.x, paper.y + paper.h, paper.x, paper.y + paper.h - reach, 0.05],
+  ];
+  for (const [x0, y0, x1, y1, opacity] of edges) {
+    const shade = ctx.createLinearGradient(x0, y0, x1, y1);
+    shade.addColorStop(0, `rgba(40, 30, 20, ${opacity})`);
+    shade.addColorStop(1, 'rgba(40, 30, 20, 0)');
+    ctx.fillStyle = shade;
+    ctx.fillRect(paper.x, paper.y, paper.w, paper.h);
+  }
 }
 
 export function loadCorsImage(url: string): Promise<HTMLImageElement> {
