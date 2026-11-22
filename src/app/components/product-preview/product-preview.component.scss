@@ -667,80 +667,9 @@
   }
 }
 
-// Design actions: save, and see the design in a room
+// Design actions: where they sit; the buttons style themselves
 .design-actions {
   margin-top: 20px;
-  display: flex;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.save-design-btn {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1rem;
-  border: none;
-  border-radius: 999px;
-  background: #384f8c;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease;
-
-  &:hover:not(:disabled) {
-    background: #2d3f70;
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-}
-
-.room-design-btn {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 999px;
-  background: #fff;
-  color: #384f8c;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-
-  &:hover {
-    border-color: #384f8c;
-    background: #f8fafc;
-  }
-
-  // The room view is not good enough on phones yet
-  @media (max-width: 767px) {
-    display: none;
-  }
-}
-
-.saving-spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 // Guide info boxes (left of artboard)
@@ -1214,6 +1143,7 @@ $line-color: oklch(52.5% 0.223 3.958);
     padding: 1rem 1rem 0;
     border-radius: 1rem 1rem 0 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
     flex-shrink: 0;
   }
 
@@ -1232,6 +1162,8 @@ $line-color: oklch(52.5% 0.223 3.958);
   .design-actions {
     position: sticky;
     bottom: 0;
+    // Edge to edge: the negative margins only stretch it with an automatic width
+    width: auto;
     margin: auto -1rem 0;
     padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
     background: #fff;

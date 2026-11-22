@@ -1,0 +1,31 @@
+<button type="button" class="reset-design-btn" [disabled]="saving()" (click)="reset.emit()" [title]="'design.resetDesign' | t" [attr.aria-label]="'design.resetDesign' | t">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path>
+    <polyline points="3 3 3 8 8 8"></polyline>
+  </svg>
+  <span class="reset-design-label">{{ 'design.reset' | t }}</span>
+</button>
+<button type="button" class="save-design-btn" [disabled]="saving() || saved()" (click)="save.emit()">
+  @if (saving()) {
+    <span class="saving-spinner"></span>
+    {{ 'design.saving' | t }}
+  } @else if (saved()) {
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    {{ 'design.saved' | t }}
+  } @else {
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+      <polyline points="7 3 7 8 15 8"></polyline>
+    </svg>
+    {{ 'design.save' | t }}
+  }
+</button>
+<button type="button" class="room-design-btn" (click)="viewInRoom.emit()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="7" y="4" width="10" height="8" rx="0.5" /><path d="M3 20h18M5 20v-3h14v3" />
+  </svg>
+  {{ 'design.inRoom' | t }}
+</button>

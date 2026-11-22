@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
@@ -8,6 +8,8 @@ import { FrameOptionsByValue, frameMaskFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { WhiteBorderOptionsComponent } from '../white-border-options/white-border-options.component';
+import { DesignActionsComponent } from '../design-actions/design-actions.component';
+import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 import { CommonApiService } from '../../services/api/common-api.service';
 import { DESIGN_WIDTH_PX, DesignLayout, FitMode, composeDesign, designToFile, loadCorsImage } from '../../shared/design-composer';
@@ -16,7 +18,7 @@ import { NO_WHITE_BORDER, WhiteBorder, fitWhiteBorder, sameWhiteBorder } from '.
 
 @Component({
   selector: 'app-product-preview',
-  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent, UnsavedChangesDialogComponent],
+  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent, UnsavedChangesDialogComponent, DesignActionsComponent],
   templateUrl: './product-preview.component.html',
   styleUrl: './product-preview.component.scss',
 })
@@ -155,13 +157,22 @@ export class ProductPreviewComponent {
 
   objectFit = computed(() => (this.fitMode() === 'contain' ? 'contain' : 'cover'));
 
-  // Body scroll lock
+  // Rendered at body level, above the header, cookie banner and anything else on the page: the product
+  // page wraps the sidebar in its own stacking context, which would keep the overlay underneath them
   private readonly document = inject(DOCUMENT);
-  private scrollLockEffect = effect(() => {
-    this.document.body.style.overflow = this.isOpen() ? 'hidden' : '';
-    this.document.body.classList.toggle('preview-open', this.isOpen());
+  private readonly host = inject(ElementRef<HTMLElement>).nativeElement;
+  private readonly moveToBody = afterNextRender(() => this.document.body.appendChild(this.host));
+
+  // The page behind stays still while the preview is open
+  private readonly scrollLock = inject(ScrollLockService);
+  private readonly scrollLockEffect = effect(() => {
+    if (this.isOpen()) this.scrollLock.lock(this);
+    else this.scrollLock.unlock(this);
   });
-  private readonly clearPreviewOpen = inject(DestroyRef).onDestroy(() => this.document.body.classList.remove('preview-open'));
+  private readonly releaseOnDestroy = inject(DestroyRef).onDestroy(() => {
+    this.scrollLock.unlock(this);
+    this.host.remove();
+  });
 
   // Presets follow the size; a custom width stays within the new size's limit
   private readonly whiteBorderFitEffect = effect(
@@ -368,8 +379,6 @@ export class ProductPreviewComponent {
   finishClose() {
     this.showDiscardConfirm.set(false);
     this.baseline = null;
-    this.document.body.style.overflow = '';
-    this.document.body.classList.remove('preview-open');
     this.onClose.emit();
   }
 
@@ -386,6 +395,12 @@ export class ProductPreviewComponent {
     this.isLandscape.update((v) => !v);
     this.translateX.set(0);
     this.translateY.set(0);
+  }
+
+  /** Starts the design over: crop, zoom, position, orientation and white border back to how they first open */
+  resetDesign() {
+    this.smartInit();
+    this.whiteBorder.set(NO_WHITE_BORDER);
   }
 
   // Center after drag

@@ -8,6 +8,7 @@ import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomCrop, RoomRenderer } from './room-renderer';
 import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
 import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
+import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 
 /** Phones get the room view stacked: picture on top, options below */
 const PHONE_QUERY = '(max-width: 900px)';
@@ -79,7 +80,13 @@ export class RoomViewComponent {
     const host = inject(ElementRef<HTMLElement>).nativeElement;
     const body = inject(DOCUMENT).body;
     afterNextRender(() => body.appendChild(host));
-    inject(DestroyRef).onDestroy(() => host.remove());
+    // The page behind stays still while the room view is open
+    const scrollLock = inject(ScrollLockService);
+    scrollLock.lock(this);
+    inject(DestroyRef).onDestroy(() => {
+      host.remove();
+      scrollLock.unlock(this);
+    });
 
     effect(() => {
       const canvas = this.stage()?.nativeElement;
