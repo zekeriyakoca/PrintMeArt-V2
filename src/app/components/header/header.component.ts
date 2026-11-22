@@ -2,7 +2,8 @@ import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { ApiService } from './../../services/api/api.service';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { LanguageService } from '../../services/i18n/language.service';
 import { BaseAppComponent } from '../baseAppComponent';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
@@ -87,6 +88,8 @@ export class HeaderComponent extends BaseAppComponent {
       ],
     },
   ];
+
+  readonly languageService = inject(LanguageService);
 
   constructor(
     private router: Router,

@@ -144,6 +144,25 @@
   </div>
 </section>
 
+<!-- Custom design: Preview and Add to cart wait at the bottom until their own place scrolls into view -->
+@if (customImageUrl()) {
+  <div class="action-dock" [class.action-dock--shown]="showActionDock()" [attr.inert]="showActionDock() ? null : ''">
+    <div class="action-dock__inner">
+      <button type="button" class="preview-btn bg-rose-700 hover:bg-rose-600" (click)="onPreviewClick()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <span>{{ 'product.previewDesign' | t }}</span>
+      </button>
+      <button type="button" class="add-to-cart-btn" (click)="addToCart()">
+        <app-icon iconName="cart"></app-icon>
+        <span>{{ 'product.addToCart' | t }}</span>
+      </button>
+    </div>
+  </div>
+}
+
 <!-- Phones: price and add to cart pinned to the bottom -->
 @if (stickyBar()) {
   <div class="sticky-buy lg:hidden" [class.sticky-buy--shown]="showStickyBar()" [attr.inert]="showStickyBar() ? null : ''">
