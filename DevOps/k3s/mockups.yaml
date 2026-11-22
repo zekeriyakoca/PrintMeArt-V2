@@ -1,4 +1,4 @@
-# Room mockups for new products: every 30 minutes, products whose images aren't mockups yet get them
+# Room mockups for new products: every 5 minutes, products whose images aren't mockups yet get them
 # (scripts/mockups). The upload SAS lives in the mockup-blob secret, created by hand:
 #   kubectl -n printmeart create secret generic mockup-blob --from-literal=sas='https://...?sv=...'
 apiVersion: batch/v1
@@ -7,7 +7,8 @@ metadata:
   name: room-mockups
   namespace: printmeart
 spec:
-  schedule: '*/30 * * * *'
+  # The check is a few light catalog reads; only products without mockups are drawn
+  schedule: '*/5 * * * *'
   # A first run over the whole catalog takes hours; later runs wait for it
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
