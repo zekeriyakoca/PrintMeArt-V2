@@ -303,6 +303,23 @@
         </div>
       </nav>
 
+      <!-- Language -->
+      <div class="px-6 pb-5">
+        <p class="px-1 mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-slate-400">{{ 'header.language' | t }}</p>
+        <div class="grid grid-cols-2 gap-1 p-1 rounded-full bg-slate-100" role="radiogroup" [attr.aria-label]="'header.language' | t">
+          @for (language of languageService.availableLanguages; track language.code) {
+            <button type="button" role="radio"
+              [attr.aria-checked]="languageService.isCurrentLanguage(language.code)"
+              (click)="languageService.setLanguage(language.code)"
+              [class]="'flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-medium transition-all ' +
+                (languageService.isCurrentLanguage(language.code) ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800')">
+              <span [class]="'text-[0.7rem] font-semibold uppercase tracking-wider ' + (languageService.isCurrentLanguage(language.code) ? 'text-[#384f8c]' : 'text-slate-400')">{{ language.code }}</span>
+              <span>{{ language.name }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
       <!-- Mobile menu footer -->
       <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
         <p class="text-xs text-slate-500 text-center">{{ 'header.tagline' | t }}</p>

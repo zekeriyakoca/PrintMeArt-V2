@@ -30,6 +30,7 @@
     "cart": "Winkelmand",
     "profile": "Profiel",
     "tagline": "Kunstprints van museumkwaliteit — eerlijk geprijsd",
+    "language": "Taal",
     "mobileNav": "Mobiele navigatie"
   },
   "nav": {
@@ -133,7 +134,7 @@
     "included": "Inbegrepen.",
     "fairValue": "Eerlijke prijs, topkwaliteit",
     "returns": "{{days}} dagen retour",
-    "previewDesign": "Voorbeeld & ontwerp",
+    "previewDesign": "Voorbeeld",
     "addToCart": "In winkelmand",
     "securePayment": "Veilig betalen met",
     "badgeGiclee": "Giclée met 12 pigmentinkten",

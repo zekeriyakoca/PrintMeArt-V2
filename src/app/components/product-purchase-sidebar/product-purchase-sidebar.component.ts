@@ -120,6 +120,18 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   private readonly actionButtons = viewChild<ElementRef<HTMLElement>>('actionButtons');
   showStickyBar = signal(false);
+  /** The action buttons are still below the screen */
+  private actionsBelow = signal(false);
+  /** Custom design: once an image is uploaded and every option is chosen, the buttons wait at the bottom of the screen until the customer scrolls to them */
+  showActionDock = computed(
+    () =>
+      !!this.customImageUrl() &&
+      this.hasAllOptionsSelected() &&
+      this.calculatedPrice() > 0 &&
+      this.actionsBelow() &&
+      !this.showPreview() &&
+      !this.roomLayout(),
+  );
 
   constructor(
     private apiService: ApiService,
@@ -132,6 +144,14 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     afterNextRender(() => {
       const buttons = this.actionButtons()?.nativeElement;
       const footer = document.querySelector('app-footer');
+      if (buttons) {
+        // A hidden copy of the sidebar (the other breakpoint's) measures zero and never counts as below
+        const dockObserver = new IntersectionObserver(([entry]) =>
+          this.actionsBelow.set(!entry.isIntersecting && entry.boundingClientRect.top > 0),
+        );
+        dockObserver.observe(buttons);
+        destroyRef.onDestroy(() => dockObserver.disconnect());
+      }
       if (!this.stickyBar() || !buttons) return;
       // Shown once the buttons are above the screen, and out of the footer's way
       let buttonsPassed = false;
