@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SizeOption } from '../../models/size-option';
@@ -159,7 +159,9 @@ export class ProductPreviewComponent {
   private readonly document = inject(DOCUMENT);
   private scrollLockEffect = effect(() => {
     this.document.body.style.overflow = this.isOpen() ? 'hidden' : '';
+    this.document.body.classList.toggle('preview-open', this.isOpen());
   });
+  private readonly clearPreviewOpen = inject(DestroyRef).onDestroy(() => this.document.body.classList.remove('preview-open'));
 
   // Presets follow the size; a custom width stays within the new size's limit
   private readonly whiteBorderFitEffect = effect(
@@ -367,6 +369,7 @@ export class ProductPreviewComponent {
     this.showDiscardConfirm.set(false);
     this.baseline = null;
     this.document.body.style.overflow = '';
+    this.document.body.classList.remove('preview-open');
     this.onClose.emit();
   }
 

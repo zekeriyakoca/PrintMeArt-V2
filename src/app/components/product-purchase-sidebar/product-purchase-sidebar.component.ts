@@ -173,6 +173,13 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     }
   }
 
+  /** Phone customers who open Preview & Design despite the desktop-only popup */
+  continueOnMobile() {
+    this.showMobileMessage.set(false);
+    this.showPreview.set(true);
+    this.analytics.trackDesignPreview('design_preview_opened', this.product().id, { custom_image: !!this.customImageUrl(), mobile_override: true });
+  }
+
   onViewInRoom(layout: DesignLayout) {
     this.roomLayout.set(layout);
     this.showPreview.set(false);
