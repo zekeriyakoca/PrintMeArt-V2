@@ -7,4 +7,4 @@ RUN npm ci
 COPY src /app/src
 COPY scripts/mockups/generate.ts ./
 USER node
-CMD ["node", "--import", "tsx", "generate.ts", "--missing", "--apply"]
+CMD ["node", "--import", "tsx", "generate.ts", "--missing", "--apply", "--limit", "40"]
