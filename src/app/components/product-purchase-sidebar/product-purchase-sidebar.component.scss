@@ -357,6 +357,23 @@
   }
 }
 
+.mobile-popup-continue {
+  display: block;
+  margin: 0.85rem auto 0;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: none;
+  color: #64748b;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: #334155;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
