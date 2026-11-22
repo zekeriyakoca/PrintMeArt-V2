@@ -8,7 +8,7 @@
  *
  *   npx tsx generate.ts --ids 933,519 --out ~/Desktop/mockups   render to a folder
  *   npx tsx generate.ts --ids 933,519 --apply                   render and set them on the products
- *   npx tsx generate.ts --missing --apply                       every product whose images are not these mockups yet
+ *   npx tsx generate.ts --missing --apply --limit 40            the first 40 products whose images are not these mockups yet
  *
  * --apply uploads to MOCKUP_BLOB_SAS (a writable SAS URL of the image container) and sets the images through the
  * catalog API at CATALOG_INTERNAL_API (internal only: in the cluster, or through a port-forward).
@@ -206,8 +206,9 @@ async function apply(productId: number, mockups: Mockup[]) {
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { ids: { type: 'string' }, missing: { type: 'boolean' }, out: { type: 'string' }, apply: { type: 'boolean' } } });
-  const ids = values.missing ? await productsWithoutMockups() : (values.ids ?? '').split(',').map(Number).filter(Boolean);
+  const { values } = parseArgs({ options: { ids: { type: 'string' }, missing: { type: 'boolean' }, limit: { type: 'string' }, out: { type: 'string' }, apply: { type: 'boolean' } } });
+  // The renderer's native memory builds up over a long run, so the job does a batch at a time and the next run goes on
+  const ids = (values.missing ? await productsWithoutMockups() : (values.ids ?? '').split(',').map(Number).filter(Boolean)).slice(0, Number(values.limit) || undefined);
   if ((!values.missing && !ids.length) || (!values.out && !values.apply)) {
     throw new Error('Usage: generate.ts (--ids 933,519 | --missing) (--out <folder> | --apply)');
   }
