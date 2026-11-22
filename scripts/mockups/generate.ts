@@ -27,7 +27,7 @@ const { RoomRenderer, printFits } = await import('../../src/app/components/room-
 const { composeDesign, DESIGN_WIDTH_PX } = await import('../../src/app/shared/design-composer');
 const { frameMaskFor } = await import('../../src/app/shared/constants');
 type RoomScene = (typeof ROOM_SCENES)[number];
-type Framing = NonNullable<Parameters<InstanceType<typeof RoomRenderer>['render']>[4]>;
+type Framing = import('../../src/app/components/room-view/room-renderer').Framing;
 
 const CATALOG_API = 'https://lontray.art/catalog-api/catalog/v1';
 /** The catalog picks the shop from the Origin */

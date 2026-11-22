@@ -15,6 +15,11 @@ const MAX_VIEW_WIDTH_CM = 220;
 // high-density screens even where only part of a room photo is shown
 const STAGE_WIDTH_PX = 2400;
 
+/** The room around the print, as much of it as fits; optionally cut to a width / height ratio (a phone wants it tall) */
+export interface RoomCrop {
+  aspect?: number;
+}
+
 /** A fixed crop around the print, for saved mockups */
 export interface Framing {
   widthPx: number;
@@ -41,13 +46,14 @@ interface Rect {
 export class RoomRenderer {
   private readonly roomCache = new Map<string, ImageData>();
 
-  render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall, framing?: Framing) {
+  render(canvas: HTMLCanvasElement, room: RoomScene, roomImage: HTMLImageElement, print: PrintOnWall, crop: RoomCrop | Framing = {}) {
     const photoW = roomImage.naturalWidth;
     const photoH = roomImage.naturalHeight;
     const photoPxPerCm = photoW / room.widthCm;
     // Where the print hangs and which part of the photo is shown, in photo pixels
     const outer = this.place(room, photoW, photoH, print, photoPxPerCm);
-    const view = framing ? around(outer, photoW, photoH, framing) : this.view(room, photoW, photoH, photoPxPerCm);
+    const framing = 'printShare' in crop ? crop : null;
+    const view = framing ? around(outer, photoW, photoH, framing) : roomWindow(room, photoW, photoH, photoPxPerCm, outer, crop as RoomCrop);
 
     const stageW = framing?.widthPx ?? STAGE_WIDTH_PX;
     const scale = stageW / view.w;
@@ -63,15 +69,6 @@ export class RoomRenderer {
     this.drawGlass(ctx, onStage);
 
     this.applyRoomLight(ctx, this.wallPixels(room, roomImage), outer, onStage, room);
-  }
-
-  /** The part of the photo shown: all of it, or for a wide room a window around the print with the same composition. */
-  private view(room: RoomScene, photoW: number, photoH: number, pxPerCm: number): Rect {
-    const w = Math.min(photoW, MAX_VIEW_WIDTH_CM * pxPerCm);
-    const h = (w * photoH) / photoW;
-    const x = clamp(room.anchor.x * (photoW - w), 0, photoW - w);
-    const y = clamp(room.anchor.y * (photoH - h), 0, photoH - h);
-    return { x, y, w, h };
   }
 
   /** Room photo pixels, cached per room; the light map reads the wall from them. */
@@ -186,6 +183,23 @@ function hangingTop(room: RoomScene, photoH: number, h: number): number {
 /** Whether a print of this size hangs at the room's anchor without being pushed down onto the furniture */
 export function printFits(room: RoomScene, photoW: number, photoH: number, widthCm: number, heightCm: number): boolean {
   return hangingTop(room, photoH, heightCm * (photoW / room.widthCm)) >= 0.03 * photoH;
+}
+
+/**
+ * The part of the photo shown: all of it, or for a wide room (or a narrower ratio) a window with the
+ * same composition, never cutting the print.
+ */
+function roomWindow(room: RoomScene, photoW: number, photoH: number, pxPerCm: number, print: Rect, crop: RoomCrop): Rect {
+  const aspect = crop.aspect ?? photoW / photoH;
+  let w = Math.min(photoW, MAX_VIEW_WIDTH_CM * pxPerCm);
+  let h = w / aspect;
+  if (h > photoH) {
+    h = photoH;
+    w = h * aspect;
+  }
+  const x = clamp(clamp(room.anchor.x * (photoW - w), print.x + print.w - w, print.x), 0, photoW - w);
+  const y = clamp(clamp(room.anchor.y * (photoH - h), print.y + print.h - h, print.y), 0, photoH - h);
+  return { x, y, w, h };
 }
 
 /** The crop of the photo around the print, at the framing's aspect, as close to its print share and position as the photo allows */

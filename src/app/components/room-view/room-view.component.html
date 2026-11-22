@@ -32,18 +32,25 @@
         </section>
       }
 
-      <button type="button" class="edit-design-btn edit-design-btn--panel" (click)="editDesign.emit()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z" /></svg>
-        {{ 'room.edit' | t }}
-      </button>
+      <!-- On phones it stays pinned to the bottom of the screen until the panel scrolls it into place -->
+      <div class="edit-design">
+        <button type="button" class="edit-design-btn" (click)="editDesign.emit()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z" /></svg>
+          {{ 'room.edit' | t }}
+        </button>
+      </div>
 
       <p class="footnote">{{ 'room.footnote' | t }}</p>
     </aside>
   </div>
 
   @if (showDiscardConfirm()) {
-  <div class="confirm-host" (click)="$event.stopPropagation()">
-    <app-unsaved-changes-dialog [saving]="saving()" (save)="saveDesign.emit()" (keepEditing)="keepEditing.emit()" (discard)="discardDesign.emit()"></app-unsaved-changes-dialog>
-  </div>
+  <app-unsaved-changes-dialog
+    [saving]="saving()"
+    (click)="$event.stopPropagation()"
+    (save)="saveDesign.emit()"
+    (keepEditing)="keepEditing.emit()"
+    (discard)="discardDesign.emit()"
+  ></app-unsaved-changes-dialog>
   }
 </div>
