@@ -175,10 +175,20 @@ export class EffectiveImagePixelsResolver {
   private static parsePixels(
     meta: ProductMetadata | null | undefined,
   ): Omit<EffectiveImagePixels, 'mode'> | null {
-    const original = EffectiveImagePixelsResolver.readPixels(
+    // OriginalImageWidth/Height is the worker copy, capped at 12000px; the
+    // print master (OriginalImageMaster*) can be larger and is what gets printed.
+    const worker = EffectiveImagePixelsResolver.readPixels(
       meta?.OriginalImageWidth,
       meta?.OriginalImageHeight,
     );
+    const master = EffectiveImagePixelsResolver.readPixels(
+      meta?.OriginalImageMasterWidth,
+      meta?.OriginalImageMasterHeight,
+    );
+    const original =
+      worker && master
+        ? EffectiveImagePixelsResolver.preferHigherQuality(worker, master)
+        : (master ?? worker);
     const upscaled = EffectiveImagePixelsResolver.readPixels(
       meta?.UpscaledImageWidth,
       meta?.UpscaledImageHeight,

@@ -54,6 +54,8 @@ export class ProductMetadata {
   OriginalImageHeight: string = '0';
   UpscaledImageWidth?: string;
   UpscaledImageHeight?: string;
+  OriginalImageMasterWidth?: string;
+  OriginalImageMasterHeight?: string;
   Museum: string = '';
   Dimensions: string = '';
   Story?: string;
