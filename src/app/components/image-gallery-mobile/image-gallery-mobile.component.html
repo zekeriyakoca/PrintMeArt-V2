@@ -29,8 +29,14 @@
           </div>
         } @else {
           <img [src]="item.large" [alt]="alt()" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-          @if (item.isDetail) {
-            <span class="closeup-tag absolute left-3 top-3">{{ 'gallery.detailTitle' | t }}</span>
+          @if (item.isDetail && i === current()) {
+            <div class="closeup-frame closeup-frame--below-counter" aria-hidden="true">
+              <span class="closeup-frame__corner closeup-frame__corner--tl"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--tr"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--bl"></span>
+              <span class="closeup-frame__corner closeup-frame__corner--br"></span>
+              <span class="closeup-frame__label">{{ 'gallery.detailTitle' | t }}</span>
+            </div>
           }
         }
       </div>
