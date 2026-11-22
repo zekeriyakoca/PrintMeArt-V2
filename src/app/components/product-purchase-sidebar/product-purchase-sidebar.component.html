@@ -29,7 +29,7 @@
           <app-ppi-bar [metadata]="metadata" [size]="selectedSize()" [enhanced]="isEnhancementIncluded()"></app-ppi-bar>
           @if (showEnhancement()) {
             <app-tooltip [ariaLabel]="'enhancement.include' | t">
-              <button type="button" [class.active]="isEnhancementIncluded()" (click)="enhancementWanted.set(!enhancementWanted())"
+              <button type="button" [class.active]="isEnhancementIncluded()" (click)="toggleEnhancement()"
                 [class]="'enhance-btn inline-flex h-7 w-7 items-center justify-center rounded-md border transition-colors ' +
                   (isEnhancementIncluded() ? 'border-[#384f8c] bg-[#384f8c] text-white' : 'border-indigo-200 bg-[#faf6ff] text-[#384f8c] hover:border-[#384f8c]')">
                 <app-icon iconName="sparkles" class="h-4 w-4"></app-icon>
@@ -74,7 +74,7 @@
   @if (showEnhancement()) {
     <div class="option-group">
       <label class="option-label">{{ 'enhancement.label' | t }}</label>
-      <app-enhancement-options [(isIncluded)]="enhancementWanted"></app-enhancement-options>
+      <app-enhancement-options [isIncluded]="isEnhancementIncluded()" (toggle)="toggleEnhancement()"></app-enhancement-options>
     </div>
   }
 

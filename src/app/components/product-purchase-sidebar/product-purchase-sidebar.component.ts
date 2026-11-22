@@ -68,7 +68,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   /** What print quality and the preview are judged on: the uploaded image, or the product's own image */
   imageMetadata = computed(() => this.customImageMetadata() ?? this.product().metadata);
 
-  /** Below this print quality the image enhancement is offered */
+  /** Below this print quality the image enhancement is chosen for the customer */
   private readonly ENHANCEMENT_PPI_THRESHOLD = 200;
 
   /** Image enhancement option; only the custom design product has it */
@@ -76,17 +76,25 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.product().optionGroups?.find((group) => group.name.toLowerCase() === 'image enhancement')?.options[0],
   );
 
-  /** Offered only while the image is too low in resolution for the chosen size */
-  showEnhancement = computed(() => {
+  /** Always offered where the product has it (the custom design product) */
+  showEnhancement = computed(() => !!this.enhancementOption());
+
+  /** The image is too low in resolution for the chosen size */
+  private lowQuality = computed(() => {
     const metadata = this.imageMetadata();
-    if (!this.enhancementOption() || !metadata) return false;
+    if (!metadata) return false;
     const ppi = EffectiveImagePixelsResolver.printPpi(EffectiveImagePixelsResolver.resolve(metadata), this.selectedSize());
     return ppi !== null && ppi < this.ENHANCEMENT_PPI_THRESHOLD;
   });
 
-  /** The customer's tick, on by default; it only counts while the option is offered */
-  enhancementWanted = signal(true);
-  isEnhancementIncluded = computed(() => this.enhancementWanted() && this.showEnhancement());
+  /** The customer's own tick; until they make one, it is on for a low-quality image and off otherwise */
+  private enhancementChoice = signal<boolean | null>(null);
+  enhancementWanted = computed(() => this.enhancementChoice() ?? this.lowQuality());
+  isEnhancementIncluded = computed(() => this.showEnhancement() && this.enhancementWanted());
+
+  toggleEnhancement() {
+    this.enhancementChoice.set(!this.enhancementWanted());
+  }
 
   availableSizes = computed<SizeOption[]>(() => {
     const sizes = DimensionParser.filterSizes(this.product().metadata?.Dimensions ?? '', SizeOptions) ?? SizeOptions;
