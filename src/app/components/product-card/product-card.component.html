@@ -3,19 +3,10 @@
     <img class="rounded-sm w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
       [src]="product().image.small" [alt]="product().name" loading="lazy" decoding="async" />
 
-    @if(isHorizontal()){
-    @if (product().thirdImage?.small) {
-    <img
-      class="rounded-sm h-full w-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      [src]="product().thirdImage.small" [alt]="product().name" loading="lazy" decoding="async" />
-    }
-    }
-    @else{
     @if (product().secondImage?.small) {
     <img
       class="rounded-sm h-full w-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       [src]="product().secondImage.small" [alt]="product().name" loading="lazy" decoding="async" />
-    }
     }
   </div>
   <div class="flex flex-col">

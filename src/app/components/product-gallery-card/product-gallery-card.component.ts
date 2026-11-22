@@ -19,9 +19,6 @@ export class ProductGalleryCardComponent {
     const ratio = this.product().imageRatio;
     return ratio > 0 ? `${ratio}` : null;
   });
-  isHorizontal = computed(() => {
-    return this.product().imageRatio >= 1;
-  });
 
   firstImage = computed(() => {
     return this.showLargeImage() ? this.product().image.large || this.product().image.medium || this.product().image.small : this.product().image.medium || this.product().image.small;
@@ -30,11 +27,6 @@ export class ProductGalleryCardComponent {
     return this.showLargeImage()
       ? this.product().secondImage.large || this.product().secondImage.medium || this.product().secondImage.small
       : this.product().secondImage.medium || this.product().secondImage.small;
-  });
-  thirdImage = computed(() => {
-    return this.showLargeImage()
-      ? this.product().thirdImage.large || this.product().thirdImage.medium || this.product().thirdImage.small
-      : this.product().thirdImage.medium || this.product().thirdImage.small;
   });
 
   readonly productPath = productPath;

@@ -25,6 +25,8 @@ export interface DesignParts {
   width: number;
   height: number;
   matIncluded: boolean;
+  /** Colour of the paper and mat around the artwork; white when not given */
+  matColor?: string;
 }
 
 /**
@@ -41,7 +43,7 @@ export function composeDesign(canvasWidth: number, parts: DesignParts, layout: D
   canvas.height = canvasH;
   const ctx = canvas.getContext('2d')!;
 
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = parts.matColor ?? '#ffffff';
   ctx.fillRect(0, 0, canvasW, canvasH);
 
   // 1. Paper area: inset 2% of the width behind the frame on every side (CSS % margins resolve against the artboard width)

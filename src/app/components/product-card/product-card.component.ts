@@ -13,9 +13,6 @@ import { productPath } from '../../shared/product-path';
 export class ProductCardComponent {
   product = input.required<ProductSimpleDto>();
   fromPrice = computed(() => this.product().cheapestPrice);
-  isHorizontal = computed(() => {
-    return this.product().imageRatio >= 1;
-  });
 
   readonly productPath = productPath;
 }

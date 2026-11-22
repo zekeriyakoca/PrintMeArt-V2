@@ -26,8 +26,7 @@
           <img
             [src]="images()[2].large"
             [alt]="alt()"
-            class="transition-all duration-300 group-hover:scale-105"
-            [class]="images()[2].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
+            class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
           />
           @if (sliderIndex() === 2) {
             <app-closeup-slider [urls]="crops()" [alt]="alt()" />
@@ -42,8 +41,7 @@
           <img
             [src]="images()[3].large"
             [alt]="alt()"
-            class="transition-all duration-300 group-hover:scale-105"
-            [class]="images()[3].isDetail ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
+            class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
           />
           @if (sliderIndex() === 3) {
             <app-closeup-slider [urls]="crops()" [alt]="alt()" />

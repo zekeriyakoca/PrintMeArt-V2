@@ -1,0 +1,12 @@
+{
+  "name": "room-mockups",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "tsx generate.ts"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "0.1.80",
+    "tsx": "4.20.6"
+  }
+}
