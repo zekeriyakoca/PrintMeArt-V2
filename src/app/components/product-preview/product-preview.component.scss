@@ -1131,6 +1131,10 @@ $line-color: oklch(52.5% 0.223 3.958);
     gap: 0.4rem;
   }
 
+  .backdrop {
+    background: #0f172a;
+  }
+
   .top-right-actions {
     top: 0.6rem;
     right: 0.6rem;
@@ -1139,7 +1143,10 @@ $line-color: oklch(52.5% 0.223 3.958);
   .toolbar {
     gap: 0.2rem;
     padding: 0.3rem 0.4rem;
-    max-width: calc(100vw - 1rem);
+    // Starts left so it stays clear of the close button on the right
+    align-self: flex-start;
+    margin: -2.85rem 0 0 0.5rem;
+    max-width: calc(100vw - 3.75rem);
     overflow-x: auto;
     scrollbar-width: none;
 
