@@ -352,7 +352,7 @@
   }
 }
 
-// Custom design: the action buttons docked at the bottom of the screen
+// Custom design, phones only: the action buttons docked at the bottom of the screen
 .action-dock {
   position: fixed;
   inset-inline: 0;
@@ -371,6 +371,10 @@
   &--shown {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    display: none;
   }
 }
 
