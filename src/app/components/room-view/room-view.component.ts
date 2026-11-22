@@ -1,14 +1,18 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, DestroyRef, ElementRef, PLATFORM_ID, Signal, afterNextRender, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
 import { frameMaskFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../../shared/design-composer';
 import { ROOM_SCENES, RoomScene } from './rooms';
-import { Framing, RoomRenderer } from './room-renderer';
+import { RoomCrop, RoomRenderer } from './room-renderer';
 import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
 import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 
+/** Phones get the room view stacked: picture on top, options below */
+const PHONE_QUERY = '(max-width: 900px)';
+
+/** Shows the design from Preview & Design hanging in a room, at real scale */
 @Component({
   imports: [TranslatePipe, PreparingStateComponent, UnsavedChangesDialogComponent],
   selector: 'app-room-view',
@@ -17,6 +21,7 @@ import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved
   styleUrl: './room-view.component.scss',
 })
 export class RoomViewComponent {
+  // The print, as designed in Preview & Design
   title = input('');
   imageUrl = input.required<string>();
   /** Frame option name as chosen on the product page; null for a rolled-up print, which shows in the frame we sell */
@@ -26,59 +31,47 @@ export class RoomViewComponent {
   layout = input.required<DesignLayout>();
   /** Size chosen in Preview & Design */
   selectedSize = input<SizeOption | null>(null);
-  close = output<void>();
-  editDesign = output<void>();
-  /** Asks to save the edited design before the room view closes */
+
+  // Closing with an unsaved design: the parent decides and saves, this view only asks
   showDiscardConfirm = input(false);
   saving = input(false);
+
+  close = output<void>();
+  editDesign = output<void>();
   saveDesign = output<void>();
   keepEditing = output<void>();
   discardDesign = output<void>();
 
-  /** Phones get a crop around the print in its own orientation, and half the rooms */
-  private readonly phone = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+  private readonly phone = isPlatformBrowser(inject(PLATFORM_ID)) && window.matchMedia(PHONE_QUERY).matches;
+
+  /** Phones offer half the rooms, so the picker stays short */
   readonly rooms = this.phone ? ROOM_SCENES.slice(0, Math.ceil(ROOM_SCENES.length / 2)) : ROOM_SCENES;
-  room = signal<RoomScene>(ROOM_SCENES[0]);
-  private readonly body = viewChild<ElementRef<HTMLElement>>('body');
+  readonly room = signal<RoomScene>(this.rooms[0]);
 
-  /** Shows the new room from the top, where the picture is */
-  selectRoom(scene: RoomScene) {
-    this.room.set(scene);
-    this.body()?.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('stage');
-  private readonly renderer = new RoomRenderer();
-  private readonly roomImages = new Map<string, HTMLImageElement>();
-  private loadedRoom = signal<string | null>(null);
-  private art = signal<HTMLImageElement | null>(null);
-  private frameMask = signal<HTMLImageElement | null>(null);
-  /** Room the stage last finished drawing; until it matches, the preparing state shows */
-  private renderedRoom = signal<string | null>(null);
-  ready = computed(() => this.renderedRoom() === this.room().id);
-
+  private readonly art = loaded(() => loadCorsImage(this.imageUrl()));
   /** Print size in cm, turned to match the artwork's orientation */
-  printSize = computed(() => {
+  readonly printSize = computed(() => {
     const size = this.selectedSize();
     const art = this.art();
     if (!size || !art) return null;
     const landscape = art.naturalWidth > art.naturalHeight;
     return landscape ? { width: size.val2, height: size.val1 } : { width: size.val1, height: size.val2 };
   });
-
   /** Same frame as Preview & Design, for the print as it hangs (portrait or landscape) */
-  frameMaskUrl = computed(() => {
+  private readonly frameMask = loaded(() => {
     const size = this.printSize();
-    return size ? frameMaskFor(this.frameName(), size.width, size.height) : null;
+    return size ? loadCorsImage(frameMaskFor(this.frameName(), size.width, size.height)) : null;
   });
+  private readonly roomPhotos = new Map<string, Promise<HTMLImageElement>>();
+  private readonly roomPhoto = loaded(() => this.photoOf(this.room()));
 
-  /** On phones a tall print gets a tall crop of the room and a wide one a square crop, so the print and the wall around it both fit */
-  private phoneFraming(widthCm: number, heightCm: number): Framing | undefined {
-    if (!this.phone) return undefined;
-    return heightCm > widthCm
-      ? { widthPx: 1600, aspect: 3 / 4, printShare: 0.5, printY: 0.45 }
-      : { widthPx: 1600, aspect: 1, printShare: 0.62, printY: 0.45 };
-  }
+  /** Room the stage last finished drawing; until it matches, the preparing state shows */
+  private readonly renderedRoom = signal<string | null>(null);
+  readonly ready = computed(() => this.renderedRoom() === this.room().id);
+
+  private readonly stage = viewChild<ElementRef<HTMLCanvasElement>>('stage');
+  private readonly body = viewChild<ElementRef<HTMLElement>>('body');
+  private readonly renderer = new RoomRenderer();
 
   constructor() {
     // Render at body level: the product page wraps the sidebar in its own stacking context,
@@ -89,45 +82,66 @@ export class RoomViewComponent {
     inject(DestroyRef).onDestroy(() => host.remove());
 
     effect(() => {
-      loadCorsImage(this.imageUrl()).then((image) => this.art.set(image));
-    });
-
-    effect(() => {
-      const url = this.frameMaskUrl();
-      this.frameMask.set(null);
-      if (url) loadCorsImage(url).then((image) => this.frameMask.set(image));
-    });
-
-    effect(() => {
-      const room = this.room();
-      if (this.roomImages.has(room.id)) return;
-      const image = new Image();
-      // Served from blob storage: CORS keeps the canvas readable for the light map and Save my design
-      image.crossOrigin = 'anonymous';
-      image.onload = () => {
-        this.roomImages.set(room.id, image);
-        this.loadedRoom.set(room.id);
-      };
-      image.src = room.image;
-    });
-
-    effect(() => {
-      const canvas = this.canvas()?.nativeElement;
-      const room = this.room();
+      const canvas = this.stage()?.nativeElement;
       const art = this.art();
-      const size = this.printSize();
       const frame = this.frameMask();
-      this.loadedRoom();
-      const roomImage = this.roomImages.get(room.id);
-      if (!canvas || !art || !size || !roomImage || !frame) return;
+      const photo = this.roomPhoto();
+      const size = this.printSize();
+      if (!canvas || !art || !frame || !photo || !size) return;
 
+      const room = this.room();
       const design = composeDesign(
         DESIGN_WIDTH_PX,
         { image: art, frame, width: size.width, height: size.height, matIncluded: this.matIncluded() },
         this.layout(),
       );
-      this.renderer.render(canvas, room, roomImage, { design, widthCm: size.width, heightCm: size.height }, this.phoneFraming(size.width, size.height));
+      this.renderer.render(canvas, room, photo, { design, widthCm: size.width, heightCm: size.height }, this.crop(size));
       this.renderedRoom.set(room.id);
     });
   }
+
+  selectRoom(scene: RoomScene) {
+    this.room.set(scene);
+    // On phones the picker sits under the picture: bring the new room into view
+    this.body()?.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** Phones are tall: show a tall piece of the room for a tall print and a square one for a wide print, rather than a thin strip */
+  private crop(size: { width: number; height: number }): RoomCrop {
+    if (!this.phone) return {};
+    return { aspect: size.height > size.width ? 4 / 5 : 1 };
+  }
+
+  /** Room photos are large; each is fetched once and kept while the view is open */
+  private photoOf(room: RoomScene): Promise<HTMLImageElement> {
+    let photo = this.roomPhotos.get(room.id);
+    if (!photo) {
+      photo = new Promise((resolve, reject) => {
+        const image = new Image();
+        // Served from blob storage: CORS keeps the canvas readable for the light map
+        image.crossOrigin = 'anonymous';
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error(`Room photo failed to load: ${room.id}`));
+        image.src = room.image;
+      });
+      this.roomPhotos.set(room.id, photo);
+    }
+    return photo;
+  }
+}
+
+/** The image a loader resolves to, as a signal; null while it loads, and again whenever the loader's inputs change */
+function loaded(load: () => Promise<HTMLImageElement> | null): Signal<HTMLImageElement | null> {
+  const image = signal<HTMLImageElement | null>(null);
+  let latest: Promise<HTMLImageElement> | null = null;
+  effect(() => {
+    image.set(null);
+    const pending = (latest = load());
+    pending?.then(
+      // A newer load may have started meanwhile; only the latest one counts
+      (result) => latest === pending && image.set(result),
+      () => {},
+    );
+  });
+  return image.asReadonly();
 }
