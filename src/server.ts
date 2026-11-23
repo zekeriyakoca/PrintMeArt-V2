@@ -93,7 +93,11 @@ app.use('/ph', (req, res, next) => {
 // Every page lives under /en or /nl, and the language of the last page opened is remembered.
 // An address without one goes to that language, or Dutch the first time.
 app.use((req, res, next) => {
-  const language = req.path.split('/')[1];
+  const [, language, second] = req.path.split('/');
+  // A doubled prefix such as /nl/nl/products is a broken link to /nl/products
+  if (isLanguage(language) && isLanguage(second)) {
+    return res.redirect(301, req.originalUrl.slice(language.length + 1));
+  }
   if (isLanguage(language)) {
     res.cookie(LANGUAGE_COOKIE, language, { maxAge: 31536000000, sameSite: 'lax' });
     return next();
