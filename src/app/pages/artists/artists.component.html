@@ -36,11 +36,15 @@
   </section>
   }
 
-  <nav class="az" [attr.aria-label]="'artists.alphabet' | t">
+  <nav class="az" [class.is-stuck]="stuck()" [attr.aria-label]="'artists.alphabet' | t">
     <div class="wrap">
-      @for (l of letters(); track l.letter) {<a routerLink="." [fragment]="'l-' + l.letter">{{ l.letter }}</a>}
-      <em>{{ shownCount() }} {{ 'artists.count' | t }}</em>
+      <span class="az__label">A–Z</span>
+      <div class="az__letters">
+        @for (l of letters(); track l.letter) {<a routerLink="." [fragment]="'l-' + l.letter" [class.on]="active() === l.letter">{{ l.letter }}</a>}
+      </div>
+      <em><b>{{ shownCount() }}</b> {{ 'artists.count' | t }}</em>
     </div>
+    <span class="az__progress" [style.transform]="'scaleX(' + progress() + ')'"></span>
   </nav>
 
   <section>

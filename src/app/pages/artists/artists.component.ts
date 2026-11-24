@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, OnInit, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ArtistSummaryDto } from '../../models/artist';
 import { ApiService } from '../../services/api/api.service';
@@ -33,6 +34,12 @@ export class ArtistsComponent implements OnInit {
 
   artists = signal<ArtistSummaryDto[]>([]);
   query = signal('');
+
+  /** Sticky A–Z bar state: stuck to the top, the letter in view, how far down the page we are */
+  stuck = signal(false);
+  active = signal('');
+  progress = signal(0);
+  private readonly document = inject(DOCUMENT);
   readonly link = (slug: string) => artistPath(this.language, slug);
   readonly big = MIN_INDEXED_WORKS;
 
@@ -51,6 +58,29 @@ export class ArtistsComponent implements OnInit {
     return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([letter, artists]) => ({ letter, artists }));
   });
   shownCount = computed(() => this.letters().reduce((sum, l) => sum + l.artists.length, 0));
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const bar = this.document.querySelector<HTMLElement>('nav.az');
+    if (!bar) return;
+    this.stuck.set(bar.getBoundingClientRect().top <= 1);
+    let current = '';
+    for (const { letter } of this.letters()) {
+      const section = this.document.getElementById('l-' + letter);
+      if (section && section.getBoundingClientRect().top <= 140) current = letter;
+    }
+    if (current !== this.active()) {
+      this.active.set(current);
+      // keep the highlighted item visible when the bar scrolls sideways (phones)
+      setTimeout(() => {
+        const strip = bar.querySelector<HTMLElement>('.az__letters');
+        const item = strip?.querySelector<HTMLElement>('a.on');
+        if (strip && item) strip.scrollTo({ left: item.offsetLeft - strip.clientWidth / 2 + item.clientWidth / 2, behavior: 'smooth' });
+      });
+    }
+    const root = this.document.documentElement;
+    this.progress.set(Math.min(1, root.scrollTop / Math.max(1, root.scrollHeight - root.clientHeight)));
+  }
 
   years(artist: ArtistSummaryDto): string {
     const { BirthYear: born, DeathYear: died } = artist.facts;
