@@ -1,7 +1,7 @@
 .artists-page{font-family:'Poppins',sans-serif;color:var(--ink);overflow-x:clip}
-.artists-page img{display:block;max-width:100%}
-.artists-page a{color:inherit;text-decoration:none}
-.artists-page p,.artists-page h1,.artists-page h2,.artists-page h3,.artists-page ul{margin:0;padding:0}
+:where(.artists-page) img{display:block;max-width:100%}
+:where(.artists-page) a{color:inherit;text-decoration:none}
+:where(.artists-page) :where(p,h1,h2,h3,ul){margin:0;padding:0}
 .search input{color:var(--ink);background:#fff}
 
 

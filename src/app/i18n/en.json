@@ -1114,7 +1114,8 @@
     "seo": {
       "title": "{{name}} – art prints & posters",
       "description": "{{count}} works by {{name}} ({{years}}) as museum-quality art prints or posters, from {{price}}. Printed in 's-Hertogenbosch on Hahnemühle cotton paper."
-    }
+    },
+    "portrait": "Portrait of {{name}}"
   },
   "artists": {
     "lead": "{{count}} painters, watercolourists and printmakers from the public domain, from the Dutch Golden Age to Post-Impressionism. Choose a name and see every work we print in museum quality.",

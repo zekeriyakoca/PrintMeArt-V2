@@ -19,7 +19,7 @@
           </h1>
           @if (lifeLine()) {
           <div class="hero__life">
-            @if (a.image?.thumb) {<img [src]="a.image?.thumb" [alt]="a.name" width="64" height="64" />}
+            @if (portrait()) {<img [src]="portrait()" [alt]="'artist.portrait' | t: { name: a.name }" width="64" height="64" />}
             <div><strong>{{ lifeLine() }}</strong>@if (fact('Movement')) {<span>{{ fact('Movement') }}</span>}</div>
           </div>
           }

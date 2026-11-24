@@ -1287,7 +1287,8 @@
     "seo": {
       "title": "{{name}} – kunstprints & posters",
       "description": "{{count}} werken van {{name}} ({{years}}) als kunstprint op museumkwaliteit of poster, vanaf {{price}}. Gedrukt in 's-Hertogenbosch op Hahnemühle katoenpapier."
-    }
+    },
+    "portrait": "Portret van {{name}}"
   },
   "artists": {
     "lead": "{{count}} schilders, aquarellisten en prentmakers uit het publiek domein, van de Gouden Eeuw tot het postimpressionisme. Kies een naam en bekijk elk werk dat we als print op museumkwaliteit drukken.",

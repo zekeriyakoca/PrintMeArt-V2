@@ -1,10 +1,10 @@
 /* Port of the artist page design (scratchpad mockup); colours follow the site's palette */
 .artist-page{font-family:'Poppins',sans-serif;color:var(--ink);overflow-x:clip;-webkit-font-smoothing:antialiased}
-.artist-page img{display:block;max-width:100%}
-.artist-page a{color:inherit;text-decoration:none}
+:where(.artist-page) img{display:block;max-width:100%}
+:where(.artist-page) a{color:inherit;text-decoration:none}
 .artist-page a.btn--dark,.artist-page .btn--dark{color:#f8fafc}
 .artist-page .subnav__buy a,.artist-page .buybar a{color:#fff}
-.artist-page p,.artist-page h1,.artist-page h2,.artist-page h3,.artist-page dl,.artist-page dd,.artist-page ol,.artist-page ul,.artist-page figure{margin:0;padding:0}
+:where(.artist-page) :where(p,h1,h2,h3,dl,dd,ol,ul,figure){margin:0;padding:0}
 .ladder{margin-top:1.4rem}
 button.btn{cursor:pointer;font:inherit}
 

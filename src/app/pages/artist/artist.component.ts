@@ -13,6 +13,7 @@ import { artistPath, MIN_INDEXED_WORKS } from '../../shared/artist-path';
 import { productPath } from '../../shared/product-path';
 import { environment } from '../../../environments/environment';
 import { BasePageComponent } from '../basePageComponent';
+import { INTRO_IMAGES } from '../../shared/intro-images';
 import { NotFoundComponent } from '../not-found/not-found.component';
 
 /** The technique groups the catalogue can be filtered on, recognised in the museum's medium text */
@@ -150,6 +151,9 @@ export class ArtistComponent extends BasePageComponent implements OnInit {
     const died = [this.fact('DeathPlace'), this.artist()?.facts['DeathYear']].filter(Boolean).join(' ');
     return born && died ? `${born} – ${died}` : '';
   });
+
+  /** The artist's portrait (160 px), where we have one */
+  portrait = computed(() => INTRO_IMAGES[this.artist()?.name ?? '']);
 
   bio = computed(() => {
     const artist = this.artist();
