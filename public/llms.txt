@@ -46,6 +46,14 @@ Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch 
 
 - [How we work](https://printmeart.nl/en/how-we-work): our papers (Hahnemühle Photo Rag, Hahnemühle Museum Etching, Canson Rag Photographique (coming soon), Premium Poster), 12-colour giclée printing, quality checks, framing and care, FAQ
 
+## Guides
+
+- [Which paper should you choose for an art print?](https://printmeart.nl/en/guides/which-paper): Hahnemühle Photo Rag vs Museum Etching vs Premium Poster
+- [How big can you print your photo?](https://printmeart.nl/en/guides/photo-size-and-resolution): pixels needed per size at 200 ppi, phone photos, upscaling
+- [Giclée or poster: what is the difference?](https://printmeart.nl/en/guides/giclee-vs-poster)
+- [From your photo to an art print: how we make it](https://printmeart.nl/en/guides/from-photo-to-art-print): file check, hand cropping, approval, printing, quality check, packing
+- Dutch versions: https://printmeart.nl/nl/gids
+
 ## Policies
 
 - [Shipping, returns, terms and privacy](https://printmeart.nl/en/legal): current shipping costs per region, delivery times, the return period and how to start a return

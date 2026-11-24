@@ -3,6 +3,7 @@ import { environment } from './environments/environment';
 import { productPath } from './app/shared/product-path';
 import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from './app/services/i18n/languages';
 import { ARTISTS_SEGMENT, artistPath, MIN_INDEXED_WORKS } from './app/shared/artist-path';
+import { GUIDES, guidePath, guideText } from './app/guides/guides';
 
 const STATIC_PAGES = ['/', '/collections', '/products', '/about', '/frames', '/your-design', '/how-we-work', '/legal', '/licensing'];
 const CACHE_MS = 60 * 60 * 1000;
@@ -17,13 +18,15 @@ export async function sitemapXml(): Promise<string> {
 
   const [products, artists] = await Promise.all([fetchProducts(), indexedArtists()]);
   const listings = await fetchListings(new Set(artists.keys()));
-  // A page's path in each language; only the artist pages have a translated address
+  // A page's path in each language; the artist pages and guides have a translated address
   type Paths = (language: string) => string;
   const same = (path: string): Paths => () => path;
   const pages: Paths[] = [
     ...[...STATIC_PAGES, ...listings, ...products.map((product) => `/products/${productPath(product)}`)].map(same),
     (language) => artistPath(language),
     ...[...artists.values()].map((slug) => (language: string) => artistPath(language, slug)),
+    (language) => guidePath(language),
+    ...GUIDES.map((guide) => (language: string) => guidePath(language, guideText(guide, language).slug)),
   ];
   const url = (language: string, path: string) => escapeXml(`${environment.siteUrl}/${language}${path === '/' ? '' : path}`);
   const entries = pages.flatMap((path) =>
