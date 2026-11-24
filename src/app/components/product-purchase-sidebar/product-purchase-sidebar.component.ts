@@ -378,10 +378,38 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       return;
     }
 
-    // Picture: the design saved in Preview & Design, else the upload, else the product image
-    const pictureUrl = this.savedDesignUrl() || this.customImageUrl() || this.product().images?.[0]?.thumb || '';
+    // An upload added without a saved design: the design is rendered as Preview & Design shows it,
+    // so print prep sees the crop the customer saw, as for a saved one
+    const preview = this.preview();
+    if (this.customImageUrl() && !this.savedDesignUrl() && preview) {
+      if (this.addingToCart) return;
+      this.addingToCart = true;
+      // The same design again reuses its snapshot, so the cart adds to that line instead of a new one
+      const key = JSON.stringify([this.designImageUrl(), this.selectedSize()?.name, this.selectedFrameName(), this.isMatIncluded(), this.whiteBorder()]);
+      const cached = this.renderedDesign?.key === key ? this.renderedDesign.url : null;
+      (cached ? Promise.resolve(cached) : preview.uploadCurrentDesign().then((url) => ((this.renderedDesign = { key, url }), url)))
+        .catch((error) => {
+          // Never blocks the sale: the line goes in without the snapshot
+          console.error('Could not save the design snapshot:', error);
+          return null;
+        })
+        .then((designUrl) => this.putInCart(designUrl))
+        .finally(() => (this.addingToCart = false));
+      return;
+    }
 
-    this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions());
+    this.putInCart(this.savedDesignUrl());
+  }
+
+  private addingToCart = false;
+  /** Snapshot rendered at add to cart, with the design it shows */
+  private renderedDesign: { key: string; url: string } | null = null;
+
+  private putInCart(designUrl: string | null) {
+    // Picture: the design saved in Preview & Design, else the upload, else the product image
+    const pictureUrl = designUrl || this.customImageUrl() || this.product().images?.[0]?.thumb || '';
+
+    this.cartService.addItemToCart(this.product().id, this.variantId, this.product().name, this.calculatedPrice(), this.quantity(), pictureUrl, this.getSelectedOptions(designUrl));
   }
 
   getSelectedOptionName(optionId?: number): string {
@@ -392,7 +420,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     return option ? option.value : '';
   }
 
-  private getSelectedOptions() {
+  private getSelectedOptions(designUrl: string | null = this.savedDesignUrl()) {
     const size = this.selectedSize() ?? SizeOptions[0];
     const paperName = this.selectedPaperName();
 
@@ -442,13 +470,14 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
             optionId: customProductUrlOption.id,
             optionName: 'CustomProductUrl',
             spec1: customImageUrl,
+            // Pixel size of the upload, for print prep (the custom product's own metadata has none)
+            ...(this.customImageMetadata() ? { spec2: this.customImageMetadata()!.OriginalImageWidth, spec3: this.customImageMetadata()!.OriginalImageHeight } : {}),
           } as SelectedOptionDto);
         }
       }
     }
 
     // Add preview snapshot URL (optional)
-    const designUrl = this.savedDesignUrl();
     if (designUrl) {
       const snapshotGroup = this.product().optionGroups.find((group) => group.name === 'PreviewSnapshot');
       if (snapshotGroup) {
