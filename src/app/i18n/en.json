@@ -1132,5 +1132,36 @@
       "title": "Artists A–Z – art prints & posters",
       "description": "{{count}} artists and {{prints}} museum-quality art prints, from Van Gogh and Monet to Vermeer and Avercamp. Choose an artist and see all their works."
     }
+  },
+  "designPrices": {
+    "eyebrow": "Prices",
+    "title": "What does a print of your own photo cost?",
+    "intro": "One price per size, everything included: we check your file, crop it by hand and print it on the paper you choose.",
+    "size": "Size",
+    "posterSpec": "Fujifilm photo paper, 234 g/m²",
+    "cotton": "Cotton paper",
+    "cottonSpec": "Hahnemühle, 308–350 g/m²",
+    "noteIncluded": "Prices include VAT. Prints are sent rolled up in a protective tube.",
+    "noteShipping": "Free shipping in the Netherlands from {{amount}}.",
+    "noteCotton": "Hahnemühle Photo Rag (smooth) and Hahnemühle Museum Etching (finely textured) cost the same.",
+    "noteEnhancement": "Is your image too small for the size? Professional upscaling costs €5 extra.",
+    "faqEyebrow": "Questions",
+    "faqTitle": "Before you order",
+    "faq": {
+      "costQ": "What does it cost to print my own photo?",
+      "costA": "From {{from}} for 13 × 18 cm on Premium Poster, or {{cottonFrom}} on cotton paper. The largest size, {{largest}} cm on cotton paper, is {{largestPrice}}. Every price includes VAT, checking your file and cropping it by hand.",
+      "resolutionQ": "How sharp does my photo need to be?",
+      "resolutionA": "For a sharp print we want at least 200 pixels per inch at the size you choose. When you upload, you see the print quality for every size straight away. If your image falls short, we switch on professional upscaling (€5): we enlarge and sharpen your image before printing. You can turn it off yourself.",
+      "filesQ": "Which files can I upload?",
+      "filesA": "PNG, JPG or GIF, up to 50 MB. A photo straight from your phone or camera works fine; the bigger the original, the larger you can print it.",
+      "processQ": "What happens after I order?",
+      "processA": "We look at every file ourselves: the crop, the alignment and the white border. If your image needs a different crop to fit, we send you the final design to approve first, so you have the last word. Then we print it, check edges and colours, and pack it rolled up in a protective tube.",
+      "paperQ": "Which paper should I choose?",
+      "paperA": "All our papers are matte, so there is no glare. For photos where colour really matters, choose Hahnemühle Photo Rag: smooth cotton paper with fine detail, printed as a giclée with pigment inks and fade-resistant for over 100 years. Premium Poster is a real photographic print on Fujifilm paper with vivid colours and deep blacks, at the best price.",
+      "deliveryQ": "How fast will it arrive?",
+      "deliveryA": "Orders are delivered within {{days}} days, always with track and trace.",
+      "privacyQ": "What happens to my photos?",
+      "privacyA": "We only use your image to make your print. Your images are deleted within 90 days, or once your order is completed."
+    }
   }
 }

@@ -2,7 +2,7 @@ import { ProductTags } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
-import { EMPTY, Observable, of, shareReplay } from 'rxjs';
+import { EMPTY, Observable, forkJoin, map, of, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   ProductDto,
@@ -53,6 +53,42 @@ export class ApiService {
   getProductById(productId: string): Observable<ProductDto> {
     return this._httpClient.get<ProductDto>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`,
+    );
+  }
+
+  /**
+   * Prices of a product in the standard sizes on Premium Poster and on cotton paper, rolled up.
+   * Worked out on the server too (unlike calculatePrice), so the price table is in the page search engines read;
+   * the browser reuses the server's answers.
+   */
+  getPriceTable(product: ProductDto, sizes: { name: string; val1: number; val2: number }[]): Observable<PriceTableRow[]> {
+    const group = (name: string) => product.optionGroups.find((g) => g.name.toLowerCase().startsWith(name));
+    const paper = group('paper');
+    const frame = group('frame')?.options.find((o) => o.value === 'Rolled-up');
+    const mat = group('including mat')?.options[0];
+    const size = group('size')?.options[0];
+    if (!paper || !frame || !mat || !size) return of([]);
+    const price = (s: { name: string; val1: number; val2: number }, grade: string, paperName: string) => {
+      const option = paper.options.find((o) => o.value === grade) ?? paper.options[0];
+      const specs = { spec1: s.val1.toString(), spec2: s.val2.toString() };
+      return this._httpClient
+        .post<{ price: number }>(`${this.PRICING_API_URL}/pricing/v1/product/calculate-price`, {
+          productId: product.id.toString(),
+          selectedOptions: [
+            { optionId: option.id, optionName: paperName, ...specs, spec3: paperName },
+            { optionId: frame.id, optionName: frame.value, ...specs },
+            { optionId: mat.id, optionName: 'No Mat', spec1: 'false' },
+            { optionId: size.id, optionName: s.name, ...specs },
+          ],
+        })
+        .pipe(map((r) => r.price));
+    };
+    return forkJoin(
+      sizes.map((s) =>
+        forkJoin({ poster: price(s, 'Home', 'Premium Poster'), cotton: price(s, 'Museum', 'Hahnemühle Photo Rag') }).pipe(
+          map(({ poster, cotton }) => ({ size: s.name, poster, cotton })),
+        ),
+      ),
     );
   }
 
@@ -177,4 +213,10 @@ export class ApiService {
       `${this.BFF_URL}/bff/v1/ordering/checkout/${sessionId}`,
     );
   }
+}
+
+export interface PriceTableRow {
+  size: string;
+  poster: number;
+  cotton: number;
 }
