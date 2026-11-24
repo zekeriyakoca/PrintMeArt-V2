@@ -145,7 +145,9 @@
     "paper": "Papier",
     "allByArtist": "Alle werken van {{name}}",
     "changeOptions": "Opties wijzigen",
-    "chooseOptions": "Kies opties"
+    "chooseOptions": "Kies opties",
+    "frame": "Lijst",
+    "rolledUp": "Opgerold"
   },
   "sizes": {
     "original": "Originele afmeting",
