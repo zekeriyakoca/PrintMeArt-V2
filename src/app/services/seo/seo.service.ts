@@ -24,7 +24,7 @@ export interface PageSeo {
   /** The page's path in each language, when the address itself is translated (/nl/kunstenaars, /en/artists) */
   paths?: Record<string, string>;
   image?: string;
-  type?: 'website' | 'product';
+  type?: 'website' | 'product' | 'article';
   /** Product price in euros, for Pinterest's product pins */
   price?: number;
   /** schema.org objects for this page, besides the site-wide ones */

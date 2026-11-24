@@ -1,0 +1,26 @@
+<div class="guide-page">
+  <header class="ghero">
+    <div class="wrap">
+      <nav class="crumbs" [attr.aria-label]="'artist.breadcrumb' | t"><a routerLink="/">PrintMeArt</a><span>/</span><b>{{ 'guides.title' | t }}</b></nav>
+      <p class="eyebrow">{{ 'guides.eyebrow' | t }}</p>
+      <h1>{{ 'guides.title' | t }}</h1>
+      <p class="lead">{{ 'guides.lead' | t }}</p>
+    </div>
+  </header>
+
+  <section class="glist">
+    <div class="wrap">
+      @for (g of guides; track g.link) {
+      <a class="gcard" [routerLink]="g.link">
+        <span class="gcard__n">{{ g.number }}</span>
+        <span class="gcard__body">
+          <small>{{ g.text.eyebrow }} · {{ 'guides.minutes' | t: { minutes: g.minutes } }}</small>
+          <h2>{{ g.text.title }}</h2>
+          <p>{{ g.text.description }}</p>
+        </span>
+        <span class="gcard__go" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      }
+    </div>
+  </section>
+</div>

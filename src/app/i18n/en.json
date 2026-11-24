@@ -71,7 +71,8 @@
     "shop": "Shop",
     "allPrints": "All prints",
     "frames": "Frames",
-    "yourDesign": "Your design"
+    "yourDesign": "Your design",
+    "guides": "Guides"
   },
   "user": {
     "profile": "Profile",
@@ -1163,5 +1164,22 @@
       "privacyQ": "What happens to my photos?",
       "privacyA": "We only use your image to make your print. Your images are deleted within 90 days, or once your order is completed."
     }
+  },
+  "guides": {
+    "eyebrow": "Guides",
+    "title": "Guides",
+    "lead": "Practical explanations of paper, sizes and how an art print is made. No jargon, just what we see in the studio every day.",
+    "seoTitle": "Art print guides: paper, size and printing",
+    "seoDescription": "Which paper to choose, how big you can print your photo and what a giclée is. Practical guides from PrintMeArt.",
+    "minutes": "{{minutes}} min read",
+    "updated": "Updated {{date}}",
+    "inShort": "In short",
+    "more": "More guides",
+    "ctaDesignKicker": "Your design",
+    "ctaDesignTitle": "Upload your photo and see straight away how big you can print it.",
+    "ctaDesignButton": "Make your print",
+    "ctaPrintsKicker": "The collection",
+    "ctaPrintsTitle": "Museum masterpieces, printed on the paper that suits them.",
+    "ctaPrintsButton": "See all prints"
   }
 }

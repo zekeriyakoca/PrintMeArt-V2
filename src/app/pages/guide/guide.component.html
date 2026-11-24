@@ -1,0 +1,69 @@
+@if (text(); as g) {
+<article class="guide-page">
+  <header class="ghero">
+    <div class="wrap">
+      <nav class="crumbs" [attr.aria-label]="'artist.breadcrumb' | t"><a routerLink="/">PrintMeArt</a><span>/</span><a [routerLink]="indexLink">{{ 'guides.title' | t }}</a><span>/</span><b>{{ g.eyebrow }}</b></nav>
+      <p class="eyebrow">{{ 'guides.eyebrow' | t }} · {{ g.eyebrow }}</p>
+      <h1>{{ g.title }}</h1>
+      <p class="lead">{{ g.lead }}</p>
+      <p class="meta"><span>{{ 'guides.minutes' | t: { minutes: guide()!.minutes } }}</span><i></i><span>{{ 'guides.updated' | t: { date: updated() } }}</span></p>
+    </div>
+  </header>
+
+  <div class="wrap gbody">
+    <aside class="toc">
+      <p class="toc__label">{{ 'artist.onThisPage' | t }}</p>
+      <nav>
+        @for (h of toc(); track h.id) {<a routerLink="." [fragment]="h.id">{{ h.text }}</a>}
+      </nav>
+    </aside>
+
+    <div class="prose" (click)="follow($event)">
+      <section class="short" [attr.aria-label]="'guides.inShort' | t">
+        <p class="short__label">{{ 'guides.inShort' | t }}</p>
+        <ul>@for (s of g.summary; track $index) {<li>{{ s }}</li>}</ul>
+      </section>
+
+      @for (b of g.blocks; track $index) {
+        @switch (b.t) {
+          @case ('h2') { <h2 [id]="b.id">{{ b.text }}</h2> }
+          @case ('p') { <p [innerHTML]="b.html"></p> }
+          @case ('ul') { <ul class="bullets">@for (item of b.items; track $index) {<li [innerHTML]="item"></li>}</ul> }
+          @case ('table') {
+            <div class="tbl"><table>
+              <thead><tr>@for (h of b.head; track $index) {<th scope="col">{{ h }}</th>}</tr></thead>
+              <tbody>@for (row of b.rows; track $index) {<tr>@for (cell of row; track $index; let first = $first) {@if (first) {<th scope="row">{{ cell }}</th>} @else {<td>{{ cell }}</td>}}</tr>}</tbody>
+            </table></div>
+          }
+          @case ('tip') { <aside class="tip"><b>{{ b.title }}</b><p [innerHTML]="b.html"></p></aside> }
+        }
+      }
+
+      <div class="cta">
+        @if (guide()!.cta === 'design') {
+          <p class="cta__k">{{ 'guides.ctaDesignKicker' | t }}</p>
+          <h2 class="cta__h">{{ 'guides.ctaDesignTitle' | t }}</h2>
+          <a class="cta__btn" [routerLink]="'/' + language + '/your-design'">{{ 'guides.ctaDesignButton' | t }} →</a>
+        } @else {
+          <p class="cta__k">{{ 'guides.ctaPrintsKicker' | t }}</p>
+          <h2 class="cta__h">{{ 'guides.ctaPrintsTitle' | t }}</h2>
+          <a class="cta__btn" [routerLink]="'/' + language + '/products'">{{ 'guides.ctaPrintsButton' | t }} →</a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <section class="more">
+    <div class="wrap">
+      <p class="eyebrow">{{ 'guides.more' | t }}</p>
+      <div class="more__grid">
+        @for (o of others(); track o.link) {
+        <a class="mcard" [routerLink]="o.link"><small>{{ o.text.eyebrow }} · {{ 'guides.minutes' | t: { minutes: o.minutes } }}</small><h3>{{ o.text.title }}</h3><span>→</span></a>
+        }
+      </div>
+    </div>
+  </section>
+</article>
+} @else {
+<app-not-found />
+}

@@ -71,7 +71,8 @@
     "shop": "Winkel",
     "allPrints": "Alle prints",
     "frames": "Lijsten",
-    "yourDesign": "Jouw ontwerp"
+    "yourDesign": "Jouw ontwerp",
+    "guides": "Gidsen"
   },
   "user": {
     "profile": "Profiel",
@@ -1336,5 +1337,22 @@
       "privacyQ": "Wat gebeurt er met mijn foto’s?",
       "privacyA": "We gebruiken je afbeelding alleen om je print te maken. Je afbeeldingen worden binnen 90 dagen verwijderd, of zodra je bestelling is afgerond."
     }
+  },
+  "guides": {
+    "eyebrow": "Gids",
+    "title": "Gidsen",
+    "lead": "Praktische uitleg over papier, formaten en hoe een kunstprint wordt gemaakt. Zonder vakjargon, met wat we in de studio dagelijks zien.",
+    "seoTitle": "Gidsen over kunstprints: papier, formaat en printtechniek",
+    "seoDescription": "Welk papier kies je, hoe groot kun je je foto printen en wat is een giclée? Praktische gidsen van PrintMeArt.",
+    "minutes": "{{minutes}} min lezen",
+    "updated": "Bijgewerkt {{date}}",
+    "inShort": "In het kort",
+    "more": "Meer gidsen",
+    "ctaDesignKicker": "Jouw ontwerp",
+    "ctaDesignTitle": "Upload je foto en zie meteen hoe groot je kunt printen.",
+    "ctaDesignButton": "Maak je print",
+    "ctaPrintsKicker": "De collectie",
+    "ctaPrintsTitle": "Meesterwerken uit musea, geprint op het papier dat bij ze past.",
+    "ctaPrintsButton": "Bekijk alle prints"
   }
 }

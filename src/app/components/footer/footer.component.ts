@@ -1,7 +1,9 @@
 import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { guidePath } from '../../guides/guides';
+import { LanguageService } from '../../services/i18n/language.service';
 
 import { IconComponent } from '../shared/icon/icon.component';
 import { COMPANY } from '../../shared/company';
@@ -25,6 +27,7 @@ export class FooterComponent {
         { href: '/about', label: 'footer.aboutUs' },
         { href: '/about#contact-us', label: 'footer.contact' },
         { href: '/how-we-work', label: 'footer.howWeWork' },
+        { href: guidePath(inject(LanguageService).currentLanguageCode()), label: 'footer.guides' },
       ],
     },
     {

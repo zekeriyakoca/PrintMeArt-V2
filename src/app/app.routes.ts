@@ -25,6 +25,11 @@ export const routes: Routes = [
     { path: segment, loadComponent: () => import('./pages/artists/artists.component').then((m) => m.ArtistsComponent) },
     { path: `${segment}/:slug`, loadComponent: () => import('./pages/artist/artist.component').then((m) => m.ArtistComponent) },
   ]),
+  // The guides too: /nl/gids, /en/guides
+  ...['gids', 'guides'].flatMap((segment) => [
+    { path: segment, loadComponent: () => import('./pages/guides/guides.component').then((m) => m.GuidesComponent) },
+    { path: `${segment}/:slug`, loadComponent: () => import('./pages/guide/guide.component').then((m) => m.GuideComponent) },
+  ]),
   {
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),

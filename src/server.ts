@@ -6,6 +6,7 @@ import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i1
 import { productFeedXml, refreshProductFeed } from './feed';
 import { indexedArtists, sitemapXml, wrongArtistsSegment } from './sitemap';
 import { artistPath } from './app/shared/artist-path';
+import { guideBySlug, guidePath, guideText } from './app/guides/guides';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
 
@@ -113,6 +114,16 @@ app.get(/^\/(en|nl)\/(kunstenaars|artists)(\/.*)?$/, (req, res, next) => {
   const [, language, segment] = req.path.split('/');
   if (!wrongArtistsSegment(language, segment)) return next();
   return res.redirect(301, `/${language}${artistPath(language)}${req.originalUrl.slice(language.length + segment.length + 2)}`);
+});
+
+// The guides: /nl/gids/welk-papier-kiezen and /en/guides/which-paper; the other language's word or slug moves to this language's
+app.get(/^\/(en|nl)\/(gids|guides)(\/[^/]*)?\/?$/, (req, res, next) => {
+  const [, language, segment, slug] = req.path.split('/');
+  const guide = slug ? guideBySlug(slug) : undefined;
+  if (slug && !guide) return next();
+  const target = guidePath(language, guide ? guideText(guide, language).slug : undefined);
+  if (`/${segment}${slug ? `/${slug}` : ''}` === target) return next();
+  return res.redirect(301, `/${language}${target}`);
 });
 
 // The catalog filtered to one artist was that artist's page before it had its own; those links move to the page.
