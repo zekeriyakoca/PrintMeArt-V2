@@ -2,6 +2,7 @@ import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
 import { FrameOptionsByValue, frameMaskFor } from '../../shared/constants';
@@ -268,33 +269,56 @@ export class ProductPreviewComponent {
   }
 
   private smartInit() {
-    const meta = this.metadata();
-    const size = this.selectedSize();
-
     // Cover by default: the print always shows in a frame
     this.fitMode.set('cover');
     this.showGhost.set(true);
     this.translateX.set(0);
     this.translateY.set(0);
 
-    // Detect image orientation from metadata
+    const view = this.openingView();
+    this.isLandscape.set(view.landscape);
+    this.scale.set(view.scale);
+  }
+
+  /** Orientation and zoom the editor opens with for the options chosen now */
+  private openingView(): { landscape: boolean; scale: number } {
+    const meta = this.metadata();
+    const size = this.selectedSize();
+    let landscape = false;
+    // Detect image orientation from metadata: turn the print when image and size orientation don't match
     if (meta) {
       const imgW = parseFloat(meta.OriginalImageWidth) || 1;
       const imgH = parseFloat(meta.OriginalImageHeight) || 1;
-      const imageIsLandscape = imgW > imgH;
-      const sizeIsLandscape = size.val1 > size.val2;
-      // Toggle landscape if image and size orientation don't match
-      this.isLandscape.set(imageIsLandscape !== sizeIsLandscape);
-    } else {
-      this.isLandscape.set(false);
+      landscape = imgW > imgH !== size.val1 > size.val2;
     }
+    // If mat, zoom out slightly to show mat border; otherwise fit
+    return { landscape, scale: this.showsMat() ? 0.92 : 1 };
+  }
 
-    // Set zoom: if mat, zoom out slightly to show mat border; otherwise fit
-    if (this.showsMat()) {
-      this.scale.set(0.92);
-    } else {
-      this.scale.set(1);
-    }
+  /**
+   * Renders and uploads the design as Preview & Design would show it now, without opening or closing it:
+   * for a cart line added without a saved design, so print prep still sees the crop the customer saw
+   */
+  async uploadCurrentDesign(): Promise<string> {
+    // Not opened since the options last changed: it would open on its default view
+    const view = this.needsSmartInit ? this.openingView() : { landscape: this.isLandscape(), scale: this.clampedScale() };
+    const fitMode = this.needsSmartInit ? 'cover' : this.fitMode();
+    const size = this.selectedSize();
+    const border = this.whiteBorder();
+    // Closed, the editor cannot measure its pan; an unsaved pan is always reset on close (save or discard), so it is none
+    const layout: DesignLayout = (this.isOpen() && !this.needsSmartInit ? this.currentLayout() : null) ?? {
+      fitMode,
+      scale: view.scale,
+      offsetX: 0,
+      offsetY: 0,
+      borderCm: border.cm,
+      borderBottomCm: border.bottomCm,
+    };
+    const width = view.landscape ? size.val2 : size.val1;
+    const height = view.landscape ? size.val1 : size.val2;
+    const [image, frame] = await Promise.all([loadCorsImage(this.imageUrl()), loadCorsImage(frameMaskFor(this.frameName(), width, height))]);
+    const file = await designToFile(composeDesign(DESIGN_WIDTH_PX, { image, frame, width, height, matIncluded: this.showsMat() }, layout));
+    return firstValueFrom(this.commonApi.uploadImage(file));
   }
 
   /** Current fit / zoom / pan, independent of the on-screen size of the preview. */
