@@ -120,7 +120,7 @@
 
     <!-- PURCHASE SIDEBAR (desktop) -->
     <div class="hidden lg:block flex-grow">
-      <app-product-purchase-sidebar [product]="product()" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
+      <app-product-purchase-sidebar [product]="product()" [stickyBar]="true" (priceChange)="describeForSearch(product(), $event)"></app-product-purchase-sidebar>
     </div>
   </div>
 

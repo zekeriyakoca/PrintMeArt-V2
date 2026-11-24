@@ -1,6 +1,6 @@
 <section class="purchase-sidebar">
   <!-- Price -->
-  <div class="price-block">
+  <div class="price-block" #priceBlock>
     @if (hasAllOptionsSelected()) {
       <!-- The price is worked out in the browser; until then the row keeps its place without showing €0.00 -->
       <div class="price-row" [style.visibility]="calculatedPrice() > 0 ? null : 'hidden'">
@@ -163,31 +163,59 @@
   </div>
 }
 
-<!-- Phones and tablets: the work, the chosen options and add to cart pinned to the top -->
+<!-- Pinned to the top once the price has scrolled away: the work, the chosen options, the price and add to cart -->
 @if (stickyBar()) {
-  <div class="sticky-buy lg:hidden" [class.sticky-buy--shown]="showStickyBar()" [attr.inert]="showStickyBar() ? null : ''">
-    <button type="button" class="sticky-buy__info" (click)="scrollToOptions()" [attr.aria-label]="'product.changeOptions' | t">
-      @if (product().images?.[0]?.thumb; as thumb) {
-        <img class="sticky-buy__thumb" [src]="thumb" alt="" />
-      }
-      <span class="sticky-buy__text">
-        <span class="sticky-buy__name">{{ product().name }}</span>
-        <span class="sticky-buy__meta">
-          @if (selectedSize(); as size) {<b>{{ size.name }} cm</b>}
-          <i></i>{{ selectedFrameName() || ('design.noFrame' | t) }}
-          @if (isFrameSelected() && isMatIncluded()) {<i></i>{{ 'design.matArea' | t }}}
-          <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="sticky-buy" [class.sticky-buy--shown]="stickyBarShown()" [attr.inert]="stickyBarShown() ? null : ''">
+    <div class="sticky-buy__inner">
+      <button type="button" class="sticky-buy__info" (click)="scrollToOptions()" [attr.aria-label]="'product.changeOptions' | t">
+        @if (stickyThumb(); as thumb) {
+          <span class="sticky-buy__frame"><img class="sticky-buy__thumb" [src]="thumb" alt="" /></span>
+        }
+        <span class="sticky-buy__text">
+          <span class="sticky-buy__name">{{ product().name }}</span>
+          @if (product().title) {<span class="sticky-buy__title">{{ product().title }}</span>}
+          <span class="sticky-buy__meta">
+            @if (selectedSize(); as size) {<b>{{ size.name }} cm</b>}
+            <i></i>{{ selectedFrameName() || ('product.rolledUp' | t) }}
+            @if (isFrameSelected() && isMatIncluded()) {<i></i>{{ 'design.matArea' | t }}}
+            <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
         </span>
-      </span>
-    </button>
-    @if (hasAllOptionsSelected() && calculatedPrice() > 0) {
-      <button type="button" class="sticky-buy__btn" (click)="addToCart()" [attr.aria-label]="'product.addToCart' | t">
-        <app-icon iconName="cart"></app-icon>
-        <span>{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
       </button>
-    } @else {
-      <button type="button" class="sticky-buy__btn" (click)="scrollToOptions()">{{ 'product.chooseOptions' | t }}</button>
-    }
+
+      <!-- Wide screens: each chosen option as a chip; a click goes back to the options -->
+      <div class="sticky-buy__chips">
+        @if (selectedSize(); as size) {
+          <button type="button" class="chip" (click)="scrollToOptions()"><small>{{ 'product.size' | t }}</small>{{ size.name }} cm</button>
+        }
+        <button type="button" class="chip" (click)="scrollToOptions()"><small>{{ 'product.frame' | t }}</small>{{ selectedFrameName() || ('product.rolledUp' | t) }}@if (isFrameSelected() && isMatIncluded()) { + {{ 'design.matArea' | t }}}</button>
+        @if (selectedPaper(); as paper) {
+          <button type="button" class="chip chip--paper" (click)="scrollToOptions()"><small>{{ 'product.paper' | t }}</small>{{ paper.name }}</button>
+        }
+      </div>
+
+      <div class="sticky-buy__actions">
+        @if (hasAllOptionsSelected() && calculatedPrice() > 0) {
+          <span class="sticky-buy__price"><b>{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</b><small>{{ 'product.taxIncluded' | t }}</small></span>
+          <button type="button" class="sticky-buy__ghost" [disabled]="!selectedSize()" (click)="onPreviewClick()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>{{ 'product.previewDesign' | t }}</span>
+          </button>
+          <button type="button" class="sticky-buy__btn" (click)="addToCart()" [attr.aria-label]="'product.addToCart' | t">
+            <app-icon iconName="cart"></app-icon>
+            <span class="sticky-buy__btn-price">{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+            <span class="sticky-buy__btn-text">{{ 'product.addToCart' | t }}</span>
+          </button>
+        } @else if (awaitingUpload()) {
+          <button type="button" class="sticky-buy__btn" (click)="scrollToUpload()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+            <span>{{ 'howCustom.uploadTitle' | t }}</span>
+          </button>
+        } @else {
+          <button type="button" class="sticky-buy__btn" (click)="scrollToOptions()">{{ 'product.chooseOptions' | t }}</button>
+        }
+      </div>
+    </div>
     <span class="sticky-buy__progress" [style.transform]="'scaleX(' + scrollProgress() + ')'"></span>
   </div>
 }

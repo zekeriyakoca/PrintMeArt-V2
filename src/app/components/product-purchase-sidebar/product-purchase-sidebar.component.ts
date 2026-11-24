@@ -127,13 +127,27 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   );
 
   private readonly actionButtons = viewChild<ElementRef<HTMLElement>>('actionButtons');
+  private readonly priceBlock = viewChild<ElementRef<HTMLElement>>('priceBlock');
   showStickyBar = signal(false);
+  /** Custom design: the bottom dock with the buttons takes over while it is up, so the two never show at once */
+  stickyBarShown = computed(() => this.showStickyBar() && !this.showActionDock() && !this.showPreview() && !this.roomLayout());
+  /** The uploaded image on the custom design page, else the product's own */
+  stickyThumb = computed(() => this.customImageUrl() || this.product().images?.[0]?.thumb || null);
   /** How far down the page we are, for the sticky bar's progress line */
   scrollProgress = signal(0);
 
+  /** Custom design without an image yet: the sticky bar asks for the upload first */
+  awaitingUpload = computed(() => !this.customImageUrl() && !!this.product().optionGroups?.some((g) => g.name === 'CustomProductDetails'));
+
+  scrollToUpload() {
+    const upload = document.querySelector('app-custom-design-upload');
+    const top = upload ? upload.getBoundingClientRect().top + window.scrollY - 96 : 0;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
   /** The sticky bar's way back to the options, just under the site header */
   scrollToOptions() {
-    const top = this.host.nativeElement.getBoundingClientRect().top + window.scrollY - 80;
+    const top = this.host.nativeElement.getBoundingClientRect().top + window.scrollY - 96;
     window.scrollTo({ top, behavior: 'smooth' });
   }
   /** The action buttons are still below the screen */
@@ -167,12 +181,14 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         dockObserver.observe(buttons);
         destroyRef.onDestroy(() => dockObserver.disconnect());
       }
-      if (!this.stickyBar() || !buttons) return;
-      // Shown once the buttons are above the screen
-      const observer = new IntersectionObserver(([entry]) =>
-        this.showStickyBar.set(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      const price = this.priceBlock()?.nativeElement;
+      if (!this.stickyBar() || !price) return;
+      // Shown as soon as the price has gone up under the site header (80 px); a hidden copy of the sidebar measures zero and never shows it
+      const observer = new IntersectionObserver(
+        ([entry]) => this.showStickyBar.set(!entry.isIntersecting && entry.boundingClientRect.bottom < 80 && entry.boundingClientRect.height > 0),
+        { rootMargin: '-80px 0px 0px 0px' },
       );
-      observer.observe(buttons);
+      observer.observe(price);
       const onScroll = () => {
         const root = document.documentElement;
         this.scrollProgress.set(Math.min(1, root.scrollTop / Math.max(1, root.scrollHeight - root.clientHeight)));
