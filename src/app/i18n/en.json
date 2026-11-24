@@ -46,7 +46,8 @@
     "romanticism": "Romanticism",
     "impressionism": "Impressionism",
     "postImpressionism": "Post-Impressionism",
-    "realism": "Realism"
+    "realism": "Realism",
+    "artists": "Artists"
   },
   "footer": {
     "familyStudio": "Family-Owned Studio",
@@ -141,7 +142,8 @@
     "badgeCotton": "Hahnemühle 100% cotton, 308 g/m²",
     "fromUpper": "FROM",
     "uploadPending": "Please wait for your image to finish uploading before adding to cart.",
-    "paper": "Paper"
+    "paper": "Paper",
+    "allByArtist": "All works by {{name}}"
   },
   "sizes": {
     "original": "Original Artwork Size",
@@ -1010,6 +1012,121 @@
     "notFound": {
       "title": "Page not found",
       "description": "This page does not exist (anymore)."
+    }
+  },
+  "artist": {
+    "index": "Artists",
+    "breadcrumb": "Breadcrumb",
+    "eyebrow": "Artist",
+    "subtitle": "Museum-quality art prints & posters",
+    "lead": "PrintMeArt prints <b>{{count}} works by {{name}}</b> as giclée prints on 100% cotton Hahnemühle paper or as a Premium Poster, in sizes from 13×18 to 60×90 cm, <b>from {{price}}</b>.",
+    "seeAll": "See all {{count}} prints",
+    "readStory": "Read the story",
+    "statWorks": "Works",
+    "statMuseums": "Museums",
+    "statPeriod": "Period",
+    "asPrint": "As a print from {{price}}",
+    "onThisPage": "On this page",
+    "nav": {
+      "facts": "At a glance",
+      "featured": "Featured",
+      "bio": "Biography",
+      "works": "All works",
+      "museums": "Museums",
+      "faq": "Questions"
+    },
+    "from": "from",
+    "pick": "Choose a work",
+    "inFacts": "in facts",
+    "born": "Born",
+    "died": "Died",
+    "country": "Country",
+    "movement": "Movement",
+    "techniques": "Techniques",
+    "originalsIn": "Originals in",
+    "atUs": "At PrintMeArt",
+    "price": "Price",
+    "inclVat": "incl. VAT",
+    "sources": "Sources: collection data from the museums named (open access) and Wikidata.",
+    "featuredTitle": "Where to start",
+    "original": "Original",
+    "collection": "Collection",
+    "viewPrint": "View this print",
+    "bioTitle": "About {{name}}",
+    "life": "Life",
+    "bornIn": "Born in {{place}}",
+    "diedIn": "Died in {{place}}",
+    "worksFrom": "The {{count}} works in our collection",
+    "catalogue": "Catalogue",
+    "allWorks": "All {{count}} prints by",
+    "filter": "Filter by technique",
+    "all": "All",
+    "showAll": "Show {{count}} more works",
+    "listTitle": "All works at a glance",
+    "col": {
+      "title": "Title",
+      "year": "Year",
+      "technique": "Technique",
+      "museum": "Museum",
+      "size": "Original",
+      "price": "Print"
+    },
+    "provenance": "Provenance",
+    "whereTitle": "Where are the originals?",
+    "whereText": "Every print is made from the open-access image of the museum that holds the original. Each work names the museum and its credit line.",
+    "thePrint": "The print",
+    "printTitle": "How {{name}} comes to your wall",
+    "sizesTitle": "Sizes",
+    "sizesText": "Six standard sizes from 13×18 to 60×90 cm. For each work we offer the sizes that suit the proportions and resolution of the museum image.",
+    "paperTitle": "Paper",
+    "paperRag": "Smooth matte cotton paper (100% cotton), giclée with pigment inks",
+    "paperEtching": "Cotton paper with a fine, tactile texture",
+    "paperPoster": "A true photographic print with vivid colour, at the best price",
+    "orderTitle": "Ordering",
+    "matOption": "With or without a passe-partout",
+    "shipping": "Shipping within the Netherlands {{price}}",
+    "delivery": "Delivered within {{days}} days",
+    "faqTitle": "About prints by",
+    "more": "Keep exploring",
+    "relatedTitle": "Related artists",
+    "allArtists": "All artists A–Z",
+    "painter": "Painter",
+    "technique": {
+      "watercolour": "Watercolour",
+      "oil": "Oil",
+      "print": "Print",
+      "drawing": "Drawing"
+    },
+    "faq": {
+      "whereQ": "Where can I buy a {{name}} print?",
+      "whereA": "At PrintMeArt (printmeart.nl), a family business in 's-Hertogenbosch, the Netherlands. We print {{count}} works by {{name}} as giclée prints on 100% cotton Hahnemühle paper or as a Premium Poster, from {{price}} including VAT. We ship within the Netherlands and the EU.",
+      "whichQ": "Which works by {{name}} are available as a poster or print?",
+      "whichA": "Among others {{works}}: {{count}} works in total. The full list with year, technique and museum is on this page.",
+      "sizesQ": "Which sizes, and from what price?",
+      "sizesA": "The standard sizes are 13×18, 21×30, 30×40, 40×60, 50×70 and 60×90 cm; for each work we offer the sizes that suit the proportions and resolution of the original. Prices start at {{price}} including VAT.",
+      "publicQ": "Can the work of {{name}} be reproduced freely?",
+      "publicA": "Yes. {{name}} died in {{died}}; the work is in the public domain. Our prints are made from the open-access images the museums publish themselves.",
+      "museumsQ": "Where are the original works?",
+      "museumsA": "The originals on this page are in {{museums}}.",
+      "deliveryQ": "How fast is a print delivered?",
+      "deliveryA": "Orders within the Netherlands are delivered within {{days}} days, with tracking."
+    },
+    "seo": {
+      "title": "{{name}} – art prints & posters",
+      "description": "{{count}} works by {{name}} ({{years}}) as museum-quality art prints or posters, from {{price}}. Printed in 's-Hertogenbosch on Hahnemühle cotton paper."
+    },
+    "portrait": "Portrait of {{name}}"
+  },
+  "artists": {
+    "lead": "{{count}} painters, watercolourists and printmakers from the public domain, from the Dutch Golden Age to Post-Impressionism. Choose a name and see every work we print in museum quality.",
+    "search": "Search an artist, e.g. Monet",
+    "masters": "Great masters",
+    "alphabet": "Alphabet",
+    "count": "artists",
+    "none": "No artist found.",
+    "seo": {
+      "title": "Artists A–Z – art prints & posters",
+      "description": "{{count}} artists and {{prints}} museum-quality art prints, from Van Gogh and Monet to Vermeer and Avercamp. Choose an artist and see all their works."
     }
   }
 }

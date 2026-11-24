@@ -46,7 +46,8 @@
     "romanticism": "Romantiek",
     "impressionism": "Impressionisme",
     "postImpressionism": "Postimpressionisme",
-    "realism": "Realisme"
+    "realism": "Realisme",
+    "artists": "Kunstenaars"
   },
   "footer": {
     "familyStudio": "Familiestudio",
@@ -141,7 +142,8 @@
     "badgeCotton": "Hahnemühle, 100% katoen, 308 g/m²",
     "fromUpper": "VANAF",
     "uploadPending": "Wacht even tot je afbeelding is geüpload voordat je hem in je winkelmand legt.",
-    "paper": "Papier"
+    "paper": "Papier",
+    "allByArtist": "Alle werken van {{name}}"
   },
   "sizes": {
     "original": "Originele afmeting",
@@ -1183,6 +1185,121 @@
     "notFound": {
       "title": "Pagina niet gevonden",
       "description": "Deze pagina bestaat niet (meer)."
+    }
+  },
+  "artist": {
+    "index": "Kunstenaars",
+    "breadcrumb": "Kruimelpad",
+    "eyebrow": "Kunstenaar",
+    "subtitle": "Kunstprints & posters op museumkwaliteit",
+    "lead": "PrintMeArt drukt <b>{{count}} werken van {{name}}</b> als giclée-print op 100% katoenpapier van Hahnemühle of als Premium Poster, in formaten van 13×18 tot 60×90 cm, <b>vanaf {{price}}</b>.",
+    "seeAll": "Bekijk alle {{count}} prints",
+    "readStory": "Lees het verhaal",
+    "statWorks": "Werken",
+    "statMuseums": "Musea",
+    "statPeriod": "Periode",
+    "asPrint": "Als print vanaf {{price}}",
+    "onThisPage": "Op deze pagina",
+    "nav": {
+      "facts": "In het kort",
+      "featured": "Uitgelicht",
+      "bio": "Biografie",
+      "works": "Alle werken",
+      "museums": "Musea",
+      "faq": "Vragen"
+    },
+    "from": "vanaf",
+    "pick": "Kies een werk",
+    "inFacts": "in feiten",
+    "born": "Geboren",
+    "died": "Overleden",
+    "country": "Land",
+    "movement": "Stroming",
+    "techniques": "Technieken",
+    "originalsIn": "Originelen in",
+    "atUs": "Bij PrintMeArt",
+    "price": "Prijs",
+    "inclVat": "incl. btw",
+    "sources": "Bronnen: collectiegegevens van de genoemde musea (open access) en Wikidata.",
+    "featuredTitle": "Om mee te beginnen",
+    "original": "Origineel",
+    "collection": "Collectie",
+    "viewPrint": "Bekijk deze print",
+    "bioTitle": "Over {{name}}",
+    "life": "Levensloop",
+    "bornIn": "Geboren in {{place}}",
+    "diedIn": "Overleden in {{place}}",
+    "worksFrom": "De {{count}} werken in onze collectie",
+    "catalogue": "Catalogus",
+    "allWorks": "Alle {{count}} prints van",
+    "filter": "Filter op techniek",
+    "all": "Alles",
+    "showAll": "Toon nog {{count}} werken",
+    "listTitle": "Alle werken op een rij",
+    "col": {
+      "title": "Titel",
+      "year": "Jaar",
+      "technique": "Techniek",
+      "museum": "Museum",
+      "size": "Origineel",
+      "price": "Print"
+    },
+    "provenance": "Herkomst",
+    "whereTitle": "Waar hangen de originelen?",
+    "whereText": "Elke print is gemaakt van het open-accessbeeld van het museum dat het origineel bewaart. Bij elk werk vermelden we het museum en de credit line.",
+    "thePrint": "De print",
+    "printTitle": "Zo komt {{name}} aan je muur",
+    "sizesTitle": "Formaten",
+    "sizesText": "Zes standaardformaten van 13×18 tot 60×90 cm. Per werk tonen we de formaten die bij de verhouding en de resolutie van het museumbeeld passen.",
+    "paperTitle": "Papier",
+    "paperRag": "Glad, mat katoenpapier (100% katoen), giclée met pigmentinkt",
+    "paperEtching": "Katoenpapier met een fijne, voelbare structuur",
+    "paperPoster": "Echte fotoafdruk met levendige kleuren, voor de beste prijs",
+    "orderTitle": "Bestellen",
+    "matOption": "Met of zonder passe-partout",
+    "shipping": "Verzending binnen Nederland {{price}}",
+    "delivery": "Levering binnen {{days}} dagen",
+    "faqTitle": "Over prints van",
+    "more": "Verder kijken",
+    "relatedTitle": "Verwante kunstenaars",
+    "allArtists": "Alle kunstenaars A–Z",
+    "painter": "Kunstschilder",
+    "technique": {
+      "watercolour": "Aquarel",
+      "oil": "Olieverf",
+      "print": "Prent",
+      "drawing": "Tekening"
+    },
+    "faq": {
+      "whereQ": "Waar kan ik een print van {{name}} kopen?",
+      "whereA": "Bij PrintMeArt (printmeart.nl), een familiebedrijf uit 's-Hertogenbosch. We hebben {{count}} werken van {{name}} als giclée-print op 100% katoenpapier van Hahnemühle of als Premium Poster, vanaf {{price}} inclusief btw. We verzenden binnen Nederland en de EU.",
+      "whichQ": "Welke werken van {{name}} zijn als poster of print verkrijgbaar?",
+      "whichA": "Onder meer {{works}}: in totaal {{count}} werken. De volledige lijst met jaartal, techniek en museum staat op deze pagina.",
+      "sizesQ": "In welke formaten en vanaf welke prijs?",
+      "sizesA": "De standaardformaten zijn 13×18, 21×30, 30×40, 40×60, 50×70 en 60×90 cm; per werk bieden we de formaten aan die bij de verhouding en de resolutie van het origineel passen. Prijzen beginnen bij {{price}} inclusief btw.",
+      "publicQ": "Mag het werk van {{name}} vrij worden gereproduceerd?",
+      "publicA": "Ja. {{name}} overleed in {{died}}; het werk behoort tot het publiek domein. Onze prints zijn gemaakt van de open-accessbeelden die de musea zelf beschikbaar stellen.",
+      "museumsQ": "Waar hangen de originele werken?",
+      "museumsA": "De originelen op deze pagina bevinden zich in {{museums}}.",
+      "deliveryQ": "Hoe snel wordt een print geleverd?",
+      "deliveryA": "Bestellingen binnen Nederland worden binnen {{days}} dagen geleverd, met track-and-trace."
+    },
+    "seo": {
+      "title": "{{name}} – kunstprints & posters",
+      "description": "{{count}} werken van {{name}} ({{years}}) als kunstprint op museumkwaliteit of poster, vanaf {{price}}. Gedrukt in 's-Hertogenbosch op Hahnemühle katoenpapier."
+    },
+    "portrait": "Portret van {{name}}"
+  },
+  "artists": {
+    "lead": "{{count}} schilders, aquarellisten en prentmakers uit het publiek domein, van de Gouden Eeuw tot het postimpressionisme. Kies een naam en bekijk elk werk dat we als print op museumkwaliteit drukken.",
+    "search": "Zoek een kunstenaar, bijv. Monet",
+    "masters": "Grote meesters",
+    "alphabet": "Alfabet",
+    "count": "kunstenaars",
+    "none": "Geen kunstenaar gevonden.",
+    "seo": {
+      "title": "Kunstenaars A–Z – kunstprints & posters",
+      "description": "{{count}} kunstenaars en {{prints}} kunstprints op museumkwaliteit, van Van Gogh en Monet tot Vermeer en Avercamp. Kies een kunstenaar en bekijk alle werken."
     }
   }
 }

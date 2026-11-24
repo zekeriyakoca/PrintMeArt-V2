@@ -21,6 +21,8 @@ export interface PageSeo {
   description: string;
   /** Path without the language, e.g. '/products/401-the-little-street'; defaults to the current URL */
   path?: string;
+  /** The page's path in each language, when the address itself is translated (/nl/kunstenaars, /en/artists) */
+  paths?: Record<string, string>;
   image?: string;
   type?: 'website' | 'product';
   /** Product price in euros, for Pinterest's product pins */
@@ -67,6 +69,7 @@ export class SeoService {
 
   setPage(page: PageSeo): void {
     const path = page.path ?? this.indexablePath(this.router.url);
+    const pathIn = (language: string) => page.paths?.[language] ?? path;
     const url = this.absoluteUrl(this.language, path);
     const fullTitle = page.title.includes(SITE_NAME) ? page.title : `${page.title} | ${SITE_NAME}`;
     const image = page.image ?? DEFAULT_IMAGE;
@@ -97,8 +100,8 @@ export class SeoService {
     // Canonical and the same page in every language; x-default is the Dutch page
     this.replaceHead('link[data-seo]', [
       { rel: 'canonical', href: url },
-      ...AVAILABLE_LANGUAGES.map(({ code }) => ({ rel: 'alternate', hreflang: code, href: this.absoluteUrl(code, path) })),
-      { rel: 'alternate', hreflang: 'x-default', href: this.absoluteUrl(DEFAULT_LANGUAGE, path) },
+      ...AVAILABLE_LANGUAGES.map(({ code }) => ({ rel: 'alternate', hreflang: code, href: this.absoluteUrl(code, pathIn(code)) })),
+      { rel: 'alternate', hreflang: 'x-default', href: this.absoluteUrl(DEFAULT_LANGUAGE, pathIn(DEFAULT_LANGUAGE)) },
     ]);
 
     this.document.head.querySelectorAll('script[data-seo]').forEach((script) => script.remove());

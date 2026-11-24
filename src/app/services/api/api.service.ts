@@ -12,6 +12,7 @@ import {
   FilterGroupDto,
 } from '../../models/product';
 import { SelectedOptionDto } from '../../models/cart-item';
+import { ArtistDetailDto, ArtistSummaryDto } from '../../models/artist';
 
 @Injectable({
   providedIn: 'root',
@@ -99,6 +100,14 @@ export class ApiService {
       `${this.BFF_URL}/bff/v1/ordering/order`,
       userInfo,
     );
+  }
+
+  getArtists(): Observable<ArtistSummaryDto[]> {
+    return this._httpClient.get<ArtistSummaryDto[]>(`${this.CATALOG_API_URL}/catalog/v1/storefront/artists`);
+  }
+
+  getArtist(slug: string): Observable<ArtistDetailDto> {
+    return this._httpClient.get<ArtistDetailDto>(`${this.CATALOG_API_URL}/catalog/v1/storefront/artists/${encodeURIComponent(slug)}`);
   }
 
   getFilterOptions(): Observable<FilterGroupDto[]> {

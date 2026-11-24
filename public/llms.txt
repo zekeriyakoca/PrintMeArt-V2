@@ -1,17 +1,33 @@
 # PrintMeArt
 
-> PrintMeArt is a family-run print studio in 's-Hertogenbosch (Den Bosch), the Netherlands. We sell museum-quality prints of public-domain masterpieces — Rembrandt, Vermeer, Van Gogh, Monet, the Dutch Golden Age and more — as giclée prints on fine-art cotton paper or as a Premium Poster photographic print, in many sizes and with an optional white passe-partout. Customers can also upload their own photo or artwork to have it printed.
+> PrintMeArt is a family-run print studio in 's-Hertogenbosch (Den Bosch), the Netherlands. We sell museum-quality prints of public-domain masterpieces — Van Gogh, Monet, Winslow Homer, Turner, Avercamp, the Dutch Golden Age and more — as giclée prints on fine-art cotton paper or as a Premium Poster photographic print, in many sizes and with an optional white passe-partout. Customers can also upload their own photo or artwork to have it printed.
 
 The shop is available in Dutch (default) and English: every page exists under https://printmeart.nl/nl/ and https://printmeart.nl/en/. Prices include Dutch VAT (btw). We ship within the Netherlands and the EU.
 
 ## Shop
 
 - [All art prints](https://printmeart.nl/en/products): the full catalog, filterable by category, artist and museum
+- [Artists A–Z](https://printmeart.nl/en/artists): one page per artist with a short biography, key facts, every work we print (year, technique, museum, price) and where the originals hang. Dutch: https://printmeart.nl/nl/kunstenaars
 - [Collections](https://printmeart.nl/en/collections): curated collections — museum highlights (Rijksmuseum, The Met, Art Institute of Chicago, …), famous painters, styles and periods, scenes
 - [Your design](https://printmeart.nl/en/your-design): print your own photo or artwork
 - [Frames](https://printmeart.nl/en/frames): our Natural Oak frame (temporarily unavailable)
 
 Every product page tells the story of the artwork and its artist, and names the museum and credit line it comes from.
+
+## Artists with the most prints
+
+- [Winslow Homer](https://printmeart.nl/en/artists/winslow-homer)
+- [Thomas Shotter Boys](https://printmeart.nl/en/artists/thomas-shotter-boys)
+- [Vincent van Gogh](https://printmeart.nl/en/artists/vincent-van-gogh)
+- [Claude Monet](https://printmeart.nl/en/artists/claude-monet)
+- [Hendrick Avercamp](https://printmeart.nl/en/artists/hendrick-avercamp)
+- [Alfred Sisley](https://printmeart.nl/en/artists/alfred-sisley)
+- [Pierre-Auguste Renoir](https://printmeart.nl/en/artists/pierre-auguste-renoir)
+- [Eugène Boudin](https://printmeart.nl/en/artists/eugene-boudin)
+- [Camille Pissarro](https://printmeart.nl/en/artists/camille-pissarro)
+- [George Inness](https://printmeart.nl/en/artists/george-inness)
+- [J. M. W. Turner](https://printmeart.nl/en/artists/j-m-w-turner)
+- [Thomas Moran](https://printmeart.nl/en/artists/thomas-moran)
 
 ## How it works
 

@@ -136,6 +136,13 @@
                 </a>
               </li>
 
+              <!-- Artists -->
+              <li class="menu-item flex-shrink-0">
+                <a [routerLink]="artistsIndex" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
+                  {{ 'nav.artists' | t }}
+                </a>
+              </li>
+
               <!-- Frames -->
               <li class="menu-item flex-shrink-0">
                 <a routerLink="/how-we-work" class="inline-flex items-center text-sm lg:text-[.9rem] font-medium text-slate-700 py-2.5 px-4 xl:px-5 rounded-full hover:text-slate-900 hover:bg-slate-100">
@@ -260,6 +267,12 @@
             <a routerLink="/your-design" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-pink-50 transition-colors" style="color: #db2877" (click)="closeMobileMenu()">
               <app-icon iconName="sparkles" class="w-5 h-5"></app-icon>
               <span class="font-semibold" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem">{{ 'header.yourDesign' | t }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="artistsIndex" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors" (click)="closeMobileMenu()">
+              <app-icon iconName="brush" class="w-5 h-5 text-slate-400"></app-icon>
+              <span class="font-medium">{{ 'nav.artists' | t }}</span>
             </a>
           </li>
           <li>

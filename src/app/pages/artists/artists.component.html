@@ -1,0 +1,62 @@
+<div class="artists-page">
+  <section class="ihero">
+    @if (heroImage()) {<img class="bg" [src]="heroImage()" alt="" />}
+    <div class="wrap">
+      <p class="eyebrow">PrintMeArt · {{ 'artist.index' | t }}</p>
+      <h1>{{ 'artist.index' | t }} <em>A–Z</em></h1>
+      <p class="lead">{{ 'artists.lead' | t: { count: artists().length } }}</p>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <input type="search" [placeholder]="'artists.search' | t" [attr.aria-label]="'artists.search' | t" [value]="query()" (input)="query.set($any($event.target).value)" />
+      </label>
+      <div class="istats">
+        <div><b>{{ artists().length }}</b><span>{{ 'artist.index' | t }}</span></div>
+        <div><b>{{ prints() }}</b><span>Prints</span></div>
+      </div>
+    </div>
+  </section>
+
+  @if (featured().length && !query()) {
+  <section class="sec">
+    <div class="wrap">
+      <div class="head"><div><p class="kicker">{{ 'artist.nav.featured' | t }}</p><h2>{{ 'artists.masters' | t }}</h2></div></div>
+      <div class="feats">
+        @for (a of featured(); track a.slug) {
+        <a class="feat" [routerLink]="link(a.slug)">
+          @if (a.image?.medium) {<img [src]="a.image?.medium" [alt]="a.name" loading="lazy" />}
+          <div class="feat__txt">
+            <small>{{ movement(a) }}@if (movement(a) && years(a)) { · }{{ years(a) }}</small>
+            <h3>{{ a.name }}</h3>
+            <span>{{ a.productCount }} {{ a.productCount === 1 ? 'print' : 'prints' }} →</span>
+          </div>
+        </a>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  <nav class="az" [attr.aria-label]="'artists.alphabet' | t">
+    <div class="wrap">
+      @for (l of letters(); track l.letter) {<a routerLink="." [fragment]="'l-' + l.letter">{{ l.letter }}</a>}
+      <em>{{ shownCount() }} {{ 'artists.count' | t }}</em>
+    </div>
+  </nav>
+
+  <section>
+    <div class="wrap">
+      @for (l of letters(); track l.letter) {
+      <section class="letter" [id]="'l-' + l.letter">
+        <h2>{{ l.letter }}</h2>
+        <ul>
+          @for (a of l.artists; track a.slug) {
+          <li [class.is-big]="a.productCount >= big"><a [routerLink]="link(a.slug)"><span>{{ a.name }}</span><i></i><b>{{ a.productCount }}</b></a></li>
+          }
+        </ul>
+      </section>
+      } @empty {
+      @if (query()) {<p class="note">{{ 'artists.none' | t }}</p>}
+      }
+    </div>
+  </section>
+</div>

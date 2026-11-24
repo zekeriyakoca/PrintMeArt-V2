@@ -2,6 +2,7 @@ import { DefaultUrlSerializer } from '@angular/router';
 import { environment } from './environments/environment';
 import { productPath } from './app/shared/product-path';
 import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from './app/services/i18n/languages';
+import { ARTISTS_SEGMENT, artistPath, MIN_INDEXED_WORKS } from './app/shared/artist-path';
 
 const STATIC_PAGES = ['/', '/collections', '/products', '/about', '/frames', '/your-design', '/how-we-work', '/legal', '/licensing'];
 const CACHE_MS = 60 * 60 * 1000;
@@ -14,15 +15,23 @@ let cached: { xml: string; at: number } | undefined;
 export async function sitemapXml(): Promise<string> {
   if (cached && Date.now() - cached.at < CACHE_MS) return cached.xml;
 
-  const [products, listings] = await Promise.all([fetchProducts(), fetchListings()]);
-  const paths = [...STATIC_PAGES, ...listings, ...products.map((product) => `/products/${productPath(product)}`)];
+  const [products, artists] = await Promise.all([fetchProducts(), indexedArtists()]);
+  const listings = await fetchListings(new Set(artists.keys()));
+  // A page's path in each language; only the artist pages have a translated address
+  type Paths = (language: string) => string;
+  const same = (path: string): Paths => () => path;
+  const pages: Paths[] = [
+    ...[...STATIC_PAGES, ...listings, ...products.map((product) => `/products/${productPath(product)}`)].map(same),
+    (language) => artistPath(language),
+    ...[...artists.values()].map((slug) => (language: string) => artistPath(language, slug)),
+  ];
   const url = (language: string, path: string) => escapeXml(`${environment.siteUrl}/${language}${path === '/' ? '' : path}`);
-  const entries = paths.flatMap((path) =>
+  const entries = pages.flatMap((path) =>
     AVAILABLE_LANGUAGES.map(
       ({ code }) => `  <url>
-    <loc>${url(code, path)}</loc>
-${AVAILABLE_LANGUAGES.map((other) => `    <xhtml:link rel="alternate" hreflang="${other.code}" href="${url(other.code, path)}"/>`).join('\n')}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${url(DEFAULT_LANGUAGE, path)}"/>
+    <loc>${url(code, path(code))}</loc>
+${AVAILABLE_LANGUAGES.map((other) => `    <xhtml:link rel="alternate" hreflang="${other.code}" href="${url(other.code, path(other.code))}"/>`).join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${url(DEFAULT_LANGUAGE, path(DEFAULT_LANGUAGE))}"/>
   </url>`,
     ),
   );
@@ -40,8 +49,24 @@ async function fetchProducts(): Promise<{ id: number; name: string }[]> {
   return (await catalog('/storefront/products/search', { pageSize: 5000, pageIndex: 0 })).data;
 }
 
-/** The product list narrowed to each category and attribute (artist, museum, collection) with enough prints */
-async function fetchListings(): Promise<string[]> {
+let artistsCache: { slugs: Map<string, string>; at: number } | undefined;
+
+/** Artist name → slug for every artist whose page is indexed; read at most once an hour */
+export async function indexedArtists(): Promise<Map<string, string>> {
+  if (artistsCache && Date.now() - artistsCache.at < CACHE_MS) return artistsCache.slugs;
+  const artists: { name: string; slug: string; productCount: number }[] = await catalog('/storefront/artists');
+  const slugs = new Map(artists.filter((a) => a.productCount >= MIN_INDEXED_WORKS).map((a) => [a.name, a.slug]));
+  artistsCache = { slugs, at: Date.now() };
+  return slugs;
+}
+
+/** The artist page's word in the other language, e.g. 'artists' on a Dutch address */
+export function wrongArtistsSegment(language: string, segment: string): boolean {
+  return Object.values(ARTISTS_SEGMENT).includes(segment) && ARTISTS_SEGMENT[language] !== segment;
+}
+
+/** The product list narrowed to each category and attribute (museum, collection) with enough prints; artists have their own page */
+async function fetchListings(artistNames: Set<string>): Promise<string[]> {
   const groups: { groupType: string; name: string; options: { name: string }[] }[] = await catalog('/storefront/filter-options');
   const names = (type: string) =>
     groups.filter((g) => g.groupType === type && g.name !== 'Image Quality').flatMap((g) => g.options.map((o) => o.name));
@@ -53,7 +78,7 @@ async function fetchListings(): Promise<string[]> {
   const serializer = new DefaultUrlSerializer();
   const listing = (param: string, name: string) => serializer.serialize(serializer.parse(`/products?${param}=${encodeURIComponent(name)}`));
   const enough = (items: { name: string; productCount: number }[]) => items.filter((i) => i.productCount >= MIN_PRODUCTS).map((i) => i.name);
-  return [...enough(stats.categories).map((n) => listing('categoryName', n)), ...enough(stats.attributes).map((n) => listing('attributeName', n))];
+  return [...enough(stats.categories).map((n) => listing('categoryName', n)), ...enough(stats.attributes).filter((n) => !artistNames.has(n)).map((n) => listing('attributeName', n))];
 }
 
 export function catalog(path: string, body?: object) {

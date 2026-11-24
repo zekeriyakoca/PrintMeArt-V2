@@ -1,0 +1,293 @@
+@if (missing()) {
+<app-not-found />
+} @else if (artist(); as a) {
+<div class="artist-page">
+  <section class="hero" id="top">
+    @if (lifeYears()) {
+    <div class="hero__years" aria-hidden="true">{{ lifeYears() }}</div>
+    }
+    <div class="wrap">
+      <nav class="crumbs" [attr.aria-label]="'artist.breadcrumb' | t">
+        <a routerLink="/">PrintMeArt</a><span>/</span><a [routerLink]="indexPath">{{ 'artist.index' | t }}</a><span>/</span><b>{{ a.name }}</b>
+      </nav>
+      <div class="hero__grid">
+        <div>
+          <p class="eyebrow">{{ 'artist.eyebrow' | t }}@if (fact('Movement')) { · {{ fact('Movement') }}}@if (fact('Country')) { · {{ fact('Country') }}}</p>
+          <h1>
+            <span class="n">@if (nameParts().first) {{{ nameParts().first }} }<em>{{ nameParts().last }}</em></span>
+            <span class="s">{{ 'artist.subtitle' | t }}</span>
+          </h1>
+          @if (lifeLine()) {
+          <div class="hero__life">
+            @if (portrait()) {<img [src]="portrait()" [alt]="'artist.portrait' | t: { name: a.name }" width="64" height="64" />}
+            <div><strong>{{ lifeLine() }}</strong>@if (fact('Movement')) {<span>{{ fact('Movement') }}</span>}</div>
+          </div>
+          }
+          <p class="hero__lead" [innerHTML]="'artist.lead' | t: { name: a.name, count: count(), price: money(fromPrice()) }"></p>
+          <div class="hero__cta">
+            <a class="btn btn--dark" routerLink="." fragment="works">{{ 'artist.seeAll' | t: { count: count() } }}</a>
+            @if (bio().lead) {<a class="btn btn--ghost" routerLink="." fragment="biography">{{ 'artist.readStory' | t }}</a>}
+          </div>
+          <div class="hero__stats">
+            <div><b>{{ count() }}</b><span>{{ 'artist.statWorks' | t }}</span></div>
+            @if (museums().length) {<div><b>{{ museums().length }}</b><span>{{ 'artist.statMuseums' | t }}</span></div>}
+            @if (period()) {<div><b>{{ period() }}</b><span>{{ 'artist.statPeriod' | t }}</span></div>}
+          </div>
+        </div>
+        @if (hero(); as h) {
+        <figure class="hang">
+          <a class="hang__frame" [routerLink]="h.path"><img [src]="h.product.image.large || h.image" [alt]="h.product.name + ' – ' + a.name" fetchpriority="high" /></a>
+          <figcaption class="hang__label">
+            <strong>{{ h.product.name }}@if (h.year) {, {{ h.year }}}</strong>
+            <span>@if (h.dimensions) {{{ h.dimensions }}<br />}{{ h.museum }}</span>
+            <a [routerLink]="h.path">{{ 'artist.asPrint' | t: { price: money(h.product.cheapestPrice) } }} →</a>
+          </figcaption>
+        </figure>
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="subnav">
+    <div class="wrap">
+      <nav [attr.aria-label]="'artist.onThisPage' | t">
+        <a routerLink="." fragment="facts">{{ 'artist.nav.facts' | t }}</a>
+        @if (featured().length) {<a routerLink="." fragment="featured">{{ 'artist.nav.featured' | t }}</a>}
+        @if (bio().lead) {<a routerLink="." fragment="biography">{{ 'artist.nav.bio' | t }}</a>}
+        <a routerLink="." fragment="works">{{ 'artist.nav.works' | t }}</a>
+        @if (museums().length) {<a routerLink="." fragment="museums">{{ 'artist.nav.museums' | t }}</a>}
+        <a routerLink="." fragment="faq">{{ 'artist.nav.faq' | t }}</a>
+      </nav>
+      @if (hasPrice()) {
+      <div class="subnav__buy"><span>{{ count() }} prints · <b>{{ 'artist.from' | t }} {{ money(fromPrice()) }}</b></span><a routerLink="." fragment="works">{{ 'artist.pick' | t }}</a></div>
+      }
+    </div>
+  </div>
+
+  <section class="facts" id="facts">
+    <div class="wrap">
+      <div class="facts__grid">
+        <div>
+          <p class="kicker">{{ 'artist.nav.facts' | t }}</p>
+          <h2 class="h2">{{ a.name }} <em>{{ 'artist.inFacts' | t }}</em></h2>
+        </div>
+        <div>
+          <dl>
+            @if (a.facts['BirthYear']) {<div><dt>{{ 'artist.born' | t }}</dt><dd>{{ a.facts['BirthYear'] }}@if (fact('BirthPlace')) {<small>{{ fact('BirthPlace') }}</small>}</dd></div>}
+            @if (a.facts['DeathYear']) {<div><dt>{{ 'artist.died' | t }}</dt><dd>{{ a.facts['DeathYear'] }}@if (fact('DeathPlace')) {<small>{{ fact('DeathPlace') }}</small>}</dd></div>}
+            @if (fact('Country')) {<div><dt>{{ 'artist.country' | t }}</dt><dd>{{ fact('Country') }}</dd></div>}
+            @if (fact('Movement')) {<div><dt>{{ 'artist.movement' | t }}</dt><dd>{{ fact('Movement') }}</dd></div>}
+            @if (techniques().length) {<div><dt>{{ 'artist.techniques' | t }}</dt><dd>@for (t of techniques(); track t.key; let last = $last) {{{ techniqueLabel(t.key) }}@if (!last) {, }}</dd></div>}
+            @if (museums().length) {<div class="wide"><dt>{{ 'artist.originalsIn' | t }}</dt><dd>@for (m of museums(); track m.name; let last = $last) {{{ m.name }}@if (!last) {, }}</dd></div>}
+            <div><dt>{{ 'artist.atUs' | t }}</dt><dd>{{ count() }} prints</dd></div>
+            @if (hasPrice()) {<div><dt>{{ 'artist.price' | t }}</dt><dd>{{ 'artist.from' | t }} {{ money(fromPrice()) }}<small>{{ 'artist.inclVat' | t }}</small></dd></div>}
+          </dl>
+          <p class="src">{{ 'artist.sources' | t }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  @if (featured().length) {
+  <section class="sec" id="featured">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="kicker">{{ 'artist.nav.featured' | t }}</p><h2>{{ 'artist.featuredTitle' | t }}</h2></div>
+      </div>
+      <div class="plates">
+        @for (w of featured(); track w.product.id; let i = $index; let odd = $odd) {
+        <article class="plate" [class.plate--flip]="odd">
+          <a class="plate__art" [routerLink]="w.path"><span class="plate__no">Nº {{ i + 1 | number: '2.0-0' }}</span><img [src]="w.image" [alt]="w.product.name + ' – ' + a.name" loading="lazy" /></a>
+          <div class="plate__text">
+            <p class="kicker">{{ w.year }}@if (w.year && w.technique) { · }{{ techniqueLabel(w.technique) }}</p>
+            <h3>{{ w.product.name }}</h3>
+            @for (p of w.story.slice(0, 2); track $index) {<p class="plate__story">{{ p }}</p>}
+            <dl class="label">
+              @if (w.dimensions) {<div><dt>{{ 'artist.original' | t }}</dt><dd>{{ w.dimensions }}</dd></div>}
+              @if (w.museum) {<div><dt>{{ 'artist.collection' | t }}</dt><dd>{{ w.museum }}</dd></div>}
+              <div><dt>Print</dt><dd>{{ 'artist.from' | t }} {{ money(w.product.cheapestPrice) }}</dd></div>
+            </dl>
+            <a class="btn btn--dark" [routerLink]="w.path">{{ 'artist.viewPrint' | t }} →</a>
+          </div>
+        </article>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  @if (bio().lead) {
+  <section class="sec bio" id="biography">
+    <div class="wrap">
+      <div class="bio__grid">
+        <div>
+          <p class="kicker">{{ 'artist.nav.bio' | t }}</p>
+          <h2 class="h2">{{ 'artist.bioTitle' | t: { name: a.name } }}</h2>
+          <p class="bio__lead">{{ bio().lead }}</p>
+          @if (bio().rest) {<p>{{ bio().rest }}</p>}
+        </div>
+        @if (lifeLine() || a.facts['WikidataId']) {
+        <div>
+          <p class="kicker">{{ 'artist.life' | t }}</p>
+          <ol class="tl">
+            @if (a.facts['BirthYear']) {<li><b>{{ a.facts['BirthYear'] }}</b><span>{{ 'artist.bornIn' | t: { place: fact('BirthPlace') } }}</span></li>}
+            @if (period()) {<li><b>{{ period() }}</b><span>{{ 'artist.worksFrom' | t: { count: count() } }}</span></li>}
+            @if (a.facts['DeathYear']) {<li><b>{{ a.facts['DeathYear'] }}</b><span>{{ 'artist.diedIn' | t: { place: fact('DeathPlace') } }}</span></li>}
+          </ol>
+          @if (fact('Wikipedia')) {
+          <div class="bio__links"><a [href]="fact('Wikipedia')" rel="noopener" target="_blank">Wikipedia</a></div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  <section class="sec" id="works">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="kicker">{{ 'artist.catalogue' | t }}</p><h2>{{ 'artist.allWorks' | t: { count: count() } }} <em>{{ a.name }}</em></h2></div>
+        @if (showFilters()) {
+        <div class="chips" role="group" [attr.aria-label]="'artist.filter' | t">
+          <button class="chip" [class.is-on]="technique() === 'all'" (click)="technique.set('all')">{{ 'artist.all' | t }}<sup>{{ count() }}</sup></button>
+          @for (t of techniques(); track t.key) {
+          <button class="chip" [class.is-on]="technique() === t.key" (click)="technique.set(t.key)">{{ techniqueLabel(t.key) }}<sup>{{ t.count }}</sup></button>
+          }
+        </div>
+        }
+      </div>
+      <div class="works-grid" [class.works-grid--few]="size() !== 'full'">
+        @for (w of shown(); track w.product.id) {
+        <a class="work" [routerLink]="w.path">
+          <div class="work__img" [style.aspect-ratio]="w.product.imageRatio?.toFixed(2) ?? '4/3'">
+            <img [src]="w.product.image.small" [alt]="w.product.name + ' – ' + a.name" loading="lazy" decoding="async" />
+            <span class="work__cta">{{ 'artist.viewPrint' | t }}</span>
+          </div>
+          <h3>{{ w.product.name }}</h3>
+          <p class="work__meta">{{ w.year }}@if (w.year && w.museum) { · }{{ w.museum }}</p>
+          <p class="work__price"><small>{{ 'product.fromUpper' | t }}</small> {{ money(w.product.cheapestPrice) }}</p>
+        </a>
+        }
+      </div>
+      @if (hiddenCount()) {
+      <div class="more"><button class="btn btn--ghost" (click)="showAll.set(true)">{{ 'artist.showAll' | t: { count: hiddenCount() } }}</button></div>
+      }
+
+      <details class="listing">
+        <summary>{{ 'artist.listTitle' | t }} <span>{{ count() }} {{ 'artist.statWorks' | t }}</span></summary>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'artist.col.title' | t }}</th><th>{{ 'artist.col.year' | t }}</th><th>{{ 'artist.col.technique' | t }}</th>
+                <th>{{ 'artist.col.museum' | t }}</th><th>{{ 'artist.col.size' | t }}</th><th>{{ 'artist.col.price' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (w of works(); track w.product.id) {
+              <tr>
+                <th><a [routerLink]="w.path">{{ w.product.name }}</a></th>
+                <td>{{ w.year }}</td><td>{{ techniqueLabel(w.technique) }}</td><td>{{ w.museum }}</td><td>{{ w.dimensions }}</td>
+                <td class="num">{{ 'artist.from' | t }} {{ money(w.product.cheapestPrice) }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  @if (museums().length) {
+  <section class="sec museums" id="museums">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="kicker">{{ 'artist.provenance' | t }}</p><h2>{{ 'artist.whereTitle' | t }}</h2></div>
+        <p>{{ 'artist.whereText' | t }}</p>
+      </div>
+      <div class="mus">
+        @for (m of museums(); track m.name) {
+        <div class="mus__card"><b>{{ m.count }}<small>{{ 'artist.statWorks' | t }}</small></b><h3>{{ m.name }}</h3>@if (m.city) {<p>{{ m.city }}</p>}</div>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  <section class="sec print">
+    <div class="wrap">
+      <div class="sec__head"><div><p class="kicker">{{ 'artist.thePrint' | t }}</p><h2>{{ 'artist.printTitle' | t: { name: nameParts().last } }}</h2></div></div>
+      <div class="print__grid">
+        <div>
+          <h3>{{ 'artist.sizesTitle' | t }}</h3>
+          <p>{{ 'artist.sizesText' | t }}</p>
+          <div class="ladder" role="img" aria-label="13×18 – 60×90 cm">
+            <span style="width:100%;height:100%"><i>60×90</i></span><span style="width:83.3%;height:77.8%"><i>50×70</i></span>
+            <span style="width:66.7%;height:66.7%"><i>40×60</i></span><span style="width:50%;height:44.4%"><i>30×40</i></span>
+            <span style="width:35%;height:33.3%"><i>21×30</i></span><span style="width:21.7%;height:20%"><i>13×18</i></span>
+          </div>
+        </div>
+        <div>
+          <h3>{{ 'artist.paperTitle' | t }}</h3>
+          <ul>
+            <li><b>Hahnemühle Photo Rag</b><br />{{ 'artist.paperRag' | t }}</li>
+            <li><b>Hahnemühle Museum Etching</b><br />{{ 'artist.paperEtching' | t }}</li>
+            <li><b>Premium Poster</b><br />{{ 'artist.paperPoster' | t }}</li>
+          </ul>
+        </div>
+        <div>
+          <h3>{{ 'artist.orderTitle' | t }}</h3>
+          <ul>
+            @if (hasPrice()) {<li><b>{{ 'artist.from' | t }} {{ money(fromPrice()) }}</b> {{ 'artist.inclVat' | t }}</li>}
+            <li><b>{{ 'artist.matOption' | t }}</b></li>
+            @if (shippingRate() !== null) {<li><b>{{ 'artist.shipping' | t: { price: money(shippingRate()!) } }}</b></li>}
+            @if (deliveryDays()) {<li><b>{{ 'artist.delivery' | t: { days: deliveryDays() ?? '' } }}</b></li>}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec faq" id="faq">
+    <div class="wrap">
+      <div class="faq__grid">
+        <div><p class="kicker">{{ 'artist.nav.faq' | t }}</p><h2 class="h2">{{ 'artist.faqTitle' | t }} <em>{{ a.name }}</em></h2></div>
+        <div>
+          @for (item of faq(); track item.q; let first = $first) {
+          <details [open]="first"><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  @if (a.related.length) {
+  <section class="sec" id="related">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="kicker">{{ 'artist.more' | t }}</p><h2>{{ 'artist.relatedTitle' | t }}</h2></div>
+        <a class="btn btn--ghost" [routerLink]="indexPath">{{ 'artist.allArtists' | t }} →</a>
+      </div>
+      <div class="rels">
+        @for (r of a.related; track r.slug) {
+        <a class="rel" [routerLink]="artistLink(r.slug)">
+          <div class="rel__img">@if (r.image?.small) {<img [src]="r.image?.small" [alt]="r.name" loading="lazy" />}</div>
+          <h3>{{ r.name }}</h3>
+          <p>@if (r.facts['BirthYear'] && r.facts['DeathYear']) {{{ r.facts['BirthYear'] }}–{{ r.facts['DeathYear'] }} · }{{ r.productCount }} prints</p>
+        </a>
+        }
+      </div>
+    </div>
+  </section>
+  } @else {
+  <section class="sec" id="related">
+    <div class="wrap"><div class="more"><a class="btn btn--ghost" [routerLink]="indexPath">{{ 'artist.allArtists' | t }} →</a></div></div>
+  </section>
+  }
+
+  @if (hasPrice()) {
+  <div class="buybar"><div><small>{{ count() }} prints</small><b>{{ 'artist.from' | t }} {{ money(fromPrice()) }}</b></div><a routerLink="." fragment="works">{{ 'artist.pick' | t }}</a></div>
+  }
+</div>
+}
