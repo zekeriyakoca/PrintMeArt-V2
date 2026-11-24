@@ -43,11 +43,11 @@
         @if (guide()!.cta === 'design') {
           <p class="cta__k">{{ 'guides.ctaDesignKicker' | t }}</p>
           <h2 class="cta__h">{{ 'guides.ctaDesignTitle' | t }}</h2>
-          <a class="cta__btn" [routerLink]="'/' + language + '/your-design'">{{ 'guides.ctaDesignButton' | t }} →</a>
+          <a class="cta__btn" routerLink="/your-design">{{ 'guides.ctaDesignButton' | t }} →</a>
         } @else {
           <p class="cta__k">{{ 'guides.ctaPrintsKicker' | t }}</p>
           <h2 class="cta__h">{{ 'guides.ctaPrintsTitle' | t }}</h2>
-          <a class="cta__btn" [routerLink]="'/' + language + '/products'">{{ 'guides.ctaPrintsButton' | t }} →</a>
+          <a class="cta__btn" routerLink="/products">{{ 'guides.ctaPrintsButton' | t }} →</a>
         }
       </div>
     </div>
