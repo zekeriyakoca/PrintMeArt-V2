@@ -19,6 +19,9 @@
             <div>
               <h1 class="text-[1.6rem] leading-tight md:text-2xl font-semibold text-slate-800 mb-1.5 md:mb-1 text-balance">{{ product().name }}</h1>
               <p class="!leading-6 md:!leading-8 font-light md:font-light text-sm md:text-base text-[#9097bb]">{{ product().title }}</p>
+              @if (artistPage(); as artist) {
+              <a [routerLink]="artist.path" class="text-xs font-medium uppercase tracking-wider text-[#384f8c] hover:underline">{{ 'product.allByArtist' | t: { name: artist.name } }}</a>
+              }
             </div>
             <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-2">
               <!-- Public Domain Badge -->
@@ -75,6 +78,9 @@
             <div class="mt-6 pl-4 border-l-2 border-slate-200">
               <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{{ 'product.aboutArtist' | t }}</span>
               <p class="text-slate-500 !leading-7 text-sm">{{ bio }}</p>
+              @if (artistPage(); as artist) {
+              <a [routerLink]="artist.path" class="mt-2 inline-block text-sm font-medium text-[#384f8c] hover:underline">{{ 'product.allByArtist' | t: { name: artist.name } }} →</a>
+              }
             </div>
           }
           @if (hasMoreStory()) {

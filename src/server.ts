@@ -4,7 +4,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i18n/languages';
 import { productFeedXml, refreshProductFeed } from './feed';
-import { sitemapXml } from './sitemap';
+import { indexedArtists, sitemapXml, wrongArtistsSegment } from './sitemap';
+import { artistPath } from './app/shared/artist-path';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
 
@@ -105,6 +106,30 @@ app.use((req, res, next) => {
   const remembered = req.get('cookie')?.match(new RegExp(`(?:^|; )${LANGUAGE_COOKIE}=(\\w+)`))?.[1];
   const target = isLanguage(remembered) ? remembered : DEFAULT_LANGUAGE;
   res.set('Cache-Control', 'no-store').redirect(302, `/${target}${req.originalUrl === '/' ? '' : req.originalUrl}`);
+});
+
+// The artist pages: /nl/kunstenaars and /en/artists, so the other language's word moves to the right one
+app.get(/^\/(en|nl)\/(kunstenaars|artists)(\/.*)?$/, (req, res, next) => {
+  const [, language, segment] = req.path.split('/');
+  if (!wrongArtistsSegment(language, segment)) return next();
+  return res.redirect(301, `/${language}${artistPath(language)}${req.originalUrl.slice(language.length + segment.length + 2)}`);
+});
+
+// The catalog filtered to one artist was that artist's page before it had its own; those links move to the page.
+// Only a bare artist filter moves: with a page number or other filters it stays a listing
+app.get(/^\/(en|nl)\/products\/?$/, (req, res, next) => {
+  const name = req.query['attributeName'];
+  const others = Object.keys(req.query).filter((key) => key !== 'attributeName' && !/^(utm_|gclid|fbclid|srsltid)/.test(key));
+  if (typeof name !== 'string' || others.length) return next();
+  indexedArtists()
+    .then((artists) => {
+      const slug = artists.get(name);
+      if (!slug) return next();
+      const language = req.path.split('/')[1];
+      return res.redirect(301, `/${language}${artistPath(language, slug)}`);
+    })
+    // Without the artist list the listing still works
+    .catch(() => next());
 });
 
 // Pages that depend on the visitor render in the browser only

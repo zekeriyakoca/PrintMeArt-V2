@@ -14,6 +14,7 @@ import { CategoryDto } from '../../models/category';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { LanguageDropdownComponent } from '../language-dropdown/language-dropdown.component';
+import { artistPath } from '../../shared/artist-path';
 
 @Component({
   selector: 'app-header',
@@ -38,6 +39,9 @@ export class HeaderComponent extends BaseAppComponent {
     return (category.childCategories?.length ?? 0) > 5;
   }
 
+  private readonly lang = inject(LanguageService).currentLanguageCode();
+  readonly artistsIndex = artistPath(this.lang);
+
   readonly collectionGroups = [
     {
       name: 'nav.picks',
@@ -47,7 +51,7 @@ export class HeaderComponent extends BaseAppComponent {
         { name: 'nav.spotlight', href: '/products?tags=2' },
         { name: 'nav.classics', href: '/products?attributeName=Classics' },
         { name: 'nav.dutchMasters', href: '/products?categoryName=Dutch%20Masters' },
-        { name: 'nav.vanGogh', href: '/products?attributeName=Vincent%20van%20Gogh' },
+        { name: 'nav.vanGogh', href: artistPath(this.lang, 'vincent-van-gogh') },
       ],
     },
     {
@@ -65,14 +69,14 @@ export class HeaderComponent extends BaseAppComponent {
     },
     {
       name: 'nav.masters',
-      href: '/collections#painters',
+      href: artistPath(this.lang),
       items: [
-        { name: 'Claude Monet', href: '/products?attributeName=Claude%20Monet' },
-        { name: 'Vincent van Gogh', href: '/products?attributeName=Vincent%20van%20Gogh' },
-        { name: 'Camille Pissarro', href: '/products?attributeName=Camille%20Pissarro' },
-        { name: 'Alfred Sisley', href: '/products?attributeName=Alfred%20Sisley' },
-        { name: 'Pierre-Auguste Renoir', href: '/products?attributeName=Pierre-Auguste%20Renoir' },
-        { name: 'J.M.W. Turner', href: '/products?attributeName=J.%20M.%20W.%20Turner' },
+        { name: 'Claude Monet', href: artistPath(this.lang, 'claude-monet') },
+        { name: 'Vincent van Gogh', href: artistPath(this.lang, 'vincent-van-gogh') },
+        { name: 'Camille Pissarro', href: artistPath(this.lang, 'camille-pissarro') },
+        { name: 'Alfred Sisley', href: artistPath(this.lang, 'alfred-sisley') },
+        { name: 'Pierre-Auguste Renoir', href: artistPath(this.lang, 'pierre-auguste-renoir') },
+        { name: 'J.M.W. Turner', href: artistPath(this.lang, 'j-m-w-turner') },
         { name: 'John Singer Sargent', href: '/products?attributeName=John%20Singer%20Sargent' },
       ],
     },

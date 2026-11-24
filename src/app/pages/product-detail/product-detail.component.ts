@@ -21,6 +21,7 @@ import { SeoService, summary } from '../../services/seo/seo.service';
 import { productPath } from '../../shared/product-path';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { artistPath, artistSlug } from '../../shared/artist-path';
 
 const ARTIST_GROUP = 'Artist';
 
@@ -83,6 +84,15 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
     const painter = (this.product().metadata as unknown as Record<string, string | undefined> | undefined)?.['Painter'];
     return [this.product().name, painter].filter(Boolean).join(' – ');
   });
+
+  /** The artist's own page, e.g. /kunstenaars/winslow-homer */
+  artistPage = computed(() => {
+    const artist = this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP);
+    // Names that are not one person ("Unknown Artist", "After …") have no page
+    const person = artist && !/^(unknown|anonymous|after |imitator|follower|workshop|circle of|style of|copy after|master of|attributed)/i.test(artist.name);
+    return artist && person ? { name: artist.name, path: artistPath(this.language, artistSlug(artist)) } : null;
+  });
+  private readonly language = inject(LanguageService).currentLanguageCode();
 
   artistBio = computed(() => {
     const artist = this.product().attributeDetails?.find((a) => a.group === ARTIST_GROUP);

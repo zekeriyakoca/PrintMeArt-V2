@@ -20,6 +20,11 @@ export const routes: Routes = [
     path: 'products/:productId',
     loadComponent: () => import('./pages/product-detail/product-detail.component').then((m) => m.ProductDetailComponent),
   },
+  // The artist pages have a translated address; server.ts moves the other language's word to the right one
+  ...['kunstenaars', 'artists'].flatMap((segment) => [
+    { path: segment, loadComponent: () => import('./pages/artists/artists.component').then((m) => m.ArtistsComponent) },
+    { path: `${segment}/:slug`, loadComponent: () => import('./pages/artist/artist.component').then((m) => m.ArtistComponent) },
+  ]),
   {
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),
