@@ -1093,6 +1093,22 @@ $line-color: oklch(52.5% 0.223 3.958);
     font-size: 0.75rem;
     padding: 0.45rem 0.55rem;
     flex-shrink: 0;
+    // A finger-sized target on phones
+    min-height: 2.25rem;
+    justify-content: center;
+  }
+
+  // The narrowest phones (360 px): the whole toolbar fits, nothing hidden behind a sideways scroll
+  @media (max-width: 380px) {
+    .toolbar {
+      gap: 0.1rem;
+      padding: 0.3rem;
+    }
+
+    .tool-btn {
+      padding: 0.45rem 0.36rem;
+      font-size: 0.72rem;
+    }
   }
 
   .guides-btn {

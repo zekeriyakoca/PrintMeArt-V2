@@ -57,19 +57,30 @@
 
     &:hover {
         border-color: #cbd5e1;
-        background: #ffffff;
+        background-color: #ffffff;
     }
 
     &:focus {
         outline: none;
         border-color: #0f172a;
-        background: #ffffff;
+        background-color: #ffffff;
         box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
     }
 
     &.with-icon {
         padding-left: 2.75rem;
     }
+}
+
+// Safari draws its own select, which ignores the padding (a short field on iPhones): draw it like the inputs, with a chevron
+select.form-input {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2364748b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1rem;
 }
 
 .input-with-icon {

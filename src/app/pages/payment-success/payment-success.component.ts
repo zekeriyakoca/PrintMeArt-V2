@@ -30,6 +30,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
   isAuthenticated = computed(() => this.auth.isAuthenticated());
   isSuccess = signal(false);
   sessionData = signal<CheckoutSessionStatus | null>(null);
+  /** Translation key of what went wrong */
   errorMessage = signal<string>('');
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
 
     if (!sessionId) {
       this.isLoading.set(false);
-      this.errorMessage.set('No checkout session found.');
+      this.errorMessage.set('paid.noSession');
       return;
     }
 
@@ -66,7 +67,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
           sessionStorage.removeItem('checkoutEmail');
         } else {
           this.analytics.trackPaymentFailed('payment_not_completed', session.orderId);
-          this.errorMessage.set('Payment was not completed.');
+          this.errorMessage.set('paid.notCompleted');
         }
 
         this.isLoading.set(false);
@@ -74,7 +75,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
       error: (err) => {
         console.error('Failed to verify checkout session:', err);
         this.analytics.trackPaymentFailed('checkout_session_verification_failed');
-        this.errorMessage.set('Failed to verify payment. Please contact support.');
+        this.errorMessage.set('paid.verifyFailed');
         this.isLoading.set(false);
       },
     });

@@ -100,6 +100,9 @@
 
 .item-actions {
   display: flex;
+  // On a narrow phone "Remove" goes under the quantity instead of past the card's edge
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   align-items: center;
   justify-content: space-between;
   margin-top: 1rem;
