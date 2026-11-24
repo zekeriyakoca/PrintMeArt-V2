@@ -1,5 +1,7 @@
 import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
+import { categoryLink } from '../../shared/category-path';
+import { ListingPipe } from '../../shared/listing.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { ApiService } from './../../services/api/api.service';
 import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
@@ -18,7 +20,7 @@ import { artistPath } from '../../shared/artist-path';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, LinkPipe, TranslatePipe, UserMenuComponent, IconComponent, LanguageDropdownComponent],
+  imports: [RouterLink, LinkPipe, ListingPipe, TranslatePipe, UserMenuComponent, IconComponent, LanguageDropdownComponent],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -50,7 +52,7 @@ export class HeaderComponent extends BaseAppComponent {
         { name: 'nav.editorsPicks', href: '/products?tags=8' },
         { name: 'nav.spotlight', href: '/products?tags=2' },
         { name: 'nav.classics', href: '/products?attributeName=Classics' },
-        { name: 'nav.dutchMasters', href: '/products?categoryName=Dutch%20Masters' },
+        { name: 'nav.dutchMasters', href: categoryLink(this.lang, 'Dutch Masters') },
         { name: 'nav.vanGogh', href: artistPath(this.lang, 'vincent-van-gogh') },
       ],
     },

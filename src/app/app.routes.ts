@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { Route, Routes, UrlSegment } from '@angular/router';
+import { categoryBySlug } from './shared/category-path';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthenticationGuard } from './services/authentication/authentication.guard';
 
@@ -20,6 +21,13 @@ export const routes: Routes = [
     path: 'products/:productId',
     loadComponent: () => import('./pages/product-detail/product-detail.component').then((m) => m.ProductDetailComponent),
   },
+  // A category's own page: /nl/categorie/landschap, /en/category/landscape. An unknown slug falls through to the 404 page;
+  // server.ts moves the other language's word or slug to this language's
+  ...['categorie', 'category'].map((segment) => ({
+    path: `${segment}/:categorySlug`,
+    canMatch: [(_route: Route, segments: UrlSegment[]) => !!categoryBySlug(segments[1]?.path ?? '')],
+    loadComponent: () => import('./pages/product-list/product-list.component').then((m) => m.ProductListComponent),
+  })),
   // The artist pages have a translated address; server.ts moves the other language's word to the right one
   ...['kunstenaars', 'artists'].flatMap((segment) => [
     { path: segment, loadComponent: () => import('./pages/artists/artists.component').then((m) => m.ArtistsComponent) },

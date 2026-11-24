@@ -60,7 +60,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-10">
         @for (item of starters.slice(0, 3); track item.name) {
-          <a [routerLink]="['/products']" [queryParams]="item.queryParams" class="group cursor-pointer block">
+          <a [routerLink]="item.queryParams | listing" class="group cursor-pointer block">
             <div class="overflow-hidden aspect-[4/3] relative">
               <img [src]="thumbnails().get(item.name) ?? item.imageUrl" [alt]="item.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
               <div class="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-colors duration-500"></div>
@@ -81,7 +81,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
         @for (item of starters.slice(3); track item.name) {
-          <a [routerLink]="['/products']" [queryParams]="item.queryParams" class="group cursor-pointer block">
+          <a [routerLink]="item.queryParams | listing" class="group cursor-pointer block">
             <div class="overflow-hidden aspect-[4/3] relative">
               <img [src]="thumbnails().get(item.name) ?? item.imageUrl" [alt]="item.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
               <div class="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-colors duration-500"></div>
@@ -119,7 +119,7 @@
       <div #museumsScroll class="max-w-screen-3xl mx-auto overflow-x-auto pl-4 md:pl-8 pb-12" style="scrollbar-width: none; -webkit-overflow-scrolling: touch">
         <div class="flex gap-4" style="padding-right: 2rem">
           @for (museum of museums; track museum.name) {
-            <a [routerLink]="['/products']" [queryParams]="museum.queryParams" class="group cursor-pointer block shrink-0 w-[230px] lg:w-[268px]">
+            <a [routerLink]="museum.queryParams | listing" class="group cursor-pointer block shrink-0 w-[230px] lg:w-[268px]">
               <div class="overflow-hidden rounded-xl aspect-[3/4] relative">
                 <img [src]="thumbnails().get(museum.name) ?? museum.imageUrl" [alt]="museum.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/12 transition-colors duration-500 rounded-xl"></div>
@@ -163,7 +163,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
-        <a [routerLink]="['/products']" [queryParams]="scenes[0].queryParams" class="lg:col-span-2 group relative overflow-hidden rounded-2xl cursor-pointer block aspect-[4/3]">
+        <a [routerLink]="scenes[0].queryParams | listing" class="lg:col-span-2 group relative overflow-hidden rounded-2xl cursor-pointer block aspect-[4/3]">
           <img
             [src]="mediumSizeImages().get(scenes[0].name) ?? scenes[0].imageUrl"
             [alt]="scenes[0].name"
@@ -178,7 +178,7 @@
 
         <div class="flex flex-col gap-3">
           @for (scene of scenes.slice(1, 3); track scene.name) {
-            <a [routerLink]="['/products']" [queryParams]="scene.queryParams" class="group relative overflow-hidden rounded-xl cursor-pointer block aspect-[4/3]">
+            <a [routerLink]="scene.queryParams | listing" class="group relative overflow-hidden rounded-xl cursor-pointer block aspect-[4/3]">
               <img
                 [src]="thumbnails().get(scene.name) ?? scene.imageUrl"
                 [alt]="scene.name"
@@ -195,7 +195,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         @for (scene of scenes.slice(3); track scene.name) {
-          <a [routerLink]="['/products']" [queryParams]="scene.queryParams" class="group relative overflow-hidden rounded-xl cursor-pointer block aspect-[4/3]">
+          <a [routerLink]="scene.queryParams | listing" class="group relative overflow-hidden rounded-xl cursor-pointer block aspect-[4/3]">
             <img
               [src]="thumbnails().get(scene.name) ?? scene.imageUrl"
               [alt]="scene.name"
@@ -229,8 +229,7 @@
         <div class="flex gap-3" style="padding-right: 2rem">
           @for (painter of painters; track painter.name) {
             <a
-              [routerLink]="['/products']"
-              [queryParams]="painter.queryParams"
+              [routerLink]="painter.queryParams | listing"
               class="group relative overflow-hidden rounded-xl cursor-pointer shrink-0 w-[200px] lg:w-[240px]"
               style="aspect-ratio: 3/4"
             >
@@ -275,7 +274,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
         @for (style of styles.slice(0, 6); track style.name) {
-          <a [routerLink]="['/products']" [queryParams]="style.queryParams" class="group cursor-pointer block">
+          <a [routerLink]="style.queryParams | listing" class="group cursor-pointer block">
             <div class="overflow-hidden aspect-[4/3] relative">
               <img [src]="thumbnails().get(style.name) ?? style.imageUrl" [alt]="style.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
@@ -308,7 +307,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <a [routerLink]="['/products']" [queryParams]="featured[0].queryParams" class="lg:col-span-2 group cursor-pointer block">
+        <a [routerLink]="featured[0].queryParams | listing" class="lg:col-span-2 group cursor-pointer block">
           <div class="overflow-hidden rounded-2xl aspect-[4/3] relative">
             <img
               [src]="thumbnails().get(featured[0].name) ?? featured[0].imageUrl"
@@ -332,7 +331,7 @@
 
         <div class="flex flex-col gap-6 lg:gap-8">
           @for (item of featured.slice(1); track item.name) {
-            <a [routerLink]="['/products']" [queryParams]="item.queryParams" class="group cursor-pointer block">
+            <a [routerLink]="item.queryParams | listing" class="group cursor-pointer block">
               <div class="overflow-hidden rounded-xl aspect-[4/3] relative">
                 <img [src]="thumbnails().get(item.name) ?? item.imageUrl" [alt]="item.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500 rounded-xl"></div>

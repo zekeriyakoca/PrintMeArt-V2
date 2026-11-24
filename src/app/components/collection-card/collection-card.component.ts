@@ -1,8 +1,10 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoryDto } from '../../models/category';
 import { IconComponent } from '../shared/icon/icon.component';
+import { LanguageService } from '../../services/i18n/language.service';
+import { categoryLink } from '../../shared/category-path';
 
 @Component({
   selector: 'app-collection-card',
@@ -13,12 +15,14 @@ import { IconComponent } from '../shared/icon/icon.component';
 export class CollectionCardComponent {
   category = input.required<CategoryDto>();
 
+  private readonly language = inject(LanguageService).currentLanguageCode();
+
   constructor(private router: Router) {}
 
   goToCategory() {
     const categoryName = this.category()?.name;
     if (categoryName) {
-      this.router.navigate(['/products'], { queryParams: { categoryName } });
+      this.router.navigateByUrl(categoryLink(this.language, categoryName));
     }
   }
 }

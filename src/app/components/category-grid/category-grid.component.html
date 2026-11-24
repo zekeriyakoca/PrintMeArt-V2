@@ -42,14 +42,14 @@
           </h2>
         </div>
 
-        <a [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
+        <a [routerLink]="item.name | listing"
           class="cat-card__cta flex items-center text-xs md:text-sm">
           <span>{{ 'categories.seePrints' | t }}</span>
           <app-icon iconName="see-prints" class="cat-card__arrow w-4 h-4 ml-2.5" />
         </a>
       </div>
 
-      <a class="absolute inset-0" [routerLink]="'/products?categoryName=' + encodeURIComponent(item.name) | link"
+      <a class="absolute inset-0" [routerLink]="item.name | listing"
         [aria-label]="'categories.show' | t"></a>
     </div>
     }

@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:StoreFront": "node dist/store-front/server/server.mjs",
+    "seo:check": "node scripts/seo-check.mjs",
     "postinstall": "node scripts/patch-angular-build.js"
   },
   "private": true,

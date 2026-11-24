@@ -4,6 +4,7 @@ import { productPath } from './app/shared/product-path';
 import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from './app/services/i18n/languages';
 import { ARTISTS_SEGMENT, artistPath, MIN_INDEXED_WORKS } from './app/shared/artist-path';
 import { GUIDES, guidePath, guideText } from './app/guides/guides';
+import { categoryPath } from './app/shared/category-path';
 
 const STATIC_PAGES = ['/', '/collections', '/products', '/about', '/frames', '/your-design', '/how-we-work', '/legal', '/licensing'];
 const CACHE_MS = 60 * 60 * 1000;
@@ -17,12 +18,13 @@ export async function sitemapXml(): Promise<string> {
   if (cached && Date.now() - cached.at < CACHE_MS) return cached.xml;
 
   const [products, artists] = await Promise.all([fetchProducts(), indexedArtists()]);
-  const listings = await fetchListings(new Set(artists.keys()));
-  // A page's path in each language; the artist pages and guides have a translated address
+  const { categories, listings } = await fetchListings(new Set(artists.keys()));
+  // A page's path in each language; the category and artist pages and guides have a translated address
   type Paths = (language: string) => string;
   const same = (path: string): Paths => () => path;
   const pages: Paths[] = [
     ...[...STATIC_PAGES, ...listings, ...products.map((product) => `/products/${productPath(product)}`)].map(same),
+    ...categories.map((name) => (language: string) => categoryPath(language, name)!),
     (language) => artistPath(language),
     ...[...artists.values()].map((slug) => (language: string) => artistPath(language, slug)),
     (language) => guidePath(language),
@@ -68,8 +70,11 @@ export function wrongArtistsSegment(language: string, segment: string): boolean 
   return Object.values(ARTISTS_SEGMENT).includes(segment) && ARTISTS_SEGMENT[language] !== segment;
 }
 
-/** The product list narrowed to each category and attribute (museum, collection) with enough prints; artists have their own page */
-async function fetchListings(artistNames: Set<string>): Promise<string[]> {
+/**
+ * The categories with enough prints that have a page of their own, and the product list narrowed to each other
+ * category and attribute (museum, collection) with enough prints; artists have their own page
+ */
+async function fetchListings(artistNames: Set<string>): Promise<{ categories: string[]; listings: string[] }> {
   const groups: { groupType: string; name: string; options: { name: string }[] }[] = await catalog('/storefront/filter-options');
   const names = (type: string) =>
     groups.filter((g) => g.groupType === type && g.name !== 'Image Quality').flatMap((g) => g.options.map((o) => o.name));
@@ -81,7 +86,14 @@ async function fetchListings(artistNames: Set<string>): Promise<string[]> {
   const serializer = new DefaultUrlSerializer();
   const listing = (param: string, name: string) => serializer.serialize(serializer.parse(`/products?${param}=${encodeURIComponent(name)}`));
   const enough = (items: { name: string; productCount: number }[]) => items.filter((i) => i.productCount >= MIN_PRODUCTS).map((i) => i.name);
-  return [...enough(stats.categories).map((n) => listing('categoryName', n)), ...enough(stats.attributes).filter((n) => !artistNames.has(n)).map((n) => listing('attributeName', n))];
+  const categories = enough(stats.categories);
+  return {
+    categories: categories.filter((n) => categoryPath('nl', n)),
+    listings: [
+      ...categories.filter((n) => !categoryPath('nl', n)).map((n) => listing('categoryName', n)),
+      ...enough(stats.attributes).filter((n) => !artistNames.has(n)).map((n) => listing('attributeName', n)),
+    ],
+  };
 }
 
 export function catalog(path: string, body?: object) {

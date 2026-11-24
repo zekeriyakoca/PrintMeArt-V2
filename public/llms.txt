@@ -14,6 +14,23 @@ The shop is available in Dutch (default) and English: every page exists under ht
 
 Every product page tells the story of the artwork and its artist, and names the museum and credit line it comes from.
 
+## Categories
+
+Every category has its own page in both languages (Dutch: https://printmeart.nl/nl/categorie/…).
+
+- [Art Prints](https://printmeart.nl/en/category/art-prints) — Dutch: https://printmeart.nl/nl/categorie/kunstprints
+- [Landscape](https://printmeart.nl/en/category/landscape) — Dutch: https://printmeart.nl/nl/categorie/landschap
+- [Seascapes](https://printmeart.nl/en/category/seascapes) — Dutch: https://printmeart.nl/nl/categorie/zeegezichten
+- [Cityscapes & Architecture](https://printmeart.nl/en/category/cityscapes-architecture) — Dutch: https://printmeart.nl/nl/categorie/stadsgezichten-architectuur
+- [Portraits](https://printmeart.nl/en/category/portraits) — Dutch: https://printmeart.nl/nl/categorie/portretten
+- [Still Life](https://printmeart.nl/en/category/still-life) — Dutch: https://printmeart.nl/nl/categorie/stilleven
+- [Botanical Art](https://printmeart.nl/en/category/botanical-art) — Dutch: https://printmeart.nl/nl/categorie/botanische-kunst
+- [Animal Art](https://printmeart.nl/en/category/animal-art) — Dutch: https://printmeart.nl/nl/categorie/dierenkunst
+- [Famous Painters](https://printmeart.nl/en/category/famous-painters) — Dutch: https://printmeart.nl/nl/categorie/beroemde-schilders
+- [Dutch Masters](https://printmeart.nl/en/category/dutch-masters) — Dutch: https://printmeart.nl/nl/categorie/hollandse-meesters
+- [Modern Masters](https://printmeart.nl/en/category/modern-masters) — Dutch: https://printmeart.nl/nl/categorie/moderne-meesters
+- [Romantic & Realist Masters](https://printmeart.nl/en/category/romantic-realist-masters) — Dutch: https://printmeart.nl/nl/categorie/romantiek-realisme-meesters
+
 ## Artists with the most prints
 
 - [Winslow Homer](https://printmeart.nl/en/artists/winslow-homer)

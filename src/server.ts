@@ -6,6 +6,7 @@ import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE } from './app/services/i1
 import { productFeedXml, refreshProductFeed } from './feed';
 import { indexedArtists, sitemapXml, wrongArtistsSegment } from './sitemap';
 import { artistPath } from './app/shared/artist-path';
+import { categoryBySlug, categoryPath } from './app/shared/category-path';
 import { guideBySlug, guidePath, guideText } from './app/guides/guides';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
@@ -126,17 +127,42 @@ app.get(/^\/(en|nl)\/(gids|guides)(\/[^/]*)?\/?$/, (req, res, next) => {
   return res.redirect(301, `/${language}${target}`);
 });
 
-// The catalog filtered to one artist was that artist's page before it had its own; those links move to the page.
-// Only a bare artist filter moves: with a page number or other filters it stays a listing
+// Tracking tags added by ads and search engines; they never change what a page lists
+const TRACKING_PARAM = /^(utm_|gclid|fbclid|srsltid)/;
+/** The query string without the given keys, e.g. '?utm_source=x', or '' when nothing is left */
+function remainingQuery(originalUrl: string, drop: string[]): string {
+  const query = new URLSearchParams(originalUrl.split('?')[1] ?? '');
+  drop.forEach((key) => query.delete(key));
+  const rest = query.toString();
+  return rest ? `?${rest}` : '';
+}
+
+// The category pages: /nl/categorie/landschap and /en/category/landscape; the other language's word or slug moves to this language's
+app.get(/^\/(en|nl)\/(categorie|category)\/([^/]+)\/?$/, (req, res, next) => {
+  const [, language, segment, slug] = req.path.split('/');
+  const name = categoryBySlug(slug);
+  const target = name && categoryPath(language, name);
+  if (!target || `/${segment}/${slug}` === target) return next();
+  return res.redirect(301, `/${language}${target}${remainingQuery(req.originalUrl, [])}`);
+});
+
+// The catalog filtered to one category or one artist was that page before it had its own; those links move to the page.
+// Only a bare filter moves (a page number and tracking tags come along): with other filters it stays a listing
 app.get(/^\/(en|nl)\/products\/?$/, (req, res, next) => {
+  const language = req.path.split('/')[1];
+  const meaningful = Object.keys(req.query).filter((key) => !TRACKING_PARAM.test(key) && key !== 'pageIndex');
+  const category = req.query['categoryName'];
+  if (meaningful.length === 1 && typeof category === 'string') {
+    const target = categoryPath(language, category);
+    if (!target) return next();
+    return res.redirect(301, `/${language}${target}${remainingQuery(req.originalUrl, ['categoryName'])}`);
+  }
   const name = req.query['attributeName'];
-  const others = Object.keys(req.query).filter((key) => key !== 'attributeName' && !/^(utm_|gclid|fbclid|srsltid)/.test(key));
-  if (typeof name !== 'string' || others.length) return next();
+  if (typeof name !== 'string' || meaningful.length !== 1 || req.query['pageIndex'] !== undefined) return next();
   indexedArtists()
     .then((artists) => {
       const slug = artists.get(name);
       if (!slug) return next();
-      const language = req.path.split('/')[1];
       return res.redirect(301, `/${language}${artistPath(language, slug)}`);
     })
     // Without the artist list the listing still works

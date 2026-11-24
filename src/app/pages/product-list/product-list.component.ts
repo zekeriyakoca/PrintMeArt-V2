@@ -5,7 +5,7 @@ import { ProductCardComponent } from '../../components/product-card/product-card
 import { ProductGalleryCardComponent } from '../../components/product-gallery-card/product-gallery-card.component';
 import { ApiService } from '../../services/api/api.service';
 import { FilterGroupDto, PaginatedListDto, ProductFilterRequestDto, ProductSimpleDto, ProductTags } from '../../models/product';
-import { takeUntil } from 'rxjs';
+import { combineLatest, takeUntil } from 'rxjs';
 import { BasePageComponent } from '../basePageComponent';
 import { mapColorToHex } from '../../shared/utils';
 import { isDesktopViewport } from '../../shared/device';
@@ -17,6 +17,7 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { SeoService, summary } from '../../services/seo/seo.service';
 import { TranslationService } from '../../services/i18n/translation.service';
+import { CATEGORY_SLUGS, categoryBySlug, categoryPath, listingLink } from '../../shared/category-path';
 
 @Component({
   selector: 'app-product-list',
@@ -110,9 +111,20 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     super();
   }
 
+  /** Set on a category's own page (/categorie/landschap), which describes itself as that category */
+  categoryPage = signal(false);
+
   ngOnInit() {
-    this.route.queryParamMap.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params) => {
-      const categoryName = params.get('categoryName') || undefined;
+    combineLatest([this.route.paramMap, this.route.queryParamMap]).pipe(takeUntil(this.ngUnsubscribe)).subscribe(([path, params]) => {
+      const slug = path.get('categorySlug');
+      const categoryName = (slug ? categoryBySlug(slug) : params.get('categoryName')) || undefined;
+      this.categoryPage.set(!!slug);
+      // A link to the catalog filtered to just one category moves to that category's own page
+      const clean = listingLink(this.i18n.language, Object.fromEntries(params.keys.map((key) => [key, params.get(key) ?? undefined])));
+      if (!slug && categoryName && !clean.startsWith('/products')) {
+        this.router.navigateByUrl(clean, { replaceUrl: true });
+        return;
+      }
       const attributeName = params.get('attributeName') || undefined;
       const optionName = params.get('optionName') || undefined;
       const tagsParam = params.get('tags');
@@ -194,7 +206,8 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
     if (filters.optionName) queryParams['optionName'] = filters.optionName;
     if (filters.searchTerm) queryParams['searchTerm'] = filters.searchTerm;
     if (filters.tags !== undefined) queryParams['tags'] = filters.tags;
-    this.router.navigate([], { queryParams });
+    // A bare category filter is that category's page; anything else is the filtered catalog
+    this.router.navigateByUrl(listingLink(this.i18n.language, queryParams));
   }
 
   fetchProductsWithFilters() {
@@ -295,6 +308,7 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
   }
 
   private describeForSearch() {
+    if (this.categoryPage()) return this.describeCategory();
     const name = this.named() ?? this.selectedFilterOptions().searchTerm;
     const shown = name ? this.i18n.t('name.' + name) : undefined;
     const description = this.namedText() ?? (shown ? this.i18n.t('seo.catalog.namedDescription', { name: shown }) : this.i18n.t('seo.catalog.description'));
@@ -302,6 +316,29 @@ export class ProductListComponent extends BasePageComponent implements OnInit, A
       title: shown ? this.i18n.t('seo.catalog.namedTitle', { name: shown }) : this.i18n.t('seo.catalog.title'),
       description: summary(description),
       structuredData: this.named() ? [{ '@type': 'CollectionPage', name: shown, description, numberOfItems: this.products().count }] : [],
+      // A list without prints (an old or mistyped filter) is not worth a place in search results
+      noindex: !this.products().count,
+    });
+  }
+
+  /** A category's own page: a title and description of its own, and the same page in the other language */
+  private describeCategory() {
+    const name = this.selectedFilterOptions().categoryName!;
+    const shown = this.i18n.t('name.' + name);
+    const page = this.selectedFilterOptions().pageIndex;
+    const paths = Object.fromEntries(
+      Object.keys(CATEGORY_SLUGS[name]).map((language) => [language, categoryPath(language, name)! + (page ? `?pageIndex=${page}` : '')]),
+    );
+    const description = this.i18n.t('seo.category.description', { name: shown });
+    this.seo.setPage({
+      title: this.i18n.t('seo.category.title', { name: shown }),
+      description: summary(description),
+      path: paths[this.i18n.language],
+      paths,
+      noindex: !this.products().count,
+      structuredData: [
+        { '@type': 'CollectionPage', name: shown, description: this.namedText() ?? description, numberOfItems: this.products().count, inLanguage: this.i18n.language },
+      ],
     });
   }
 
