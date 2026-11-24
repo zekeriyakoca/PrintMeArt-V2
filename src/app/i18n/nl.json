@@ -143,7 +143,9 @@
     "fromUpper": "VANAF",
     "uploadPending": "Wacht even tot je afbeelding is geüpload voordat je hem in je winkelmand legt.",
     "paper": "Papier",
-    "allByArtist": "Alle werken van {{name}}"
+    "allByArtist": "Alle werken van {{name}}",
+    "changeOptions": "Opties wijzigen",
+    "chooseOptions": "Kies opties"
   },
   "sizes": {
     "original": "Originele afmeting",
