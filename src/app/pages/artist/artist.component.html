@@ -48,20 +48,25 @@
     </div>
   </section>
 
-  <div class="subnav">
+  <div class="subnav" [class.is-stuck]="stuck()">
     <div class="wrap">
+      <a class="subnav__id" routerLink="." fragment="top" [attr.aria-hidden]="!stuck()" [attr.tabindex]="stuck() ? null : -1">
+        @if (portrait()) {<img [src]="portrait()" alt="" width="40" height="40" />}
+        <span>@if (nameParts().first) {{{ nameParts().first }} }<b>{{ nameParts().last }}</b></span>
+      </a>
       <nav [attr.aria-label]="'artist.onThisPage' | t">
-        <a routerLink="." fragment="facts">{{ 'artist.nav.facts' | t }}</a>
-        @if (featured().length) {<a routerLink="." fragment="featured">{{ 'artist.nav.featured' | t }}</a>}
-        @if (bio().lead) {<a routerLink="." fragment="biography">{{ 'artist.nav.bio' | t }}</a>}
-        <a routerLink="." fragment="works">{{ 'artist.nav.works' | t }}</a>
-        @if (museums().length) {<a routerLink="." fragment="museums">{{ 'artist.nav.museums' | t }}</a>}
-        <a routerLink="." fragment="faq">{{ 'artist.nav.faq' | t }}</a>
+        <a routerLink="." fragment="facts" [class.on]="active() === 'facts'">{{ 'artist.nav.facts' | t }}</a>
+        @if (featured().length) {<a routerLink="." fragment="featured" [class.on]="active() === 'featured'">{{ 'artist.nav.featured' | t }}</a>}
+        @if (bio().lead) {<a routerLink="." fragment="biography" [class.on]="active() === 'biography'">{{ 'artist.nav.bio' | t }}</a>}
+        <a routerLink="." fragment="works" [class.on]="active() === 'works'">{{ 'artist.nav.works' | t }}</a>
+        @if (museums().length) {<a routerLink="." fragment="museums" [class.on]="active() === 'museums'">{{ 'artist.nav.museums' | t }}</a>}
+        <a routerLink="." fragment="faq" [class.on]="active() === 'faq'">{{ 'artist.nav.faq' | t }}</a>
       </nav>
       @if (hasPrice()) {
-      <div class="subnav__buy"><span>{{ count() }} prints · <b>{{ 'artist.from' | t }} {{ money(fromPrice()) }}</b></span><a routerLink="." fragment="works">{{ 'artist.pick' | t }}</a></div>
+      <div class="subnav__buy"><span>{{ count() }} prints<i></i>{{ 'artist.from' | t }} <b>{{ money(fromPrice()) }}</b></span><a routerLink="." fragment="works">{{ 'artist.pick' | t }} <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       }
     </div>
+    <span class="subnav__progress" [style.transform]="'scaleX(' + progress() + ')'"></span>
   </div>
 
   <section class="facts" id="facts">

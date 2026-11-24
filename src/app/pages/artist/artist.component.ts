@@ -1,5 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { Component, computed, HostListener, inject, OnInit, signal } from '@angular/core';
+import { DecimalPipe, DOCUMENT } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { ArtistDetailDto, ArtistSummaryDto, ArtistWorkDto } from '../../models/artist';
@@ -39,6 +39,8 @@ export interface Work {
   image: string;
 }
 
+const SECTIONS = ['facts', 'featured', 'biography', 'works', 'museums', 'faq'];
+
 @Component({
   selector: 'app-artist',
   imports: [TranslatePipe, RouterLink, DecimalPipe, NotFoundComponent],
@@ -58,6 +60,12 @@ export class ArtistComponent extends BasePageComponent implements OnInit {
   missing = signal(false);
   technique = signal<string>('all');
   showAll = signal(false);
+
+  /** Sticky bar state: stuck to the top, the section in view, how far down the page we are */
+  stuck = signal(false);
+  active = signal('');
+  progress = signal(0);
+  private readonly document = inject(DOCUMENT);
 
   readonly indexPath = artistPath(this.language);
   readonly artistLink = (slug: string) => artistPath(this.language, slug);
@@ -212,6 +220,29 @@ export class ArtistComponent extends BasePageComponent implements OnInit {
         error: (error) => this.missing.set(error?.status === 404),
       });
     });
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const bar = this.document.querySelector<HTMLElement>('.artist-page .subnav');
+    if (!bar) return;
+    this.stuck.set(bar.getBoundingClientRect().top <= 1);
+    let current = '';
+    for (const id of SECTIONS) {
+      const section = this.document.getElementById(id);
+      if (section && section.getBoundingClientRect().top <= 140) current = id;
+    }
+    if (current !== this.active()) {
+      this.active.set(current);
+      // keep the highlighted item visible when the bar scrolls sideways (phones)
+      setTimeout(() => {
+        const strip = bar.querySelector<HTMLElement>('.subnav nav');
+        const item = strip?.querySelector<HTMLElement>('a.on');
+        if (strip && item) strip.scrollTo({ left: item.offsetLeft - strip.clientWidth / 2 + item.clientWidth / 2, behavior: 'smooth' });
+      });
+    }
+    const root = this.document.documentElement;
+    this.progress.set(Math.min(1, root.scrollTop / Math.max(1, root.scrollHeight - root.clientHeight)));
   }
 
   money(value: number): string {
