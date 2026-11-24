@@ -128,6 +128,14 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   private readonly actionButtons = viewChild<ElementRef<HTMLElement>>('actionButtons');
   showStickyBar = signal(false);
+  /** How far down the page we are, for the sticky bar's progress line */
+  scrollProgress = signal(0);
+
+  /** The sticky bar's way back to the options, just under the site header */
+  scrollToOptions() {
+    const top = this.host.nativeElement.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
   /** The action buttons are still below the screen */
   private actionsBelow = signal(false);
   /** Custom design: once an image is uploaded and every option is chosen, the buttons wait at the bottom of the screen until the customer scrolls to them */
@@ -151,7 +159,6 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       const buttons = this.actionButtons()?.nativeElement;
-      const footer = document.querySelector('app-footer');
       if (buttons) {
         // A hidden copy of the sidebar (the other breakpoint's) measures zero and never counts as below
         const dockObserver = new IntersectionObserver(([entry]) =>
@@ -161,19 +168,20 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         destroyRef.onDestroy(() => dockObserver.disconnect());
       }
       if (!this.stickyBar() || !buttons) return;
-      // Shown once the buttons are above the screen, and out of the footer's way
-      let buttonsPassed = false;
-      let footerInView = false;
-      const observer = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (entry.target === buttons) buttonsPassed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-          else footerInView = entry.isIntersecting;
-        }
-        this.showStickyBar.set(buttonsPassed && !footerInView);
-      });
+      // Shown once the buttons are above the screen
+      const observer = new IntersectionObserver(([entry]) =>
+        this.showStickyBar.set(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      );
       observer.observe(buttons);
-      if (footer) observer.observe(footer);
-      destroyRef.onDestroy(() => observer.disconnect());
+      const onScroll = () => {
+        const root = document.documentElement;
+        this.scrollProgress.set(Math.min(1, root.scrollTop / Math.max(1, root.scrollHeight - root.clientHeight)));
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      destroyRef.onDestroy(() => {
+        observer.disconnect();
+        window.removeEventListener('scroll', onScroll);
+      });
     });
   }
 

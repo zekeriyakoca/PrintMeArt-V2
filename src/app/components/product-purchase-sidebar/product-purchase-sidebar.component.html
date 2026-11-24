@@ -163,23 +163,32 @@
   </div>
 }
 
-<!-- Phones: price and add to cart pinned to the bottom -->
+<!-- Phones and tablets: the work, the chosen options and add to cart pinned to the top -->
 @if (stickyBar()) {
   <div class="sticky-buy lg:hidden" [class.sticky-buy--shown]="showStickyBar()" [attr.inert]="showStickyBar() ? null : ''">
-    @if (product().images?.[0]?.thumb; as thumb) {
-      <img class="sticky-buy__thumb" [src]="thumb" alt="" />
-    }
-    <div class="min-w-0 flex-1">
-      <p class="sticky-buy__name">{{ product().name }}</p>
-      <p class="sticky-buy__meta">
-        @if (selectedSize(); as size) {<span>{{ size.name }} cm</span> · }
-        <span class="sticky-buy__price">{{ (calculatedPrice() || product().cheapestPrice) | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-      </p>
-    </div>
-    <button type="button" class="sticky-buy__btn" [disabled]="!hasAllOptionsSelected() || calculatedPrice() <= 0" (click)="addToCart()">
-      <app-icon iconName="cart"></app-icon>
-      <span>{{ 'product.addToCart' | t }}</span>
+    <button type="button" class="sticky-buy__info" (click)="scrollToOptions()" [attr.aria-label]="'product.changeOptions' | t">
+      @if (product().images?.[0]?.thumb; as thumb) {
+        <img class="sticky-buy__thumb" [src]="thumb" alt="" />
+      }
+      <span class="sticky-buy__text">
+        <span class="sticky-buy__name">{{ product().name }}</span>
+        <span class="sticky-buy__meta">
+          @if (selectedSize(); as size) {<b>{{ size.name }} cm</b>}
+          <i></i>{{ selectedFrameName() || ('design.noFrame' | t) }}
+          @if (isFrameSelected() && isMatIncluded()) {<i></i>{{ 'design.matArea' | t }}}
+          <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </span>
     </button>
+    @if (hasAllOptionsSelected() && calculatedPrice() > 0) {
+      <button type="button" class="sticky-buy__btn" (click)="addToCart()" [attr.aria-label]="'product.addToCart' | t">
+        <app-icon iconName="cart"></app-icon>
+        <span>{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+      </button>
+    } @else {
+      <button type="button" class="sticky-buy__btn" (click)="scrollToOptions()">{{ 'product.chooseOptions' | t }}</button>
+    }
+    <span class="sticky-buy__progress" [style.transform]="'scaleX(' + scrollProgress() + ')'"></span>
   </div>
 }
 

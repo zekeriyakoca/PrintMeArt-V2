@@ -143,7 +143,9 @@
     "fromUpper": "FROM",
     "uploadPending": "Please wait for your image to finish uploading before adding to cart.",
     "paper": "Paper",
-    "allByArtist": "All works by {{name}}"
+    "allByArtist": "All works by {{name}}",
+    "changeOptions": "Change options",
+    "chooseOptions": "Choose options"
   },
   "sizes": {
     "original": "Original Artwork Size",
