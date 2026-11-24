@@ -42,5 +42,8 @@
       </div>
     </div>
   </div>
+  @if (customProduct().id) {
+  <app-custom-design-prices [product]="customProduct()" />
+  }
   <app-custom-design-cta />
 </div>
