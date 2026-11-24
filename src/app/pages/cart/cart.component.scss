@@ -2,6 +2,11 @@
   background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
   padding: 4rem 2rem;
 
+  // Phones keep their width for the items
+  @media (max-width: 639px) {
+    padding: 3rem 1rem;
+  }
+
   @media (min-width: 768px) {
     padding: 6rem 2rem;
   }
@@ -125,6 +130,8 @@
 // Cart Content
 .cart-content {
   display: grid;
+  // One column on phones that never grows wider than the screen (an implicit column takes the content's width)
+  grid-template-columns: minmax(0, 1fr);
   gap: 3rem;
 
   @media (min-width: 1024px) {

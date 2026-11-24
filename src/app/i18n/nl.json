@@ -288,6 +288,7 @@
     "Gold accent frame for a statement look.": "Gouden lijst voor een opvallende uitstraling.",
     "Matte black wide frame for strong contrast.": "Brede matzwarte lijst voor sterk contrast.",
     "Natural oak frame with a warm, visible wood grain.": "Naturel eikenhouten lijst met een warme, zichtbare houtnerf.",
+    "Dark walnut frame with a fine, straight grain and a flat 1.5 cm deep profile.": "Donkere notenhouten lijst met een fijne, rechte nerf en een vlak profiel van 1,5 cm diep.",
     "Art reproductions and paintings": "Kunstreproducties en schilderijen",
     "Artworks where texture adds value": "Kunstwerken waarbij structuur iets toevoegt",
     "Balanced contrast": "Evenwichtig contrast",
@@ -748,6 +749,9 @@
     "tracking": "Je ontvangt een track-and-trace zodra je bestelling verzonden is.",
     "wrong": "Er ging iets mis",
     "unableToVerify": "Je betaling kon niet worden gecontroleerd",
+    "noSession": "We konden je betaalsessie niet vinden.",
+    "notCompleted": "Je betaling is niet afgerond.",
+    "verifyFailed": "We konden je betaling niet controleren. Neem contact met ons op.",
     "contactSupport": "Denk je dat dit een fout is? Neem dan contact op met onze klantenservice en vermeld je bestelgegevens.",
     "tryAgain": "Opnieuw proberen",
     "home": "Naar de homepage"

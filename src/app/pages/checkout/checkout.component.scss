@@ -2,6 +2,11 @@
   min-height: 100vh;
   background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
   padding: 6rem 2rem 1rem;
+
+  // Phones keep their width for the form
+  @media (max-width: 639px) {
+    padding: 4.5rem 1rem 1rem;
+  }
 }
 
 .checkout-container {
@@ -100,6 +105,11 @@
     background: #e2e8f0;
   }
 
+  // The three steps stay on one line on the smallest phones
+  @media (max-width: 420px) {
+    padding: 0.4rem 0.55rem;
+  }
+
   @media (min-width: 768px) {
     font-size: 0.85rem;
     padding: 0.5rem 1rem;
@@ -146,6 +156,8 @@
 // Content Layout
 .checkout-content {
   display: grid;
+  // One column on phones that never grows wider than the screen (an implicit column takes the content's width)
+  grid-template-columns: minmax(0, 1fr);
   gap: 3rem;
 
   @media (min-width: 1024px) {

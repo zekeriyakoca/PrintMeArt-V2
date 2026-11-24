@@ -15,7 +15,8 @@
       }}</span>
 
     @if (ppi() !== null) {
-    <div class="ml-1.5 h-1.5 w-14 overflow-hidden rounded-full bg-black/10" aria-hidden="true">
+    <!-- Only where the row has room for it (the size row is a container) -->
+    <div class="ml-1.5 hidden @[20rem]:block h-1.5 w-14 overflow-hidden rounded-full bg-black/10" aria-hidden="true">
       <div class="h-full" [class]="barFillClasses()" [style.width.%]="fillPercent() * 100"></div>
     </div>
     }

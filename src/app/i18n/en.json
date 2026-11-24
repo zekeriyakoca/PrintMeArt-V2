@@ -575,6 +575,9 @@
     "tracking": "You'll receive tracking info when your order ships.",
     "wrong": "Something went wrong",
     "unableToVerify": "Unable to verify payment",
+    "noSession": "No checkout session found.",
+    "notCompleted": "Payment was not completed.",
+    "verifyFailed": "Failed to verify payment. Please contact support.",
     "contactSupport": "If you believe this is an error, please contact our support team with your order details.",
     "tryAgain": "Try Again",
     "home": "Back to Home"

@@ -191,7 +191,8 @@ $teal: rgb(22, 122, 146);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.3rem;
-  max-height: 10rem;
+  // All five rows of sizes in view, not the last one cut in half behind an inner scroll
+  max-height: 12rem;
   overflow-y: auto;
   padding: 0.1rem 0.1rem 0.2rem;
 }

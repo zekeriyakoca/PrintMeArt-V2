@@ -22,7 +22,8 @@
 
   <!-- Size first -->
   <div class="option-group">
-    <div class="flex items-center justify-between gap-2">
+    <!-- A container, so the quality badge drops its meter when the row is narrow (smallest phones, the tablet's side column) -->
+    <div class="@container flex flex-wrap items-center justify-between gap-2">
       <label class="option-label">{{ 'product.size' | t }}</label>
       @if (imageMetadata(); as metadata) {
         <div class="flex items-center gap-1.5">
@@ -30,7 +31,7 @@
           @if (showEnhancement()) {
             <app-tooltip [ariaLabel]="'enhancement.include' | t">
               <button type="button" [class.active]="isEnhancementIncluded()" (click)="toggleEnhancement()"
-                [class]="'enhance-btn inline-flex h-7 w-7 items-center justify-center rounded-md border transition-colors ' +
+                [class]="'enhance-btn inline-flex h-8 w-8 items-center justify-center rounded-md border transition-colors ' +
                   (isEnhancementIncluded() ? 'border-[#384f8c] bg-[#384f8c] text-white' : 'border-indigo-200 bg-[#faf6ff] text-[#384f8c] hover:border-[#384f8c]')">
                 <app-icon iconName="sparkles" class="h-4 w-4"></app-icon>
               </button>
@@ -118,8 +119,8 @@
   </div>
 
   <!-- Payment Methods -->
-  <div class="flex items-center justify-center gap-1 py-2">
-    <span class="text-sm text-slate-400 mr-2">{{ 'product.securePayment' | t }}</span>
+  <div class="flex flex-wrap items-center justify-center gap-1 py-2">
+    <span class="text-sm text-slate-400 mr-2 whitespace-nowrap">{{ 'product.securePayment' | t }}</span>
     <app-icon iconName="stripe" class="w-10 h-7" title="Stripe"></app-icon>
     <app-icon iconName="klarna" class="w-10 h-7" title="Klarna"></app-icon>
     <app-icon iconName="ideal" class="w-10 h-7" title="ideal"></app-icon>

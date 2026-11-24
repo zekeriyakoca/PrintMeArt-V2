@@ -644,4 +644,20 @@
     0 18px 40px -16px rgba(15, 23, 42, 0.45),
     0 0 0 1px rgba(15, 23, 42, 0.06);
   pointer-events: auto;
+
+  // Labels stay on one line; on the narrowest phones the icons make room for them
+  .preview-btn,
+  .add-to-cart-btn {
+    white-space: nowrap;
+    min-width: 0;
+    padding-inline: 0.75rem;
+  }
+
+  @media (max-width: 360px) {
+    svg,
+    app-icon {
+      // The icon sets its display on its own element
+      display: none !important;
+    }
+  }
 }

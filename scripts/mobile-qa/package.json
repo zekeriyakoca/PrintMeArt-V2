@@ -1,0 +1,9 @@
+{
+  "name": "printmeart-mobile-qa",
+  "private": true,
+  "type": "module",
+  "description": "Mobile regression walk of the custom design flow, kept apart from the app's dependencies",
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}

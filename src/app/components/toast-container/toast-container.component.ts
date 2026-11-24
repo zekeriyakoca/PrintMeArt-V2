@@ -6,7 +6,7 @@ import { ToastService, Toast } from '../../services/toast/toast.service';
   standalone: true,
   template: `
     <div
-      class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none"
+      class="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:bottom-6 sm:right-6 z-[100] flex flex-col gap-3 sm:max-w-sm sm:w-full pointer-events-none"
     >
       @for (toast of toastService.toasts(); track toast.id) {
         <div
