@@ -46,8 +46,9 @@ export class GuideComponent extends BasePageComponent implements OnInit {
     });
   }
 
+  /** The router adds the language itself */
   link(slug?: string): string {
-    return `/${this.language}${guidePath(this.language, slug)}`;
+    return guidePath(this.language, slug);
   }
 
   /** Links inside the article text stay in the app instead of reloading the page */
@@ -56,7 +57,8 @@ export class GuideComponent extends BasePageComponent implements OnInit {
     const href = anchor?.getAttribute('href');
     if (!href?.startsWith('/') || event.ctrlKey || event.metaKey || event.shiftKey) return;
     event.preventDefault();
-    this.router.navigateByUrl(href);
+    // The article links carry the language ('/nl/your-design'); the router adds it itself
+    this.router.navigateByUrl(href.replace(/^\/(nl|en)(?=\/|$)/, '') || '/');
   }
 
   private describeForSearch(guide: Guide) {

@@ -22,7 +22,8 @@ export class GuidesComponent implements OnInit {
     number: String(index + 1).padStart(2, '0'),
     minutes: guide.minutes,
     text: guideText(guide, this.language),
-    link: `/${this.language}${guidePath(this.language, guideText(guide, this.language).slug)}`,
+    // The router adds the language itself
+    link: guidePath(this.language, guideText(guide, this.language).slug),
   }));
 
   ngOnInit() {
