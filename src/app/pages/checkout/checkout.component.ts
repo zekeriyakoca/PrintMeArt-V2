@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, HostListener, inject, Input, PLATFORM_ID, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -112,6 +112,12 @@ export class CheckoutComponent extends BasePageComponent {
         this.toastService.error('errors.checkoutInit');
       },
     });
+  }
+
+  /** Back from Stripe with the browser's back button, the page comes out of the cache as it was left: still processing */
+  @HostListener('window:pageshow', ['$event'])
+  onPageShow(event: PageTransitionEvent) {
+    if (event.persisted) this.isProcessing.set(false);
   }
 
   /** Sends the name and email as soon as they are typed, so a checkout that fails later can still be followed up */
