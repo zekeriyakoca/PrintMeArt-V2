@@ -9,7 +9,7 @@ The shop is available in Dutch (default) and English: every page exists under ht
 - [All art prints](https://printmeart.nl/en/products): the full catalog, filterable by category, artist and museum
 - [Artists A–Z](https://printmeart.nl/en/artists): one page per artist with a short biography, key facts, every work we print (year, technique, museum, price) and where the originals hang. Dutch: https://printmeart.nl/nl/kunstenaars
 - [Collections](https://printmeart.nl/en/collections): curated collections — museum highlights (Rijksmuseum, The Met, Art Institute of Chicago, …), famous painters, styles and periods, scenes
-- [Your design](https://printmeart.nl/en/your-design): print your own photo or artwork
+- [Your design](https://printmeart.nl/en/your-design): fine art print of your own photo or artwork — giclée on Hahnemühle cotton paper or Premium Poster, fixed price per size (table below). Dutch: https://printmeart.nl/nl/your-design
 - [Frames](https://printmeart.nl/en/frames): our Natural Oak frame (temporarily unavailable)
 
 Every product page tells the story of the artwork and its artist, and names the museum and credit line it comes from.
@@ -48,7 +48,7 @@ Every category has its own page in both languages (Dutch: https://printmeart.nl/
 
 ## Prices: printing your own photo or artwork
 
-Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch VAT, rolled up in a protective tube. Cotton paper is Hahnemühle Photo Rag (308 g/m²) or Hahnemühle Museum Etching (350 g/m²), same price; Premium Poster is a photographic print on Fujifilm paper (234 g/m²). Professional upscaling for small images: €5. Free shipping in the Netherlands from €75.
+Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch VAT, rolled up in a protective tube. Cotton paper is Hahnemühle Photo Rag (308 g/m²) or Hahnemühle Museum Etching (350 g/m²), same price; Premium Poster is a photographic print on Fujifilm paper (234 g/m²). Professional upscaling for small images: €5. Free shipping in the Netherlands from €75. Every file is checked by hand, and the customer approves the final design before it is printed. Orders can also be picked up at the studio in Den Bosch (by appointment, via support@printmeart.nl). Coming soon: Canson Rag Photographique II (310 g/m²) and a baryta paper.
 
 | Size (cm) | Premium Poster | Cotton paper |
 |---|---|---|

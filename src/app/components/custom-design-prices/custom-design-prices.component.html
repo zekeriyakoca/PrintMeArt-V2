@@ -7,6 +7,12 @@
       <p class="max-w-2xl mx-auto text-slate-600">{{ 'designPrices.intro' | t }}</p>
     </div>
 
+    <ul class="mb-8 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 text-sm text-slate-700">
+      @for (perk of perks(); track perk) {
+      <li class="flex items-start gap-2.5"><span class="mt-0.5 font-semibold text-[#384f8c]" aria-hidden="true">✓</span>{{ perk }}</li>
+      }
+    </ul>
+
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_48px_-32px_rgba(15,23,42,0.35)]">
       <table class="w-full text-left">
         <thead>
@@ -34,9 +40,10 @@
       </table>
     </div>
     <ul class="mt-5 space-y-1.5 text-sm text-slate-500">
-      <li>{{ 'designPrices.noteIncluded' | t }}@if (freeFrom(); as free) { {{ 'designPrices.noteShipping' | t: { amount: euro(free, 0) } }}}</li>
+      <li>{{ 'designPrices.noteIncluded' | t }}</li>
       <li>{{ 'designPrices.noteCotton' | t }}</li>
       <li>{{ 'designPrices.noteEnhancement' | t }}</li>
+      <li>{{ 'designPrices.noteSoon' | t }} <a routerLink="/how-we-work" fragment="paper-options" class="font-medium text-[#384f8c] underline underline-offset-2 hover:no-underline">{{ 'designPrices.allPapers' | t }}</a></li>
     </ul>
   </div>
 </section>
