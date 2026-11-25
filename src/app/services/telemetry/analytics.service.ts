@@ -77,6 +77,10 @@ const FIRST_PARTY_FLUSH_INTERVAL_MS = 5000;
 const KEEPALIVE_MAX_BYTES = 60 * 1024;
 const PAGE_TITLE_WAIT_MS = 3000;
 const TRACKED_ORDERS_KEY = 'pma_tracked_orders';
+// A visit lasts until the visitor has been idle this long. Kept in localStorage, not sessionStorage: mobile Safari
+// can drop sessionStorage on the way back from Stripe, which split one checkout into two visits.
+const VISIT_SESSION_KEY = 'pma_visit_session';
+const VISIT_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 
 @Injectable({
   providedIn: 'root',
@@ -365,7 +369,7 @@ export class AnalyticsService {
       clientEventId: this.createId(),
       userId: this.currentUserId,
       anonymousId: this.anonymousId ?? this.getOrCreateBrowserId('pma_anonymous_id', localStorage),
-      sessionId: this.sessionId ?? this.getOrCreateBrowserId('pma_session_id', sessionStorage),
+      sessionId: this.touchVisitSessionId(),
       eventName: name,
       occurredAt: new Date().toISOString(),
       source: 'storefront',
@@ -491,7 +495,7 @@ export class AnalyticsService {
     if (!this.analyticsApiUrl) return;
 
     this.anonymousId = this.getOrCreateBrowserId('pma_anonymous_id', localStorage);
-    this.sessionId = this.getOrCreateBrowserId('pma_session_id', sessionStorage);
+    this.sessionId = this.touchVisitSessionId();
 
     merge(
       interval(FIRST_PARTY_FLUSH_INTERVAL_MS).pipe(map(() => false)),
@@ -510,6 +514,9 @@ export class AnalyticsService {
     if (this.firstPartyQueue.length >= FIRST_PARTY_MAX_QUEUE_SIZE) {
       this.firstPartyQueue.shift();
     }
+
+    // Every event keeps the visit alive; after 30 idle minutes the next one starts a new visit
+    this.sessionId = this.touchVisitSessionId();
 
     this.firstPartyQueue.push({
       clientEventId: this.createId(),
@@ -708,6 +715,19 @@ export class AnalyticsService {
       return created;
     } catch {
       return this.createId();
+    }
+  }
+
+  /** The current visit's id, renewed after 30 idle minutes. Each call counts as activity. */
+  private touchVisitSessionId(): string {
+    const now = Date.now();
+    try {
+      const saved = JSON.parse(localStorage.getItem(VISIT_SESSION_KEY) ?? 'null') as { id?: string; lastSeen?: number } | null;
+      const id = saved?.id && now - (saved.lastSeen ?? 0) < VISIT_IDLE_TIMEOUT_MS ? saved.id : this.createId();
+      localStorage.setItem(VISIT_SESSION_KEY, JSON.stringify({ id, lastSeen: now }));
+      return id;
+    } catch {
+      return this.sessionId ?? this.createId();
     }
   }
 

@@ -53,13 +53,19 @@ export const AuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
 
 const SESSION_KEY = 'session_id';
 
+/**
+ * The guest's id: the backend keys the guest basket and the guest buyer on it. It lives in localStorage so it
+ * survives the trip to Stripe and back, and new tabs. In sessionStorage, mobile Safari sometimes lost it on the way
+ * back, and the guest came back as a stranger with an empty basket.
+ */
 function getSessionIdBrowser(): string {
   try {
-    let sessionId = sessionStorage.getItem(SESSION_KEY);
+    // An id from before the move to localStorage is kept, so a basket filled just before a deploy is not lost
+    let sessionId = localStorage.getItem(SESSION_KEY) ?? sessionStorage.getItem(SESSION_KEY);
     if (!sessionId) {
       sessionId = createRequestId();
-      sessionStorage.setItem(SESSION_KEY, sessionId);
     }
+    localStorage.setItem(SESSION_KEY, sessionId);
     return sessionId;
   } catch {
     return createRequestId();
