@@ -1,0 +1,13 @@
+<div class="confirm-layer" (click)="keepDesign.emit()">
+  <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="saved-change-title" aria-describedby="saved-change-text" (click)="$event.stopPropagation()">
+    <div class="confirm-mark" aria-hidden="true">
+      <span class="confirm-mark-paper"><span class="confirm-mark-art"></span></span>
+    </div>
+    <h4 id="saved-change-title" class="confirm-title">{{ 'design.savedChanged.title' | t }}</h4>
+    <p id="saved-change-text" class="confirm-text">{{ 'design.savedChanged.text' | t }}</p>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-save" #keepButton (click)="keepDesign.emit()">{{ 'design.savedChanged.keep' | t }}</button>
+    </div>
+    <button type="button" class="confirm-discard" (click)="change.emit()">{{ 'design.savedChanged.change' | t }}</button>
+  </div>
+</div>

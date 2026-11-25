@@ -395,6 +395,12 @@
     "zoom": "Zoom",
     "printDetails": "Print details",
     "selections": "Your selections",
+    "savedChanged": {
+      "title": "Change your saved design?",
+      "text": "Your saved design was made for the size and frame you had. If you change them, the saved design goes and you design it again.",
+      "keep": "Keep my design",
+      "change": "Change and design again"
+    },
     "unsaved": {
       "title": "Save your design?",
       "text": "You've changed your design. Save it and we'll print it exactly like this.",

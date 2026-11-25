@@ -1,0 +1,5 @@
+// On the page itself rather than inside the editor: cover the whole screen
+.confirm-layer {
+  position: fixed;
+  z-index: 1000;
+}

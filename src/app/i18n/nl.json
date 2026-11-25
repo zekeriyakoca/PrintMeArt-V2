@@ -569,6 +569,12 @@
     "zoom": "Zoom",
     "printDetails": "Printdetails",
     "selections": "Jouw keuzes",
+    "savedChanged": {
+      "title": "Opgeslagen ontwerp wijzigen?",
+      "text": "Je opgeslagen ontwerp is gemaakt voor het formaat en de lijst die je had. Wijzig je die, dan vervalt het ontwerp en ontwerp je het opnieuw.",
+      "keep": "Mijn ontwerp houden",
+      "change": "Wijzigen en opnieuw ontwerpen"
+    },
     "unsaved": {
       "title": "Ontwerp opslaan?",
       "text": "Je hebt je ontwerp aangepast. Sla het op, dan printen we het precies zo.",
