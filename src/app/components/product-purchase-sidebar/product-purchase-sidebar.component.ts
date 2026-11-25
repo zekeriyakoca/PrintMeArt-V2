@@ -271,8 +271,11 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   });
   /** Tells the page when the saved design stops matching, so it stops showing it as the preview */
   private readonly staleDesignEffect = effect(() => {
+    // Read the URL first, on every run: if it were read only once a design exists, the first run (no design yet)
+    // would track nothing and the effect would never run again
+    const url = this.savedDesignUrl();
     const design = untracked(() => this.savedDesign());
-    if (design && !this.savedDesignUrl()) {
+    if (design && !url) {
       untracked(() => {
         this.savedDesign.set(null);
         this.designSaved.emit(null);
