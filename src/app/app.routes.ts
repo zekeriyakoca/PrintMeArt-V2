@@ -38,6 +38,11 @@ export const routes: Routes = [
     { path: segment, loadComponent: () => import('./pages/guides/guides.component').then((m) => m.GuidesComponent) },
     { path: `${segment}/:slug`, loadComponent: () => import('./pages/guide/guide.component').then((m) => m.GuideComponent) },
   ]),
+  // The papers too: /nl/papier, /en/paper
+  ...['papier', 'paper'].flatMap((segment) => [
+    { path: segment, loadComponent: () => import('./pages/papers/papers.component').then((m) => m.PapersComponent) },
+    { path: `${segment}/:slug`, loadComponent: () => import('./pages/paper/paper.component').then((m) => m.PaperComponent) },
+  ]),
   {
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),

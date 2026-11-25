@@ -72,7 +72,8 @@
     "allPrints": "Alle prints",
     "frames": "Lijsten",
     "yourDesign": "Jouw ontwerp",
-    "guides": "Gidsen"
+    "guides": "Gidsen",
+    "papers": "Papieren"
   },
   "user": {
     "profile": "Profiel",
@@ -1323,6 +1324,28 @@
       "description": "{{count}} kunstenaars en {{prints}} kunstprints op museumkwaliteit, van Van Gogh en Monet tot Vermeer en Avercamp. Kies een kunstenaar en bekijk alle werken."
     }
   },
+  "paperPages": {
+    "eyebrow": "Papier",
+    "title": "Onze papieren",
+    "lead": "Elk papier geeft een print een ander karakter: glad of gestructureerd, mat of glanzend, koel of warm wit. Dit zijn de papieren waarop we printen, met per papier waar het voor past en wat het kost.",
+    "seoTitle": "Fine-art papier: Hahnemühle Photo Rag, Museum Etching, Baryta, Hemp en Bamboo",
+    "seoDescription": "De papieren waarop PrintMeArt print: Hahnemühle Photo Rag, Museum Etching, FineArt Baryta, Hemp en Bamboo, Canson Rag Photographique en Premium Poster. Eigenschappen en prijzen.",
+    "productName": "Fine-art print op {{paper}}",
+    "available": "Nu te bestellen",
+    "soon": "Binnenkort te bestellen",
+    "aboutTitle": "Over dit papier",
+    "specsTitle": "Eigenschappen",
+    "bestForTitle": "Het mooist voor",
+    "lessForTitle": "Minder geschikt voor",
+    "pricesTitle": "Prijzen",
+    "price": "Prijs",
+    "pricesIntro": "Dit kost een print van je eigen foto of kunstwerk op {{paper}}, per formaat:",
+    "pricesNote": "Prijzen zijn inclusief btw, de controle van je bestand en het bijsnijden met de hand. Prints worden opgerold verstuurd in een stevige koker.",
+    "soonText": "{{paper}} is binnenkort te bestellen in de webshop. Wil je er nu al op laten printen? Mail naar support@printmeart.nl, dan kijken we wat er kan.",
+    "ctaTitle": "Upload je foto en kies {{paper}} als papier.",
+    "ctaSoonTitle": "Upload je foto en kies uit de papieren die nu al te bestellen zijn.",
+    "more": "Andere papieren"
+  },
   "designPrices": {
     "eyebrow": "Prijzen",
     "title": "Wat kost een print van je eigen foto?",
@@ -1334,7 +1357,7 @@
     "noteIncluded": "Prijzen zijn inclusief btw. Prints worden opgerold verstuurd in een stevige koker.",
     "noteCotton": "Hahnemühle Photo Rag (glad) en Hahnemühle Museum Etching (fijn gestructureerd) kosten hetzelfde.",
     "noteEnhancement": "Is je afbeelding te klein voor het formaat? Professionele vergroting kost €5 extra.",
-    "noteSoon": "Binnenkort ook: Canson Rag Photographique II (310 g/m²) en een baryta-papier.",
+    "noteSoon": "Binnenkort ook: Hahnemühle FineArt Baryta, Hemp en Bamboo, en Canson Rag Photographique II.",
     "allPapers": "Bekijk al onze papieren",
     "productName": "Fine-art print van je eigen foto",
     "perks": {

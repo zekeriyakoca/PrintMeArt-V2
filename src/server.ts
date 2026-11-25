@@ -8,6 +8,7 @@ import { indexedArtists, sitemapXml, wrongArtistsSegment } from './sitemap';
 import { artistPath } from './app/shared/artist-path';
 import { categoryBySlug, categoryPath } from './app/shared/category-path';
 import { guideBySlug, guidePath, guideText } from './app/guides/guides';
+import { PAPERS_SEGMENT, paperPath } from './app/papers/papers';
 
 const browserDistFolder = join(dirname(fileURLToPath(import.meta.url)), '../browser');
 
@@ -125,6 +126,13 @@ app.get(/^\/(en|nl)\/(gids|guides)(\/[^/]*)?\/?$/, (req, res, next) => {
   const target = guidePath(language, guide ? guideText(guide, language).slug : undefined);
   if (`/${segment}${slug ? `/${slug}` : ''}` === target) return next();
   return res.redirect(301, `/${language}${target}`);
+});
+
+// The papers: /nl/papier and /en/paper, so the other language's word moves to the right one
+app.get(/^\/(en|nl)\/(papier|paper)(\/.*)?$/, (req, res, next) => {
+  const [, language, segment] = req.path.split('/');
+  if (PAPERS_SEGMENT[language] === segment) return next();
+  return res.redirect(301, `/${language}${paperPath(language)}${req.originalUrl.slice(language.length + segment.length + 2)}`);
 });
 
 // Tracking tags added by ads and search engines; they never change what a page lists

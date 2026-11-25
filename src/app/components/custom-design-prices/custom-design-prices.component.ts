@@ -8,6 +8,7 @@ import { LanguageService } from '../../services/i18n/language.service';
 import { SeoService } from '../../services/seo/seo.service';
 import { SizeOptions } from '../../shared/constants';
 import { RouterLink } from '@angular/router';
+import { paperPath } from '../../papers/papers';
 import { environment } from '../../../environments/environment';
 
 /** The size whose price the first answer spells out, besides the smallest and the largest */
@@ -28,6 +29,9 @@ export class CustomDesignPricesComponent {
 
   private readonly language = inject(LanguageService).currentLanguageCode();
   private readonly dutch = this.language === 'nl';
+
+  /** The router adds the language itself */
+  readonly papersLink = paperPath(this.language);
 
   product = input.required<ProductDto>();
   rows = signal<PriceTableRow[]>([]);

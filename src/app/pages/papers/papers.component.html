@@ -1,0 +1,26 @@
+<div class="guide-page">
+  <header class="ghero">
+    <div class="wrap">
+      <nav class="crumbs" [attr.aria-label]="'artist.breadcrumb' | t"><a routerLink="/">PrintMeArt</a><span>/</span><b>{{ 'paperPages.title' | t }}</b></nav>
+      <p class="eyebrow">{{ 'paperPages.eyebrow' | t }}</p>
+      <h1>{{ 'paperPages.title' | t }}</h1>
+      <p class="lead">{{ 'paperPages.lead' | t }}</p>
+    </div>
+  </header>
+
+  <section class="glist">
+    <div class="wrap">
+      @for (p of papers; track p.link) {
+      <a class="gcard" [routerLink]="p.link">
+        <span class="gcard__n">{{ p.number }}</span>
+        <span class="gcard__body">
+          <small>{{ p.text.kind }} · {{ p.weight }} g/m² · {{ (p.orderable ? 'paperPages.available' : 'paperPages.soon') | t }}</small>
+          <h2>{{ p.name }}</h2>
+          <p>{{ p.text.lead }}</p>
+        </span>
+        <span class="gcard__go" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      }
+    </div>
+  </section>
+</div>
