@@ -50,7 +50,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   stickyBar = input<boolean>(false);
 
   onSelectedFrameChanged = output<string>();
-  designSaved = output<string>();
+  /** The saved design's snapshot, or null once it no longer matches the options chosen (size, frame, mat, border, artwork) */
+  designSaved = output<string | null>();
   /** Preview & Design (or the room view after it) closed */
   previewClosed = output<void>();
   /** The price of the options chosen now, for the page's search engine description */
@@ -235,7 +236,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   onDesignSaved(url: string) {
-    this.savedDesign.set({ url, imageUrl: this.designImageUrl() });
+    this.savedDesign.set({ url, key: this.designKey() });
     this.designSaved.emit(url);
     this.analytics.trackCustomDesignSaved(this.product().id, {
       custom_image: !!this.customImageUrl(),
@@ -255,12 +256,29 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.showPreview.set(false);
     this.analytics.trackDesignPreview('room_view_opened', this.product().id, { custom_image: !!this.customImageUrl() });
   }
-  private savedDesign = signal<{ url: string; imageUrl: string } | null>(null);
-  /** The saved design, while it is still of the artwork shown now (a new upload drops it) */
+  private savedDesign = signal<{ url: string; key: string } | null>(null);
+  /** Everything the snapshot depends on: the artwork and the print it sits on */
+  private designKey = computed(() =>
+    JSON.stringify([this.designImageUrl(), this.selectedSize()?.name, this.selectedFrameName(), this.isMatIncluded(), this.whiteBorder()]),
+  );
+  /**
+   * The saved design, while it still shows the artwork and print chosen now. Changing the size (or frame, mat,
+   * border, artwork) after saving drops it: a 50x70 snapshot must never go to the cart as the 40x60 the customer pays for
+   */
   savedDesignUrl = computed(() => {
     const design = this.savedDesign();
-    return design && design.imageUrl === this.designImageUrl() ? design.url : null;
+    return design && design.key === this.designKey() ? design.url : null;
   });
+  /** Tells the page when the saved design stops matching, so it stops showing it as the preview */
+  private readonly staleDesignEffect = effect(() => {
+    const design = untracked(() => this.savedDesign());
+    if (design && !this.savedDesignUrl()) {
+      untracked(() => {
+        this.savedDesign.set(null);
+        this.designSaved.emit(null);
+      });
+    }
+  }, { allowSignalWrites: true });
   /** White border chosen in Preview & Design */
   whiteBorder = signal<WhiteBorder>(NO_WHITE_BORDER);
   selectedFrameName = signal<string | null>(null);
@@ -385,7 +403,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       if (this.addingToCart) return;
       this.addingToCart = true;
       // The same design again reuses its snapshot, so the cart adds to that line instead of a new one
-      const key = JSON.stringify([this.designImageUrl(), this.selectedSize()?.name, this.selectedFrameName(), this.isMatIncluded(), this.whiteBorder()]);
+      const key = this.designKey();
       const cached = this.renderedDesign?.key === key ? this.renderedDesign.url : null;
       (cached ? Promise.resolve(cached) : preview.uploadCurrentDesign().then((url) => ((this.renderedDesign = { key, url }), url)))
         .catch((error) => {

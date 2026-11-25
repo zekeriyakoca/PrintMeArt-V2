@@ -77,7 +77,8 @@ export class CustomDesignComponent
     this.previewOpenTrigger.update((v) => v + 1);
   }
 
-  onSavedDesign(url: string): void {
+  /** null: the saved design no longer matches the chosen size or options, so the page stops showing it */
+  onSavedDesign(url: string | null): void {
     this.savedDesignImageUrl.set(url);
   }
 
