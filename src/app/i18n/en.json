@@ -478,7 +478,7 @@
   },
   "howCustom": {
     "eyebrow": "Print Your Design",
-    "title": "Turn Your Photos into Art",
+    "title": "Fine art giclée print of your own photo, on Hahnemühle cotton paper",
     "uploadTitle": "Upload your image",
     "uploadText": "Drop your photo or artwork. PNG, JPG, GIF up to 50MB.",
     "customizeTitle": "Customize your print",
@@ -1010,8 +1010,8 @@
       "description": "Our Natural Oak frame for your print, with or without a white passe-partout. Delivered ready to hang."
     },
     "yourDesign": {
-      "title": "Print your own photo or artwork",
-      "description": "Upload your photo or design and we print it as a museum-quality giclée print, framed and ready to hang."
+      "title": "Fine art print of your own photo – giclée on Hahnemühle",
+      "description": "Have your own photo or artwork printed as a fine art giclée on Hahnemühle cotton paper or as a Premium Poster. One fixed price per size, checked by hand in Den Bosch."
     },
     "howWeWork": {
       "title": "How we work — fine-art paper and our print process",
@@ -1158,14 +1158,25 @@
     "cotton": "Cotton paper",
     "cottonSpec": "Hahnemühle, 308–350 g/m²",
     "noteIncluded": "Prices include VAT. Prints are sent rolled up in a protective tube.",
-    "noteShipping": "Free shipping in the Netherlands from {{amount}}.",
     "noteCotton": "Hahnemühle Photo Rag (smooth) and Hahnemühle Museum Etching (finely textured) cost the same.",
     "noteEnhancement": "Is your image too small for the size? Professional upscaling costs €5 extra.",
+    "noteSoon": "Coming soon: Canson Rag Photographique II (310 g/m²) and a baryta paper.",
+    "allPapers": "See all our papers",
+    "productName": "Fine art print of your own photo",
+    "perks": {
+      "proof": "You approve the design before we print",
+      "shipping": "Free shipping in the Netherlands from {{amount}}",
+      "pickup": "Or pick it up at our studio in Den Bosch",
+      "made": "Printed and cropped by hand in our own studio"
+    },
     "faqEyebrow": "Questions",
     "faqTitle": "Before you order",
     "faq": {
       "costQ": "What does it cost to print my own photo?",
       "costA": "From {{from}} for 13 × 18 cm on Premium Poster, or {{cottonFrom}} on cotton paper. The largest size, {{largest}} cm on cotton paper, is {{largestPrice}}. Every price includes VAT, checking your file and cropping it by hand.",
+      "costMid": "A {{mid}} cm print costs {{midPoster}} on Premium Poster and {{midCotton}} on Hahnemühle Photo Rag.",
+      "pickupQ": "Can I pick up my print in Den Bosch?",
+      "pickupA": "Yes. We print in our own studio in Den Bosch and you can collect your order there. Email support@printmeart.nl after ordering and we will agree on a time.",
       "resolutionQ": "How sharp does my photo need to be?",
       "resolutionA": "For a sharp print we want at least 200 pixels per inch at the size you choose. When you upload, you see the print quality for every size straight away. If your image falls short, we switch on professional upscaling (€5): we enlarge and sharpen your image before printing. You can turn it off yourself.",
       "filesQ": "Which files can I upload?",

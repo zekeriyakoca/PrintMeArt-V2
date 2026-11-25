@@ -652,7 +652,7 @@
   },
   "howCustom": {
     "eyebrow": "Print je ontwerp",
-    "title": "Maak kunst van je foto’s",
+    "title": "Fine-art giclée-print van je eigen foto, op Hahnemühle-katoenpapier",
     "uploadTitle": "Upload je afbeelding",
     "uploadText": "Sleep je foto of kunstwerk hierheen. PNG, JPG, GIF tot 50 MB.",
     "customizeTitle": "Stel je print samen",
@@ -1184,8 +1184,8 @@
       "description": "Onze lijst van natuurlijk eiken voor je print, met of zonder wit passe-partout. Klaar om op te hangen geleverd."
     },
     "yourDesign": {
-      "title": "Je eigen foto of kunstwerk laten printen",
-      "description": "Upload je foto of ontwerp en wij printen het als giclée-print van museumkwaliteit, ingelijst en klaar om op te hangen."
+      "title": "Fine-art print van je eigen foto – giclée op Hahnemühle",
+      "description": "Laat je eigen foto of kunstwerk printen als fine-art giclée op Hahnemühle-katoenpapier of als Premium Poster. Vaste prijs per formaat, met de hand gecontroleerd in Den Bosch."
     },
     "howWeWork": {
       "title": "Hoe wij werken — fine-art papier en ons printproces",
@@ -1332,14 +1332,25 @@
     "cotton": "Katoenpapier",
     "cottonSpec": "Hahnemühle, 308–350 g/m²",
     "noteIncluded": "Prijzen zijn inclusief btw. Prints worden opgerold verstuurd in een stevige koker.",
-    "noteShipping": "Gratis verzending in Nederland vanaf {{amount}}.",
     "noteCotton": "Hahnemühle Photo Rag (glad) en Hahnemühle Museum Etching (fijn gestructureerd) kosten hetzelfde.",
     "noteEnhancement": "Is je afbeelding te klein voor het formaat? Professionele vergroting kost €5 extra.",
+    "noteSoon": "Binnenkort ook: Canson Rag Photographique II (310 g/m²) en een baryta-papier.",
+    "allPapers": "Bekijk al onze papieren",
+    "productName": "Fine-art print van je eigen foto",
+    "perks": {
+      "proof": "Jij keurt het ontwerp goed voordat we printen",
+      "shipping": "Gratis verzending in Nederland vanaf {{amount}}",
+      "pickup": "Ophalen in onze studio in Den Bosch kan ook",
+      "made": "Geprint en met de hand bijgesneden in eigen studio"
+    },
     "faqEyebrow": "Vragen",
     "faqTitle": "Voordat je bestelt",
     "faq": {
       "costQ": "Wat kost het om mijn eigen foto te laten printen?",
       "costA": "Vanaf {{from}} voor 13 × 18 cm op Premium Poster, of {{cottonFrom}} op katoenpapier. Het grootste formaat, {{largest}} cm op katoenpapier, kost {{largestPrice}}. Elke prijs is inclusief btw, de controle van je bestand en het bijsnijden met de hand.",
+      "costMid": "Een print van {{mid}} cm kost {{midPoster}} op Premium Poster en {{midCotton}} op Hahnemühle Photo Rag.",
+      "pickupQ": "Kan ik mijn print ophalen in Den Bosch?",
+      "pickupA": "Ja. We printen in onze eigen studio in Den Bosch en je kunt je bestelling daar ophalen. Mail na je bestelling naar support@printmeart.nl, dan spreken we een moment af.",
       "resolutionQ": "Hoe scherp moet mijn foto zijn?",
       "resolutionA": "Voor een scherpe print willen we minstens 200 pixels per inch op het formaat dat je kiest. Bij het uploaden zie je meteen de printkwaliteit per formaat. Is je afbeelding te klein, dan zetten we professionele vergroting aan (€5): we vergroten en verscherpen je afbeelding vóór het printen. Je kunt dat zelf uitzetten.",
       "filesQ": "Welke bestanden kan ik uploaden?",
