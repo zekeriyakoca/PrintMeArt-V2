@@ -3,6 +3,7 @@ import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { Component, inject } from '@angular/core';
 import { guidePath } from '../../guides/guides';
+import { paperPath } from '../../papers/papers';
 import { LanguageService } from '../../services/i18n/language.service';
 
 import { IconComponent } from '../shared/icon/icon.component';
@@ -28,6 +29,7 @@ export class FooterComponent {
         { href: '/about#contact-us', label: 'footer.contact' },
         { href: '/how-we-work', label: 'footer.howWeWork' },
         { href: guidePath(inject(LanguageService).currentLanguageCode()), label: 'footer.guides' },
+        { href: paperPath(inject(LanguageService).currentLanguageCode()), label: 'footer.papers' },
       ],
     },
     {

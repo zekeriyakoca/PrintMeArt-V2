@@ -10,6 +10,7 @@ import { CustomDesignPricesComponent } from '../../components/custom-design-pric
 import { CustomDesignHowItWorksComponent } from '../../components/custom-design-how-it-works/custom-design-how-it-works.component';
 import { ToastService } from '../../services/toast/toast.service';
 import { ApiService } from '../../services/api/api.service';
+import { CUSTOM_PRINT_PRODUCT_ID } from '../../papers/papers';
 
 @Component({
   selector: 'app-custom-design',
@@ -29,7 +30,6 @@ export class CustomDesignComponent
   extends BasePageComponent
   implements OnDestroy
 {
-  private readonly PRODUCT_ID = 719;
   private readonly apiService = inject(ApiService);
   private readonly toastService = inject(ToastService);
 
@@ -58,7 +58,7 @@ export class CustomDesignComponent
 
   ngOnInit(): void {
     this.apiService
-      .getProductById(this.PRODUCT_ID.toString())
+      .getProductById(CUSTOM_PRINT_PRODUCT_ID.toString())
       .subscribe((product) => {
         if (product) this.customProduct.set(product);
       });

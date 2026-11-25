@@ -48,7 +48,7 @@ Every category has its own page in both languages (Dutch: https://printmeart.nl/
 
 ## Prices: printing your own photo or artwork
 
-Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch VAT, rolled up in a protective tube. Cotton paper is Hahnemühle Photo Rag (308 g/m²) or Hahnemühle Museum Etching (350 g/m²), same price; Premium Poster is a photographic print on Fujifilm paper (234 g/m²). Professional upscaling for small images: €5. Free shipping in the Netherlands from €75. Every file is checked by hand, and the customer approves the final design before it is printed. Orders can also be picked up at the studio in Den Bosch (by appointment, via support@printmeart.nl). Coming soon: Canson Rag Photographique II (310 g/m²) and a baryta paper.
+Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch VAT, rolled up in a protective tube. Cotton paper is Hahnemühle Photo Rag (308 g/m²) or Hahnemühle Museum Etching (350 g/m²), same price; Premium Poster is a photographic print on Fujifilm paper (234 g/m²). Professional upscaling for small images: €5. Free shipping in the Netherlands from €75. Every file is checked by hand, and the customer approves the final design before it is printed. Orders can also be picked up at the studio in Den Bosch (by appointment, via support@printmeart.nl). Coming soon: Hahnemühle FineArt Baryta, Hemp and Bamboo, and Canson Rag Photographique II.
 
 | Size (cm) | Premium Poster | Cotton paper |
 |---|---|---|
@@ -62,6 +62,18 @@ Prices on https://printmeart.nl/en/your-design (November 2026), including Dutch 
 ## How it works
 
 - [How we work](https://printmeart.nl/en/how-we-work): our papers (Hahnemühle Photo Rag, Hahnemühle Museum Etching, Canson Rag Photographique (coming soon), Premium Poster), 12-colour giclée printing, quality checks, framing and care, FAQ
+
+## Papers
+
+One page per paper, with properties, what it suits and (for papers on sale) the price per size. Dutch: https://printmeart.nl/nl/papier
+
+- [Hahnemühle Photo Rag](https://printmeart.nl/en/paper/hahnemuhle-photo-rag): 308 g/m², 100% cotton, smooth matte — available now
+- [Hahnemühle Museum Etching](https://printmeart.nl/en/paper/hahnemuhle-museum-etching): 350 g/m², 100% cotton, finely textured matte, no optical brighteners — available now
+- [Premium Poster](https://printmeart.nl/en/paper/premium-poster): 234 g/m², photographic print on Fujifilm Crystal Archive paper — available now
+- [Hahnemühle FineArt Baryta](https://printmeart.nl/en/paper/hahnemuhle-fineart-baryta): 325 g/m², bright white, high-gloss baryta paper — coming soon
+- [Hahnemühle Hemp](https://printmeart.nl/en/paper/hahnemuhle-hemp): 290 g/m², 60% hemp and 40% cotton, matte — coming soon
+- [Hahnemühle Bamboo](https://printmeart.nl/en/paper/hahnemuhle-bamboo): 290 g/m², 90% bamboo and 10% cotton, warm natural white, matte — coming soon
+- [Canson Rag Photographique II](https://printmeart.nl/en/paper/canson-rag-photographique): 310 g/m², 100% cotton, very smooth matte — coming soon
 
 ## Guides
 

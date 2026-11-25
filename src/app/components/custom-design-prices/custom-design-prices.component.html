@@ -43,7 +43,7 @@
       <li>{{ 'designPrices.noteIncluded' | t }}</li>
       <li>{{ 'designPrices.noteCotton' | t }}</li>
       <li>{{ 'designPrices.noteEnhancement' | t }}</li>
-      <li>{{ 'designPrices.noteSoon' | t }} <a routerLink="/how-we-work" fragment="paper-options" class="font-medium text-[#384f8c] underline underline-offset-2 hover:no-underline">{{ 'designPrices.allPapers' | t }}</a></li>
+      <li>{{ 'designPrices.noteSoon' | t }} <a [routerLink]="papersLink" class="font-medium text-[#384f8c] underline underline-offset-2 hover:no-underline">{{ 'designPrices.allPapers' | t }}</a></li>
     </ul>
   </div>
 </section>

@@ -72,7 +72,8 @@
     "allPrints": "All prints",
     "frames": "Frames",
     "yourDesign": "Your design",
-    "guides": "Guides"
+    "guides": "Guides",
+    "papers": "Papers"
   },
   "user": {
     "profile": "Profile",
@@ -1149,6 +1150,28 @@
       "description": "{{count}} artists and {{prints}} museum-quality art prints, from Van Gogh and Monet to Vermeer and Avercamp. Choose an artist and see all their works."
     }
   },
+  "paperPages": {
+    "eyebrow": "Paper",
+    "title": "Our papers",
+    "lead": "Every paper gives a print a different character: smooth or textured, matte or glossy, cool or warm white. These are the papers we print on, with what each one suits and what it costs.",
+    "seoTitle": "Fine art paper: Hahnemühle Photo Rag, Museum Etching, Baryta, Hemp and Bamboo",
+    "seoDescription": "The papers PrintMeArt prints on: Hahnemühle Photo Rag, Museum Etching, FineArt Baryta, Hemp and Bamboo, Canson Rag Photographique and Premium Poster. Properties and prices.",
+    "productName": "Fine art print on {{paper}}",
+    "available": "Available now",
+    "soon": "Coming soon",
+    "aboutTitle": "About this paper",
+    "specsTitle": "Properties",
+    "bestForTitle": "Best for",
+    "lessForTitle": "Less suited to",
+    "pricesTitle": "Prices",
+    "price": "Price",
+    "pricesIntro": "This is what a print of your own photo or artwork on {{paper}} costs, per size:",
+    "pricesNote": "Prices include VAT, checking your file and cropping it by hand. Prints are sent rolled up in a protective tube.",
+    "soonText": "{{paper}} will be available in the shop soon. Want a print on it already? Email support@printmeart.nl and we will see what is possible.",
+    "ctaTitle": "Upload your photo and choose {{paper}} as the paper.",
+    "ctaSoonTitle": "Upload your photo and choose from the papers that are available now.",
+    "more": "Other papers"
+  },
   "designPrices": {
     "eyebrow": "Prices",
     "title": "What does a print of your own photo cost?",
@@ -1160,7 +1183,7 @@
     "noteIncluded": "Prices include VAT. Prints are sent rolled up in a protective tube.",
     "noteCotton": "Hahnemühle Photo Rag (smooth) and Hahnemühle Museum Etching (finely textured) cost the same.",
     "noteEnhancement": "Is your image too small for the size? Professional upscaling costs €5 extra.",
-    "noteSoon": "Coming soon: Canson Rag Photographique II (310 g/m²) and a baryta paper.",
+    "noteSoon": "Coming soon: Hahnemühle FineArt Baryta, Hemp and Bamboo, and Canson Rag Photographique II.",
     "allPapers": "See all our papers",
     "productName": "Fine art print of your own photo",
     "perks": {

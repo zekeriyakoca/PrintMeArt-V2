@@ -1,0 +1,80 @@
+@if (text(); as p) {
+<article class="guide-page">
+  <header class="ghero">
+    <div class="wrap">
+      <nav class="crumbs" [attr.aria-label]="'artist.breadcrumb' | t"><a routerLink="/">PrintMeArt</a><span>/</span><a [routerLink]="indexLink">{{ 'paperPages.title' | t }}</a><span>/</span><b>{{ fullName() }}</b></nav>
+      <p class="eyebrow">{{ 'paperPages.eyebrow' | t }} · {{ p.kind }}</p>
+      <h1>{{ fullName() }}</h1>
+      <p class="lead">{{ p.lead }}</p>
+      <p class="meta"><span>{{ paper()!.weightGsm }} g/m²</span><i></i><span>{{ (paper()!.price ? 'paperPages.available' : 'paperPages.soon') | t }}</span></p>
+    </div>
+  </header>
+
+  <div class="wrap gbody">
+    <aside class="toc">
+      <p class="toc__label">{{ 'artist.onThisPage' | t }}</p>
+      <nav>
+        <a routerLink="." fragment="about">{{ 'paperPages.aboutTitle' | t }}</a>
+        <a routerLink="." fragment="specs">{{ 'paperPages.specsTitle' | t }}</a>
+        <a routerLink="." fragment="best-for">{{ 'paperPages.bestForTitle' | t }}</a>
+        <a routerLink="." fragment="prices">{{ 'paperPages.pricesTitle' | t }}</a>
+      </nav>
+    </aside>
+
+    <div class="prose" (click)="follow($event)">
+      <section class="short" [attr.aria-label]="'guides.inShort' | t">
+        <p class="short__label">{{ 'guides.inShort' | t }}</p>
+        <ul>@for (s of p.summary; track $index) {<li>{{ s }}</li>}</ul>
+      </section>
+
+      <h2 id="about">{{ 'paperPages.aboutTitle' | t }}</h2>
+      @if (paper()!.image; as image) {
+      <img [src]="image" [alt]="fullName()" width="1200" height="800" loading="lazy" class="w-full h-auto rounded-2xl mb-6" />
+      }
+      @for (text of p.about; track $index) {<p [innerHTML]="text"></p>}
+
+      <h2 id="specs">{{ 'paperPages.specsTitle' | t }}</h2>
+      <div class="tbl"><table>
+        <tbody>@for (row of p.specs; track row[0]) {<tr><th scope="row">{{ row[0] }}</th><td>{{ row[1] }}</td></tr>}</tbody>
+      </table></div>
+
+      <h2 id="best-for">{{ 'paperPages.bestForTitle' | t }}</h2>
+      <ul class="bullets">@for (item of p.bestFor; track $index) {<li [innerHTML]="item"></li>}</ul>
+      <aside class="tip"><b>{{ 'paperPages.lessForTitle' | t }}</b><p [innerHTML]="p.lessFor"></p></aside>
+
+      <h2 id="prices">{{ 'paperPages.pricesTitle' | t }}</h2>
+      @if (paper()!.price) {
+        <p>{{ 'paperPages.pricesIntro' | t: { paper: fullName() } }}</p>
+        @if (prices().length) {
+        <div class="tbl"><table>
+          <thead><tr><th scope="col">{{ 'designPrices.size' | t }}</th><th scope="col">{{ 'paperPages.price' | t }}</th></tr></thead>
+          <tbody>@for (row of prices(); track row.size) {<tr><th scope="row">{{ row.size }}</th><td>{{ row.price }}</td></tr>}</tbody>
+        </table></div>
+        }
+        <p>{{ 'paperPages.pricesNote' | t }}</p>
+      } @else {
+        <p>{{ 'paperPages.soonText' | t: { paper: fullName() } }}</p>
+      }
+
+      <div class="cta">
+        <p class="cta__k">{{ 'guides.ctaDesignKicker' | t }}</p>
+        <h2 class="cta__h">{{ (paper()!.price ? 'paperPages.ctaTitle' : 'paperPages.ctaSoonTitle') | t: { paper: fullName() } }}</h2>
+        <a class="cta__btn" routerLink="/your-design">{{ 'guides.ctaDesignButton' | t }} →</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="more">
+    <div class="wrap">
+      <p class="eyebrow">{{ 'paperPages.more' | t }}</p>
+      <div class="more__grid">
+        @for (o of others(); track o.link) {
+        <a class="mcard" [routerLink]="o.link"><small>{{ o.kind }} · {{ o.weight }} g/m²</small><h3>{{ o.name }}</h3><span>→</span></a>
+        }
+      </div>
+    </div>
+  </section>
+</article>
+} @else {
+<app-not-found />
+}
