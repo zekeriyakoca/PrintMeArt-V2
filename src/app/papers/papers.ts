@@ -261,7 +261,7 @@ export const PAPER_PAGES: PaperPage[] = [
     weightGsm: 290,
     nl: {
       kind: 'Mat papier van hennep',
-      title: 'Hahnemühle Hemp 290 g/m²: fine-art print op hennepapier',
+      title: 'Hahnemühle Hemp 290 g/m²: fine-art print op henneppapier',
       description: 'Hahnemühle Hemp: mat fine-art papier van 60% hennep en 40% katoen, 290 g/m², zonder optische witmakers. Binnenkort te bestellen bij PrintMeArt.',
       lead: 'Mat papier van 60% hennep en 40% katoen, 290 g/m². Een natuurlijke uitstraling met een lichte structuur, van een vezel die weinig water en geen bestrijdingsmiddelen nodig heeft.',
       summary: [
