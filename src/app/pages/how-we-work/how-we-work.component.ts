@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService } from '../../services/seo/seo.service';
+import { LanguageService } from '../../services/i18n/language.service';
+import { paperPath } from '../../papers/papers';
 
 @Component({
   selector: 'app-how-we-work',
@@ -16,6 +18,12 @@ export class HowWeWorkComponent {
   readonly shippingInfo = inject(Bootstrap).shippingInfo;
   private readonly i18n = inject(TranslationService);
   private readonly seo = inject(SeoService);
+  private readonly language = inject(LanguageService).currentLanguageCode();
+
+  /** A paper's own page; the router adds the language itself */
+  paperLink(slug: string): string {
+    return paperPath(this.language, slug);
+  }
 
   // The page's FAQ, also as structured data so search engines and AI assistants can quote it
   private readonly describeForSearch = effect(() => {

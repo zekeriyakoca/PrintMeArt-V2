@@ -99,7 +99,7 @@
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-2.webp"
           [alt]="'how.photoRagAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> Photo Rag</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2"><a [routerLink]="paperLink('hahnemuhle-photo-rag')" class="hover:underline"><strong>Hahnemühle</strong> Photo Rag</a></h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.photoRagSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.photoRagText' | t }}
@@ -109,6 +109,7 @@
             <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.photoRagBest' | t }}</li>
             <li><span class="font-semibold">{{ 'how.lifespan' | t }}</span> {{ 'how.lifespanValue' | t }}</li>
           </ul>
+          <a [routerLink]="paperLink('hahnemuhle-photo-rag')" class="mt-5 inline-block text-sm font-semibold text-[#384f8c] hover:underline">{{ 'how.morePaper' | t }} →</a>
         </div>
       </div>
 
@@ -118,7 +119,7 @@
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-art-1.webp"
           [alt]="'how.etchingAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2"><strong>Hahnemühle</strong> Museum Etching</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2"><a [routerLink]="paperLink('hahnemuhle-museum-etching')" class="hover:underline"><strong>Hahnemühle</strong> Museum Etching</a></h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.etchingSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.etchingText' | t }}
@@ -128,6 +129,25 @@
             <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.etchingBest' | t }}</li>
             <li><span class="font-semibold">{{ 'how.lifespan' | t }}</span> {{ 'how.lifespanValue' | t }}</li>
           </ul>
+          <a [routerLink]="paperLink('hahnemuhle-museum-etching')" class="mt-5 inline-block text-sm font-semibold text-[#384f8c] hover:underline">{{ 'how.morePaper' | t }} →</a>
+        </div>
+      </div>
+
+      <!-- FineArt Baryta -->
+      <div id="art_fineart_baryta_325"
+        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors">
+        <div class="w-full h-64 sm:h-80 md:h-92 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 text-sm font-medium uppercase tracking-widest" aria-hidden="true">FineArt Baryta</div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-2 flex flex-wrap items-center gap-2"><a [routerLink]="paperLink('hahnemuhle-fineart-baryta')" class="hover:underline"><strong>Hahnemühle</strong> FineArt Baryta</a><span class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{{ 'papers.comingSoon' | t }}</span></h3>
+          <p class="text-sm text-slate-500 mb-3">{{ 'how.barytaSpec' | t }}</p>
+          <p class="text-slate-700 leading-relaxed mb-4">
+            {{ 'how.barytaText' | t }}
+          </p>
+          <ul class="text-slate-600 space-y-2 leading-relaxed">
+            <li><span class="font-semibold">{{ 'how.printing' | t }}</span> {{ 'how.inks' | t }}</li>
+            <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.barytaBest' | t }}</li>
+          </ul>
+          <a [routerLink]="paperLink('hahnemuhle-fineart-baryta')" class="mt-5 inline-block text-sm font-semibold text-[#384f8c] hover:underline">{{ 'how.morePaper' | t }} →</a>
         </div>
       </div>
 
@@ -137,7 +157,7 @@
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-photo-1.webp"
           [alt]="'how.canonAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2 flex flex-wrap items-center gap-2"><span><strong>Canson</strong> Rag Photographique II</span><span class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{{ 'papers.comingSoon' | t }}</span></h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2 flex flex-wrap items-center gap-2"><a [routerLink]="paperLink('canson-rag-photographique')" class="hover:underline"><strong>Canson</strong> Rag Photographique II</a><span class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{{ 'papers.comingSoon' | t }}</span></h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.canonSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.canonText' | t }}
@@ -147,6 +167,7 @@
             <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.canonBest' | t }}</li>
             <li><span class="font-semibold">{{ 'how.lifespan' | t }}</span> {{ 'how.lifespanValue' | t }}</li>
           </ul>
+          <a [routerLink]="paperLink('canson-rag-photographique')" class="mt-5 inline-block text-sm font-semibold text-[#384f8c] hover:underline">{{ 'how.morePaper' | t }} →</a>
         </div>
       </div>
 
@@ -156,7 +177,7 @@
         <img src="https://genstorageaccount3116.blob.core.windows.net/printme-images/paper-fine-art-1.webp"
           [alt]="'how.posterAlt' | t" class="w-full h-64 sm:h-80 md:h-92 object-cover" />
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-2">Premium Poster</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2"><a [routerLink]="paperLink('premium-poster')" class="hover:underline">Premium Poster</a></h3>
           <p class="text-sm text-slate-500 mb-3">{{ 'how.posterSpec' | t }}</p>
           <p class="text-slate-700 leading-relaxed mb-4">
             {{ 'how.posterText' | t }}
@@ -166,6 +187,7 @@
             <li><span class="font-semibold">{{ 'how.bestFor' | t }}</span> {{ 'how.posterBest' | t }}</li>
             <li><span class="font-semibold">{{ 'how.note' | t }}</span> {{ 'how.notArchival' | t }}</li>
           </ul>
+          <a [routerLink]="paperLink('premium-poster')" class="mt-5 inline-block text-sm font-semibold text-[#384f8c] hover:underline">{{ 'how.morePaper' | t }} →</a>
         </div>
       </div>
     </div>
