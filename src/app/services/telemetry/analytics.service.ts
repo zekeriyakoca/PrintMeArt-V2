@@ -276,8 +276,8 @@ export class AnalyticsService {
     });
   }
 
-  /** Any step of checkout failed: opening it (draft order), creating the order, or starting the payment */
-  trackCheckoutFailed(stage: 'draft_order' | 'create_order' | 'payment', reason: string): void {
+  /** Any step of checkout failed: opening it (basket check), creating the order, or starting the payment */
+  trackCheckoutFailed(stage: 'basket_check' | 'create_order' | 'payment', reason: string): void {
     this.track('checkout_failed', { stage, reason }, { ga4: false, posthog: true });
   }
 

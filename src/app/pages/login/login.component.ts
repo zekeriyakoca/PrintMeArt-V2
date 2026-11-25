@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // Check if user is already authenticated
     if (this.authService.isAuthenticated()) {
-      this.syncCartAndNavigate('/');
+      this.showAccountCartAndNavigate(this.route.snapshot.queryParamMap.get('returnUrl') || '/');
       return;
     }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         // Get the intended destination or default to home
         const returnUrl =
           this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-        this.syncCartAndNavigate(returnUrl);
+        this.showAccountCartAndNavigate(returnUrl);
       }
     });
   }
@@ -63,12 +63,10 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Syncs cart with backend after login and navigates to target URL.
+   * The basket API moves the guest basket into the account by itself; the page only reads the result.
    */
-  private syncCartAndNavigate(targetUrl: string): void {
-    this.cartService.syncCartAfterLogin().subscribe({
-      next: () => this.router.navigate([targetUrl]),
-      error: () => this.router.navigate([targetUrl]), // Navigate even if sync fails
-    });
+  private showAccountCartAndNavigate(targetUrl: string): void {
+    this.cartService.fetchCartItems();
+    this.router.navigate([targetUrl]);
   }
 }

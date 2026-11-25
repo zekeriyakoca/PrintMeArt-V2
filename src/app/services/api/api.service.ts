@@ -111,12 +111,13 @@ export class ApiService {
     );
   }
 
-  createDraftOrder(): Observable<any> {
+  /** Opening checkout: the backend verifies the basket and brings its prices up to date */
+  checkBasket(): Observable<any> {
     if (this.isSSR) {
       return of({});
     }
     return this._httpClient.post<any>(
-      `${this.BFF_URL}/bff/v1/ordering/draft-order`,
+      `${this.BFF_URL}/bff/v1/ordering/basket-check`,
       {},
     );
   }

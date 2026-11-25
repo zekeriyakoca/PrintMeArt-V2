@@ -10,10 +10,21 @@ export interface AddressDto {
   zipCode: string;
 }
 
-export interface CreateOrderFromDraftDto {
+export interface CreateOrderDto {
   customerFullName: string;
   customerEmail: string;
   shipmentAddress: AddressDto;
+  /** Items + shipping as the page shows it; the backend makes the order only when it charges exactly this */
+  expectedTotal: number;
+}
+
+/** The 409 answer to an order that would charge another total than the page showed */
+export interface OrderTotalMismatch {
+  pricesUpdated: boolean;
+  basketChanged: boolean;
+  /** What the order will charge for the basket as it is now */
+  total: number;
+  items: { id: string; unitPrice: number }[];
 }
 
 export interface CheckoutRequestDto {
@@ -48,15 +59,15 @@ export interface CheckoutSessionStatus {
 export class CheckoutService {
   constructor(private readonly apiService: ApiService) {}
 
-  createDraftOrder() {
-    return this.apiService.createDraftOrder();
+  checkBasket() {
+    return this.apiService.checkBasket();
   }
 
   saveCheckoutContact(contact: { email: string; firstName: string; lastName: string }) {
     return this.apiService.saveCheckoutContact(contact);
   }
 
-  createOrderFromDraft(data: CreateOrderFromDraftDto) {
+  createOrder(data: CreateOrderDto) {
     return this.apiService.submitOrder(data);
   }
 

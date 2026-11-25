@@ -7,7 +7,6 @@ import {
   getDisplayableOptions,
 } from '../../models/cart-item';
 import { CartService } from '../../services/cart/cart.service';
-import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { IconComponent } from '../shared/icon/icon.component';
 import { CurrencyPipe } from '@angular/common';
 import { isFrameOutOfStock } from '../../shared/constants';
@@ -24,7 +23,6 @@ export class CartItemComponent {
   cartItemChanged = output();
 
   private readonly router = inject(Router);
-  private readonly analytics = inject(AnalyticsService);
 
   constructor(private cartService: CartService) {}
 
@@ -44,27 +42,18 @@ export class CartItemComponent {
   }
 
   removeItem() {
-    if (this.cartItem()?.id) {
-      this.cartService.removeItemFromCart(this.cartItem()?.id);
+    const item = this.cartItem();
+    if (item?.id) {
+      this.cartService.removeItemFromCart(item.id);
       this.cartItemChanged.emit();
     }
   }
 
   changeQuantity(change: number) {
-    const updatedCart = this.cartService.cart().map((item) => {
-      if (item.id === this.cartItem()?.id) {
-        return {
-          ...item,
-          quantity: item.quantity + change,
-        };
-      }
-      return item;
-    });
-
     const item = this.cartItem();
-    if (item) this.analytics.trackCartQuantityChanged(item, change);
+    if (!item) return;
 
-    this.cartService.updateCartOnBackend(updatedCart).subscribe();
+    this.cartService.changeQuantity(item, change);
     this.cartItemChanged.emit();
   }
 

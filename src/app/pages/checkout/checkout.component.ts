@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, HostListener, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostBinding, HostListener, inject, Input, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -11,7 +11,7 @@ import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../basePageComponent';
 import { IconComponent } from '../../components/shared/icon/icon.component';
 import { CheckoutUserInfo } from '../../models/checkout-user-info';
-import { CheckoutService, CreateOrderFromDraftDto } from '../../services/checkout/checkout.service';
+import { CheckoutService, CreateOrderDto, OrderTotalMismatch } from '../../services/checkout/checkout.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
@@ -57,6 +57,9 @@ export class CheckoutComponent extends BasePageComponent {
   serverErrors = signal<Partial<Record<keyof CheckoutUserInfo, string[]>>>({});
   // The name and email last sent to the backend, so each blur does not send them again
   private savedContactKey = '';
+  private readonly orderSummary = viewChild(OrderSummaryComponent);
+  // After the backend refused a total: the basket it was looking at and the total it will charge for it
+  private agreedTotal: { basket: string; total: number } | null = null;
 
   userDetails: CheckoutUserInfo = {
     firstName: '',
@@ -97,8 +100,8 @@ export class CheckoutComponent extends BasePageComponent {
         }
       });
     }
-    // Create draft order when entering checkout
-    this.checkoutService.createDraftOrder().subscribe({
+    // The backend checks the basket and brings its prices up to date
+    this.checkoutService.checkBasket().subscribe({
       next: (result: { pricesUpdated?: boolean } | null) => {
         // The backend found newer prices and saved them to the basket; show what will be charged
         if (result?.pricesUpdated) {
@@ -107,8 +110,8 @@ export class CheckoutComponent extends BasePageComponent {
         }
       },
       error: (err) => {
-        console.error('Failed to create draft order:', err);
-        this.analytics.trackCheckoutFailed('draft_order', `http_${err?.status ?? 'unknown'}`);
+        console.error('Failed to check the basket:', err);
+        this.analytics.trackCheckoutFailed('basket_check', `http_${err?.status ?? 'unknown'}`);
         this.toastService.error('errors.checkoutInit');
       },
     });
@@ -152,8 +155,39 @@ export class CheckoutComponent extends BasePageComponent {
     };
   }
 
-  private prepareOrderData(): CreateOrderFromDraftDto {
+  /** The basket and destination a total belongs to */
+  private basketKey(): string {
+    return JSON.stringify([this.userDetails.country, this.cartItems().map((item) => [item.id, item.quantity, item.unitPrice])]);
+  }
+
+  /**
+   * The total the customer is looking at. Right after the backend refused a total it is the one the
+   * backend named for this same basket, so the next try always goes through, even if this page
+   * would add it up differently.
+   */
+  private expectedTotal(): number {
+    if (this.agreedTotal?.basket === this.basketKey()) return this.agreedTotal.total;
+    return Math.round((this.orderSummary()?.total() ?? 0) * 100) / 100;
+  }
+
+  /** The order would charge another total than shown: show the basket as it will be charged and let the customer pay again */
+  private showChangedBasket(change: OrderTotalMismatch) {
+    this.cartService.reloadWithPrices(change.items ?? []).subscribe({
+      next: () => {
+        this.agreedTotal = { basket: this.basketKey(), total: change.total };
+        this.isProcessing.set(false);
+        this.toastService.info(change.pricesUpdated ? 'checkout.pricesUpdated' : 'checkout.basketChanged');
+      },
+      error: () => {
+        this.isProcessing.set(false);
+        this.toastService.error('errors.order');
+      },
+    });
+  }
+
+  private prepareOrderData(): CreateOrderDto {
     return {
+      expectedTotal: this.expectedTotal(),
       customerFullName: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
       customerEmail: this.userDetails.email,
       shipmentAddress: {
@@ -181,8 +215,8 @@ export class CheckoutComponent extends BasePageComponent {
 
     const orderData = this.prepareOrderData();
 
-    // Step 1: Create order from draft with shipping details
-    this.checkoutService.createOrderFromDraft(orderData).subscribe({
+    // Step 1: Create the order from the basket with shipping details
+    this.checkoutService.createOrder(orderData).subscribe({
       next: (orderResponse) => {
         console.log('Order created:', orderResponse.orderId);
 
@@ -222,6 +256,10 @@ export class CheckoutComponent extends BasePageComponent {
           });
       },
       error: (err) => {
+        if (err?.status === 409) {
+          this.showChangedBasket(err.error);
+          return;
+        }
         console.error('Order creation failed:', err);
         this.analytics.trackPaymentFailed('order_creation_failed');
         this.analytics.trackCheckoutFailed('create_order', `http_${err?.status ?? 'unknown'}`);

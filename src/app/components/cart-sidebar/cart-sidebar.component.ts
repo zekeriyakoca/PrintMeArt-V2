@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
-import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { CartItemDto, getDisplayableOptions } from '../../models/cart-item';
 import { IconComponent } from '../shared/icon/icon.component';
 
@@ -22,7 +21,6 @@ import { IconComponent } from '../shared/icon/icon.component';
 export class CartSidebarComponent {
   private readonly router = inject(Router);
   private readonly cartService = inject(CartService);
-  private readonly analytics = inject(AnalyticsService);
 
   isOpen = this.cartService.isCartSidebarOpen;
   cartItems = this.cartService.cart;
@@ -58,19 +56,6 @@ export class CartSidebarComponent {
   }
 
   updateQuantity(item: CartItemDto, delta: number): void {
-    const newQuantity = item.quantity + delta;
-    if (newQuantity <= 0) {
-      this.removeItem(item.id);
-      return;
-    }
-
-    const updatedCart = this.cartItems().map((cartItem) =>
-      cartItem.id === item.id
-        ? { ...cartItem, quantity: newQuantity }
-        : cartItem,
-    );
-
-    this.analytics.trackCartQuantityChanged(item, delta);
-    this.cartService.updateCartOnBackend(updatedCart).subscribe();
+    this.cartService.changeQuantity(item, delta);
   }
 }
