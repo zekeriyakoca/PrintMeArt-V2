@@ -1,0 +1,30 @@
+name: SEO check
+
+# Every pull request: build the shop, render a sample of every page type in Dutch and English on the server,
+# and fail when titles, H1s, canonical and hreflang links, the sitemap or the old-address redirects break
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: seo-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  seo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Starts the built server itself; pages render with live catalog data from the public API
+      - run: node scripts/seo-check.mjs

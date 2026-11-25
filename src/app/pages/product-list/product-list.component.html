@@ -74,7 +74,13 @@
           </div>
         }
       </div>
+      @if (categoryPage()) {
+        <p class="mt-3 text-sm leading-relaxed text-slate-500">{{ 'seo.category.intro' | t: { name: ('name.' + name | t) } }}</p>
+      }
     </section>
+  } @else {
+    <!-- The plain catalog and search results still get the page's one heading -->
+    <h1 class="mb-4 text-2xl font-semibold text-slate-900 tracking-tight">{{ 'seo.catalog.title' | t }}</h1>
   }
   <!-- Filter Titles  -->
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-4 pb-4 border-b border-neutral-200">

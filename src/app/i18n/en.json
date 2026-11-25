@@ -204,7 +204,8 @@
   },
   "related": {
     "curated": "Curated for you",
-    "title": "You may also like"
+    "title": "You may also like",
+    "seeCategory": "See all prints in {{name}}"
   },
   "gallery": {
     "showAll": "Show all",
@@ -984,6 +985,11 @@
       "description": "Browse museum-quality giclée prints of public-domain masterpieces, in many sizes and with a frame of your choice.",
       "namedTitle": "{{name}} — art prints",
       "namedDescription": "Discover {{name}} as museum-quality giclée prints on fine-art paper, printed by hand in Den Bosch."
+    },
+    "category": {
+      "title": "{{name}} as giclée prints and posters",
+      "description": "{{name}}: public-domain masterpieces as museum-quality giclée prints on cotton paper, or as a Premium Poster. In many sizes, from our studio in Den Bosch.",
+      "intro": "Every work in the {{name}} category is available as a museum-quality giclée print, made with fade-resistant pigment ink on fine-art cotton paper, or as a Premium Poster: a true photographic print on matte Fujifilm paper. You choose the size and the paper, and we make your print to order."
     },
     "product": {
       "kind": "Fine-art print",

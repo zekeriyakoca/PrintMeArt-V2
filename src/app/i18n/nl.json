@@ -204,7 +204,8 @@
   },
   "related": {
     "curated": "Voor jou geselecteerd",
-    "title": "Misschien ook iets voor jou"
+    "title": "Misschien ook iets voor jou",
+    "seeCategory": "Bekijk alle prints in {{name}}"
   },
   "gallery": {
     "showAll": "Alles tonen",
@@ -1158,6 +1159,11 @@
       "description": "Bekijk giclée-prints van museumkwaliteit van meesterwerken uit het publieke domein, in veel formaten en met een lijst naar keuze.",
       "namedTitle": "{{name}} — kunstprints",
       "namedDescription": "Ontdek {{name}} als giclée-prints van museumkwaliteit op fine-art papier, met de hand gemaakt in Den Bosch."
+    },
+    "category": {
+      "title": "{{name}} als giclée-print of poster",
+      "description": "{{name}}: meesterwerken uit het publieke domein als giclée-print van museumkwaliteit op katoenpapier, of als Premium Poster. In veel formaten, uit onze studio in Den Bosch.",
+      "intro": "Alle werken in de categorie {{name}} bestel je als giclée-print van museumkwaliteit, met lichtechte pigmentinkt gedrukt op fine-art katoenpapier, of als Premium Poster: een echte fotoafdruk op mat Fujifilm-fotopapier. Je kiest zelf het formaat en het papier, en wij maken je print op bestelling."
     },
     "product": {
       "kind": "Kunstprint",

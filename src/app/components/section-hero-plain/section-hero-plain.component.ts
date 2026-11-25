@@ -1,10 +1,12 @@
 import { RouterLink } from '@angular/router';
 import { LinkPipe } from '../../shared/link.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import { IconComponent } from '../shared/icon/icon.component';
 import { MUSEUMS } from '../../data/museums';
+import { LanguageService } from '../../services/i18n/language.service';
+import { categoryLink } from '../../shared/category-path';
 
 export interface CategoryCard {
   title: string;
@@ -28,7 +30,7 @@ export class SectionHeroPlainComponent {
       title: 'home.cardMuseum',
       image:
         'https://ecombone.blob.core.windows.net/ecomm-processed-images/localhost/1764/1764-small.jpeg',
-      link: '/products?categoryName=Art Prints',
+      link: categoryLink(inject(LanguageService).currentLanguageCode(), 'Art Prints'),
     },
     {
       title: 'home.cardCustom',

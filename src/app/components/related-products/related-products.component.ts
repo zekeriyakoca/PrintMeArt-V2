@@ -1,3 +1,5 @@
+import { RouterLink } from '@angular/router';
+import { ListingPipe } from '../../shared/listing.pipe';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import {
   Component,
@@ -18,7 +20,7 @@ import { ApiService } from '../../services/api/api.service';
 @Component({
   selector: 'app-related-products',
   standalone: true,
-  imports: [TranslatePipe, ProductCardComponent],
+  imports: [TranslatePipe, ProductCardComponent, RouterLink, ListingPipe],
   templateUrl: './related-products.component.html',
   styleUrls: ['./related-products.component.scss'],
 })

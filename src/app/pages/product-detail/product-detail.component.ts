@@ -19,6 +19,7 @@ import { LanguageService } from '../../services/i18n/language.service';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService, summary } from '../../services/seo/seo.service';
 import { productPath } from '../../shared/product-path';
+import { categoryLink } from '../../shared/category-path';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { artistPath, artistSlug } from '../../shared/artist-path';
@@ -259,7 +260,7 @@ export class ProductDetailComponent extends BasePageComponent implements OnInit 
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'PrintMeArt', item: this.seo.absoluteUrl(this.i18n.language, '/') },
             ...(product.categoryName
-              ? [{ '@type': 'ListItem', position: 2, name: this.i18n.t('name.' + product.categoryName), item: `${this.seo.absoluteUrl(this.i18n.language, '/products')}?categoryName=${encodeURIComponent(product.categoryName)}` }]
+              ? [{ '@type': 'ListItem', position: 2, name: this.i18n.t('name.' + product.categoryName), item: this.seo.absoluteUrl(this.i18n.language, categoryLink(this.i18n.language, product.categoryName)) }]
               : []),
             { '@type': 'ListItem', position: product.categoryName ? 3 : 2, name: product.name, item: url },
           ],

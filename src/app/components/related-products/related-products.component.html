@@ -18,4 +18,12 @@
     }
   </div>
   }
+  <!-- Rendered on the server as well, so the product page always links to its category's page -->
+  @if (categoryName()) {
+  <p class="mt-8 text-center">
+    <a class="text-sm font-medium text-[#384f8c] hover:text-[#2c3e70] underline underline-offset-4" [routerLink]="categoryName() | listing">
+      {{ 'related.seeCategory' | t: { name: ('name.' + categoryName() | t) } }}
+    </a>
+  </p>
+  }
 </section>

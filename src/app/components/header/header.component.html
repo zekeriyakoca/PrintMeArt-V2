@@ -28,11 +28,11 @@
                         <div class="flex gap-10 xl:gap-14 shrink-0">
                           @for (category of printCategories(); track category.id; let first = $first) {
                             <div [class]="first ? '' : 'border-l border-slate-100 pl-10 xl:pl-14'">
-                              <a class="font-medium text-[#384f8c] uppercase tracking-wide" [routerLink]="'/products?categoryName=' + encodeURIComponent(category.name) | link">{{ 'name.' + category.name | t }}</a>
+                              <a class="font-medium text-[#384f8c] uppercase tracking-wide" [routerLink]="category.name | listing">{{ 'name.' + category.name | t }}</a>
                               <ul class="grid gap-y-3.5 gap-x-10 mt-5" [class.grid-cols-2]="isWideCategory(category)">
                                 @for (child of category.childCategories; track child.id) {
                                   <li>
-                                    <a class="font-normal text-slate-600 hover:text-black whitespace-nowrap" [routerLink]="'/products?categoryName=' + encodeURIComponent(child.name) | link">{{ 'name.' + child.name | t }}</a>
+                                    <a class="font-normal text-slate-600 hover:text-black whitespace-nowrap" [routerLink]="child.name | listing">{{ 'name.' + child.name | t }}</a>
                                   </li>
                                 }
                               </ul>
