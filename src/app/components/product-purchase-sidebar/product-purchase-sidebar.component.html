@@ -257,3 +257,7 @@
     ></app-product-preview>
   }
 }
+
+@if (showSavedDesignChanged()) {
+  <app-saved-design-changed-dialog (keepDesign)="keepSavedDesign()" (change)="changeSavedDesign()"></app-saved-design-changed-dialog>
+}

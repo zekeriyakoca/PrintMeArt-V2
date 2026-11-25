@@ -25,10 +25,11 @@ import { Bootstrap } from '../../services/bootstrap/bootstrap';
 import { EffectiveImagePixelsResolver } from '../../utils/effective-image-pixels';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
 import { EnhancementOptionsComponent } from '../enhancement-options/enhancement-options.component';
+import { SavedDesignChangedDialogComponent } from '../saved-design-changed-dialog/saved-design-changed-dialog.component';
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent],
+  imports: [TranslatePipe, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent, SavedDesignChangedDialogComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -236,7 +237,17 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   onDesignSaved(url: string) {
-    this.savedDesign.set({ url, key: this.designKey() });
+    const frameGroupIndex = this.product().optionGroups.findIndex((g) => g.name.toLowerCase() === 'frame');
+    this.savedDesign.set({
+      url,
+      key: this.designKey(),
+      image: this.designImageUrl(),
+      size: this.selectedSize(),
+      frameGroupIndex,
+      frameOptionId: frameGroupIndex >= 0 ? (this.product().optionGroups[frameGroupIndex].selectedOptionId ?? null) : null,
+      mat: this.isMatIncluded(),
+      whiteBorder: this.whiteBorder(),
+    });
     this.designSaved.emit(url);
     this.analytics.trackCustomDesignSaved(this.product().id, {
       custom_image: !!this.customImageUrl(),
@@ -256,7 +267,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.showPreview.set(false);
     this.analytics.trackDesignPreview('room_view_opened', this.product().id, { custom_image: !!this.customImageUrl() });
   }
-  private savedDesign = signal<{ url: string; key: string } | null>(null);
+  private savedDesign = signal<SavedDesign | null>(null);
+  /** A size, frame or mat change after saving waits on the customer: keep the design or drop it */
+  showSavedDesignChanged = signal(false);
   /** Everything the snapshot depends on: the artwork and the print it sits on */
   private designKey = computed(() =>
     JSON.stringify([this.designImageUrl(), this.selectedSize()?.name, this.selectedFrameName(), this.isMatIncluded(), this.whiteBorder()]),
@@ -269,19 +282,50 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     const design = this.savedDesign();
     return design && design.key === this.designKey() ? design.url : null;
   });
-  /** Tells the page when the saved design stops matching, so it stops showing it as the preview */
+  /**
+   * When the saved design stops matching: a new artwork, or a change made in Preview & Design (saved again there),
+   * drops it right away. A size, frame or mat change on the page asks first.
+   */
   private readonly staleDesignEffect = effect(() => {
     // Read the URL first, on every run: if it were read only once a design exists, the first run (no design yet)
     // would track nothing and the effect would never run again
     const url = this.savedDesignUrl();
     const design = untracked(() => this.savedDesign());
-    if (design && !url) {
-      untracked(() => {
-        this.savedDesign.set(null);
-        this.designSaved.emit(null);
-      });
-    }
+    if (!design || url) return;
+    untracked(() => {
+      if (design.image !== this.designImageUrl() || this.showPreview() || this.roomLayout()) {
+        this.dropSavedDesign();
+      } else {
+        this.showSavedDesignChanged.set(true);
+      }
+    });
   }, { allowSignalWrites: true });
+
+  /** Puts the options back the way they were when the design was saved */
+  keepSavedDesign() {
+    const design = this.savedDesign();
+    this.showSavedDesignChanged.set(false);
+    if (!design) return;
+    // The frame first: it decides which sizes there are
+    if (design.frameGroupIndex >= 0 && design.frameOptionId != null) {
+      const group = this.product().optionGroups[design.frameGroupIndex];
+      if (group?.selectedOptionId !== design.frameOptionId) this.selectFrame(design.frameGroupIndex, design.frameOptionId);
+    }
+    this.selectedSize.set(design.size);
+    this.isMatIncluded.set(design.mat);
+    this.whiteBorder.set(design.whiteBorder);
+  }
+
+  /** The customer keeps the new options; the saved design goes */
+  changeSavedDesign() {
+    this.showSavedDesignChanged.set(false);
+    this.dropSavedDesign();
+  }
+
+  private dropSavedDesign() {
+    this.savedDesign.set(null);
+    this.designSaved.emit(null);
+  }
   /** White border chosen in Preview & Design */
   whiteBorder = signal<WhiteBorder>(NO_WHITE_BORDER);
   selectedFrameName = signal<string | null>(null);
@@ -518,4 +562,16 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
     return selectedOptions;
   }
+}
+
+interface SavedDesign {
+  url: string;
+  /** designKey when saved */
+  key: string;
+  image: string;
+  size: SizeOption | null;
+  frameGroupIndex: number;
+  frameOptionId: number | null;
+  mat: boolean;
+  whiteBorder: WhiteBorder;
 }
