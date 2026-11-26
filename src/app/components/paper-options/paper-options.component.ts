@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, output, signal, untracked } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, effect, inject, input, model, output, signal, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OptionGroupDto } from '../../models/product';
 import { PAPER_TIERS, PaperPage, PaperChoice, PaperText, PaperTier, paperName, paperPath, paperText, papersOfTier } from '../../papers/papers';
@@ -24,7 +24,7 @@ let instances = 0;
   imports: [TranslatePipe, RouterLink, NgTemplateOutlet],
   templateUrl: './paper-options.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '(document:keydown.escape)': 'sheet.set(null)' },
+  host: { '(document:keydown.escape)': 'close()', '(document:click)': 'closeWhenOutside($event)' },
 })
 export class PaperOptionsComponent {
   group = input.required<OptionGroupDto>();
@@ -33,6 +33,7 @@ export class PaperOptionsComponent {
   optionSelected = output<number>();
 
   private readonly language = inject(LanguageService).currentLanguageCode();
+  private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
   /** Names its radio groups: a page can show the chooser twice (phone and desktop) */
   readonly id = `paper-options-${instances++}`;
 
@@ -44,6 +45,13 @@ export class PaperOptionsComponent {
   /** All papers side by side, for those who want to compare */
   readonly papersLink = paperPath(this.language);
 
+  /** The row of the paper the customer chose; none while our studio picks */
+  chosenRow = computed(() => this.papers().find((row) => row.paper === this.choice().paper) ?? null);
+
+  /** The list of step 2 is a dropdown: closed, it shows what is chosen */
+  open = signal(false);
+  /** The list is being walked with the keyboard */
+  byKeys = false;
   /** The detail a phone shows in a sheet; a desktop shows it next to the row on hover */
   sheet = signal<Detail | null>(null);
 
@@ -74,7 +82,22 @@ export class PaperOptionsComponent {
   /** The sheet's button: take what it shows */
   chooseShown(detail: Detail): void {
     this.selectPaper(detail === 'studio' ? null : detail.paper);
+    this.close();
+  }
+
+  /** A row of the list: a tap or click takes it and closes the list; the arrow keys walk through it and leave it open */
+  pick(paper: PaperPage | null): void {
+    this.selectPaper(paper);
+    if (!this.byKeys) this.open.set(false);
+  }
+
+  close(): void {
+    this.open.set(false);
     this.sheet.set(null);
+  }
+
+  closeWhenOutside(event: MouseEvent): void {
+    if (this.open() && !this.host.nativeElement.contains(event.target as Node)) this.open.set(false);
   }
 
   paperLink(paper: PaperPage): string {

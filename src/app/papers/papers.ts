@@ -14,8 +14,6 @@ export interface PaperText {
   labels: string[];
   /** What it suits best, in a few words each; the chooser's row shows the first */
   idealFor: string[];
-  /** A short hint in its row, e.g. that photos look more vivid on another paper */
-  hint?: string;
   title: string;
   description: string;
   lead: string;
@@ -408,7 +406,6 @@ export const PAPER_PAGES: PaperPage[] = [
       surface: 'Fijn gestructureerd, mat',
       labels: ['Fotopapier', 'Mat'],
       idealFor: ['Kunstprints met de beste prijs-kwaliteit', 'Kunst voor elke dag'],
-      hint: 'Foto’s worden levendiger op Silk',
       title: 'Premium Poster 234 g/m²: fotoafdruk op Fujifilm-papier',
       description: 'Premium Poster: een echte fotoafdruk op mat Fujifilm Crystal Archive-papier, 234 g/m². Levendige kleuren voor de beste prijs. Prijzen per formaat.',
       lead: 'Een echte fotoafdruk op mat Fujifilm-papier van 234 g/m². Levendige kleuren en diep zwart, voor de laagste prijs per formaat.',
@@ -439,7 +436,6 @@ export const PAPER_PAGES: PaperPage[] = [
       surface: 'Fine-textured, matte',
       labels: ['Photo paper', 'Matte'],
       idealFor: ['Best value art prints', 'Everyday art display'],
-      hint: 'Photos look more vivid on Silk',
       title: 'Premium Poster 234 gsm: photographic print on Fujifilm paper',
       description: 'Premium Poster: a real photographic print on matte Fujifilm Crystal Archive paper, 234 gsm. Vivid colours at the best price. Prices per size.',
       lead: 'A real photographic print on matte Fujifilm paper, 234 gsm. Vivid colours and deep blacks, at the lowest price per size.',
