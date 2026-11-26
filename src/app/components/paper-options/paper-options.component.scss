@@ -1,0 +1,31 @@
+// The light that passes over the dropdown when the tier changes
+.sweep {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.26), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  animation: sweep 0.8s ease-out;
+}
+
+// The opened list settles into place
+.drop-in {
+  animation: drop-in 0.14s ease-out;
+}
+
+@keyframes sweep {
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep,
+  .drop-in {
+    animation: none;
+  }
+}

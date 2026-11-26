@@ -23,6 +23,7 @@ let instances = 0;
   selector: 'app-paper-options',
   imports: [TranslatePipe, RouterLink, NgTemplateOutlet],
   templateUrl: './paper-options.component.html',
+  styleUrl: './paper-options.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(document:keydown.escape)': 'close()', '(document:click)': 'closeWhenOutside($event)' },
 })
@@ -45,6 +46,12 @@ export class PaperOptionsComponent {
   /** All papers side by side, for those who want to compare */
   readonly papersLink = paperPath(this.language);
 
+  /** Where the stem meets the dropdown: under the middle of the chosen tier, as a share of the width */
+  stemLeft = computed(() => {
+    const tiers = this.tiers();
+    return ((tiers.indexOf(this.choice().tier) + 0.5) / tiers.length) * 100;
+  });
+
   /** The row of the paper the customer chose; none while our studio picks */
   chosenRow = computed(() => this.papers().find((row) => row.paper === this.choice().paper) ?? null);
 
@@ -54,6 +61,10 @@ export class PaperOptionsComponent {
   byKeys = false;
   /** The detail a phone shows in a sheet; a desktop shows it next to the row on hover */
   sheet = signal<Detail | null>(null);
+  /** Counts the customer's tier changes: each one sends a light over the dropdown */
+  private readonly tierChanges = signal(0);
+  /** The light now passing; a new one for every tier change, none before the first */
+  sweeps = computed(() => (this.tierChanges() ? [this.tierChanges()] : []));
 
   // Like the frame, the tier shown first is the chosen one, so the price includes it; also when another product takes this one's place
   private readonly chooseShownTier = effect(() => {
@@ -72,6 +83,12 @@ export class PaperOptionsComponent {
     if (tier === this.choice().tier && this.group().selectedOptionId != null) return;
     this.choice.set({ tier, paper: null });
     this.emitOption(tier);
+  }
+
+  /** The customer's own change of tier, in the toggle */
+  switchTier(tier: PaperTier): void {
+    this.selectTier(tier);
+    this.tierChanges.update((count) => count + 1);
   }
 
   /** null: our studio picks */
