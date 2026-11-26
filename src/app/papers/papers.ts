@@ -202,7 +202,6 @@ export const PAPER_PAGES: PaperPage[] = [
     weightGsm: 325,
     image: `${IMAGES}/paper-baryta-1.webp`,
     price: 'cotton',
-    onRequest: true,
     nl: {
       kind: 'Glanzend barietpapier',
       title: 'Hahnemühle FineArt Baryta 325 g/m²: fine-art print met glans en diep zwart',
@@ -271,16 +270,14 @@ export const PAPER_PAGES: PaperPage[] = [
     weightGsm: 310,
     image: `${IMAGES}/paper-photo-1.webp`,
     price: 'cotton',
-    soon: true,
     nl: {
       kind: 'Glad katoenpapier voor fotografie',
       title: 'Canson Rag Photographique II 310 g/m²: fine-art print voor fotografie',
-      description: 'Canson Infinity Rag Photographique II: glad, mat papier van 100% katoen, 310 g/m², gemaakt voor fotografie. Binnenkort te bestellen bij PrintMeArt.',
+      description: 'Canson Infinity Rag Photographique II: glad, mat papier van 100% katoen, 310 g/m², gemaakt voor fotografie.',
       lead: 'Glad, mat katoenpapier van 310 g/m², door Canson gemaakt voor fotografie. Neutraal van kleur, met veel detail en een zachte fine-art uitstraling.',
       summary: [
         '100% katoen, 310 g/m², mat en zeer glad.',
         'Neutrale kleurweergave: gemaakt voor foto’s die er als fine art uit moeten zien.',
-        'Binnenkort te bestellen.',
       ],
       about: [
         'Canson maakt in Frankrijk al eeuwen papier voor kunstenaars. Rag Photographique is hun katoenpapier voor fotografie: 100% katoen, met een mat oppervlak dat gladder is dan de meeste fine-art papieren.',
@@ -296,17 +293,16 @@ export const PAPER_PAGES: PaperPage[] = [
         '<strong>Fotografie</strong> die er als fine art uit moet zien, zonder glans.',
         '<strong>Kunstreproducties</strong> waarbij neutrale kleur belangrijk is.',
       ],
-      lessFor: 'Wil je glans en hard contrast, kies dan <a href="/nl/papier/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Nu al te bestellen en vergelijkbaar glad: <a href="/nl/papier/hahnemuhle-photo-rag">Hahnemühle Photo Rag</a>.',
+      lessFor: 'Wil je glans en hard contrast, kies dan <a href="/nl/papier/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Vergelijkbaar glad: <a href="/nl/papier/hahnemuhle-photo-rag">Hahnemühle Photo Rag</a>.',
     },
     en: {
       kind: 'Smooth cotton paper for photography',
       title: 'Canson Rag Photographique II 310 gsm: fine art print for photography',
-      description: 'Canson Infinity Rag Photographique II: smooth, matte 100% cotton paper, 310 gsm, made for photography. Coming soon at PrintMeArt.',
+      description: 'Canson Infinity Rag Photographique II: smooth, matte 100% cotton paper, 310 gsm, made for photography.',
       lead: 'Smooth, matte cotton paper at 310 gsm, made by Canson for photography. Neutral in colour, with plenty of detail and a soft fine art look.',
       summary: [
         '100% cotton, 310 gsm, matte and very smooth.',
         'Neutral colour: made for photos that should look like fine art.',
-        'Coming soon.',
       ],
       about: [
         'Canson has been making paper for artists in France for centuries. Rag Photographique is their cotton paper for photography: 100% cotton, with a matte surface smoother than most fine art papers.',
@@ -322,7 +318,7 @@ export const PAPER_PAGES: PaperPage[] = [
         '<strong>Photography</strong> that should look like fine art, without gloss.',
         '<strong>Art reproductions</strong> where neutral colour matters.',
       ],
-      lessFor: 'For gloss and hard contrast choose <a href="/en/paper/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Available now and similarly smooth: <a href="/en/paper/hahnemuhle-photo-rag">Hahnemühle Photo Rag</a>.',
+      lessFor: 'For gloss and hard contrast choose <a href="/en/paper/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Similarly smooth: <a href="/en/paper/hahnemuhle-photo-rag">Hahnemühle Photo Rag</a>.',
     },
   },
   {
