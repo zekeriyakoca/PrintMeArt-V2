@@ -3,13 +3,12 @@ import { DEFAULT_PAPER_CHOICE, PAPER_PAGES, PAPER_TIERS, paperBySlug, paperChoic
 describe('papers', () => {
   const tier = (id: string) => PAPER_TIERS.find((t) => t.id === id)!;
 
-  it('offers two Fujifilm papers and four Hahnemühle papers', () => {
+  it('offers two Fujifilm papers and three Hahnemühle papers', () => {
     expect(papersOfTier(tier('poster')).map(paperName)).toEqual(['Premium Poster', 'Premium Poster Silk']);
     expect(papersOfTier(tier('cotton')).map(paperName)).toEqual([
       'Hahnemühle Photo Rag',
       'Hahnemühle Museum Etching',
       'Hahnemühle FineArt Baryta',
-      'Hahnemühle Hemp',
     ]);
   });
 
@@ -25,8 +24,8 @@ describe('papers', () => {
   });
 
   it('names the order after the paper, or says the studio picks it', () => {
-    const hemp = paperBySlug('hahnemuhle-hemp')!;
-    expect(paperChoiceName({ tier: tier('cotton'), paper: hemp })).toBe('Hahnemühle Hemp');
+    const baryta = paperBySlug('hahnemuhle-fineart-baryta')!;
+    expect(paperChoiceName({ tier: tier('cotton'), paper: baryta })).toBe('Hahnemühle FineArt Baryta');
     expect(paperChoiceName({ tier: tier('cotton'), paper: null })).toBe("Studio's choice: Fine Art (Hahnemühle)");
     expect(paperChoiceName({ tier: tier('poster'), paper: null })).toBe("Studio's choice: Premium Poster (Fujifilm)");
   });

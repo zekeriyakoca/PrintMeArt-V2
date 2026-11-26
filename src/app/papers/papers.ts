@@ -8,10 +8,14 @@ const IMAGES = 'https://genstorageaccount3116.blob.core.windows.net/printme-imag
 export interface PaperText {
   /** What the paper is, in a few words, e.g. 'Smooth cotton paper' */
   kind: string;
-  /** Its character in two to four words, on its tile in the paper chooser, e.g. 'smooth matte' */
-  feel: string;
-  /** A short hint under it on its tile, e.g. that photos look more vivid on another paper */
-  tileHint?: string;
+  /** Its surface, next to the weight in the paper chooser, e.g. 'Smooth, matte' */
+  surface: string;
+  /** Two or three words that set it apart, as labels in the paper chooser */
+  labels: string[];
+  /** What it suits best, in a few words each; the chooser's row shows the first */
+  idealFor: string[];
+  /** A short hint in its row, e.g. that photos look more vivid on another paper */
+  hint?: string;
   title: string;
   description: string;
   lead: string;
@@ -72,12 +76,14 @@ export interface PaperTier {
   grade: string;
   /** The paper's name on the order when the studio picks it, so the team sees the choice is theirs */
   studioChoiceName: string;
+  /** One of its papers up close, in the tier toggle */
+  image: string;
 }
 
 /** Cheapest first: the first tier is the one a product opens with, so its price is the "from" price */
 export const PAPER_TIERS: PaperTier[] = [
-  { id: 'poster', grade: 'Home', studioChoiceName: "Studio's choice: Premium Poster (Fujifilm)" },
-  { id: 'cotton', grade: 'Museum', studioChoiceName: "Studio's choice: Fine Art (Hahnemühle)" },
+  { id: 'poster', grade: 'Home', studioChoiceName: "Studio's choice: Premium Poster (Fujifilm)", image: `${IMAGES}/paper-fine-art-1.webp` },
+  { id: 'cotton', grade: 'Museum', studioChoiceName: "Studio's choice: Fine Art (Hahnemühle)", image: `${IMAGES}/paper-art-1.webp` },
 ];
 
 /** The tier and, in it, the paper the customer chose; no paper means our studio picks it */
@@ -112,7 +118,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Glad katoenpapier',
-      feel: 'glad en mat',
+      surface: 'Glad, mat',
+      labels: ['Mat', 'Glad', 'Onze favoriet'],
+      idealFor: ['Schilderijen / kunstreproducties', 'Illustraties', 'Zachte tinten, galeriestijl'],
       title: 'Hahnemühle Photo Rag 308 g/m²: fine-art print op glad katoenpapier',
       description: 'Hahnemühle Photo Rag: glad, mat papier van 100% katoen, 308 g/m². Waar het voor past, wat het kost per formaat en hoe je je eigen foto erop laat printen.',
       lead: 'Glad, mat katoenpapier van 308 g/m². Het papier dat we het vaakst aanraden: het laat fijn detail en zachte kleurovergangen zien zonder zelf de aandacht te trekken.',
@@ -143,7 +151,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Smooth cotton paper',
-      feel: 'smooth matte',
+      surface: 'Smooth, matte',
+      labels: ['Matte', 'Smooth', 'Signature choice'],
+      idealFor: ['Paintings / art reproductions', 'Illustrations', 'Soft tones, gallery style'],
       title: 'Hahnemühle Photo Rag 308 gsm: fine art print on smooth cotton paper',
       description: 'Hahnemühle Photo Rag: smooth, matte 100% cotton paper, 308 gsm. What it suits, what it costs per size and how to have your own photo printed on it.',
       lead: 'Smooth, matte cotton paper at 308 gsm. The paper we recommend most often: it shows fine detail and soft colour transitions without drawing attention to itself.',
@@ -182,7 +192,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Gestructureerd katoenpapier',
-      feel: 'mat, voelbare structuur',
+      surface: 'Gestructureerd, mat',
+      labels: ['Gestructureerd', 'Mat', 'Schilderachtig'],
+      idealFor: ['Schilderijen in olie- of acrylstijl', 'Kunstwerken waarbij structuur iets toevoegt'],
       title: 'Hahnemühle Museum Etching 350 g/m²: fine-art print op gestructureerd katoenpapier',
       description: 'Hahnemühle Museum Etching: zwaar katoenpapier van 350 g/m² met een fijne structuur, zonder optische witmakers. Voor schilderijen en werk met textuur. Prijzen per formaat.',
       lead: 'Zwaar katoenpapier van 350 g/m² met een fijne, voelbare structuur. Een schilderij krijgt er de tastbaarheid van het origineel door terug.',
@@ -213,7 +225,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Textured cotton paper',
-      feel: 'matte, textured',
+      surface: 'Textured, matte',
+      labels: ['Textured', 'Matte', 'Painterly'],
+      idealFor: ['Oil/acrylic style paintings', 'Artworks where texture adds value'],
       title: 'Hahnemühle Museum Etching 350 gsm: fine art print on textured cotton paper',
       description: 'Hahnemühle Museum Etching: heavy 350 gsm cotton paper with a fine texture and no optical brighteners. For paintings and textured work. Prices per size.',
       lead: 'Heavy cotton paper at 350 gsm with a fine texture you can feel. It gives a painting back some of the presence of the original.',
@@ -252,7 +266,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Glanzend barietpapier',
-      feel: 'diep zwart, glanzend',
+      surface: 'Glad, glanzend',
+      labels: ['Glans', 'Diep zwart', 'Foto'],
+      idealFor: ['Foto’s met veel contrast', 'Zwart-wit'],
       title: 'Hahnemühle FineArt Baryta 325 g/m²: fine-art print met glans en diep zwart',
       description: 'Hahnemühle FineArt Baryta: helderwit, glanzend barietpapier van 325 g/m². Voor zwart-wit en foto’s met veel contrast.',
       lead: 'Helderwit, glanzend papier van 325 g/m² met een barietlaag, zoals het klassieke doka-papier. Het geeft het diepste zwart en het meeste contrast van al onze papieren.',
@@ -283,7 +299,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Glossy baryta paper',
-      feel: 'deep blacks, glossy',
+      surface: 'Smooth, glossy',
+      labels: ['Gloss', 'Deep blacks', 'Photo'],
+      idealFor: ['High-contrast photos', 'Black and white'],
       title: 'Hahnemühle FineArt Baryta 325 gsm: fine art print with gloss and deep blacks',
       description: 'Hahnemühle FineArt Baryta: bright white, glossy baryta paper, 325 gsm. For black-and-white and high-contrast photos.',
       lead: 'Bright white, glossy paper at 325 gsm with a baryta layer, like classic darkroom paper. It gives the deepest blacks and the most contrast of all our papers.',
@@ -314,75 +332,6 @@ export const PAPER_PAGES: PaperPage[] = [
     },
   },
   {
-    slug: 'hahnemuhle-hemp',
-    brand: 'Hahnemühle',
-    name: 'Hemp',
-    weightGsm: 290,
-    price: 'cotton',
-    nl: {
-      kind: 'Hennep- en katoenpapier',
-      feel: 'warm natuurwit',
-      title: 'Hahnemühle Hemp 290 g/m²: fine-art print op henneppapier',
-      description: 'Hahnemühle Hemp: mat papier van hennep en katoen, 290 g/m², natuurwit en zonder optische witmakers. Waar het voor past en wat het kost per formaat.',
-      lead: 'Mat papier van hennep en katoen, 290 g/m². De warme, natuurwitte tint en de lichte structuur geven een beeld rust.',
-      summary: [
-        '60% hennepvezel en 40% katoen, 290 g/m², mat met een lichte structuur.',
-        'Natuurwit, zonder optische witmakers.',
-        'Kost hetzelfde als Photo Rag en Museum Etching.',
-      ],
-      about: [
-        'Hemp komt uit de Natural Line van Hahnemühle. Het is gemaakt van 60% hennepvezel en 40% katoen. Hennep groeit snel en heeft weinig water en geen bestrijdingsmiddelen nodig.',
-        'Het papier is natuurwit omdat er geen optische witmakers in zitten, en het is zuur- en ligninevrij. We printen erop als <strong>giclée</strong>, met pigmentinkt in twaalf kleuren. Het matte oppervlak heeft een lichte structuur en voelt zacht aan.',
-      ],
-      specs: [
-        ['Gewicht', '290 g/m²'],
-        ['Materiaal', '60% hennep, 40% katoen'],
-        ['Kleur', 'Natuurwit'],
-        ['Oppervlak', 'Mat, licht gestructureerd'],
-        ['Optische witmakers', 'Geen'],
-        ['Bewaring', 'Zuur- en ligninevrij'],
-        ['Druk', GICLEE_NL],
-      ],
-      bestFor: [
-        '<strong>Warme beelden</strong>: portretten, natuur en aardetinten.',
-        '<strong>Zwart-wit met een zachte, warme toon</strong>.',
-        '<strong>Illustraties en botanische prenten</strong> waarbij het papier mag meedoen.',
-      ],
-      lessFor: 'Wil je helder, koel wit of hard contrast, kies dan <a href="/nl/papier/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Gladder en neutraler van toon is <a href="/nl/papier/hahnemuhle-photo-rag">Photo Rag</a>.',
-    },
-    en: {
-      kind: 'Hemp and cotton paper',
-      feel: 'warm natural white',
-      title: 'Hahnemühle Hemp 290 gsm: fine art print on hemp paper',
-      description: 'Hahnemühle Hemp: matte paper made of hemp and cotton, 290 gsm, natural white with no optical brighteners. What it suits and what it costs per size.',
-      lead: 'Matte paper made of hemp and cotton, 290 gsm. Its warm, natural white tone and light texture give an image calm.',
-      summary: [
-        '60% hemp fibre and 40% cotton, 290 gsm, matte with a light texture.',
-        'Natural white, without optical brighteners.',
-        'Costs the same as Photo Rag and Museum Etching.',
-      ],
-      about: [
-        'Hemp is part of Hahnemühle’s Natural Line. It is made of 60% hemp fibre and 40% cotton. Hemp grows fast and needs little water and no pesticides.',
-        'The paper is natural white because it contains no optical brighteners, and it is acid- and lignin-free. We print on it as a <strong>giclée</strong>, with twelve pigment inks. The matte surface has a light texture and feels soft.',
-      ],
-      specs: [
-        ['Weight', '290 gsm'],
-        ['Material', '60% hemp, 40% cotton'],
-        ['Tone', 'Natural white'],
-        ['Surface', 'Matte, lightly textured'],
-        ['Optical brighteners', 'None'],
-        ['Archival', 'Acid- and lignin-free'],
-        ['Printing', GICLEE_EN],
-      ],
-      bestFor: [
-        '<strong>Warm images</strong>: portraits, nature and earth tones.',
-        '<strong>Black-and-white with a soft, warm tone</strong>.',
-        '<strong>Illustrations and botanical prints</strong> where the paper may play its part.',
-      ],
-      lessFor: 'For a bright, cool white or hard contrast choose <a href="/en/paper/hahnemuhle-fineart-baryta">FineArt Baryta</a>. Smoother and more neutral in tone: <a href="/en/paper/hahnemuhle-photo-rag">Photo Rag</a>.',
-    },
-  },
-  {
     slug: 'canson-rag-photographique',
     brand: 'Canson',
     name: 'Rag Photographique II',
@@ -392,7 +341,9 @@ export const PAPER_PAGES: PaperPage[] = [
     offMenu: true,
     nl: {
       kind: 'Glad katoenpapier voor fotografie',
-      feel: 'zeer glad, neutraal',
+      surface: 'Glad, mat',
+      labels: ['Mat', 'Glad', 'Kleurecht'],
+      idealFor: ['Kunstreproducties en schilderijen', 'Fotografie met een fine-art uitstraling'],
       title: 'Canson Rag Photographique II 310 g/m²: fine-art print voor fotografie',
       description: 'Canson Infinity Rag Photographique II: glad, mat papier van 100% katoen, 310 g/m², gemaakt voor fotografie.',
       lead: 'Glad, mat katoenpapier van 310 g/m², door Canson gemaakt voor fotografie. Neutraal van kleur, met veel detail en een zachte fine-art uitstraling.',
@@ -418,7 +369,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Smooth cotton paper for photography',
-      feel: 'very smooth, neutral',
+      surface: 'Smooth, matte',
+      labels: ['Matte', 'Smooth', 'Colour-accurate'],
+      idealFor: ['Art reproductions and paintings', 'Photography with a fine art look'],
       title: 'Canson Rag Photographique II 310 gsm: fine art print for photography',
       description: 'Canson Infinity Rag Photographique II: smooth, matte 100% cotton paper, 310 gsm, made for photography.',
       lead: 'Smooth, matte cotton paper at 310 gsm, made by Canson for photography. Neutral in colour, with plenty of detail and a soft fine art look.',
@@ -452,8 +405,10 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'poster',
     nl: {
       kind: 'Mat fotopapier',
-      feel: 'fijn mat',
-      tileHint: 'Foto’s worden levendiger op Silk',
+      surface: 'Fijn gestructureerd, mat',
+      labels: ['Fotopapier', 'Mat'],
+      idealFor: ['Kunstprints met de beste prijs-kwaliteit', 'Kunst voor elke dag'],
+      hint: 'Foto’s worden levendiger op Silk',
       title: 'Premium Poster 234 g/m²: fotoafdruk op Fujifilm-papier',
       description: 'Premium Poster: een echte fotoafdruk op mat Fujifilm Crystal Archive-papier, 234 g/m². Levendige kleuren voor de beste prijs. Prijzen per formaat.',
       lead: 'Een echte fotoafdruk op mat Fujifilm-papier van 234 g/m². Levendige kleuren en diep zwart, voor de laagste prijs per formaat.',
@@ -481,8 +436,10 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Matte photo paper',
-      feel: 'fine matte',
-      tileHint: 'Photos look more vivid on Silk',
+      surface: 'Fine-textured, matte',
+      labels: ['Photo paper', 'Matte'],
+      idealFor: ['Best value art prints', 'Everyday art display'],
+      hint: 'Photos look more vivid on Silk',
       title: 'Premium Poster 234 gsm: photographic print on Fujifilm paper',
       description: 'Premium Poster: a real photographic print on matte Fujifilm Crystal Archive paper, 234 gsm. Vivid colours at the best price. Prices per size.',
       lead: 'A real photographic print on matte Fujifilm paper, 234 gsm. Vivid colours and deep blacks, at the lowest price per size.',
@@ -517,7 +474,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'poster',
     nl: {
       kind: 'Fotopapier met zijdeglans',
-      feel: 'zijdeglans',
+      surface: 'Zijdeglans',
+      labels: ['Fotopapier', 'Zijdeglans', 'FSC'],
+      idealFor: ['Foto’s in levendige kleuren'],
       title: 'Premium Poster Silk 232 g/m²: fotoafdruk met zijdeglans op Fujifilm-papier',
       description: 'Premium Poster Silk: een echte fotoafdruk op Fujifilm Crystal Archive-papier met zijdeglans, 232 g/m², FSC-gecertificeerd. Prijzen per formaat.',
       lead: 'Een echte fotoafdruk op Fujifilm-papier van 232 g/m² met een zijdeglans. Kleuren krijgen meer diepte dan op mat papier, zonder de spiegeling van hoogglans.',
@@ -545,7 +504,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Photo paper with a silk sheen',
-      feel: 'silk sheen',
+      surface: 'Silk sheen',
+      labels: ['Photo paper', 'Silk sheen', 'FSC'],
+      idealFor: ['Photos in vivid colours'],
       title: 'Premium Poster Silk 232 gsm: photographic print with a silk sheen on Fujifilm paper',
       description: 'Premium Poster Silk: a real photographic print on Fujifilm Crystal Archive paper with a silk sheen, 232 gsm, FSC-certified. Prices per size.',
       lead: 'A real photographic print on Fujifilm paper, 232 gsm, with a silk sheen. Colours gain more depth than on matte paper, without the reflections of high gloss.',

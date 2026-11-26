@@ -1,60 +1,146 @@
-<div class="@container flex flex-col gap-2">
+<div class="flex flex-col gap-2.5">
   <!-- Step 1: the tier, which sets the price -->
-  <fieldset class="grid grid-cols-2 gap-2" [attr.aria-label]="'product.paper' | t">
+  <fieldset class="grid grid-cols-2 rounded-[14px] bg-slate-100 p-1" [attr.aria-label]="'product.paper' | t">
     @for (tier of tiers(); track tier.id) {
-      <app-radio-tile [name]="id + '-tier'" [checked]="tier === choice().tier" (chosen)="selectTier(tier)">
-        <span class="flex flex-col px-3 py-2.5">
-          <span class="text-[0.9rem] leading-tight font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ 'papers.tier.' + tier.id + '.name' | t }}</span>
-          <span class="mt-0.5 text-[0.62rem] font-medium tracking-[0.08em] text-[#167a92] uppercase">{{ 'papers.tier.' + tier.id + '.brand' | t }}</span>
-          <span class="mt-1.5 text-xs leading-snug text-slate-500">{{ 'papers.tier.' + tier.id + '.text' | t }}</span>
+      <label
+        class="group flex cursor-pointer items-center gap-2 rounded-[11px] p-2 transition-colors [-webkit-tap-highlight-color:transparent] has-checked:bg-white has-checked:shadow-[0_1px_3px_rgb(15_23_42/0.14)] has-focus-visible:outline-2 has-focus-visible:outline-[#384f8c]/45"
+      >
+        <input type="radio" class="sr-only" [name]="id + '-tier'" [checked]="tier === choice().tier" (change)="selectTier(tier)" />
+        <img [src]="tier.image" alt="" width="40" height="40" loading="lazy" class="h-8 w-8 shrink-0 rounded-lg object-cover opacity-75 group-has-checked:opacity-100 sm:h-10 sm:w-10" />
+        <span class="flex min-w-0 flex-col">
+          <span class="text-[0.56rem] leading-tight font-medium tracking-[0.13em] text-slate-400 uppercase group-has-checked:text-[#167a92]">{{ 'papers.tier.' + tier.id + '.brand' | t }}</span>
+          <span class="text-[0.82rem] leading-tight font-medium text-slate-500 group-has-checked:text-[#384f8c]">{{ 'papers.tier.' + tier.id + '.name' | t }}</span>
+          <span class="text-[0.68rem] leading-tight text-slate-500">{{ 'papers.tier.' + tier.id + '.grade' | t }}</span>
         </span>
-      </app-radio-tile>
+      </label>
     }
   </fieldset>
 
-  <!-- Step 2: who picks the paper in the tier -->
-  <fieldset class="flex flex-col gap-2" [attr.aria-label]="'papers.whoPicks' | t">
-    <app-radio-tile [name]="id + '-paper'" [checked]="!choice().paper" (chosen)="selectPaper(null)">
-      <span class="flex items-start gap-2.5 px-3 py-2.5">
-        <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white group-has-checked:border-[#384f8c]" aria-hidden="true">
-          <span class="h-2 w-2 rounded-full bg-[#384f8c] opacity-0 transition-opacity group-has-checked:opacity-100"></span>
+  <!-- Step 2: who picks the paper in the tier: our studio, or the customer -->
+  <fieldset class="rounded-xl border border-slate-200" [attr.aria-label]="'papers.whoPicks' | t">
+    <div class="group/row relative">
+      <label
+        class="group flex cursor-pointer items-center gap-2.5 rounded-t-[11px] p-2.5 pr-11 transition-colors [-webkit-tap-highlight-color:transparent] has-checked:bg-linear-to-br has-checked:from-[#384f8c] has-checked:to-[#1f6f93] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#384f8c]/45 md:pr-2.5"
+      >
+        <input type="radio" class="sr-only" [name]="id + '-paper'" [checked]="!choice().paper" (change)="selectPaper(null)" />
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-[#384f8c] to-[#1f6f93] text-lg text-white group-has-checked:bg-white/15 group-has-checked:bg-none" aria-hidden="true">✦</span>
+        <span class="flex min-w-0 flex-1 flex-col">
+          <span class="text-[0.86rem] leading-snug font-medium text-slate-800 group-has-checked:text-white">{{ 'papers.studioTitle' | t }}</span>
+          <span class="text-xs leading-snug text-slate-500 group-has-checked:text-white/80">{{ 'papers.studioHint' | t }}</span>
         </span>
-        <span class="flex min-w-0 flex-col">
-          <span class="text-[0.86rem] leading-snug font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ 'papers.studioTitle' | t }}</span>
-          <span class="mt-0.5 text-xs leading-snug text-slate-500">{{ 'papers.studioText' | t }}</span>
-        </span>
-      </span>
-    </app-radio-tile>
+        <span class="text-white"><ng-container [ngTemplateOutlet]="check" /></span>
+      </label>
+      <ng-container [ngTemplateOutlet]="more" [ngTemplateOutletContext]="{ $implicit: 'studio', label: 'papers.studioTitle' | t }" />
+    </div>
 
-    <span class="mt-0.5 block text-xs leading-snug text-slate-500">{{ 'papers.orChoose' | t }}</span>
-    <div class="grid grid-cols-1 gap-2 @[280px]:grid-cols-2">
-      @for (item of papers(); track item.paper.slug) {
-        <app-radio-tile [name]="id + '-paper'" [checked]="item.paper === choice().paper" (chosen)="selectPaper(item.paper)">
-          <span class="flex w-full items-center gap-2.5 p-1.5 pr-2">
-            <!-- The paper up close; a paper without a photo yet shows as a plain sheet -->
-            @if (item.paper.image; as image) {
-              <img [src]="image" alt="" width="40" height="40" loading="lazy" class="h-10 w-10 shrink-0 rounded-md object-cover" />
-            } @else {
-              <span class="h-10 w-10 shrink-0 rounded-md border border-slate-200 bg-linear-to-br from-[#fbf8f1] to-[#ece6d8]" aria-hidden="true"></span>
-            }
-            <span class="flex min-w-0 flex-col">
-              <span class="text-[0.8rem] leading-tight font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ item.paper.name }}</span>
-              <span class="mt-0.5 text-[0.7rem] leading-tight text-slate-500">{{ item.text.feel }}</span>
-              @if (item.text.tileHint; as hint) {
-                <span class="mt-1 text-[0.68rem] leading-tight text-[#167a92]">{{ hint }}</span>
+    @for (row of papers(); track row.paper.slug; let last = $last) {
+      <div class="group/row relative border-t border-slate-100">
+        <label
+          class="group flex cursor-pointer items-start gap-2.5 p-2.5 pr-11 transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-slate-50 has-checked:bg-[#384f8c]/[0.06] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#384f8c]/45 md:pr-2.5"
+          [class.rounded-b-[11px]]="last"
+        >
+          <input type="radio" class="sr-only" [name]="id + '-paper'" [checked]="row.paper === choice().paper" (change)="selectPaper(row.paper)" />
+          <!-- The paper up close; a paper without a photo yet shows as a plain sheet -->
+          @if (row.paper.image; as image) {
+            <img [src]="image" alt="" width="48" height="48" loading="lazy" class="h-12 w-12 shrink-0 rounded-lg object-cover" />
+          } @else {
+            <span class="h-12 w-12 shrink-0 rounded-lg border border-slate-200 bg-linear-to-br from-[#fbf8f1] to-[#ece6d8]" aria-hidden="true"></span>
+          }
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-[0.86rem] leading-snug font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ row.name }}</span>
+            <span class="text-xs leading-snug text-slate-500">{{ row.paper.weightGsm }} g/m² · {{ row.text.surface }}</span>
+            <span class="mt-1.5 flex flex-wrap gap-1">
+              @for (label of row.text.labels; track label) {
+                <span class="rounded-[5px] bg-slate-100 px-1.5 py-0.5 text-[0.66rem] leading-tight font-medium text-slate-600 group-has-checked:bg-[#384f8c]/10 group-has-checked:text-[#384f8c]">{{ label }}</span>
               }
             </span>
+            <span class="mt-1.5 text-[0.7rem] leading-snug text-slate-600"><span class="font-semibold">{{ 'papers.idealFor' | t }}:</span> {{ row.text.idealFor[0] }}</span>
+            @if (row.text.hint; as hint) {
+              <span class="mt-1 text-[0.7rem] leading-snug text-[#167a92]">{{ hint }}</span>
+            }
           </span>
-        </app-radio-tile>
-      }
-    </div>
+          <span class="self-center text-[#384f8c]"><ng-container [ngTemplateOutlet]="check" /></span>
+        </label>
+        <ng-container [ngTemplateOutlet]="more" [ngTemplateOutletContext]="{ $implicit: row, label: row.name }" />
+      </div>
+    }
   </fieldset>
 
-  <a [routerLink]="detailLink()" target="_blank" rel="noopener" class="self-start text-xs font-medium text-[#384f8c] hover:text-[#167a92] hover:underline">
-    @if (choice().paper) {
-      {{ 'papers.about' | t: { paper: chosenPaperName() } }}
-    } @else {
-      {{ 'papers.viewAll' | t }}
-    }
-  </a>
+  <a [routerLink]="papersLink" target="_blank" rel="noopener" class="self-start text-xs font-medium text-[#384f8c] hover:text-[#167a92] hover:underline">{{ 'papers.viewAll' | t }}</a>
 </div>
+
+<!-- The mark of the chosen row -->
+<ng-template #check>
+  <svg class="hidden h-4 w-4 shrink-0 group-has-checked:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+  </svg>
+</ng-template>
+
+<!-- More about a row: a card next to it on hover (desktop), a button that opens the sheet (phone) -->
+<ng-template #more let-detail let-label="label">
+  <button
+    type="button"
+    class="absolute top-1/2 right-2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white text-[0.7rem] font-semibold text-slate-500 md:hidden"
+    [attr.aria-label]="'papers.moreAbout' | t: { paper: label }"
+    (click)="sheet.set(detail)"
+  >
+    i
+  </button>
+  <div
+    class="pointer-events-none absolute top-1/2 right-full z-50 mr-3 hidden w-80 -translate-y-1/2 scale-95 overflow-hidden rounded-2xl border border-slate-200 bg-white opacity-0 shadow-xl shadow-slate-300/50 transition duration-150 ease-out group-hover/row:scale-100 group-hover/row:opacity-100 group-has-focus-visible/row:scale-100 group-has-focus-visible/row:opacity-100 md:block"
+    role="tooltip"
+  >
+    <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ $implicit: detail }" />
+  </div>
+</ng-template>
+
+<!-- What there is to know about a paper, or about leaving the choice to our studio -->
+<ng-template #card let-detail>
+  @if (detail === 'studio') {
+    <div class="p-4">
+      <div class="text-[0.92rem] font-semibold text-slate-900">{{ 'papers.studioTitle' | t }}</div>
+      <p class="mt-1.5 text-[0.8rem] leading-relaxed text-slate-500">{{ 'papers.studioText' | t }}</p>
+    </div>
+  } @else {
+    @if (detail.paper.image; as image) {
+      <img [src]="image" alt="" loading="lazy" class="h-36 w-full object-cover" />
+    }
+    <div class="p-4">
+      <div class="flex items-start justify-between gap-2">
+        <div class="text-[0.92rem] leading-snug font-semibold text-slate-900">{{ detail.name }}</div>
+        <span class="shrink-0 rounded-full bg-[#384f8c]/10 px-2 py-0.5 text-[0.62rem] font-semibold text-[#384f8c]">{{ 'papers.tier.' + detail.paper.price + '.grade' | t }}</span>
+      </div>
+      <div class="mt-1 text-[0.78rem] leading-snug text-slate-500">{{ detail.paper.weightGsm }} g/m² · {{ detail.text.surface }} · {{ 'papers.tier.' + detail.paper.price + '.print' | t }}</div>
+      <div class="mt-2.5 flex flex-wrap gap-1">
+        @for (label of detail.text.labels; track label) {
+          <span class="rounded-[5px] bg-slate-100 px-1.5 py-0.5 text-[0.68rem] font-medium text-slate-600">{{ label }}</span>
+        }
+      </div>
+      <div class="mt-3 text-[0.74rem] font-semibold text-slate-700">{{ 'papers.idealFor' | t }}</div>
+      <ul class="mt-0.5">
+        @for (use of detail.text.idealFor; track use) {
+          <li class="flex items-start gap-1.5 text-[0.78rem] leading-relaxed text-slate-500"><span class="mt-[0.55rem] h-1 w-1 shrink-0 rounded-full bg-slate-400"></span>{{ use }}</li>
+        }
+      </ul>
+    </div>
+  }
+</ng-template>
+
+<!-- The phone's sheet -->
+@if (sheet(); as detail) {
+  <div class="fixed inset-0 z-[60] flex flex-col justify-end md:hidden" role="dialog" aria-modal="true">
+    <button type="button" class="absolute inset-0 bg-slate-900/45" [attr.aria-label]="'a11y.close' | t" (click)="sheet.set(null)"></button>
+    <div class="relative max-h-[85vh] overflow-auto rounded-t-[18px] bg-white pb-5">
+      <div class="mx-auto mt-2.5 mb-1 h-1 w-9 rounded-full bg-slate-300"></div>
+      <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ $implicit: detail }" />
+      <div class="flex flex-col gap-3 px-4">
+        <button type="button" class="h-11 rounded-[10px] bg-[#384f8c] text-sm font-medium text-white" (click)="chooseShown(detail)">
+          {{ detail === 'studio' ? ('papers.studioChoose' | t) : ('papers.choose' | t: { paper: detail.name }) }}
+        </button>
+        @if (detail !== 'studio') {
+          <a [routerLink]="paperLink(detail.paper)" target="_blank" rel="noopener" class="self-center text-xs font-medium text-[#384f8c]">{{ 'papers.moreAbout' | t: { paper: detail.name } }}</a>
+        }
+      </div>
+    </div>
+  </div>
+}
