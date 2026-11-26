@@ -491,6 +491,7 @@
     "googleFill": "Continue with Google",
     "googleFillHint": "Fill in your details in one click",
     "pricesUpdated": "Some prices in your cart were updated. Your order uses the prices shown now.",
+    "basketChanged": "Your cart was changed. Please check your order and pay again.",
     "shipping": "Shipping",
     "payment": "Payment",
     "backToShop": "Back to shop",

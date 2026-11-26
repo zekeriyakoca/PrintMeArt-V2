@@ -8,6 +8,11 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: unknown) => {
+      // The order endpoint answers 409 when the basket or its prices changed; checkout shows that itself
+      if (error instanceof HttpErrorResponse && error.status === 409 && req.url.endsWith('/ordering/order')) {
+        return throwError(() => error);
+      }
+
       if (error instanceof HttpErrorResponse) {
         // Common cases we typically don't toast globally.
         // 401 is handled by `AuthenticationInterceptor` (logout flow).
