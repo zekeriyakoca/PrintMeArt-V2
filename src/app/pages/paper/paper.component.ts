@@ -34,7 +34,8 @@ export class PaperComponent extends BasePageComponent implements OnInit {
   });
   fullName = computed(() => fullName(this.paper()));
   status = computed(() => statusKey(this.paper()));
-  /** Size and price of a print of your own image on this paper; empty for papers that cannot be ordered yet */
+  orderable = computed(() => orderable(this.paper()));
+  /** Size and price of a print of your own image on this paper */
   prices = signal<{ size: string; price: string }[]>([]);
   others = computed(() =>
     PAPER_PAGES.filter((p) => p !== this.paper()).map((p) => ({ name: fullName(p), kind: paperText(p, this.language).kind, weight: p.weightGsm, link: this.link(p.slug) })),
@@ -48,7 +49,7 @@ export class PaperComponent extends BasePageComponent implements OnInit {
       this.prices.set([]);
       if (!paper) return;
       this.describeForSearch(paper);
-      if (paper.price) this.loadPrices(paper, paper.price);
+      this.loadPrices(paper, paper.price);
     });
   }
 
@@ -112,7 +113,8 @@ export class PaperComponent extends BasePageComponent implements OnInit {
           brand: { '@type': 'Brand', name: 'PrintMeArt' },
           material: `${fullName(paper)}, ${paper.weightGsm} g/m²`,
           additionalProperty: text.specs.map(([name, value]) => ({ '@type': 'PropertyValue', name, value })),
-          ...(prices.length
+          // Only a paper in the order menu is offered for sale
+          ...(prices.length && orderable(paper)
             ? {
                 offers: {
                   '@type': 'AggregateOffer',
@@ -145,9 +147,14 @@ export class PaperComponent extends BasePageComponent implements OnInit {
   }
 }
 
+/** In the order menu today */
+export function orderable(paper: PaperPage | null): boolean {
+  return !!paper && !paper.soon && !paper.onRequest;
+}
+
 /** Whether the paper can be ordered in the shop, by email, or not yet */
 export function statusKey(paper: PaperPage | null): string {
-  return paper?.price ? 'paperPages.available' : paper?.onRequest ? 'paperPages.onRequest' : 'paperPages.soon';
+  return paper?.soon ? 'paperPages.soon' : paper?.onRequest ? 'paperPages.onRequest' : 'paperPages.available';
 }
 
 /** 'Hahnemühle Photo Rag'; our own Premium Poster has no brand in front */
