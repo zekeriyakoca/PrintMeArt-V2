@@ -24,6 +24,26 @@ export class SizeOptionsComponent {
     return [all.slice(0, topCount), all.slice(topCount)];
   });
 
+  /**
+   * Drawn sheet per size, in px: true proportions, and bigger sizes drawn bigger.
+   * The smallest still gets a third of the box, so it stays a sheet and not a dot.
+   */
+  glyphs = computed(() => {
+    const GLYPH_PX = 24;
+    const all = this.sizes();
+    const longest = Math.max(1, ...all.map((s) => Math.max(s.val1, s.val2)));
+    const map = new Map<number | string, { w: number; h: number }>();
+    for (const size of all) {
+      const long = Math.max(size.val1, size.val2) || 1;
+      const longPx = GLYPH_PX * (0.35 + 0.65 * (long / longest));
+      map.set(size.id, {
+        w: Math.round((longPx * size.val1) / long),
+        h: Math.round((longPx * size.val2) / long),
+      });
+    }
+    return map;
+  });
+
   selectedMoreSize = computed<SizeOption | null>(() => {
     const current = this.sizeSelected();
     if (!current) return null;

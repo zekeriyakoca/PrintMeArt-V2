@@ -77,19 +77,20 @@ export class PpiBarComponent {
   });
 
   readonly pillClasses = computed(() => {
+    // Calm while the print is fine; tinted only when the customer should look twice. Same box either way, so nothing moves.
     const prefix =
-      'inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs';
+      'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs leading-4 whitespace-nowrap';
 
     switch (this.quality()) {
       case 'fineart':
-        return `${prefix} border-[rgba(22,122,146,0.3)] bg-[rgb(242,248,245)] text-[rgb(22,122,146)]`;
+        return `${prefix} border-[rgba(22,122,146,0.18)] bg-[rgba(22,122,146,0.05)] text-[rgb(22,122,146)]`;
       case 'borderline':
         return `${prefix} border-[rgba(165,100,45,0.3)] bg-[rgb(252,247,240)] text-[rgb(165,100,45)]`;
       case 'low':
         return `${prefix} border-[rgba(195,61,61,0.3)] bg-[rgb(252,242,242)] text-[rgb(195,61,61)]`;
       case 'good':
       default:
-        return `${prefix} border-[rgb(204,204,204)] bg-[rgb(247,246,242)] text-[rgb(92,92,95)]`;
+        return `${prefix} border-slate-200 bg-slate-50 text-slate-600`;
     }
   });
 
@@ -127,6 +128,23 @@ export class PpiBarComponent {
     return Math.max(0, Math.min(1, value / 300));
   });
 
+  /** Meter steps lit: one per quality band, on the same thresholds as the label */
+  readonly meterSteps = [1, 2, 3, 4];
+  readonly meterLevel = computed(() => {
+    switch (this.quality()) {
+      case 'fineart':
+        return 4;
+      case 'good':
+        return 3;
+      case 'borderline':
+        return 2;
+      case 'low':
+        return 1;
+      default:
+        return 0;
+    }
+  });
+
   readonly barFillClasses = computed(() => {
     switch (this.quality()) {
       case 'fineart':
@@ -136,7 +154,7 @@ export class PpiBarComponent {
       case 'low':
         return 'bg-[rgb(195,61,61)]';
       default:
-        return 'bg-[rgb(38,38,44)]';
+        return 'bg-slate-500';
     }
   });
 
