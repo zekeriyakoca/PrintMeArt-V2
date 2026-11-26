@@ -264,7 +264,7 @@ export const GUIDES: Guide[] = [
       ],
       blocks: [
         { t: 'h2', id: 'upload', text: '1. Je uploadt je foto' },
-        { t: 'p', html: 'Op <a href="/nl/your-design">Jouw ontwerp</a> upload je een foto of ontwerp (PNG, JPG of GIF, tot 50 MB). Je kiest het formaat en het papier, en je ziet meteen hoe scherp je foto op elk formaat wordt. Met <strong>Voorbeeld</strong> zie je het resultaat vooraf, ook in een kamer aan de muur.' },
+        { t: 'p', html: 'Op <a href="/nl/your-design">Jouw ontwerp</a> upload je een foto of ontwerp (PNG, JPG of GIF, tot 150 MB). Je kiest het formaat en het papier, en je ziet meteen hoe scherp je foto op elk formaat wordt. Met <strong>Voorbeeld</strong> zie je het resultaat vooraf, ook in een kamer aan de muur.' },
         { t: 'h2', id: 'controle', text: '2. We bekijken je bestand' },
         { t: 'p', html: 'Na je bestelling kijken we naar je bestand zoals een drukker dat doet. Is de resolutie hoog genoeg voor het formaat? Staat de horizon recht? Loopt er niets belangrijks tegen de rand? Is de foto te klein voor het gekozen formaat en heb je professionele vergroting gekozen, dan vergroten en verscherpen we hem eerst.' },
         { t: 'h2', id: 'uitsnede', text: '3. Bijsnijden met de hand, en jouw akkoord' },
@@ -297,7 +297,7 @@ export const GUIDES: Guide[] = [
       ],
       blocks: [
         { t: 'h2', id: 'upload', text: '1. You upload your photo' },
-        { t: 'p', html: 'On <a href="/en/your-design">Your design</a> you upload a photo or design (PNG, JPG or GIF, up to 50 MB). You choose the size and paper and see straight away how sharp your photo will be at each size. <strong>Preview & Design</strong> shows you the result first, even on a wall in a room.' },
+        { t: 'p', html: 'On <a href="/en/your-design">Your design</a> you upload a photo or design (PNG, JPG or GIF, up to 150 MB). You choose the size and paper and see straight away how sharp your photo will be at each size. <strong>Preview & Design</strong> shows you the result first, even on a wall in a room.' },
         { t: 'h2', id: 'check', text: '2. We look at your file' },
         { t: 'p', html: 'After you order, we look at your file the way a printer would. Is the resolution high enough for the size? Is the horizon straight? Is anything important running into the edge? If the photo is too small for the chosen size and you chose professional upscaling, we enlarge and sharpen it first.' },
         { t: 'h2', id: 'crop', text: '3. Cropped by hand, with your approval' },
