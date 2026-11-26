@@ -28,10 +28,12 @@ export interface PaperPage {
   image?: string;
   /** A second photo, of the paper's surface up close */
   closeup?: string;
-  /** The column of the Your design price table this paper is sold at; papers without one cannot be ordered yet */
-  price?: 'poster' | 'cotton';
-  /** We print on it, but it is not in the order menu yet: the price comes by email */
+  /** The column of the Your design price table this paper is sold at: every fine art paper costs the same */
+  price: 'poster' | 'cotton';
+  /** We print on it, but it is not in the order menu yet: it is ordered by email */
   onRequest?: boolean;
+  /** Not printed on yet */
+  soon?: boolean;
   nl: PaperText;
   en: PaperText;
 }
@@ -199,6 +201,7 @@ export const PAPER_PAGES: PaperPage[] = [
     name: 'FineArt Baryta',
     weightGsm: 325,
     image: `${IMAGES}/paper-baryta-1.webp`,
+    price: 'cotton',
     onRequest: true,
     nl: {
       kind: 'Glanzend barietpapier',
@@ -267,6 +270,8 @@ export const PAPER_PAGES: PaperPage[] = [
     name: 'Rag Photographique II',
     weightGsm: 310,
     image: `${IMAGES}/paper-photo-1.webp`,
+    price: 'cotton',
+    soon: true,
     nl: {
       kind: 'Glad katoenpapier voor fotografie',
       title: 'Canson Rag Photographique II 310 g/m²: fine-art print voor fotografie',

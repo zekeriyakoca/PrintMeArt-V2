@@ -46,24 +46,23 @@
       <aside class="tip"><b>{{ 'paperPages.lessForTitle' | t }}</b><p [innerHTML]="p.lessFor"></p></aside>
 
       <h2 id="prices">{{ 'paperPages.pricesTitle' | t }}</h2>
-      @if (paper()!.price) {
-        <p>{{ 'paperPages.pricesIntro' | t: { paper: fullName() } }}</p>
-        @if (prices().length) {
-        <div class="tbl"><table>
-          <thead><tr><th scope="col">{{ 'designPrices.size' | t }}</th><th scope="col">{{ 'paperPages.price' | t }}</th></tr></thead>
-          <tbody>@for (row of prices(); track row.size) {<tr><th scope="row">{{ row.size }}</th><td>{{ row.price }}</td></tr>}</tbody>
-        </table></div>
-        }
-        <p>{{ 'paperPages.pricesNote' | t }}</p>
+      <p>{{ 'paperPages.pricesIntro' | t: { paper: fullName() } }}</p>
+      @if (prices().length) {
+      <div class="tbl"><table>
+        <thead><tr><th scope="col">{{ 'designPrices.size' | t }}</th><th scope="col">{{ 'paperPages.price' | t }}</th></tr></thead>
+        <tbody>@for (row of prices(); track row.size) {<tr><th scope="row">{{ row.size }}</th><td>{{ row.price }}</td></tr>}</tbody>
+      </table></div>
+      }
+      <p>{{ 'paperPages.pricesNote' | t }}</p>
+      @if (paper()!.soon) {
+      <p>{{ 'paperPages.soonText' | t: { paper: fullName() } }}</p>
       } @else if (paper()!.onRequest) {
-        <p>{{ 'paperPages.requestText' | t: { paper: fullName() } }}</p>
-      } @else {
-        <p>{{ 'paperPages.soonText' | t: { paper: fullName() } }}</p>
+      <p>{{ 'paperPages.requestText' | t: { paper: fullName() } }}</p>
       }
 
       <div class="cta">
         <p class="cta__k">{{ 'guides.ctaDesignKicker' | t }}</p>
-        <h2 class="cta__h">{{ (paper()!.price ? 'paperPages.ctaTitle' : paper()!.onRequest ? 'guides.ctaDesignTitle' : 'paperPages.ctaSoonTitle') | t: { paper: fullName() } }}</h2>
+        <h2 class="cta__h">{{ (orderable() ? 'paperPages.ctaTitle' : paper()!.onRequest ? 'guides.ctaDesignTitle' : 'paperPages.ctaSoonTitle') | t: { paper: fullName() } }}</h2>
         <a class="cta__btn" routerLink="/your-design">{{ 'guides.ctaDesignButton' | t }} →</a>
       </div>
     </div>
