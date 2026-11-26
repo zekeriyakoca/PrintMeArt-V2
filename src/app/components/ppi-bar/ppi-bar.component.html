@@ -1,24 +1,28 @@
 <app-tooltip [ariaLabel]="ariaLabel()">
   <div [class]="pillClasses()">
-    <span class="inline-flex h-4 w-4 items-center justify-center" aria-hidden="true">
+    <!--
+      The row is a container and never wraps, so the sizes below do not jump as the quality changes:
+      a narrow row drops the paper name first, then the meter. With nothing to judge yet, only the hint is left.
+    -->
+    <span class="h-3.5 w-3.5 items-center justify-center" [class]="ppi() === null ? 'hidden @[26rem]:inline-flex' : 'inline-flex'" aria-hidden="true">
       @if (showWarningIcon()) {
-      <app-icon iconName="warning" class="h-4 w-4"></app-icon>
+      <app-icon iconName="warning" class="h-3.5 w-3.5"></app-icon>
       } @else {
-      <app-icon iconName="check" class="h-4 w-4"></app-icon>
+      <app-icon iconName="check" class="h-3.5 w-3.5"></app-icon>
       }
     </span>
 
-    <span class="font-medium">FineArt</span>
-    <span class="opacity-40" aria-hidden="true">·</span>
-    <span class="font-semibold" [class]="labelClasses()">{{
-      qualityText()
-      }}</span>
+    <span class="hidden @[26rem]:inline font-medium">FineArt</span>
+    <span class="hidden @[26rem]:inline opacity-40" aria-hidden="true">·</span>
+    <span class="font-semibold" [class]="labelClasses() + (ppi() === null ? ' hidden @[26rem]:inline' : '')">{{ qualityText() }}</span>
 
     @if (ppi() !== null) {
-    <!-- Only where the row has room for it (the size row is a container) -->
-    <div class="ml-1.5 hidden @[20rem]:block h-1.5 w-14 overflow-hidden rounded-full bg-black/10" aria-hidden="true">
-      <div class="h-full" [class]="barFillClasses()" [style.width.%]="fillPercent() * 100"></div>
-    </div>
+    <!-- Four steps: low, borderline, very good, excellent -->
+    <span class="ml-0.5 hidden @[22rem]:inline-flex items-center gap-[2px]" aria-hidden="true">
+      @for (step of meterSteps; track step) {
+      <span class="h-[5px] w-[9px] rounded-[1.5px]" [class]="step <= meterLevel() ? barFillClasses() : 'bg-slate-200'"></span>
+      }
+    </span>
     }
 
     @if (ppi() !== null) {

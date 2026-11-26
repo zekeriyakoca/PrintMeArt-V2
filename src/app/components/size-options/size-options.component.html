@@ -1,13 +1,15 @@
 <ng-template #tile let-size>
+  <!-- The sheet at its relative size; a fixed box, so the tiles never move -->
+  <span class="size-glyph" aria-hidden="true"><span class="sheet" [style.width.px]="glyphs().get(size.id)?.w" [style.height.px]="glyphs().get(size.id)?.h"></span></span>
   <span class="size-label">{{ size.val1 }}<span class="times">×</span>{{ size.val2 }}<span class="unit">cm</span></span>
 </ng-template>
 
-<div class="size-options">
+<div class="size-options" role="group" [attr.aria-label]="'product.size' | t">
   @for (row of rows(); track $index) {
     <div class="size-row" [style.grid-template-columns]="'repeat(' + row.length + ', minmax(0, 1fr))'">
       @for (size of row; track size.id) {
         @if (size.id === 'original') {
-          <app-tooltip ariaLabel="Original artwork size" class="original-tooltip-wrapper">
+          <app-tooltip ariaLabel="Original artwork size" tabIndex="-1" class="original-tooltip-wrapper">
             <button type="button" class="size-tile original" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
               <span class="original-tag">{{ 'sizes.originalShort' | t }}</span>
               <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
@@ -48,7 +50,7 @@
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </button>
-    <div class="more-panel" [class.open]="showMoreSizes()">
+    <div class="more-panel" [class.open]="showMoreSizes()" [attr.inert]="showMoreSizes() ? null : ''">
       <div class="more-panel-inner">
         <div class="more-grid">
           @for (size of moreSizes(); track size.id) {
@@ -56,6 +58,8 @@
               type="button"
               class="more-chip"
               [class.selected]="sizeSelected()?.val1 === size.val1 && sizeSelected()?.val2 === size.val2"
+              [attr.aria-pressed]="sizeSelected()?.val1 === size.val1 && sizeSelected()?.val2 === size.val2"
+              [attr.aria-label]="size.val1 + '×' + size.val2 + ' cm'"
               [attr.tabindex]="showMoreSizes() ? null : -1"
               (click)="selectMoreSize(size)"
             >
