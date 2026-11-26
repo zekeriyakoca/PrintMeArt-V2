@@ -6,7 +6,7 @@
       <p class="eyebrow">{{ 'paperPages.eyebrow' | t }} · {{ p.kind }}</p>
       <h1>{{ fullName() }}</h1>
       <p class="lead">{{ p.lead }}</p>
-      <p class="meta"><span>{{ paper()!.weightGsm }} g/m²</span><i></i><span>{{ (paper()!.price ? 'paperPages.available' : 'paperPages.soon') | t }}</span></p>
+      <p class="meta"><span>{{ paper()!.weightGsm }} g/m²</span><i></i><span>{{ status() | t }}</span></p>
     </div>
   </header>
 
@@ -29,11 +29,14 @@
 
       <h2 id="about">{{ 'paperPages.aboutTitle' | t }}</h2>
       @if (paper()!.image; as image) {
-      <img [src]="image" [alt]="fullName()" width="1200" height="800" loading="lazy" class="w-full h-auto rounded-2xl mb-6" />
+      <img [src]="image" [alt]="fullName()" width="1200" height="800" loading="lazy" class="w-full aspect-[3/2] object-cover rounded-2xl mb-6" />
       }
       @for (text of p.about; track $index) {<p [innerHTML]="text"></p>}
 
       <h2 id="specs">{{ 'paperPages.specsTitle' | t }}</h2>
+      @if (paper()!.closeup; as closeup) {
+      <img [src]="closeup" [alt]="'paperPages.closeupAlt' | t: { paper: fullName() }" width="1200" height="800" loading="lazy" class="w-full aspect-[3/2] object-cover rounded-2xl mb-6" />
+      }
       <div class="tbl"><table>
         <tbody>@for (row of p.specs; track row[0]) {<tr><th scope="row">{{ row[0] }}</th><td>{{ row[1] }}</td></tr>}</tbody>
       </table></div>
@@ -52,13 +55,15 @@
         </table></div>
         }
         <p>{{ 'paperPages.pricesNote' | t }}</p>
+      } @else if (paper()!.onRequest) {
+        <p>{{ 'paperPages.requestText' | t: { paper: fullName() } }}</p>
       } @else {
         <p>{{ 'paperPages.soonText' | t: { paper: fullName() } }}</p>
       }
 
       <div class="cta">
         <p class="cta__k">{{ 'guides.ctaDesignKicker' | t }}</p>
-        <h2 class="cta__h">{{ (paper()!.price ? 'paperPages.ctaTitle' : 'paperPages.ctaSoonTitle') | t: { paper: fullName() } }}</h2>
+        <h2 class="cta__h">{{ (paper()!.price ? 'paperPages.ctaTitle' : paper()!.onRequest ? 'guides.ctaDesignTitle' : 'paperPages.ctaSoonTitle') | t: { paper: fullName() } }}</h2>
         <a class="cta__btn" routerLink="/your-design">{{ 'guides.ctaDesignButton' | t }} →</a>
       </div>
     </div>

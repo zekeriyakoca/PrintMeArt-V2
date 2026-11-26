@@ -14,7 +14,7 @@
       <a class="gcard" [routerLink]="p.link">
         <span class="gcard__n">{{ p.number }}</span>
         <span class="gcard__body">
-          <small>{{ p.text.kind }} · {{ p.weight }} g/m² · {{ (p.orderable ? 'paperPages.available' : 'paperPages.soon') | t }}</small>
+          <small>{{ p.text.kind }} · {{ p.weight }} g/m² · {{ p.status | t }}</small>
           <h2>{{ p.name }}</h2>
           <p>{{ p.text.lead }}</p>
         </span>
