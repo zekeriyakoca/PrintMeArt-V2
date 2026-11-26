@@ -489,7 +489,7 @@
     "selected": "Selected",
     "uploading": "Uploading image...",
     "guarantee": "Perfect Fit Guarantee",
-    "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. We'll send you the final design for your approval, giving you the last say.",
+    "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. If something needs to change noticeably, we send you the design for approval first.",
     "imageAlt": "Your uploaded image",
     "retention": "Your images are deleted within 90 days or once your order is completed, whichever comes first."
   },
@@ -500,8 +500,8 @@
     "uploadText": "Drop your photo or artwork. PNG, JPG, GIF up to 150MB.",
     "customizeTitle": "Customize your print",
     "customizeText": "Choose frame, size & passe-partout. Preview your design instantly.",
-    "approveTitle": "Approve & receive",
-    "approveText": "We review your design, you approve, then we print & ship."
+    "approveTitle": "Checked & delivered",
+    "approveText": "We check your file and email you first if we have doubts. Then we print and ship."
   },
   "checkout": {
     "googleFill": "Continue with Google",
@@ -1210,7 +1210,7 @@
     "allPapers": "See all our papers",
     "productName": "Fine art print of your own photo",
     "perks": {
-      "proof": "You approve the design before we print",
+      "proof": "When in doubt, we ask you to approve the design before we print",
       "shipping": "Free shipping in the Netherlands from {{amount}}",
       "pickup": "Or pick it up at our studio in Den Bosch",
       "made": "Printed and cropped by hand in our own studio"

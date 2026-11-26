@@ -627,7 +627,7 @@
     "selected": "Gekozen",
     "uploading": "Afbeelding wordt geüpload...",
     "guarantee": "Garantie op een perfecte pasvorm",
-    "guaranteeText": "Onze ontwerpers zorgen dat elke afbeelding, ook liggende, perfect in je lijst past. We sturen je het definitieve ontwerp ter goedkeuring, zodat jij het laatste woord hebt.",
+    "guaranteeText": "Onze ontwerpers zorgen dat elke afbeelding, ook liggende, perfect in je lijst past. Moet er iets merkbaar anders, dan sturen we je eerst het ontwerp ter goedkeuring.",
     "imageAlt": "Je geüploade afbeelding",
     "retention": "Je afbeeldingen worden binnen 90 dagen verwijderd of zodra je bestelling is afgerond, wat het eerst gebeurt."
   },
@@ -638,8 +638,8 @@
     "uploadText": "Sleep je foto of kunstwerk hierheen. PNG, JPG, GIF tot 150 MB.",
     "customizeTitle": "Stel je print samen",
     "customizeText": "Kies lijst, formaat en passe-partout. Bekijk je ontwerp meteen.",
-    "approveTitle": "Goedkeuren & ontvangen",
-    "approveText": "Wij controleren je ontwerp, jij keurt het goed, daarna printen en verzenden we."
+    "approveTitle": "Controle & ontvangen",
+    "approveText": "Wij controleren je bestand en mailen je eerst als we twijfelen. Daarna printen en verzenden we."
   },
   "checkout": {
     "googleFill": "Doorgaan met Google",
@@ -1348,7 +1348,7 @@
     "allPapers": "Bekijk al onze papieren",
     "productName": "Fine-art print van je eigen foto",
     "perks": {
-      "proof": "Jij keurt het ontwerp goed voordat we printen",
+      "proof": "Twijfelen we, dan keur jij het ontwerp goed voordat we printen",
       "shipping": "Gratis verzending in Nederland vanaf {{amount}}",
       "pickup": "Ophalen in onze studio in Den Bosch kan ook",
       "made": "Geprint en met de hand bijgesneden in eigen studio"
