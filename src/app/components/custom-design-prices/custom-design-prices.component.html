@@ -14,36 +14,36 @@
     </ul>
 
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_48px_-32px_rgba(15,23,42,0.35)]">
-      <table class="w-full text-left">
+      <table class="w-full table-fixed text-left">
         <thead>
-          <tr class="bg-slate-50 text-[11px] sm:text-xs uppercase tracking-wider text-slate-500">
-            <th scope="col" class="px-4 sm:px-6 py-4 font-semibold">{{ 'designPrices.size' | t }}</th>
-            <th scope="col" class="px-3 sm:px-6 py-4 font-semibold">
+          <tr class="bg-slate-50 align-top text-[11px] sm:text-xs uppercase tracking-normal sm:tracking-wider text-slate-500">
+            <th scope="col" class="w-[33%] sm:w-[30%] pl-4 pr-2 sm:px-6 py-3.5 sm:py-4 font-semibold">{{ 'designPrices.size' | t }}</th>
+            <th scope="col" class="pl-2 pr-1 sm:px-6 py-3.5 sm:py-4 font-semibold">
               Premium Poster
-              <span class="block normal-case tracking-normal font-normal text-slate-400">{{ 'designPrices.posterSpec' | t }}</span>
+              <span class="mt-1 block text-[11px] sm:text-xs leading-snug normal-case tracking-normal font-normal text-slate-500">{{ 'designPrices.posterSpec' | t }}</span>
             </th>
-            <th scope="col" class="px-3 sm:px-6 py-4 font-semibold">
+            <th scope="col" class="pl-2 pr-4 sm:px-6 py-3.5 sm:py-4 font-semibold text-[#384f8c]">
               {{ 'designPrices.cotton' | t }}
-              <span class="block normal-case tracking-normal font-normal text-slate-400">{{ 'designPrices.cottonSpec' | t }}</span>
+              <span class="mt-1 block text-[11px] sm:text-xs leading-snug normal-case tracking-normal font-normal text-slate-500">{{ 'designPrices.cottonSpec' | t }}</span>
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-slate-100 text-[15px] sm:text-base">
           @for (row of rows(); track row.size) {
           <tr class="hover:bg-[#384f8c]/[0.03] transition-colors">
-            <th scope="row" class="px-4 sm:px-6 py-3.5 font-medium text-slate-800 whitespace-nowrap">{{ row.size.replace('x', ' × ') }} cm</th>
-            <td class="px-3 sm:px-6 py-3.5 text-slate-700 tabular-nums">{{ euro(row.poster) }}</td>
-            <td class="px-3 sm:px-6 py-3.5 font-semibold text-[#384f8c] tabular-nums">{{ euro(row.cotton) }}</td>
+            <th scope="row" class="pl-4 pr-2 sm:px-6 py-3.5 text-sm sm:text-base font-medium text-slate-800 whitespace-nowrap">{{ row.size.replace('x', ' × ') }} cm</th>
+            <td class="px-2 sm:px-6 py-3.5 text-slate-700 tabular-nums">{{ euro(row.poster) }}</td>
+            <td class="pl-2 pr-4 sm:px-6 py-3.5 font-semibold text-[#384f8c] tabular-nums">{{ euro(row.cotton) }}</td>
           </tr>
           }
         </tbody>
       </table>
     </div>
-    <ul class="mt-5 space-y-1.5 text-sm text-slate-500">
-      <li>{{ 'designPrices.noteIncluded' | t }}</li>
-      <li>{{ 'designPrices.noteCotton' | t }}</li>
-      <li>{{ 'designPrices.noteEnhancement' | t }}</li>
-      <li>{{ 'designPrices.noteSoon' | t }} <a [routerLink]="papersLink" class="font-medium text-[#384f8c] underline underline-offset-2 hover:no-underline">{{ 'designPrices.allPapers' | t }}</a></li>
+    <ul class="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 px-1 sm:px-0 text-[13px] leading-relaxed text-slate-600">
+      <li class="flex items-start gap-2.5"><span class="mt-[0.55em] h-1 w-1 flex-none rounded-full bg-slate-300" aria-hidden="true"></span><span>{{ 'designPrices.noteIncluded' | t }}</span></li>
+      <li class="flex items-start gap-2.5"><span class="mt-[0.55em] h-1 w-1 flex-none rounded-full bg-slate-300" aria-hidden="true"></span><span>{{ 'designPrices.noteCotton' | t }}</span></li>
+      <li class="flex items-start gap-2.5"><span class="mt-[0.55em] h-1 w-1 flex-none rounded-full bg-slate-300" aria-hidden="true"></span><span>{{ 'designPrices.noteEnhancement' | t }}</span></li>
+      <li class="flex items-start gap-2.5"><span class="mt-[0.55em] h-1 w-1 flex-none rounded-full bg-slate-300" aria-hidden="true"></span><span>{{ 'designPrices.noteSoon' | t }} <a [routerLink]="papersLink" class="font-medium text-[#384f8c] underline underline-offset-2 hover:no-underline">{{ 'designPrices.allPapers' | t }}</a></span></li>
     </ul>
   </div>
 </section>
