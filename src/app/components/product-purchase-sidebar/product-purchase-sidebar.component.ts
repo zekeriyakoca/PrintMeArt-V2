@@ -1,6 +1,6 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { SizeOption } from './../../models/size-option';
-import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, inject, input, model, output, signal, untracked, viewChild, linkedSignal } from '@angular/core';
 import { ProductDto, ProductMetadata } from '../../models/product';
 import { ApiService } from '../../services/api/api.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -13,7 +13,7 @@ import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
 import { FramedSizeNames, isFrameOutOfStock, SizeOptions } from '../../shared/constants';
-import { DEFAULT_PAPER_CHOICE, PaperChoice, paperChoiceName, paperName } from '../../papers/papers';
+import { CUSTOM_PRINT_PRODUCT_ID, PaperChoice, defaultPaperChoice, paperChoiceName, paperName } from '../../papers/papers';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
@@ -62,8 +62,13 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   selectedSize = model<SizeOption | null>(null);
   private readonly i18n = inject(TranslationService);
-  /** The paper tier and, in it, the customer's own paper or the studio's pick */
-  paperChoice = signal<PaperChoice>(DEFAULT_PAPER_CHOICE);
+  /** The customer prints an image of their own (Your design), not one from the catalog */
+  private readonly ownImage = computed(() => this.product().id === CUSTOM_PRINT_PRODUCT_ID);
+  /**
+   * The paper tier and, in it, the customer's own paper or the studio's pick. Opens on the default of this kind of product;
+   * it follows ownImage and not the product itself, which changes with every option chosen
+   */
+  paperChoice = linkedSignal<PaperChoice>(() => defaultPaperChoice(this.ownImage()));
   /** The choice in a few words, under the price and in the sticky bar */
   paperLabel = computed(() => {
     const { tier, paper } = this.paperChoice();

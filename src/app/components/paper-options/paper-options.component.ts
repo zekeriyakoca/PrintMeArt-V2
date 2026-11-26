@@ -61,10 +61,12 @@ export class PaperOptionsComponent {
   byKeys = false;
   /** The detail a phone shows in a sheet; a desktop shows it next to the row on hover */
   sheet = signal<Detail | null>(null);
-  /** Counts the customer's tier changes: each one sends a light over the dropdown */
+  /** The paper each tier was left with, so a tier comes back the way the customer left it */
+  private readonly leftWith = new Map<PaperTier['id'], PaperPage | null>();
+  /** Counts the customer's tier changes: each one lights up the dropdown where the stem lands */
   private readonly tierChanges = signal(0);
-  /** The light now passing; a new one for every tier change, none before the first */
-  sweeps = computed(() => (this.tierChanges() ? [this.tierChanges()] : []));
+  /** The glow now showing; a new one for every tier change, none before the first */
+  glows = computed(() => (this.tierChanges() ? [this.tierChanges()] : []));
 
   // Like the frame, the tier shown first is the chosen one, so the price includes it; also when another product takes this one's place
   private readonly chooseShownTier = effect(() => {
@@ -78,10 +80,12 @@ export class PaperOptionsComponent {
     });
   });
 
-  /** A new tier starts with the studio's pick: the paper chosen before is not in it */
+  /** A tier comes back as it was left: with the paper chosen in it, or our studio's pick */
   selectTier(tier: PaperTier): void {
-    if (tier === this.choice().tier && this.group().selectedOptionId != null) return;
-    this.choice.set({ tier, paper: null });
+    const { tier: left, paper } = this.choice();
+    if (tier === left && this.group().selectedOptionId != null) return;
+    this.leftWith.set(left.id, paper);
+    this.choice.set({ tier, paper: this.leftWith.get(tier.id) ?? null });
     this.emitOption(tier);
   }
 

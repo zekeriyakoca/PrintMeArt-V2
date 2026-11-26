@@ -1,4 +1,4 @@
-import { DEFAULT_PAPER_CHOICE, PAPER_PAGES, PAPER_TIERS, paperBySlug, paperChoiceName, paperName, papersOfTier } from './papers';
+import { defaultPaperChoice, PAPER_PAGES, PAPER_TIERS, paperBySlug, paperChoiceName, paperName, papersOfTier } from './papers';
 
 describe('papers', () => {
   const tier = (id: string) => PAPER_TIERS.find((t) => t.id === id)!;
@@ -19,8 +19,14 @@ describe('papers', () => {
     expect(names).toContain('Hahnemühle Museum Etching');
   });
 
-  it('opens with the cheapest tier and the studio picking the paper', () => {
-    expect(DEFAULT_PAPER_CHOICE).toEqual({ tier: tier('poster'), paper: null });
+  it('opens Your design on fine art with the studio picking the paper', () => {
+    expect(defaultPaperChoice(true)).toEqual({ tier: tier('cotton'), paper: null });
+  });
+
+  it('opens a catalog print on FineArt Baryta', () => {
+    const choice = defaultPaperChoice(false);
+    expect(choice.tier).toBe(tier('cotton'));
+    expect(paperChoiceName(choice)).toBe('Hahnemühle FineArt Baryta');
   });
 
   it('names the order after the paper, or says the studio picks it', () => {

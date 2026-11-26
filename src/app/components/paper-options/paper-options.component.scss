@@ -1,8 +1,17 @@
-// The light that passes over the dropdown when the tier changes
-.sweep {
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.26), transparent);
-  transform: translateX(-120%) skewX(-18deg);
-  animation: sweep 0.8s ease-out;
+// The dark band of the sticky buy bar, so the chooser brings no colours of its own
+.dark-band {
+  background:
+    radial-gradient(60% 140% at 85% 0%, rgba(219, 39, 119, 0.16), transparent 60%),
+    radial-gradient(50% 160% at 20% 100%, rgba(167, 186, 233, 0.14), transparent 60%),
+    linear-gradient(100deg, #0f172a 0%, #18223f 55%, #24346a 100%);
+}
+
+// When the tier changes the band's own pink and blue bloom where the stem lands, then fade
+.glow {
+  background: radial-gradient(34% 150% at var(--at) 0%, rgba(219, 39, 119, 0.42), rgba(167, 186, 233, 0.16) 55%, transparent 75%);
+  transform-origin: var(--at) 0;
+  opacity: 0;
+  animation: glow 0.9s ease-out;
 }
 
 // The opened list settles into place
@@ -10,9 +19,17 @@
   animation: drop-in 0.14s ease-out;
 }
 
-@keyframes sweep {
+@keyframes glow {
+  from {
+    opacity: 0;
+    transform: scaleX(0.35);
+  }
+  30% {
+    opacity: 1;
+  }
   to {
-    transform: translateX(320%) skewX(-18deg);
+    opacity: 0;
+    transform: scaleX(1.7);
   }
 }
 
@@ -24,7 +41,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sweep,
+  .glow,
   .drop-in {
     animation: none;
   }

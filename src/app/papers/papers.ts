@@ -78,7 +78,7 @@ export interface PaperTier {
   image: string;
 }
 
-/** Cheapest first: the first tier is the one a product opens with, so its price is the "from" price */
+/** Cheapest first */
 export const PAPER_TIERS: PaperTier[] = [
   { id: 'poster', grade: 'Home', studioChoiceName: "Studio's choice: Premium Poster (Fujifilm)", image: `${IMAGES}/paper-fine-art-1.webp` },
   { id: 'cotton', grade: 'Museum', studioChoiceName: "Studio's choice: Fine Art (Hahnemühle)", image: `${IMAGES}/paper-art-1.webp` },
@@ -90,7 +90,17 @@ export interface PaperChoice {
   paper: PaperPage | null;
 }
 
-export const DEFAULT_PAPER_CHOICE: PaperChoice = { tier: PAPER_TIERS[0], paper: null };
+/** The paper a catalog print opens with */
+const CATALOG_PAPER_SLUG = 'hahnemuhle-fineart-baryta';
+
+/**
+ * What a page opens with: fine art in both cases. For the customer's own image our studio picks the paper,
+ * a print from the catalog opens on FineArt Baryta.
+ */
+export function defaultPaperChoice(ownImage: boolean): PaperChoice {
+  const tier = PAPER_TIERS[PAPER_TIERS.length - 1];
+  return { tier, paper: ownImage ? null : (paperBySlug(CATALOG_PAPER_SLUG) ?? null) };
+}
 
 /** The papers of a tier the customer can pick themselves */
 export function papersOfTier(tier: PaperTier): PaperPage[] {

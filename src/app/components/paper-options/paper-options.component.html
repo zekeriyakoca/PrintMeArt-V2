@@ -29,7 +29,7 @@
     <button
       type="button"
       [class]="'relative flex w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-xl border p-2.5 text-left transition-colors [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#384f8c]/45 ' +
-        (chosenRow() ? 'border-slate-200 bg-white text-slate-500 hover:border-slate-300' : 'border-transparent bg-linear-to-br from-[#384f8c] to-[#1f6f93] text-white')"
+        (chosenRow() ? 'border-slate-200 bg-white text-slate-500 hover:border-slate-300' : 'dark-band border-transparent text-white')"
       [attr.aria-expanded]="open()"
       [attr.aria-controls]="id + '-list'"
       (click)="open.set(!open())"
@@ -60,9 +60,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </span>
-      <!-- A light passes over the bar when the tier changes: these are now that tier's papers -->
-      @for (sweep of sweeps(); track sweep) {
-        <span class="sweep pointer-events-none absolute inset-y-0 left-0 w-1/3" aria-hidden="true"></span>
+      <!-- The bar lights up where the stem lands when the tier changes: these are now that tier's papers -->
+      @for (glow of glows(); track glow) {
+        <span class="glow pointer-events-none absolute inset-0" [style.--at]="stemLeft() + '%'" aria-hidden="true"></span>
       }
     </button>
 
@@ -80,7 +80,7 @@
             class="group flex cursor-pointer items-center gap-2.5 rounded-t-[11px] p-2.5 pr-11 transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-slate-50 has-checked:bg-[#384f8c]/[0.06] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#384f8c]/45 md:pr-2.5"
           >
             <input type="radio" class="sr-only" [name]="id + '-paper'" [checked]="!choice().paper" (click)="pick(null)" />
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-[#384f8c] to-[#1f6f93] text-lg text-white" aria-hidden="true">✦</span>
+            <span class="dark-band flex h-12 w-12 shrink-0 items-center justify-center rounded-lg text-lg text-white" aria-hidden="true">✦</span>
             <span class="flex min-w-0 flex-1 flex-col">
               <span class="text-[0.86rem] leading-snug font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ 'papers.studioTitle' | t }}</span>
               <span class="text-xs leading-snug text-slate-500">{{ 'papers.studioHint' | t }}</span>
