@@ -77,13 +77,13 @@ export class CustomDesignUploadComponent {
   private processFile(file: File): void {
     const sizeMb = file.size / (1024 * 1024);
 
-    if (sizeMb > 50) {
+    if (sizeMb > 150) {
       this.analytics.trackCustomUpload('custom_upload_rejected', {
         reason: 'too_large',
         sizeMb,
         mimeType: file.type,
       });
-      alert('File size must be less than 50MB');
+      alert('File size must be less than 150MB');
       return;
     }
 
