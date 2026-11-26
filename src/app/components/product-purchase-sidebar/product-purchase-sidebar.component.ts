@@ -12,7 +12,9 @@ import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { PaperOptionsComponent } from '../paper-options/paper-options.component';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
-import { AllPapers, FramedSizeNames, isFrameOutOfStock, SizeOptions } from '../../shared/constants';
+import { FramedSizeNames, isFrameOutOfStock, SizeOptions } from '../../shared/constants';
+import { DEFAULT_PAPER_CHOICE, PaperChoice, paperChoiceName, paperName } from '../../papers/papers';
+import { TranslationService } from '../../services/i18n/translation.service';
 import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
@@ -59,10 +61,14 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   priceChange = output<number>();
 
   selectedSize = model<SizeOption | null>(null);
-  /** Selected paper name for display and spec3 */
-  selectedPaperName = signal<string>('Hahnemühle Photo Rag');
-  /** The chosen paper's specs, shown under the price */
-  selectedPaper = computed(() => AllPapers.find((paper) => paper.name === this.selectedPaperName()));
+  private readonly i18n = inject(TranslationService);
+  /** The paper tier and, in it, the customer's own paper or the studio's pick */
+  paperChoice = signal<PaperChoice>(DEFAULT_PAPER_CHOICE);
+  /** The choice in a few words, under the price and in the sticky bar */
+  paperLabel = computed(() => {
+    const { tier, paper } = this.paperChoice();
+    return paper ? paperName(paper) : this.i18n.t(`papers.tier.${tier.id}.studio`);
+  });
 
   /** The artwork Preview & Design and the room view show and save: the uploaded image, or the product's 2400 px copy */
   designImageUrl = computed(() => this.customImageUrl() || this.product().images[0].xLarge || this.product().images[0].large);
@@ -487,7 +493,8 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
 
   private getSelectedOptions(designUrl: string | null = this.savedDesignUrl()) {
     const size = this.selectedSize() ?? SizeOptions[0];
-    const paperName = this.selectedPaperName();
+    // The paper travels as the option's name: a paper by name, or that the studio picks one in the tier
+    const paper = paperChoiceName(this.paperChoice());
 
     const selectedOptions = this.product()
       .optionGroups.filter((x) => x.selectedOptionId ?? 0 > 0)
@@ -495,10 +502,10 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
         const isPaper = group.name.toLowerCase().startsWith('paper');
         return {
           optionId: group.selectedOptionId!,
-          optionName: isPaper ? paperName : group.options.find((option) => option.id === group.selectedOptionId)?.value,
+          optionName: isPaper ? paper : group.options.find((option) => option.id === group.selectedOptionId)?.value,
           spec1: size.val1.toString(),
           spec2: size.val2.toString(),
-          spec3: isPaper ? paperName : undefined,
+          spec3: isPaper ? paper : undefined,
         } as SelectedOptionDto;
       });
 

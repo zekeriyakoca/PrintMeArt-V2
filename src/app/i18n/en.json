@@ -127,7 +127,6 @@
     "detailGuarantee": "100+ years fade-resistant on cotton papers",
     "publicDomainTitle": "This artwork is in the Public Domain (CC0)",
     "taxIncluded": "Tax included",
-    "cotton": "100% cotton",
     "from": "From",
     "madeIn": "Made in",
     "byFamily": "by a small family studio",
@@ -179,10 +178,27 @@
     "clickRemove": "Click to remove"
   },
   "papers": {
-    "bestFor": "Best for",
-    "archival": "Archival quality · Fade-resistant pigment ink",
     "viewAll": "Compare papers",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "tier": {
+      "poster": {
+        "name": "Premium Poster",
+        "brand": "Fujifilm photo paper",
+        "text": "A real photographic print with vivid colours and deep blacks.",
+        "studio": "Premium Poster · studio picks the paper"
+      },
+      "cotton": {
+        "name": "Fine Art",
+        "brand": "Hahnemühle",
+        "text": "Giclée on museum paper, for work you want to keep for years.",
+        "studio": "Fine Art · studio picks the paper"
+      }
+    },
+    "whoPicks": "Who picks the paper",
+    "studioTitle": "Our studio picks the best paper for this image",
+    "studioText": "Same price. If we pick something you might not expect, we email you first. No reply within 24 hours and we print our choice.",
+    "orChoose": "Or choose yourself. Then we print on exactly that paper.",
+    "about": "More about {{paper}}"
   },
   "ppi": {
     "selectSize": "Select size",

@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CUSTOM_PRINT_PRODUCT_ID, PAPER_PAGES, PaperPage, paperBySlug, paperPath, paperText } from '../../papers/papers';
+import { CUSTOM_PRINT_PRODUCT_ID, PAPER_PAGES, PaperPage, paperBySlug, paperName, paperPath, paperText } from '../../papers/papers';
 import { ApiService, PriceTableRow } from '../../services/api/api.service';
 import { LanguageService } from '../../services/i18n/language.service';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
@@ -32,13 +32,13 @@ export class PaperComponent extends BasePageComponent implements OnInit {
     const paper = this.paper();
     return paper ? paperText(paper, this.language) : null;
   });
-  fullName = computed(() => fullName(this.paper()));
+  fullName = computed(() => paperName(this.paper()));
   status = computed(() => statusKey(this.paper()));
   orderable = computed(() => orderable(this.paper()));
   /** Size and price of a print of your own image on this paper */
   prices = signal<{ size: string; price: string }[]>([]);
   others = computed(() =>
-    PAPER_PAGES.filter((p) => p !== this.paper()).map((p) => ({ name: fullName(p), kind: paperText(p, this.language).kind, weight: p.weightGsm, link: this.link(p.slug) })),
+    PAPER_PAGES.filter((p) => p !== this.paper()).map((p) => ({ name: paperName(p), kind: paperText(p, this.language).kind, weight: p.weightGsm, link: this.link(p.slug) })),
   );
   readonly indexLink = this.link();
 
@@ -106,12 +106,12 @@ export class PaperComponent extends BasePageComponent implements OnInit {
       structuredData: [
         {
           '@type': 'Product',
-          name: this.i18n.t('paperPages.productName', { paper: fullName(paper) }),
+          name: this.i18n.t('paperPages.productName', { paper: paperName(paper) }),
           description: text.description,
           image: paper.image ?? `${environment.siteUrl}/share.jpg`,
           url,
           brand: { '@type': 'Brand', name: 'PrintMeArt' },
-          material: `${fullName(paper)}, ${paper.weightGsm} g/m²`,
+          material: `${paperName(paper)}, ${paper.weightGsm} g/m²`,
           additionalProperty: text.specs.map(([name, value]) => ({ '@type': 'PropertyValue', name, value })),
           // Only a paper in the order menu is offered for sale
           ...(prices.length && orderable(paper)
@@ -139,7 +139,7 @@ export class PaperComponent extends BasePageComponent implements OnInit {
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'PrintMeArt', item: this.seo.absoluteUrl(this.language, '/') },
             { '@type': 'ListItem', position: 2, name: this.i18n.t('paperPages.title'), item: this.seo.absoluteUrl(this.language, paperPath(this.language)) },
-            { '@type': 'ListItem', position: 3, name: fullName(paper), item: url },
+            { '@type': 'ListItem', position: 3, name: paperName(paper), item: url },
           ],
         },
       ],
@@ -155,9 +155,4 @@ export function orderable(paper: PaperPage | null): boolean {
 /** Whether the paper can be ordered in the shop, by email, or not yet */
 export function statusKey(paper: PaperPage | null): string {
   return paper?.soon ? 'paperPages.soon' : paper?.onRequest ? 'paperPages.onRequest' : 'paperPages.available';
-}
-
-/** 'Hahnemühle Photo Rag'; our own Premium Poster has no brand in front */
-export function fullName(paper: PaperPage | null): string {
-  return paper ? [paper.brand, paper.name].filter(Boolean).join(' ') : '';
 }
