@@ -58,9 +58,15 @@ export class CustomDesignPricesComponent {
     const costMid = mid
       ? ` ${this.i18n.t('designPrices.faq.costMid', { mid: mid.size.replace('x', ' × '), midPoster: euro(mid.poster), midCotton: euro(mid.cotton) })}`
       : '';
+    // What shipping within the Netherlands costs, after the delivery time
+    const zone = this.zone();
+    const deliveryCost = zone
+      ? ` ${this.i18n.t(zone.freeShippingFrom != null ? 'designPrices.faq.deliveryCostFree' : 'designPrices.faq.deliveryCost', { rate: euro(zone.rate), free: zone.freeShippingFrom != null ? this.euro(zone.freeShippingFrom, 0) : '' })}`
+      : '';
+    const extra: Record<string, string> = { cost: costMid, delivery: deliveryCost };
     return keys.map((key) => ({
       q: this.i18n.t(`designPrices.faq.${key}Q`, params),
-      a: this.i18n.t(`designPrices.faq.${key}A`, params) + (key === 'cost' ? costMid : ''),
+      a: this.i18n.t(`designPrices.faq.${key}A`, params) + (extra[key] ?? ''),
     }));
   });
 

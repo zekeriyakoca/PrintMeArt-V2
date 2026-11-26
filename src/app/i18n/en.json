@@ -475,7 +475,7 @@
     "guarantee": "Perfect Fit Guarantee",
     "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. We'll send you the final design for your approval, giving you the last say.",
     "imageAlt": "Your uploaded image",
-    "retention": "Your images are deleted within 90 days, or once your order is completed."
+    "retention": "Your images are deleted within 90 days or once your order is completed, whichever comes first."
   },
   "howCustom": {
     "eyebrow": "Print Your Design",
@@ -1208,7 +1208,7 @@
       "costA": "From {{from}} for 13 × 18 cm on Premium Poster, or {{cottonFrom}} on fine art paper. The largest size, {{largest}} cm on fine art paper, is {{largestPrice}}. Every price includes VAT, checking your file and cropping it by hand.",
       "costMid": "A {{mid}} cm print costs {{midPoster}} on Premium Poster and {{midCotton}} on Hahnemühle Photo Rag.",
       "pickupQ": "Can I pick up my print in Den Bosch?",
-      "pickupA": "Yes. We print in our own studio in Den Bosch and you can collect your order there. Email support@printmeart.nl before or after ordering and we will agree on a time.",
+      "pickupA": "Yes. We print in our own studio in Den Bosch and you can collect your order there, with no shipping costs. Email support@printmeart.nl before or after ordering and we will agree on a time.",
       "resolutionQ": "How sharp does my photo need to be?",
       "resolutionA": "For a sharp print we want at least 200 pixels per inch at the size you choose. When you upload, you see the print quality for every size straight away. If your image falls short, we switch on professional upscaling (€5): we enlarge and sharpen your image before printing. You can turn it off yourself.",
       "filesQ": "Which files can I upload?",
@@ -1219,8 +1219,10 @@
       "paperA": "For photos where colour really matters, choose Hahnemühle Photo Rag: smooth cotton paper with fine detail, printed as a giclée with pigment inks and fade-resistant for over 100 years. Premium Poster is a real photographic print on Fujifilm paper with vivid colours and deep blacks, at the best price.",
       "deliveryQ": "How fast will it arrive?",
       "deliveryA": "Orders are delivered within {{days}} days, always with track and trace.",
+      "deliveryCost": "Shipping within the Netherlands costs {{rate}}.",
+      "deliveryCostFree": "Shipping within the Netherlands costs {{rate}}, and is free from {{free}}.",
       "privacyQ": "What happens to my photos?",
-      "privacyA": "We only use your image to make your print. Your images are deleted within 90 days, or once your order is completed."
+      "privacyA": "We only use your image to make your print. Your images are deleted within 90 days or once your order is completed, whichever comes first."
     }
   },
   "guides": {

@@ -649,7 +649,7 @@
     "guarantee": "Garantie op een perfecte pasvorm",
     "guaranteeText": "Onze ontwerpers zorgen dat elke afbeelding, ook liggende, perfect in je lijst past. We sturen je het definitieve ontwerp ter goedkeuring, zodat jij het laatste woord hebt.",
     "imageAlt": "Je geüploade afbeelding",
-    "retention": "Je afbeeldingen worden binnen 90 dagen verwijderd, of zodra je bestelling is afgerond."
+    "retention": "Je afbeeldingen worden binnen 90 dagen verwijderd of zodra je bestelling is afgerond, wat het eerst gebeurt."
   },
   "howCustom": {
     "eyebrow": "Print je ontwerp",
@@ -1382,7 +1382,7 @@
       "costA": "Vanaf {{from}} voor 13 × 18 cm op Premium Poster, of {{cottonFrom}} op fine-art papier. Het grootste formaat, {{largest}} cm op fine-art papier, kost {{largestPrice}}. Elke prijs is inclusief btw, de controle van je bestand en het bijsnijden met de hand.",
       "costMid": "Een print van {{mid}} cm kost {{midPoster}} op Premium Poster en {{midCotton}} op Hahnemühle Photo Rag.",
       "pickupQ": "Kan ik mijn print ophalen in Den Bosch?",
-      "pickupA": "Ja. We printen in onze eigen studio in Den Bosch en je kunt je bestelling daar ophalen. Mail voor of na je bestelling naar support@printmeart.nl, dan spreken we een moment af.",
+      "pickupA": "Ja. We printen in onze eigen studio in Den Bosch en je kunt je bestelling daar ophalen, zonder verzendkosten. Mail voor of na je bestelling naar support@printmeart.nl, dan spreken we een moment af.",
       "resolutionQ": "Hoe scherp moet mijn foto zijn?",
       "resolutionA": "Voor een scherpe print willen we minstens 200 pixels per inch op het formaat dat je kiest. Bij het uploaden zie je meteen de printkwaliteit per formaat. Is je afbeelding te klein, dan zetten we professionele vergroting aan (€5): we vergroten en verscherpen je afbeelding vóór het printen. Je kunt dat zelf uitzetten.",
       "filesQ": "Welke bestanden kan ik uploaden?",
@@ -1393,8 +1393,10 @@
       "paperA": "Voor foto’s waarbij kleur echt telt kies je Hahnemühle Photo Rag: glad katoenpapier met fijn detail, giclée-gedrukt met pigmentinkt en meer dan 100 jaar lichtecht. Premium Poster is een echte fotoafdruk op Fujifilm-papier met levendige kleuren en diep zwart, voor de beste prijs.",
       "deliveryQ": "Hoe snel heb ik het in huis?",
       "deliveryA": "Bestellingen worden binnen {{days}} dagen bezorgd, altijd met track-and-trace.",
+      "deliveryCost": "Verzending binnen Nederland kost {{rate}}.",
+      "deliveryCostFree": "Verzending binnen Nederland kost {{rate}} en is gratis vanaf {{free}}.",
       "privacyQ": "Wat gebeurt er met mijn foto’s?",
-      "privacyA": "We gebruiken je afbeelding alleen om je print te maken. Je afbeeldingen worden binnen 90 dagen verwijderd, of zodra je bestelling is afgerond."
+      "privacyA": "We gebruiken je afbeelding alleen om je print te maken. Je afbeeldingen worden binnen 90 dagen verwijderd of zodra je bestelling is afgerond, wat het eerst gebeurt."
     }
   },
   "guides": {
