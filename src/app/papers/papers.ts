@@ -26,8 +26,12 @@ export interface PaperPage {
   name: string;
   weightGsm: number;
   image?: string;
+  /** A second photo, of the paper's surface up close */
+  closeup?: string;
   /** The column of the Your design price table this paper is sold at; papers without one cannot be ordered yet */
   price?: 'poster' | 'cotton';
+  /** We print on it, but it is not in the order menu yet: the price comes by email */
+  onRequest?: boolean;
   nl: PaperText;
   en: PaperText;
 }
@@ -58,6 +62,7 @@ export const PAPER_PAGES: PaperPage[] = [
     name: 'Photo Rag',
     weightGsm: 308,
     image: `${IMAGES}/paper-art-2.webp`,
+    closeup: `${IMAGES}/paper-photo-rag-closeup.webp`,
     price: 'cotton',
     nl: {
       kind: 'Glad katoenpapier',
@@ -193,15 +198,17 @@ export const PAPER_PAGES: PaperPage[] = [
     brand: 'Hahnemühle',
     name: 'FineArt Baryta',
     weightGsm: 325,
+    image: `${IMAGES}/paper-baryta-1.webp`,
+    onRequest: true,
     nl: {
       kind: 'Glanzend barietpapier',
       title: 'Hahnemühle FineArt Baryta 325 g/m²: fine-art print met glans en diep zwart',
-      description: 'Hahnemühle FineArt Baryta: helderwit, glanzend barietpapier van 325 g/m². Voor zwart-wit en foto’s met veel contrast. Binnenkort te bestellen bij PrintMeArt.',
+      description: 'Hahnemühle FineArt Baryta: helderwit, glanzend barietpapier van 325 g/m². Voor zwart-wit en foto’s met veel contrast.',
       lead: 'Helderwit, glanzend papier van 325 g/m² met een barietlaag, zoals het klassieke doka-papier. Het geeft het diepste zwart en het meeste contrast van al onze papieren.',
       summary: [
         '325 g/m², 100% alfacellulose, helderwit en hoogglanzend.',
         'De barietlaag (bariumsulfaat) geeft diep zwart en veel contrast.',
-        'Het papier voor zwart-witfotografie; binnenkort te bestellen.',
+        'Het papier voor zwart-witfotografie.',
       ],
       about: [
         'Barietpapier was tientallen jaren de standaard in de donkere kamer. FineArt Baryta brengt dat karakter naar de giclée: een laag bariumsulfaat onder de coating zorgt voor een helderwit, glanzend oppervlak met een licht voelbare structuur.',
@@ -226,12 +233,12 @@ export const PAPER_PAGES: PaperPage[] = [
     en: {
       kind: 'Glossy baryta paper',
       title: 'Hahnemühle FineArt Baryta 325 gsm: fine art print with gloss and deep blacks',
-      description: 'Hahnemühle FineArt Baryta: bright white, glossy baryta paper, 325 gsm. For black-and-white and high-contrast photos. Coming soon at PrintMeArt.',
+      description: 'Hahnemühle FineArt Baryta: bright white, glossy baryta paper, 325 gsm. For black-and-white and high-contrast photos.',
       lead: 'Bright white, glossy paper at 325 gsm with a baryta layer, like classic darkroom paper. It gives the deepest blacks and the most contrast of all our papers.',
       summary: [
         '325 gsm, 100% alpha-cellulose, bright white and high-gloss.',
         'The baryta layer (barium sulphate) gives deep blacks and strong contrast.',
-        'The paper for black-and-white photography; coming soon.',
+        'The paper for black-and-white photography.',
       ],
       about: [
         'For decades baryta paper was the standard in the darkroom. FineArt Baryta brings that character to the giclée: a layer of barium sulphate under the coating gives a bright white, glossy surface with a texture you can just feel.',

@@ -33,6 +33,7 @@ export class PaperComponent extends BasePageComponent implements OnInit {
     return paper ? paperText(paper, this.language) : null;
   });
   fullName = computed(() => fullName(this.paper()));
+  status = computed(() => statusKey(this.paper()));
   /** Size and price of a print of your own image on this paper; empty for papers that cannot be ordered yet */
   prices = signal<{ size: string; price: string }[]>([]);
   others = computed(() =>
@@ -142,6 +143,11 @@ export class PaperComponent extends BasePageComponent implements OnInit {
       ],
     });
   }
+}
+
+/** Whether the paper can be ordered in the shop, by email, or not yet */
+export function statusKey(paper: PaperPage | null): string {
+  return paper?.price ? 'paperPages.available' : paper?.onRequest ? 'paperPages.onRequest' : 'paperPages.soon';
 }
 
 /** 'Hahnemühle Photo Rag'; our own Premium Poster has no brand in front */

@@ -5,7 +5,7 @@ import { LanguageService } from '../../services/i18n/language.service';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService } from '../../services/seo/seo.service';
-import { fullName } from '../paper/paper.component';
+import { fullName, statusKey } from '../paper/paper.component';
 
 /** /nl/papier, /en/paper: every paper we print on */
 @Component({
@@ -23,7 +23,7 @@ export class PapersComponent implements OnInit {
     number: String(index + 1).padStart(2, '0'),
     name: fullName(paper),
     weight: paper.weightGsm,
-    orderable: !!paper.price,
+    status: statusKey(paper),
     text: paperText(paper, this.language),
     // The router adds the language itself
     link: paperPath(this.language, paper.slug),
