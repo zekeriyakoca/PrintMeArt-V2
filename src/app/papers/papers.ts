@@ -25,6 +25,26 @@ export interface PaperText {
   lessFor: string;
 }
 
+/** One photo of a paper, stored as AVIF and WebP at each of its widths: papers/photo-rag-corner-480.avif */
+export interface PaperShot {
+  file: string;
+  /** The widths it is stored at, small to large; the last one is the photo's own size */
+  widths: number[];
+  width: number;
+  height: number;
+  nl: string;
+  en: string;
+}
+
+export function shotUrl(shot: PaperShot, width: number, format: 'avif' | 'webp'): string {
+  return `${IMAGES}/papers/${shot.file}-${width}.${format}`;
+}
+
+/** Every width of a photo, for the browser to pick from */
+export function shotSrcset(shot: PaperShot, format: 'avif' | 'webp'): string {
+  return shot.widths.map((width) => `${shotUrl(shot, width, format)} ${width}w`).join(', ');
+}
+
 export interface PaperPage {
   /** The address in both languages: /nl/papier/hahnemuhle-photo-rag, /en/paper/hahnemuhle-photo-rag */
   slug: string;
@@ -34,6 +54,8 @@ export interface PaperPage {
   image?: string;
   /** A second photo, of the paper's surface up close */
   closeup?: string;
+  /** Several photos of the same paper; the page shows them as a gallery in place of the one image */
+  gallery?: PaperShot[];
   /** The column of the Your design price table this paper is sold at: every fine art paper costs the same */
   price: 'poster' | 'cotton';
   /** We print on it, but it is not in the order menu yet: it is ordered by email */
@@ -123,6 +145,11 @@ export const PAPER_PAGES: PaperPage[] = [
     weightGsm: 308,
     image: `${IMAGES}/paper-art-2.webp`,
     closeup: `${IMAGES}/paper-photo-rag-closeup.webp`,
+    gallery: [
+      { file: 'photo-rag-detail', widths: [480, 800], width: 800, height: 800, nl: 'Het gladde, matte oppervlak van dichtbij', en: 'The smooth, matte surface up close' },
+      { file: 'photo-rag-corner', widths: [480, 750], width: 750, height: 580, nl: 'De rand van een print op Photo Rag', en: 'The edge of a print on Photo Rag' },
+      { file: 'photo-rag-angle', widths: [480, 960], width: 960, height: 673, nl: 'Een print op Photo Rag, schuin bekeken', en: 'A print on Photo Rag, seen at an angle' },
+    ],
     price: 'cotton',
     nl: {
       kind: 'Glad katoenpapier',
@@ -197,6 +224,12 @@ export const PAPER_PAGES: PaperPage[] = [
     name: 'Museum Etching',
     weightGsm: 350,
     image: `${IMAGES}/paper-art-1.webp`,
+    gallery: [
+      { file: 'museum-etching-texture', widths: [480, 800, 1280], width: 1280, height: 1280, nl: 'De structuur van Museum Etching van dichtbij', en: 'The texture of Museum Etching up close' },
+      { file: 'museum-etching-corner', widths: [480, 750], width: 750, height: 580, nl: 'De rand van een print op Museum Etching', en: 'The edge of a print on Museum Etching' },
+      { file: 'museum-etching-detail', widths: [480, 800], width: 800, height: 800, nl: 'Inkt op het gestructureerde oppervlak', en: 'Ink on the textured surface' },
+      { file: 'museum-etching-angle', widths: [480, 960], width: 960, height: 673, nl: 'Een print op Museum Etching, schuin bekeken', en: 'A print on Museum Etching, seen at an angle' },
+    ],
     price: 'cotton',
     nl: {
       kind: 'Gestructureerd katoenpapier',
@@ -410,6 +443,10 @@ export const PAPER_PAGES: PaperPage[] = [
     name: 'Premium Poster',
     weightGsm: 234,
     image: `${IMAGES}/paper-fine-art-1.webp`,
+    gallery: [
+      { file: 'premium-poster-detail', widths: [480, 800], width: 800, height: 1000, nl: 'Het matte oppervlak van dichtbij', en: 'The matte surface up close' },
+      { file: 'premium-poster-sheets', widths: [480, 960], width: 960, height: 673, nl: 'Twee prints op mat fotopapier', en: 'Two prints on matte photo paper' },
+    ],
     price: 'poster',
     nl: {
       kind: 'Mat fotopapier',
