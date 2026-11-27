@@ -89,9 +89,10 @@ export class PaperOptionsComponent {
     this.emitOption(tier);
   }
 
-  /** The customer's own change of tier, in the toggle */
+  /** The customer's own change of tier, in step 1; an open list closes, it showed the other tier's papers */
   switchTier(tier: PaperTier): void {
     this.selectTier(tier);
+    this.open.set(false);
     this.tierChanges.update((count) => count + 1);
   }
 
