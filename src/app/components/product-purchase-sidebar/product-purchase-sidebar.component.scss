@@ -86,6 +86,16 @@
   font-weight: 300;
 }
 
+.trust-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: rgb(22, 122, 146);
+  }
+}
+
 .trust-check {
   color: rgb(22, 122, 146);
   font-weight: 700;

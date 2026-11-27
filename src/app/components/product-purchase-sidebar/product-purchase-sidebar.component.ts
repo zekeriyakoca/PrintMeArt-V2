@@ -7,6 +7,8 @@ import { CartService } from '../../services/cart/cart.service';
 import { BasePageComponent } from '../../pages/basePageComponent';
 import { SelectedOptionDto } from '../../models/cart-item';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LinkPipe } from '../../shared/link.pipe';
 import { FrameOptionsComponent } from '../frame-options/frame-options.component';
 import { IconComponent } from '../shared/icon/icon.component';
 import { MatOptionsComponent } from '../mat-options/mat-options.component';
@@ -31,7 +33,7 @@ import { SavedDesignChangedDialogComponent } from '../saved-design-changed-dialo
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, CommonModule, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent, SavedDesignChangedDialogComponent],
+  imports: [TranslatePipe, CommonModule, RouterLink, LinkPipe, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent, SavedDesignChangedDialogComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -63,7 +65,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   selectedSize = model<SizeOption | null>(null);
   private readonly i18n = inject(TranslationService);
   /** The customer prints an image of their own (Your design), not one from the catalog */
-  private readonly ownImage = computed(() => this.product().id === CUSTOM_PRINT_PRODUCT_ID);
+  readonly ownImage = computed(() => this.product().id === CUSTOM_PRINT_PRODUCT_ID);
   /**
    * The paper tier and, in it, the customer's own paper or the studio's pick. Opens on the default of this kind of product;
    * it follows ownImage and not the product itself, which changes with every option chosen
