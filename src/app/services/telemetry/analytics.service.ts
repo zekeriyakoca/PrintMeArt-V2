@@ -108,6 +108,8 @@ export class AnalyticsService {
   private sessionRecordingStarted = false;
   // Name and email a guest typed at checkout, waiting for PostHog to load
   private pendingCheckoutContact?: { email: string; name: string };
+  /** Set by trackOrderCompleted and used once, by the purchase event's Google tag call */
+  private purchaseEmail?: string;
   private readonly queue: QueuedEvent[] = [];
   private readonly firstPartyQueue: FirstPartyEventRequest[] = [];
   private readonly firstPartyFlushRequests$ = new Subject<boolean>();
@@ -311,10 +313,13 @@ export class AnalyticsService {
     amountTotal?: number;
     currency?: string;
     items?: { productId: number; variantId: number; productName: string; unitPrice: number; units: number }[];
+    /** The buyer's email, for Google Ads enhanced conversions; the Google tag hashes it before it leaves the browser */
+    email?: string;
   }): void {
     const transactionId = data.orderNumber || (data.orderId ? String(data.orderId) : undefined);
     // The success page can be opened again (reload, back button); an order counts once
     if (transactionId && !this.markOrderTracked(transactionId)) return;
+    this.purchaseEmail = data.email?.trim().toLowerCase() || undefined;
 
     this.track('purchase', {
       transaction_id: transactionId,
@@ -496,6 +501,11 @@ export class AnalyticsService {
 
   private trackGa4(name: string, properties: AnalyticsProperties): void {
     if (!this.ga4Initialized || typeof window.gtag !== 'function') return;
+    // Enhanced conversions: Google matches the purchase to the ad click by the email, which the Google tag hashes. Only the Google tag gets it.
+    if (name === 'purchase' && this.purchaseEmail) {
+      window.gtag('set', 'user_data', { email: this.purchaseEmail });
+      this.purchaseEmail = undefined;
+    }
     window.gtag('event', name, properties);
   }
 
