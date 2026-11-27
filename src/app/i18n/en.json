@@ -186,14 +186,18 @@
         "brand": "Fujifilm",
         "grade": "Home quality",
         "print": "Photo print on Fujifilm Crystal Archive paper",
-        "studio": "Premium Poster · studio picks the paper"
+        "studio": "Premium Poster · studio picks the paper",
+        "studioPicks": "Studio picks your Fujifilm paper",
+        "studioFrom": "Matte or Silk · same price"
       },
       "cotton": {
         "name": "Fine Art",
         "brand": "Hahnemühle",
         "grade": "Museum quality",
         "print": "Giclée, twelve pigment inks",
-        "studio": "Fine Art · studio picks the paper"
+        "studio": "Fine Art · studio picks the paper",
+        "studioPicks": "Studio picks your Hahnemühle paper",
+        "studioFrom": "1 of 3 fine art papers · same price"
       }
     },
     "chooseType": "Choose your paper type",

@@ -43,6 +43,8 @@ export class PaperOptionsComponent {
   papers = computed<PaperRow[]>(() =>
     papersOfTier(this.choice().tier).map((paper) => ({ paper, name: paperName(paper), text: paperText(paper, this.language) })),
   );
+  /** The tier's papers as a small pile on the studio bar: the first paper lies on top */
+  pile = computed(() => [...this.papers()].reverse());
   /** All papers side by side, for those who want to compare */
   readonly papersLink = paperPath(this.language);
 
