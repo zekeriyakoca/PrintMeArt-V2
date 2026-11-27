@@ -60,8 +60,8 @@
         <app-mat-options [(isMatIncluded)]="isMatIncluded"></app-mat-options>
       </div>
     } @else if (group.name.toLowerCase().startsWith('paper')) {
+      <!-- The chooser brings its own titles: one for each of its two steps -->
       <div class="option-group">
-        <label class="option-label">{{ 'product.paper' | t }}</label>
         <app-paper-options [group]="group" [(choice)]="paperChoice" (optionSelected)="selectOption(groupIndex, $event)"></app-paper-options>
       </div>
     } @else if (group.name.toLowerCase().startsWith('customproductdetails')) {

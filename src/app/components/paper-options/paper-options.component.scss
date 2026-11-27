@@ -6,7 +6,7 @@
     linear-gradient(100deg, #0f172a 0%, #18223f 55%, #24346a 100%);
 }
 
-// When the tier changes the band's own pink and blue bloom where the stem lands, then fade
+// When the tier changes the band's own pink and blue bloom under the chosen tier, then fade
 .glow {
   background: radial-gradient(34% 150% at var(--at) 0%, rgba(219, 39, 119, 0.42), rgba(167, 186, 233, 0.16) 55%, transparent 75%);
   transform-origin: var(--at) 0;

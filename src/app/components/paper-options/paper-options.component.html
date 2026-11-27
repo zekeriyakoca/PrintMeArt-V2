@@ -1,31 +1,33 @@
 <div class="@container flex flex-col gap-2.5">
-  <!-- Step 1: the tier, which sets the price -->
-  <fieldset class="grid grid-cols-2 rounded-[14px] bg-slate-100 p-1" [attr.aria-label]="'product.paper' | t">
+  <!-- Step 1: the tier, which sets the price. Each card says what a tap does -->
+  <ng-container [ngTemplateOutlet]="step" [ngTemplateOutletContext]="{ $implicit: 1, id: id + '-step-1', text: 'papers.chooseType' | t }" />
+  <fieldset class="grid grid-cols-2 gap-2" [attr.aria-labelledby]="id + '-step-1'">
     @for (tier of tiers(); track tier.id) {
       <label
-        class="group flex cursor-pointer items-center gap-2 rounded-[11px] p-2 transition-colors [-webkit-tap-highlight-color:transparent] has-checked:bg-white has-checked:shadow-[0_1px_3px_rgb(15_23_42/0.14)] has-focus-visible:outline-2 has-focus-visible:outline-[#384f8c]/45"
+        class="group flex min-w-0 cursor-pointer flex-col gap-2.5 rounded-xl border border-slate-200 bg-white p-2.5 transition-colors [-webkit-tap-highlight-color:transparent] hover:border-slate-300 has-checked:border-[#384f8c] has-checked:shadow-[inset_0_0_0_1px_#384f8c] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#384f8c]/45"
       >
         <input type="radio" class="sr-only" [name]="id + '-tier'" [checked]="tier === choice().tier" (change)="switchTier(tier)" />
-        <img [src]="tier.image" alt="" width="40" height="40" loading="lazy" class="h-8 w-8 shrink-0 rounded-lg object-cover opacity-75 group-has-checked:opacity-100 sm:h-10 sm:w-10" />
-        <span class="flex min-w-0 flex-col">
-          <span class="text-[0.56rem] leading-tight font-medium tracking-[0.13em] text-slate-400 uppercase group-has-checked:text-[#167a92]">{{ 'papers.tier.' + tier.id + '.brand' | t }}</span>
-          <span class="text-[0.82rem] leading-tight font-medium text-slate-500 group-has-checked:text-[#384f8c]">{{ 'papers.tier.' + tier.id + '.name' | t }}</span>
-          <span class="text-[0.68rem] leading-tight text-slate-500">{{ 'papers.tier.' + tier.id + '.grade' | t }}</span>
+        <span class="flex items-center gap-2">
+          <img [src]="tier.image" alt="" width="40" height="40" loading="lazy" class="h-8 w-8 shrink-0 rounded-lg object-cover @[360px]:h-10 @[360px]:w-10" />
+          <span class="flex min-w-0 flex-col">
+            <span class="text-[0.56rem] leading-tight font-medium tracking-[0.13em] text-[#167a92] uppercase">{{ 'papers.tier.' + tier.id + '.brand' | t }}</span>
+            <span class="text-[0.82rem] leading-tight font-medium text-slate-800 group-has-checked:text-[#384f8c]">{{ 'papers.tier.' + tier.id + '.name' | t }}</span>
+            <span class="text-[0.68rem] leading-tight text-slate-500">{{ 'papers.tier.' + tier.id + '.grade' | t }}</span>
+          </span>
+        </span>
+        <!-- Looks like a button and says what the card does; the card itself is the control -->
+        <span class="flex h-8 items-center justify-center rounded-lg border border-slate-300 text-[0.76rem] font-medium text-[#384f8c] group-has-checked:hidden" aria-hidden="true">{{ 'papers.chooseThis' | t }}</span>
+        <span class="dark-band hidden h-8 items-center justify-center gap-1.5 rounded-lg text-[0.76rem] font-medium text-white group-has-checked:flex" aria-hidden="true">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+          {{ 'papers.chosen' | t }}
         </span>
       </label>
     }
   </fieldset>
 
   <!-- Step 2: who picks the paper in the tier: our studio, or the customer. A dropdown: closed, it shows what is chosen -->
+  <ng-container [ngTemplateOutlet]="step" [ngTemplateOutletContext]="{ $implicit: 2, id: id + '-step-2', text: 'papers.whoPicks' | t }" />
   <div class="relative">
-    <!-- A stem ties the dropdown to the tier it belongs to, and slides along when the tier changes -->
-    @if (tiers().length > 1) {
-      <span
-        class="absolute -top-2.5 h-2.5 w-0.5 -translate-x-1/2 bg-linear-to-b from-slate-300 to-[#384f8c] transition-[left] duration-300 ease-out after:absolute after:-bottom-1 after:left-1/2 after:h-2 after:w-2 after:-translate-x-1/2 after:rounded-full after:border-2 after:border-[#384f8c] after:bg-white motion-reduce:transition-none"
-        [style.left.%]="stemLeft()"
-        aria-hidden="true"
-      ></span>
-    }
     <button
       type="button"
       [class]="'relative flex w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-xl border p-2.5 text-left transition-colors [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#384f8c]/45 ' +
@@ -60,9 +62,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </span>
-      <!-- The bar lights up where the stem lands when the tier changes: these are now that tier's papers -->
+      <!-- The bar lights up under the chosen tier when the tier changes: these are now that tier's papers -->
       @for (glow of glows(); track glow) {
-        <span class="glow pointer-events-none absolute inset-0" [style.--at]="stemLeft() + '%'" aria-hidden="true"></span>
+        <span class="glow pointer-events-none absolute inset-0" [style.--at]="tierAt() + '%'" aria-hidden="true"></span>
       }
     </button>
 
@@ -70,7 +72,7 @@
       <fieldset
         [id]="id + '-list'"
         class="drop-in absolute inset-x-0 top-full z-40 mt-1.5 rounded-xl border border-slate-200 bg-white shadow-lg shadow-slate-300/40"
-        [attr.aria-label]="'papers.whoPicks' | t"
+        [attr.aria-labelledby]="id + '-step-2'"
         (keydown)="byKeys = true"
         (keydown.enter)="open.set(false)"
         (pointerdown)="byKeys = false"
@@ -115,6 +117,14 @@
 
   <a [routerLink]="papersLink" target="_blank" rel="noopener" class="self-start text-xs font-medium text-[#384f8c] hover:text-[#167a92] hover:underline">{{ 'papers.viewAll' | t }}</a>
 </div>
+
+<!-- The title of a step, with its number -->
+<ng-template #step let-number let-id="id" let-text="text">
+  <div [id]="id" class="mt-1 flex items-center gap-2 text-[0.9rem] text-[#384f8c] first:mt-0">
+    <span class="dark-band flex h-[1.15rem] w-[1.15rem] shrink-0 items-center justify-center rounded-full text-[0.64rem] font-semibold text-white" aria-hidden="true">{{ number }}</span>
+    {{ text }}
+  </div>
+</ng-template>
 
 <!-- The paper up close; a paper without a photo yet shows as a plain sheet -->
 <ng-template #thumb let-paper>

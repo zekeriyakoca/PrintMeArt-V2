@@ -196,7 +196,10 @@
         "studio": "Fine Art · studio picks the paper"
       }
     },
-    "whoPicks": "Who picks the paper",
+    "chooseType": "Choose your paper type",
+    "chooseThis": "Choose this paper",
+    "chosen": "Chosen",
+    "whoPicks": "Who picks the paper?",
     "studioTitle": "Studio picks the paper",
     "samePrice": "Same price",
     "or": "or",

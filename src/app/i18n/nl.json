@@ -196,7 +196,10 @@
         "studio": "Fine Art · studio kiest het papier"
       }
     },
-    "whoPicks": "Wie kiest het papier",
+    "chooseType": "Kies je papiersoort",
+    "chooseThis": "Kies dit papier",
+    "chosen": "Gekozen",
+    "whoPicks": "Wie kiest het papier?",
     "studioTitle": "Studio kiest het papier",
     "samePrice": "Zelfde prijs",
     "or": "of",

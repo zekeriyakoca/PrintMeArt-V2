@@ -46,8 +46,8 @@ export class PaperOptionsComponent {
   /** All papers side by side, for those who want to compare */
   readonly papersLink = paperPath(this.language);
 
-  /** Where the stem meets the dropdown: under the middle of the chosen tier, as a share of the width */
-  stemLeft = computed(() => {
+  /** The middle of the chosen tier's card, as a share of the width: where the dropdown lights up */
+  tierAt = computed(() => {
     const tiers = this.tiers();
     return ((tiers.indexOf(this.choice().tier) + 0.5) / tiers.length) * 100;
   });
@@ -63,7 +63,7 @@ export class PaperOptionsComponent {
   sheet = signal<Detail | null>(null);
   /** The paper each tier was left with, so a tier comes back the way the customer left it */
   private readonly leftWith = new Map<PaperTier['id'], PaperPage | null>();
-  /** Counts the customer's tier changes: each one lights up the dropdown where the stem lands */
+  /** Counts the customer's tier changes: each one lights up the dropdown under the chosen tier */
   private readonly tierChanges = signal(0);
   /** The glow now showing; a new one for every tier change, none before the first */
   glows = computed(() => (this.tierChanges() ? [this.tierChanges()] : []));
