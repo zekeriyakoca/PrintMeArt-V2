@@ -60,6 +60,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
             amountTotal: session.amountTotal,
             currency: session.currency,
             items: session.items,
+            email: session.customerEmail || sessionStorage.getItem('checkoutEmail') || undefined,
           });
           // Clear the cart after successful payment
           this.cartService.clearCart();
