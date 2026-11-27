@@ -5,47 +5,51 @@
 </ng-template>
 
 <div class="size-options" role="group" [attr.aria-label]="'product.size' | t">
-  @for (row of rows(); track $index) {
-    <div class="size-row" [style.grid-template-columns]="'repeat(' + row.length + ', minmax(0, 1fr))'">
-      @for (size of row; track size.id) {
-        @if (size.id === 'original') {
-          <app-tooltip ariaLabel="Original artwork size" tabIndex="-1" class="original-tooltip-wrapper">
-            <button type="button" class="size-tile original" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
-              <span class="original-tag">{{ 'sizes.originalShort' | t }}</span>
+  <!-- Rows of tiles; Preview & Design on a phone lays them out as one strip -->
+  <div class="size-rows">
+    @for (row of rows(); track $index) {
+      <div class="size-row" [style.grid-template-columns]="'repeat(' + row.length + ', minmax(0, 1fr))'">
+        @for (size of row; track size.id) {
+          @if (size.id === 'original') {
+            <app-tooltip ariaLabel="Original artwork size" tabIndex="-1" class="original-tooltip-wrapper">
+              <button type="button" class="size-tile original" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
+                <span class="original-tag">{{ 'sizes.originalShort' | t }}</span>
+                <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
+              </button>
+
+              <div tooltip>
+                <div class="px-4 pt-3 pb-2 text-center text-[rgb(22,122,146)]">
+                  <div class="font-semibold text-sm">{{ 'sizes.original' | t }}</div>
+                </div>
+                <div class="px-4 pb-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-500">{{ 'sizes.dimensions' | t }}</span>
+                    <span class="font-medium text-slate-900">{{ size.val1 }}×{{ size.val2 }} cm</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
+                    <span class="text-slate-500">{{ 'sizes.quality' | t }}</span>
+                    <span class="font-bold text-[rgb(22,122,146)]">{{ 'sizes.trueToOriginal' | t }}</span>
+                  </div>
+                </div>
+              </div>
+            </app-tooltip>
+          } @else {
+            <button type="button" class="size-tile" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
               <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
             </button>
-
-            <div tooltip>
-              <div class="px-4 pt-3 pb-2 text-center text-[rgb(22,122,146)]">
-                <div class="font-semibold text-sm">{{ 'sizes.original' | t }}</div>
-              </div>
-              <div class="px-4 pb-3 space-y-2">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-500">{{ 'sizes.dimensions' | t }}</span>
-                  <span class="font-medium text-slate-900">{{ size.val1 }}×{{ size.val2 }} cm</span>
-                </div>
-                <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
-                  <span class="text-slate-500">{{ 'sizes.quality' | t }}</span>
-                  <span class="font-bold text-[rgb(22,122,146)]">{{ 'sizes.trueToOriginal' | t }}</span>
-                </div>
-              </div>
-            </div>
-          </app-tooltip>
-        } @else {
-          <button type="button" class="size-tile" [class.selected]="isActive(size)" [attr.aria-pressed]="isActive(size)" (click)="selectSize(size)">
-            <ng-container *ngTemplateOutlet="tile; context: { $implicit: size }"></ng-container>
-          </button>
+          }
         }
-      }
-    </div>
-  }
+      </div>
+    }
+  </div>
 
   @if (moreSizes().length) {
-    <button type="button" class="more-toggle" [class.has-selection]="selectedMoreSize()" [attr.aria-expanded]="showMoreSizes()" (click)="showMoreSizes.set(!showMoreSizes())">
+    <button type="button" class="more-toggle" [class.has-selection]="selectedMoreSize()" [attr.aria-expanded]="showMoreSizes()" (click)="toggleMoreSizes()">
       @if (selectedMoreSize(); as ms) {
         <span class="more-chosen">{{ ms.val1 }}×{{ ms.val2 }}<span class="unit">cm</span></span>
       }
       <span class="more-label">{{ 'sizes.more' | t }}</span>
+      <span class="more-short">{{ 'sizes.moreShort' | t }}</span>
       <svg class="chevron" [class.rotated]="showMoreSizes()" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>

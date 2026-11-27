@@ -182,3 +182,67 @@ $frame: #1f1d1a;
   color: $muted;
   font-variant-numeric: tabular-nums;
 }
+
+// A width of their own: only where the presets and the slider take turns
+.wb-custom {
+  display: none;
+}
+
+// Preview & Design on a phone: one row of names, the slider only for a custom width
+@media (max-width: 768px) {
+  :host(.phone-strip) {
+    // Scrolled into view, it stays clear of the sheet's handle above and the pinned actions below
+    scroll-margin: 2rem 0 5.5rem;
+
+    .wb-tiles {
+      display: flex;
+      gap: 2px;
+      margin: 0.5rem 0 0;
+      padding: 3px;
+      background: #f1f5f9;
+      border-radius: 999px;
+    }
+
+    .wb-tile {
+      flex: 1;
+      justify-content: center;
+      height: 2rem;
+      padding: 0 0.2rem;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      box-shadow: none;
+
+      &.selected {
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+
+        .wb-tile-label {
+          color: $ink;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .wb-custom {
+      display: flex;
+    }
+
+    .wb-mini,
+    .wb-slider,
+    .wb-scale {
+      display: none;
+    }
+
+    .custom-open {
+      .wb-slider {
+        display: block;
+        margin-top: 0.9rem;
+      }
+
+      .wb-scale {
+        display: flex;
+      }
+    }
+  }
+}

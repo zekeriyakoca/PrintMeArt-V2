@@ -226,23 +226,6 @@
 <!-- Product Preview Modal -->
 @if (selectedSize(); as size) {
   @if (customImageUrl() || product().images?.length) {
-    @if (roomLayout(); as layout) {
-    <app-room-view
-      [title]="product().name"
-      [imageUrl]="designImageUrl()"
-      [frameName]="selectedFrameName()"
-      [matIncluded]="isFrameSelected() && isMatIncluded()"
-      [layout]="layout"
-      [selectedSize]="size"
-      [showDiscardConfirm]="roomConfirm()"
-      [saving]="roomSaving()"
-      (close)="closeRoom()"
-      (editDesign)="roomConfirm.set(false); roomLayout.set(null); showPreview.set(true)"
-      (saveDesign)="saveFromRoom()"
-      (keepEditing)="roomConfirm.set(false)"
-      (discardDesign)="discardFromRoom()"
-    ></app-room-view>
-    }
     <app-product-preview
       [isOpen]="showPreview()"
       [imageUrl]="designImageUrl()"
@@ -255,7 +238,7 @@
       [metadata]="imageMetadata()"
       (onClose)="onPreviewClosed()"
       (onDesignSaved)="onDesignSaved($event)"
-      (onViewInRoom)="onViewInRoom($event)"
+      (onViewInRoom)="onViewInRoom()"
     ></app-product-preview>
   }
 }
