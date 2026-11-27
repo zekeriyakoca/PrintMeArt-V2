@@ -94,7 +94,12 @@ export interface PaperTier {
   id: PaperPage['price'];
   /** The backend's paper option the tier is sold as (the option's value); the paper itself travels as the option's name */
   grade: string;
-  /** The paper's name on the order when the studio picks it, so the team sees the choice is theirs */
+  /**
+   * The paper's name on the order when the studio picks it, so the team sees the choice is theirs. It rides on the tier's
+   * option, so it costs what every paper of the tier costs. Keep the "Studio's choice: " prefix: the backend's customer
+   * emails find it by that prefix to put it in Dutch (eCommBone Shared/Email/OrderOptionText.cs), and orders already hold
+   * these names; the Dutch text is under name. in nl.json
+   */
   studioChoiceName: string;
   /** One of its papers up close, in the tier toggle */
   image: string;
