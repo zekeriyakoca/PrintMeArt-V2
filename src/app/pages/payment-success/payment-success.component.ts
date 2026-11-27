@@ -59,6 +59,7 @@ export class PaymentSuccessComponent extends BasePageComponent implements OnInit
             orderNumber: session.orderNumber,
             amountTotal: session.amountTotal,
             currency: session.currency,
+            items: session.items,
           });
           // Clear the cart after successful payment
           this.cartService.clearCart();

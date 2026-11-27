@@ -305,7 +305,13 @@ export class AnalyticsService {
     );
   }
 
-  trackOrderCompleted(data: { orderId?: number; orderNumber?: string; amountTotal?: number; currency?: string }): void {
+  trackOrderCompleted(data: {
+    orderId?: number;
+    orderNumber?: string;
+    amountTotal?: number;
+    currency?: string;
+    items?: { productId: number; variantId: number; productName: string; unitPrice: number; units: number }[];
+  }): void {
     const transactionId = data.orderNumber || (data.orderId ? String(data.orderId) : undefined);
     // The success page can be opened again (reload, back button); an order counts once
     if (transactionId && !this.markOrderTracked(transactionId)) return;
@@ -314,6 +320,13 @@ export class AnalyticsService {
       transaction_id: transactionId,
       value: data.amountTotal ? data.amountTotal / 100 : undefined,
       currency: (data.currency || 'EUR').toUpperCase(),
+      items: data.items?.map((item) => ({
+        item_id: String(item.productId),
+        item_name: item.productName,
+        item_variant: String(item.variantId),
+        price: this.money(item.unitPrice),
+        quantity: item.units,
+      })),
     });
   }
 

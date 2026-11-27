@@ -47,6 +47,7 @@ export interface CheckoutSessionStatus {
   orderNumber?: string;
   amountTotal?: number;
   currency?: string;
+  items?: { productId: number; variantId: number; productName: string; unitPrice: number; units: number }[];
 }
 
 /**

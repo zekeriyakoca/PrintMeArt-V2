@@ -125,14 +125,16 @@ function shippingXml(info: ShippingInfo, price: number): string {
     .flatMap((zone) => zone.countries.map((country) => ({ zone, country })))
     .map(({ zone, country }) => {
       const rate = zone.freeShippingFrom != null && price >= zone.freeShippingFrom ? 0 : zone.rate;
-      // The backend gives one delivery figure, covering both printing and transit
+      // The backend gives one delivery figure, covering both printing and transit. Every print is made to
+      // order, so 1-2 days of it are printing (handling) and the rest is the carrier, keeping the same total.
+      const maxHandling = Math.min(2, Math.max(1, info.deliveryDays - 1));
       return `      <g:shipping>
         <g:country>${country}</g:country>
         <g:price>${rate.toFixed(2)} ${escapeXml(info.currency)}</g:price>
-        <g:min_handling_time>0</g:min_handling_time>
-        <g:max_handling_time>0</g:max_handling_time>
+        <g:min_handling_time>1</g:min_handling_time>
+        <g:max_handling_time>${maxHandling}</g:max_handling_time>
         <g:min_transit_time>1</g:min_transit_time>
-        <g:max_transit_time>${Math.max(1, info.deliveryDays)}</g:max_transit_time>
+        <g:max_transit_time>${Math.max(1, info.deliveryDays - maxHandling)}</g:max_transit_time>
       </g:shipping>`;
     })
     .join('\n');

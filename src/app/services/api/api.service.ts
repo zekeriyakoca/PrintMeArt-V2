@@ -209,6 +209,7 @@ export class ApiService {
     orderNumber?: string;
     amountTotal?: number;
     currency?: string;
+    items?: { productId: number; variantId: number; productName: string; unitPrice: number; units: number }[];
   }> {
     if (this.isSSR) {
       return of({
