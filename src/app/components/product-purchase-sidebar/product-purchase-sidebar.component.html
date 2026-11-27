@@ -1,13 +1,17 @@
 <section class="purchase-sidebar">
   <!-- Price -->
   <div class="price-block" #priceBlock>
-    @if (hasAllOptionsSelected()) {
-      <!-- The price is worked out in the browser; until then the row keeps its place without showing €0.00 -->
-      <div class="price-row" [style.visibility]="calculatedPrice() > 0 ? null : 'hidden'">
+    <!--
+      The exact price is worked out in the browser only (ApiService.calculatePrice), so the server and the first
+      render in the browser have none: they show the catalog's from price, the one the product data offers.
+      Never render calculatedPrice() before it is known, or the server HTML says €0.00 to Google.
+    -->
+    @if (hasAllOptionsSelected() && calculatedPrice() > 0) {
+      <div class="price-row">
         <span class="price">{{ calculatedPrice() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
         <span class="tax-note">{{ 'product.taxIncluded' | t }}</span>
       </div>
-    } @else {
+    } @else if (product().cheapestPrice > 0) {
       <span class="price-hint">{{ 'product.from' | t }}</span>
       <div class="price-row">
         <span class="price">{{ product().cheapestPrice | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>

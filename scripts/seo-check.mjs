@@ -3,7 +3,8 @@
 //   SEO_BASE_URL=https://printmeart.nl node scripts/seo-check.mjs   # or checks a running shop
 // It samples every page type in Dutch and English and fails (exit 1) when a page loses what search engines need:
 // one H1, a translated title and H1, a clean self-referencing canonical, hreflang alternates, a place in the
-// sitemap, and the 301s that keep old addresses working. The pages render with live catalog data.
+// sitemap, and the 301s that keep old addresses working, and when a page shows €0.00 or a product page shows a
+// price other than the one its product data offers. The pages render with live catalog data.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 
@@ -136,8 +137,38 @@ async function checkPage(where, path) {
   const own = path.split('/')[1];
   if (alternates[own] && alternates[own] !== canonical[0]) fail(where, `${path} hreflang ${own} is ${alternates[own]}, not the page itself`);
   if (/noindex/.test(robots)) fail(where, `${path} is noindex`);
+  checkPrices(where, path, html);
   console.log(`${failures.length === before ? '✓' : '✗'} ${where.padEnd(32)} ${path}  "${title}"  H1 "${h1s[0] ?? ''}"`);
   return { title, h1: h1s[0], canonical: canonical[0], alternates };
+}
+
+/**
+ * Google Merchant Center and Googlebot read the server HTML: a price of €0.00 there, or one that differs from the
+ * product data's offer, gets products disapproved. The purchase panel's prices (class="price") must all be the offer.
+ */
+function checkPrices(where, path, html) {
+  const zero = html.match(/€(\s|&nbsp;)?0[.,]00(?!\d)/);
+  if (zero) fail(where, `${path} shows ${zero[0]}`);
+  const products = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+    .flatMap((m) => {
+      try {
+        return [JSON.parse(m[1])].flat();
+      } catch {
+        return [];
+      }
+    })
+    .filter((data) => data['@type'] === 'Product');
+  if (!products.length) return;
+  // A single offer, or the cheapest of several (Your design)
+  const offers = products[0].offers;
+  const offer = Number(offers?.['@type'] === 'AggregateOffer' ? offers.lowPrice : offers?.price);
+  if (!(offer > 0)) return fail(where, `${path} product data offers no price`);
+  const shown = [...html.matchAll(/<span[^>]*class="price"[^>]*>([^<]*)<\/span>/g)].map((m) => decodeXml(m[1]).trim());
+  if (!shown.length) return fail(where, `${path} shows no price; the product data offers €${offer.toFixed(2)}`);
+  for (const price of shown) {
+    const value = Number(price.replace(/[^\d.,]/g, '').replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.'));
+    if (value !== offer) fail(where, `${path} shows ${price}, the product data offers €${offer.toFixed(2)}`);
+  }
 }
 
 async function text(path) {
