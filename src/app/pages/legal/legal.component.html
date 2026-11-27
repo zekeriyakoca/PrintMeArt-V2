@@ -170,7 +170,32 @@
           <p class="text-amber-700 text-sm">{{ 'legal.extendedText' | t: { days: info.returnDays } }}</p>
         </div>
         }
-        <p class="text-sm text-slate-500">{{ 'legal.condition' | t }}</p>
+        <p class="text-sm text-slate-500 mb-6">{{ 'legal.condition' | t }}</p>
+        @if (shippingInfo(); as info) {
+        <div id="custom-returns" class="p-6 rounded-xl bg-slate-50 scroll-mt-32">
+          <h3 class="font-semibold text-slate-800 mb-4">{{ 'legal.customReturnsTitle' | t }}</h3>
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div
+                class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                1</div>
+              <p class="text-slate-600">{{ 'legal.customStep1' | t: { days: info.returnDays } }}</p>
+            </div>
+            <div class="flex gap-4">
+              <div
+                class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                2</div>
+              <p class="text-slate-600">{{ 'legal.customStep2' | t }}</p>
+            </div>
+            <div class="flex gap-4">
+              <div
+                class="w-8 h-8 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                3</div>
+              <p class="text-slate-600">{{ 'legal.customStep3' | t }}</p>
+            </div>
+          </div>
+        </div>
+        }
       </div>
     </div>
   </section>
