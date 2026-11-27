@@ -128,6 +128,9 @@ app.get(/^\/(en|nl)\/(gids|guides)(\/[^/]*)?\/?$/, (req, res, next) => {
   return res.redirect(301, `/${language}${target}`);
 });
 
+// /nl/contact and /en/contact are where people and Merchant Center look for us; the contact details live on the about page
+app.get(/^\/(en|nl)\/contact\/?$/, (req, res) => res.redirect(301, `/${req.path.split('/')[1]}/about#contact-us`));
+
 // The papers: /nl/papier and /en/paper, so the other language's word moves to the right one
 app.get(/^\/(en|nl)\/(papier|paper)(\/.*)?$/, (req, res, next) => {
   const [, language, segment] = req.path.split('/');
