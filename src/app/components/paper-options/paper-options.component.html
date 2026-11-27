@@ -44,11 +44,20 @@
           <ng-container [ngTemplateOutlet]="labels" [ngTemplateOutletContext]="{ $implicit: row.text.labels }" />
         </span>
       } @else {
-        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/15 text-lg" aria-hidden="true">✦</span>
+        <!-- The papers our studio picks from: the bar shows which tier it is about -->
+        <span class="flex shrink-0" aria-hidden="true">
+          @for (row of pile(); track row.paper.slug) {
+            @if (row.paper.image; as image) {
+              <img [src]="image" alt="" width="38" height="48" loading="lazy" class="-ml-4 h-12 w-8 rounded-md object-cover ring-2 ring-[#18223f] first:ml-0 @[360px]:w-[2.4rem]" />
+            } @else {
+              <span class="-ml-4 h-12 w-8 rounded-md bg-linear-to-br from-[#fbf8f1] to-[#d9dee8] ring-2 ring-[#18223f] first:ml-0 @[360px]:w-[2.4rem]"></span>
+            }
+          }
+        </span>
         <span class="flex min-w-0 flex-1 flex-col">
-          <span class="text-[0.86rem] leading-snug font-medium">{{ 'papers.studioTitle' | t }}</span>
+          <span class="text-[0.86rem] leading-snug font-medium">{{ 'papers.tier.' + choice().tier.id + '.studioPicks' | t }}</span>
           <span class="text-xs leading-snug text-white/80 @[360px]:hidden">{{ 'papers.samePrice' | t }}</span>
-          <span class="hidden text-xs leading-snug text-white/80 @[360px]:inline">{{ 'papers.studioHint' | t }}</span>
+          <span class="hidden text-xs leading-snug text-white/80 @[360px]:inline">{{ 'papers.tier.' + choice().tier.id + '.studioFrom' | t }}</span>
         </span>
         <!-- The other way: pick the paper yourself -->
         <span class="h-9 shrink-0 border-l border-dashed border-white/40" aria-hidden="true"></span>

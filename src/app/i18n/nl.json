@@ -186,14 +186,18 @@
         "brand": "Fujifilm",
         "grade": "Thuiskwaliteit",
         "print": "Fotoafdruk op Fujifilm Crystal Archive-papier",
-        "studio": "Premium Poster · studio kiest het papier"
+        "studio": "Premium Poster · studio kiest het papier",
+        "studioPicks": "Studio kiest je Fujifilm-papier",
+        "studioFrom": "Mat of Silk · zelfde prijs"
       },
       "cotton": {
         "name": "Fine Art",
         "brand": "Hahnemühle",
         "grade": "Museumkwaliteit",
         "print": "Giclée, pigmentinkt in twaalf kleuren",
-        "studio": "Fine Art · studio kiest het papier"
+        "studio": "Fine Art · studio kiest het papier",
+        "studioPicks": "Studio kiest je Hahnemühle-papier",
+        "studioFrom": "1 van 3 fine-art papieren · zelfde prijs"
       }
     },
     "chooseType": "Kies je papiersoort",
