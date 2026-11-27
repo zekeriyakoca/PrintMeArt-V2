@@ -1,21 +1,19 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, DestroyRef, ElementRef, PLATFORM_ID, Signal, afterNextRender, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, PLATFORM_ID, Signal, computed, effect, inject, input, signal, viewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SizeOption } from '../../models/size-option';
 import { frameMaskFor } from '../../shared/constants';
 import { DESIGN_WIDTH_PX, DesignLayout, composeDesign, loadCorsImage } from '../../shared/design-composer';
 import { ROOM_SCENES, RoomScene } from './rooms';
 import { RoomCrop, RoomRenderer } from './room-renderer';
 import { PreparingStateComponent } from '../shared/preparing-state/preparing-state.component';
-import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
-import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 
-/** Phones get the room view stacked: picture on top, options below */
+/** Narrow screens get fewer rooms and a taller piece of each */
 const PHONE_QUERY = '(max-width: 900px)';
 
-/** Shows the design from Preview & Design hanging in a room, at real scale */
+/** The room tab of Preview & Design: the design hanging in a room, at real scale, with a strip of rooms to pick from */
 @Component({
-  imports: [TranslatePipe, PreparingStateComponent, UnsavedChangesDialogComponent],
+  imports: [TranslatePipe, PreparingStateComponent],
   selector: 'app-room-view',
   standalone: true,
   templateUrl: './room-view.component.html',
@@ -23,7 +21,6 @@ const PHONE_QUERY = '(max-width: 900px)';
 })
 export class RoomViewComponent {
   // The print, as designed in Preview & Design
-  title = input('');
   imageUrl = input.required<string>();
   /** Frame option name as chosen on the product page; null for a rolled-up print, which shows in the frame we sell */
   frameName = input<string | null>(null);
@@ -32,16 +29,6 @@ export class RoomViewComponent {
   layout = input.required<DesignLayout>();
   /** Size chosen in Preview & Design */
   selectedSize = input<SizeOption | null>(null);
-
-  // Closing with an unsaved design: the parent decides and saves, this view only asks
-  showDiscardConfirm = input(false);
-  saving = input(false);
-
-  close = output<void>();
-  editDesign = output<void>();
-  saveDesign = output<void>();
-  keepEditing = output<void>();
-  discardDesign = output<void>();
 
   private readonly phone = isPlatformBrowser(inject(PLATFORM_ID)) && window.matchMedia(PHONE_QUERY).matches;
 
@@ -71,23 +58,9 @@ export class RoomViewComponent {
   readonly ready = computed(() => this.renderedRoom() === this.room().id);
 
   private readonly stage = viewChild<ElementRef<HTMLCanvasElement>>('stage');
-  private readonly body = viewChild<ElementRef<HTMLElement>>('body');
   private readonly renderer = new RoomRenderer();
 
   constructor() {
-    // Render at body level: the product page wraps the sidebar in its own stacking context,
-    // which would keep a fixed overlay underneath the sticky header.
-    const host = inject(ElementRef<HTMLElement>).nativeElement;
-    const body = inject(DOCUMENT).body;
-    afterNextRender(() => body.appendChild(host));
-    // The page behind stays still while the room view is open
-    const scrollLock = inject(ScrollLockService);
-    scrollLock.lock(this);
-    inject(DestroyRef).onDestroy(() => {
-      host.remove();
-      scrollLock.unlock(this);
-    });
-
     effect(() => {
       const canvas = this.stage()?.nativeElement;
       const art = this.art();
@@ -105,12 +78,6 @@ export class RoomViewComponent {
       this.renderer.render(canvas, room, photo, { design, widthCm: size.width, heightCm: size.height }, this.crop(size));
       this.renderedRoom.set(room.id);
     });
-  }
-
-  selectRoom(scene: RoomScene) {
-    this.room.set(scene);
-    // On phones the picker sits under the picture: bring the new room into view
-    this.body()?.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /** Phones are tall: show a tall piece of the room for a tall print and a square one for a wide print, rather than a thin strip */

@@ -157,6 +157,7 @@
     "quality": "Quality",
     "trueToOriginal": "True to original",
     "originalShort": "Original",
+    "moreShort": "More",
     "more": "More sizes"
   },
   "frames": {
@@ -446,7 +447,8 @@
       "none": "None",
       "slim": "Slim",
       "classic": "Classic",
-      "gallery": "Gallery"
+      "gallery": "Gallery",
+      "custom": "Custom"
     },
     "matIncluded": "High quality passe-partout included",
     "noMat": "No passe-partout",
@@ -458,6 +460,8 @@
     "save": "Save design",
     "saved": "Already saved",
     "inRoom": "In a room",
+    "viewPaper": "Paper",
+    "viewFramed": "In frame",
     "previewOnly": "Preview only",
     "optimize": "Our team will professionally optimize your artwork for the perfect print.",
     "close": "Close preview",
@@ -472,10 +476,7 @@
   },
   "room": {
     "toScale": "{{width}} × {{height}} cm · shown to scale",
-    "eyebrow": "View on a wall",
     "room": "Room",
-    "footnote": "Rooms are shown at their real scale, so sizes compare as they would on your own wall.",
-    "edit": "Edit design",
     "close": "Close"
   },
   "preparing": {

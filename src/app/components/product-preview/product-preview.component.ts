@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, Injector, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -7,9 +7,9 @@ import { SizeOption } from '../../models/size-option';
 import { ProductMetadata } from '../../models/product';
 import { FrameOptionsByValue, frameMaskFor } from '../../shared/constants';
 import { SizeOptionsComponent } from '../size-options/size-options.component';
-import { MatOptionsComponent } from '../mat-options/mat-options.component';
 import { WhiteBorderOptionsComponent } from '../white-border-options/white-border-options.component';
 import { DesignActionsComponent } from '../design-actions/design-actions.component';
+import { RoomViewComponent } from '../room-view/room-view.component';
 import { ScrollLockService } from '../../services/scroll-lock/scroll-lock.service';
 import { UnsavedChangesDialogComponent } from '../unsaved-changes-dialog/unsaved-changes-dialog.component';
 import { CommonApiService } from '../../services/api/common-api.service';
@@ -19,7 +19,7 @@ import { NO_WHITE_BORDER, WhiteBorder, fitWhiteBorder, sameWhiteBorder } from '.
 
 @Component({
   selector: 'app-product-preview',
-  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, MatOptionsComponent, WhiteBorderOptionsComponent, UnsavedChangesDialogComponent, DesignActionsComponent],
+  imports: [TranslatePipe, CommonModule, FormsModule, SizeOptionsComponent, WhiteBorderOptionsComponent, UnsavedChangesDialogComponent, DesignActionsComponent, RoomViewComponent],
   templateUrl: './product-preview.component.html',
   styleUrl: './product-preview.component.scss',
 })
@@ -37,7 +37,7 @@ export class ProductPreviewComponent {
   // Outputs
   onClose = output<void>();
   onDesignSaved = output<string>();
-  onViewInRoom = output<DesignLayout>();
+  onViewInRoom = output<void>();
 
   // Services
   private commonApi = inject(CommonApiService);
@@ -55,6 +55,10 @@ export class ProductPreviewComponent {
   showGhost = signal(false);
   showGuides = signal(false);
   showGuideInfo = signal(true);
+  /** How the print is shown: the bare sheet, in its frame, or hanging in a room */
+  view = signal<'paper' | 'framed' | 'room'>('paper');
+  /** The design as the room shows it */
+  roomLayout = signal<DesignLayout | null>(null, { equal: (a, b) => JSON.stringify(a) === JSON.stringify(b) });
   isSaving = signal(false);
   /** Asks to save before closing when the design changed since it was opened or last saved */
   showDiscardConfirm = signal(false);
@@ -172,6 +176,7 @@ export class ProductPreviewComponent {
   });
   private readonly releaseOnDestroy = inject(DestroyRef).onDestroy(() => {
     this.scrollLock.unlock(this);
+    this.stopResizeWatch();
     this.host.remove();
   });
 
@@ -199,7 +204,6 @@ export class ProductPreviewComponent {
           this.smartInit();
           this.needsSmartInit = false;
         }
-        // Kept across a trip to the room view, so changes made before it still count
         if (!this.baseline) this.baseline = untracked(() => this.snapshot());
       }
       this.prevOpen = open;
@@ -339,14 +343,24 @@ export class ProductPreviewComponent {
     };
   }
 
-  viewInRoom() {
-    const layout = this.currentLayout();
-    if (layout) this.onViewInRoom.emit(layout);
+  showRoom() {
+    if (this.view() === 'room') return;
+    this.roomLayout.set(this.currentLayout());
+    this.view.set('room');
+    this.onViewInRoom.emit();
   }
 
-  /** Saves the design; the room view passes the layout it shows, since the hidden editor cannot measure it */
-  saveDesign(layout: DesignLayout | null = this.currentLayout()) {
+  // A size or border chosen, or the design started over, while the room shows: the room follows, once the editor underneath has laid it out
+  private readonly injector = inject(Injector);
+  private readonly roomFollowsEffect = effect(() => {
+    if (this.view() !== 'room') return;
+    this.snapshot();
+    afterNextRender(() => this.roomLayout.set(this.currentLayout()), { injector: this.injector });
+  });
+
+  saveDesign() {
     if (this.isSaving() || this.isAlreadySaved()) return;
+    const layout = this.currentLayout();
     if (!layout) return;
 
     this.isSaving.set(true);
@@ -403,8 +417,46 @@ export class ProductPreviewComponent {
   finishClose() {
     this.showDiscardConfirm.set(false);
     this.baseline = null;
+    // The next visit starts in the editor
+    if (this.view() === 'room') this.view.set('paper');
     this.onClose.emit();
   }
+
+  /** Phones: the options sheet, folded away to give the print the screen */
+  sheetCollapsed = signal(false);
+  private sheetGrabY = 0;
+
+  onSheetGrab(event: PointerEvent) {
+    this.sheetGrabY = event.clientY;
+    (event.target as HTMLElement).setPointerCapture(event.pointerId);
+  }
+
+  /** A tap flips the sheet; a drag sends it the way it was pulled */
+  onSheetRelease(event: PointerEvent) {
+    const pulled = event.clientY - this.sheetGrabY;
+    this.sheetCollapsed.update((collapsed) => (Math.abs(pulled) < 8 ? !collapsed : pulled > 0));
+  }
+
+  // The print changes size with the window and the sheet: a pan, kept in pixels, keeps its place on the print
+  private readonly keepPanOnResize = afterNextRender(() => {
+    const viewport = this.viewportRef()?.nativeElement;
+    if (!viewport) return;
+    let width = viewport.clientWidth;
+    const observer = new ResizeObserver(() => {
+      const next = viewport.clientWidth;
+      // Hidden (closed) reports 0: nothing to rescale
+      if (!next) return;
+      if (width && next !== width) {
+        const ratio = next / width;
+        this.translateX.update((x) => x * ratio);
+        this.translateY.update((y) => y * ratio);
+      }
+      width = next;
+    });
+    observer.observe(viewport);
+    this.stopResizeWatch = () => observer.disconnect();
+  });
+  private stopResizeWatch: () => void = () => {};
 
   // Fit mode
   setFitMode(mode: FitMode) {
@@ -547,7 +599,8 @@ export class ProductPreviewComponent {
   onKeyDown(event: KeyboardEvent) {
     if (!this.isOpen()) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-    if (this.showDiscardConfirm() && event.key !== 'Escape') return;
+    // The editing keys rest while the dialog or the room is up
+    if ((this.showDiscardConfirm() || this.view() === 'room') && event.key !== 'Escape') return;
 
     switch (event.key) {
       case 'Escape':

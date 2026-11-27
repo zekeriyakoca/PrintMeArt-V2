@@ -307,3 +307,109 @@ $teal: rgb(22, 122, 146);
     transition: none;
   }
 }
+
+// The rows are only a wrapper here; the tiles lay out as before
+.size-rows {
+  display: contents;
+}
+
+.more-short {
+  display: none;
+}
+
+// Preview & Design on a phone: one strip of sizes to slide through, More sizes pinned in front
+@media (max-width: 768px) {
+  :host(.phone-strip) {
+    // Scrolled into view, it stays clear of the sheet's handle above and the pinned actions below
+    scroll-margin: 2rem 0 5.5rem;
+
+    .size-options {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .size-rows {
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .size-row {
+      display: contents;
+    }
+
+    // The artwork's own size leads the strip, named, so it is never out of sight
+    .original-tooltip-wrapper {
+      flex: none;
+      order: -1;
+    }
+
+    .size-tile.original {
+      flex-direction: row;
+      gap: 0.35rem;
+
+      .original-tag {
+        position: static;
+        transform: none;
+        padding: 0;
+        background: none;
+        font-size: 0.6rem;
+      }
+    }
+
+    .size-tile {
+      flex: none;
+      width: auto;
+      height: 2rem;
+      padding: 0 0.8rem;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      box-shadow: none;
+      white-space: nowrap;
+
+      &.selected {
+        background: #fff;
+        color: $ink;
+        font-weight: 500;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+      }
+    }
+
+    .size-glyph,
+    .more-label {
+      display: none;
+    }
+
+    .more-short {
+      display: inline;
+    }
+
+    .more-toggle {
+      grid-column: 1;
+      grid-row: 1;
+      height: calc(2rem + 6px);
+      padding: 0 0.85rem;
+      border-radius: 999px;
+      background: #f1f5f9;
+      white-space: nowrap;
+
+      &.has-selection {
+        gap: 0.4rem;
+        background: #fff;
+      }
+    }
+
+    .more-panel {
+      grid-column: 1 / -1;
+    }
+  }
+}

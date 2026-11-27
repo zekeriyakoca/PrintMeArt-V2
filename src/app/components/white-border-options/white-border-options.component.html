@@ -1,4 +1,4 @@
-<div class="white-border">
+<div class="white-border" [class.custom-open]="isCustom()">
   <div class="wb-head">
     <span class="wb-title">{{ 'design.whiteBorder' | t }}</span>
     <span class="wb-value" [class.is-none]="border().cm === 0">
@@ -11,13 +11,17 @@
   </div>
 
   <div class="wb-tiles" role="radiogroup" [attr.aria-label]="'design.whiteBorder' | t">
+    <!-- Preview & Design on a phone: the slider waits behind this one -->
+    <button type="button" role="radio" class="wb-tile wb-custom" [class.selected]="isCustom()" [attr.aria-checked]="isCustom()" (click)="openCustom()">
+      <span class="wb-tile-label">{{ 'design.border.custom' | t }}</span>
+    </button>
     @for (tile of tiles(); track tile.id) {
       <button
         type="button"
         role="radio"
         class="wb-tile"
-        [class.selected]="border().presetId === tile.id"
-        [attr.aria-checked]="border().presetId === tile.id"
+        [class.selected]="!isCustom() && border().presetId === tile.id"
+        [attr.aria-checked]="!isCustom() && border().presetId === tile.id"
         (click)="selectPreset(tile.id)"
       >
         <span class="wb-mini" [style.aspect-ratio]="miniRatio()">

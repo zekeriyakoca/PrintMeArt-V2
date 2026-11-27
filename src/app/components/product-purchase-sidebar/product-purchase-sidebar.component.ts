@@ -21,8 +21,6 @@ import { PpiBarComponent } from '../ppi-bar/ppi-bar.component';
 import { AnalyticsService } from '../../services/telemetry/analytics.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { DimensionParser } from '../../utils/dimension-parser';
-import { RoomViewComponent } from '../room-view/room-view.component';
-import { DesignLayout } from '../../shared/design-composer';
 import { NO_WHITE_BORDER, WhiteBorder } from '../../shared/white-border';
 import { ProductPreviewComponent } from '../product-preview/product-preview.component';
 import { Bootstrap } from '../../services/bootstrap/bootstrap';
@@ -33,7 +31,7 @@ import { SavedDesignChangedDialogComponent } from '../saved-design-changed-dialo
 
 @Component({
   selector: 'app-product-purchase-sidebar',
-  imports: [TranslatePipe, CommonModule, RouterLink, LinkPipe, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, RoomViewComponent, EnhancementOptionsComponent, TooltipComponent, SavedDesignChangedDialogComponent],
+  imports: [TranslatePipe, CommonModule, RouterLink, LinkPipe, FrameOptionsComponent, IconComponent, MatOptionsComponent, PaperOptionsComponent, SizeOptionsComponent, PpiBarComponent, ProductPreviewComponent, EnhancementOptionsComponent, TooltipComponent, SavedDesignChangedDialogComponent],
   templateUrl: './product-purchase-sidebar.component.html',
   styleUrl: './product-purchase-sidebar.component.scss',
 })
@@ -57,7 +55,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   onSelectedFrameChanged = output<string>();
   /** The saved design's snapshot, or null once it no longer matches the options chosen (size, frame, mat, border, artwork) */
   designSaved = output<string | null>();
-  /** Preview & Design (or the room view after it) closed */
+  /** Preview & Design closed */
   previewClosed = output<void>();
   /** The price of the options chosen now, for the page's search engine description */
   priceChange = output<number>();
@@ -145,7 +143,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   private readonly priceBlock = viewChild<ElementRef<HTMLElement>>('priceBlock');
   showStickyBar = signal(false);
   /** Custom design: the bottom dock with the buttons takes over while it is up, so the two never show at once */
-  stickyBarShown = computed(() => this.showStickyBar() && !this.showActionDock() && !this.showPreview() && !this.roomLayout());
+  stickyBarShown = computed(() => this.showStickyBar() && !this.showActionDock() && !this.showPreview());
   /** The uploaded image on the custom design page, else the product's own */
   stickyThumb = computed(() => this.customImageUrl() || this.product().images?.[0]?.thumb || null);
   /** How far down the page we are, for the sticky bar's progress line */
@@ -174,8 +172,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
       this.hasAllOptionsSelected() &&
       this.calculatedPrice() > 0 &&
       this.actionsBelow() &&
-      !this.showPreview() &&
-      !this.roomLayout(),
+      !this.showPreview(),
   );
 
   constructor(
@@ -217,35 +214,9 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
   }
 
   showPreview = signal(false);
-  /** Design shown in the room view while it is open */
-  roomLayout = signal<DesignLayout | null>(null);
   private readonly preview = viewChild(ProductPreviewComponent);
-  /** Closing the room view with an unsaved design asks first */
-  roomConfirm = signal(false);
-  roomSaving = computed(() => this.preview()?.isSaving() ?? false);
-
-  closeRoom() {
-    const preview = this.preview();
-    if (preview?.hasUnsavedChanges()) {
-      this.roomConfirm.set(true);
-      return;
-    }
-    preview?.finishClose();
-  }
-
-  saveFromRoom() {
-    this.preview()?.saveDesign(this.roomLayout());
-  }
-
-  discardFromRoom() {
-    this.preview()?.discardChanges();
-  }
-
-  /** The editor closed (it also closes the room view it led to) */
   onPreviewClosed() {
     this.showPreview.set(false);
-    this.roomLayout.set(null);
-    this.roomConfirm.set(false);
     this.previewClosed.emit();
   }
 
@@ -274,10 +245,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     this.analytics.trackDesignPreview('design_preview_opened', this.product().id, { custom_image: !!this.customImageUrl(), mobile: window.innerWidth < 768 });
   }
 
-  onViewInRoom(layout: DesignLayout) {
-    this.roomConfirm.set(false);
-    this.roomLayout.set(layout);
-    this.showPreview.set(false);
+  onViewInRoom() {
     this.analytics.trackDesignPreview('room_view_opened', this.product().id, { custom_image: !!this.customImageUrl() });
   }
   private savedDesign = signal<SavedDesign | null>(null);
@@ -306,7 +274,7 @@ export class ProductPurchaseSidebarComponent extends BasePageComponent {
     const design = untracked(() => this.savedDesign());
     if (!design || url) return;
     untracked(() => {
-      if (design.image !== this.designImageUrl() || this.showPreview() || this.roomLayout()) {
+      if (design.image !== this.designImageUrl() || this.showPreview()) {
         this.dropSavedDesign();
       } else {
         this.showSavedDesignChanged.set(true);

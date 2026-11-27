@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, input, model, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, input, model, signal } from '@angular/core';
 import { SizeOption } from '../../models/size-option';
 import { NgTemplateOutlet } from '@angular/common';
 import { TooltipComponent } from '../shared/tooltip/tooltip.component';
@@ -16,6 +16,13 @@ export class SizeOptionsComponent {
   moreSizes = input<SizeOption[]>([]);
 
   showMoreSizes = signal(false);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+
+  /** Opens or closes More sizes; opened, it is brought into view once it has unfolded */
+  toggleMoreSizes() {
+    this.showMoreSizes.update((open) => !open);
+    if (this.showMoreSizes()) setTimeout(() => this.host.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 260);
+  }
 
   rows = computed(() => {
     const all = this.sizes();

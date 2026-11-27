@@ -1,27 +1,16 @@
-.room-view {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
+// The room and its picker, filling whatever Preview & Design gives it
+:host {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: rgba(17, 17, 19, 0.88);
-  backdrop-filter: blur(6px);
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
   animation: fade-in 0.2s ease-out;
-}
-
-.room-view-body {
-  display: flex;
-  gap: 1.5rem;
-  width: min(1320px, 100%);
-  max-height: 100%;
 }
 
 .stage {
   position: relative;
   flex: 1;
-  min-width: 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +18,7 @@
 
 .stage-canvas {
   max-width: 100%;
-  max-height: calc(100vh - 4rem);
+  max-height: 100%;
   border-radius: 0.75rem;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
@@ -39,7 +28,6 @@
 }
 
 .preparing {
-  min-height: min(60vh, 480px);
   justify-content: center;
 }
 
@@ -58,78 +46,31 @@
   backdrop-filter: blur(4px);
 }
 
-.panel {
-  width: 340px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.75rem 1.5rem;
-  border-radius: 1rem;
-  background: #fbfaf8;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.close-btn {
-  width: 2rem;
-  height: 2rem;
-  margin: -0.4rem -0.5rem -0.4rem 0;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  color: #64748b;
-  transition: background 0.15s ease, color 0.15s ease;
-
-  &:hover {
-    color: #1e293b;
-    background: #f1f5f9;
-  }
-}
-
-.eyebrow {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #94a3b8;
-}
-
-.title {
-  margin-top: 0.35rem;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.label {
-  margin-bottom: 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #64748b;
-}
-
+// A strip of rooms, where the editor has its tools
 .rooms {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  display: flex;
+  align-self: center;
+  flex-shrink: 0;
+  gap: 0.4rem;
+  max-width: 100%;
+  padding: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
 }
 
 .room-thumb {
-  aspect-ratio: 1;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 0.45rem;
+  opacity: 0.7;
   outline: 2px solid transparent;
-  outline-offset: 2px;
-  transition: outline-color 0.15s ease;
+  outline-offset: -2px;
+  transition: opacity 0.15s ease, outline-color 0.15s ease;
 
   img {
     width: 100%;
@@ -137,75 +78,13 @@
     object-fit: cover;
   }
 
-  &.active {
-    outline-color: #384f8c;
-  }
-}
-
-.footnote {
-  margin-top: auto;
-  font-size: 0.72rem;
-  line-height: 1.5;
-  color: #94a3b8;
-}
-
-.edit-design-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  width: 100%;
-  padding: 0.7rem 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 999px;
-  color: #384f8c;
-  background: #fff;
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-
   &:hover {
-    border-color: #384f8c;
-    background: #f8fafc;
-  }
-}
-
-// Phones: picture on top, panel below, scrolling together
-@media (max-width: 900px) {
-  .room-view {
-    padding: 0;
-    align-items: stretch;
+    opacity: 1;
   }
 
-  .room-view-body {
-    flex-direction: column;
-    gap: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .stage-canvas {
-    max-height: 66vh;
-    border-radius: 0;
-  }
-
-  // Scrolls with the picture, so Continue editing can stick to the screen's bottom
-  .panel {
-    width: 100%;
-    overflow: visible;
-    border-radius: 1rem 1rem 0 0;
-  }
-
-  // Pinned to the bottom of the screen while its place in the panel is further down
-  .edit-design {
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    margin: 0 -1.5rem;
-    padding: 0.75rem 1.5rem calc(0.75rem + env(safe-area-inset-bottom));
-    background: linear-gradient(to bottom, rgba(251, 250, 248, 0), #fbfaf8 35%);
+  &.active {
+    opacity: 1;
+    outline-color: #384f8c;
   }
 }
 

@@ -157,6 +157,7 @@
     "quality": "Kwaliteit",
     "trueToOriginal": "Trouw aan het origineel",
     "originalShort": "Origineel",
+    "moreShort": "Meer",
     "more": "Meer formaten"
   },
   "frames": {
@@ -584,7 +585,8 @@
       "none": "Geen",
       "slim": "Smal",
       "classic": "Klassiek",
-      "gallery": "Galerie"
+      "gallery": "Galerie",
+      "custom": "Eigen"
     },
     "matIncluded": "Hoogwaardig passe-partout inbegrepen",
     "noMat": "Geen passe-partout",
@@ -596,6 +598,8 @@
     "save": "Opslaan",
     "saved": "Al opgeslagen",
     "inRoom": "Aan de muur",
+    "viewPaper": "Papier",
+    "viewFramed": "In lijst",
     "previewOnly": "Alleen een voorbeeld",
     "optimize": "Ons team optimaliseert je kunstwerk professioneel voor de perfecte print.",
     "close": "Voorbeeld sluiten",
@@ -610,10 +614,7 @@
   },
   "room": {
     "toScale": "{{width}} × {{height}} cm · op ware grootte",
-    "eyebrow": "Aan de muur bekijken",
     "room": "Kamer",
-    "footnote": "Kamers worden op ware grootte getoond, zodat je formaten vergelijkt zoals op je eigen muur.",
-    "edit": "Ontwerp aanpassen",
     "close": "Sluiten"
   },
   "preparing": {

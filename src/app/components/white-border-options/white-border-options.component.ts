@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
-import { Component, computed, input, model } from '@angular/core';
+import { Component, ElementRef, Injector, afterNextRender, computed, inject, input, model, signal } from '@angular/core';
 import {
   WHITE_BORDER_PRESETS,
   WHITE_BORDER_STEP_CM,
@@ -44,7 +44,21 @@ export class WhiteBorderOptionsComponent {
 
   miniRatio = computed(() => `${this.widthCm()} / ${this.heightCm()}`);
 
+  /** Phones in Preview & Design: the customer asked for a width of their own, so the slider shows */
+  customOpen = signal(false);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly injector = inject(Injector);
+
+  /** Shows the slider and brings it into view, where the sheet is too short to show it */
+  openCustom() {
+    this.customOpen.set(true);
+    afterNextRender(() => this.host.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), { injector: this.injector });
+  }
+
+  isCustom = computed(() => this.customOpen() || this.border().presetId === null);
+
   selectPreset(id: WhiteBorderPresetId) {
+    this.customOpen.set(false);
     this.border.set(whiteBorderFromPreset(id, this.widthCm(), this.heightCm()));
   }
 

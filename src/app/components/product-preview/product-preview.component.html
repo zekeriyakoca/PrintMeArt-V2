@@ -1,4 +1,4 @@
-<div class="preview-modal" [style.display]="isOpen() ? null : 'none'">
+<div class="preview-modal" [class.view-framed]="view() === 'framed'" [class.view-room]="view() === 'room'" [style.display]="isOpen() ? null : 'none'">
     <!-- Backdrop -->
     <div class="backdrop" (click)="close()"></div>
 
@@ -16,54 +16,11 @@
     <div class="preview-layout">
       <!-- LEFT: Preview area -->
       <div class="preview-area">
-        <!-- Toolbar (compact, centered) -->
-        <div class="toolbar">
-          <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">{{ 'design.contain' | t }}</button>
-          <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">{{ 'design.cover' | t }}</button>
-          <button class="tool-btn" [class.active]="fitMode() === 'free'" (click)="setFitMode('free')">{{ 'design.free' | t }}</button>
-
-          <div class="toolbar-divider"></div>
-
-          <!-- Rotate 90° -->
-          <button class="tool-btn" [class.active]="isLandscape()" (click)="toggleLandscape()" [title]="'design.rotate' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="1 4 1 10 7 10"></polyline>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-            </svg>
-            <span>90°</span>
-          </button>
-
-          <!-- Center -->
-          <button class="tool-btn" (click)="centerImage()" [title]="'design.centerKey' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <line x1="12" y1="1" x2="12" y2="4"></line>
-              <line x1="12" y1="20" x2="12" y2="23"></line>
-              <line x1="1" y1="12" x2="4" y2="12"></line>
-              <line x1="20" y1="12" x2="23" y2="12"></line>
-            </svg>
-            <span>{{ 'design.center' | t }}</span>
-          </button>
-
-          <!-- Reset -->
-          <button class="tool-btn" (click)="resetZoom()" [title]="'design.resetKey' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-              <path d="M3 3v5h5"></path>
-            </svg>
-            <span>{{ 'design.reset' | t }}</span>
-          </button>
-
-          <div class="toolbar-divider"></div>
-
-          <!-- Guides toggle -->
-          <button class="guides-btn" [class.active]="showGuides()" (click)="showGuides.set(!showGuides())" [title]="'design.dimensions' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 2v20h20"></path>
-              <path d="M6 16l4-8 4 4 4-12"></path>
-            </svg>
-            <span>{{ 'design.guides' | t }}</span>
-          </button>
+        <!-- How the print is shown -->
+        <div class="view-toggle" role="group">
+          <button type="button" class="view-btn" [class.active]="view() === 'paper'" [attr.aria-pressed]="view() === 'paper'" (click)="view.set('paper')">{{ 'design.viewPaper' | t }}</button>
+          <button type="button" class="view-btn" [class.active]="view() === 'framed'" [attr.aria-pressed]="view() === 'framed'" (click)="view.set('framed')">{{ 'design.viewFramed' | t }}</button>
+          <button type="button" class="view-btn" [class.active]="view() === 'room'" [attr.aria-pressed]="view() === 'room'" (click)="showRoom()">{{ 'design.inRoom' | t }}</button>
         </div>
 
         <!-- Artboard area -->
@@ -152,32 +109,91 @@
           }
         </div>
 
-        <!-- Zoom bar (bottom) -->
-        <div class="zoom-bar">
-          <span class="zoom-label">{{ 'design.zoom' | t }}</span>
-          <div class="zoom-divider"></div>
-          <button class="zoom-btn" (click)="zoomOut()" [aria-label]="'design.zoomOut' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </button>
-          <input type="range" class="zoom-slider" min="0.7" max="2" step="0.01" [ngModel]="clampedScale()" (ngModelChange)="scale.set($event)" />
-          <button class="zoom-btn" (click)="zoomIn()" [aria-label]="'design.zoomIn' | t">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <span class="zoom-value">{{ zoomPercent() }}%</span>
+        <!-- The room takes the stage; the editor stays underneath, so the design can still be measured and saved -->
+        @if (view() === 'room' && roomLayout(); as layout) {
+          <app-room-view class="room-stage" [imageUrl]="imageUrl()" [frameName]="frameName()" [matIncluded]="showsMat()" [layout]="layout" [selectedSize]="selectedSize()"></app-room-view>
+        }
+
+        <!-- Tools: fit, turn, centre, guides and zoom in one dock -->
+        <div class="tool-dock">
+          <!-- Toolbar (compact, centered) -->
+          <div class="toolbar">
+            <button class="tool-btn" [class.active]="fitMode() === 'contain'" (click)="setFitMode('contain')">{{ 'design.contain' | t }}</button>
+            <button class="tool-btn" [class.active]="fitMode() === 'cover'" (click)="setFitMode('cover')">{{ 'design.cover' | t }}</button>
+            <button class="tool-btn" [class.active]="fitMode() === 'free'" (click)="setFitMode('free')">{{ 'design.free' | t }}</button>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Rotate 90° -->
+            <button class="tool-btn" [class.active]="isLandscape()" (click)="toggleLandscape()" [title]="'design.rotate' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              <span>90°</span>
+            </button>
+
+            <!-- Center -->
+            <button class="tool-btn" (click)="centerImage()" [title]="'design.centerKey' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <line x1="12" y1="1" x2="12" y2="4"></line>
+                <line x1="12" y1="20" x2="12" y2="23"></line>
+                <line x1="1" y1="12" x2="4" y2="12"></line>
+                <line x1="20" y1="12" x2="23" y2="12"></line>
+              </svg>
+              <span class="tool-label">{{ 'design.center' | t }}</span>
+            </button>
+
+            <!-- Reset -->
+            <button class="tool-btn" (click)="resetZoom()" [title]="'design.resetKey' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span class="tool-label">{{ 'design.reset' | t }}</span>
+            </button>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Guides toggle -->
+            <button class="guides-btn" [class.active]="showGuides()" (click)="showGuides.set(!showGuides())" [title]="'design.dimensions' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 2v20h20"></path>
+                <path d="M6 16l4-8 4 4 4-12"></path>
+              </svg>
+              <span class="tool-label">{{ 'design.guides' | t }}</span>
+            </button>
+          </div>
+
+          <!-- Zoom bar (bottom) -->
+          <div class="zoom-bar">
+            <span class="zoom-label">{{ 'design.zoom' | t }}</span>
+            <div class="zoom-divider"></div>
+            <button class="zoom-btn" (click)="zoomOut()" [aria-label]="'design.zoomOut' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <input type="range" class="zoom-slider" min="0.7" max="2" step="0.01" [ngModel]="clampedScale()" (ngModelChange)="scale.set($event)" />
+            <button class="zoom-btn" (click)="zoomIn()" [aria-label]="'design.zoomIn' | t">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <span class="zoom-value">{{ zoomPercent() }}%</span>
+          </div>
         </div>
       </div>
 
       <!-- RIGHT: Side panel -->
-      <div class="side-panel">
+      <div class="side-panel" [class.collapsed]="sheetCollapsed()">
+        <button type="button" class="sheet-handle" [attr.aria-expanded]="!sheetCollapsed()" [attr.aria-label]="'design.printDetails' | t" (pointerdown)="onSheetGrab($event)" (pointerup)="onSheetRelease($event)"></button>
         <h3 class="panel-title">{{ 'design.printDetails' | t }}</h3>
 
         <!-- Size selector -->
         <div class="panel-section">
           <label class="panel-label">{{ 'product.size' | t }}</label>
-          <app-size-options [sizes]="sizes()" [(sizeSelected)]="selectedSize" [moreSizes]="hasFrame() ? [] : moreSizes"></app-size-options>
+          <app-size-options class="phone-strip" [sizes]="sizes()" [(sizeSelected)]="selectedSize" [moreSizes]="hasFrame() ? [] : moreSizes"></app-size-options>
         </div>
 
         <!-- Divider: Your selections -->
@@ -187,7 +203,7 @@
 
         <!-- White border -->
         <div class="panel-section">
-          <app-white-border-options [widthCm]="effectiveSize().val1" [heightCm]="effectiveSize().val2" [(border)]="whiteBorder"></app-white-border-options>
+          <app-white-border-options class="phone-strip" [widthCm]="effectiveSize().val1" [heightCm]="effectiveSize().val2" [(border)]="whiteBorder"></app-white-border-options>
         </div>
 
         <!-- Mat showcase -->
@@ -217,7 +233,7 @@
         </div>
 
         <!-- Design actions -->
-        <app-design-actions class="design-actions" [saving]="isSaving()" [saved]="isAlreadySaved()" (reset)="resetDesign()" (save)="saveDesign()" (viewInRoom)="viewInRoom()"></app-design-actions>
+        <app-design-actions class="design-actions" [saving]="isSaving()" [saved]="isAlreadySaved()" (reset)="resetDesign()" (save)="saveDesign()"></app-design-actions>
 
         <!-- Reassurance banner -->
         <div class="reassurance-banner">

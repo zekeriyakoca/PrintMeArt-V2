@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 
-/** Preview & Design's actions: start over, save the design, and see it in a room */
+/** Preview & Design's actions: start over and save the design */
 @Component({
   imports: [TranslatePipe],
   selector: 'app-design-actions',
@@ -14,5 +14,4 @@ export class DesignActionsComponent {
   saved = input(false);
   reset = output<void>();
   save = output<void>();
-  viewInRoom = output<void>();
 }
