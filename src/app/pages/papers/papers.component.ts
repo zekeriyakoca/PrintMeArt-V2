@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PAPER_PAGES, paperPath, paperText } from '../../papers/papers';
+import { PAPER_PAGES, paperName, paperPath, paperText } from '../../papers/papers';
 import { LanguageService } from '../../services/i18n/language.service';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
 import { TranslationService } from '../../services/i18n/translation.service';
 import { SeoService } from '../../services/seo/seo.service';
-import { fullName, statusKey } from '../paper/paper.component';
+import { statusKey } from '../paper/paper.component';
 
 /** /nl/papier, /en/paper: every paper we print on */
 @Component({
@@ -21,7 +21,7 @@ export class PapersComponent implements OnInit {
 
   readonly papers = PAPER_PAGES.map((paper, index) => ({
     number: String(index + 1).padStart(2, '0'),
-    name: fullName(paper),
+    name: paperName(paper),
     weight: paper.weightGsm,
     status: statusKey(paper),
     text: paperText(paper, this.language),

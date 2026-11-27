@@ -13,6 +13,7 @@ import {
 } from '../../models/product';
 import { SelectedOptionDto } from '../../models/cart-item';
 import { ArtistDetailDto, ArtistSummaryDto } from '../../models/artist';
+import { PAPER_TIERS, PaperTier } from '../../papers/papers';
 
 @Injectable({
   providedIn: 'root',
@@ -68,8 +69,11 @@ export class ApiService {
     const mat = group('including mat')?.options[0];
     const size = group('size')?.options[0];
     if (!paper || !frame || !mat || !size) return of([]);
-    const price = (s: { name: string; val1: number; val2: number }, grade: string, paperName: string) => {
-      const option = paper.options.find((o) => o.value === grade) ?? paper.options[0];
+    const tierOf = (id: PaperTier['id']) => PAPER_TIERS.find((tier) => tier.id === id)!;
+    const price = (s: { name: string; val1: number; val2: number }, tier: PaperTier) => {
+      const option = paper.options.find((o) => o.value === tier.grade) ?? paper.options[0];
+      // Every paper of a tier costs the same; the name is only what the order would say
+      const paperName = tier.studioChoiceName;
       const specs = { spec1: s.val1.toString(), spec2: s.val2.toString() };
       return this._httpClient
         .post<{ price: number }>(`${this.PRICING_API_URL}/pricing/v1/product/calculate-price`, {
@@ -85,7 +89,7 @@ export class ApiService {
     };
     return forkJoin(
       sizes.map((s) =>
-        forkJoin({ poster: price(s, 'Home', 'Premium Poster'), cotton: price(s, 'Museum', 'Hahnemühle Photo Rag') }).pipe(
+        forkJoin({ poster: price(s, tierOf('poster')), cotton: price(s, tierOf('cotton')) }).pipe(
           map(({ poster, cotton }) => ({ size: s.name, poster, cotton })),
         ),
       ),

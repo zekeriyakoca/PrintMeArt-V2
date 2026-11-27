@@ -8,6 +8,12 @@ const IMAGES = 'https://genstorageaccount3116.blob.core.windows.net/printme-imag
 export interface PaperText {
   /** What the paper is, in a few words, e.g. 'Smooth cotton paper' */
   kind: string;
+  /** Its surface, next to the weight in the paper chooser, e.g. 'Smooth, matte' */
+  surface: string;
+  /** Two or three words that set it apart, as labels in the paper chooser */
+  labels: string[];
+  /** What it suits best, in a few words each; the chooser's row shows the first */
+  idealFor: string[];
   title: string;
   description: string;
   lead: string;
@@ -34,6 +40,8 @@ export interface PaperPage {
   onRequest?: boolean;
   /** Not printed on yet */
   soon?: boolean;
+  /** Has a page, but no tile in the paper chooser */
+  offMenu?: boolean;
   nl: PaperText;
   en: PaperText;
 }
@@ -54,6 +62,56 @@ export function paperBySlug(slug: string): PaperPage | undefined {
   return PAPER_PAGES.find((p) => p.slug === slug);
 }
 
+/** 'Hahnemühle Photo Rag'; our own Premium Poster has no brand in front. Also the paper's name on the order */
+export function paperName(paper: PaperPage | null): string {
+  return paper ? [paper.brand, paper.name].filter(Boolean).join(' ') : '';
+}
+
+/** A price group: every paper in it costs the same */
+export interface PaperTier {
+  id: PaperPage['price'];
+  /** The backend's paper option the tier is sold as (the option's value); the paper itself travels as the option's name */
+  grade: string;
+  /** The paper's name on the order when the studio picks it, so the team sees the choice is theirs */
+  studioChoiceName: string;
+  /** One of its papers up close, in the tier toggle */
+  image: string;
+}
+
+/** Cheapest first */
+export const PAPER_TIERS: PaperTier[] = [
+  { id: 'poster', grade: 'Home', studioChoiceName: "Studio's choice: Premium Poster (Fujifilm)", image: `${IMAGES}/paper-fine-art-1.webp` },
+  { id: 'cotton', grade: 'Museum', studioChoiceName: "Studio's choice: Fine Art (Hahnemühle)", image: `${IMAGES}/paper-art-1.webp` },
+];
+
+/** The tier and, in it, the paper the customer chose; no paper means our studio picks it */
+export interface PaperChoice {
+  tier: PaperTier;
+  paper: PaperPage | null;
+}
+
+/** The paper a catalog print opens with */
+const CATALOG_PAPER_SLUG = 'hahnemuhle-fineart-baryta';
+
+/**
+ * What a page opens with: fine art in both cases. For the customer's own image our studio picks the paper,
+ * a print from the catalog opens on FineArt Baryta.
+ */
+export function defaultPaperChoice(ownImage: boolean): PaperChoice {
+  const tier = PAPER_TIERS[PAPER_TIERS.length - 1];
+  return { tier, paper: ownImage ? null : (paperBySlug(CATALOG_PAPER_SLUG) ?? null) };
+}
+
+/** The papers of a tier the customer can pick themselves */
+export function papersOfTier(tier: PaperTier): PaperPage[] {
+  return PAPER_PAGES.filter((p) => p.price === tier.id && !p.soon && !p.onRequest && !p.offMenu);
+}
+
+/** What the order says was chosen */
+export function paperChoiceName(choice: PaperChoice): string {
+  return choice.paper ? paperName(choice.paper) : choice.tier.studioChoiceName;
+}
+
 const GICLEE_NL = 'Giclée, pigmentinkt in twaalf kleuren';
 const GICLEE_EN = 'Giclée, twelve pigment inks';
 
@@ -68,6 +126,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Glad katoenpapier',
+      surface: 'Glad, mat',
+      labels: ['Mat', 'Glad', 'Onze favoriet'],
+      idealFor: ['Schilderijen / kunstreproducties', 'Illustraties', 'Zachte tinten, galeriestijl'],
       title: 'Hahnemühle Photo Rag 308 g/m²: fine-art print op glad katoenpapier',
       description: 'Hahnemühle Photo Rag: glad, mat papier van 100% katoen, 308 g/m². Waar het voor past, wat het kost per formaat en hoe je je eigen foto erop laat printen.',
       lead: 'Glad, mat katoenpapier van 308 g/m². Het papier dat we het vaakst aanraden: het laat fijn detail en zachte kleurovergangen zien zonder zelf de aandacht te trekken.',
@@ -98,6 +159,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Smooth cotton paper',
+      surface: 'Smooth, matte',
+      labels: ['Matte', 'Smooth', 'Signature choice'],
+      idealFor: ['Paintings / art reproductions', 'Illustrations', 'Soft tones, gallery style'],
       title: 'Hahnemühle Photo Rag 308 gsm: fine art print on smooth cotton paper',
       description: 'Hahnemühle Photo Rag: smooth, matte 100% cotton paper, 308 gsm. What it suits, what it costs per size and how to have your own photo printed on it.',
       lead: 'Smooth, matte cotton paper at 308 gsm. The paper we recommend most often: it shows fine detail and soft colour transitions without drawing attention to itself.',
@@ -136,6 +200,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Gestructureerd katoenpapier',
+      surface: 'Gestructureerd, mat',
+      labels: ['Gestructureerd', 'Mat', 'Schilderachtig'],
+      idealFor: ['Schilderijen in olie- of acrylstijl', 'Kunstwerken waarbij structuur iets toevoegt'],
       title: 'Hahnemühle Museum Etching 350 g/m²: fine-art print op gestructureerd katoenpapier',
       description: 'Hahnemühle Museum Etching: zwaar katoenpapier van 350 g/m² met een fijne structuur, zonder optische witmakers. Voor schilderijen en werk met textuur. Prijzen per formaat.',
       lead: 'Zwaar katoenpapier van 350 g/m² met een fijne, voelbare structuur. Een schilderij krijgt er de tastbaarheid van het origineel door terug.',
@@ -166,6 +233,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Textured cotton paper',
+      surface: 'Textured, matte',
+      labels: ['Textured', 'Matte', 'Painterly'],
+      idealFor: ['Oil/acrylic style paintings', 'Artworks where texture adds value'],
       title: 'Hahnemühle Museum Etching 350 gsm: fine art print on textured cotton paper',
       description: 'Hahnemühle Museum Etching: heavy 350 gsm cotton paper with a fine texture and no optical brighteners. For paintings and textured work. Prices per size.',
       lead: 'Heavy cotton paper at 350 gsm with a fine texture you can feel. It gives a painting back some of the presence of the original.',
@@ -204,6 +274,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'cotton',
     nl: {
       kind: 'Glanzend barietpapier',
+      surface: 'Glad, glanzend',
+      labels: ['Glans', 'Diep zwart', 'Foto'],
+      idealFor: ['Foto’s met veel contrast', 'Zwart-wit'],
       title: 'Hahnemühle FineArt Baryta 325 g/m²: fine-art print met glans en diep zwart',
       description: 'Hahnemühle FineArt Baryta: helderwit, glanzend barietpapier van 325 g/m². Voor zwart-wit en foto’s met veel contrast.',
       lead: 'Helderwit, glanzend papier van 325 g/m² met een barietlaag, zoals het klassieke doka-papier. Het geeft het diepste zwart en het meeste contrast van al onze papieren.',
@@ -234,6 +307,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Glossy baryta paper',
+      surface: 'Smooth, glossy',
+      labels: ['Gloss', 'Deep blacks', 'Photo'],
+      idealFor: ['High-contrast photos', 'Black and white'],
       title: 'Hahnemühle FineArt Baryta 325 gsm: fine art print with gloss and deep blacks',
       description: 'Hahnemühle FineArt Baryta: bright white, glossy baryta paper, 325 gsm. For black-and-white and high-contrast photos.',
       lead: 'Bright white, glossy paper at 325 gsm with a baryta layer, like classic darkroom paper. It gives the deepest blacks and the most contrast of all our papers.',
@@ -270,8 +346,12 @@ export const PAPER_PAGES: PaperPage[] = [
     weightGsm: 310,
     image: `${IMAGES}/paper-photo-1.webp`,
     price: 'cotton',
+    offMenu: true,
     nl: {
       kind: 'Glad katoenpapier voor fotografie',
+      surface: 'Glad, mat',
+      labels: ['Mat', 'Glad', 'Kleurecht'],
+      idealFor: ['Kunstreproducties en schilderijen', 'Fotografie met een fine-art uitstraling'],
       title: 'Canson Rag Photographique II 310 g/m²: fine-art print voor fotografie',
       description: 'Canson Infinity Rag Photographique II: glad, mat papier van 100% katoen, 310 g/m², gemaakt voor fotografie.',
       lead: 'Glad, mat katoenpapier van 310 g/m², door Canson gemaakt voor fotografie. Neutraal van kleur, met veel detail en een zachte fine-art uitstraling.',
@@ -297,6 +377,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Smooth cotton paper for photography',
+      surface: 'Smooth, matte',
+      labels: ['Matte', 'Smooth', 'Colour-accurate'],
+      idealFor: ['Art reproductions and paintings', 'Photography with a fine art look'],
       title: 'Canson Rag Photographique II 310 gsm: fine art print for photography',
       description: 'Canson Infinity Rag Photographique II: smooth, matte 100% cotton paper, 310 gsm, made for photography.',
       lead: 'Smooth, matte cotton paper at 310 gsm, made by Canson for photography. Neutral in colour, with plenty of detail and a soft fine art look.',
@@ -330,6 +413,9 @@ export const PAPER_PAGES: PaperPage[] = [
     price: 'poster',
     nl: {
       kind: 'Mat fotopapier',
+      surface: 'Fijn gestructureerd, mat',
+      labels: ['Fotopapier', 'Mat'],
+      idealFor: ['Kunstprints met de beste prijs-kwaliteit', 'Kunst voor elke dag'],
       title: 'Premium Poster 234 g/m²: fotoafdruk op Fujifilm-papier',
       description: 'Premium Poster: een echte fotoafdruk op mat Fujifilm Crystal Archive-papier, 234 g/m². Levendige kleuren voor de beste prijs. Prijzen per formaat.',
       lead: 'Een echte fotoafdruk op mat Fujifilm-papier van 234 g/m². Levendige kleuren en diep zwart, voor de laagste prijs per formaat.',
@@ -357,6 +443,9 @@ export const PAPER_PAGES: PaperPage[] = [
     },
     en: {
       kind: 'Matte photo paper',
+      surface: 'Fine-textured, matte',
+      labels: ['Photo paper', 'Matte'],
+      idealFor: ['Best value art prints', 'Everyday art display'],
       title: 'Premium Poster 234 gsm: photographic print on Fujifilm paper',
       description: 'Premium Poster: a real photographic print on matte Fujifilm Crystal Archive paper, 234 gsm. Vivid colours at the best price. Prices per size.',
       lead: 'A real photographic print on matte Fujifilm paper, 234 gsm. Vivid colours and deep blacks, at the lowest price per size.',
@@ -381,6 +470,73 @@ export const PAPER_PAGES: PaperPage[] = [
         '<strong>Your own photos</strong> in vivid colours at a lower price.',
       ],
       lessFor: 'For a print that lasts generations choose cotton paper: <a href="/en/paper/hahnemuhle-photo-rag">Photo Rag</a> or <a href="/en/paper/hahnemuhle-museum-etching">Museum Etching</a>.',
+    },
+  },
+  {
+    slug: 'premium-poster-silk',
+    brand: '',
+    name: 'Premium Poster Silk',
+    weightGsm: 232,
+    price: 'poster',
+    nl: {
+      kind: 'Fotopapier met zijdeglans',
+      surface: 'Zijdeglans',
+      labels: ['Fotopapier', 'Zijdeglans', 'FSC'],
+      idealFor: ['Foto’s in levendige kleuren'],
+      title: 'Premium Poster Silk 232 g/m²: fotoafdruk met zijdeglans op Fujifilm-papier',
+      description: 'Premium Poster Silk: een echte fotoafdruk op Fujifilm Crystal Archive-papier met zijdeglans, 232 g/m², FSC-gecertificeerd. Prijzen per formaat.',
+      lead: 'Een echte fotoafdruk op Fujifilm-papier van 232 g/m² met een zijdeglans. Kleuren krijgen meer diepte dan op mat papier, zonder de spiegeling van hoogglans.',
+      summary: [
+        'Fotografische afdruk op Fujifilm Crystal Archive-papier, 232 g/m².',
+        'Zijdeglans met een fijne structuur: diepe kleuren en weinig spiegeling.',
+        'Kost hetzelfde als de matte Premium Poster. Het papier is FSC-gecertificeerd.',
+      ],
+      about: [
+        'Premium Poster Silk is dezelfde fotografische afdruk als onze matte Premium Poster, belicht op Fujifilm Crystal Archive-papier, maar met een zijdeglanzend oppervlak.',
+        'De fijne structuur breekt het licht, zodat je minder spiegeling ziet dan bij hoogglans. Kleuren en zwart zijn dieper dan op mat papier. Het is geen katoenpapier en geen giclée.',
+      ],
+      specs: [
+        ['Gewicht', '232 g/m²'],
+        ['Materiaal', 'Fujifilm Crystal Archive fotopapier, FSC-gecertificeerd'],
+        ['Oppervlak', 'Zijdeglans, fijn gestructureerd'],
+        ['Druk', 'Fotografische afdruk'],
+      ],
+      bestFor: [
+        '<strong>Je eigen foto’s</strong>: vakantie, familie en portretten.',
+        '<strong>Beelden met veel kleur en contrast</strong> die van een lichte glans beter worden.',
+        '<strong>Wie de look van een klassieke fotoafdruk wil</strong> voor een lage prijs.',
+      ],
+      lessFor: 'Hangt de print tegenover een raam of wil je helemaal geen glans, kies dan de matte <a href="/nl/papier/premium-poster">Premium Poster</a>. Voor een print die generaties meegaat kies je fine-art papier, bijvoorbeeld <a href="/nl/papier/hahnemuhle-photo-rag">Photo Rag</a>.',
+    },
+    en: {
+      kind: 'Photo paper with a silk sheen',
+      surface: 'Silk sheen',
+      labels: ['Photo paper', 'Silk sheen', 'FSC'],
+      idealFor: ['Photos in vivid colours'],
+      title: 'Premium Poster Silk 232 gsm: photographic print with a silk sheen on Fujifilm paper',
+      description: 'Premium Poster Silk: a real photographic print on Fujifilm Crystal Archive paper with a silk sheen, 232 gsm, FSC-certified. Prices per size.',
+      lead: 'A real photographic print on Fujifilm paper, 232 gsm, with a silk sheen. Colours gain more depth than on matte paper, without the reflections of high gloss.',
+      summary: [
+        'Photographic print on Fujifilm Crystal Archive paper, 232 gsm.',
+        'Silk sheen with a fine texture: deep colours and few reflections.',
+        'Costs the same as the matte Premium Poster. The paper is FSC-certified.',
+      ],
+      about: [
+        'Premium Poster Silk is the same photographic print as our matte Premium Poster, exposed on Fujifilm Crystal Archive paper, but with a silk surface.',
+        'The fine texture breaks up the light, so you see fewer reflections than with high gloss. Colours and blacks are deeper than on matte paper. It is not cotton paper and not a giclée.',
+      ],
+      specs: [
+        ['Weight', '232 gsm'],
+        ['Material', 'Fujifilm Crystal Archive photo paper, FSC-certified'],
+        ['Surface', 'Silk sheen, finely textured'],
+        ['Printing', 'Photographic print'],
+      ],
+      bestFor: [
+        '<strong>Your own photos</strong>: holidays, family and portraits.',
+        '<strong>Images with plenty of colour and contrast</strong> that gain from a light sheen.',
+        '<strong>Anyone who wants the look of a classic photographic print</strong> at a low price.',
+      ],
+      lessFor: 'If the print hangs opposite a window, or you want no sheen at all, choose the matte <a href="/en/paper/premium-poster">Premium Poster</a>. For a print that lasts generations choose fine art paper, such as <a href="/en/paper/hahnemuhle-photo-rag">Photo Rag</a>.',
     },
   },
 ];

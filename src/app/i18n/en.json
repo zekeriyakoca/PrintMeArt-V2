@@ -127,7 +127,6 @@
     "detailGuarantee": "100+ years fade-resistant on cotton papers",
     "publicDomainTitle": "This artwork is in the Public Domain (CC0)",
     "taxIncluded": "Tax included",
-    "cotton": "100% cotton",
     "from": "From",
     "madeIn": "Made in",
     "byFamily": "by a small family studio",
@@ -179,10 +178,38 @@
     "clickRemove": "Click to remove"
   },
   "papers": {
-    "bestFor": "Best for",
-    "archival": "Archival quality · Fade-resistant pigment ink",
     "viewAll": "Compare papers",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "tier": {
+      "poster": {
+        "name": "Premium Poster",
+        "brand": "Fujifilm",
+        "grade": "Home quality",
+        "print": "Photo print on Fujifilm Crystal Archive paper",
+        "studio": "Premium Poster · studio picks the paper"
+      },
+      "cotton": {
+        "name": "Fine Art",
+        "brand": "Hahnemühle",
+        "grade": "Museum quality",
+        "print": "Giclée, twelve pigment inks",
+        "studio": "Fine Art · studio picks the paper"
+      }
+    },
+    "chooseType": "Choose your paper type",
+    "chooseThis": "Choose this paper",
+    "chosen": "Chosen",
+    "whoPicks": "Who picks the paper?",
+    "studioTitle": "Studio picks the paper",
+    "samePrice": "Same price",
+    "or": "or",
+    "pickYourself": "You pick",
+    "studioHint": "Suits your image · same price",
+    "studioText": "Our studio picks the paper that suits your image, at the same price. If we pick something you might not expect, we email you first. No reply within 24 hours and we print our choice. If you choose a paper yourself, we print on exactly that one.",
+    "studioChoose": "Let the studio choose",
+    "choose": "Choose {{paper}}",
+    "idealFor": "Ideal for",
+    "moreAbout": "More about {{paper}}"
   },
   "ppi": {
     "selectSize": "Select size",
@@ -473,7 +500,7 @@
     "selected": "Selected",
     "uploading": "Uploading image...",
     "guarantee": "Perfect Fit Guarantee",
-    "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. We'll send you the final design for your approval, giving you the last say.",
+    "guaranteeText": "Our professional designers ensure every image, even horizontal ones, is perfectly tailored to fit your frame. If something needs to change noticeably, we send you the design for approval first.",
     "imageAlt": "Your uploaded image",
     "retention": "Your images are deleted within 90 days or once your order is completed, whichever comes first."
   },
@@ -484,8 +511,8 @@
     "uploadText": "Drop your photo or artwork. PNG, JPG, GIF up to 150MB.",
     "customizeTitle": "Customize your print",
     "customizeText": "Choose frame, size & passe-partout. Preview your design instantly.",
-    "approveTitle": "Approve & receive",
-    "approveText": "We review your design, you approve, then we print & ship."
+    "approveTitle": "Checked & delivered",
+    "approveText": "We check your file and email you first if we have doubts. Then we print and ship."
   },
   "checkout": {
     "googleFill": "Continue with Google",
@@ -1194,7 +1221,7 @@
     "allPapers": "See all our papers",
     "productName": "Fine art print of your own photo",
     "perks": {
-      "proof": "You approve the design before we print",
+      "proof": "When in doubt, we ask you to approve the design before we print",
       "shipping": "Free shipping in the Netherlands from {{amount}}",
       "pickup": "Or pick it up at our studio in Den Bosch",
       "made": "Printed and cropped by hand in our own studio"
