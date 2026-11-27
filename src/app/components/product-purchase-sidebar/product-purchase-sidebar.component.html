@@ -92,7 +92,11 @@
     @if (shippingInfo(); as info) {
     <li class="trust-item">
       <span class="trust-check">✓</span>
+      @if (ownImage()) {
+      <a class="trust-link" [routerLink]="'/legal#returns' | link">{{ 'product.customReturns' | t }}</a>
+      } @else {
       <span>{{ 'product.returns' | t: { days: info.returnDays } }}</span>
+      }
     </li>
     }
   </ul>
