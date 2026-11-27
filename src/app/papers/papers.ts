@@ -152,7 +152,6 @@ export const PAPER_PAGES: PaperPage[] = [
     closeup: `${IMAGES}/paper-photo-rag-closeup.webp`,
     gallery: [
       { file: 'photo-rag-detail', widths: [480, 800], width: 800, height: 800, nl: 'Het gladde, matte oppervlak van dichtbij', en: 'The smooth, matte surface up close' },
-      { file: 'photo-rag-corner', widths: [480, 750], width: 750, height: 580, nl: 'De rand van een print op Photo Rag', en: 'The edge of a print on Photo Rag' },
       { file: 'photo-rag-angle', widths: [480, 960], width: 960, height: 673, nl: 'Een print op Photo Rag, schuin bekeken', en: 'A print on Photo Rag, seen at an angle' },
     ],
     price: 'cotton',
@@ -231,7 +230,6 @@ export const PAPER_PAGES: PaperPage[] = [
     image: `${IMAGES}/paper-art-1.webp`,
     gallery: [
       { file: 'museum-etching-texture', widths: [480, 800, 1280], width: 1280, height: 1280, nl: 'De structuur van Museum Etching van dichtbij', en: 'The texture of Museum Etching up close' },
-      { file: 'museum-etching-corner', widths: [480, 750], width: 750, height: 580, nl: 'De rand van een print op Museum Etching', en: 'The edge of a print on Museum Etching' },
       { file: 'museum-etching-detail', widths: [480, 800], width: 800, height: 800, nl: 'Inkt op het gestructureerde oppervlak', en: 'Ink on the textured surface' },
       { file: 'museum-etching-angle', widths: [480, 960], width: 960, height: 673, nl: 'Een print op Museum Etching, schuin bekeken', en: 'A print on Museum Etching, seen at an angle' },
     ],
@@ -519,6 +517,10 @@ export const PAPER_PAGES: PaperPage[] = [
     brand: '',
     name: 'Premium Poster Silk',
     weightGsm: 232,
+    gallery: [
+      { file: 'premium-poster-silk-surface', widths: [480, 960], width: 960, height: 673, nl: 'De zijdeglans en de fijne structuur van dichtbij', en: 'The silk sheen and fine texture up close' },
+      { file: 'premium-poster-silk-sheets', widths: [480, 960], width: 960, height: 673, nl: 'Twee prints op fotopapier met zijdeglans', en: 'Two prints on silk photo paper' },
+    ],
     price: 'poster',
     nl: {
       kind: 'Fotopapier met zijdeglans',
