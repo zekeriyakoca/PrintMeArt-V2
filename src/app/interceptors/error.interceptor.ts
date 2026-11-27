@@ -1,7 +1,10 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { ToastService } from '../services/toast/toast.service';
+
+/** HTTP statuses the caller handles itself (e.g. a 404 that shows the not-found page), so no toast */
+export const SILENT_STATUSES = new HttpContextToken<number[]>(() => []);
 
 export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastService = inject(ToastService);
@@ -14,6 +17,9 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if (error instanceof HttpErrorResponse) {
+        if (req.context.get(SILENT_STATUSES).includes(error.status)) {
+          return throwError(() => error);
+        }
         // Common cases we typically don't toast globally.
         // 401 is handled by `AuthenticationInterceptor` (logout flow).
         if (error.status !== 401) {

@@ -1,5 +1,6 @@
 import { ProductTags } from './../../models/product';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import { SILENT_STATUSES } from '../../interceptors/error.interceptor';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CategoryDto } from '../../models/category';
 import { EMPTY, Observable, forkJoin, map, of, shareReplay } from 'rxjs';
@@ -54,6 +55,8 @@ export class ApiService {
   getProductById(productId: string): Observable<ProductDto> {
     return this._httpClient.get<ProductDto>(
       `${this.CATALOG_API_URL}/catalog/v1/storefront/products/${productId}`,
+      // A missing product shows the not-found page; no error toast on top of it
+      { context: new HttpContext().set(SILENT_STATUSES, [404]) },
     );
   }
 
