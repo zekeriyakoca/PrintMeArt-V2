@@ -1,3 +1,4 @@
+import nl from '../i18n/nl.json';
 import { defaultPaperChoice, PAPER_PAGES, PAPER_TIERS, paperBySlug, paperChoiceName, paperName, papersOfTier } from './papers';
 
 describe('papers', () => {
@@ -34,5 +35,19 @@ describe('papers', () => {
     expect(paperChoiceName({ tier: tier('cotton'), paper: baryta })).toBe('Hahnemühle FineArt Baryta');
     expect(paperChoiceName({ tier: tier('cotton'), paper: null })).toBe("Studio's choice: Fine Art (Hahnemühle)");
     expect(paperChoiceName({ tier: tier('poster'), paper: null })).toBe("Studio's choice: Premium Poster (Fujifilm)");
+  });
+
+  it('sells the studio\'s pick as the tier\'s own option, so it costs what the tier costs', () => {
+    // The backend's paper options: Home and Museum. 'Studio' and 'Gallery' are other options with their own price
+    expect(PAPER_TIERS.map((t) => t.grade)).toEqual(['Home', 'Museum']);
+  });
+
+  it('names the studio\'s pick so the backend and the Dutch pages recognise it', () => {
+    const names = nl.name as Record<string, string>;
+    for (const t of PAPER_TIERS) {
+      // The backend's customer emails find it by this prefix (eCommBone Shared/Email/OrderOptionText.cs)
+      expect(t.studioChoiceName.startsWith("Studio's choice: ")).toBeTrue();
+      expect(names[t.studioChoiceName]).toBe(`Keuze van de studio: ${t.studioChoiceName.slice("Studio's choice: ".length)}`);
+    }
   });
 });
