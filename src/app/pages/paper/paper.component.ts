@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CUSTOM_PRINT_PRODUCT_ID, PAPER_PAGES, PaperPage, paperBySlug, paperName, paperPath, paperText } from '../../papers/papers';
+import { CUSTOM_PRINT_PRODUCT_ID, PAPER_PAGES, PaperPage, PaperShot, paperBySlug, paperName, paperPath, paperText, shotSrcset, shotUrl } from '../../papers/papers';
 import { ApiService, PriceTableRow } from '../../services/api/api.service';
 import { LanguageService } from '../../services/i18n/language.service';
 import { TranslatePipe } from '../../services/i18n/translate.pipe';
@@ -35,6 +35,11 @@ export class PaperComponent extends BasePageComponent implements OnInit {
   fullName = computed(() => paperName(this.paper()));
   status = computed(() => statusKey(this.paper()));
   orderable = computed(() => orderable(this.paper()));
+  /** Which photo of the gallery is the large one */
+  shotIndex = signal(0);
+  shot = computed(() => this.paper()?.gallery?.[this.shotIndex()] ?? null);
+  /** The text column is at most about 760px wide; on a phone the photo is as wide as the screen */
+  readonly mainSizes = '(max-width: 1000px) 100vw, 760px';
   /** Size and price of a print of your own image on this paper */
   prices = signal<{ size: string; price: string }[]>([]);
   others = computed(() =>
@@ -47,10 +52,28 @@ export class PaperComponent extends BasePageComponent implements OnInit {
       const paper = paperBySlug(params.get('slug') ?? '') ?? null;
       this.paper.set(paper);
       this.prices.set([]);
+      this.shotIndex.set(0);
       if (!paper) return;
       this.describeForSearch(paper);
       this.loadPrices(paper, paper.price);
     });
+  }
+
+  srcset(shot: PaperShot, format: 'avif' | 'webp'): string {
+    return shotSrcset(shot, format);
+  }
+
+  /** For browsers that read neither AVIF nor srcset */
+  src(shot: PaperShot): string {
+    return shotUrl(shot, shot.widths[shot.widths.length - 1], 'webp');
+  }
+
+  thumb(shot: PaperShot, format: 'avif' | 'webp'): string {
+    return shotUrl(shot, shot.widths[0], format);
+  }
+
+  caption(shot: PaperShot): string {
+    return this.language === 'nl' ? shot.nl : shot.en;
   }
 
   /** The router adds the language itself */

@@ -28,7 +28,25 @@
       </section>
 
       <h2 id="about">{{ 'paperPages.aboutTitle' | t }}</h2>
-      @if (paper()!.image; as image) {
+      @if (shot(); as shot) {
+      <div class="pgal">
+        <picture class="pgal__main">
+          <source type="image/avif" [attr.srcset]="srcset(shot, 'avif')" [attr.sizes]="mainSizes" />
+          <img [src]="src(shot)" [attr.srcset]="srcset(shot, 'webp')" [attr.sizes]="mainSizes" [alt]="caption(shot)" [width]="shot.width" [height]="shot.height" loading="lazy" decoding="async" />
+        </picture>
+        <div class="pgal__thumbs">
+          @for (s of paper()!.gallery; track s.file; let i = $index) {
+          <button type="button" [class.on]="i === shotIndex()" [attr.aria-pressed]="i === shotIndex()" [attr.aria-label]="caption(s)" (click)="shotIndex.set(i)">
+            <picture>
+              <source type="image/avif" [attr.srcset]="thumb(s, 'avif')" />
+              <img [src]="thumb(s, 'webp')" alt="" width="160" height="160" loading="lazy" decoding="async" />
+            </picture>
+          </button>
+          }
+        </div>
+        <p class="pgal__cap">{{ caption(shot) }}</p>
+      </div>
+      } @else if (paper()!.image; as image) {
       <img [src]="image" [alt]="fullName()" width="1200" height="800" loading="lazy" class="w-full aspect-[3/2] object-cover rounded-2xl mb-6" />
       }
       @for (text of p.about; track $index) {<p [innerHTML]="text"></p>}
